@@ -72,7 +72,12 @@ void  INTERRUPT_Initialize (void)
     IPR1bits.INT0IP = 1;
     IPR5bits.INT1IP = 1;
     IPR7bits.INT2IP = 1;
+    IPR6bits.U2TXIP = 1;
+    IPR6bits.U2RXIP = 1;
     IPR0bits.IOCIP = 1;
+    IPR1bits.ADIP = 1;
+    IPR3bits.U1TXIP = 1;
+    IPR3bits.U1RXIP = 1;
 }
 
 void __interrupt(irq(default),base(8)) Default_ISR()
