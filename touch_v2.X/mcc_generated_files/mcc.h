@@ -53,6 +53,7 @@
 #include <stdbool.h>
 #include "interrupt_manager.h"
 #include "adcc.h"
+#include "tmr6.h"
 #include "ext_int.h"
 #include "uart2.h"
 #include "uart1.h"

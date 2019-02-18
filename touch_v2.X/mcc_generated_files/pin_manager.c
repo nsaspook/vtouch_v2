@@ -49,7 +49,6 @@
 #include <xc.h>
 #include "pin_manager.h"
 #include "stdbool.h"
-#include "interrupt_manager.h"
 
 
 
@@ -60,7 +59,7 @@ void PIN_MANAGER_Initialize(void)
     /**
     LATx registers
     */
-    LATE = 0x00;
+    LATE = 0x01;
     LATD = 0x00;
     LATA = 0x00;
     LATF = 0x00;
@@ -70,7 +69,7 @@ void PIN_MANAGER_Initialize(void)
     /**
     TRISx registers
     */
-    TRISE = 0x07;
+    TRISE = 0x06;
     TRISF = 0xFF;
     TRISA = 0xFF;
     TRISB = 0xBF;
@@ -83,7 +82,7 @@ void PIN_MANAGER_Initialize(void)
     ANSELD = 0xFF;
     ANSELC = 0x7F;
     ANSELB = 0x78;
-    ANSELE = 0x07;
+    ANSELE = 0x06;
     ANSELF = 0xFF;
     ANSELA = 0xFF;
 
@@ -122,8 +121,6 @@ void PIN_MANAGER_Initialize(void)
 
 
    
-    // Enable IOCI interrupt 
-    PIE0bits.IOCIE = 1; 
     
 	
     U2RXPPS = 0x0F;   //RB7->UART2:RX2;    
@@ -135,7 +132,7 @@ void PIN_MANAGER_Initialize(void)
     U1RXPPS = 0x17;   //RC7->UART1:RX1;    
 }
   
-void __interrupt(irq(IOC),base(8)) PIN_MANAGER_IOC()
+void PIN_MANAGER_IOC(void)
 {   
 }
 
