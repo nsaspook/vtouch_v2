@@ -1,8 +1,8 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[v F16094 `(v ~T0 @X0 0 tf ]
-[v F16097 `(v ~T0 @X0 0 tf ]
-[v F16126 `(v ~T0 @X0 0 tf ]
-[v F16129 `(v ~T0 @X0 0 tf ]
+[v F16181 `(v ~T0 @X0 0 tf ]
+[v F16184 `(v ~T0 @X0 0 tf ]
+[v F16213 `(v ~T0 @X0 0 tf ]
+[v F16216 `(v ~T0 @X0 0 tf ]
 "47115 /opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h
 [s S2114 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2114 . INT0EDG INT1EDG INT2EDG . IPEN GIEL GIE ]
@@ -70,6 +70,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S139 . . ]
 "3231
 [v _IPR6bits `VS139 ~T0 @X0 0 e@14726 ]
+"3354
+[s S146 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S146 . TMR6IP CCP3IP CWG3IP CLC3IP ]
+"3353
+[u S145 `S146 1 ]
+[n S145 . . ]
+"3361
+[v _IPR9bits `VS145 ~T0 @X0 0 e@14729 ]
 "2988
 [s S131 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S131 . I2C1TXIP I2C1IP I2C1EIP U1RXIP U1TXIP U1EIP U1IP TMR0IP ]
@@ -18319,6 +18327,76 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 830: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;adcc.h: 847: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 [; ;adcc.h: 867: void ADCC_DefaultInterruptHandler(void);
+[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;tmr6.h: 79: typedef enum
+[; ;tmr6.h: 80: {
+[; ;tmr6.h: 89: TMR6_ROP_STARTS_TMRON,
+[; ;tmr6.h: 94: TMR6_ROP_STARTS_TMRON_ERSHIGH,
+[; ;tmr6.h: 99: TMR6_ROP_STARTS_TMRON_ERSLOW,
+[; ;tmr6.h: 104: TMR6_ROP_RESETS_ERSBOTHEDGE,
+[; ;tmr6.h: 109: TMR6_ROP_RESETS_ERSRISINGEDGE,
+[; ;tmr6.h: 114: TMR6_ROP_RESETS_ERSFALLINGEDGE,
+[; ;tmr6.h: 119: TMR6_ROP_RESETS_ERSLOW,
+[; ;tmr6.h: 124: TMR6_ROP_RESETS_ERSHIGH,
+[; ;tmr6.h: 135: TMR6_OS_STARTS_TMRON,
+[; ;tmr6.h: 140: TMR6_OS_STARTS_ERSRISINGEDGE ,
+[; ;tmr6.h: 145: TMR6_OS_STARTS_ERSFALLINGEDGE ,
+[; ;tmr6.h: 150: TMR6_OS_STARTS_ERSBOTHEDGE,
+[; ;tmr6.h: 156: TMR6_OS_STARTS_ERSFIRSTRISINGEDGE,
+[; ;tmr6.h: 162: TMR6_OS_STARTS_ERSFIRSTFALLINGEDGE,
+[; ;tmr6.h: 168: TMR6_OS_STARTS_ERSRISINGEDGEDETECT,
+[; ;tmr6.h: 173: TMR6_OS_STARTS_ERSFALLINGEDGEDETECT,
+[; ;tmr6.h: 178: TMR6_OS_STARTS_TMRON_ERSHIGH = 0x16,
+[; ;tmr6.h: 183: TMR6_OS_STARTS_TMRON_ERSLOW = 0x17,
+[; ;tmr6.h: 192: TMR6_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
+[; ;tmr6.h: 197: TMR6_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
+[; ;tmr6.h: 203: TMR6_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
+[; ;tmr6.h: 205: } TMR6_HLT_MODE;
+[; ;tmr6.h: 220: typedef enum
+[; ;tmr6.h: 221: {
+[; ;tmr6.h: 224: TMR6_T6INPPS,
+[; ;tmr6.h: 228: TMR6_T2POSTSCALED,
+[; ;tmr6.h: 232: TMR6_T4POSTSCALED,
+[; ;tmr6.h: 236: TMR6_RESERVED,
+[; ;tmr6.h: 240: TMR6_CCP1_OUT,
+[; ;tmr6.h: 244: TMR6_CCP2_OUT,
+[; ;tmr6.h: 248: TMR6_CCP3_OUT,
+[; ;tmr6.h: 252: TMR6_CCP4_OUT,
+[; ;tmr6.h: 256: TMR6_PWM5_OUT,
+[; ;tmr6.h: 260: TMR6_PWM6_OUT,
+[; ;tmr6.h: 264: TMR6_PWM7_OUT,
+[; ;tmr6.h: 268: TMR6_PWM8_OUT,
+[; ;tmr6.h: 272: TMR6_RESERVED_2,
+[; ;tmr6.h: 276: TMR6_RESERVED_3,
+[; ;tmr6.h: 280: TMR6_C1_OUT_SYNC,
+[; ;tmr6.h: 284: TMR6_C2_OUT_SYNC,
+[; ;tmr6.h: 288: TMR6_ZCD_OUTPUT,
+[; ;tmr6.h: 292: TMR6_CLC1_OUT,
+[; ;tmr6.h: 296: TMR6_CLC2_OUT,
+[; ;tmr6.h: 300: TMR6_CLC3_OUT,
+[; ;tmr6.h: 304: TMR6_CLC4_OUT,
+[; ;tmr6.h: 308: TMR6_UART1_RX_EDGE,
+[; ;tmr6.h: 312: TMR6_UART1_TX_EDGE,
+[; ;tmr6.h: 316: TMR6_UART2_RX_EDGE,
+[; ;tmr6.h: 320: TMR6_UART2_TX_EDGE
+[; ;tmr6.h: 322: } TMR6_HLT_EXT_RESET_SOURCE;
+[; ;tmr6.h: 365: void TMR6_Initialize(void);
+[; ;tmr6.h: 401: void TMR6_ModeSet(TMR6_HLT_MODE mode);
+[; ;tmr6.h: 436: void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset);
+[; ;tmr6.h: 465: void TMR6_Start(void);
+[; ;tmr6.h: 494: void TMR6_StartTimer(void);
+[; ;tmr6.h: 526: void TMR6_Stop(void);
+[; ;tmr6.h: 558: void TMR6_StopTimer(void);
+[; ;tmr6.h: 593: uint8_t TMR6_Counter8BitGet(void);
+[; ;tmr6.h: 628: uint8_t TMR6_ReadTimer(void);
+[; ;tmr6.h: 667: void TMR6_Counter8BitSet(uint8_t timerVal);
+[; ;tmr6.h: 706: void TMR6_WriteTimer(uint8_t timerVal);
+[; ;tmr6.h: 758: void TMR6_Period8BitSet(uint8_t periodVal);
+[; ;tmr6.h: 810: void TMR6_LoadPeriodRegister(uint8_t periodVal);
+[; ;tmr6.h: 829: void TMR6_CallBack(void);
+[; ;tmr6.h: 846: void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
+[; ;tmr6.h: 864: extern void (*TMR6_InterruptHandler)(void);
+[; ;tmr6.h: 882: void TMR6_DefaultInterruptHandler(void);
 [; ;ext_int.h: 562: void EXT_INT_Initialize(void);
 [; ;ext_int.h: 590: void INT0_CallBack(void);
 [; ;ext_int.h: 613: void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
@@ -18344,10 +18422,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart2.h: 346: void UART2_Transmit_ISR(void);
 [; ;uart2.h: 367: void UART2_Receive_ISR(void);
 "387 mcc_generated_files/uart2.h
-[v _UART2_RxInterruptHandler `*F16094 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F16181 ~T0 @X0 1 e ]
 [; ;uart2.h: 387: void (*UART2_RxInterruptHandler)(void);
 "405
-[v _UART2_TxInterruptHandler `*F16097 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F16184 ~T0 @X0 1 e ]
 [; ;uart2.h: 405: void (*UART2_TxInterruptHandler)(void);
 [; ;uart2.h: 425: void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 [; ;uart2.h: 443: void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
@@ -18363,16 +18441,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart1.h: 346: void UART1_Transmit_ISR(void);
 [; ;uart1.h: 367: void UART1_Receive_ISR(void);
 "387 mcc_generated_files/uart1.h
-[v _UART1_RxInterruptHandler `*F16126 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F16213 ~T0 @X0 1 e ]
 [; ;uart1.h: 387: void (*UART1_RxInterruptHandler)(void);
 "405
-[v _UART1_TxInterruptHandler `*F16129 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F16216 ~T0 @X0 1 e ]
 [; ;uart1.h: 405: void (*UART1_TxInterruptHandler)(void);
 [; ;uart1.h: 425: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 [; ;uart1.h: 443: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-[; ;mcc.h: 73: void SYSTEM_Initialize(void);
-[; ;mcc.h: 86: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 99: void PMD_Initialize(void);
+[; ;mcc.h: 74: void SYSTEM_Initialize(void);
+[; ;mcc.h: 87: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 100: void PMD_Initialize(void);
 "52 mcc_generated_files/interrupt_manager.c
 [v _INTERRUPT_Initialize `(v ~T0 @X0 1 ef ]
 "53
@@ -18436,29 +18514,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;interrupt_manager.c: 76: IPR6bits.U2RXIP = 1;
 "76
 [e = . . _IPR6bits 0 2 -> -> 1 `i `uc ]
-[; ;interrupt_manager.c: 77: IPR1bits.ADIP = 1;
+[; ;interrupt_manager.c: 77: IPR9bits.TMR6IP = 1;
 "77
-[e = . . _IPR1bits 0 2 -> -> 1 `i `uc ]
-[; ;interrupt_manager.c: 78: IPR3bits.U1TXIP = 1;
+[e = . . _IPR9bits 0 0 -> -> 1 `i `uc ]
+[; ;interrupt_manager.c: 78: IPR1bits.ADIP = 1;
 "78
-[e = . . _IPR3bits 0 4 -> -> 1 `i `uc ]
-[; ;interrupt_manager.c: 79: IPR3bits.U1RXIP = 1;
+[e = . . _IPR1bits 0 2 -> -> 1 `i `uc ]
+[; ;interrupt_manager.c: 79: IPR3bits.U1TXIP = 1;
 "79
-[e = . . _IPR3bits 0 3 -> -> 1 `i `uc ]
-[; ;interrupt_manager.c: 80: }
+[e = . . _IPR3bits 0 4 -> -> 1 `i `uc ]
+[; ;interrupt_manager.c: 80: IPR3bits.U1RXIP = 1;
 "80
+[e = . . _IPR3bits 0 3 -> -> 1 `i `uc ]
+[; ;interrupt_manager.c: 81: }
+"81
 [e :UE 2221 ]
 }
 [v $root$_Default_ISR `(v ~T0 @X0 0 e ]
-"82
-[v _Default_ISR `(v ~T6 @X0 1 ef ]
 "83
+[v _Default_ISR `(v ~T6 @X0 1 ef ]
+"84
 {
-[; ;interrupt_manager.c: 82: void __interrupt(irq(default),base(8)) Default_ISR()
-[; ;interrupt_manager.c: 83: {
+[; ;interrupt_manager.c: 83: void __interrupt(irq(default),base(8)) Default_ISR()
+[; ;interrupt_manager.c: 84: {
 [e :U _Default_ISR ]
 [f ]
-[; ;interrupt_manager.c: 84: }
-"84
+[; ;interrupt_manager.c: 85: }
+"85
 [e :UE 2222 ]
 }

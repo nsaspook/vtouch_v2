@@ -49,6 +49,7 @@
 */
 
 #include <xc.h>
+#include <pic18f57k42.h>
 #include "tmr6.h"
 #include "interrupt_manager.h"
 
@@ -198,6 +199,7 @@ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
 void TMR6_DefaultInterruptHandler(void){
     // add your TMR6 interrupt custom code
     // or set custom function using TMR6_SetInterruptHandler()
+	LATEbits.LATE0 = (uint8_t)~LATEbits.LATE0;
 }
 
 /**

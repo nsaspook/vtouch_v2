@@ -27858,6 +27858,210 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 # 867
 void ADCC_DefaultInterruptHandler(void);
 
+# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 79 "mcc_generated_files/tmr6.h"
+typedef enum
+{
+
+# 89
+TMR6_ROP_STARTS_TMRON,
+
+# 94
+TMR6_ROP_STARTS_TMRON_ERSHIGH,
+
+# 99
+TMR6_ROP_STARTS_TMRON_ERSLOW,
+
+# 104
+TMR6_ROP_RESETS_ERSBOTHEDGE,
+
+# 109
+TMR6_ROP_RESETS_ERSRISINGEDGE,
+
+# 114
+TMR6_ROP_RESETS_ERSFALLINGEDGE,
+
+# 119
+TMR6_ROP_RESETS_ERSLOW,
+
+# 124
+TMR6_ROP_RESETS_ERSHIGH,
+
+# 135
+TMR6_OS_STARTS_TMRON,
+
+# 140
+TMR6_OS_STARTS_ERSRISINGEDGE ,
+
+# 145
+TMR6_OS_STARTS_ERSFALLINGEDGE ,
+
+# 150
+TMR6_OS_STARTS_ERSBOTHEDGE,
+
+# 156
+TMR6_OS_STARTS_ERSFIRSTRISINGEDGE,
+
+# 162
+TMR6_OS_STARTS_ERSFIRSTFALLINGEDGE,
+
+# 168
+TMR6_OS_STARTS_ERSRISINGEDGEDETECT,
+
+# 173
+TMR6_OS_STARTS_ERSFALLINGEDGEDETECT,
+
+# 178
+TMR6_OS_STARTS_TMRON_ERSHIGH = 0x16,
+
+# 183
+TMR6_OS_STARTS_TMRON_ERSLOW = 0x17,
+
+# 192
+TMR6_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
+
+# 197
+TMR6_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
+
+# 203
+TMR6_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
+
+} TMR6_HLT_MODE;
+
+# 220
+typedef enum
+{
+
+# 224
+TMR6_T6INPPS,
+
+# 228
+TMR6_T2POSTSCALED,
+
+# 232
+TMR6_T4POSTSCALED,
+
+# 236
+TMR6_RESERVED,
+
+# 240
+TMR6_CCP1_OUT,
+
+# 244
+TMR6_CCP2_OUT,
+
+# 248
+TMR6_CCP3_OUT,
+
+# 252
+TMR6_CCP4_OUT,
+
+# 256
+TMR6_PWM5_OUT,
+
+# 260
+TMR6_PWM6_OUT,
+
+# 264
+TMR6_PWM7_OUT,
+
+# 268
+TMR6_PWM8_OUT,
+
+# 272
+TMR6_RESERVED_2,
+
+# 276
+TMR6_RESERVED_3,
+
+# 280
+TMR6_C1_OUT_SYNC,
+
+# 284
+TMR6_C2_OUT_SYNC,
+
+# 288
+TMR6_ZCD_OUTPUT,
+
+# 292
+TMR6_CLC1_OUT,
+
+# 296
+TMR6_CLC2_OUT,
+
+# 300
+TMR6_CLC3_OUT,
+
+# 304
+TMR6_CLC4_OUT,
+
+# 308
+TMR6_UART1_RX_EDGE,
+
+# 312
+TMR6_UART1_TX_EDGE,
+
+# 316
+TMR6_UART2_RX_EDGE,
+
+# 320
+TMR6_UART2_TX_EDGE
+
+} TMR6_HLT_EXT_RESET_SOURCE;
+
+# 365
+void TMR6_Initialize(void);
+
+# 401
+void TMR6_ModeSet(TMR6_HLT_MODE mode);
+
+# 436
+void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset);
+
+# 465
+void TMR6_Start(void);
+
+# 494
+void TMR6_StartTimer(void);
+
+# 526
+void TMR6_Stop(void);
+
+# 558
+void TMR6_StopTimer(void);
+
+# 593
+uint8_t TMR6_Counter8BitGet(void);
+
+# 628
+uint8_t TMR6_ReadTimer(void);
+
+# 667
+void TMR6_Counter8BitSet(uint8_t timerVal);
+
+# 706
+void TMR6_WriteTimer(uint8_t timerVal);
+
+# 758
+void TMR6_Period8BitSet(uint8_t periodVal);
+
+# 810
+void TMR6_LoadPeriodRegister(uint8_t periodVal);
+
+# 829
+void TMR6_CallBack(void);
+
+# 846
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
+
+# 864
+extern void (*TMR6_InterruptHandler)(void);
+
+# 882
+void TMR6_DefaultInterruptHandler(void);
+
 # 562 "mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
 
@@ -27983,13 +28187,13 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 443
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
-# 73 "mcc_generated_files/mcc.h"
+# 74 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 86
+# 87
 void OSCILLATOR_Initialize(void);
 
-# 99
+# 100
 void PMD_Initialize(void);
 
 # 49 "main.c"
