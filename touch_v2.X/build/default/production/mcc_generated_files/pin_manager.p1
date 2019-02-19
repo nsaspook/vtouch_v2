@@ -73,18 +73,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _SLRCONF `Vuc ~T0 @X0 0 e@14995 ]
 "12457
 [v _U2RXPPS `Vuc ~T0 @X0 0 e@15080 ]
+"12277
+[v _SPI1SCKPPS `Vuc ~T0 @X0 0 e@15070 ]
 "7216
 [v _RB6PPS `Vuc ~T0 @X0 0 e@14862 ]
+"7466
+[v _RC3PPS `Vuc ~T0 @X0 0 e@14867 ]
 "11677
 [v _INT0PPS `Vuc ~T0 @X0 0 e@15040 ]
 "11717
 [v _INT2PPS `Vuc ~T0 @X0 0 e@15042 ]
 "11697
 [v _INT1PPS `Vuc ~T0 @X0 0 e@15041 ]
+"7566
+[v _RC5PPS `Vuc ~T0 @X0 0 e@14869 ]
 "7616
 [v _RC6PPS `Vuc ~T0 @X0 0 e@14870 ]
 "12417
 [v _U1RXPPS `Vuc ~T0 @X0 0 e@15077 ]
+"12297
+[v _SPI1SDIPPS `Vuc ~T0 @X0 0 e@15071 ]
 [; ;xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc.h: 20: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -18248,7 +18256,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 183: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 185: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 187: extern __nonreentrant void _delay3(unsigned char);
-[; ;pin_manager.h: 248: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 304: void PIN_MANAGER_Initialize (void);
 [; ;stdbool.h: 13: typedef unsigned char bool;
 "57 mcc_generated_files/pin_manager.c
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 1 ef ]
@@ -18288,18 +18296,18 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 75: TRISB = 0xBF;
 "75
 [e = _TRISB -> -> 191 `i `uc ]
-[; ;pin_manager.c: 76: TRISC = 0xBF;
+[; ;pin_manager.c: 76: TRISC = 0x93;
 "76
-[e = _TRISC -> -> 191 `i `uc ]
+[e = _TRISC -> -> 147 `i `uc ]
 [; ;pin_manager.c: 77: TRISD = 0xFF;
 "77
 [e = _TRISD -> -> 255 `i `uc ]
 [; ;pin_manager.c: 82: ANSELD = 0xFF;
 "82
 [e = _ANSELD -> -> 255 `i `uc ]
-[; ;pin_manager.c: 83: ANSELC = 0x7F;
+[; ;pin_manager.c: 83: ANSELC = 0x67;
 "83
-[e = _ANSELC -> -> 127 `i `uc ]
+[e = _ANSELC -> -> 103 `i `uc ]
 [; ;pin_manager.c: 84: ANSELB = 0x78;
 "84
 [e = _ANSELB -> -> 120 `i `uc ]
@@ -18369,37 +18377,49 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pin_manager.c: 126: U2RXPPS = 0x0F;
 "126
 [e = _U2RXPPS -> -> 15 `i `uc ]
-[; ;pin_manager.c: 127: RB6PPS = 0x16;
+[; ;pin_manager.c: 127: SPI1SCKPPS = 0x13;
 "127
-[e = _RB6PPS -> -> 22 `i `uc ]
-[; ;pin_manager.c: 128: INT0PPS = 0x08;
+[e = _SPI1SCKPPS -> -> 19 `i `uc ]
+[; ;pin_manager.c: 128: RB6PPS = 0x16;
 "128
-[e = _INT0PPS -> -> 8 `i `uc ]
-[; ;pin_manager.c: 129: INT2PPS = 0x0A;
+[e = _RB6PPS -> -> 22 `i `uc ]
+[; ;pin_manager.c: 129: RC3PPS = 0x1E;
 "129
-[e = _INT2PPS -> -> 10 `i `uc ]
-[; ;pin_manager.c: 130: INT1PPS = 0x09;
+[e = _RC3PPS -> -> 30 `i `uc ]
+[; ;pin_manager.c: 130: INT0PPS = 0x08;
 "130
-[e = _INT1PPS -> -> 9 `i `uc ]
-[; ;pin_manager.c: 131: RC6PPS = 0x13;
+[e = _INT0PPS -> -> 8 `i `uc ]
+[; ;pin_manager.c: 131: INT2PPS = 0x0A;
 "131
-[e = _RC6PPS -> -> 19 `i `uc ]
-[; ;pin_manager.c: 132: U1RXPPS = 0x17;
+[e = _INT2PPS -> -> 10 `i `uc ]
+[; ;pin_manager.c: 132: INT1PPS = 0x09;
 "132
-[e = _U1RXPPS -> -> 23 `i `uc ]
-[; ;pin_manager.c: 133: }
+[e = _INT1PPS -> -> 9 `i `uc ]
+[; ;pin_manager.c: 133: RC5PPS = 0x1F;
 "133
-[e :UE 2221 ]
-}
+[e = _RC5PPS -> -> 31 `i `uc ]
+[; ;pin_manager.c: 134: RC6PPS = 0x13;
+"134
+[e = _RC6PPS -> -> 19 `i `uc ]
+[; ;pin_manager.c: 135: U1RXPPS = 0x17;
 "135
-[v _PIN_MANAGER_IOC `(v ~T0 @X0 1 ef ]
+[e = _U1RXPPS -> -> 23 `i `uc ]
+[; ;pin_manager.c: 136: SPI1SDIPPS = 0x14;
 "136
-{
-[; ;pin_manager.c: 135: void PIN_MANAGER_IOC(void)
-[; ;pin_manager.c: 136: {
-[e :U _PIN_MANAGER_IOC ]
-[f ]
+[e = _SPI1SDIPPS -> -> 20 `i `uc ]
 [; ;pin_manager.c: 137: }
 "137
+[e :UE 2221 ]
+}
+"139
+[v _PIN_MANAGER_IOC `(v ~T0 @X0 1 ef ]
+"140
+{
+[; ;pin_manager.c: 139: void PIN_MANAGER_IOC(void)
+[; ;pin_manager.c: 140: {
+[e :U _PIN_MANAGER_IOC ]
+[f ]
+[; ;pin_manager.c: 141: }
+"141
 [e :UE 2222 ]
 }

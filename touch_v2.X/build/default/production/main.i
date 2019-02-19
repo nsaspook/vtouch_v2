@@ -27657,7 +27657,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 248 "mcc_generated_files/pin_manager.h"
+# 304 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdint.h"
@@ -28187,13 +28187,31 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 443
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
-# 74 "mcc_generated_files/mcc.h"
+# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 4 "/opt/microchip/xc8/v2.00/pic/include/__size_t.h"
+typedef unsigned size_t;
+
+# 6 "/opt/microchip/xc8/v2.00/pic/include/c90/stddef.h"
+typedef int ptrdiff_t;
+
+# 117 "mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+
+# 152
+uint8_t SPI1_Exchange8bit(uint8_t data);
+
+# 192
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+
+# 75 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 87
+# 88
 void OSCILLATOR_Initialize(void);
 
-# 100
+# 101
 void PMD_Initialize(void);
 
 # 49 "main.c"
@@ -28202,7 +28220,16 @@ void main(void)
 
 SYSTEM_Initialize();
 
+# 59
+(INTCON0bits.GIEH = 1);
+
+
+(INTCON0bits.GIEL = 1);
+
 # 70
+TMR6_Initialize();
+TMR6_Start();
+
 while (1)
 {
 

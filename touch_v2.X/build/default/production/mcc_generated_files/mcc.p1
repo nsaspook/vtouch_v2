@@ -5,11 +5,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v F16216 `(v ~T0 @X0 0 tf ]
 "109 mcc_generated_files/interrupt_manager.h
 [v _INTERRUPT_Initialize `(v ~T0 @X0 0 ef ]
-"100 mcc_generated_files/mcc.h
+"101 mcc_generated_files/mcc.h
 [v _PMD_Initialize `(v ~T0 @X0 0 ef ]
-"248 mcc_generated_files/pin_manager.h
+"304 mcc_generated_files/pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"87 mcc_generated_files/mcc.h
+"88 mcc_generated_files/mcc.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "365 mcc_generated_files/tmr6.h
 [v _TMR6_Initialize `(v ~T0 @X0 0 ef ]
@@ -21,6 +21,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _UART2_Initialize `(v ~T0 @X0 0 ef ]
 "105 mcc_generated_files/uart1.h
 [v _UART1_Initialize `(v ~T0 @X0 0 ef ]
+"117 mcc_generated_files/spi1.h
+[v _SPI1_Initialize `(v ~T0 @X0 0 ef ]
 "5207 /opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@14809 ]
 "5347
@@ -18212,7 +18214,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 183: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 185: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 187: extern __nonreentrant void _delay3(unsigned char);
-[; ;pin_manager.h: 248: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 304: void PIN_MANAGER_Initialize (void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef __int24 int24_t;
@@ -18406,9 +18408,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart1.h: 405: void (*UART1_TxInterruptHandler)(void);
 [; ;uart1.h: 425: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 [; ;uart1.h: 443: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-[; ;mcc.h: 74: void SYSTEM_Initialize(void);
-[; ;mcc.h: 87: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 100: void PMD_Initialize(void);
+[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stddef.h: 6: typedef int ptrdiff_t;
+[; ;spi1.h: 117: void SPI1_Initialize(void);
+[; ;spi1.h: 152: uint8_t SPI1_Exchange8bit(uint8_t data);
+[; ;spi1.h: 192: uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+[; ;mcc.h: 75: void SYSTEM_Initialize(void);
+[; ;mcc.h: 88: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 101: void PMD_Initialize(void);
 "50 mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "51
@@ -18444,84 +18452,87 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.c: 60: UART1_Initialize();
 "60
 [e ( _UART1_Initialize ..  ]
-[; ;mcc.c: 61: }
+[; ;mcc.c: 61: SPI1_Initialize();
 "61
+[e ( _SPI1_Initialize ..  ]
+[; ;mcc.c: 62: }
+"62
 [e :UE 2221 ]
 }
-"63
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "64
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"65
 {
-[; ;mcc.c: 63: void OSCILLATOR_Initialize(void)
-[; ;mcc.c: 64: {
+[; ;mcc.c: 64: void OSCILLATOR_Initialize(void)
+[; ;mcc.c: 65: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;mcc.c: 66: OSCCON1 = 0x20;
-"66
+[; ;mcc.c: 67: OSCCON1 = 0x20;
+"67
 [e = _OSCCON1 -> -> 32 `i `uc ]
-[; ;mcc.c: 68: OSCCON3 = 0x00;
-"68
+[; ;mcc.c: 69: OSCCON3 = 0x00;
+"69
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;mcc.c: 70: OSCEN = 0x00;
-"70
+[; ;mcc.c: 71: OSCEN = 0x00;
+"71
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;mcc.c: 72: OSCFRQ = 0x02;
-"72
+[; ;mcc.c: 73: OSCFRQ = 0x02;
+"73
 [e = _OSCFRQ -> -> 2 `i `uc ]
-[; ;mcc.c: 74: OSCTUNE = 0x00;
-"74
+[; ;mcc.c: 75: OSCTUNE = 0x00;
+"75
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;mcc.c: 76: while(PLLR == 0)
-"76
+[; ;mcc.c: 77: while(PLLR == 0)
+"77
 [e $U 2223  ]
 [e :U 2224 ]
-[; ;mcc.c: 77: {
-"77
-{
+[; ;mcc.c: 78: {
 "78
+{
+"79
 }
 [e :U 2223 ]
-"76
+"77
 [e $ == -> _PLLR `i -> 0 `i 2224  ]
 [e :U 2225 ]
-[; ;mcc.c: 78: }
 [; ;mcc.c: 79: }
-"79
+[; ;mcc.c: 80: }
+"80
 [e :UE 2222 ]
 }
-"81
-[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
 "82
+[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
+"83
 {
-[; ;mcc.c: 81: void PMD_Initialize(void)
-[; ;mcc.c: 82: {
+[; ;mcc.c: 82: void PMD_Initialize(void)
+[; ;mcc.c: 83: {
 [e :U _PMD_Initialize ]
 [f ]
-[; ;mcc.c: 84: PMD0 = 0x00;
-"84
+[; ;mcc.c: 85: PMD0 = 0x00;
+"85
 [e = _PMD0 -> -> 0 `i `uc ]
-[; ;mcc.c: 86: PMD1 = 0x00;
-"86
+[; ;mcc.c: 87: PMD1 = 0x00;
+"87
 [e = _PMD1 -> -> 0 `i `uc ]
-[; ;mcc.c: 88: PMD2 = 0x00;
-"88
+[; ;mcc.c: 89: PMD2 = 0x00;
+"89
 [e = _PMD2 -> -> 0 `i `uc ]
-[; ;mcc.c: 90: PMD3 = 0x00;
-"90
+[; ;mcc.c: 91: PMD3 = 0x00;
+"91
 [e = _PMD3 -> -> 0 `i `uc ]
-[; ;mcc.c: 92: PMD4 = 0x00;
-"92
+[; ;mcc.c: 93: PMD4 = 0x00;
+"93
 [e = _PMD4 -> -> 0 `i `uc ]
-[; ;mcc.c: 94: PMD5 = 0x00;
-"94
+[; ;mcc.c: 95: PMD5 = 0x00;
+"95
 [e = _PMD5 -> -> 0 `i `uc ]
-[; ;mcc.c: 96: PMD6 = 0x00;
-"96
+[; ;mcc.c: 97: PMD6 = 0x00;
+"97
 [e = _PMD6 -> -> 0 `i `uc ]
-[; ;mcc.c: 98: PMD7 = 0x00;
-"98
-[e = _PMD7 -> -> 0 `i `uc ]
-[; ;mcc.c: 99: }
+[; ;mcc.c: 99: PMD7 = 0x00;
 "99
+[e = _PMD7 -> -> 0 `i `uc ]
+[; ;mcc.c: 100: }
+"100
 [e :UE 2226 ]
 }

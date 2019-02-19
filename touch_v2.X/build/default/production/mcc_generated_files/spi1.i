@@ -1,8 +1,5 @@
 
-# 1 "mcc_generated_files/interrupt_manager.c"
-
-# 109 "mcc_generated_files/interrupt_manager.h"
-void INTERRUPT_Initialize (void);
+# 1 "mcc_generated_files/spi1.c"
 
 # 18 "/opt/microchip/xc8/v2.00/pic/include/xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -27660,8 +27657,14 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 304 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
+# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 4 "/opt/microchip/xc8/v2.00/pic/include/__size_t.h"
+typedef unsigned size_t;
+
+# 6 "/opt/microchip/xc8/v2.00/pic/include/c90/stddef.h"
+typedef int ptrdiff_t;
 
 # 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdint.h"
 typedef signed char int8_t;
@@ -27749,453 +27752,6 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
-typedef unsigned char bool;
-
-# 13
-typedef unsigned char bool;
-
-# 72 "mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
-
-# 89
-typedef enum
-{
-channel_ANA0 = 0x0,
-channel_ANA1 = 0x1,
-channel_ANA2 = 0x2,
-channel_VSS = 0x3B,
-channel_Temp = 0x3C,
-channel_DAC1 = 0x3D,
-channel_FVR_Buffer1 = 0x3E,
-channel_FVR_Buffer2 = 0x3F
-} adcc_channel_t;
-
-# 133
-void ADCC_Initialize(void);
-
-# 162
-void ADCC_StartConversion(adcc_channel_t channel);
-
-# 192
-bool ADCC_IsConversionDone();
-
-# 224
-adc_result_t ADCC_GetConversionResult(void);
-
-# 255
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-
-# 280
-void ADCC_StopConversion(void);
-
-# 307
-void ADCC_SetStopOnInterrupt(void);
-
-# 332
-void ADCC_DischargeSampleCapacitor(void);
-
-# 358
-void ADCC_LoadAcquisitionRegister(uint16_t);
-
-# 384
-void ADCC_SetPrechargeTime(uint16_t);
-
-# 409
-void ADCC_SetRepeatCount(uint8_t);
-
-# 437
-uint8_t ADCC_GetCurrentCountofConversions(void);
-
-# 461
-void ADCC_ClearAccumulator(void);
-
-# 486
-int24_t ADCC_GetAccumulatorValue(void);
-
-# 514
-bool ADCC_HasAccumulatorOverflowed(void);
-
-# 539
-uint16_t ADCC_GetFilterValue(void);
-
-# 567
-uint16_t ADCC_GetPreviousResult(void);
-
-# 593
-void ADCC_DefineSetPoint(uint16_t);
-
-# 619
-void ADCC_SetUpperThreshold(uint16_t);
-
-# 645
-void ADCC_SetLowerThreshold(uint16_t);
-
-# 672
-uint16_t ADCC_GetErrorCalculation(void);
-
-# 699
-void ADCC_EnableDoubleSampling(void);
-
-# 723
-void ADCC_EnableContinuousConversion(void);
-
-# 747
-void ADCC_DisableContinuousConversion(void);
-
-# 775
-bool ADCC_HasErrorCrossedUpperThreshold(void);
-
-# 803
-bool ADCC_HasErrorCrossedLowerThreshold(void);
-
-# 830
-uint8_t ADCC_GetConversionStageStatus(void);
-
-# 847
-void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-
-# 867
-void ADCC_DefaultInterruptHandler(void);
-
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
-typedef unsigned char bool;
-
-# 79 "mcc_generated_files/tmr6.h"
-typedef enum
-{
-
-# 89
-TMR6_ROP_STARTS_TMRON,
-
-# 94
-TMR6_ROP_STARTS_TMRON_ERSHIGH,
-
-# 99
-TMR6_ROP_STARTS_TMRON_ERSLOW,
-
-# 104
-TMR6_ROP_RESETS_ERSBOTHEDGE,
-
-# 109
-TMR6_ROP_RESETS_ERSRISINGEDGE,
-
-# 114
-TMR6_ROP_RESETS_ERSFALLINGEDGE,
-
-# 119
-TMR6_ROP_RESETS_ERSLOW,
-
-# 124
-TMR6_ROP_RESETS_ERSHIGH,
-
-# 135
-TMR6_OS_STARTS_TMRON,
-
-# 140
-TMR6_OS_STARTS_ERSRISINGEDGE ,
-
-# 145
-TMR6_OS_STARTS_ERSFALLINGEDGE ,
-
-# 150
-TMR6_OS_STARTS_ERSBOTHEDGE,
-
-# 156
-TMR6_OS_STARTS_ERSFIRSTRISINGEDGE,
-
-# 162
-TMR6_OS_STARTS_ERSFIRSTFALLINGEDGE,
-
-# 168
-TMR6_OS_STARTS_ERSRISINGEDGEDETECT,
-
-# 173
-TMR6_OS_STARTS_ERSFALLINGEDGEDETECT,
-
-# 178
-TMR6_OS_STARTS_TMRON_ERSHIGH = 0x16,
-
-# 183
-TMR6_OS_STARTS_TMRON_ERSLOW = 0x17,
-
-# 192
-TMR6_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-
-# 197
-TMR6_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-
-# 203
-TMR6_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-
-} TMR6_HLT_MODE;
-
-# 220
-typedef enum
-{
-
-# 224
-TMR6_T6INPPS,
-
-# 228
-TMR6_T2POSTSCALED,
-
-# 232
-TMR6_T4POSTSCALED,
-
-# 236
-TMR6_RESERVED,
-
-# 240
-TMR6_CCP1_OUT,
-
-# 244
-TMR6_CCP2_OUT,
-
-# 248
-TMR6_CCP3_OUT,
-
-# 252
-TMR6_CCP4_OUT,
-
-# 256
-TMR6_PWM5_OUT,
-
-# 260
-TMR6_PWM6_OUT,
-
-# 264
-TMR6_PWM7_OUT,
-
-# 268
-TMR6_PWM8_OUT,
-
-# 272
-TMR6_RESERVED_2,
-
-# 276
-TMR6_RESERVED_3,
-
-# 280
-TMR6_C1_OUT_SYNC,
-
-# 284
-TMR6_C2_OUT_SYNC,
-
-# 288
-TMR6_ZCD_OUTPUT,
-
-# 292
-TMR6_CLC1_OUT,
-
-# 296
-TMR6_CLC2_OUT,
-
-# 300
-TMR6_CLC3_OUT,
-
-# 304
-TMR6_CLC4_OUT,
-
-# 308
-TMR6_UART1_RX_EDGE,
-
-# 312
-TMR6_UART1_TX_EDGE,
-
-# 316
-TMR6_UART2_RX_EDGE,
-
-# 320
-TMR6_UART2_TX_EDGE
-
-} TMR6_HLT_EXT_RESET_SOURCE;
-
-# 365
-void TMR6_Initialize(void);
-
-# 401
-void TMR6_ModeSet(TMR6_HLT_MODE mode);
-
-# 436
-void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset);
-
-# 465
-void TMR6_Start(void);
-
-# 494
-void TMR6_StartTimer(void);
-
-# 526
-void TMR6_Stop(void);
-
-# 558
-void TMR6_StopTimer(void);
-
-# 593
-uint8_t TMR6_Counter8BitGet(void);
-
-# 628
-uint8_t TMR6_ReadTimer(void);
-
-# 667
-void TMR6_Counter8BitSet(uint8_t timerVal);
-
-# 706
-void TMR6_WriteTimer(uint8_t timerVal);
-
-# 758
-void TMR6_Period8BitSet(uint8_t periodVal);
-
-# 810
-void TMR6_LoadPeriodRegister(uint8_t periodVal);
-
-# 829
-void TMR6_CallBack(void);
-
-# 846
-void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 864
-extern void (*TMR6_InterruptHandler)(void);
-
-# 882
-void TMR6_DefaultInterruptHandler(void);
-
-# 562 "mcc_generated_files/ext_int.h"
-void EXT_INT_Initialize(void);
-
-# 590
-void INT0_CallBack(void);
-
-# 613
-void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 637
-extern void (*INT0_InterruptHandler)(void);
-
-# 661
-void INT0_DefaultInterruptHandler(void);
-
-# 685
-void INT1_CallBack(void);
-
-# 708
-void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 732
-extern void (*INT1_InterruptHandler)(void);
-
-# 756
-void INT1_DefaultInterruptHandler(void);
-
-# 780
-void INT2_CallBack(void);
-
-# 803
-void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
-
-# 827
-extern void (*INT2_InterruptHandler)(void);
-
-# 851
-void INT2_DefaultInterruptHandler(void);
-
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
-typedef unsigned char bool;
-
-# 77 "mcc_generated_files/uart2.h"
-extern volatile uint8_t uart2TxBufferRemaining;
-extern volatile uint8_t uart2RxCount;
-
-# 105
-void UART2_Initialize(void);
-
-# 154
-uint8_t UART2_is_rx_ready(void);
-
-# 204
-uint8_t UART2_is_tx_ready(void);
-
-# 251
-bool UART2_is_tx_done(void);
-
-# 300
-uint8_t UART2_Read(void);
-
-# 325
-void UART2_Write(uint8_t txData);
-
-# 346
-void UART2_Transmit_ISR(void);
-
-# 367
-void UART2_Receive_ISR(void);
-
-# 387
-void (*UART2_RxInterruptHandler)(void);
-
-# 405
-void (*UART2_TxInterruptHandler)(void);
-
-# 425
-void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-
-# 443
-void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
-typedef unsigned char bool;
-
-# 77 "mcc_generated_files/uart1.h"
-extern volatile uint8_t uart1TxBufferRemaining;
-extern volatile uint8_t uart1RxCount;
-
-# 105
-void UART1_Initialize(void);
-
-# 154
-uint8_t UART1_is_rx_ready(void);
-
-# 204
-uint8_t UART1_is_tx_ready(void);
-
-# 251
-bool UART1_is_tx_done(void);
-
-# 300
-uint8_t UART1_Read(void);
-
-# 325
-void UART1_Write(uint8_t txData);
-
-# 346
-void UART1_Transmit_ISR(void);
-
-# 367
-void UART1_Receive_ISR(void);
-
-# 387
-void (*UART1_RxInterruptHandler)(void);
-
-# 405
-void (*UART1_TxInterruptHandler)(void);
-
-# 425
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-
-# 443
-void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
-typedef unsigned char bool;
-
-# 4 "/opt/microchip/xc8/v2.00/pic/include/__size_t.h"
-typedef unsigned size_t;
-
-# 6 "/opt/microchip/xc8/v2.00/pic/include/c90/stddef.h"
-typedef int ptrdiff_t;
-
 # 117 "mcc_generated_files/spi1.h"
 void SPI1_Initialize(void);
 
@@ -28205,48 +27761,71 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 
-# 75 "mcc_generated_files/mcc.h"
-void SYSTEM_Initialize(void);
-
-# 88
-void OSCILLATOR_Initialize(void);
-
-# 101
-void PMD_Initialize(void);
-
-# 52 "mcc_generated_files/interrupt_manager.c"
-void INTERRUPT_Initialize (void)
+# 64 "mcc_generated_files/spi1.c"
+void SPI1_Initialize(void)
 {
-INTCON0bits.IPEN = 1;
 
-bool state = (unsigned char)GIE;
-GIE = 0;
-IVTLOCK = 0x55;
-IVTLOCK = 0xAA;
-IVTLOCKbits.IVTLOCKED = 0x00;
 
-IVTADU = 0;
-IVTADH = 0;
-IVTADL = 8;
+SPI1CON1 = 0x00;
 
-IVTLOCK = 0x55;
-IVTLOCK = 0xAA;
-IVTLOCKbits.IVTLOCKED = 0x01;
+SPI1CON2 = 0x03;
 
-GIE = state;
+SPI1BAUD = 0x16;
 
-IPR1bits.INT0IP = 1;
-IPR5bits.INT1IP = 1;
-IPR7bits.INT2IP = 1;
-IPR6bits.U2TXIP = 1;
-IPR6bits.U2RXIP = 1;
-IPR9bits.TMR6IP = 1;
-IPR1bits.ADIP = 1;
-IPR3bits.U1TXIP = 1;
-IPR3bits.U1RXIP = 1;
+SPI1CLK = 0x00;
+
+SPI1CON0 = 0x82;
 }
 
-void __interrupt(irq(default),base(8)) Default_ISR()
+uint8_t SPI1_Exchange8bit(uint8_t data)
 {
+
+SPI1TCNTL = 1;
+SPI1TXB = data;
+
+while(PIR2bits.SPI1RXIF == 0x0)
+{
+}
+
+return (SPI1RXB);
+}
+
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut)
+{
+uint8_t bytesWritten = 0;
+
+if(bufLen != 0)
+{
+if(dataIn != (0))
+{
+while(bytesWritten < bufLen)
+{
+if(dataOut == (0))
+{
+SPI1_Exchange8bit(dataIn[bytesWritten]);
+}
+else
+{
+dataOut[bytesWritten] = SPI1_Exchange8bit(dataIn[bytesWritten]);
+}
+
+bytesWritten++;
+}
+}
+else
+{
+if(dataOut != (0))
+{
+while(bytesWritten < bufLen )
+{
+dataOut[bytesWritten] = SPI1_Exchange8bit(0x0);
+
+bytesWritten++;
+}
+}
+}
+}
+
+return bytesWritten;
 }
 

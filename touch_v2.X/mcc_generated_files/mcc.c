@@ -58,6 +58,7 @@ void SYSTEM_Initialize(void)
     EXT_INT_Initialize();
     UART2_Initialize();
     UART1_Initialize();
+    SPI1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

@@ -1,26 +1,31 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[v F16181 `(v ~T0 @X0 0 tf ]
-[v F16184 `(v ~T0 @X0 0 tf ]
-[v F16213 `(v ~T0 @X0 0 tf ]
-[v F16216 `(v ~T0 @X0 0 tf ]
-[p mainexit ]
-"75 mcc_generated_files/mcc.h
-[v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-"47115 /opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h
-[s S2114 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2114 . INT0EDG INT1EDG INT2EDG . IPEN GIEL GIE ]
-"47124
-[s S2115 :7 `uc 1 :1 `uc 1 ]
-[n S2115 . . GIEH ]
-"47114
-[u S2113 `S2114 1 `S2115 1 ]
-[n S2113 . . . ]
-"47129
-[v _INTCON0bits `VS2113 ~T0 @X0 0 e@16338 ]
-"365 mcc_generated_files/tmr6.h
-[v _TMR6_Initialize `(v ~T0 @X0 0 ef ]
-"465
-[v _TMR6_Start `(v ~T0 @X0 0 ef ]
+"23244 /opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h
+[v _SPI1CON1 `Vuc ~T0 @X0 0 e@15637 ]
+"23346
+[v _SPI1CON2 `Vuc ~T0 @X0 0 e@15638 ]
+"23546
+[v _SPI1BAUD `Vuc ~T0 @X0 0 e@15641 ]
+"23800
+[v _SPI1CLK `Vuc ~T0 @X0 0 e@15644 ]
+"23178
+[v _SPI1CON0 `Vuc ~T0 @X0 0 e@15636 ]
+"23138
+[v _SPI1TCNTL `Vuc ~T0 @X0 0 e@15634 ]
+"23061
+[v _SPI1TXB `Vuc ~T0 @X0 0 e@15633 ]
+"4226
+[s S183 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S183 . DMA1SCNTIF DMA1DCNTIF DMA1ORIF DMA1AIF SPI1RXIF SPI1TXIF SPI1IF I2C1RXIF ]
+"4236
+[s S184 :6 `uc 1 :1 `uc 1 ]
+[n S184 . . CMIF ]
+"4225
+[u S182 `S183 1 `S184 1 ]
+[n S182 . . . ]
+"4241
+[v _PIR2bits `VS182 ~T0 @X0 0 e@14754 ]
+"22991
+[v _SPI1RXB `Vuc ~T0 @X0 0 e@15632 ]
 [; ;xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc.h: 20: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -18184,7 +18189,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 183: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 185: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 187: extern __nonreentrant void _delay3(unsigned char);
-[; ;pin_manager.h: 304: void PIN_MANAGER_Initialize (void);
+[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stddef.h: 6: typedef int ptrdiff_t;
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef __int24 int24_t;
@@ -18213,218 +18220,200 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 282: typedef uint32_t uintmax_t;
 [; ;stdint.h: 289: typedef int16_t intptr_t;
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
-[; ;stdbool.h: 13: typedef unsigned char bool;
-[; ;interrupt_manager.h: 109: void INTERRUPT_Initialize (void);
-[; ;stdbool.h: 13: typedef unsigned char bool;
-[; ;adcc.h: 72: typedef uint16_t adc_result_t;
-[; ;adcc.h: 89: typedef enum
-[; ;adcc.h: 90: {
-[; ;adcc.h: 91: channel_ANA0 = 0x0,
-[; ;adcc.h: 92: channel_ANA1 = 0x1,
-[; ;adcc.h: 93: channel_ANA2 = 0x2,
-[; ;adcc.h: 94: channel_VSS = 0x3B,
-[; ;adcc.h: 95: channel_Temp = 0x3C,
-[; ;adcc.h: 96: channel_DAC1 = 0x3D,
-[; ;adcc.h: 97: channel_FVR_Buffer1 = 0x3E,
-[; ;adcc.h: 98: channel_FVR_Buffer2 = 0x3F
-[; ;adcc.h: 99: } adcc_channel_t;
-[; ;adcc.h: 133: void ADCC_Initialize(void);
-[; ;adcc.h: 162: void ADCC_StartConversion(adcc_channel_t channel);
-[; ;adcc.h: 192: bool ADCC_IsConversionDone();
-[; ;adcc.h: 224: adc_result_t ADCC_GetConversionResult(void);
-[; ;adcc.h: 255: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-[; ;adcc.h: 280: void ADCC_StopConversion(void);
-[; ;adcc.h: 307: void ADCC_SetStopOnInterrupt(void);
-[; ;adcc.h: 332: void ADCC_DischargeSampleCapacitor(void);
-[; ;adcc.h: 358: void ADCC_LoadAcquisitionRegister(uint16_t);
-[; ;adcc.h: 384: void ADCC_SetPrechargeTime(uint16_t);
-[; ;adcc.h: 409: void ADCC_SetRepeatCount(uint8_t);
-[; ;adcc.h: 437: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adcc.h: 461: void ADCC_ClearAccumulator(void);
-[; ;adcc.h: 486: int24_t ADCC_GetAccumulatorValue(void);
-[; ;adcc.h: 514: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adcc.h: 539: uint16_t ADCC_GetFilterValue(void);
-[; ;adcc.h: 567: uint16_t ADCC_GetPreviousResult(void);
-[; ;adcc.h: 593: void ADCC_DefineSetPoint(uint16_t);
-[; ;adcc.h: 619: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adcc.h: 645: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adcc.h: 672: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adcc.h: 699: void ADCC_EnableDoubleSampling(void);
-[; ;adcc.h: 723: void ADCC_EnableContinuousConversion(void);
-[; ;adcc.h: 747: void ADCC_DisableContinuousConversion(void);
-[; ;adcc.h: 775: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adcc.h: 803: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adcc.h: 830: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;adcc.h: 847: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-[; ;adcc.h: 867: void ADCC_DefaultInterruptHandler(void);
-[; ;stdbool.h: 13: typedef unsigned char bool;
-[; ;tmr6.h: 79: typedef enum
-[; ;tmr6.h: 80: {
-[; ;tmr6.h: 89: TMR6_ROP_STARTS_TMRON,
-[; ;tmr6.h: 94: TMR6_ROP_STARTS_TMRON_ERSHIGH,
-[; ;tmr6.h: 99: TMR6_ROP_STARTS_TMRON_ERSLOW,
-[; ;tmr6.h: 104: TMR6_ROP_RESETS_ERSBOTHEDGE,
-[; ;tmr6.h: 109: TMR6_ROP_RESETS_ERSRISINGEDGE,
-[; ;tmr6.h: 114: TMR6_ROP_RESETS_ERSFALLINGEDGE,
-[; ;tmr6.h: 119: TMR6_ROP_RESETS_ERSLOW,
-[; ;tmr6.h: 124: TMR6_ROP_RESETS_ERSHIGH,
-[; ;tmr6.h: 135: TMR6_OS_STARTS_TMRON,
-[; ;tmr6.h: 140: TMR6_OS_STARTS_ERSRISINGEDGE ,
-[; ;tmr6.h: 145: TMR6_OS_STARTS_ERSFALLINGEDGE ,
-[; ;tmr6.h: 150: TMR6_OS_STARTS_ERSBOTHEDGE,
-[; ;tmr6.h: 156: TMR6_OS_STARTS_ERSFIRSTRISINGEDGE,
-[; ;tmr6.h: 162: TMR6_OS_STARTS_ERSFIRSTFALLINGEDGE,
-[; ;tmr6.h: 168: TMR6_OS_STARTS_ERSRISINGEDGEDETECT,
-[; ;tmr6.h: 173: TMR6_OS_STARTS_ERSFALLINGEDGEDETECT,
-[; ;tmr6.h: 178: TMR6_OS_STARTS_TMRON_ERSHIGH = 0x16,
-[; ;tmr6.h: 183: TMR6_OS_STARTS_TMRON_ERSLOW = 0x17,
-[; ;tmr6.h: 192: TMR6_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-[; ;tmr6.h: 197: TMR6_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-[; ;tmr6.h: 203: TMR6_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-[; ;tmr6.h: 205: } TMR6_HLT_MODE;
-[; ;tmr6.h: 220: typedef enum
-[; ;tmr6.h: 221: {
-[; ;tmr6.h: 224: TMR6_T6INPPS,
-[; ;tmr6.h: 228: TMR6_T2POSTSCALED,
-[; ;tmr6.h: 232: TMR6_T4POSTSCALED,
-[; ;tmr6.h: 236: TMR6_RESERVED,
-[; ;tmr6.h: 240: TMR6_CCP1_OUT,
-[; ;tmr6.h: 244: TMR6_CCP2_OUT,
-[; ;tmr6.h: 248: TMR6_CCP3_OUT,
-[; ;tmr6.h: 252: TMR6_CCP4_OUT,
-[; ;tmr6.h: 256: TMR6_PWM5_OUT,
-[; ;tmr6.h: 260: TMR6_PWM6_OUT,
-[; ;tmr6.h: 264: TMR6_PWM7_OUT,
-[; ;tmr6.h: 268: TMR6_PWM8_OUT,
-[; ;tmr6.h: 272: TMR6_RESERVED_2,
-[; ;tmr6.h: 276: TMR6_RESERVED_3,
-[; ;tmr6.h: 280: TMR6_C1_OUT_SYNC,
-[; ;tmr6.h: 284: TMR6_C2_OUT_SYNC,
-[; ;tmr6.h: 288: TMR6_ZCD_OUTPUT,
-[; ;tmr6.h: 292: TMR6_CLC1_OUT,
-[; ;tmr6.h: 296: TMR6_CLC2_OUT,
-[; ;tmr6.h: 300: TMR6_CLC3_OUT,
-[; ;tmr6.h: 304: TMR6_CLC4_OUT,
-[; ;tmr6.h: 308: TMR6_UART1_RX_EDGE,
-[; ;tmr6.h: 312: TMR6_UART1_TX_EDGE,
-[; ;tmr6.h: 316: TMR6_UART2_RX_EDGE,
-[; ;tmr6.h: 320: TMR6_UART2_TX_EDGE
-[; ;tmr6.h: 322: } TMR6_HLT_EXT_RESET_SOURCE;
-[; ;tmr6.h: 365: void TMR6_Initialize(void);
-[; ;tmr6.h: 401: void TMR6_ModeSet(TMR6_HLT_MODE mode);
-[; ;tmr6.h: 436: void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset);
-[; ;tmr6.h: 465: void TMR6_Start(void);
-[; ;tmr6.h: 494: void TMR6_StartTimer(void);
-[; ;tmr6.h: 526: void TMR6_Stop(void);
-[; ;tmr6.h: 558: void TMR6_StopTimer(void);
-[; ;tmr6.h: 593: uint8_t TMR6_Counter8BitGet(void);
-[; ;tmr6.h: 628: uint8_t TMR6_ReadTimer(void);
-[; ;tmr6.h: 667: void TMR6_Counter8BitSet(uint8_t timerVal);
-[; ;tmr6.h: 706: void TMR6_WriteTimer(uint8_t timerVal);
-[; ;tmr6.h: 758: void TMR6_Period8BitSet(uint8_t periodVal);
-[; ;tmr6.h: 810: void TMR6_LoadPeriodRegister(uint8_t periodVal);
-[; ;tmr6.h: 829: void TMR6_CallBack(void);
-[; ;tmr6.h: 846: void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;tmr6.h: 864: extern void (*TMR6_InterruptHandler)(void);
-[; ;tmr6.h: 882: void TMR6_DefaultInterruptHandler(void);
-[; ;ext_int.h: 562: void EXT_INT_Initialize(void);
-[; ;ext_int.h: 590: void INT0_CallBack(void);
-[; ;ext_int.h: 613: void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;ext_int.h: 637: extern void (*INT0_InterruptHandler)(void);
-[; ;ext_int.h: 661: void INT0_DefaultInterruptHandler(void);
-[; ;ext_int.h: 685: void INT1_CallBack(void);
-[; ;ext_int.h: 708: void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;ext_int.h: 732: extern void (*INT1_InterruptHandler)(void);
-[; ;ext_int.h: 756: void INT1_DefaultInterruptHandler(void);
-[; ;ext_int.h: 780: void INT2_CallBack(void);
-[; ;ext_int.h: 803: void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
-[; ;ext_int.h: 827: extern void (*INT2_InterruptHandler)(void);
-[; ;ext_int.h: 851: void INT2_DefaultInterruptHandler(void);
-[; ;stdbool.h: 13: typedef unsigned char bool;
-[; ;uart2.h: 77: extern volatile uint8_t uart2TxBufferRemaining;
-[; ;uart2.h: 78: extern volatile uint8_t uart2RxCount;
-[; ;uart2.h: 105: void UART2_Initialize(void);
-[; ;uart2.h: 154: uint8_t UART2_is_rx_ready(void);
-[; ;uart2.h: 204: uint8_t UART2_is_tx_ready(void);
-[; ;uart2.h: 251: bool UART2_is_tx_done(void);
-[; ;uart2.h: 300: uint8_t UART2_Read(void);
-[; ;uart2.h: 325: void UART2_Write(uint8_t txData);
-[; ;uart2.h: 346: void UART2_Transmit_ISR(void);
-[; ;uart2.h: 367: void UART2_Receive_ISR(void);
-"387 mcc_generated_files/uart2.h
-[v _UART2_RxInterruptHandler `*F16181 ~T0 @X0 1 e ]
-[; ;uart2.h: 387: void (*UART2_RxInterruptHandler)(void);
-"405
-[v _UART2_TxInterruptHandler `*F16184 ~T0 @X0 1 e ]
-[; ;uart2.h: 405: void (*UART2_TxInterruptHandler)(void);
-[; ;uart2.h: 425: void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-[; ;uart2.h: 443: void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-[; ;stdbool.h: 13: typedef unsigned char bool;
-[; ;uart1.h: 77: extern volatile uint8_t uart1TxBufferRemaining;
-[; ;uart1.h: 78: extern volatile uint8_t uart1RxCount;
-[; ;uart1.h: 105: void UART1_Initialize(void);
-[; ;uart1.h: 154: uint8_t UART1_is_rx_ready(void);
-[; ;uart1.h: 204: uint8_t UART1_is_tx_ready(void);
-[; ;uart1.h: 251: bool UART1_is_tx_done(void);
-[; ;uart1.h: 300: uint8_t UART1_Read(void);
-[; ;uart1.h: 325: void UART1_Write(uint8_t txData);
-[; ;uart1.h: 346: void UART1_Transmit_ISR(void);
-[; ;uart1.h: 367: void UART1_Receive_ISR(void);
-"387 mcc_generated_files/uart1.h
-[v _UART1_RxInterruptHandler `*F16213 ~T0 @X0 1 e ]
-[; ;uart1.h: 387: void (*UART1_RxInterruptHandler)(void);
-"405
-[v _UART1_TxInterruptHandler `*F16216 ~T0 @X0 1 e ]
-[; ;uart1.h: 405: void (*UART1_TxInterruptHandler)(void);
-[; ;uart1.h: 425: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-[; ;uart1.h: 443: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-[; ;stdbool.h: 13: typedef unsigned char bool;
-[; ;__size_t.h: 4: typedef unsigned size_t;
-[; ;stddef.h: 6: typedef int ptrdiff_t;
 [; ;spi1.h: 117: void SPI1_Initialize(void);
 [; ;spi1.h: 152: uint8_t SPI1_Exchange8bit(uint8_t data);
 [; ;spi1.h: 192: uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-[; ;mcc.h: 75: void SYSTEM_Initialize(void);
-[; ;mcc.h: 88: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 101: void PMD_Initialize(void);
-[v $root$_main `(v ~T0 @X0 0 e ]
-"49 main.c
-[v _main `(v ~T0 @X0 1 ef ]
-"50
+"64 mcc_generated_files/spi1.c
+[v _SPI1_Initialize `(v ~T0 @X0 1 ef ]
+"65
 {
-[; ;main.c: 49: void main(void)
-[; ;main.c: 50: {
-[e :U _main ]
+[; ;spi1.c: 64: void SPI1_Initialize(void)
+[; ;spi1.c: 65: {
+[e :U _SPI1_Initialize ]
 [f ]
-[; ;main.c: 52: SYSTEM_Initialize();
-"52
-[e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 59: (INTCON0bits.GIEH = 1);
-"59
-[e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-[; ;main.c: 62: (INTCON0bits.GIEL = 1);
-"62
-[e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 70: TMR6_Initialize();
+[; ;spi1.c: 68: SPI1CON1 = 0x00;
+"68
+[e = _SPI1CON1 -> -> 0 `i `uc ]
+[; ;spi1.c: 70: SPI1CON2 = 0x03;
 "70
-[e ( _TMR6_Initialize ..  ]
-[; ;main.c: 71: TMR6_Start();
-"71
-[e ( _TMR6_Start ..  ]
-[; ;main.c: 73: while (1)
-"73
-[e :U 2223 ]
-[; ;main.c: 74: {
+[e = _SPI1CON2 -> -> 3 `i `uc ]
+[; ;spi1.c: 72: SPI1BAUD = 0x16;
+"72
+[e = _SPI1BAUD -> -> 22 `i `uc ]
+[; ;spi1.c: 74: SPI1CLK = 0x00;
 "74
-{
+[e = _SPI1CLK -> -> 0 `i `uc ]
+[; ;spi1.c: 76: SPI1CON0 = 0x82;
 "76
-}
-[e :U 2222 ]
-"73
-[e $U 2223  ]
-[e :U 2224 ]
-[; ;main.c: 76: }
-[; ;main.c: 77: }
+[e = _SPI1CON0 -> -> 130 `i `uc ]
+[; ;spi1.c: 77: }
 "77
 [e :UE 2221 ]
+}
+"79
+[v _SPI1_Exchange8bit `(uc ~T0 @X0 1 ef1`uc ]
+"80
+{
+[; ;spi1.c: 79: uint8_t SPI1_Exchange8bit(uint8_t data)
+[; ;spi1.c: 80: {
+[e :U _SPI1_Exchange8bit ]
+"79
+[v _data `uc ~T0 @X0 1 r1 ]
+"80
+[f ]
+[; ;spi1.c: 82: SPI1TCNTL = 1;
+"82
+[e = _SPI1TCNTL -> -> 1 `i `uc ]
+[; ;spi1.c: 83: SPI1TXB = data;
+"83
+[e = _SPI1TXB _data ]
+[; ;spi1.c: 85: while(PIR2bits.SPI1RXIF == 0x0)
+"85
+[e $U 2223  ]
+[e :U 2224 ]
+[; ;spi1.c: 86: {
+"86
+{
+"87
+}
+[e :U 2223 ]
+"85
+[e $ == -> . . _PIR2bits 0 4 `i -> 0 `i 2224  ]
+[e :U 2225 ]
+[; ;spi1.c: 87: }
+[; ;spi1.c: 89: return (SPI1RXB);
+"89
+[e ) _SPI1RXB ]
+[e $UE 2222  ]
+[; ;spi1.c: 90: }
+"90
+[e :UE 2222 ]
+}
+"92
+[v _SPI1_Exchange8bitBuffer `(uc ~T0 @X0 1 ef3`*uc`uc`*uc ]
+"93
+{
+[; ;spi1.c: 92: uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut)
+[; ;spi1.c: 93: {
+[e :U _SPI1_Exchange8bitBuffer ]
+"92
+[v _dataIn `*uc ~T0 @X0 1 r1 ]
+[v _bufLen `uc ~T0 @X0 1 r2 ]
+[v _dataOut `*uc ~T0 @X0 1 r3 ]
+"93
+[f ]
+"94
+[v _bytesWritten `uc ~T0 @X0 1 a ]
+[; ;spi1.c: 94: uint8_t bytesWritten = 0;
+[e = _bytesWritten -> -> 0 `i `uc ]
+[; ;spi1.c: 96: if(bufLen != 0)
+"96
+[e $ ! != -> _bufLen `i -> 0 `i 2227  ]
+[; ;spi1.c: 97: {
+"97
+{
+[; ;spi1.c: 98: if(dataIn != (0))
+"98
+[e $ ! != _dataIn -> -> 0 `i `*uc 2228  ]
+[; ;spi1.c: 99: {
+"99
+{
+[; ;spi1.c: 100: while(bytesWritten < bufLen)
+"100
+[e $U 2229  ]
+[e :U 2230 ]
+[; ;spi1.c: 101: {
+"101
+{
+[; ;spi1.c: 102: if(dataOut == (0))
+"102
+[e $ ! == _dataOut -> -> 0 `i `*uc 2232  ]
+[; ;spi1.c: 103: {
+"103
+{
+[; ;spi1.c: 104: SPI1_Exchange8bit(dataIn[bytesWritten]);
+"104
+[e ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
+"105
+}
+[; ;spi1.c: 105: }
+[e $U 2233  ]
+"106
+[e :U 2232 ]
+[; ;spi1.c: 106: else
+[; ;spi1.c: 107: {
+"107
+{
+[; ;spi1.c: 108: dataOut[bytesWritten] = SPI1_Exchange8bit(dataIn[bytesWritten]);
+"108
+[e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
+"109
+}
+[e :U 2233 ]
+[; ;spi1.c: 109: }
+[; ;spi1.c: 111: bytesWritten++;
+"111
+[e ++ _bytesWritten -> -> 1 `i `uc ]
+"112
+}
+[e :U 2229 ]
+"100
+[e $ < -> _bytesWritten `i -> _bufLen `i 2230  ]
+[e :U 2231 ]
+"113
+}
+[; ;spi1.c: 112: }
+[; ;spi1.c: 113: }
+[e $U 2234  ]
+"114
+[e :U 2228 ]
+[; ;spi1.c: 114: else
+[; ;spi1.c: 115: {
+"115
+{
+[; ;spi1.c: 116: if(dataOut != (0))
+"116
+[e $ ! != _dataOut -> -> 0 `i `*uc 2235  ]
+[; ;spi1.c: 117: {
+"117
+{
+[; ;spi1.c: 118: while(bytesWritten < bufLen )
+"118
+[e $U 2236  ]
+[e :U 2237 ]
+[; ;spi1.c: 119: {
+"119
+{
+[; ;spi1.c: 120: dataOut[bytesWritten] = SPI1_Exchange8bit(0x0);
+"120
+[e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 -> -> 0 `i `uc ]
+[; ;spi1.c: 122: bytesWritten++;
+"122
+[e ++ _bytesWritten -> -> 1 `i `uc ]
+"123
+}
+[e :U 2236 ]
+"118
+[e $ < -> _bytesWritten `i -> _bufLen `i 2237  ]
+[e :U 2238 ]
+"124
+}
+[e :U 2235 ]
+"125
+}
+[e :U 2234 ]
+"126
+}
+[e :U 2227 ]
+[; ;spi1.c: 123: }
+[; ;spi1.c: 124: }
+[; ;spi1.c: 125: }
+[; ;spi1.c: 126: }
+[; ;spi1.c: 128: return bytesWritten;
+"128
+[e ) _bytesWritten ]
+[e $UE 2226  ]
+[; ;spi1.c: 129: }
+"129
+[e :UE 2226 ]
 }

@@ -56,10 +56,10 @@ void main(void)
     // Use the following macros to:
 
     // Enable high priority global interrupts
-    //INTERRUPT_GlobalInterruptHighEnable();
+    INTERRUPT_GlobalInterruptHighEnable();
 
     // Enable low priority global interrupts.
-    //INTERRUPT_GlobalInterruptLowEnable();
+    INTERRUPT_GlobalInterruptLowEnable();
 
     // Disable high priority global interrupts
     //INTERRUPT_GlobalInterruptHighDisable();
@@ -67,6 +67,9 @@ void main(void)
     // Disable low priority global interrupts.
     //INTERRUPT_GlobalInterruptLowDisable();
 
+    TMR6_Initialize();
+    TMR6_Start();
+    
     while (1)
     {
         // Add your application code
