@@ -27770,6 +27770,7 @@ void wdtdelay(uint32_t);
 void init_display(void);
 void send_lcd_data(uint8_t);
 void send_lcd_cmd(uint8_t);
+void send_lcd_cmd_long(uint8_t);
 void start_lcd(void);
 void wait_lcd(void);
 
@@ -27890,15 +27891,16 @@ asm(" clrwdt");
 void init_display(void)
 {
 LATEbits.LATE0 = 1;
+do { LATCbits.LATC2 = 1; } while(0);
 wdtdelay(350000);
 send_lcd_cmd(0x39);
 send_lcd_cmd(0x1d);
 send_lcd_cmd(0x50);
 send_lcd_cmd(0x6c);
 send_lcd_cmd(0x76);
-send_lcd_cmd(0x38);
+send_lcd_cmd_long(0x38);
 send_lcd_cmd(0x0f);
-send_lcd_cmd(0x01);
+send_lcd_cmd_long(0x01);
 send_lcd_cmd(0x02);
 send_lcd_cmd(0x06);
 start_lcd();
@@ -27906,27 +27908,37 @@ wait_lcd();
 LATEbits.LATE0 = 0;
 }
 
-# 50
+# 51
 void send_lcd_data(uint8_t data)
 {
 do { LATCbits.LATC1 = 1; } while(0);
 do { LATCbits.LATC2 = 0; } while(0);
 SPI1_Exchange8bit(data);
-wdtdelay(35);
 do { LATCbits.LATC2 = 1; } while(0);
+wdtdelay(5);
 }
 
-# 62
+# 63
 void send_lcd_cmd(uint8_t cmd)
 {
 do { LATCbits.LATC1 = 0; } while(0);
 do { LATCbits.LATC2 = 0; } while(0);
 SPI1_Exchange8bit(cmd);
-wdtdelay(800);
 do { LATCbits.LATC2 = 1; } while(0);
+wdtdelay(30);
 }
 
-# 74
+# 75
+void send_lcd_cmd_long(uint8_t cmd)
+{
+do { LATCbits.LATC1 = 0; } while(0);
+do { LATCbits.LATC2 = 0; } while(0);
+SPI1_Exchange8bit(cmd);
+do { LATCbits.LATC2 = 1; } while(0);
+wdtdelay(800);
+}
+
+# 87
 void start_lcd(void)
 {
 
@@ -27948,7 +27960,7 @@ start_lcd();
 wait_lcd();
 }
 
-# 98
+# 111
 void putch(char c)
 {
 send_lcd_data((uint8_t) c);

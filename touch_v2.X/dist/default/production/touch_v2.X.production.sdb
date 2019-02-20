@@ -102,23 +102,25 @@ TMR6_UART2_TX_EDGE 24
 [v _wdtdelay wdtdelay `(v  1 e 1 0 ]
 "28
 [v _init_display init_display `(v  1 e 1 0 ]
-"50
+"51
 [v _send_lcd_data send_lcd_data `(v  1 e 1 0 ]
-"62
+"63
 [v _send_lcd_cmd send_lcd_cmd `(v  1 e 1 0 ]
-"74
+"75
+[v _send_lcd_cmd_long send_lcd_cmd_long `(v  1 e 1 0 ]
+"87
 [v _start_lcd start_lcd `(v  1 e 1 0 ]
-"81
+"94
 [v _wait_lcd wait_lcd `(v  1 e 1 0 ]
-"88
+"101
 [v _eaDogM_WriteChr eaDogM_WriteChr `(v  1 e 1 0 ]
-"98
+"111
 [v _putch putch `(v  1 e 1 0 ]
-"103
+"116
 [v _eaDogM_WriteCommand eaDogM_WriteCommand `(v  1 e 1 0 ]
-"110
+"123
 [v _eaDogM_SetPos eaDogM_SetPos `(v  1 e 1 0 ]
-"126
+"139
 [v _eaDogM_WriteString eaDogM_WriteString `(v  1 e 1 0 ]
 "50 /root/MPLABXProjects/vtouch_v2/touch_v2.X/main.c
 [v _main main `(v  1 e 1 0 ]
@@ -984,7 +986,7 @@ TMR6_UART2_TX_EDGE 24
 [v _LATB LATB `VEuc  1 e 1 @16315 ]
 "45958
 [v _LATC LATC `VEuc  1 e 1 @16316 ]
-[s S1913 . 1 `uc 1 LATC0 1 0 :1:0 
+[s S1900 . 1 `uc 1 LATC0 1 0 :1:0 
 `uc 1 LATC1 1 0 :1:1 
 `uc 1 LATC2 1 0 :1:2 
 `uc 1 LATC3 1 0 :1:3 
@@ -994,7 +996,7 @@ TMR6_UART2_TX_EDGE 24
 `uc 1 LATC7 1 0 :1:7 
 ]
 "45985
-[s S1922 . 1 `uc 1 LC0 1 0 :1:0 
+[s S1909 . 1 `uc 1 LC0 1 0 :1:0 
 `uc 1 LC1 1 0 :1:1 
 `uc 1 LC2 1 0 :1:2 
 `uc 1 LC3 1 0 :1:3 
@@ -1004,10 +1006,10 @@ TMR6_UART2_TX_EDGE 24
 `uc 1 LC7 1 0 :1:7 
 ]
 "45985
-[u S1931 . 1 `S1913 1 . 1 0 `S1922 1 . 1 0 ]
+[u S1918 . 1 `S1900 1 . 1 0 `S1909 1 . 1 0 ]
 "45985
 "45985
-[v _LATCbits LATCbits `VES1931  1 e 1 @16316 ]
+[v _LATCbits LATCbits `VES1918  1 e 1 @16316 ]
 "46070
 [v _LATD LATD `VEuc  1 e 1 @16317 ]
 "46182
@@ -1128,27 +1130,36 @@ TMR6_UART2_TX_EDGE 24
 "28 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _init_display init_display `(v  1 e 1 0 ]
 {
-"45
+"46
 } 0
-"62
+"75
+[v _send_lcd_cmd_long send_lcd_cmd_long `(v  1 e 1 0 ]
+{
+[v send_lcd_cmd_long@cmd cmd `uc  1 a 1 wreg ]
+[v send_lcd_cmd_long@cmd cmd `uc  1 a 1 wreg ]
+"77
+[v send_lcd_cmd_long@cmd cmd `uc  1 a 1 5 ]
+"82
+} 0
+"63
 [v _send_lcd_cmd send_lcd_cmd `(v  1 e 1 0 ]
 {
 [v send_lcd_cmd@cmd cmd `uc  1 a 1 wreg ]
 [v send_lcd_cmd@cmd cmd `uc  1 a 1 wreg ]
-"64
+"65
 [v send_lcd_cmd@cmd cmd `uc  1 a 1 5 ]
-"69
+"70
 } 0
-"126
+"139
 [v _eaDogM_WriteString eaDogM_WriteString `(v  1 e 1 0 ]
 {
 [v eaDogM_WriteString@strPtr strPtr `*.32uc  1 p 2 17 ]
-"132
+"145
 } 0
-"81
+"94
 [v _wait_lcd wait_lcd `(v  1 e 1 0 ]
 {
-"86
+"99
 } 0
 "4 /opt/microchip/xc8/v2.05/pic/sources/c90/common/strlen.c
 [v _strlen strlen `(ui  1 e 2 0 ]
@@ -1159,10 +1170,10 @@ TMR6_UART2_TX_EDGE 24
 [v strlen@s s `*.32Cuc  1 p 2 1 ]
 "13
 } 0
-"74 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
+"87 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _start_lcd start_lcd `(v  1 e 1 0 ]
 {
-"79
+"92
 } 0
 "472 /opt/microchip/xc8/v2.05/pic/sources/c90/common/doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
@@ -1177,23 +1188,23 @@ TMR6_UART2_TX_EDGE 24
 [v printf@f f `*.32Cuc  1 p 2 7 ]
 "1560
 } 0
-"98 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
+"111 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _putch putch `(v  1 e 1 0 ]
 {
 [v putch@c c `uc  1 a 1 wreg ]
 [v putch@c c `uc  1 a 1 wreg ]
-"100
+"113
 [v putch@c c `uc  1 a 1 6 ]
-"101
+"114
 } 0
-"50
+"51
 [v _send_lcd_data send_lcd_data `(v  1 e 1 0 ]
 {
 [v send_lcd_data@data data `uc  1 a 1 wreg ]
 [v send_lcd_data@data data `uc  1 a 1 wreg ]
-"52
+"53
 [v send_lcd_data@data data `uc  1 a 1 5 ]
-"57
+"58
 } 0
 "14
 [v _wdtdelay wdtdelay `(v  1 e 1 0 ]

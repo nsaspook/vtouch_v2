@@ -69,7 +69,7 @@ void SPI1_Initialize(void)
 		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
 		SPI1CON2 = 0x03;
 		// BAUD 0; 
-		SPI1BAUD = 0x40;
+		SPI1BAUD = 0x07;
 		// CLKSEL FOSC; 
 		SPI1CLK = 0x00;
 		// BMODE last byte; LSBF MSb first; EN enabled; MST bus master; 

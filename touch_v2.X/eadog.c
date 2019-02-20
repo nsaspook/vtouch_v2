@@ -28,15 +28,16 @@ void wdtdelay(uint32_t delay)
 void init_display(void)
 {
 	SLED = true;
+	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
 	send_lcd_cmd(0x39);
 	send_lcd_cmd(0x1d);
 	send_lcd_cmd(0x50);
 	send_lcd_cmd(0x6c);
 	send_lcd_cmd(0x76); // contrast last 4 bits
-	send_lcd_cmd(0x38);
+	send_lcd_cmd_long(0x38); // follower control
 	send_lcd_cmd(0x0f);
-	send_lcd_cmd(0x01);
+	send_lcd_cmd_long(0x01); // clear
 	send_lcd_cmd(0x02);
 	send_lcd_cmd(0x06);
 	start_lcd();
@@ -45,27 +46,39 @@ void init_display(void)
 }
 
 /*
- * bit 9 is unset for short spi delay (default)
+ * add short spi delay (default)
  */
 void send_lcd_data(uint8_t data)
 {
 	RS_SetHigh();
 	CSB_SetLow();
 	SPI1_Exchange8bit(data);
-	wdtdelay(35);
 	CSB_SetHigh();
+	wdtdelay(5);
 }
 
 /*
- * set bit 9 to add long spi delay
+ * add inst spi delay
  */
 void send_lcd_cmd(uint8_t cmd)
 {
 	RS_SetLow();
 	CSB_SetLow();
 	SPI1_Exchange8bit(cmd);
-	wdtdelay(800);
 	CSB_SetHigh();
+	wdtdelay(30);
+}
+
+/*
+ * add clear/home spi delay
+ */
+void send_lcd_cmd_long(uint8_t cmd)
+{
+	RS_SetLow();
+	CSB_SetLow();
+	SPI1_Exchange8bit(cmd);
+	CSB_SetHigh();
+	wdtdelay(800);
 }
 
 /*

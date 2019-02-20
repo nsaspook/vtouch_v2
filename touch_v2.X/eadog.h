@@ -34,6 +34,7 @@ extern "C" {
 	void init_display(void);
 	void send_lcd_data(uint8_t);
 	void send_lcd_cmd(uint8_t);
+	void send_lcd_cmd_long(uint8_t);
 	void start_lcd(void);
 	void wait_lcd(void);
 
