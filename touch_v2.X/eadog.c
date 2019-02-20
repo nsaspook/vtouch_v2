@@ -1,5 +1,5 @@
-#include "eadog.h"
 #include "vconfig.h"
+#include "eadog.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -29,17 +29,16 @@ void init_display(void)
 {
 	SLED = true;
 	wdtdelay(350000); // > 400ms power up delay
-//	stdout = _H_USER; // use our STDOUT handler
-	SPI1_Exchange8bit(0x139);
-	SPI1_Exchange8bit(0x11d);
-	SPI1_Exchange8bit(0x150);
-	SPI1_Exchange8bit(0x16c);
-	SPI1_Exchange8bit(0x176); // contrast last 4 bits
-	SPI1_Exchange8bit(0x138);
-	SPI1_Exchange8bit(0x10f);
-	SPI1_Exchange8bit(0x101);
-	SPI1_Exchange8bit(0x102);
-	SPI1_Exchange8bit(0x106);
+	send_lcd_cmd(0x39);
+	send_lcd_cmd(0x1d);
+	send_lcd_cmd(0x50);
+	send_lcd_cmd(0x6c);
+	send_lcd_cmd(0x76); // contrast last 4 bits
+	send_lcd_cmd(0x38);
+	send_lcd_cmd(0x0f);
+	send_lcd_cmd(0x01);
+	send_lcd_cmd(0x02);
+	send_lcd_cmd(0x06);
 	start_lcd();
 	wait_lcd();
 	SLED = false;
@@ -50,7 +49,11 @@ void init_display(void)
  */
 void send_lcd_data(uint8_t data)
 {
+	RS_SetHigh();
+	CSB_SetLow();
 	SPI1_Exchange8bit(data);
+	wdtdelay(35);
+	CSB_SetHigh();
 }
 
 /*
@@ -58,10 +61,11 @@ void send_lcd_data(uint8_t data)
  */
 void send_lcd_cmd(uint8_t cmd)
 {
-	uint16_t symbol;
-
-	symbol = (uint16_t) cmd | LCD_CMD_SET;
-	SPI1_Exchange8bit(symbol);
+	RS_SetLow();
+	CSB_SetLow();
+	SPI1_Exchange8bit(cmd);
+	wdtdelay(800);
+	CSB_SetHigh();
 }
 
 /*
@@ -69,20 +73,21 @@ void send_lcd_cmd(uint8_t cmd)
  */
 void start_lcd(void)
 {
-	spi_link.SPI_LCD = HIGH;
-	PIR1bits.SSPIF = HIGH;
-	PIE1bits.SSPIE = HIGH;
+	//	spi_link.SPI_LCD = HIGH;
+	//	PIR1bits.SSPIF = HIGH;
+	//	PIE1bits.SSPIE = HIGH;
 }
 
 void wait_lcd(void)
 {
-	while (!ringBufS_empty(spi_link.tx1b));
-	while (spi_link.LCD_DATA);
+	//	while (!ringBufS_empty(spi_link.tx1b));
+	//	while (spi_link.LCD_DATA);
+	while (0);
 }
 
 void eaDogM_WriteChr(int8_t value)
 {
-	send_lcd_data(value);
+	send_lcd_data((uint8_t) value);
 	start_lcd();
 	wait_lcd();
 }
@@ -90,9 +95,9 @@ void eaDogM_WriteChr(int8_t value)
 /*
  * STDOUT user handler function
  */
-int _user_putc(int8_t c)
+void putch(char c)
 {
-	send_lcd_data(c);
+	send_lcd_data((uint8_t) c);
 }
 
 void eaDogM_WriteCommand(uint8_t cmd)
@@ -105,7 +110,7 @@ void eaDogM_WriteCommand(uint8_t cmd)
 void eaDogM_SetPos(uint8_t r, uint8_t c)
 {
 	uint8_t cmdPos;
-	cmdPos = EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c;
+	cmdPos = (uint8_t) EADOGM_CMD_DDRAM_ADDR + (uint8_t) ((uint8_t) r * (uint8_t) EADOGM_COLSPAN) + (uint8_t) c;
 	eaDogM_WriteCommand(cmdPos);
 }
 
@@ -118,7 +123,7 @@ void eaDogM_ClearRow(uint8_t r)
 	}
 }
 
-void eaDogM_WriteString(int8_t *strPtr)
+void eaDogM_WriteString(char *strPtr)
 {
 	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0;
 	printf("%s", strPtr); // STDOUT redirected to _user_putc, slow ~380us
@@ -126,7 +131,7 @@ void eaDogM_WriteString(int8_t *strPtr)
 	wait_lcd();
 }
 
-void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, int8_t *strPtr)
+void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
 	send_lcd_cmd((EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c));
 	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0;

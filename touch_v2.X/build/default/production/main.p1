@@ -6,7 +6,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p mainexit ]
 "75 mcc_generated_files/mcc.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
-"47115 /opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h
+"47115 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [s S2114 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2114 . INT0EDG INT1EDG INT2EDG . IPEN GIEL GIE ]
 "47124
@@ -17,13 +17,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S2113 . . . ]
 "47129
 [v _INTCON0bits `VS2113 ~T0 @X0 0 e@16338 ]
-"365 mcc_generated_files/tmr6.h
-[v _TMR6_Initialize `(v ~T0 @X0 0 ef ]
+"34 eadog.h
+[v _init_display `(v ~T0 @X0 0 ef ]
+"44
+[v _eaDogM_WriteString `(v ~T0 @X0 0 ef1`*uc ]
 [; ;xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc.h: 20: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
 [; ;pic18f57k42.h: 248: extern volatile unsigned char STATUS_CSHAD __at(0x3880);
-"250 /opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h
+"250 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;pic18f57k42.h: 250: asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
 [; ;pic18f57k42.h: 253: typedef union {
@@ -18211,9 +18213,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 282: typedef uint32_t uintmax_t;
 [; ;stdint.h: 289: typedef int16_t intptr_t;
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
-[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;interrupt_manager.h: 109: void INTERRUPT_Initialize (void);
-[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;adcc.h: 72: typedef uint16_t adc_result_t;
 [; ;adcc.h: 89: typedef enum
 [; ;adcc.h: 90: {
@@ -18255,7 +18257,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;adcc.h: 830: uint8_t ADCC_GetConversionStageStatus(void);
 [; ;adcc.h: 847: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 [; ;adcc.h: 867: void ADCC_DefaultInterruptHandler(void);
-[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr6.h: 79: typedef enum
 [; ;tmr6.h: 80: {
 [; ;tmr6.h: 89: TMR6_ROP_STARTS_TMRON,
@@ -18338,7 +18340,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ext_int.h: 803: void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;ext_int.h: 827: extern void (*INT2_InterruptHandler)(void);
 [; ;ext_int.h: 851: void INT2_DefaultInterruptHandler(void);
-[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;uart2.h: 77: extern volatile uint8_t uart2TxBufferRemaining;
 [; ;uart2.h: 78: extern volatile uint8_t uart2RxCount;
 [; ;uart2.h: 105: void UART2_Initialize(void);
@@ -18357,7 +18359,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart2.h: 405: void (*UART2_TxInterruptHandler)(void);
 [; ;uart2.h: 425: void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 [; ;uart2.h: 443: void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;uart1.h: 77: extern volatile uint8_t uart1TxBufferRemaining;
 [; ;uart1.h: 78: extern volatile uint8_t uart1RxCount;
 [; ;uart1.h: 105: void UART1_Initialize(void);
@@ -18376,7 +18378,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart1.h: 405: void (*UART1_TxInterruptHandler)(void);
 [; ;uart1.h: 425: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 [; ;uart1.h: 443: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-[; ;stdbool.h: 13: typedef unsigned char bool;
+[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;__size_t.h: 4: typedef unsigned size_t;
 [; ;stddef.h: 6: typedef int ptrdiff_t;
 [; ;spi1.h: 117: void SPI1_Initialize(void);
@@ -18385,41 +18387,58 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.h: 75: void SYSTEM_Initialize(void);
 [; ;mcc.h: 88: void OSCILLATOR_Initialize(void);
 [; ;mcc.h: 101: void PMD_Initialize(void);
+[; ;eadog.h: 32: void wdtdelay(uint32_t);
+[; ;eadog.h: 34: void init_display(void);
+[; ;eadog.h: 35: void send_lcd_data(uint8_t);
+[; ;eadog.h: 36: void send_lcd_cmd(uint8_t);
+[; ;eadog.h: 37: void start_lcd(void);
+[; ;eadog.h: 38: void wait_lcd(void);
+[; ;eadog.h: 40: void eaDogM_WriteChr(int8_t);
+[; ;eadog.h: 41: void eaDogM_WriteCommand(uint8_t);
+[; ;eadog.h: 42: void eaDogM_SetPos(uint8_t, uint8_t);
+[; ;eadog.h: 43: void eaDogM_ClearRow(uint8_t);
+[; ;eadog.h: 44: void eaDogM_WriteString(char *);
+[; ;eadog.h: 45: void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+[; ;eadog.h: 46: void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
+[; ;eadog.h: 47: void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
 [v $root$_main `(v ~T0 @X0 0 e ]
-"49 main.c
+"50 main.c
 [v _main `(v ~T0 @X0 1 ef ]
-"50
+"51
 {
-[; ;main.c: 49: void main(void)
-[; ;main.c: 50: {
+[; ;main.c: 50: void main(void)
+[; ;main.c: 51: {
 [e :U _main ]
 [f ]
-[; ;main.c: 52: SYSTEM_Initialize();
-"52
+[; ;main.c: 53: SYSTEM_Initialize();
+"53
 [e ( _SYSTEM_Initialize ..  ]
-[; ;main.c: 59: (INTCON0bits.GIEH = 1);
-"59
+[; ;main.c: 60: (INTCON0bits.GIEH = 1);
+"60
 [e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-[; ;main.c: 62: (INTCON0bits.GIEL = 1);
-"62
+[; ;main.c: 63: (INTCON0bits.GIEL = 1);
+"63
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-[; ;main.c: 70: TMR6_Initialize();
-"70
-[e ( _TMR6_Initialize ..  ]
-[; ;main.c: 72: while (1)
+[; ;main.c: 72: init_display();
 "72
-[e :U 2223 ]
-[; ;main.c: 73: {
-"73
-{
+[e ( _init_display ..  ]
+[; ;main.c: 74: eaDogM_WriteString("Testing 1234567890");
+"74
+[e ( _eaDogM_WriteString (1 -> :s 1C `*uc ]
+[; ;main.c: 75: while (1) {
 "75
+[e :U 2223 ]
+{
+"78
 }
 [e :U 2222 ]
-"72
+"75
 [e $U 2223  ]
 [e :U 2224 ]
-[; ;main.c: 75: }
-[; ;main.c: 76: }
-"76
+[; ;main.c: 78: }
+[; ;main.c: 79: }
+"79
 [e :UE 2221 ]
 }
+[a 1C 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 57 48 0 ]
+

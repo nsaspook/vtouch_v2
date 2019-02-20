@@ -1,17 +1,17 @@
 
 # 1 "mcc_generated_files/pin_manager.c"
 
-# 18 "/opt/microchip/xc8/v2.00/pic/include/xc.h"
+# 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h"
 extern const char __xc8_OPTIM_SPEED;
 
 extern double __fpnormalize(double);
 
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/xc8debug.h"
+# 13 "/opt/microchip/xc8/v2.05/pic/include/c90/xc8debug.h"
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
 
-# 248 "/opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h"
+# 248 "/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h"
 extern volatile unsigned char STATUS_CSHAD __at(0x3880);
 
 asm("STATUS_CSHAD equ 03880h");
@@ -27630,7 +27630,7 @@ extern volatile __bit nRWDT __at(0x1FF84);
 
 extern volatile __bit nWDTWV __at(0x1FF85);
 
-# 18 "/opt/microchip/xc8/v2.00/pic/include/pic18.h"
+# 18 "/opt/microchip/xc8/v2.05/pic/include/pic18.h"
 __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
 __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
 
@@ -27660,7 +27660,7 @@ extern __nonreentrant void _delay3(unsigned char);
 # 324 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
 # 57 "mcc_generated_files/pin_manager.c"

@@ -1,17 +1,17 @@
 
 # 1 "main.c"
 
-# 18 "/opt/microchip/xc8/v2.00/pic/include/xc.h"
+# 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h"
 extern const char __xc8_OPTIM_SPEED;
 
 extern double __fpnormalize(double);
 
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/xc8debug.h"
+# 13 "/opt/microchip/xc8/v2.05/pic/include/c90/xc8debug.h"
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
 
-# 248 "/opt/microchip/xc8/v2.00/pic/include/pic18f57k42.h"
+# 248 "/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h"
 extern volatile unsigned char STATUS_CSHAD __at(0x3880);
 
 asm("STATUS_CSHAD equ 03880h");
@@ -27630,7 +27630,7 @@ extern volatile __bit nRWDT __at(0x1FF84);
 
 extern volatile __bit nWDTWV __at(0x1FF85);
 
-# 18 "/opt/microchip/xc8/v2.00/pic/include/pic18.h"
+# 18 "/opt/microchip/xc8/v2.05/pic/include/pic18.h"
 __attribute__((__unsupported__("The " "flash_write" " routine is no longer supported. Please use the MPLAB X MCC."))) void flash_write(const unsigned char *, unsigned int, __far unsigned char *);
 __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer supported. Please use the MPLAB X MCC."))) void EraseFlash(unsigned long startaddr, unsigned long endaddr);
 
@@ -27660,7 +27660,7 @@ extern __nonreentrant void _delay3(unsigned char);
 # 324 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdint.h"
+# 13 "/opt/microchip/xc8/v2.05/pic/include/c90/stdint.h"
 typedef signed char int8_t;
 
 # 20
@@ -27746,13 +27746,13 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
 # 109 "mcc_generated_files/interrupt_manager.h"
 void INTERRUPT_Initialize (void);
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
 # 72 "mcc_generated_files/adcc.h"
@@ -27858,7 +27858,7 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 # 867
 void ADCC_DefaultInterruptHandler(void);
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
 # 79 "mcc_generated_files/tmr6.h"
@@ -28101,7 +28101,7 @@ extern void (*INT2_InterruptHandler)(void);
 # 851
 void INT2_DefaultInterruptHandler(void);
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
 # 77 "mcc_generated_files/uart2.h"
@@ -28144,7 +28144,7 @@ void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 443
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
 # 77 "mcc_generated_files/uart1.h"
@@ -28187,13 +28187,13 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 443
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
-# 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdbool.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
-# 4 "/opt/microchip/xc8/v2.00/pic/include/__size_t.h"
+# 4 "/opt/microchip/xc8/v2.05/pic/include/__size_t.h"
 typedef unsigned size_t;
 
-# 6 "/opt/microchip/xc8/v2.00/pic/include/c90/stddef.h"
+# 6 "/opt/microchip/xc8/v2.05/pic/include/c90/stddef.h"
 typedef int ptrdiff_t;
 
 # 117 "mcc_generated_files/spi1.h"
@@ -28214,23 +28214,42 @@ void OSCILLATOR_Initialize(void);
 # 101
 void PMD_Initialize(void);
 
-# 49 "main.c"
+# 32 "eadog.h"
+void wdtdelay(uint32_t);
+
+void init_display(void);
+void send_lcd_data(uint8_t);
+void send_lcd_cmd(uint8_t);
+void start_lcd(void);
+void wait_lcd(void);
+
+void eaDogM_WriteChr(int8_t);
+void eaDogM_WriteCommand(uint8_t);
+void eaDogM_SetPos(uint8_t, uint8_t);
+void eaDogM_ClearRow(uint8_t);
+void eaDogM_WriteString(char *);
+void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
+void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
+
+# 50 "main.c"
 void main(void)
 {
 
 SYSTEM_Initialize();
 
-# 59
+# 60
 (INTCON0bits.GIEH = 1);
 
 
 (INTCON0bits.GIEL = 1);
 
-# 70
-TMR6_Initialize();
+# 72
+init_display();
 
-while (1)
-{
+eaDogM_WriteString("Testing 1234567890");
+while (1) {
+
 
 }
 }
