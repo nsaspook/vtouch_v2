@@ -68,7 +68,6 @@ void main(void)
     //INTERRUPT_GlobalInterruptLowDisable();
 
     TMR6_Initialize();
-    TMR6_Start();
     
     while (1)
     {

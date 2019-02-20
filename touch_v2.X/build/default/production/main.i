@@ -27657,7 +27657,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 304 "mcc_generated_files/pin_manager.h"
+# 324 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "/opt/microchip/xc8/v2.00/pic/include/c90/stdint.h"
@@ -28228,7 +28228,6 @@ SYSTEM_Initialize();
 
 # 70
 TMR6_Initialize();
-TMR6_Start();
 
 while (1)
 {
