@@ -18378,6 +18378,28 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi1.h: 152: uint8_t SPI1_Exchange8bit(uint8_t data);
 [; ;spi1.h: 192: uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 [; ;pin_manager.h: 324: void PIN_MANAGER_Initialize (void);
+[; ;ringbufs.h: 19: typedef struct ringBufS_t {
+[; ;ringbufs.h: 20: uint8_t buf[64];
+[; ;ringbufs.h: 21: uint8_t head;
+[; ;ringbufs.h: 22: uint8_t tail;
+[; ;ringbufs.h: 23: uint8_t count;
+[; ;ringbufs.h: 24: } ringBufS_t;
+[; ;ringbufs.h: 26: void ringBufS_init(volatile ringBufS_t *_this);
+[; ;ringbufs.h: 27: int8_t ringBufS_empty(ringBufS_t *_this);
+[; ;ringbufs.h: 28: int8_t ringBufS_full(ringBufS_t *_this);
+[; ;ringbufs.h: 29: uint8_t ringBufS_get(ringBufS_t *_this);
+[; ;ringbufs.h: 30: void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+[; ;ringbufs.h: 31: void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+[; ;vconfig.h: 33: struct spi_link_type {
+[; ;vconfig.h: 34: uint8_t SPI_LCD : 1;
+[; ;vconfig.h: 35: uint8_t SPI_AUX : 1;
+[; ;vconfig.h: 36: uint8_t LCD_TIMER : 1;
+[; ;vconfig.h: 37: uint8_t LCD_DATA : 1;
+[; ;vconfig.h: 38: uint16_t delay;
+[; ;vconfig.h: 39: uint8_t config;
+[; ;vconfig.h: 40: volatile struct ringBufS_t *tx1b, *tx1a;
+[; ;vconfig.h: 41: int32_t int_count;
+[; ;vconfig.h: 42: };
 "61 mcc_generated_files/tmr6.c
 [v _TMR6_InterruptHandler `*F16049 ~T0 @X0 1 e ]
 [; ;tmr6.c: 61: void (*TMR6_InterruptHandler)(void);
@@ -18418,7 +18440,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _T6CON -> -> 255 `i `uc ]
 [; ;tmr6.c: 97: }
 "97
-[e :UE 2221 ]
+[e :UE 2223 ]
 }
 "99
 [v _TMR6_ModeSet `(v ~T0 @X0 1 ef1`E15966 ]
@@ -18436,7 +18458,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _T6HLTbits 0 0 -> _mode `uc ]
 [; ;tmr6.c: 103: }
 "103
-[e :UE 2222 ]
+[e :UE 2224 ]
 }
 "105
 [v _TMR6_ExtResetSourceSet `(v ~T0 @X0 1 ef1`E15989 ]
@@ -18454,7 +18476,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _T6RSTbits 0 0 -> _reset `uc ]
 [; ;tmr6.c: 109: }
 "109
-[e :UE 2223 ]
+[e :UE 2225 ]
 }
 "111
 [v _TMR6_Start `(v ~T0 @X0 1 ef ]
@@ -18469,7 +18491,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _T6CONbits 3 7 -> -> 1 `i `uc ]
 [; ;tmr6.c: 115: }
 "115
-[e :UE 2224 ]
+[e :UE 2226 ]
 }
 "117
 [v _TMR6_StartTimer `(v ~T0 @X0 1 ef ]
@@ -18484,7 +18506,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _TMR6_Start ..  ]
 [; ;tmr6.c: 120: }
 "120
-[e :UE 2225 ]
+[e :UE 2227 ]
 }
 "122
 [v _TMR6_Stop `(v ~T0 @X0 1 ef ]
@@ -18499,7 +18521,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _T6CONbits 3 7 -> -> 0 `i `uc ]
 [; ;tmr6.c: 126: }
 "126
-[e :UE 2226 ]
+[e :UE 2228 ]
 }
 "128
 [v _TMR6_StopTimer `(v ~T0 @X0 1 ef ]
@@ -18514,7 +18536,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _TMR6_Stop ..  ]
 [; ;tmr6.c: 131: }
 "131
-[e :UE 2227 ]
+[e :UE 2229 ]
 }
 "133
 [v _TMR6_Counter8BitGet `(uc ~T0 @X0 1 ef ]
@@ -18533,10 +18555,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr6.c: 139: return readVal;
 "139
 [e ) _readVal ]
-[e $UE 2228  ]
+[e $UE 2230  ]
 [; ;tmr6.c: 140: }
 "140
-[e :UE 2228 ]
+[e :UE 2230 ]
 }
 "142
 [v _TMR6_ReadTimer `(uc ~T0 @X0 1 ef ]
@@ -18549,10 +18571,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr6.c: 144: return TMR6_Counter8BitGet();
 "144
 [e ) ( _TMR6_Counter8BitGet ..  ]
-[e $UE 2229  ]
+[e $UE 2231  ]
 [; ;tmr6.c: 145: }
 "145
-[e :UE 2229 ]
+[e :UE 2231 ]
 }
 "147
 [v _TMR6_Counter8BitSet `(v ~T0 @X0 1 ef1`uc ]
@@ -18570,7 +18592,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _TMR6 _timerVal ]
 [; ;tmr6.c: 151: }
 "151
-[e :UE 2230 ]
+[e :UE 2232 ]
 }
 "153
 [v _TMR6_WriteTimer `(v ~T0 @X0 1 ef1`uc ]
@@ -18588,7 +18610,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _TMR6_Counter8BitSet (1 _timerVal ]
 [; ;tmr6.c: 156: }
 "156
-[e :UE 2231 ]
+[e :UE 2233 ]
 }
 "158
 [v _TMR6_Period8BitSet `(v ~T0 @X0 1 ef1`uc ]
@@ -18606,7 +18628,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _PR6 _periodVal ]
 [; ;tmr6.c: 161: }
 "161
-[e :UE 2232 ]
+[e :UE 2234 ]
 }
 "163
 [v _TMR6_LoadPeriodRegister `(v ~T0 @X0 1 ef1`uc ]
@@ -18624,7 +18646,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _TMR6_Period8BitSet (1 _periodVal ]
 [; ;tmr6.c: 166: }
 "166
-[e :UE 2233 ]
+[e :UE 2235 ]
 }
 [v $root$_TMR6_ISR `(v ~T0 @X0 0 e ]
 "168
@@ -18636,8 +18658,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _TMR6_ISR ]
 [f ]
 "170
-[v F16087 `Vui ~T0 @X0 1 s CountCallBack ]
-[i F16087
+[v F16117 `Vui ~T0 @X0 1 s CountCallBack ]
+[i F16117
 -> -> 0 `i `ui
 ]
 [; ;tmr6.c: 170: static volatile unsigned int CountCallBack = 0;
@@ -18646,7 +18668,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _PIR9bits 0 0 -> -> 0 `i `uc ]
 [; ;tmr6.c: 176: if (++CountCallBack >= 101)
 "176
-[e $ ! >= =+ F16087 -> -> 1 `i `ui -> -> 101 `i `ui 2235  ]
+[e $ ! >= =+ F16117 -> -> 1 `i `ui -> -> 101 `i `ui 2237  ]
 [; ;tmr6.c: 177: {
 "177
 {
@@ -18655,14 +18677,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _TMR6_CallBack ..  ]
 [; ;tmr6.c: 182: CountCallBack = 0;
 "182
-[e = F16087 -> -> 0 `i `ui ]
+[e = F16117 -> -> 0 `i `ui ]
 "183
 }
-[e :U 2235 ]
+[e :U 2237 ]
 [; ;tmr6.c: 183: }
 [; ;tmr6.c: 184: }
 "184
-[e :UE 2234 ]
+[e :UE 2236 ]
 }
 "186
 [v _TMR6_CallBack `(v ~T0 @X0 1 ef ]
@@ -18674,7 +18696,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;tmr6.c: 190: if(TMR6_InterruptHandler)
 "190
-[e $ ! != _TMR6_InterruptHandler -> -> 0 `i `*F16049 2237  ]
+[e $ ! != _TMR6_InterruptHandler -> -> 0 `i `*F16049 2239  ]
 [; ;tmr6.c: 191: {
 "191
 {
@@ -18683,26 +18705,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( *U _TMR6_InterruptHandler ..  ]
 "193
 }
-[e :U 2237 ]
+[e :U 2239 ]
 [; ;tmr6.c: 193: }
 [; ;tmr6.c: 194: }
 "194
-[e :UE 2236 ]
+[e :UE 2238 ]
 }
 "196
 [v _TMR6_SetInterruptHandler `(v ~T0 @X0 1 ef1`*F16046 ]
 {
 [; ;tmr6.c: 196: void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
 [e :U _TMR6_SetInterruptHandler ]
-[v F16090 `(v ~T0 @X0 0 tf ]
-[v _InterruptHandler `*F16090 ~T0 @X0 1 r1 ]
+[v F16120 `(v ~T0 @X0 0 tf ]
+[v _InterruptHandler `*F16120 ~T0 @X0 1 r1 ]
 [f ]
 [; ;tmr6.c: 197: TMR6_InterruptHandler = InterruptHandler;
 "197
 [e = _TMR6_InterruptHandler _InterruptHandler ]
 [; ;tmr6.c: 198: }
 "198
-[e :UE 2238 ]
+[e :UE 2240 ]
 }
 "200
 [v _TMR6_DefaultInterruptHandler `(v ~T0 @X0 1 ef ]
@@ -18715,5 +18737,5 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . . _LATEbits 0 0 -> ~ -> . . _LATEbits 0 0 `i `uc ]
 [; ;tmr6.c: 204: }
 "204
-[e :UE 2239 ]
+[e :UE 2241 ]
 }

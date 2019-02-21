@@ -71,10 +71,10 @@ void main(void)
 	//    TMR6_Initialize();
 	init_display();
 
-	eaDogM_WriteString("Testing 1234567890");
+	eaDogM_WriteString((char*)"Testing 12345678");
 	while (1) {
 		// Add your application code
-
+		eaDogM_WriteString((char*)"Testing 12345678");
 	}
 }
 /**

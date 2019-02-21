@@ -24,6 +24,7 @@
 extern "C" {
 #endif
 #include "vconfig.h"
+#include "ringbufs.h"
 
 #define LCD_CMD_MASK	0x01
 #define LCD_CMD_SET		0x100

@@ -17,9 +17,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S2113 . . . ]
 "47129
 [v _INTCON0bits `VS2113 ~T0 @X0 0 e@16338 ]
-"34 eadog.h
+"35 eadog.h
 [v _init_display `(v ~T0 @X0 0 ef ]
-"45
+"46
 [v _eaDogM_WriteString `(v ~T0 @X0 0 ef1`*uc ]
 [; ;xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc.h: 20: extern double __fpnormalize(double);
@@ -18387,21 +18387,43 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.h: 75: void SYSTEM_Initialize(void);
 [; ;mcc.h: 88: void OSCILLATOR_Initialize(void);
 [; ;mcc.h: 101: void PMD_Initialize(void);
-[; ;eadog.h: 32: void wdtdelay(uint32_t);
-[; ;eadog.h: 34: void init_display(void);
-[; ;eadog.h: 35: void send_lcd_data(uint8_t);
-[; ;eadog.h: 36: void send_lcd_cmd(uint8_t);
-[; ;eadog.h: 37: void send_lcd_cmd_long(uint8_t);
-[; ;eadog.h: 38: void start_lcd(void);
-[; ;eadog.h: 39: void wait_lcd(void);
-[; ;eadog.h: 41: void eaDogM_WriteChr(int8_t);
-[; ;eadog.h: 42: void eaDogM_WriteCommand(uint8_t);
-[; ;eadog.h: 43: void eaDogM_SetPos(uint8_t, uint8_t);
-[; ;eadog.h: 44: void eaDogM_ClearRow(uint8_t);
-[; ;eadog.h: 45: void eaDogM_WriteString(char *);
-[; ;eadog.h: 46: void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
-[; ;eadog.h: 47: void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
-[; ;eadog.h: 48: void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
+[; ;ringbufs.h: 19: typedef struct ringBufS_t {
+[; ;ringbufs.h: 20: uint8_t buf[64];
+[; ;ringbufs.h: 21: uint8_t head;
+[; ;ringbufs.h: 22: uint8_t tail;
+[; ;ringbufs.h: 23: uint8_t count;
+[; ;ringbufs.h: 24: } ringBufS_t;
+[; ;ringbufs.h: 26: void ringBufS_init(volatile ringBufS_t *_this);
+[; ;ringbufs.h: 27: int8_t ringBufS_empty(ringBufS_t *_this);
+[; ;ringbufs.h: 28: int8_t ringBufS_full(ringBufS_t *_this);
+[; ;ringbufs.h: 29: uint8_t ringBufS_get(ringBufS_t *_this);
+[; ;ringbufs.h: 30: void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+[; ;ringbufs.h: 31: void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+[; ;vconfig.h: 33: struct spi_link_type {
+[; ;vconfig.h: 34: uint8_t SPI_LCD : 1;
+[; ;vconfig.h: 35: uint8_t SPI_AUX : 1;
+[; ;vconfig.h: 36: uint8_t LCD_TIMER : 1;
+[; ;vconfig.h: 37: uint8_t LCD_DATA : 1;
+[; ;vconfig.h: 38: uint16_t delay;
+[; ;vconfig.h: 39: uint8_t config;
+[; ;vconfig.h: 40: volatile struct ringBufS_t *tx1b, *tx1a;
+[; ;vconfig.h: 41: int32_t int_count;
+[; ;vconfig.h: 42: };
+[; ;eadog.h: 33: void wdtdelay(uint32_t);
+[; ;eadog.h: 35: void init_display(void);
+[; ;eadog.h: 36: void send_lcd_data(uint8_t);
+[; ;eadog.h: 37: void send_lcd_cmd(uint8_t);
+[; ;eadog.h: 38: void send_lcd_cmd_long(uint8_t);
+[; ;eadog.h: 39: void start_lcd(void);
+[; ;eadog.h: 40: void wait_lcd(void);
+[; ;eadog.h: 42: void eaDogM_WriteChr(int8_t);
+[; ;eadog.h: 43: void eaDogM_WriteCommand(uint8_t);
+[; ;eadog.h: 44: void eaDogM_SetPos(uint8_t, uint8_t);
+[; ;eadog.h: 45: void eaDogM_ClearRow(uint8_t);
+[; ;eadog.h: 46: void eaDogM_WriteString(char *);
+[; ;eadog.h: 47: void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+[; ;eadog.h: 48: void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
+[; ;eadog.h: 49: void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
 [v $root$_main `(v ~T0 @X0 0 e ]
 "50 main.c
 [v _main `(v ~T0 @X0 1 ef ]
@@ -18423,23 +18445,26 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 72: init_display();
 "72
 [e ( _init_display ..  ]
-[; ;main.c: 74: eaDogM_WriteString("Testing 1234567890");
+[; ;main.c: 74: eaDogM_WriteString((char*)"Testing 12345678");
 "74
 [e ( _eaDogM_WriteString (1 -> :s 1C `*uc ]
 [; ;main.c: 75: while (1) {
 "75
-[e :U 2223 ]
+[e :U 2225 ]
 {
+[; ;main.c: 77: eaDogM_WriteString((char*)"Testing 12345678");
+"77
+[e ( _eaDogM_WriteString (1 -> :s 2C `*uc ]
 "78
 }
-[e :U 2222 ]
-"75
-[e $U 2223  ]
 [e :U 2224 ]
+"75
+[e $U 2225  ]
+[e :U 2226 ]
 [; ;main.c: 78: }
 [; ;main.c: 79: }
 "79
-[e :UE 2221 ]
+[e :UE 2223 ]
 }
-[a 1C 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 57 48 0 ]
-
+[a 1C 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 0 ]
+[a 2C 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 0 ]

@@ -14,7 +14,8 @@ extern "C" {
 #include <xc.h>
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
-	
+#include "ringbufs.h"
+
 #define SLED	LATEbits.LATE0
 
 #define EADOGM_CMD_CLR		1
@@ -29,6 +30,16 @@ extern "C" {
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
 
+	struct spi_link_type { // internal state table
+		uint8_t SPI_LCD : 1;
+		uint8_t SPI_AUX : 1;
+		uint8_t LCD_TIMER : 1;
+		uint8_t LCD_DATA : 1;
+		uint16_t delay;
+		uint8_t config;
+		volatile struct ringBufS_t *tx1b, *tx1a;
+		int32_t int_count;
+	};
 
 #ifdef	__cplusplus
 }

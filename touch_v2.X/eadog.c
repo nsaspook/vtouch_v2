@@ -1,5 +1,6 @@
 #include "vconfig.h"
 #include "eadog.h"
+#include "ringbufs.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -9,7 +10,10 @@
 #define eaDogM_DisplayOn()       eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_ON)
 #define eaDogM_DisplayOff()      eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_OFF)
 
-#define max_strlen	16
+#define max_strlen	64
+
+volatile struct spi_link_type spi_link;
+volatile struct ringBufS_t ring_buf1, ring_buf2;
 
 void wdtdelay(uint32_t delay)
 {
@@ -27,6 +31,11 @@ void wdtdelay(uint32_t delay)
  */
 void init_display(void)
 {
+	spi_link.tx1b = &ring_buf1;
+	spi_link.tx1a = &ring_buf2;
+	ringBufS_init(spi_link.tx1b);
+	ringBufS_init(spi_link.tx1a);
+	
 	SLED = true;
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
@@ -53,8 +62,8 @@ void send_lcd_data(uint8_t data)
 	RS_SetHigh();
 	CSB_SetLow();
 	SPI1_Exchange8bit(data);
-	CSB_SetHigh();
-	wdtdelay(5);
+//	CSB_SetHigh();
+	wdtdelay(0);
 }
 
 /*
@@ -65,7 +74,7 @@ void send_lcd_cmd(uint8_t cmd)
 	RS_SetLow();
 	CSB_SetLow();
 	SPI1_Exchange8bit(cmd);
-	CSB_SetHigh();
+//	CSB_SetHigh();
 	wdtdelay(30);
 }
 
@@ -95,7 +104,6 @@ void wait_lcd(void)
 {
 	//	while (!ringBufS_empty(spi_link.tx1b));
 	//	while (spi_link.LCD_DATA);
-	while (0);
 }
 
 void eaDogM_WriteChr(int8_t value)

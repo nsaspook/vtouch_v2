@@ -27764,7 +27764,34 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
 # 324 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
-# 32 "eadog.h"
+# 19 "ringbufs.h"
+typedef struct ringBufS_t {
+uint8_t buf[64];
+uint8_t head;
+uint8_t tail;
+uint8_t count;
+} ringBufS_t;
+
+void ringBufS_init(volatile ringBufS_t *_this);
+int8_t ringBufS_empty(ringBufS_t *_this);
+int8_t ringBufS_full(ringBufS_t *_this);
+uint8_t ringBufS_get(ringBufS_t *_this);
+void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+
+# 33 "vconfig.h"
+struct spi_link_type {
+uint8_t SPI_LCD : 1;
+uint8_t SPI_AUX : 1;
+uint8_t LCD_TIMER : 1;
+uint8_t LCD_DATA : 1;
+uint16_t delay;
+uint8_t config;
+volatile struct ringBufS_t *tx1b, *tx1a;
+int32_t int_count;
+};
+
+# 33 "eadog.h"
 void wdtdelay(uint32_t);
 
 void init_display(void);
@@ -27875,7 +27902,10 @@ extern char * strichr(const char *, int);
 extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
-# 14 "eadog.c"
+# 15 "eadog.c"
+volatile struct spi_link_type spi_link;
+volatile struct ringBufS_t ring_buf1, ring_buf2;
+
 void wdtdelay(uint32_t delay)
 {
 static uint32_t dcount;
@@ -27887,9 +27917,14 @@ asm(" clrwdt");
 
 }
 
-# 28
+# 32
 void init_display(void)
 {
+spi_link.tx1b = &ring_buf1;
+spi_link.tx1a = &ring_buf2;
+ringBufS_init(spi_link.tx1b);
+ringBufS_init(spi_link.tx1a);
+
 LATEbits.LATE0 = 1;
 do { LATCbits.LATC2 = 1; } while(0);
 wdtdelay(350000);
@@ -27908,27 +27943,27 @@ wait_lcd();
 LATEbits.LATE0 = 0;
 }
 
-# 51
+# 60
 void send_lcd_data(uint8_t data)
 {
 do { LATCbits.LATC1 = 1; } while(0);
 do { LATCbits.LATC2 = 0; } while(0);
 SPI1_Exchange8bit(data);
-do { LATCbits.LATC2 = 1; } while(0);
-wdtdelay(5);
+
+wdtdelay(0);
 }
 
-# 63
+# 72
 void send_lcd_cmd(uint8_t cmd)
 {
 do { LATCbits.LATC1 = 0; } while(0);
 do { LATCbits.LATC2 = 0; } while(0);
 SPI1_Exchange8bit(cmd);
-do { LATCbits.LATC2 = 1; } while(0);
+
 wdtdelay(30);
 }
 
-# 75
+# 84
 void send_lcd_cmd_long(uint8_t cmd)
 {
 do { LATCbits.LATC1 = 0; } while(0);
@@ -27938,7 +27973,7 @@ do { LATCbits.LATC2 = 1; } while(0);
 wdtdelay(800);
 }
 
-# 87
+# 96
 void start_lcd(void)
 {
 
@@ -27950,7 +27985,6 @@ void wait_lcd(void)
 {
 
 
-while (0);
 }
 
 void eaDogM_WriteChr(int8_t value)
@@ -27960,7 +27994,7 @@ start_lcd();
 wait_lcd();
 }
 
-# 111
+# 119
 void putch(char c)
 {
 send_lcd_data((uint8_t) c);
@@ -27991,7 +28025,7 @@ eaDogM_WriteChr(' ');
 
 void eaDogM_WriteString(char *strPtr)
 {
-if (strlen(strPtr) > 16) strPtr[16] = 0;
+if (strlen(strPtr) > 64) strPtr[64] = 0;
 printf("%s", strPtr);
 start_lcd();
 wait_lcd();
@@ -28000,7 +28034,7 @@ wait_lcd();
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
 send_lcd_cmd((0b10000000 + (r * 16) + c));
-if (strlen(strPtr) > 16) strPtr[16] = 0;
+if (strlen(strPtr) > 64) strPtr[64] = 0;
 printf("%s", strPtr);
 start_lcd();
 wait_lcd();

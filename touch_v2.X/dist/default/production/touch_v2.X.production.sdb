@@ -66,10 +66,6 @@ TMR6_UART1_TX_EDGE 22
 TMR6_UART2_RX_EDGE 23
 TMR6_UART2_TX_EDGE 24
 ]
-"7 /opt/microchip/xc8/v2.05/pic/sources/c90/common/awdiv.c
-[v ___awdiv __awdiv `(i  1 e 2 0 ]
-"7 /opt/microchip/xc8/v2.05/pic/sources/c90/common/awmod.c
-[v ___awmod __awmod `(i  1 e 2 0 ]
 "472 /opt/microchip/xc8/v2.05/pic/sources/c90/common/doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
 "4 /opt/microchip/xc8/v2.05/pic/sources/c90/common/fleq.c
@@ -84,6 +80,12 @@ TMR6_UART2_TX_EDGE 24
 [v ___ftmul __ftmul `(f  1 e 4 0 ]
 "19 /opt/microchip/xc8/v2.05/pic/sources/c90/common/ftsub.c
 [v ___ftsub __ftsub `(f  1 e 4 0 ]
+"4 /opt/microchip/xc8/v2.05/pic/sources/c90/common/lbdiv.c
+[v ___lbdiv __lbdiv `(uc  1 e 1 0 ]
+"4 /opt/microchip/xc8/v2.05/pic/sources/c90/common/lbmod.c
+[v ___lbmod __lbmod `(uc  1 e 1 0 ]
+"8 /opt/microchip/xc8/v2.05/pic/sources/c90/common/memset.c
+[v _memset memset `(*.30v  1 e 2 0 ]
 "10 /opt/microchip/xc8/v2.05/pic/sources/c90/common/sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "245
@@ -98,29 +100,29 @@ TMR6_UART2_TX_EDGE 24
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 "91 /opt/microchip/xc8/v2.05/pic/sources/c90/common/Umul64.c
 [v ___omul __omul `(ul  1 e 4 0 ]
-"14 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
+"18 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _wdtdelay wdtdelay `(v  1 e 1 0 ]
-"28
+"32
 [v _init_display init_display `(v  1 e 1 0 ]
-"51
+"60
 [v _send_lcd_data send_lcd_data `(v  1 e 1 0 ]
-"63
+"72
 [v _send_lcd_cmd send_lcd_cmd `(v  1 e 1 0 ]
-"75
+"84
 [v _send_lcd_cmd_long send_lcd_cmd_long `(v  1 e 1 0 ]
-"87
+"96
 [v _start_lcd start_lcd `(v  1 e 1 0 ]
-"94
+"103
 [v _wait_lcd wait_lcd `(v  1 e 1 0 ]
-"101
+"109
 [v _eaDogM_WriteChr eaDogM_WriteChr `(v  1 e 1 0 ]
-"111
+"119
 [v _putch putch `(v  1 e 1 0 ]
-"116
+"124
 [v _eaDogM_WriteCommand eaDogM_WriteCommand `(v  1 e 1 0 ]
-"123
+"131
 [v _eaDogM_SetPos eaDogM_SetPos `(v  1 e 1 0 ]
-"139
+"147
 [v _eaDogM_WriteString eaDogM_WriteString `(v  1 e 1 0 ]
 "50 /root/MPLABXProjects/vtouch_v2/touch_v2.X/main.c
 [v _main main `(v  1 e 1 0 ]
@@ -222,6 +224,10 @@ TMR6_UART2_TX_EDGE 24
 [v _UART2_SetRxInterruptHandler UART2_SetRxInterruptHandler `(v  1 e 1 0 ]
 "252
 [v _UART2_SetTxInterruptHandler UART2_SetTxInterruptHandler `(v  1 e 1 0 ]
+"7 /root/MPLABXProjects/vtouch_v2/touch_v2.X/ringbufs.c
+[v _modulo_inc modulo_inc `(uc  1 e 1 0 ]
+"22
+[v _ringBufS_init ringBufS_init `(v  1 e 1 0 ]
 "728 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [v _IVTADL IVTADL `VEuc  1 e 1 @14493 ]
 "748
@@ -601,27 +607,6 @@ TMR6_UART2_TX_EDGE 24
 [v _U2UIR U2UIR `VEuc  1 e 1 @15840 ]
 "26628
 [v _U2ERRIR U2ERRIR `VEuc  1 e 1 @15841 ]
-[s S1218 . 1 `uc 1 TXCIF 1 0 :1:0 
-`uc 1 RXFOIF 1 0 :1:1 
-`uc 1 RXBKIF 1 0 :1:2 
-`uc 1 FERIF 1 0 :1:3 
-`uc 1 CERIF 1 0 :1:4 
-`uc 1 ABDOVF 1 0 :1:5 
-`uc 1 PERIF 1 0 :1:6 
-`uc 1 TXMTIF 1 0 :1:7 
-]
-"26655
-[s S1378 . 1 `uc 1 U2TXCIF 1 0 :1:0 
-`uc 1 U2RXFOIF 1 0 :1:1 
-`uc 1 U2RXBKIF 1 0 :1:2 
-`uc 1 U2FERIF 1 0 :1:3 
-`uc 1 U2CERIF 1 0 :1:4 
-`uc 1 U2ABDOVF 1 0 :1:5 
-`uc 1 U2PERIF 1 0 :1:6 
-`uc 1 U2TXMTIF 1 0 :1:7 
-]
-[u S1387 . 1 `S1218 1 . 1 0 `S1378 1 . 1 0 ]
-[v _U2ERRIRbits U2ERRIRbits `VES1387  1 e 1 @15841 ]
 "26740
 [v _U2ERRIE U2ERRIE `VEuc  1 e 1 @15842 ]
 "26852
@@ -656,18 +641,6 @@ TMR6_UART2_TX_EDGE 24
 [v _U1UIR U1UIR `VEuc  1 e 1 @15864 ]
 "27680
 [v _U1ERRIR U1ERRIR `VEuc  1 e 1 @15865 ]
-"27707
-[s S1227 . 1 `uc 1 U1TXCIF 1 0 :1:0 
-`uc 1 U1RXFOIF 1 0 :1:1 
-`uc 1 U1RXBKIF 1 0 :1:2 
-`uc 1 U1FERIF 1 0 :1:3 
-`uc 1 U1CERIF 1 0 :1:4 
-`uc 1 U1ABDOVF 1 0 :1:5 
-`uc 1 U1PERIF 1 0 :1:6 
-`uc 1 U1TXMTIF 1 0 :1:7 
-]
-[u S1236 . 1 `S1218 1 . 1 0 `S1227 1 . 1 0 ]
-[v _U1ERRIRbits U1ERRIRbits `VES1236  1 e 1 @15865 ]
 "27792
 [v _U1ERRIE U1ERRIE `VEuc  1 e 1 @15866 ]
 "28950
@@ -678,36 +651,14 @@ TMR6_UART2_TX_EDGE 24
 [v _ADUTHL ADUTHL `VEuc  1 e 1 @16096 ]
 "29341
 [v _ADUTHH ADUTHH `VEuc  1 e 1 @16097 ]
-"29476
-[v _ADERRL ADERRL `VEuc  1 e 1 @16098 ]
-"29604
-[v _ADERRH ADERRH `VEuc  1 e 1 @16099 ]
 "29739
 [v _ADSTPTL ADSTPTL `VEuc  1 e 1 @16100 ]
 "29867
 [v _ADSTPTH ADSTPTH `VEuc  1 e 1 @16101 ]
-"30002
-[v _ADFLTRL ADFLTRL `VEuc  1 e 1 @16102 ]
-"30130
-[v _ADFLTRH ADFLTRH `VEuc  1 e 1 @16103 ]
-"30267
-[v _ADACCL ADACCL `VEuc  1 e 1 @16104 ]
-"30395
-[v _ADACCH ADACCH `VEuc  1 e 1 @16105 ]
 "30523
 [v _ADACCU ADACCU `VEuc  1 e 1 @16106 ]
-"30651
-[v _ADCNT ADCNT `VEuc  1 e 1 @16107 ]
 "30779
 [v _ADRPT ADRPT `VEuc  1 e 1 @16108 ]
-"30914
-[v _ADPREVL ADPREVL `VEuc  1 e 1 @16109 ]
-"31042
-[v _ADPREVH ADPREVH `VEuc  1 e 1 @16110 ]
-"31177
-[v _ADRESL ADRESL `VEuc  1 e 1 @16111 ]
-"31305
-[v _ADRESH ADRESH `VEuc  1 e 1 @16112 ]
 "31425
 [v _ADPCH ADPCH `VEuc  1 e 1 @16113 ]
 "31490
@@ -722,155 +673,14 @@ TMR6_UART2_TX_EDGE 24
 [v _ADPREH ADPREH `VEuc  1 e 1 @16119 ]
 "31989
 [v _ADCON0 ADCON0 `VEuc  1 e 1 @16120 ]
-[s S755 . 1 `uc 1 GO 1 0 :1:0 
-`uc 1 . 1 0 :1:1 
-`uc 1 FM 1 0 :2:2 
-`uc 1 CS 1 0 :1:4 
-`uc 1 . 1 0 :1:5 
-`uc 1 CONT 1 0 :1:6 
-`uc 1 ON 1 0 :1:7 
-]
-"32031
-[s S763 . 1 `uc 1 ADGO 1 0 :1:0 
-`uc 1 . 1 0 :1:1 
-`uc 1 ADFM 1 0 :2:2 
-`uc 1 ADCS 1 0 :1:4 
-`uc 1 . 1 0 :1:5 
-`uc 1 ADCONT 1 0 :1:6 
-`uc 1 ADON 1 0 :1:7 
-]
-[s S771 . 1 `uc 1 DONE 1 0 :1:0 
-`uc 1 . 1 0 :1:1 
-`uc 1 FM0 1 0 :1:2 
-]
-[s S775 . 1 `uc 1 GO_NOT_DONE 1 0 :1:0 
-]
-[s S777 . 1 `uc 1 GO_nDONE 1 0 :1:0 
-`uc 1 . 1 0 :1:1 
-`uc 1 ADFM0 1 0 :1:2 
-]
-[s S781 . 1 `uc 1 . 1 0 :7:0 
-`uc 1 ADCAL 1 0 :1:7 
-]
-[u S784 . 1 `S755 1 . 1 0 `S763 1 . 1 0 `S771 1 . 1 0 `S775 1 . 1 0 `S777 1 . 1 0 `S781 1 . 1 0 ]
-[v _ADCON0bits ADCON0bits `VES784  1 e 1 @16120 ]
 "32116
 [v _ADCON1 ADCON1 `VEuc  1 e 1 @16121 ]
-[s S1017 . 1 `uc 1 DSEN 1 0 :1:0 
-`uc 1 . 1 0 :4:1 
-`uc 1 GPOL 1 0 :1:5 
-`uc 1 IPEN 1 0 :1:6 
-`uc 1 PPOL 1 0 :1:7 
-]
-"32141
-[s S1023 . 1 `uc 1 ADDSEN 1 0 :1:0 
-`uc 1 . 1 0 :4:1 
-`uc 1 ADGPOL 1 0 :1:5 
-`uc 1 ADIPEN 1 0 :1:6 
-`uc 1 ADPPOL 1 0 :1:7 
-]
-[s S1029 . 1 `uc 1 . 1 0 :5:0 
-`uc 1 VCFG11 1 0 :1:5 
-]
-[u S1032 . 1 `S1017 1 . 1 0 `S1023 1 . 1 0 `S1029 1 . 1 0 ]
-[v _ADCON1bits ADCON1bits `VES1032  1 e 1 @16121 ]
 "32191
 [v _ADCON2 ADCON2 `VEuc  1 e 1 @16122 ]
-[s S878 . 1 `uc 1 MODE 1 0 :3:0 
-`uc 1 ACLR 1 0 :1:3 
-`uc 1 CRS 1 0 :3:4 
-`uc 1 PSIS 1 0 :1:7 
-]
-"32239
-[s S883 . 1 `uc 1 ADMD0 1 0 :1:0 
-`uc 1 ADMD1 1 0 :1:1 
-`uc 1 ADMD2 1 0 :1:2 
-`uc 1 ADACLR 1 0 :1:3 
-`uc 1 ADCRS0 1 0 :1:4 
-`uc 1 ADCRS1 1 0 :1:5 
-`uc 1 ADCRS2 1 0 :1:6 
-`uc 1 ADPSIS 1 0 :1:7 
-]
-[s S892 . 1 `uc 1 ADMD 1 0 :3:0 
-`uc 1 . 1 0 :1:3 
-`uc 1 ADCRS 1 0 :3:4 
-]
-[s S896 . 1 `uc 1 MODE0 1 0 :1:0 
-`uc 1 MODE1 1 0 :1:1 
-`uc 1 MODE2 1 0 :1:2 
-`uc 1 . 1 0 :1:3 
-`uc 1 CRS0 1 0 :1:4 
-`uc 1 CRS1 1 0 :1:5 
-`uc 1 CRS2 1 0 :1:6 
-]
-[s S904 . 1 `uc 1 MD 1 0 :3:0 
-]
-[s S906 . 1 `uc 1 MD0 1 0 :1:0 
-`uc 1 MD1 1 0 :1:1 
-`uc 1 MD2 1 0 :1:2 
-]
-[s S910 . 1 `uc 1 ADMODE 1 0 :3:0 
-]
-[u S912 . 1 `S878 1 . 1 0 `S883 1 . 1 0 `S892 1 . 1 0 `S896 1 . 1 0 `S904 1 . 1 0 `S906 1 . 1 0 `S910 1 . 1 0 ]
-[v _ADCON2bits ADCON2bits `VES912  1 e 1 @16122 ]
 "32369
 [v _ADCON3 ADCON3 `VEuc  1 e 1 @16123 ]
-[s S823 . 1 `uc 1 TMD 1 0 :3:0 
-`uc 1 SOI 1 0 :1:3 
-`uc 1 CALC 1 0 :3:4 
-]
-"32404
-[s S827 . 1 `uc 1 ADTMD0 1 0 :1:0 
-`uc 1 ADTMD1 1 0 :1:1 
-`uc 1 ADTMD2 1 0 :1:2 
-`uc 1 ADSOI 1 0 :1:3 
-`uc 1 ADCALC0 1 0 :1:4 
-`uc 1 ADCALC1 1 0 :1:5 
-`uc 1 ADCALC2 1 0 :1:6 
-]
-[s S835 . 1 `uc 1 ADTMD 1 0 :3:0 
-`uc 1 . 1 0 :1:3 
-`uc 1 ADCALC 1 0 :3:4 
-]
-[s S839 . 1 `uc 1 TMD0 1 0 :1:0 
-`uc 1 TMD1 1 0 :1:1 
-`uc 1 TMD2 1 0 :1:2 
-`uc 1 . 1 0 :1:3 
-`uc 1 CALC0 1 0 :1:4 
-`uc 1 CALC1 1 0 :1:5 
-`uc 1 CALC2 1 0 :1:6 
-]
-[u S847 . 1 `S823 1 . 1 0 `S827 1 . 1 0 `S835 1 . 1 0 `S839 1 . 1 0 ]
-[v _ADCON3bits ADCON3bits `VES847  1 e 1 @16123 ]
 "32499
 [v _ADSTAT ADSTAT `VEuc  1 e 1 @16124 ]
-[s S957 . 1 `uc 1 STAT 1 0 :3:0 
-`uc 1 . 1 0 :1:3 
-`uc 1 MATH 1 0 :1:4 
-`uc 1 LTHR 1 0 :1:5 
-`uc 1 UTHR 1 0 :1:6 
-`uc 1 OV 1 0 :1:7 
-]
-"32534
-[s S964 . 1 `uc 1 ADSTAT0 1 0 :1:0 
-`uc 1 ADSTAT1 1 0 :1:1 
-`uc 1 ADSTAT2 1 0 :1:2 
-`uc 1 . 1 0 :1:3 
-`uc 1 ADMATH 1 0 :1:4 
-`uc 1 ADLTHR 1 0 :1:5 
-`uc 1 ADUTHR 1 0 :1:6 
-`uc 1 ADAOV 1 0 :1:7 
-]
-[s S973 . 1 `uc 1 ADSTAT 1 0 :3:0 
-`uc 1 . 1 0 :4:3 
-`uc 1 ADOV 1 0 :1:7 
-]
-[s S977 . 1 `uc 1 STAT0 1 0 :1:0 
-`uc 1 STAT1 1 0 :1:1 
-`uc 1 STAT2 1 0 :1:2 
-]
-[u S981 . 1 `S957 1 . 1 0 `S964 1 . 1 0 `S973 1 . 1 0 `S977 1 . 1 0 ]
-[v _ADSTATbits ADSTATbits `VES981  1 e 1 @16124 ]
 "32624
 [v _ADREF ADREF `VEuc  1 e 1 @16125 ]
 "32706
@@ -879,114 +689,23 @@ TMR6_UART2_TX_EDGE 24
 [v _ADCLK ADCLK `VEuc  1 e 1 @16127 ]
 "40674
 [v _T6TMR T6TMR `VEuc  1 e 1 @16274 ]
-"40679
-[v _TMR6 TMR6 `VEuc  1 e 1 @16274 ]
 "40712
 [v _T6PR T6PR `VEuc  1 e 1 @16275 ]
-"40717
-[v _PR6 PR6 `VEuc  1 e 1 @16275 ]
 "40750
 [v _T6CON T6CON `VEuc  1 e 1 @16276 ]
-[s S1644 . 1 `uc 1 OUTPS 1 0 :4:0 
-`uc 1 CKPS 1 0 :3:4 
-`uc 1 ON 1 0 :1:7 
-]
-"40786
-[s S1648 . 1 `uc 1 T6OUTPS 1 0 :4:0 
-`uc 1 T6CKPS 1 0 :3:4 
-`uc 1 T6ON 1 0 :1:7 
-]
-"40786
-[s S1652 . 1 `uc 1 T6OUTPS0 1 0 :1:0 
-`uc 1 T6OUTPS1 1 0 :1:1 
-`uc 1 T6OUTPS2 1 0 :1:2 
-`uc 1 T6OUTPS3 1 0 :1:3 
-`uc 1 T6CKPS0 1 0 :1:4 
-`uc 1 T6CKPS1 1 0 :1:5 
-`uc 1 T6CKPS2 1 0 :1:6 
-]
-"40786
-[s S1660 . 1 `uc 1 OUTPS0 1 0 :1:0 
-`uc 1 OUTPS1 1 0 :1:1 
-`uc 1 OUTPS2 1 0 :1:2 
-`uc 1 OUTPS3 1 0 :1:3 
-`uc 1 CKPS0 1 0 :1:4 
-`uc 1 CKPS1 1 0 :1:5 
-`uc 1 CKPS2 1 0 :1:6 
-`uc 1 TMR6ON 1 0 :1:7 
-]
-"40786
-[u S1669 . 1 `S1644 1 . 1 0 `S1648 1 . 1 0 `S1652 1 . 1 0 `S1660 1 . 1 0 ]
-"40786
-"40786
-[v _T6CONbits T6CONbits `VES1669  1 e 1 @16276 ]
 "40896
 [v _T6HLT T6HLT `VEuc  1 e 1 @16277 ]
-[s S1530 . 1 `uc 1 MODE 1 0 :5:0 
-`uc 1 CKSYNC 1 0 :1:5 
-`uc 1 CKPOL 1 0 :1:6 
-`uc 1 PSYNC 1 0 :1:7 
-]
-"40929
-[s S1535 . 1 `uc 1 MODE0 1 0 :1:0 
-`uc 1 MODE1 1 0 :1:1 
-`uc 1 MODE2 1 0 :1:2 
-`uc 1 MODE3 1 0 :1:3 
-`uc 1 MODE4 1 0 :1:4 
-]
-"40929
-[s S1541 . 1 `uc 1 T6MODE 1 0 :5:0 
-`uc 1 T6CKSYNC 1 0 :1:5 
-`uc 1 T6CKPOL 1 0 :1:6 
-`uc 1 T6PSYNC 1 0 :1:7 
-]
-"40929
-[s S1546 . 1 `uc 1 T6MODE0 1 0 :1:0 
-`uc 1 T6MODE1 1 0 :1:1 
-`uc 1 T6MODE2 1 0 :1:2 
-`uc 1 T6MODE3 1 0 :1:3 
-`uc 1 T6MODE4 1 0 :1:4 
-]
-"40929
-[u S1552 . 1 `S1530 1 . 1 0 `S1535 1 . 1 0 `S1541 1 . 1 0 `S1546 1 . 1 0 ]
-"40929
-"40929
-[v _T6HLTbits T6HLTbits `VES1552  1 e 1 @16277 ]
 "41024
 [v _T6CLKCON T6CLKCON `VEuc  1 e 1 @16278 ]
 "41182
 [v _T6RST T6RST `VEuc  1 e 1 @16279 ]
-[s S1606 . 1 `uc 1 RSEL 1 0 :5:0 
-]
-"41209
-[s S1608 . 1 `uc 1 RSEL0 1 0 :1:0 
-`uc 1 RSEL1 1 0 :1:1 
-`uc 1 RSEL2 1 0 :1:2 
-`uc 1 RSEL3 1 0 :1:3 
-`uc 1 RSEL4 1 0 :1:4 
-]
-"41209
-[s S1614 . 1 `uc 1 T6RSEL 1 0 :5:0 
-]
-"41209
-[s S1616 . 1 `uc 1 T6RSEL0 1 0 :1:0 
-`uc 1 T6RSEL1 1 0 :1:1 
-`uc 1 T6RSEL2 1 0 :1:2 
-`uc 1 T6RSEL3 1 0 :1:3 
-`uc 1 T6RSEL4 1 0 :1:4 
-]
-"41209
-[u S1622 . 1 `S1606 1 . 1 0 `S1608 1 . 1 0 `S1614 1 . 1 0 `S1616 1 . 1 0 ]
-"41209
-"41209
-[v _T6RSTbits T6RSTbits `VES1622  1 e 1 @16279 ]
 "45734
 [v _LATA LATA `VEuc  1 e 1 @16314 ]
 "45846
 [v _LATB LATB `VEuc  1 e 1 @16315 ]
 "45958
 [v _LATC LATC `VEuc  1 e 1 @16316 ]
-[s S1900 . 1 `uc 1 LATC0 1 0 :1:0 
+[s S1921 . 1 `uc 1 LATC0 1 0 :1:0 
 `uc 1 LATC1 1 0 :1:1 
 `uc 1 LATC2 1 0 :1:2 
 `uc 1 LATC3 1 0 :1:3 
@@ -996,7 +715,7 @@ TMR6_UART2_TX_EDGE 24
 `uc 1 LATC7 1 0 :1:7 
 ]
 "45985
-[s S1909 . 1 `uc 1 LC0 1 0 :1:0 
+[s S1930 . 1 `uc 1 LC0 1 0 :1:0 
 `uc 1 LC1 1 0 :1:1 
 `uc 1 LC2 1 0 :1:2 
 `uc 1 LC3 1 0 :1:3 
@@ -1006,10 +725,10 @@ TMR6_UART2_TX_EDGE 24
 `uc 1 LC7 1 0 :1:7 
 ]
 "45985
-[u S1918 . 1 `S1900 1 . 1 0 `S1909 1 . 1 0 ]
+[u S1939 . 1 `S1921 1 . 1 0 `S1930 1 . 1 0 ]
 "45985
 "45985
-[v _LATCbits LATCbits `VES1918  1 e 1 @16316 ]
+[v _LATCbits LATCbits `VES1939  1 e 1 @16316 ]
 "46070
 [v _LATD LATD `VEuc  1 e 1 @16317 ]
 "46182
@@ -1072,6 +791,17 @@ TMR6_UART2_TX_EDGE 24
 [v _GIE GIE `VEb  1 e 0 @130711 ]
 "55118
 [v _PLLR PLLR `VEb  1 e 0 @118496 ]
+[s S1885 ringBufS_t 67 `[64]uc 1 buf 64 0 `uc 1 head 1 64 `uc 1 tail 1 65 `uc 1 count 1 66 ]
+"15 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
+[s S1890 spi_link_type 10 `uc 1 SPI_LCD 1 0 :1:0 
+`uc 1 SPI_AUX 1 0 :1:1 
+`uc 1 LCD_TIMER 1 0 :1:2 
+`uc 1 LCD_DATA 1 0 :1:3 
+`ui 1 delay 2 1 `uc 1 config 1 3 `*.30VES1885 1 tx1b 1 4 `*.30VES1885 1 tx1a 1 5 `l 1 int_count 4 6 ]
+[v _spi_link spi_link `VES1890  1 e 10 0 ]
+"16
+[v _ring_buf1 ring_buf1 `VES1885  1 e 67 0 ]
+[v _ring_buf2 ring_buf2 `VES1885  1 e 67 0 ]
 "58 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/adcc.c
 [v _ADCC_ADI_InterruptHandler ADCC_ADI_InterruptHandler `*.38(v  1 e 3 0 ]
 "31 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/ext_int.c
@@ -1127,92 +857,110 @@ TMR6_UART2_TX_EDGE 24
 {
 "79
 } 0
-"28 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
+"32 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _init_display init_display `(v  1 e 1 0 ]
 {
-"46
+"55
 } 0
-"75
+"84
 [v _send_lcd_cmd_long send_lcd_cmd_long `(v  1 e 1 0 ]
 {
 [v send_lcd_cmd_long@cmd cmd `uc  1 a 1 wreg ]
 [v send_lcd_cmd_long@cmd cmd `uc  1 a 1 wreg ]
-"77
+"86
 [v send_lcd_cmd_long@cmd cmd `uc  1 a 1 5 ]
-"82
+"91
 } 0
-"63
+"72
 [v _send_lcd_cmd send_lcd_cmd `(v  1 e 1 0 ]
 {
 [v send_lcd_cmd@cmd cmd `uc  1 a 1 wreg ]
 [v send_lcd_cmd@cmd cmd `uc  1 a 1 wreg ]
-"65
+"74
 [v send_lcd_cmd@cmd cmd `uc  1 a 1 5 ]
-"70
+"79
 } 0
-"139
+"22 /root/MPLABXProjects/vtouch_v2/touch_v2.X/ringbufs.c
+[v _ringBufS_init ringBufS_init `(v  1 e 1 0 ]
+{
+[s S1885 ringBufS_t 67 `[64]uc 1 buf 64 0 `uc 1 head 1 64 `uc 1 tail 1 65 `uc 1 count 1 66 ]
+[v ringBufS_init@_this _this `*.30VES1885  1 p 1 7 ]
+"33
+} 0
+"8 /opt/microchip/xc8/v2.05/pic/sources/c90/common/memset.c
+[v _memset memset `(*.30v  1 e 2 0 ]
+{
+"15
+[v memset@p p `*.30uc  1 a 1 6 ]
+"8
+[v memset@p1 p1 `*.30v  1 p 1 1 ]
+[v memset@c c `i  1 p 2 2 ]
+[v memset@n n `ui  1 p 2 4 ]
+"22
+} 0
+"147 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _eaDogM_WriteString eaDogM_WriteString `(v  1 e 1 0 ]
 {
-[v eaDogM_WriteString@strPtr strPtr `*.32uc  1 p 2 17 ]
-"145
+[v eaDogM_WriteString@strPtr strPtr `*.31uc  1 p 1 16 ]
+"153
 } 0
-"94
+"103
 [v _wait_lcd wait_lcd `(v  1 e 1 0 ]
 {
-"99
+"107
 } 0
 "4 /opt/microchip/xc8/v2.05/pic/sources/c90/common/strlen.c
 [v _strlen strlen `(ui  1 e 2 0 ]
 {
 "6
-[v strlen@cp cp `*.32Cuc  1 a 2 3 ]
+[v strlen@cp cp `*.31Cuc  1 a 1 3 ]
 "4
-[v strlen@s s `*.32Cuc  1 p 2 1 ]
+[v strlen@s s `*.31Cuc  1 p 1 1 ]
 "13
 } 0
-"87 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
+"96 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _start_lcd start_lcd `(v  1 e 1 0 ]
 {
-"92
+"101
 } 0
 "472 /opt/microchip/xc8/v2.05/pic/sources/c90/common/doprnt.c
 [v _printf printf `(i  1 e 2 0 ]
 {
 "542
-[v printf@cp cp `*.34Cuc  1 a 2 15 ]
-"474
-[v printf@ap ap `[1]*.39v  1 a 2 12 ]
+[v printf@cp cp `*.34Cuc  1 a 2 14 ]
 "507
-[v printf@c c `uc  1 a 1 14 ]
+[v printf@c c `uc  1 a 1 13 ]
+"474
+[v printf@ap ap `[1]*.30v  1 a 1 12 ]
 "472
-[v printf@f f `*.32Cuc  1 p 2 7 ]
+[v printf@f f `*.31Cuc  1 p 1 7 ]
 "1560
 } 0
-"111 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
+"119 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _putch putch `(v  1 e 1 0 ]
 {
 [v putch@c c `uc  1 a 1 wreg ]
 [v putch@c c `uc  1 a 1 wreg ]
-"113
+"121
 [v putch@c c `uc  1 a 1 6 ]
-"114
+"122
 } 0
-"51
+"60
 [v _send_lcd_data send_lcd_data `(v  1 e 1 0 ]
 {
 [v send_lcd_data@data data `uc  1 a 1 wreg ]
 [v send_lcd_data@data data `uc  1 a 1 wreg ]
-"53
+"62
 [v send_lcd_data@data data `uc  1 a 1 5 ]
-"58
+"67
 } 0
-"14
+"18
 [v _wdtdelay wdtdelay `(v  1 e 1 0 ]
 {
 [v wdtdelay@delay delay `ul  1 p 4 1 ]
-"16
+"20
 [v wdtdelay@dcount dcount `ul  1 s 4 dcount ]
-"23
+"27
 } 0
 "79 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/spi1.c
 [v _SPI1_Exchange8bit SPI1_Exchange8bit `(uc  1 e 1 0 ]

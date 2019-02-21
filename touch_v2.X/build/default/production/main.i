@@ -28214,7 +28214,34 @@ void OSCILLATOR_Initialize(void);
 # 101
 void PMD_Initialize(void);
 
-# 32 "eadog.h"
+# 19 "ringbufs.h"
+typedef struct ringBufS_t {
+uint8_t buf[64];
+uint8_t head;
+uint8_t tail;
+uint8_t count;
+} ringBufS_t;
+
+void ringBufS_init(volatile ringBufS_t *_this);
+int8_t ringBufS_empty(ringBufS_t *_this);
+int8_t ringBufS_full(ringBufS_t *_this);
+uint8_t ringBufS_get(ringBufS_t *_this);
+void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+
+# 33 "vconfig.h"
+struct spi_link_type {
+uint8_t SPI_LCD : 1;
+uint8_t SPI_AUX : 1;
+uint8_t LCD_TIMER : 1;
+uint8_t LCD_DATA : 1;
+uint16_t delay;
+uint8_t config;
+volatile struct ringBufS_t *tx1b, *tx1a;
+int32_t int_count;
+};
+
+# 33 "eadog.h"
 void wdtdelay(uint32_t);
 
 void init_display(void);
@@ -28248,10 +28275,10 @@ SYSTEM_Initialize();
 # 72
 init_display();
 
-eaDogM_WriteString("Testing 1234567890");
+eaDogM_WriteString((char*)"Testing 12345678");
 while (1) {
 
-
+eaDogM_WriteString((char*)"Testing 12345678");
 }
 }
 
