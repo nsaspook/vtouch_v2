@@ -28450,14 +28450,16 @@ void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
 void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
 void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
 
-# 48 "main.c"
+# 49 "main.c"
 extern struct spi_link_type spi_link;
 
 struct V_data V;
 
-# 55
+# 56
 void main(void)
 {
+uint8_t i;
+
 
 SYSTEM_Initialize();
 
@@ -28480,7 +28482,13 @@ V.s_state = SEQ_STATE_RUN;
 break;
 case SEQ_STATE_RUN:
 
-# 81
+# 84
+if (UART1_is_tx_ready() > 30) {
+for (i = 0; i <= 30; i++) {
+UART1_Write(0x4f);
+}
+}
+
 if (PRLOCKbits.PRLOCKED) {
 strcpy(V.buf, "Testing 12345678Testing 12345678Testing 12345678");
 } else {

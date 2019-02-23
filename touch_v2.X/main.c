@@ -43,6 +43,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "mcc_generated_files/mcc.h"
+#include "mcc_generated_files/uart1.h"
 #include "eadog.h"
 
 extern struct spi_link_type spi_link;
@@ -54,6 +55,8 @@ struct V_data V;
  */
 void main(void)
 {
+	uint8_t i;
+
 	// Initialize the device
 	SYSTEM_Initialize();
 
@@ -78,6 +81,12 @@ void main(void)
 			/*
 			 * Do something
 			 */
+			if (UART1_is_tx_ready() > 30) {
+				for (i = 0; i <= 30; i++) {
+					UART1_Write(0x4f);
+				}
+			}
+
 			if (PRLOCKbits.PRLOCKED) {
 				strcpy(V.buf, "Testing 12345678Testing 12345678Testing 12345678");
 			} else {
