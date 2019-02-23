@@ -38,6 +38,7 @@ extern "C" {
 	void send_lcd_cmd_long(uint8_t);
 	void start_lcd(void);
 	void wait_lcd_set(void);
+	bool wait_lcd_check(void);
 	void wait_lcd_done(void);
 	void eaDogM_WriteChr(int8_t);
 	void eaDogM_WriteCommand(uint8_t);

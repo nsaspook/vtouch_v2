@@ -8,7 +8,7 @@
 
 
 #pragma config CLKOUTEN = OFF
-#pragma config PR1WAY = ON
+#pragma config PR1WAY = OFF
 #pragma config CSWEN = ON
 #pragma config FCMEN = ON
 

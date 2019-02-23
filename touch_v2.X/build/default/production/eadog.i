@@ -27792,6 +27792,23 @@ struct ringBufS_t *tx1b, *tx1a;
 volatile int32_t int_count;
 };
 
+typedef enum {
+
+SEQ_STATE_INIT = 0,
+SEQ_STATE_RUN,
+SEQ_STATE_SET,
+SEQ_STATE_TRIGGER,
+SEQ_STATE_DONE,
+SEQ_STATE_ERROR
+
+} SEQ_STATES;
+
+typedef struct V_data {
+SEQ_STATES s_state;
+char buf[64];
+volatile uint32_t ticks;
+} V_data;
+
 # 33 "eadog.h"
 void wdtdelay(uint32_t);
 
@@ -27801,6 +27818,7 @@ void send_lcd_cmd(uint8_t);
 void send_lcd_cmd_long(uint8_t);
 void start_lcd(void);
 void wait_lcd_set(void);
+bool wait_lcd_check(void);
 void wait_lcd_done(void);
 void eaDogM_WriteChr(int8_t);
 void eaDogM_WriteCommand(uint8_t);
@@ -27996,6 +28014,11 @@ void wait_lcd_set(void)
 spi_link.LCD_DATA = 1;
 }
 
+bool wait_lcd_check(void)
+{
+return spi_link.LCD_DATA;
+}
+
 void wait_lcd_done(void)
 {
 while (spi_link.LCD_DATA);
@@ -28007,7 +28030,7 @@ void eaDogM_WriteChr(int8_t value)
 send_lcd_data((uint8_t) value);
 }
 
-# 131
+# 136
 void putch(char c)
 {
 ringBufS_put_dma(spi_link.tx1a, c);
@@ -28034,6 +28057,7 @@ eaDogM_WriteChr(' ');
 }
 }
 
+# 165
 void eaDogM_WriteString(char *strPtr)
 {
 wait_lcd_set();

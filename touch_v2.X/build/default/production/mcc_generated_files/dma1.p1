@@ -35,10 +35,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [n S155 . . . ]
 "3588
 [v _PIE2bits `VS155 ~T0 @X0 0 e@14738 ]
-"6244
-[v _MAINPR `Vuc ~T0 @X0 0 e@14834 ]
 "6176
 [v _ISRPR `Vuc ~T0 @X0 0 e@14833 ]
+"6244
+[v _MAINPR `Vuc ~T0 @X0 0 e@14834 ]
 "6312
 [v _DMA1PR `Vuc ~T0 @X0 0 e@14835 ]
 "6380
@@ -18345,6 +18345,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;vconfig.h: 40: struct ringBufS_t *tx1b, *tx1a;
 [; ;vconfig.h: 41: volatile int32_t int_count;
 [; ;vconfig.h: 42: };
+[; ;vconfig.h: 44: typedef enum {
+[; ;vconfig.h: 46: SEQ_STATE_INIT = 0,
+[; ;vconfig.h: 47: SEQ_STATE_RUN,
+[; ;vconfig.h: 48: SEQ_STATE_SET,
+[; ;vconfig.h: 49: SEQ_STATE_TRIGGER,
+[; ;vconfig.h: 50: SEQ_STATE_DONE,
+[; ;vconfig.h: 51: SEQ_STATE_ERROR
+[; ;vconfig.h: 53: } SEQ_STATES;
+[; ;vconfig.h: 55: typedef struct V_data {
+[; ;vconfig.h: 56: SEQ_STATES s_state;
+[; ;vconfig.h: 57: char buf[64];
+[; ;vconfig.h: 58: volatile uint32_t ticks;
+[; ;vconfig.h: 59: } V_data;
 [; ;dma1.c: 60: extern struct spi_link_type spi_link;
 "86 mcc_generated_files/dma1.c
 [v _DMA1_Initialize `(v ~T0 @X0 1 ef ]
@@ -18399,119 +18412,119 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;dma1.c: 104: PIE2bits.DMA1ORIE = 1;
 "104
 [e = . . _PIE2bits 0 2 -> -> 1 `i `uc ]
-[; ;dma1.c: 107: MAINPR = 3;
+[; ;dma1.c: 106: ISRPR = 0;
+"106
+[e = _ISRPR -> -> 0 `i `uc ]
+[; ;dma1.c: 107: MAINPR = 1;
 "107
-[e = _MAINPR -> -> 3 `i `uc ]
-[; ;dma1.c: 108: ISRPR = 2;
+[e = _MAINPR -> -> 1 `i `uc ]
+[; ;dma1.c: 108: DMA1PR = 4;
 "108
-[e = _ISRPR -> -> 2 `i `uc ]
-[; ;dma1.c: 109: DMA1PR = 0;
+[e = _DMA1PR -> -> 4 `i `uc ]
+[; ;dma1.c: 109: DMA2PR = 2;
 "109
-[e = _DMA1PR -> -> 0 `i `uc ]
-[; ;dma1.c: 110: DMA2PR = 1;
+[e = _DMA2PR -> -> 2 `i `uc ]
+[; ;dma1.c: 110: SCANPR = 3;
 "110
-[e = _DMA2PR -> -> 1 `i `uc ]
-[; ;dma1.c: 111: SCANPR = 4;
-"111
-[e = _SCANPR -> -> 4 `i `uc ]
-[; ;dma1.c: 115: asm("BCF INTCON0,7");
-"115
+[e = _SCANPR -> -> 3 `i `uc ]
+[; ;dma1.c: 112: asm("BCF INTCON0,7");
+"112
 [; <" BCF INTCON0,7 ;# ">
-[; ;dma1.c: 117: asm("BANKSEL PRLOCK");
-"117
+[; ;dma1.c: 114: asm("BANKSEL PRLOCK");
+"114
 [; <" BANKSEL PRLOCK ;# ">
-[; ;dma1.c: 118: asm("MOVLW 0x55");
-"118
+[; ;dma1.c: 115: asm("MOVLW 0x55");
+"115
 [; <" MOVLW 0x55 ;# ">
-[; ;dma1.c: 119: asm("MOVWF PRLOCK");
-"119
+[; ;dma1.c: 116: asm("MOVWF PRLOCK");
+"116
 [; <" MOVWF PRLOCK ;# ">
-[; ;dma1.c: 120: asm("MOVLW 0xAA");
-"120
+[; ;dma1.c: 117: asm("MOVLW 0xAA");
+"117
 [; <" MOVLW 0xAA ;# ">
-[; ;dma1.c: 121: asm("MOVWF PRLOCK");
-"121
+[; ;dma1.c: 118: asm("MOVWF PRLOCK");
+"118
 [; <" MOVWF PRLOCK ;# ">
-[; ;dma1.c: 122: asm("BSF PRLOCK, 0");
-"122
+[; ;dma1.c: 119: asm("BSF PRLOCK, 0");
+"119
 [; <" BSF PRLOCK, 0 ;# ">
-[; ;dma1.c: 124: asm("BSF INTCON0,7");
-"124
+[; ;dma1.c: 121: asm("BSF INTCON0,7");
+"121
 [; <" BSF INTCON0,7 ;# ">
-[; ;dma1.c: 126: DMA1CON0 = 0x00;
-"126
+[; ;dma1.c: 123: DMA1CON0 = 0x00;
+"123
 [e = _DMA1CON0 -> -> 0 `i `uc ]
-[; ;dma1.c: 127: }
-"127
-[e :UE 2227 ]
-}
-[v $root$_DMA1_DMASCNT_ISR `(v ~T0 @X0 0 e ]
-"129
-[v _DMA1_DMASCNT_ISR `(v ~T6 @X0 1 ef ]
-"130
-{
-[; ;dma1.c: 129: void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
-[; ;dma1.c: 130: {
-[e :U _DMA1_DMASCNT_ISR ]
-[f ]
-[; ;dma1.c: 131: PIR2bits.DMA1SCNTIF = 0;
-"131
-[e = . . _PIR2bits 0 0 -> -> 0 `i `uc ]
-[; ;dma1.c: 133: spi_link.LCD_DATA=0;
-"133
-[e = . _spi_link 3 -> -> 0 `i `uc ]
-[; ;dma1.c: 134: }
-"134
+[; ;dma1.c: 124: }
+"124
 [e :UE 2228 ]
 }
-[v $root$_DMA1_DMADCNT_ISR `(v ~T0 @X0 0 e ]
-"136
-[v _DMA1_DMADCNT_ISR `(v ~T7 @X0 1 ef ]
-"137
+[v $root$_DMA1_DMASCNT_ISR `(v ~T0 @X0 0 e ]
+"126
+[v _DMA1_DMASCNT_ISR `(v ~T6 @X0 1 ef ]
+"127
 {
-[; ;dma1.c: 136: void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()
-[; ;dma1.c: 137: {
-[e :U _DMA1_DMADCNT_ISR ]
+[; ;dma1.c: 126: void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
+[; ;dma1.c: 127: {
+[e :U _DMA1_DMASCNT_ISR ]
 [f ]
-[; ;dma1.c: 138: PIR2bits.DMA1DCNTIF = 0;
-"138
-[e = . . _PIR2bits 0 1 -> -> 0 `i `uc ]
-[; ;dma1.c: 140: }
-"140
+[; ;dma1.c: 128: PIR2bits.DMA1SCNTIF = 0;
+"128
+[e = . . _PIR2bits 0 0 -> -> 0 `i `uc ]
+[; ;dma1.c: 130: spi_link.LCD_DATA = 0;
+"130
+[e = . _spi_link 3 -> -> 0 `i `uc ]
+[; ;dma1.c: 131: }
+"131
 [e :UE 2229 ]
 }
-[v $root$_DMA1_DMAA_ISR `(v ~T0 @X0 0 e ]
-"146
-[v _DMA1_DMAA_ISR `(v ~T8 @X0 1 ef ]
-"148
+[v $root$_DMA1_DMADCNT_ISR `(v ~T0 @X0 0 e ]
+"133
+[v _DMA1_DMADCNT_ISR `(v ~T7 @X0 1 ef ]
+"134
 {
-[; ;dma1.c: 146: void __interrupt(irq(DMA1A), base(8)) DMA1_DMAA_ISR()
-[; ;dma1.c: 148: {
-[e :U _DMA1_DMAA_ISR ]
+[; ;dma1.c: 133: void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()
+[; ;dma1.c: 134: {
+[e :U _DMA1_DMADCNT_ISR ]
 [f ]
-[; ;dma1.c: 149: PIR2bits.DMA1AIF = 0;
-"149
-[e = . . _PIR2bits 0 3 -> -> 0 `i `uc ]
-[; ;dma1.c: 151: }
-"151
+[; ;dma1.c: 135: PIR2bits.DMA1DCNTIF = 0;
+"135
+[e = . . _PIR2bits 0 1 -> -> 0 `i `uc ]
+[; ;dma1.c: 137: }
+"137
 [e :UE 2230 ]
 }
-[v $root$_DMA1_DMAOR_ISR `(v ~T0 @X0 0 e ]
-"157
-[v _DMA1_DMAOR_ISR `(v ~T9 @X0 1 ef ]
-"159
+[v $root$_DMA1_DMAA_ISR `(v ~T0 @X0 0 e ]
+"143
+[v _DMA1_DMAA_ISR `(v ~T8 @X0 1 ef ]
+"145
 {
-[; ;dma1.c: 157: void __interrupt(irq(DMA1OR), base(8)) DMA1_DMAOR_ISR()
-[; ;dma1.c: 159: {
+[; ;dma1.c: 143: void __interrupt(irq(DMA1A), base(8)) DMA1_DMAA_ISR()
+[; ;dma1.c: 145: {
+[e :U _DMA1_DMAA_ISR ]
+[f ]
+[; ;dma1.c: 146: PIR2bits.DMA1AIF = 0;
+"146
+[e = . . _PIR2bits 0 3 -> -> 0 `i `uc ]
+[; ;dma1.c: 148: }
+"148
+[e :UE 2231 ]
+}
+[v $root$_DMA1_DMAOR_ISR `(v ~T0 @X0 0 e ]
+"154
+[v _DMA1_DMAOR_ISR `(v ~T9 @X0 1 ef ]
+"156
+{
+[; ;dma1.c: 154: void __interrupt(irq(DMA1OR), base(8)) DMA1_DMAOR_ISR()
+[; ;dma1.c: 156: {
 [e :U _DMA1_DMAOR_ISR ]
 [f ]
-[; ;dma1.c: 160: PIR2bits.DMA1ORIF = 0;
-"160
+[; ;dma1.c: 157: PIR2bits.DMA1ORIF = 0;
+"157
 [e = . . _PIR2bits 0 2 -> -> 0 `i `uc ]
-[; ;dma1.c: 162: LATEbits.LATE1 = 0;
-"162
+[; ;dma1.c: 159: LATEbits.LATE1 = 0;
+"159
 [e = . . _LATEbits 0 1 -> -> 0 `i `uc ]
-[; ;dma1.c: 163: }
-"163
-[e :UE 2231 ]
+[; ;dma1.c: 160: }
+"160
+[e :UE 2232 ]
 }

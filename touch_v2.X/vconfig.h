@@ -41,6 +41,22 @@ extern "C" {
 		volatile int32_t int_count;
 	};
 
+	typedef enum {
+		/* rotation state machine */
+		SEQ_STATE_INIT = 0,
+		SEQ_STATE_RUN,
+		SEQ_STATE_SET,
+		SEQ_STATE_TRIGGER,
+		SEQ_STATE_DONE,
+		SEQ_STATE_ERROR
+
+	} SEQ_STATES;
+
+	typedef struct V_data { // control data structure with possible volatile issues
+		SEQ_STATES s_state;
+		char	buf[64];
+		volatile uint32_t ticks;
+	} V_data;
 #ifdef	__cplusplus
 }
 #endif

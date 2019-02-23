@@ -40,11 +40,14 @@
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
  */
-
+#include <stdio.h>
+#include <string.h>
 #include "mcc_generated_files/mcc.h"
 #include "eadog.h"
 
 extern struct spi_link_type spi_link;
+
+struct V_data V;
 
 /*
 			 Main application
@@ -54,33 +57,54 @@ void main(void)
 	// Initialize the device
 	SYSTEM_Initialize();
 
-	// If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
-	// If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global Interrupts
-	// Use the following macros to:
-
 	// Enable high priority global interrupts
 	INTERRUPT_GlobalInterruptHighEnable();
 
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
 
-	// Disable high priority global interrupts
-	//INTERRUPT_GlobalInterruptHighDisable();
-
-	// Disable low priority global interrupts.
-	//INTERRUPT_GlobalInterruptLowDisable();
-
-	//    TMR6_Initialize();
 	init_display();
 
 	eaDogM_WriteString((char*) "Testing 12345678Testing 12345678Testing 12345678");
 	wait_lcd_done();
-	while (1) {
-		// Add your application code
-		eaDogM_WriteString((char*) "Testing 12345678Testing 12345678Testing 12345678");
-		wait_lcd_done();
-		LATEbits.LATE2 = 1;
-		//		if (SPI1INTFbits.SPI1TXUIF) SLED=1;
+	V.s_state = SEQ_STATE_INIT;
+
+	while (true) {
+		switch (V.s_state) {
+		case SEQ_STATE_INIT:
+			V.s_state = SEQ_STATE_RUN;
+			break;
+		case SEQ_STATE_RUN:
+			/*
+			 * Do something
+			 */
+			if (PRLOCKbits.PRLOCKED) {
+				strcpy(V.buf, "Testing 12345678Testing 12345678Testing 12345678");
+			} else {
+				strcpy(V.buf, "Test");
+			}
+			V.s_state = SEQ_STATE_SET;
+			break;
+		case SEQ_STATE_SET:
+			eaDogM_WriteString(V.buf);
+			V.s_state = SEQ_STATE_TRIGGER;
+			break;
+		case SEQ_STATE_TRIGGER:
+			DEBUG1_SetHigh();
+			if (wait_lcd_check())
+				V.s_state = SEQ_STATE_DONE;
+			DEBUG1_SetLow();
+			break;
+		case SEQ_STATE_DONE:
+			wait_lcd_done();
+			DEBUG2_SetHigh();
+			V.s_state = SEQ_STATE_RUN;
+			break;
+		case SEQ_STATE_ERROR:
+		default:
+			V.s_state = SEQ_STATE_INIT;
+			break;
+		}
 	}
 }
 /**

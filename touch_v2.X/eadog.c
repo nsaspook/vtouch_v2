@@ -114,6 +114,11 @@ void wait_lcd_set(void)
 	spi_link.LCD_DATA = 1;
 }
 
+bool wait_lcd_check(void)
+{
+	return spi_link.LCD_DATA;
+}
+
 void wait_lcd_done(void)
 {
 	while (spi_link.LCD_DATA);

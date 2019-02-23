@@ -27999,10 +27999,30 @@ struct ringBufS_t *tx1b, *tx1a;
 volatile int32_t int_count;
 };
 
-# 61 "mcc_generated_files/tmr6.c"
+typedef enum {
+
+SEQ_STATE_INIT = 0,
+SEQ_STATE_RUN,
+SEQ_STATE_SET,
+SEQ_STATE_TRIGGER,
+SEQ_STATE_DONE,
+SEQ_STATE_ERROR
+
+} SEQ_STATES;
+
+typedef struct V_data {
+SEQ_STATES s_state;
+char buf[64];
+volatile uint32_t ticks;
+} V_data;
+
+# 57 "mcc_generated_files/tmr6.c"
+extern struct V_data V;
+
+# 63
 void (*TMR6_InterruptHandler)(void);
 
-# 67
+# 69
 void TMR6_Initialize(void)
 {
 
@@ -28017,7 +28037,7 @@ T6HLT = 0x00;
 T6RST = 0x00;
 
 
-T6PR = 0x4D;
+T6PR = 0x31;
 
 
 T6TMR = 0x00;
@@ -28032,7 +28052,7 @@ PIE9bits.TMR6IE = 1;
 TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
 
 
-T6CON = 0xFF;
+T6CON = 0x8F;
 }
 
 void TMR6_ModeSet(TMR6_HLT_MODE mode)
@@ -28104,41 +28124,36 @@ void TMR6_LoadPeriodRegister(uint8_t periodVal)
 TMR6_Period8BitSet(periodVal);
 }
 
-void __interrupt(irq(TMR6),base(8)) TMR6_ISR()
+void __interrupt(irq(TMR6), base(8)) TMR6_ISR()
 {
-static volatile unsigned int CountCallBack = 0;
 
 
 PIR9bits.TMR6IF = 0;
 
 
-if (++CountCallBack >= 101)
-{
 
 TMR6_CallBack();
-
-
-CountCallBack = 0;
-}
 }
 
 void TMR6_CallBack(void)
 {
 
 
-if(TMR6_InterruptHandler)
-{
+if (TMR6_InterruptHandler) {
 TMR6_InterruptHandler();
 }
 }
 
-void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
+{
 TMR6_InterruptHandler = InterruptHandler;
 }
 
-void TMR6_DefaultInterruptHandler(void){
+void TMR6_DefaultInterruptHandler(void)
+{
 
 
-LATEbits.LATE0 = (uint8_t)~LATEbits.LATE0;
+LATEbits.LATE0 = (uint8_t) ~LATEbits.LATE0;
+++V.ticks;
 }
 

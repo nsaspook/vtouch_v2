@@ -27874,6 +27874,23 @@ struct ringBufS_t *tx1b, *tx1a;
 volatile int32_t int_count;
 };
 
+typedef enum {
+
+SEQ_STATE_INIT = 0,
+SEQ_STATE_RUN,
+SEQ_STATE_SET,
+SEQ_STATE_TRIGGER,
+SEQ_STATE_DONE,
+SEQ_STATE_ERROR
+
+} SEQ_STATES;
+
+typedef struct V_data {
+SEQ_STATES s_state;
+char buf[64];
+volatile uint32_t ticks;
+} V_data;
+
 # 60 "mcc_generated_files/dma1.c"
 extern struct spi_link_type spi_link;
 
@@ -27898,14 +27915,11 @@ PIE2bits.DMA1SCNTIE = 1;
 PIE2bits.DMA1AIE = 1;
 PIE2bits.DMA1ORIE = 1;
 
-
-MAINPR = 3;
-ISRPR = 2;
-DMA1PR = 0;
-DMA2PR = 1;
-SCANPR = 4;
-
-
+ISRPR = 0;
+MAINPR = 1;
+DMA1PR = 4;
+DMA2PR = 2;
+SCANPR = 3;
 
 asm("BCF INTCON0,7");
 
@@ -27925,7 +27939,7 @@ void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
 {
 PIR2bits.DMA1SCNTIF = 0;
 
-spi_link.LCD_DATA=0;
+spi_link.LCD_DATA = 0;
 }
 
 void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()
@@ -27934,7 +27948,7 @@ PIR2bits.DMA1DCNTIF = 0;
 
 }
 
-# 146
+# 143
 void __interrupt(irq(DMA1A), base(8)) DMA1_DMAA_ISR()
 
 {
@@ -27942,7 +27956,7 @@ PIR2bits.DMA1AIF = 0;
 
 }
 
-# 157
+# 154
 void __interrupt(irq(DMA1OR), base(8)) DMA1_DMAOR_ISR()
 
 {

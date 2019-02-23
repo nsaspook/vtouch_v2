@@ -18238,6 +18238,19 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;vconfig.h: 40: struct ringBufS_t *tx1b, *tx1a;
 [; ;vconfig.h: 41: volatile int32_t int_count;
 [; ;vconfig.h: 42: };
+[; ;vconfig.h: 44: typedef enum {
+[; ;vconfig.h: 46: SEQ_STATE_INIT = 0,
+[; ;vconfig.h: 47: SEQ_STATE_RUN,
+[; ;vconfig.h: 48: SEQ_STATE_SET,
+[; ;vconfig.h: 49: SEQ_STATE_TRIGGER,
+[; ;vconfig.h: 50: SEQ_STATE_DONE,
+[; ;vconfig.h: 51: SEQ_STATE_ERROR
+[; ;vconfig.h: 53: } SEQ_STATES;
+[; ;vconfig.h: 55: typedef struct V_data {
+[; ;vconfig.h: 56: SEQ_STATES s_state;
+[; ;vconfig.h: 57: char buf[64];
+[; ;vconfig.h: 58: volatile uint32_t ticks;
+[; ;vconfig.h: 59: } V_data;
 [; ;ringbufs.h: 19: typedef struct ringBufS_t {
 [; ;ringbufs.h: 20: uint8_t buf[64];
 [; ;ringbufs.h: 21: uint8_t head;
@@ -18269,22 +18282,22 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = _my_value -> + -> _value `i -> 1 `i `uc ]
 [; ;ringbufs.c: 10: if (my_value >= modulus) {
 "10
-[e $ ! >= -> _my_value `i -> _modulus `i 2224  ]
+[e $ ! >= -> _my_value `i -> _modulus `i 2225  ]
 {
 [; ;ringbufs.c: 11: my_value = 0;
 "11
 [e = _my_value -> -> 0 `i `uc ]
 "12
 }
-[e :U 2224 ]
+[e :U 2225 ]
 [; ;ringbufs.c: 12: }
 [; ;ringbufs.c: 13: return my_value;
 "13
 [e ) _my_value ]
-[e $UE 2223  ]
+[e $UE 2224  ]
 [; ;ringbufs.c: 14: }
 "14
-[e :UE 2223 ]
+[e :UE 2224 ]
 }
 "16
 [v _modulo_dec `(uc ~T0 @X0 1 ef2`Cuc`Cuc ]
@@ -18305,10 +18318,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ringbufs.c: 19: return my_value;
 "19
 [e ) _my_value ]
-[e $UE 2225  ]
+[e $UE 2226  ]
 [; ;ringbufs.c: 20: }
 "20
-[e :UE 2225 ]
+[e :UE 2226 ]
 }
 "22
 [v _ringBufS_init `(v ~T0 @X0 1 ef1`*VS2222 ]
@@ -18326,7 +18339,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _memset (3 , , -> __this `*v -> 0 `i -> # *U __this `ui ]
 [; ;ringbufs.c: 33: }
 "33
-[e :UE 2226 ]
+[e :UE 2227 ]
 }
 "35
 [v _ringBufS_empty `(c ~T0 @X0 1 ef1`*S2222 ]
@@ -18342,10 +18355,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ringbufs.c: 37: return(0 == _this->count);
 "37
 [e ) -> -> == -> 0 `i -> . *U __this 3 `i `i `c ]
-[e $UE 2227  ]
+[e $UE 2228  ]
 [; ;ringbufs.c: 38: }
 "38
-[e :UE 2227 ]
+[e :UE 2228 ]
 }
 "40
 [v _ringBufS_full `(c ~T0 @X0 1 ef1`*S2222 ]
@@ -18361,10 +18374,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ringbufs.c: 42: return(_this->count >= 64);
 "42
 [e ) -> -> >= -> . *U __this 3 `i -> 64 `i `i `c ]
-[e $UE 2228  ]
+[e $UE 2229  ]
 [; ;ringbufs.c: 43: }
 "43
-[e :UE 2228 ]
+[e :UE 2229 ]
 }
 "45
 [v _ringBufS_get `(uc ~T0 @X0 1 ef1`*S2222 ]
@@ -18382,7 +18395,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ringbufs.c: 47: uint8_t c;
 [; ;ringbufs.c: 48: if (_this->count > 0) {
 "48
-[e $ ! > -> . *U __this 3 `i -> 0 `i 2230  ]
+[e $ ! > -> . *U __this 3 `i -> 0 `i 2231  ]
 {
 [; ;ringbufs.c: 49: c = _this->buf[_this->tail];
 "49
@@ -18396,23 +18409,23 @@ Version 3.2 HI-TECH Software Intermediate Code
 "52
 }
 [; ;ringbufs.c: 52: } else {
-[e $U 2231  ]
-[e :U 2230 ]
+[e $U 2232  ]
+[e :U 2231 ]
 {
 [; ;ringbufs.c: 53: c = 0;
 "53
 [e = _c -> -> 0 `i `uc ]
 "54
 }
-[e :U 2231 ]
+[e :U 2232 ]
 [; ;ringbufs.c: 54: }
 [; ;ringbufs.c: 55: return(c);
 "55
 [e ) _c ]
-[e $UE 2229  ]
+[e $UE 2230  ]
 [; ;ringbufs.c: 56: }
 "56
-[e :UE 2229 ]
+[e :UE 2230 ]
 }
 "58
 [v _ringBufS_put `(v ~T0 @X0 1 ef2`*S2222`Cuc ]
@@ -18428,7 +18441,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;ringbufs.c: 60: if (_this->count < 64) {
 "60
-[e $ ! < -> . *U __this 3 `i -> 64 `i 2233  ]
+[e $ ! < -> . *U __this 3 `i -> 64 `i 2234  ]
 {
 [; ;ringbufs.c: 61: _this->buf[_this->head] = c;
 "61
@@ -18441,11 +18454,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e =+ . *U __this 3 -> -> 1 `i `uc ]
 "64
 }
-[e :U 2233 ]
+[e :U 2234 ]
 [; ;ringbufs.c: 64: }
 [; ;ringbufs.c: 65: }
 "65
-[e :UE 2232 ]
+[e :UE 2233 ]
 }
 "67
 [v _ringBufS_put_dma `(v ~T0 @X0 1 ef2`*S2222`Cuc ]
@@ -18461,7 +18474,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;ringbufs.c: 69: if (_this->count < 64) {
 "69
-[e $ ! < -> . *U __this 3 `i -> 64 `i 2235  ]
+[e $ ! < -> . *U __this 3 `i -> 64 `i 2236  ]
 {
 [; ;ringbufs.c: 70: _this->buf[_this->head] = c;
 "70
@@ -18474,11 +18487,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e =+ . *U __this 3 -> -> 1 `i `uc ]
 "73
 }
-[e :U 2235 ]
+[e :U 2236 ]
 [; ;ringbufs.c: 73: }
 [; ;ringbufs.c: 74: }
 "74
-[e :UE 2234 ]
+[e :UE 2235 ]
 }
 "76
 [v _ringBufS_flush `(v ~T0 @X0 1 ef2`*S2222`Cc ]
@@ -18503,16 +18516,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = . *U __this 2 -> -> 0 `i `uc ]
 [; ;ringbufs.c: 81: if (clearBuffer) {
 "81
-[e $ ! != -> _clearBuffer `i -> -> -> 0 `i `Cc `i 2237  ]
+[e $ ! != -> _clearBuffer `i -> -> -> 0 `i `Cc `i 2238  ]
 {
 [; ;ringbufs.c: 82: memset(_this->buf, 0, sizeof(_this->buf));
 "82
 [e ( _memset (3 , , -> &U . *U __this 0 `*v -> 0 `i * -> # *U &U . *U __this 0 `ui -> -> 64 `i `ui ]
 "83
 }
-[e :U 2237 ]
+[e :U 2238 ]
 [; ;ringbufs.c: 83: }
 [; ;ringbufs.c: 84: }
 "84
-[e :UE 2236 ]
+[e :UE 2237 ]
 }

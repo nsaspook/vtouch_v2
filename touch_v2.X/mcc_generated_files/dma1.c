@@ -103,14 +103,11 @@ void DMA1_Initialize(void)
 	PIE2bits.DMA1AIE = 1; // enable abort Interrupt
 	PIE2bits.DMA1ORIE = 1; // enable overrun Interrupt 
 
-	//	m_ARBITER_UNLOCK(); /* unlock Arbiter settings */
-	MAINPR = 3;
-	ISRPR = 2;
-	DMA1PR = 0;
-	DMA2PR = 1;
-	SCANPR = 4;
-	//	m_ARBITER_LOCK(); /* lock Arbiter settings */
-
+	ISRPR = 0;
+	MAINPR = 1;
+	DMA1PR = 4;
+	DMA2PR = 2;
+	SCANPR = 3;
 
 	asm("BCF INTCON0,7");
 
@@ -130,7 +127,7 @@ void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
 {
 	PIR2bits.DMA1SCNTIF = 0; // clear Source Count Interrupt Flag 
 	// add your DMA channel 1 source count 0 interrupt custom code
-	spi_link.LCD_DATA=0;
+	spi_link.LCD_DATA = 0;
 }
 
 void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()
