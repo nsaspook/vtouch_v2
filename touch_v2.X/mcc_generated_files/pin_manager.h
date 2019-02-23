@@ -311,6 +311,46 @@
 #define LED0_SetAnalogMode()      do { ANSELEbits.ANSELE0 = 1; } while(0)
 #define LED0_SetDigitalMode()     do { ANSELEbits.ANSELE0 = 0; } while(0)
 
+// get/set DEBUG1 aliases
+#define DEBUG1_TRIS                 TRISEbits.TRISE1
+#define DEBUG1_LAT                  LATEbits.LATE1
+#define DEBUG1_PORT                 PORTEbits.RE1
+#define DEBUG1_WPU                  WPUEbits.WPUE1
+#define DEBUG1_OD                   ODCONEbits.ODCE1
+#define DEBUG1_ANS                  ANSELEbits.ANSELE1
+#define DEBUG1_SetHigh()            do { LATEbits.LATE1 = 1; } while(0)
+#define DEBUG1_SetLow()             do { LATEbits.LATE1 = 0; } while(0)
+#define DEBUG1_Toggle()             do { LATEbits.LATE1 = ~LATEbits.LATE1; } while(0)
+#define DEBUG1_GetValue()           PORTEbits.RE1
+#define DEBUG1_SetDigitalInput()    do { TRISEbits.TRISE1 = 1; } while(0)
+#define DEBUG1_SetDigitalOutput()   do { TRISEbits.TRISE1 = 0; } while(0)
+#define DEBUG1_SetPullup()          do { WPUEbits.WPUE1 = 1; } while(0)
+#define DEBUG1_ResetPullup()        do { WPUEbits.WPUE1 = 0; } while(0)
+#define DEBUG1_SetPushPull()        do { ODCONEbits.ODCE1 = 0; } while(0)
+#define DEBUG1_SetOpenDrain()       do { ODCONEbits.ODCE1 = 1; } while(0)
+#define DEBUG1_SetAnalogMode()      do { ANSELEbits.ANSELE1 = 1; } while(0)
+#define DEBUG1_SetDigitalMode()     do { ANSELEbits.ANSELE1 = 0; } while(0)
+
+// get/set DEBUG2 aliases
+#define DEBUG2_TRIS                 TRISEbits.TRISE2
+#define DEBUG2_LAT                  LATEbits.LATE2
+#define DEBUG2_PORT                 PORTEbits.RE2
+#define DEBUG2_WPU                  WPUEbits.WPUE2
+#define DEBUG2_OD                   ODCONEbits.ODCE2
+#define DEBUG2_ANS                  ANSELEbits.ANSELE2
+#define DEBUG2_SetHigh()            do { LATEbits.LATE2 = 1; } while(0)
+#define DEBUG2_SetLow()             do { LATEbits.LATE2 = 0; } while(0)
+#define DEBUG2_Toggle()             do { LATEbits.LATE2 = ~LATEbits.LATE2; } while(0)
+#define DEBUG2_GetValue()           PORTEbits.RE2
+#define DEBUG2_SetDigitalInput()    do { TRISEbits.TRISE2 = 1; } while(0)
+#define DEBUG2_SetDigitalOutput()   do { TRISEbits.TRISE2 = 0; } while(0)
+#define DEBUG2_SetPullup()          do { WPUEbits.WPUE2 = 1; } while(0)
+#define DEBUG2_ResetPullup()        do { WPUEbits.WPUE2 = 0; } while(0)
+#define DEBUG2_SetPushPull()        do { ODCONEbits.ODCE2 = 0; } while(0)
+#define DEBUG2_SetOpenDrain()       do { ODCONEbits.ODCE2 = 1; } while(0)
+#define DEBUG2_SetAnalogMode()      do { ANSELEbits.ANSELE2 = 1; } while(0)
+#define DEBUG2_SetDigitalMode()     do { ANSELEbits.ANSELE2 = 0; } while(0)
+
 /**
    @Param
     none

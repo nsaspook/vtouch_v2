@@ -1,5 +1,5 @@
 
-# 1 "mcc_generated_files/pin_manager.c"
+# 1 "mcc_generated_files/dma1.c"
 
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -27657,79 +27657,297 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 364 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 13 "/opt/microchip/xc8/v2.05/pic/include/c90/stdint.h"
+typedef signed char int8_t;
+
+# 20
+typedef signed int int16_t;
+
+# 28
+typedef __int24 int24_t;
+
+# 36
+typedef signed long int int32_t;
+
+# 52
+typedef unsigned char uint8_t;
+
+# 58
+typedef unsigned int uint16_t;
+
+# 65
+typedef __uint24 uint24_t;
+
+# 72
+typedef unsigned long int uint32_t;
+
+# 88
+typedef signed char int_least8_t;
+
+# 96
+typedef signed int int_least16_t;
+
+# 109
+typedef __int24 int_least24_t;
+
+# 118
+typedef signed long int int_least32_t;
+
+# 136
+typedef unsigned char uint_least8_t;
+
+# 143
+typedef unsigned int uint_least16_t;
+
+# 154
+typedef __uint24 uint_least24_t;
+
+# 162
+typedef unsigned long int uint_least32_t;
+
+# 181
+typedef signed char int_fast8_t;
+
+# 188
+typedef signed int int_fast16_t;
+
+# 200
+typedef __int24 int_fast24_t;
+
+# 208
+typedef signed long int int_fast32_t;
+
+# 224
+typedef unsigned char uint_fast8_t;
+
+# 230
+typedef unsigned int uint_fast16_t;
+
+# 240
+typedef __uint24 uint_fast24_t;
+
+# 247
+typedef unsigned long int uint_fast32_t;
+
+# 268
+typedef int32_t intmax_t;
+
+# 282
+typedef uint32_t uintmax_t;
+
+# 289
+typedef int16_t intptr_t;
+
+
+
+
+typedef uint16_t uintptr_t;
+
+# 4 "/opt/microchip/xc8/v2.05/pic/include/__size_t.h"
+typedef unsigned size_t;
+
+# 7 "/opt/microchip/xc8/v2.05/pic/include/c90/stdlib.h"
+typedef unsigned short wchar_t;
+
+# 15
+typedef struct {
+int rem;
+int quot;
+} div_t;
+typedef struct {
+unsigned rem;
+unsigned quot;
+} udiv_t;
+typedef struct {
+long quot;
+long rem;
+} ldiv_t;
+typedef struct {
+unsigned long quot;
+unsigned long rem;
+} uldiv_t;
+
+# 65
+extern double atof(const char *);
+extern double strtod(const char *, const char **);
+extern int atoi(const char *);
+extern unsigned xtoi(const char *);
+extern long atol(const char *);
+
+# 73
+extern long strtol(const char *, char **, int);
+
+extern int rand(void);
+extern void srand(unsigned int);
+extern void * calloc(size_t, size_t);
+extern div_t div(int numer, int denom);
+extern udiv_t udiv(unsigned numer, unsigned denom);
+extern ldiv_t ldiv(long numer, long denom);
+extern uldiv_t uldiv(unsigned long numer,unsigned long denom);
+
+# 85
+extern unsigned long _lrotl(unsigned long value, unsigned int shift);
+extern unsigned long _lrotr(unsigned long value, unsigned int shift);
+extern unsigned int _rotl(unsigned int value, unsigned int shift);
+extern unsigned int _rotr(unsigned int value, unsigned int shift);
+
+
+
+
+extern void * malloc(size_t);
+extern void free(void *);
+extern void * realloc(void *, size_t);
+
+# 104
+extern int atexit(void (*)(void));
+extern char * getenv(const char *);
+extern char ** environ;
+extern int system(char *);
+extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
+extern void * bsearch(const void *, void *, size_t, size_t, int(*)(const void *, const void *));
+extern int abs(int);
+extern long labs(long);
+
+extern char * itoa(char * buf, int val, int base);
+extern char * utoa(char * buf, unsigned val, int base);
+
+
+
+
+extern char * ltoa(char * buf, long val, int base);
+extern char * ultoa(char * buf, unsigned long val, int base);
+
+extern char * ftoa(float f, int * status);
+
+# 114 "mcc_generated_files/dma1.h"
+void DMA1_Initialize(void);
+
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
 
 # 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
-# 57 "mcc_generated_files/pin_manager.c"
-void PIN_MANAGER_Initialize(void)
+# 6 "/opt/microchip/xc8/v2.05/pic/include/c90/stddef.h"
+typedef int ptrdiff_t;
+
+# 117 "mcc_generated_files/../mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+
+# 152
+uint8_t SPI1_Exchange8bit(uint8_t data);
+
+# 192
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+
+# 364 "mcc_generated_files/../mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+
+# 19 "mcc_generated_files/../ringbufs.h"
+typedef struct ringBufS_t {
+uint8_t buf[64];
+uint8_t head;
+uint8_t tail;
+uint8_t count;
+} ringBufS_t;
+
+void ringBufS_init(volatile ringBufS_t *_this);
+int8_t ringBufS_empty(ringBufS_t *_this);
+int8_t ringBufS_full(ringBufS_t *_this);
+uint8_t ringBufS_get(ringBufS_t *_this);
+void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+
+# 33 "mcc_generated_files/../vconfig.h"
+struct spi_link_type {
+uint8_t SPI_LCD : 1;
+uint8_t SPI_AUX : 1;
+uint8_t LCD_TIMER : 1;
+volatile uint8_t LCD_DATA : 1;
+uint16_t delay;
+uint8_t config;
+struct ringBufS_t *tx1b, *tx1a;
+volatile int32_t int_count;
+};
+
+# 60 "mcc_generated_files/dma1.c"
+extern struct spi_link_type spi_link;
+
+# 86
+void DMA1_Initialize(void)
 {
+DMA1SSA = 0x001000;
+DMA1DSA = 0x3D11;
+DMA1CON1 = 0x03;
+DMA1SSZ = 0x0001;
+DMA1DSZ = 0x0001;
+DMA1SIRQ = 0x15;
+DMA1AIRQ = 0x0;
 
-# 62
-LATE = 0x07;
-LATD = 0x00;
-LATA = 0x00;
-LATF = 0x00;
-LATB = 0x00;
-LATC = 0x06;
+PIR2bits.DMA1DCNTIF = 0;
+PIR2bits.DMA1SCNTIF = 0;
+PIR2bits.DMA1AIF = 0;
+PIR2bits.DMA1ORIF = 0;
 
-# 72
-TRISE = 0x00;
-TRISF = 0xFF;
-TRISA = 0xFF;
-TRISB = 0xBF;
-TRISC = 0x91;
-TRISD = 0xFF;
+PIE2bits.DMA1DCNTIE = 1;
+PIE2bits.DMA1SCNTIE = 1;
+PIE2bits.DMA1AIE = 1;
+PIE2bits.DMA1ORIE = 1;
 
-# 82
-ANSELD = 0xFF;
-ANSELC = 0x01;
-ANSELB = 0x38;
-ANSELE = 0x00;
-ANSELF = 0xFF;
-ANSELA = 0xFF;
 
-# 92
-WPUD = 0x00;
-WPUF = 0x00;
-WPUE = 0x00;
-WPUB = 0x00;
-WPUA = 0x00;
-WPUC = 0x00;
+MAINPR = 3;
+ISRPR = 2;
+DMA1PR = 0;
+DMA2PR = 1;
+SCANPR = 4;
 
-# 102
-ODCONE = 0x00;
-ODCONF = 0x00;
-ODCONA = 0x00;
-ODCONB = 0x00;
-ODCONC = 0x00;
-ODCOND = 0x00;
 
-# 112
-SLRCONA = 0xFF;
-SLRCONB = 0xFF;
-SLRCONC = 0xFF;
-SLRCOND = 0xFF;
-SLRCONE = 0x07;
-SLRCONF = 0xFF;
 
-# 126
-U2RXPPS = 0x0F;
-SPI1SCKPPS = 0x13;
-RB6PPS = 0x16;
-RC3PPS = 0x1E;
-INT0PPS = 0x08;
-INT2PPS = 0x0A;
-INT1PPS = 0x09;
-RC5PPS = 0x1F;
-RC6PPS = 0x13;
-U1RXPPS = 0x17;
-SPI1SDIPPS = 0x14;
+asm("BCF INTCON0,7");
+
+asm("BANKSEL PRLOCK");
+asm("MOVLW 0x55");
+asm("MOVWF PRLOCK");
+asm("MOVLW 0xAA");
+asm("MOVWF PRLOCK");
+asm("BSF PRLOCK, 0");
+
+asm("BSF INTCON0,7");
+
+DMA1CON0 = 0x00;
 }
 
-void PIN_MANAGER_IOC(void)
+void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
 {
+PIR2bits.DMA1SCNTIF = 0;
+
+spi_link.LCD_DATA=0;
+}
+
+void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()
+{
+PIR2bits.DMA1DCNTIF = 0;
+
+}
+
+# 146
+void __interrupt(irq(DMA1A), base(8)) DMA1_DMAA_ISR()
+
+{
+PIR2bits.DMA1AIF = 0;
+
+}
+
+# 157
+void __interrupt(irq(DMA1OR), base(8)) DMA1_DMAOR_ISR()
+
+{
+PIR2bits.DMA1ORIF = 0;
+
+LATEbits.LATE1 = 0;
 }
 

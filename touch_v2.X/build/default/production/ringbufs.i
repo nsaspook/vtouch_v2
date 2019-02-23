@@ -27793,7 +27793,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 
-# 324 "mcc_generated_files/pin_manager.h"
+# 364 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 33 "vconfig.h"
@@ -27801,11 +27801,11 @@ struct spi_link_type {
 uint8_t SPI_LCD : 1;
 uint8_t SPI_AUX : 1;
 uint8_t LCD_TIMER : 1;
-uint8_t LCD_DATA : 1;
+volatile uint8_t LCD_DATA : 1;
 uint16_t delay;
 uint8_t config;
-volatile struct ringBufS_t *tx1b, *tx1a;
-int32_t int_count;
+struct ringBufS_t *tx1b, *tx1a;
+volatile int32_t int_count;
 };
 
 # 19 "ringbufs.h"
@@ -27821,6 +27821,7 @@ int8_t ringBufS_empty(ringBufS_t *_this);
 int8_t ringBufS_full(ringBufS_t *_this);
 uint8_t ringBufS_get(ringBufS_t *_this);
 void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
 void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 
 # 7 "ringbufs.c"
@@ -27874,6 +27875,15 @@ void ringBufS_put(ringBufS_t *_this, const uint8_t c)
 if (_this->count < 64) {
 _this->buf[_this->head] = c;
 _this->head = modulo_inc(_this->head, 64);
+++_this->count;
+}
+}
+
+void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c)
+{
+if (_this->count < 64) {
+_this->buf[_this->head] = c;
+++_this->head;
 ++_this->count;
 }
 }

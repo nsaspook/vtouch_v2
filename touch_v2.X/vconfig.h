@@ -34,11 +34,11 @@ extern "C" {
 		uint8_t SPI_LCD : 1;
 		uint8_t SPI_AUX : 1;
 		uint8_t LCD_TIMER : 1;
-		uint8_t LCD_DATA : 1;
+		volatile uint8_t LCD_DATA : 1;
 		uint16_t delay;
 		uint8_t config;
-		volatile struct ringBufS_t *tx1b, *tx1a;
-		int32_t int_count;
+		struct ringBufS_t *tx1b, *tx1a;
+		volatile int32_t int_count;
 	};
 
 #ifdef	__cplusplus

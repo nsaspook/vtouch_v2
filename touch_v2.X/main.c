@@ -44,6 +44,8 @@
 #include "mcc_generated_files/mcc.h"
 #include "eadog.h"
 
+extern struct spi_link_type spi_link;
+
 /*
 			 Main application
  */
@@ -71,10 +73,14 @@ void main(void)
 	//    TMR6_Initialize();
 	init_display();
 
-	eaDogM_WriteString((char*)"Testing 12345678");
+	eaDogM_WriteString((char*) "Testing 12345678Testing 12345678Testing 12345678");
+	wait_lcd_done();
 	while (1) {
 		// Add your application code
-		eaDogM_WriteString((char*)"Testing 12345678");
+		eaDogM_WriteString((char*) "Testing 12345678Testing 12345678Testing 12345678");
+		wait_lcd_done();
+		LATEbits.LATE2 = 1;
+		//		if (SPI1INTFbits.SPI1TXUIF) SLED=1;
 	}
 }
 /**

@@ -64,6 +64,15 @@ void ringBufS_put(ringBufS_t *_this, const uint8_t c)
 	}
 }
 
+void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c)
+{
+	if (_this->count < RBUF_SIZE) {
+		_this->buf[_this->head] = c;
+		++_this->head;
+		++_this->count;
+	}
+}
+
 void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer)
 {
 	_this->count = 0;

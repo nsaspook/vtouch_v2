@@ -59,6 +59,7 @@ void SYSTEM_Initialize(void)
     UART2_Initialize();
     UART1_Initialize();
     SPI1_Initialize();
+    DMA1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

@@ -69,15 +69,19 @@ void  INTERRUPT_Initialize (void)
 
     GIE = state;
     // Assign peripheral interrupt priority vectors
+    IPR2bits.DMA1AIP = 1;
+    IPR2bits.DMA1DCNTIP = 1;
+    IPR2bits.DMA1SCNTIP = 1;
+    IPR2bits.DMA1ORIP = 1;
+    IPR6bits.U2TXIP = 1;
+    IPR6bits.U2RXIP = 1;
+    IPR3bits.U1TXIP = 1;
+    IPR3bits.U1RXIP = 1;
     IPR1bits.INT0IP = 1;
     IPR5bits.INT1IP = 1;
     IPR7bits.INT2IP = 1;
-    IPR6bits.U2TXIP = 1;
-    IPR6bits.U2RXIP = 1;
     IPR9bits.TMR6IP = 1;
     IPR1bits.ADIP = 1;
-    IPR3bits.U1TXIP = 1;
-    IPR3bits.U1RXIP = 1;
 }
 
 void __interrupt(irq(default),base(8)) Default_ISR()

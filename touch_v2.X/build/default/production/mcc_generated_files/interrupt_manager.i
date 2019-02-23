@@ -27660,7 +27660,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 324 "mcc_generated_files/pin_manager.h"
+# 364 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "/opt/microchip/xc8/v2.05/pic/include/c90/stdint.h"
@@ -27753,112 +27753,6 @@ typedef uint16_t uintptr_t;
 typedef unsigned char bool;
 
 # 15
-typedef unsigned char bool;
-
-# 72 "mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
-
-# 89
-typedef enum
-{
-channel_ANA0 = 0x0,
-channel_ANA1 = 0x1,
-channel_ANA2 = 0x2,
-channel_VSS = 0x3B,
-channel_Temp = 0x3C,
-channel_DAC1 = 0x3D,
-channel_FVR_Buffer1 = 0x3E,
-channel_FVR_Buffer2 = 0x3F
-} adcc_channel_t;
-
-# 133
-void ADCC_Initialize(void);
-
-# 162
-void ADCC_StartConversion(adcc_channel_t channel);
-
-# 192
-bool ADCC_IsConversionDone();
-
-# 224
-adc_result_t ADCC_GetConversionResult(void);
-
-# 255
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-
-# 280
-void ADCC_StopConversion(void);
-
-# 307
-void ADCC_SetStopOnInterrupt(void);
-
-# 332
-void ADCC_DischargeSampleCapacitor(void);
-
-# 358
-void ADCC_LoadAcquisitionRegister(uint16_t);
-
-# 384
-void ADCC_SetPrechargeTime(uint16_t);
-
-# 409
-void ADCC_SetRepeatCount(uint8_t);
-
-# 437
-uint8_t ADCC_GetCurrentCountofConversions(void);
-
-# 461
-void ADCC_ClearAccumulator(void);
-
-# 486
-int24_t ADCC_GetAccumulatorValue(void);
-
-# 514
-bool ADCC_HasAccumulatorOverflowed(void);
-
-# 539
-uint16_t ADCC_GetFilterValue(void);
-
-# 567
-uint16_t ADCC_GetPreviousResult(void);
-
-# 593
-void ADCC_DefineSetPoint(uint16_t);
-
-# 619
-void ADCC_SetUpperThreshold(uint16_t);
-
-# 645
-void ADCC_SetLowerThreshold(uint16_t);
-
-# 672
-uint16_t ADCC_GetErrorCalculation(void);
-
-# 699
-void ADCC_EnableDoubleSampling(void);
-
-# 723
-void ADCC_EnableContinuousConversion(void);
-
-# 747
-void ADCC_DisableContinuousConversion(void);
-
-# 775
-bool ADCC_HasErrorCrossedUpperThreshold(void);
-
-# 803
-bool ADCC_HasErrorCrossedLowerThreshold(void);
-
-# 830
-uint8_t ADCC_GetConversionStageStatus(void);
-
-# 847
-void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-
-# 867
-void ADCC_DefaultInterruptHandler(void);
-
-# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
 # 79 "mcc_generated_files/tmr6.h"
@@ -28062,6 +27956,112 @@ extern void (*TMR6_InterruptHandler)(void);
 # 882
 void TMR6_DefaultInterruptHandler(void);
 
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 72 "mcc_generated_files/adcc.h"
+typedef uint16_t adc_result_t;
+
+# 89
+typedef enum
+{
+channel_ANA0 = 0x0,
+channel_ANA1 = 0x1,
+channel_ANA2 = 0x2,
+channel_VSS = 0x3B,
+channel_Temp = 0x3C,
+channel_DAC1 = 0x3D,
+channel_FVR_Buffer1 = 0x3E,
+channel_FVR_Buffer2 = 0x3F
+} adcc_channel_t;
+
+# 133
+void ADCC_Initialize(void);
+
+# 162
+void ADCC_StartConversion(adcc_channel_t channel);
+
+# 192
+bool ADCC_IsConversionDone();
+
+# 224
+adc_result_t ADCC_GetConversionResult(void);
+
+# 255
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+
+# 280
+void ADCC_StopConversion(void);
+
+# 307
+void ADCC_SetStopOnInterrupt(void);
+
+# 332
+void ADCC_DischargeSampleCapacitor(void);
+
+# 358
+void ADCC_LoadAcquisitionRegister(uint16_t);
+
+# 384
+void ADCC_SetPrechargeTime(uint16_t);
+
+# 409
+void ADCC_SetRepeatCount(uint8_t);
+
+# 437
+uint8_t ADCC_GetCurrentCountofConversions(void);
+
+# 461
+void ADCC_ClearAccumulator(void);
+
+# 486
+int24_t ADCC_GetAccumulatorValue(void);
+
+# 514
+bool ADCC_HasAccumulatorOverflowed(void);
+
+# 539
+uint16_t ADCC_GetFilterValue(void);
+
+# 567
+uint16_t ADCC_GetPreviousResult(void);
+
+# 593
+void ADCC_DefineSetPoint(uint16_t);
+
+# 619
+void ADCC_SetUpperThreshold(uint16_t);
+
+# 645
+void ADCC_SetLowerThreshold(uint16_t);
+
+# 672
+uint16_t ADCC_GetErrorCalculation(void);
+
+# 699
+void ADCC_EnableDoubleSampling(void);
+
+# 723
+void ADCC_EnableContinuousConversion(void);
+
+# 747
+void ADCC_DisableContinuousConversion(void);
+
+# 775
+bool ADCC_HasErrorCrossedUpperThreshold(void);
+
+# 803
+bool ADCC_HasErrorCrossedLowerThreshold(void);
+
+# 830
+uint8_t ADCC_GetConversionStageStatus(void);
+
+# 847
+void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
+
+# 867
+void ADCC_DefaultInterruptHandler(void);
+
 # 562 "mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
 
@@ -28193,6 +28193,85 @@ typedef unsigned char bool;
 # 4 "/opt/microchip/xc8/v2.05/pic/include/__size_t.h"
 typedef unsigned size_t;
 
+# 7 "/opt/microchip/xc8/v2.05/pic/include/c90/stdlib.h"
+typedef unsigned short wchar_t;
+
+# 15
+typedef struct {
+int rem;
+int quot;
+} div_t;
+typedef struct {
+unsigned rem;
+unsigned quot;
+} udiv_t;
+typedef struct {
+long quot;
+long rem;
+} ldiv_t;
+typedef struct {
+unsigned long quot;
+unsigned long rem;
+} uldiv_t;
+
+# 65
+extern double atof(const char *);
+extern double strtod(const char *, const char **);
+extern int atoi(const char *);
+extern unsigned xtoi(const char *);
+extern long atol(const char *);
+
+# 73
+extern long strtol(const char *, char **, int);
+
+extern int rand(void);
+extern void srand(unsigned int);
+extern void * calloc(size_t, size_t);
+extern div_t div(int numer, int denom);
+extern udiv_t udiv(unsigned numer, unsigned denom);
+extern ldiv_t ldiv(long numer, long denom);
+extern uldiv_t uldiv(unsigned long numer,unsigned long denom);
+
+# 85
+extern unsigned long _lrotl(unsigned long value, unsigned int shift);
+extern unsigned long _lrotr(unsigned long value, unsigned int shift);
+extern unsigned int _rotl(unsigned int value, unsigned int shift);
+extern unsigned int _rotr(unsigned int value, unsigned int shift);
+
+
+
+
+extern void * malloc(size_t);
+extern void free(void *);
+extern void * realloc(void *, size_t);
+
+# 104
+extern int atexit(void (*)(void));
+extern char * getenv(const char *);
+extern char ** environ;
+extern int system(char *);
+extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
+extern void * bsearch(const void *, void *, size_t, size_t, int(*)(const void *, const void *));
+extern int abs(int);
+extern long labs(long);
+
+extern char * itoa(char * buf, int val, int base);
+extern char * utoa(char * buf, unsigned val, int base);
+
+
+
+
+extern char * ltoa(char * buf, long val, int base);
+extern char * ultoa(char * buf, unsigned long val, int base);
+
+extern char * ftoa(float f, int * status);
+
+# 114 "mcc_generated_files/dma1.h"
+void DMA1_Initialize(void);
+
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
 # 6 "/opt/microchip/xc8/v2.05/pic/include/c90/stddef.h"
 typedef int ptrdiff_t;
 
@@ -28205,13 +28284,13 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 
-# 75 "mcc_generated_files/mcc.h"
+# 76 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 88
+# 89
 void OSCILLATOR_Initialize(void);
 
-# 101
+# 102
 void PMD_Initialize(void);
 
 # 52 "mcc_generated_files/interrupt_manager.c"
@@ -28235,15 +28314,19 @@ IVTLOCKbits.IVTLOCKED = 0x01;
 
 GIE = state;
 
+IPR2bits.DMA1AIP = 1;
+IPR2bits.DMA1DCNTIP = 1;
+IPR2bits.DMA1SCNTIP = 1;
+IPR2bits.DMA1ORIP = 1;
+IPR6bits.U2TXIP = 1;
+IPR6bits.U2RXIP = 1;
+IPR3bits.U1TXIP = 1;
+IPR3bits.U1RXIP = 1;
 IPR1bits.INT0IP = 1;
 IPR5bits.INT1IP = 1;
 IPR7bits.INT2IP = 1;
-IPR6bits.U2TXIP = 1;
-IPR6bits.U2RXIP = 1;
 IPR9bits.TMR6IP = 1;
 IPR1bits.ADIP = 1;
-IPR3bits.U1TXIP = 1;
-IPR3bits.U1RXIP = 1;
 }
 
 void __interrupt(irq(default),base(8)) Default_ISR()

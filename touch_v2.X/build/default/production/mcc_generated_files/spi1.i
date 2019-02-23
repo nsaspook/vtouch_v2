@@ -27770,11 +27770,11 @@ SPI1CON1 = 0x40;
 
 SPI1CON2 = 0x03;
 
-SPI1BAUD = 0x1F;
+SPI1BAUD = 0x4F;
 
 SPI1CLK = 0x00;
 
-SPI1CON0 = 0x82;
+SPI1CON0 = 0x83;
 }
 
 uint8_t SPI1_Exchange8bit(uint8_t data)

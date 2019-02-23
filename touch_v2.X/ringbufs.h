@@ -28,6 +28,7 @@ extern "C" {
 	int8_t ringBufS_full(ringBufS_t *_this);
 	uint8_t ringBufS_get(ringBufS_t *_this);
 	void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+	void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
 	void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 
 

@@ -5,11 +5,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v F16216 `(v ~T0 @X0 0 tf ]
 "109 mcc_generated_files/interrupt_manager.h
 [v _INTERRUPT_Initialize `(v ~T0 @X0 0 ef ]
-"101 mcc_generated_files/mcc.h
+"102 mcc_generated_files/mcc.h
 [v _PMD_Initialize `(v ~T0 @X0 0 ef ]
-"324 mcc_generated_files/pin_manager.h
+"364 mcc_generated_files/pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"88 mcc_generated_files/mcc.h
+"89 mcc_generated_files/mcc.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
 "365 mcc_generated_files/tmr6.h
 [v _TMR6_Initialize `(v ~T0 @X0 0 ef ]
@@ -23,6 +23,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _UART1_Initialize `(v ~T0 @X0 0 ef ]
 "117 mcc_generated_files/spi1.h
 [v _SPI1_Initialize `(v ~T0 @X0 0 ef ]
+"114 mcc_generated_files/dma1.h
+[v _DMA1_Initialize `(v ~T0 @X0 0 ef ]
 "5207 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@14809 ]
 "5347
@@ -18214,7 +18216,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 183: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 185: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 187: extern __nonreentrant void _delay3(unsigned char);
-[; ;pin_manager.h: 324: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 364: void PIN_MANAGER_Initialize (void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef __int24 int24_t;
@@ -18245,48 +18247,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdint.h: 294: typedef uint16_t uintptr_t;
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;interrupt_manager.h: 109: void INTERRUPT_Initialize (void);
-[; ;stdbool.h: 15: typedef unsigned char bool;
-[; ;adcc.h: 72: typedef uint16_t adc_result_t;
-[; ;adcc.h: 89: typedef enum
-[; ;adcc.h: 90: {
-[; ;adcc.h: 91: channel_ANA0 = 0x0,
-[; ;adcc.h: 92: channel_ANA1 = 0x1,
-[; ;adcc.h: 93: channel_ANA2 = 0x2,
-[; ;adcc.h: 94: channel_VSS = 0x3B,
-[; ;adcc.h: 95: channel_Temp = 0x3C,
-[; ;adcc.h: 96: channel_DAC1 = 0x3D,
-[; ;adcc.h: 97: channel_FVR_Buffer1 = 0x3E,
-[; ;adcc.h: 98: channel_FVR_Buffer2 = 0x3F
-[; ;adcc.h: 99: } adcc_channel_t;
-[; ;adcc.h: 133: void ADCC_Initialize(void);
-[; ;adcc.h: 162: void ADCC_StartConversion(adcc_channel_t channel);
-[; ;adcc.h: 192: bool ADCC_IsConversionDone();
-[; ;adcc.h: 224: adc_result_t ADCC_GetConversionResult(void);
-[; ;adcc.h: 255: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-[; ;adcc.h: 280: void ADCC_StopConversion(void);
-[; ;adcc.h: 307: void ADCC_SetStopOnInterrupt(void);
-[; ;adcc.h: 332: void ADCC_DischargeSampleCapacitor(void);
-[; ;adcc.h: 358: void ADCC_LoadAcquisitionRegister(uint16_t);
-[; ;adcc.h: 384: void ADCC_SetPrechargeTime(uint16_t);
-[; ;adcc.h: 409: void ADCC_SetRepeatCount(uint8_t);
-[; ;adcc.h: 437: uint8_t ADCC_GetCurrentCountofConversions(void);
-[; ;adcc.h: 461: void ADCC_ClearAccumulator(void);
-[; ;adcc.h: 486: int24_t ADCC_GetAccumulatorValue(void);
-[; ;adcc.h: 514: bool ADCC_HasAccumulatorOverflowed(void);
-[; ;adcc.h: 539: uint16_t ADCC_GetFilterValue(void);
-[; ;adcc.h: 567: uint16_t ADCC_GetPreviousResult(void);
-[; ;adcc.h: 593: void ADCC_DefineSetPoint(uint16_t);
-[; ;adcc.h: 619: void ADCC_SetUpperThreshold(uint16_t);
-[; ;adcc.h: 645: void ADCC_SetLowerThreshold(uint16_t);
-[; ;adcc.h: 672: uint16_t ADCC_GetErrorCalculation(void);
-[; ;adcc.h: 699: void ADCC_EnableDoubleSampling(void);
-[; ;adcc.h: 723: void ADCC_EnableContinuousConversion(void);
-[; ;adcc.h: 747: void ADCC_DisableContinuousConversion(void);
-[; ;adcc.h: 775: bool ADCC_HasErrorCrossedUpperThreshold(void);
-[; ;adcc.h: 803: bool ADCC_HasErrorCrossedLowerThreshold(void);
-[; ;adcc.h: 830: uint8_t ADCC_GetConversionStageStatus(void);
-[; ;adcc.h: 847: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-[; ;adcc.h: 867: void ADCC_DefaultInterruptHandler(void);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;tmr6.h: 79: typedef enum
 [; ;tmr6.h: 80: {
@@ -18357,6 +18317,48 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;tmr6.h: 846: void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;tmr6.h: 864: extern void (*TMR6_InterruptHandler)(void);
 [; ;tmr6.h: 882: void TMR6_DefaultInterruptHandler(void);
+[; ;stdbool.h: 15: typedef unsigned char bool;
+[; ;adcc.h: 72: typedef uint16_t adc_result_t;
+[; ;adcc.h: 89: typedef enum
+[; ;adcc.h: 90: {
+[; ;adcc.h: 91: channel_ANA0 = 0x0,
+[; ;adcc.h: 92: channel_ANA1 = 0x1,
+[; ;adcc.h: 93: channel_ANA2 = 0x2,
+[; ;adcc.h: 94: channel_VSS = 0x3B,
+[; ;adcc.h: 95: channel_Temp = 0x3C,
+[; ;adcc.h: 96: channel_DAC1 = 0x3D,
+[; ;adcc.h: 97: channel_FVR_Buffer1 = 0x3E,
+[; ;adcc.h: 98: channel_FVR_Buffer2 = 0x3F
+[; ;adcc.h: 99: } adcc_channel_t;
+[; ;adcc.h: 133: void ADCC_Initialize(void);
+[; ;adcc.h: 162: void ADCC_StartConversion(adcc_channel_t channel);
+[; ;adcc.h: 192: bool ADCC_IsConversionDone();
+[; ;adcc.h: 224: adc_result_t ADCC_GetConversionResult(void);
+[; ;adcc.h: 255: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+[; ;adcc.h: 280: void ADCC_StopConversion(void);
+[; ;adcc.h: 307: void ADCC_SetStopOnInterrupt(void);
+[; ;adcc.h: 332: void ADCC_DischargeSampleCapacitor(void);
+[; ;adcc.h: 358: void ADCC_LoadAcquisitionRegister(uint16_t);
+[; ;adcc.h: 384: void ADCC_SetPrechargeTime(uint16_t);
+[; ;adcc.h: 409: void ADCC_SetRepeatCount(uint8_t);
+[; ;adcc.h: 437: uint8_t ADCC_GetCurrentCountofConversions(void);
+[; ;adcc.h: 461: void ADCC_ClearAccumulator(void);
+[; ;adcc.h: 486: int24_t ADCC_GetAccumulatorValue(void);
+[; ;adcc.h: 514: bool ADCC_HasAccumulatorOverflowed(void);
+[; ;adcc.h: 539: uint16_t ADCC_GetFilterValue(void);
+[; ;adcc.h: 567: uint16_t ADCC_GetPreviousResult(void);
+[; ;adcc.h: 593: void ADCC_DefineSetPoint(uint16_t);
+[; ;adcc.h: 619: void ADCC_SetUpperThreshold(uint16_t);
+[; ;adcc.h: 645: void ADCC_SetLowerThreshold(uint16_t);
+[; ;adcc.h: 672: uint16_t ADCC_GetErrorCalculation(void);
+[; ;adcc.h: 699: void ADCC_EnableDoubleSampling(void);
+[; ;adcc.h: 723: void ADCC_EnableContinuousConversion(void);
+[; ;adcc.h: 747: void ADCC_DisableContinuousConversion(void);
+[; ;adcc.h: 775: bool ADCC_HasErrorCrossedUpperThreshold(void);
+[; ;adcc.h: 803: bool ADCC_HasErrorCrossedLowerThreshold(void);
+[; ;adcc.h: 830: uint8_t ADCC_GetConversionStageStatus(void);
+[; ;adcc.h: 847: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
+[; ;adcc.h: 867: void ADCC_DefaultInterruptHandler(void);
 [; ;ext_int.h: 562: void EXT_INT_Initialize(void);
 [; ;ext_int.h: 590: void INT0_CallBack(void);
 [; ;ext_int.h: 613: void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
@@ -18410,13 +18412,65 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart1.h: 443: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;__size_t.h: 4: typedef unsigned size_t;
+[; ;stdlib.h: 7: typedef unsigned short wchar_t;
+[; ;stdlib.h: 15: typedef struct {
+[; ;stdlib.h: 16: int rem;
+[; ;stdlib.h: 17: int quot;
+[; ;stdlib.h: 18: } div_t;
+[; ;stdlib.h: 19: typedef struct {
+[; ;stdlib.h: 20: unsigned rem;
+[; ;stdlib.h: 21: unsigned quot;
+[; ;stdlib.h: 22: } udiv_t;
+[; ;stdlib.h: 23: typedef struct {
+[; ;stdlib.h: 24: long quot;
+[; ;stdlib.h: 25: long rem;
+[; ;stdlib.h: 26: } ldiv_t;
+[; ;stdlib.h: 27: typedef struct {
+[; ;stdlib.h: 28: unsigned long quot;
+[; ;stdlib.h: 29: unsigned long rem;
+[; ;stdlib.h: 30: } uldiv_t;
+[; ;stdlib.h: 65: extern double atof(const char *);
+[; ;stdlib.h: 66: extern double strtod(const char *, const char **);
+[; ;stdlib.h: 67: extern int atoi(const char *);
+[; ;stdlib.h: 68: extern unsigned xtoi(const char *);
+[; ;stdlib.h: 69: extern long atol(const char *);
+[; ;stdlib.h: 73: extern long strtol(const char *, char **, int);
+[; ;stdlib.h: 75: extern int rand(void);
+[; ;stdlib.h: 76: extern void srand(unsigned int);
+[; ;stdlib.h: 77: extern void * calloc(size_t, size_t);
+[; ;stdlib.h: 78: extern div_t div(int numer, int denom);
+[; ;stdlib.h: 79: extern udiv_t udiv(unsigned numer, unsigned denom);
+[; ;stdlib.h: 80: extern ldiv_t ldiv(long numer, long denom);
+[; ;stdlib.h: 81: extern uldiv_t uldiv(unsigned long numer,unsigned long denom);
+[; ;stdlib.h: 85: extern unsigned long _lrotl(unsigned long value, unsigned int shift);
+[; ;stdlib.h: 86: extern unsigned long _lrotr(unsigned long value, unsigned int shift);
+[; ;stdlib.h: 87: extern unsigned int _rotl(unsigned int value, unsigned int shift);
+[; ;stdlib.h: 88: extern unsigned int _rotr(unsigned int value, unsigned int shift);
+[; ;stdlib.h: 93: extern void * malloc(size_t);
+[; ;stdlib.h: 94: extern void free(void *);
+[; ;stdlib.h: 95: extern void * realloc(void *, size_t);
+[; ;stdlib.h: 104: extern int atexit(void (*)(void));
+[; ;stdlib.h: 105: extern char * getenv(const char *);
+[; ;stdlib.h: 106: extern char ** environ;
+[; ;stdlib.h: 107: extern int system(char *);
+[; ;stdlib.h: 108: extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
+[; ;stdlib.h: 109: extern void * bsearch(const void *, void *, size_t, size_t, int(*)(const void *, const void *));
+[; ;stdlib.h: 110: extern int abs(int);
+[; ;stdlib.h: 111: extern long labs(long);
+[; ;stdlib.h: 113: extern char * itoa(char * buf, int val, int base);
+[; ;stdlib.h: 114: extern char * utoa(char * buf, unsigned val, int base);
+[; ;stdlib.h: 119: extern char * ltoa(char * buf, long val, int base);
+[; ;stdlib.h: 120: extern char * ultoa(char * buf, unsigned long val, int base);
+[; ;stdlib.h: 122: extern char * ftoa(float f, int * status);
+[; ;dma1.h: 114: void DMA1_Initialize(void);
+[; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;stddef.h: 6: typedef int ptrdiff_t;
 [; ;spi1.h: 117: void SPI1_Initialize(void);
 [; ;spi1.h: 152: uint8_t SPI1_Exchange8bit(uint8_t data);
 [; ;spi1.h: 192: uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-[; ;mcc.h: 75: void SYSTEM_Initialize(void);
-[; ;mcc.h: 88: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 101: void PMD_Initialize(void);
+[; ;mcc.h: 76: void SYSTEM_Initialize(void);
+[; ;mcc.h: 89: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 102: void PMD_Initialize(void);
 "50 mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "51
@@ -18455,84 +18509,87 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;mcc.c: 61: SPI1_Initialize();
 "61
 [e ( _SPI1_Initialize ..  ]
-[; ;mcc.c: 62: }
+[; ;mcc.c: 62: DMA1_Initialize();
 "62
-[e :UE 2221 ]
+[e ( _DMA1_Initialize ..  ]
+[; ;mcc.c: 63: }
+"63
+[e :UE 2225 ]
 }
-"64
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "65
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"66
 {
-[; ;mcc.c: 64: void OSCILLATOR_Initialize(void)
-[; ;mcc.c: 65: {
+[; ;mcc.c: 65: void OSCILLATOR_Initialize(void)
+[; ;mcc.c: 66: {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-[; ;mcc.c: 67: OSCCON1 = 0x20;
-"67
+[; ;mcc.c: 68: OSCCON1 = 0x20;
+"68
 [e = _OSCCON1 -> -> 32 `i `uc ]
-[; ;mcc.c: 69: OSCCON3 = 0x00;
-"69
+[; ;mcc.c: 70: OSCCON3 = 0x00;
+"70
 [e = _OSCCON3 -> -> 0 `i `uc ]
-[; ;mcc.c: 71: OSCEN = 0x00;
-"71
+[; ;mcc.c: 72: OSCEN = 0x00;
+"72
 [e = _OSCEN -> -> 0 `i `uc ]
-[; ;mcc.c: 73: OSCFRQ = 0x02;
-"73
+[; ;mcc.c: 74: OSCFRQ = 0x02;
+"74
 [e = _OSCFRQ -> -> 2 `i `uc ]
-[; ;mcc.c: 75: OSCTUNE = 0x00;
-"75
+[; ;mcc.c: 76: OSCTUNE = 0x00;
+"76
 [e = _OSCTUNE -> -> 0 `i `uc ]
-[; ;mcc.c: 77: while(PLLR == 0)
-"77
-[e $U 2223  ]
-[e :U 2224 ]
-[; ;mcc.c: 78: {
+[; ;mcc.c: 78: while(PLLR == 0)
 "78
-{
+[e $U 2227  ]
+[e :U 2228 ]
+[; ;mcc.c: 79: {
 "79
-}
-[e :U 2223 ]
-"77
-[e $ == -> _PLLR `i -> 0 `i 2224  ]
-[e :U 2225 ]
-[; ;mcc.c: 79: }
-[; ;mcc.c: 80: }
-"80
-[e :UE 2222 ]
-}
-"82
-[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
-"83
 {
-[; ;mcc.c: 82: void PMD_Initialize(void)
-[; ;mcc.c: 83: {
+"80
+}
+[e :U 2227 ]
+"78
+[e $ == -> _PLLR `i -> 0 `i 2228  ]
+[e :U 2229 ]
+[; ;mcc.c: 80: }
+[; ;mcc.c: 81: }
+"81
+[e :UE 2226 ]
+}
+"83
+[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
+"84
+{
+[; ;mcc.c: 83: void PMD_Initialize(void)
+[; ;mcc.c: 84: {
 [e :U _PMD_Initialize ]
 [f ]
-[; ;mcc.c: 85: PMD0 = 0x00;
-"85
+[; ;mcc.c: 86: PMD0 = 0x00;
+"86
 [e = _PMD0 -> -> 0 `i `uc ]
-[; ;mcc.c: 87: PMD1 = 0x00;
-"87
+[; ;mcc.c: 88: PMD1 = 0x00;
+"88
 [e = _PMD1 -> -> 0 `i `uc ]
-[; ;mcc.c: 89: PMD2 = 0x00;
-"89
+[; ;mcc.c: 90: PMD2 = 0x00;
+"90
 [e = _PMD2 -> -> 0 `i `uc ]
-[; ;mcc.c: 91: PMD3 = 0x00;
-"91
+[; ;mcc.c: 92: PMD3 = 0x00;
+"92
 [e = _PMD3 -> -> 0 `i `uc ]
-[; ;mcc.c: 93: PMD4 = 0x00;
-"93
+[; ;mcc.c: 94: PMD4 = 0x00;
+"94
 [e = _PMD4 -> -> 0 `i `uc ]
-[; ;mcc.c: 95: PMD5 = 0x00;
-"95
+[; ;mcc.c: 96: PMD5 = 0x00;
+"96
 [e = _PMD5 -> -> 0 `i `uc ]
-[; ;mcc.c: 97: PMD6 = 0x00;
-"97
+[; ;mcc.c: 98: PMD6 = 0x00;
+"98
 [e = _PMD6 -> -> 0 `i `uc ]
-[; ;mcc.c: 99: PMD7 = 0x00;
-"99
-[e = _PMD7 -> -> 0 `i `uc ]
-[; ;mcc.c: 100: }
+[; ;mcc.c: 100: PMD7 = 0x00;
 "100
-[e :UE 2226 ]
+[e = _PMD7 -> -> 0 `i `uc ]
+[; ;mcc.c: 101: }
+"101
+[e :UE 2230 ]
 }

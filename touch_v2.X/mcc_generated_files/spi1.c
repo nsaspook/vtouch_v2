@@ -69,11 +69,11 @@ void SPI1_Initialize(void)
 		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
 		SPI1CON2 = 0x03;
 		// BAUD 0; 
-		SPI1BAUD = 0x1F;
+		SPI1BAUD = 0x4F;
 		// CLKSEL FOSC; 
 		SPI1CLK = 0x00;
-		// BMODE last byte; LSBF MSb first; EN enabled; MST bus master; 
-		SPI1CON0 = 0x82;
+		// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
+		SPI1CON0 = 0x83;
 }
 
 uint8_t SPI1_Exchange8bit(uint8_t data)

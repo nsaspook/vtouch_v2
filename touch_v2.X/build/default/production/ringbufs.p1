@@ -18227,16 +18227,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi1.h: 117: void SPI1_Initialize(void);
 [; ;spi1.h: 152: uint8_t SPI1_Exchange8bit(uint8_t data);
 [; ;spi1.h: 192: uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-[; ;pin_manager.h: 324: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 364: void PIN_MANAGER_Initialize (void);
 [; ;vconfig.h: 33: struct spi_link_type {
 [; ;vconfig.h: 34: uint8_t SPI_LCD : 1;
 [; ;vconfig.h: 35: uint8_t SPI_AUX : 1;
 [; ;vconfig.h: 36: uint8_t LCD_TIMER : 1;
-[; ;vconfig.h: 37: uint8_t LCD_DATA : 1;
+[; ;vconfig.h: 37: volatile uint8_t LCD_DATA : 1;
 [; ;vconfig.h: 38: uint16_t delay;
 [; ;vconfig.h: 39: uint8_t config;
-[; ;vconfig.h: 40: volatile struct ringBufS_t *tx1b, *tx1a;
-[; ;vconfig.h: 41: int32_t int_count;
+[; ;vconfig.h: 40: struct ringBufS_t *tx1b, *tx1a;
+[; ;vconfig.h: 41: volatile int32_t int_count;
 [; ;vconfig.h: 42: };
 [; ;ringbufs.h: 19: typedef struct ringBufS_t {
 [; ;ringbufs.h: 20: uint8_t buf[64];
@@ -18249,7 +18249,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ringbufs.h: 28: int8_t ringBufS_full(ringBufS_t *_this);
 [; ;ringbufs.h: 29: uint8_t ringBufS_get(ringBufS_t *_this);
 [; ;ringbufs.h: 30: void ringBufS_put(ringBufS_t *_this, const uint8_t c);
-[; ;ringbufs.h: 31: void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+[; ;ringbufs.h: 31: void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+[; ;ringbufs.h: 32: void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 "7 ringbufs.c
 [v _modulo_inc `(uc ~T0 @X0 1 ef2`Cuc`Cuc ]
 "8
@@ -18447,38 +18448,71 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 2232 ]
 }
 "67
-[v _ringBufS_flush `(v ~T0 @X0 1 ef2`*S2222`Cc ]
+[v _ringBufS_put_dma `(v ~T0 @X0 1 ef2`*S2222`Cuc ]
 "68
 {
-[; ;ringbufs.c: 67: void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer)
+[; ;ringbufs.c: 67: void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c)
 [; ;ringbufs.c: 68: {
-[e :U _ringBufS_flush ]
+[e :U _ringBufS_put_dma ]
 "67
 [v __this `*S2222 ~T0 @X0 1 r1 ]
-[v _clearBuffer `Cc ~T0 @X0 1 r2 ]
+[v _c `Cuc ~T0 @X0 1 r2 ]
 "68
 [f ]
-[; ;ringbufs.c: 69: _this->count = 0;
+[; ;ringbufs.c: 69: if (_this->count < 64) {
 "69
-[e = . *U __this 3 -> -> 0 `i `uc ]
-[; ;ringbufs.c: 70: _this->head = 0;
-"70
-[e = . *U __this 1 -> -> 0 `i `uc ]
-[; ;ringbufs.c: 71: _this->tail = 0;
-"71
-[e = . *U __this 2 -> -> 0 `i `uc ]
-[; ;ringbufs.c: 72: if (clearBuffer) {
-"72
-[e $ ! != -> _clearBuffer `i -> -> -> 0 `i `Cc `i 2235  ]
+[e $ ! < -> . *U __this 3 `i -> 64 `i 2235  ]
 {
-[; ;ringbufs.c: 73: memset(_this->buf, 0, sizeof(_this->buf));
+[; ;ringbufs.c: 70: _this->buf[_this->head] = c;
+"70
+[e = *U + &U . *U __this 0 * -> . *U __this 1 `ux -> -> # *U &U . *U __this 0 `ui `ux _c ]
+[; ;ringbufs.c: 71: ++_this->head;
+"71
+[e =+ . *U __this 1 -> -> 1 `i `uc ]
+[; ;ringbufs.c: 72: ++_this->count;
+"72
+[e =+ . *U __this 3 -> -> 1 `i `uc ]
 "73
-[e ( _memset (3 , , -> &U . *U __this 0 `*v -> 0 `i * -> # *U &U . *U __this 0 `ui -> -> 64 `i `ui ]
-"74
 }
 [e :U 2235 ]
+[; ;ringbufs.c: 73: }
 [; ;ringbufs.c: 74: }
-[; ;ringbufs.c: 75: }
-"75
+"74
 [e :UE 2234 ]
+}
+"76
+[v _ringBufS_flush `(v ~T0 @X0 1 ef2`*S2222`Cc ]
+"77
+{
+[; ;ringbufs.c: 76: void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer)
+[; ;ringbufs.c: 77: {
+[e :U _ringBufS_flush ]
+"76
+[v __this `*S2222 ~T0 @X0 1 r1 ]
+[v _clearBuffer `Cc ~T0 @X0 1 r2 ]
+"77
+[f ]
+[; ;ringbufs.c: 78: _this->count = 0;
+"78
+[e = . *U __this 3 -> -> 0 `i `uc ]
+[; ;ringbufs.c: 79: _this->head = 0;
+"79
+[e = . *U __this 1 -> -> 0 `i `uc ]
+[; ;ringbufs.c: 80: _this->tail = 0;
+"80
+[e = . *U __this 2 -> -> 0 `i `uc ]
+[; ;ringbufs.c: 81: if (clearBuffer) {
+"81
+[e $ ! != -> _clearBuffer `i -> -> -> 0 `i `Cc `i 2237  ]
+{
+[; ;ringbufs.c: 82: memset(_this->buf, 0, sizeof(_this->buf));
+"82
+[e ( _memset (3 , , -> &U . *U __this 0 `*v -> 0 `i * -> # *U &U . *U __this 0 `ui -> -> 64 `i `ui ]
+"83
+}
+[e :U 2237 ]
+[; ;ringbufs.c: 83: }
+[; ;ringbufs.c: 84: }
+"84
+[e :UE 2236 ]
 }

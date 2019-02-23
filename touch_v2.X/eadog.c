@@ -12,8 +12,9 @@
 
 #define max_strlen	64
 
-volatile struct spi_link_type spi_link;
-volatile struct ringBufS_t ring_buf1, ring_buf2;
+struct spi_link_type spi_link;
+struct ringBufS_t ring_buf1@0x001000;
+struct ringBufS_t ring_buf2@0x001100;
 
 void wdtdelay(uint32_t delay)
 {
@@ -31,11 +32,11 @@ void wdtdelay(uint32_t delay)
  */
 void init_display(void)
 {
-	spi_link.tx1b = &ring_buf1;
-	spi_link.tx1a = &ring_buf2;
-	ringBufS_init(spi_link.tx1b);
+	spi_link.tx1a = &ring_buf1;
+	spi_link.tx1b = &ring_buf2;
 	ringBufS_init(spi_link.tx1a);
-	
+	ringBufS_init(spi_link.tx1b);
+
 	SLED = true;
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
@@ -49,8 +50,19 @@ void init_display(void)
 	send_lcd_cmd_long(0x01); // clear
 	send_lcd_cmd(0x02);
 	send_lcd_cmd(0x06);
-	start_lcd();
-	wait_lcd();
+	wdtdelay(30);
+	SPI1CON2 = 0x02;
+	SPI1CON1 = 0x40;
+	SPI1CON0 = 0x83;
+	SPI1INTFbits.SPI1TXUIF = 0;
+	DMA1CON1bits.DMODE = 0;
+	DMA1CON1bits.DSTP = 0;
+	DMA1CON1bits.SMODE = 1;
+	DMA1CON1bits.SMR = 0;
+	DMA1CON1bits.SSTP = 1;
+	DMA1SSA = (uint24_t) 0x001000;
+	DMA1CON0bits.DGO = 0;
+	SPI1INTFbits.SPI1TXUIF = 1;
 	SLED = false;
 }
 
@@ -62,8 +74,7 @@ void send_lcd_data(uint8_t data)
 	RS_SetHigh();
 	CSB_SetLow();
 	SPI1_Exchange8bit(data);
-//	CSB_SetHigh();
-	wdtdelay(0);
+	wdtdelay(8);
 }
 
 /*
@@ -74,8 +85,8 @@ void send_lcd_cmd(uint8_t cmd)
 	RS_SetLow();
 	CSB_SetLow();
 	SPI1_Exchange8bit(cmd);
-//	CSB_SetHigh();
 	wdtdelay(30);
+	RS_SetHigh();
 }
 
 /*
@@ -86,31 +97,32 @@ void send_lcd_cmd_long(uint8_t cmd)
 	RS_SetLow();
 	CSB_SetLow();
 	SPI1_Exchange8bit(cmd);
-	CSB_SetHigh();
 	wdtdelay(800);
+	RS_SetHigh();
 }
 
 /*
- * Trigger the SPI interrupt to program the LCD display
+ * Trigger the SPI DMA transfer to the LCD display
  */
 void start_lcd(void)
 {
-	//	spi_link.SPI_LCD = HIGH;
-	//	PIR1bits.SSPIF = HIGH;
-	//	PIE1bits.SSPIE = HIGH;
+	DMA1CON0bits.DMA1SIRQEN = 1; /* start DMA trigger */
 }
 
-void wait_lcd(void)
+void wait_lcd_set(void)
 {
-	//	while (!ringBufS_empty(spi_link.tx1b));
-	//	while (spi_link.LCD_DATA);
+	spi_link.LCD_DATA = 1;
+}
+
+void wait_lcd_done(void)
+{
+	while (spi_link.LCD_DATA);
+	wdtdelay(50);
 }
 
 void eaDogM_WriteChr(int8_t value)
 {
 	send_lcd_data((uint8_t) value);
-	start_lcd();
-	wait_lcd();
 }
 
 /*
@@ -118,14 +130,12 @@ void eaDogM_WriteChr(int8_t value)
  */
 void putch(char c)
 {
-	send_lcd_data((uint8_t) c);
+	ringBufS_put_dma(spi_link.tx1a, c);
 }
 
 void eaDogM_WriteCommand(uint8_t cmd)
 {
 	send_lcd_cmd(cmd);
-	start_lcd();
-	wait_lcd();
 }
 
 void eaDogM_SetPos(uint8_t r, uint8_t c)
@@ -144,12 +154,22 @@ void eaDogM_ClearRow(uint8_t r)
 	}
 }
 
+/*
+ * uses DMA channel 1 for transfers
+ */
 void eaDogM_WriteString(char *strPtr)
 {
-	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0;
-	printf("%s", strPtr); // STDOUT redirected to _user_putc, slow ~380us
+	wait_lcd_set();
+	/* reset buffer for DMA */
+	ringBufS_flush(spi_link.tx1a, false);
+	CSB_SetLow(); /* SPI select display */
+	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
+	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
+	DMA1SSZ = strlen(strPtr);
+	DMA1CON0bits.EN = 1; /* enable DMA */
+	printf("%s", strPtr); // STDOUT redirected to user putch
+	DEBUG2_SetLow();
 	start_lcd();
-	wait_lcd();
 }
 
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
@@ -157,8 +177,6 @@ void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	send_lcd_cmd((EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c));
 	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0;
 	printf("%s", strPtr);
-	start_lcd();
-	wait_lcd();
 }
 
 void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)

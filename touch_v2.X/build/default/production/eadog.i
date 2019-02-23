@@ -27761,7 +27761,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 
-# 324 "mcc_generated_files/pin_manager.h"
+# 364 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 19 "ringbufs.h"
@@ -27777,6 +27777,7 @@ int8_t ringBufS_empty(ringBufS_t *_this);
 int8_t ringBufS_full(ringBufS_t *_this);
 uint8_t ringBufS_get(ringBufS_t *_this);
 void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
 void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 
 # 33 "vconfig.h"
@@ -27784,11 +27785,11 @@ struct spi_link_type {
 uint8_t SPI_LCD : 1;
 uint8_t SPI_AUX : 1;
 uint8_t LCD_TIMER : 1;
-uint8_t LCD_DATA : 1;
+volatile uint8_t LCD_DATA : 1;
 uint16_t delay;
 uint8_t config;
-volatile struct ringBufS_t *tx1b, *tx1a;
-int32_t int_count;
+struct ringBufS_t *tx1b, *tx1a;
+volatile int32_t int_count;
 };
 
 # 33 "eadog.h"
@@ -27799,8 +27800,8 @@ void send_lcd_data(uint8_t);
 void send_lcd_cmd(uint8_t);
 void send_lcd_cmd_long(uint8_t);
 void start_lcd(void);
-void wait_lcd(void);
-
+void wait_lcd_set(void);
+void wait_lcd_done(void);
 void eaDogM_WriteChr(int8_t);
 void eaDogM_WriteCommand(uint8_t);
 void eaDogM_SetPos(uint8_t, uint8_t);
@@ -27903,8 +27904,9 @@ extern char * strrchr(const char *, int);
 extern char * strrichr(const char *, int);
 
 # 15 "eadog.c"
-volatile struct spi_link_type spi_link;
-volatile struct ringBufS_t ring_buf1, ring_buf2;
+struct spi_link_type spi_link;
+struct ringBufS_t ring_buf1@0x001000;
+struct ringBufS_t ring_buf2@0x001100;
 
 void wdtdelay(uint32_t delay)
 {
@@ -27917,13 +27919,13 @@ asm(" clrwdt");
 
 }
 
-# 32
+# 33
 void init_display(void)
 {
-spi_link.tx1b = &ring_buf1;
-spi_link.tx1a = &ring_buf2;
-ringBufS_init(spi_link.tx1b);
+spi_link.tx1a = &ring_buf1;
+spi_link.tx1b = &ring_buf2;
 ringBufS_init(spi_link.tx1a);
+ringBufS_init(spi_link.tx1b);
 
 LATEbits.LATE0 = 1;
 do { LATCbits.LATC2 = 1; } while(0);
@@ -27938,73 +27940,82 @@ send_lcd_cmd(0x0f);
 send_lcd_cmd_long(0x01);
 send_lcd_cmd(0x02);
 send_lcd_cmd(0x06);
-start_lcd();
-wait_lcd();
+wdtdelay(30);
+SPI1CON2 = 0x02;
+SPI1CON1 = 0x40;
+SPI1CON0 = 0x83;
+SPI1INTFbits.SPI1TXUIF = 0;
+DMA1CON1bits.DMODE = 0;
+DMA1CON1bits.DSTP = 0;
+DMA1CON1bits.SMODE = 1;
+DMA1CON1bits.SMR = 0;
+DMA1CON1bits.SSTP = 1;
+DMA1SSA = (uint24_t) 0x001000;
+DMA1CON0bits.DGO = 0;
+SPI1INTFbits.SPI1TXUIF = 1;
 LATEbits.LATE0 = 0;
 }
 
-# 60
+# 72
 void send_lcd_data(uint8_t data)
 {
 do { LATCbits.LATC1 = 1; } while(0);
 do { LATCbits.LATC2 = 0; } while(0);
 SPI1_Exchange8bit(data);
-
-wdtdelay(0);
+wdtdelay(8);
 }
 
-# 72
+# 83
 void send_lcd_cmd(uint8_t cmd)
 {
 do { LATCbits.LATC1 = 0; } while(0);
 do { LATCbits.LATC2 = 0; } while(0);
 SPI1_Exchange8bit(cmd);
-
 wdtdelay(30);
+do { LATCbits.LATC1 = 1; } while(0);
 }
 
-# 84
+# 95
 void send_lcd_cmd_long(uint8_t cmd)
 {
 do { LATCbits.LATC1 = 0; } while(0);
 do { LATCbits.LATC2 = 0; } while(0);
 SPI1_Exchange8bit(cmd);
-do { LATCbits.LATC2 = 1; } while(0);
 wdtdelay(800);
+do { LATCbits.LATC1 = 1; } while(0);
 }
 
-# 96
+# 107
 void start_lcd(void)
 {
-
-
-
+DMA1CON0bits.DMA1SIRQEN = 1;
 }
 
-void wait_lcd(void)
+void wait_lcd_set(void)
 {
+spi_link.LCD_DATA = 1;
+}
 
-
+void wait_lcd_done(void)
+{
+while (spi_link.LCD_DATA);
+wdtdelay(50);
 }
 
 void eaDogM_WriteChr(int8_t value)
 {
 send_lcd_data((uint8_t) value);
-start_lcd();
-wait_lcd();
 }
 
-# 119
+# 131
 void putch(char c)
 {
-send_lcd_data((uint8_t) c);
+ringBufS_put_dma(spi_link.tx1a, c);
 }
 
 void eaDogM_WriteCommand(uint8_t cmd)
 {
 send_lcd_cmd(cmd);
-start_lcd();
-wait_lcd();
 }
 
 void eaDogM_SetPos(uint8_t r, uint8_t c)
@@ -28025,10 +28036,17 @@ eaDogM_WriteChr(' ');
 
 void eaDogM_WriteString(char *strPtr)
 {
+wait_lcd_set();
+
+ringBufS_flush(spi_link.tx1a, 0);
+do { LATCbits.LATC2 = 0; } while(0);
 if (strlen(strPtr) > 64) strPtr[64] = 0;
+DMA1CON0bits.EN = 0;
+DMA1SSZ = strlen(strPtr);
+DMA1CON0bits.EN = 1;
 printf("%s", strPtr);
+do { LATEbits.LATE2 = 0; } while(0);
 start_lcd();
-wait_lcd();
 }
 
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
@@ -28036,8 +28054,6 @@ void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 send_lcd_cmd((0b10000000 + (r * 16) + c));
 if (strlen(strPtr) > 64) strPtr[64] = 0;
 printf("%s", strPtr);
-start_lcd();
-wait_lcd();
 }
 
 void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
