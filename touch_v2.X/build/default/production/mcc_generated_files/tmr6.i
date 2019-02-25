@@ -27968,7 +27968,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 
-# 364 "mcc_generated_files/../mcc_generated_files/pin_manager.h"
+# 388 "mcc_generated_files/../mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 19 "mcc_generated_files/../ringbufs.h"

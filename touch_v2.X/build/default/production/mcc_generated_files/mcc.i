@@ -27657,7 +27657,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 364 "mcc_generated_files/pin_manager.h"
+# 388 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "/opt/microchip/xc8/v2.05/pic/include/c90/stdint.h"
@@ -28062,6 +28062,15 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 # 867
 void ADCC_DefaultInterruptHandler(void);
 
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 93 "mcc_generated_files/nco1.h"
+void NCO1_Initialize(void);
+
+# 128
+bool NCO1_GetOutputStatus(void);
+
 # 562 "mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
 
@@ -28100,6 +28109,24 @@ extern void (*INT2_InterruptHandler)(void);
 
 # 851
 void INT2_DefaultInterruptHandler(void);
+
+# 90 "mcc_generated_files/dsm.h"
+void DSM_Initialize(void);
+
+# 115
+void DSM_ManualModulationSet (void);
+
+# 140
+void DSM_ManualModulationClear (void);
+
+# 164
+void DSM_ManualModulationToggle (void);
+
+# 189
+void DSM_ModulationStart (void);
+
+# 216
+void DSM_ModulationStop (void);
 
 # 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
@@ -28284,13 +28311,19 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 
-# 76 "mcc_generated_files/mcc.h"
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 92 "mcc_generated_files/clkref.h"
+void CLKREF_Initialize(void);
+
+# 79 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 89
+# 92
 void OSCILLATOR_Initialize(void);
 
-# 102
+# 105
 void PMD_Initialize(void);
 
 # 50 "mcc_generated_files/mcc.c"
@@ -28300,13 +28333,16 @@ INTERRUPT_Initialize();
 PMD_Initialize();
 PIN_MANAGER_Initialize();
 OSCILLATOR_Initialize();
-TMR6_Initialize();
 ADCC_Initialize();
+NCO1_Initialize();
 EXT_INT_Initialize();
-UART2_Initialize();
+TMR6_Initialize();
+DSM_Initialize();
 UART1_Initialize();
+UART2_Initialize();
 SPI1_Initialize();
 DMA1_Initialize();
+CLKREF_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

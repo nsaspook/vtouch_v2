@@ -27657,7 +27657,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 364 "mcc_generated_files/pin_manager.h"
+# 388 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
@@ -27678,7 +27678,7 @@ LATC = 0x06;
 # 72
 TRISE = 0x00;
 TRISF = 0xFF;
-TRISA = 0xFF;
+TRISA = 0x9F;
 TRISB = 0xBF;
 TRISC = 0x91;
 TRISD = 0xFF;
@@ -27689,15 +27689,15 @@ ANSELC = 0x01;
 ANSELB = 0x38;
 ANSELE = 0x00;
 ANSELF = 0xFF;
-ANSELA = 0xFF;
+ANSELA = 0x9F;
 
 # 92
 WPUD = 0x00;
 WPUF = 0x00;
 WPUE = 0x00;
-WPUB = 0x00;
+WPUB = 0x87;
 WPUA = 0x00;
-WPUC = 0x00;
+WPUC = 0x90;
 
 # 102
 ODCONE = 0x00;
@@ -27717,15 +27717,17 @@ SLRCONF = 0xFF;
 
 # 126
 U2RXPPS = 0x0F;
-SPI1SCKPPS = 0x13;
 RB6PPS = 0x16;
 RC3PPS = 0x1E;
 INT0PPS = 0x08;
 INT2PPS = 0x0A;
 INT1PPS = 0x09;
+U1RXPPS = 0x17;
+SPI1SCKPPS = 0x13;
+RA5PPS = 0x26;
+RA6PPS = 0x28;
 RC5PPS = 0x1F;
 RC6PPS = 0x13;
-U1RXPPS = 0x17;
 SPI1SDIPPS = 0x14;
 }
 

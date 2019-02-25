@@ -1,23 +1,23 @@
 /**
-  @Generated PIC10 / PIC12 / PIC16 / PIC18 MCUs Header File
+  CLKREF Generated Driver API Header File
 
-  @Company:
+  @Company
     Microchip Technology Inc.
 
-  @File Name:
-    mcc.h
+  @File Name
+    clkref.h
 
-  @Summary:
-    This is the mcc.h file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+  @Summary
+    This is the generated header file for the CLKREF driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
-  @Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+  @Description
+    This header file provides APIs for driver for CLKREF.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
         Device            :  PIC18F57K42
-        Driver Version    :  2.00
+        Driver Version    :  2.01
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 or later
+        Compiler          :  XC8 1.45
         MPLAB             :  MPLAB X 4.15
 */
 
@@ -44,68 +44,62 @@
     SOFTWARE.
 */
 
-#ifndef MCC_H
-#define	MCC_H
-#include <xc.h>
-#include "device_config.h"
-#include "pin_manager.h"
-#include <stdint.h>
+#ifndef CLKREF_H
+#define CLKREF_H
+
+/**
+  Section: Included Files
+*/
+
 #include <stdbool.h>
-#include "interrupt_manager.h"
-#include "tmr6.h"
-#include "adcc.h"
-#include "nco1.h"
-#include "ext_int.h"
-#include "dsm.h"
-#include "uart2.h"
-#include "uart1.h"
-#include "dma1.h"
-#include "spi1.h"
-#include "clkref.h"
+#include <stdint.h>
 
+#ifdef __cplusplus  // Provide C++ Compatibility
 
+    extern "C" {
+
+#endif
 
 /**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the device to the default states configured in the
- *                  MCC GUI
- * @Example
-    SYSTEM_Initialize(void);
- */
-void SYSTEM_Initialize(void);
+  Section: CLKREF APIs
+*/
 
 /**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the oscillator to the default states configured in the
- *                  MCC GUI
- * @Example
-    OSCILLATOR_Initialize(void);
- */
-void OSCILLATOR_Initialize(void);
+  @Summary
+    Initializes the CLKREF
 
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the PMD module to the default states configured in the
- *                  MCC GUI
- * @Example
-    PMD_Initialize(void);
- */
-void PMD_Initialize(void);
+  @Description
+    This routine initializes the CLKREF.
+    This routine must be called before any other CLKREF routine is called.
+    This routine should only be called once during system initialization.
 
+  @Preconditions
+    None
 
-#endif	/* MCC_H */
+  @Param
+    None
+
+  @Returns
+    None
+
+  @Comment
+
+  @Example
+    <code>
+    CLKREF_Initialize();
+    </code>
+*/
+void CLKREF_Initialize(void);
+
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
+#endif
+
+#endif // CLKREF_H
 /**
  End of File
 */
+
+

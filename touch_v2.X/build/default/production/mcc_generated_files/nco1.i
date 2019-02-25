@@ -1,40 +1,5 @@
 
-# 1 "ringbufs.c"
-
-# 4 "/opt/microchip/xc8/v2.05/pic/include/__size_t.h"
-typedef unsigned size_t;
-
-# 14 "/opt/microchip/xc8/v2.05/pic/include/c90/string.h"
-extern void * memcpy(void *, const void *, size_t);
-extern void * memmove(void *, const void *, size_t);
-extern void * memset(void *, int, size_t);
-
-# 36
-extern char * strcat(char *, const char *);
-extern char * strcpy(char *, const char *);
-extern char * strncat(char *, const char *, size_t);
-extern char * strncpy(char *, const char *, size_t);
-extern char * strdup(const char *);
-extern char * strtok(char *, const char *);
-
-
-extern int memcmp(const void *, const void *, size_t);
-extern int strcmp(const char *, const char *);
-extern int stricmp(const char *, const char *);
-extern int strncmp(const char *, const char *, size_t);
-extern int strnicmp(const char *, const char *, size_t);
-extern void * memchr(const void *, int, size_t);
-extern size_t strcspn(const char *, const char *);
-extern char * strpbrk(const char *, const char *);
-extern size_t strspn(const char *, const char *);
-extern char * strstr(const char *, const char *);
-extern char * stristr(const char *, const char *);
-extern char * strerror(int);
-extern size_t strlen(const char *);
-extern char * strchr(const char *, int);
-extern char * strichr(const char *, int);
-extern char * strrchr(const char *, int);
-extern char * strrichr(const char *, int);
+# 1 "mcc_generated_files/nco1.c"
 
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -27695,9 +27660,6 @@ extern __nonreentrant void _delay3(unsigned char);
 # 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
 typedef unsigned char bool;
 
-# 6 "/opt/microchip/xc8/v2.05/pic/include/c90/stddef.h"
-typedef int ptrdiff_t;
-
 # 13 "/opt/microchip/xc8/v2.05/pic/include/c90/stdint.h"
 typedef signed char int8_t;
 
@@ -27784,134 +27746,41 @@ typedef int16_t intptr_t;
 
 typedef uint16_t uintptr_t;
 
-# 117 "mcc_generated_files/spi1.h"
-void SPI1_Initialize(void);
+# 93 "mcc_generated_files/nco1.h"
+void NCO1_Initialize(void);
 
-# 152
-uint8_t SPI1_Exchange8bit(uint8_t data);
+# 128
+bool NCO1_GetOutputStatus(void);
 
-# 192
-uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-
-# 388 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-
-# 33 "vconfig.h"
-struct spi_link_type {
-uint8_t SPI_LCD : 1;
-uint8_t SPI_AUX : 1;
-uint8_t LCD_TIMER : 1;
-volatile uint8_t LCD_DATA : 1;
-uint16_t delay;
-uint8_t config;
-struct ringBufS_t *tx1b, *tx1a;
-volatile int32_t int_count;
-};
-
-typedef enum {
-
-SEQ_STATE_INIT = 0,
-SEQ_STATE_RUN,
-SEQ_STATE_SET,
-SEQ_STATE_TRIGGER,
-SEQ_STATE_DONE,
-SEQ_STATE_ERROR
-
-} SEQ_STATES;
-
-typedef struct V_data {
-SEQ_STATES s_state;
-char buf[64];
-volatile uint32_t ticks;
-} V_data;
-
-# 19 "ringbufs.h"
-typedef struct ringBufS_t {
-uint8_t buf[64];
-uint8_t head;
-uint8_t tail;
-uint8_t count;
-} ringBufS_t;
-
-void ringBufS_init(volatile ringBufS_t *_this);
-int8_t ringBufS_empty(ringBufS_t *_this);
-int8_t ringBufS_full(ringBufS_t *_this);
-uint8_t ringBufS_get(ringBufS_t *_this);
-void ringBufS_put(ringBufS_t *_this, const uint8_t c);
-void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
-void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-
-# 7 "ringbufs.c"
-uint8_t modulo_inc(const uint8_t value, const uint8_t modulus)
-{
-uint8_t my_value = value + 1;
-if (my_value >= modulus) {
-my_value = 0;
-}
-return my_value;
-}
-
-uint8_t modulo_dec(const uint8_t value, const uint8_t modulus)
-{
-uint8_t my_value = (0 == value) ? (modulus - 1) : (value - 1);
-return my_value;
-}
-
-void ringBufS_init(volatile ringBufS_t *_this)
+# 58 "mcc_generated_files/nco1.c"
+void NCO1_Initialize (void)
 {
 
-# 32
-memset(_this, 0, sizeof(*_this));
+
+NCO1CON = 0x00;
+
+NCO1CLK = 0x00;
+
+NCO1ACCU = 0x00;
+
+NCO1ACCH = 0x00;
+
+NCO1ACCL = 0x00;
+
+NCO1INCU = 0x06;
+
+NCO1INCH = 0xC7;
+
+NCO1INCL = 0xAE;
+
+
+NCO1CONbits.EN = 1;
+
 }
 
-int8_t ringBufS_empty(ringBufS_t *_this)
+bool NCO1_GetOutputStatus(void)
 {
-return(0 == _this->count);
-}
 
-int8_t ringBufS_full(ringBufS_t *_this)
-{
-return(_this->count >= 64);
-}
-
-uint8_t ringBufS_get(ringBufS_t *_this)
-{
-uint8_t c;
-if (_this->count > 0) {
-c = _this->buf[_this->tail];
-_this->tail = modulo_inc(_this->tail, 64);
---_this->count;
-} else {
-c = 0;
-}
-return(c);
-}
-
-void ringBufS_put(ringBufS_t *_this, const uint8_t c)
-{
-if (_this->count < 64) {
-_this->buf[_this->head] = c;
-_this->head = modulo_inc(_this->head, 64);
-++_this->count;
-}
-}
-
-void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c)
-{
-if (_this->count < 64) {
-_this->buf[_this->head] = c;
-++_this->head;
-++_this->count;
-}
-}
-
-void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer)
-{
-_this->count = 0;
-_this->head = 0;
-_this->tail = 0;
-if (clearBuffer) {
-memset(_this->buf, 0, sizeof(_this->buf));
-}
+return (NCO1CONbits.OUT);
 }
 

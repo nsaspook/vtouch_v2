@@ -131,6 +131,32 @@
 <wire x1="-3.15" y1="-3.15" x2="-3.15" y2="3.15" width="0.2" layer="21"/>
 <circle x="-4.725" y="3.5" radius="0.125" width="0.25" layer="25"/>
 </package>
+<package name="SOP95P280X145-6N">
+<description>&lt;b&gt;DBV (R-PDSO-G6)-1&lt;/b&gt;&lt;br&gt;
+</description>
+<smd name="1" x="-1.338" y="0.95" dx="1.075" dy="0.65" layer="1"/>
+<smd name="2" x="-1.338" y="0" dx="1.075" dy="0.65" layer="1"/>
+<smd name="3" x="-1.338" y="-0.95" dx="1.075" dy="0.65" layer="1"/>
+<smd name="4" x="1.338" y="-0.95" dx="1.075" dy="0.65" layer="1"/>
+<smd name="5" x="1.338" y="0" dx="1.075" dy="0.65" layer="1"/>
+<smd name="6" x="1.338" y="0.95" dx="1.075" dy="0.65" layer="1"/>
+<text x="0" y="0" size="1.27" layer="25" align="center">&gt;NAME</text>
+<text x="0" y="0" size="1.27" layer="27" align="center">&gt;VALUE</text>
+<wire x1="-2.125" y1="1.775" x2="2.125" y2="1.775" width="0.05" layer="51"/>
+<wire x1="2.125" y1="1.775" x2="2.125" y2="-1.775" width="0.05" layer="51"/>
+<wire x1="2.125" y1="-1.775" x2="-2.125" y2="-1.775" width="0.05" layer="51"/>
+<wire x1="-2.125" y1="-1.775" x2="-2.125" y2="1.775" width="0.05" layer="51"/>
+<wire x1="-0.8" y1="1.45" x2="0.8" y2="1.45" width="0.1" layer="51"/>
+<wire x1="0.8" y1="1.45" x2="0.8" y2="-1.45" width="0.1" layer="51"/>
+<wire x1="0.8" y1="-1.45" x2="-0.8" y2="-1.45" width="0.1" layer="51"/>
+<wire x1="-0.8" y1="-1.45" x2="-0.8" y2="1.45" width="0.1" layer="51"/>
+<wire x1="-0.8" y1="0.5" x2="0.15" y2="1.45" width="0.1" layer="51"/>
+<wire x1="-0.45" y1="1.45" x2="0.45" y2="1.45" width="0.2" layer="21"/>
+<wire x1="0.45" y1="1.45" x2="0.45" y2="-1.45" width="0.2" layer="21"/>
+<wire x1="0.45" y1="-1.45" x2="-0.45" y2="-1.45" width="0.2" layer="21"/>
+<wire x1="-0.45" y1="-1.45" x2="-0.45" y2="1.45" width="0.2" layer="21"/>
+<wire x1="-1.875" y1="1.625" x2="-0.8" y2="1.625" width="0.2" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="PIC18F57K42-E_PT">
@@ -188,6 +214,20 @@
 <pin name="RF3" x="30.48" y="15.24" length="middle" rot="R270"/>
 <pin name="RF2" x="33.02" y="15.24" length="middle" rot="R270"/>
 <pin name="RF1" x="35.56" y="15.24" length="middle" rot="R270"/>
+</symbol>
+<symbol name="REF3440IDBVR">
+<wire x1="5.08" y1="2.54" x2="15.24" y2="2.54" width="0.254" layer="94"/>
+<wire x1="15.24" y1="-7.62" x2="15.24" y2="2.54" width="0.254" layer="94"/>
+<wire x1="15.24" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="2.54" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<text x="16.51" y="7.62" size="1.778" layer="95" align="center-left">&gt;NAME</text>
+<text x="16.51" y="5.08" size="1.778" layer="96" align="center-left">&gt;VALUE</text>
+<pin name="1" x="0" y="0" length="middle"/>
+<pin name="2" x="0" y="-2.54" length="middle"/>
+<pin name="3" x="0" y="-5.08" length="middle"/>
+<pin name="6" x="20.32" y="0" length="middle" rot="R180"/>
+<pin name="5" x="20.32" y="-2.54" length="middle" rot="R180"/>
+<pin name="4" x="20.32" y="-5.08" length="middle" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -256,6 +296,34 @@ Source: &lt;a href="https://componentsearchengine.com/Datasheets/1/PIC18F57K42-E
 <attribute name="MANUFACTURER_NAME" value="Microchip" constant="no"/>
 <attribute name="MANUFACTURER_PART_NUMBER" value="PIC18F57K42-E/PT" constant="no"/>
 <attribute name="MOUSER_PART_NUMBER" value="579-PIC18F57K42-E/PT" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="REF3440IDBVR" prefix="IC">
+<description>&lt;b&gt;4.1V Low-Drift Low-Power Small-Footprint Series Voltage Reference&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="http://www.ti.com/lit/gpn/ref3440"&gt; Datasheet &lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="REF3440IDBVR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOP95P280X145-6N">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DESCRIPTION" value="4.1V Low-Drift Low-Power Small-Footprint Series Voltage Reference" constant="no"/>
+<attribute name="HEIGHT" value="1.45mm" constant="no"/>
+<attribute name="MANUFACTURER_NAME" value="Texas Instruments" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="REF3440IDBVR" constant="no"/>
+<attribute name="MOUSER_PART_NUMBER" value="" constant="no"/>
 </technology>
 </technologies>
 </device>
@@ -8650,6 +8718,17 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <part name="C12" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="0.1"/>
 <part name="VSS24" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VSS25" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="IC2" library="SamacSys_Parts" deviceset="REF3440IDBVR" device=""/>
+<part name="VSS26" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="VDD14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
+<part name="C13" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="0.1"/>
+<part name="C14" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="0.1"/>
+<part name="C15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="15uf"/>
+<part name="C16" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="15uf"/>
+<part name="VSS27" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="VSS28" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="VSS29" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="VSS30" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -9046,6 +9125,44 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <instance part="VSS25" gate="G$1" x="-17.78" y="-50.8" smashed="yes">
 <attribute name="VALUE" x="-20.32" y="-55.88" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="IC2" gate="G$1" x="99.06" y="-35.56" smashed="yes">
+<attribute name="NAME" x="115.57" y="-27.94" size="1.778" layer="95" align="center-left"/>
+<attribute name="VALUE" x="102.87" y="-45.72" size="1.778" layer="96" align="center-left"/>
+</instance>
+<instance part="VSS26" gate="G$1" x="96.52" y="-30.48" smashed="yes" rot="R270">
+<attribute name="VALUE" x="91.44" y="-27.94" size="1.778" layer="96"/>
+</instance>
+<instance part="VDD14" gate="G$1" x="119.38" y="-50.8" smashed="yes" rot="R180">
+<attribute name="VALUE" x="121.92" y="-48.26" size="1.778" layer="96" rot="R270"/>
+</instance>
+<instance part="C13" gate="G$1" x="121.92" y="-35.56" smashed="yes" rot="R90">
+<attribute name="NAME" x="121.285" y="-34.544" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="126.111" y="-34.544" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="C14" gate="G$1" x="99.06" y="-50.8" smashed="yes">
+<attribute name="NAME" x="100.076" y="-50.165" size="1.778" layer="95"/>
+<attribute name="VALUE" x="100.076" y="-54.991" size="1.778" layer="96"/>
+</instance>
+<instance part="C15" gate="G$1" x="109.22" y="-50.8" smashed="yes">
+<attribute name="NAME" x="110.236" y="-50.165" size="1.778" layer="95"/>
+<attribute name="VALUE" x="110.236" y="-54.991" size="1.778" layer="96"/>
+</instance>
+<instance part="C16" gate="G$1" x="121.92" y="-27.94" smashed="yes" rot="R90">
+<attribute name="NAME" x="121.285" y="-26.924" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="126.111" y="-26.924" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS27" gate="G$1" x="99.06" y="-58.42" smashed="yes">
+<attribute name="VALUE" x="96.52" y="-63.5" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS28" gate="G$1" x="109.22" y="-58.42" smashed="yes">
+<attribute name="VALUE" x="106.68" y="-63.5" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS29" gate="G$1" x="129.54" y="-35.56" smashed="yes" rot="R90">
+<attribute name="VALUE" x="134.62" y="-38.1" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="VSS30" gate="G$1" x="129.54" y="-27.94" smashed="yes" rot="R90">
+<attribute name="VALUE" x="134.62" y="-30.48" size="1.778" layer="96" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -9153,6 +9270,23 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <pinref part="C12" gate="G$1" pin="1"/>
 <wire x1="-30.48" y1="-40.64" x2="-17.78" y2="-40.64" width="0.1524" layer="91"/>
 <junction x="-30.48" y="-40.64"/>
+<junction x="-17.78" y="-40.64"/>
+</segment>
+<segment>
+<pinref part="IC2" gate="G$1" pin="4"/>
+<wire x1="119.38" y1="-40.64" x2="119.38" y2="-48.26" width="0.1524" layer="91"/>
+<junction x="119.38" y="-40.64"/>
+<pinref part="VDD14" gate="G$1" pin="VDD"/>
+<junction x="119.38" y="-48.26"/>
+<pinref part="IC2" gate="G$1" pin="3"/>
+<wire x1="99.06" y1="-40.64" x2="99.06" y2="-48.26" width="0.1524" layer="91"/>
+<junction x="99.06" y="-40.64"/>
+<wire x1="99.06" y1="-48.26" x2="109.22" y2="-48.26" width="0.1524" layer="91"/>
+<pinref part="C14" gate="G$1" pin="1"/>
+<junction x="99.06" y="-48.26"/>
+<pinref part="C15" gate="G$1" pin="1"/>
+<wire x1="109.22" y1="-48.26" x2="119.38" y2="-48.26" width="0.1524" layer="91"/>
+<junction x="109.22" y="-48.26"/>
 </segment>
 </net>
 <net name="VSS" class="0">
@@ -9272,6 +9406,31 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <pinref part="C11" gate="G$1" pin="2"/>
 <pinref part="VSS25" gate="G$1" pin="VSS"/>
 </segment>
+<segment>
+<pinref part="IC2" gate="G$1" pin="2"/>
+<wire x1="99.06" y1="-38.1" x2="99.06" y2="-35.56" width="0.1524" layer="91"/>
+<junction x="99.06" y="-38.1"/>
+<pinref part="IC2" gate="G$1" pin="1"/>
+<junction x="99.06" y="-35.56"/>
+<wire x1="99.06" y1="-35.56" x2="99.06" y2="-30.48" width="0.1524" layer="91"/>
+<pinref part="VSS26" gate="G$1" pin="VSS"/>
+</segment>
+<segment>
+<pinref part="C14" gate="G$1" pin="2"/>
+<pinref part="VSS27" gate="G$1" pin="VSS"/>
+</segment>
+<segment>
+<pinref part="C15" gate="G$1" pin="2"/>
+<pinref part="VSS28" gate="G$1" pin="VSS"/>
+</segment>
+<segment>
+<pinref part="C13" gate="G$1" pin="2"/>
+<pinref part="VSS29" gate="G$1" pin="VSS"/>
+</segment>
+<segment>
+<pinref part="C16" gate="G$1" pin="2"/>
+<pinref part="VSS30" gate="G$1" pin="VSS"/>
+</segment>
 </net>
 <net name="N$6" class="0">
 <segment>
@@ -9319,6 +9478,25 @@ Source: www.mpe-connector.de / garry_shortform_2012.pdf</description>
 <wire x1="101.6" y1="-5.08" x2="106.68" y2="-5.08" width="0.1524" layer="91"/>
 <junction x="106.68" y="-5.08"/>
 <junction x="76.2" y="63.5"/>
+</segment>
+</net>
+<net name="N$8" class="0">
+<segment>
+<pinref part="IC2" gate="G$1" pin="5"/>
+<wire x1="119.38" y1="-38.1" x2="119.38" y2="-35.56" width="0.1524" layer="91"/>
+<pinref part="IC2" gate="G$1" pin="6"/>
+<junction x="119.38" y="-35.56"/>
+<junction x="119.38" y="-38.1"/>
+<pinref part="C13" gate="G$1" pin="1"/>
+<wire x1="119.38" y1="-35.56" x2="119.38" y2="-27.94" width="0.1524" layer="91"/>
+<pinref part="C16" gate="G$1" pin="1"/>
+<wire x1="119.38" y1="-27.94" x2="119.38" y2="-25.4" width="0.1524" layer="91"/>
+<junction x="119.38" y="-27.94"/>
+<pinref part="IC1" gate="G$1" pin="RA3"/>
+<wire x1="68.58" y1="17.78" x2="68.58" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="-22.86" x2="119.38" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="119.38" y1="-22.86" x2="119.38" y2="-25.4" width="0.1524" layer="91"/>
+<junction x="68.58" y="17.78"/>
 </segment>
 </net>
 </nets>
