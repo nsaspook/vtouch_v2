@@ -13,8 +13,8 @@
 #define max_strlen	64
 
 struct spi_link_type spi_link;
-struct ringBufS_t ring_buf1@0x001000;
-struct ringBufS_t ring_buf2@0x001100;
+struct ringBufS_t ring_buf1;
+struct ringBufS_t ring_buf2;
 
 void wdtdelay(uint32_t delay)
 {
@@ -60,7 +60,7 @@ void init_display(void)
 	DMA1CON1bits.SMODE = 1;
 	DMA1CON1bits.SMR = 0;
 	DMA1CON1bits.SSTP = 1;
-	DMA1SSA = (uint24_t) 0x001000;
+	DMA1SSA = (uint24_t) &ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
 	SLED = false;

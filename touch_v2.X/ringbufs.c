@@ -29,7 +29,7 @@ void ringBufS_init(volatile ringBufS_t *_this)
 	    -> count
 	  and sets head = tail
 	 ***/
-	memset(_this, 0, sizeof(*_this));
+	memset((void*)_this, 0, sizeof(*_this));
 }
 
 int8_t ringBufS_empty(ringBufS_t *_this)
