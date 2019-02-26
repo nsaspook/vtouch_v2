@@ -56,6 +56,7 @@
 #include "adcc.h"
 #include "nco1.h"
 #include "ext_int.h"
+#include "clc1.h"
 #include "dsm.h"
 #include "uart2.h"
 #include "uart1.h"

@@ -27657,7 +27657,7 @@ extern __nonreentrant void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __nonreentrant void _delay3(unsigned char);
 
-# 388 "mcc_generated_files/pin_manager.h"
+# 400 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 
 # 13 "/opt/microchip/xc8/v2.05/pic/include/c90/stdint.h"
@@ -28110,6 +28110,15 @@ extern void (*INT2_InterruptHandler)(void);
 # 851
 void INT2_DefaultInterruptHandler(void);
 
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c90/stdbool.h"
+typedef unsigned char bool;
+
+# 91 "mcc_generated_files/clc1.h"
+void CLC1_Initialize(void);
+
+# 113
+bool CLC1_OutputStatusGet(void);
+
 # 90 "mcc_generated_files/dsm.h"
 void DSM_Initialize(void);
 
@@ -28317,13 +28326,13 @@ typedef unsigned char bool;
 # 92 "mcc_generated_files/clkref.h"
 void CLKREF_Initialize(void);
 
-# 79 "mcc_generated_files/mcc.h"
+# 80 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
 
-# 92
+# 93
 void OSCILLATOR_Initialize(void);
 
-# 105
+# 106
 void PMD_Initialize(void);
 
 # 50 "mcc_generated_files/mcc.c"
@@ -28337,6 +28346,7 @@ ADCC_Initialize();
 NCO1_Initialize();
 EXT_INT_Initialize();
 TMR6_Initialize();
+CLC1_Initialize();
 DSM_Initialize();
 UART1_Initialize();
 UART2_Initialize();

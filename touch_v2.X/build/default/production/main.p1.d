@@ -15,6 +15,7 @@ mcc_generated_files/interrupt_manager.h  \
 ringbufs.h  \
 mcc_generated_files/tmr6.h  \
 mcc_generated_files/pin_manager.h  \
+mcc_generated_files/clc1.h  \
 vconfig.h  \
 mcc_generated_files/dsm.h  \
 mcc_generated_files/adcc.h 

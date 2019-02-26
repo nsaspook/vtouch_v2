@@ -57,6 +57,7 @@ void SYSTEM_Initialize(void)
     NCO1_Initialize();
     EXT_INT_Initialize();
     TMR6_Initialize();
+    CLC1_Initialize();
     DSM_Initialize();
     UART1_Initialize();
     UART2_Initialize();

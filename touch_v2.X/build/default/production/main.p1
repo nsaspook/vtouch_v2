@@ -1,16 +1,16 @@
 Version 3.2 HI-TECH Software Intermediate Code
-[v F16343 `(v ~T0 @X0 0 tf ]
-[v F16346 `(v ~T0 @X0 0 tf ]
-[v F16375 `(v ~T0 @X0 0 tf ]
-[v F16378 `(v ~T0 @X0 0 tf ]
+[v F16347 `(v ~T0 @X0 0 tf ]
+[v F16350 `(v ~T0 @X0 0 tf ]
+[v F16379 `(v ~T0 @X0 0 tf ]
+[v F16382 `(v ~T0 @X0 0 tf ]
 "51 main.c
-[c E16559 0 1 2 3 4 5 .. ]
-[n E16559 . SEQ_STATE_INIT SEQ_STATE_RUN SEQ_STATE_SET SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
+[c E16563 0 1 2 3 4 5 .. ]
+[n E16563 . SEQ_STATE_INIT SEQ_STATE_RUN SEQ_STATE_SET SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
 "55 vconfig.h
-[s S2228 `E16559 1 `uc -> 64 `i `Vul 1 ]
+[s S2228 `E16563 1 `uc -> 64 `i `Vul 1 ]
 [n S2228 V_data s_state buf ticks ]
 [p mainexit ]
-"79 mcc_generated_files/mcc.h
+"80 mcc_generated_files/mcc.h
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
 "47115 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [s S2115 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -18275,7 +18275,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;pic18.h: 183: extern __nonreentrant void _delay(unsigned long);
 [; ;pic18.h: 185: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;pic18.h: 187: extern __nonreentrant void _delay3(unsigned char);
-[; ;pin_manager.h: 388: void PIN_MANAGER_Initialize (void);
+[; ;pin_manager.h: 400: void PIN_MANAGER_Initialize (void);
 [; ;stdint.h: 13: typedef signed char int8_t;
 [; ;stdint.h: 20: typedef signed int int16_t;
 [; ;stdint.h: 28: typedef __int24 int24_t;
@@ -18434,6 +18434,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ext_int.h: 803: void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 [; ;ext_int.h: 827: extern void (*INT2_InterruptHandler)(void);
 [; ;ext_int.h: 851: void INT2_DefaultInterruptHandler(void);
+[; ;stdbool.h: 15: typedef unsigned char bool;
+[; ;clc1.h: 91: void CLC1_Initialize(void);
+[; ;clc1.h: 113: bool CLC1_OutputStatusGet(void);
 [; ;dsm.h: 90: void DSM_Initialize(void);
 [; ;dsm.h: 115: void DSM_ManualModulationSet (void);
 [; ;dsm.h: 140: void DSM_ManualModulationClear (void);
@@ -18452,10 +18455,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart2.h: 346: void UART2_Transmit_ISR(void);
 [; ;uart2.h: 367: void UART2_Receive_ISR(void);
 "387 mcc_generated_files/uart2.h
-[v _UART2_RxInterruptHandler `*F16343 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F16347 ~T0 @X0 1 e ]
 [; ;uart2.h: 387: void (*UART2_RxInterruptHandler)(void);
 "405
-[v _UART2_TxInterruptHandler `*F16346 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F16350 ~T0 @X0 1 e ]
 [; ;uart2.h: 405: void (*UART2_TxInterruptHandler)(void);
 [; ;uart2.h: 425: void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 [; ;uart2.h: 443: void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
@@ -18471,10 +18474,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;uart1.h: 346: void UART1_Transmit_ISR(void);
 [; ;uart1.h: 367: void UART1_Receive_ISR(void);
 "387 mcc_generated_files/uart1.h
-[v _UART1_RxInterruptHandler `*F16375 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F16379 ~T0 @X0 1 e ]
 [; ;uart1.h: 387: void (*UART1_RxInterruptHandler)(void);
 "405
-[v _UART1_TxInterruptHandler `*F16378 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F16382 ~T0 @X0 1 e ]
 [; ;uart1.h: 405: void (*UART1_TxInterruptHandler)(void);
 [; ;uart1.h: 425: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 [; ;uart1.h: 443: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
@@ -18537,9 +18540,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;spi1.h: 192: uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 [; ;stdbool.h: 15: typedef unsigned char bool;
 [; ;clkref.h: 92: void CLKREF_Initialize(void);
-[; ;mcc.h: 79: void SYSTEM_Initialize(void);
-[; ;mcc.h: 92: void OSCILLATOR_Initialize(void);
-[; ;mcc.h: 105: void PMD_Initialize(void);
+[; ;mcc.h: 80: void SYSTEM_Initialize(void);
+[; ;mcc.h: 93: void OSCILLATOR_Initialize(void);
+[; ;mcc.h: 106: void PMD_Initialize(void);
 [; ;ringbufs.h: 19: typedef struct ringBufS_t {
 [; ;ringbufs.h: 20: uint8_t buf[64];
 [; ;ringbufs.h: 21: uint8_t head;
@@ -18629,7 +18632,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _wait_lcd_done ..  ]
 [; ;main.c: 73: V.s_state = SEQ_STATE_INIT;
 "73
-[e = . _V 0 . `E16559 0 ]
+[e = . _V 0 . `E16563 0 ]
 [; ;main.c: 75: while (1) {
 "75
 [e :U 2231 ]
@@ -18643,7 +18646,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 2235 ]
 [; ;main.c: 78: V.s_state = SEQ_STATE_RUN;
 "78
-[e = . _V 0 . `E16559 1 ]
+[e = . _V 0 . `E16563 1 ]
 [; ;main.c: 79: break;
 "79
 [e $U 2233  ]
@@ -18700,7 +18703,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;main.c: 94: }
 [; ;main.c: 95: V.s_state = SEQ_STATE_SET;
 "95
-[e = . _V 0 . `E16559 2 ]
+[e = . _V 0 . `E16563 2 ]
 [; ;main.c: 96: break;
 "96
 [e $U 2233  ]
@@ -18712,7 +18715,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( _eaDogM_WriteString (1 &U . _V 1 ]
 [; ;main.c: 99: V.s_state = SEQ_STATE_TRIGGER;
 "99
-[e = . _V 0 . `E16559 3 ]
+[e = . _V 0 . `E16563 3 ]
 [; ;main.c: 100: break;
 "100
 [e $U 2233  ]
@@ -18731,7 +18734,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $ ! != -> ( _wait_lcd_check ..  `i -> -> -> 0 `i `uc `i 2248  ]
 [; ;main.c: 104: V.s_state = SEQ_STATE_DONE;
 "104
-[e = . _V 0 . `E16559 4 ]
+[e = . _V 0 . `E16563 4 ]
 [e :U 2248 ]
 [; ;main.c: 105: do { LATEbits.LATE1 = 0; } while(0);
 "105
@@ -18758,7 +18761,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 2254 ]
 [; ;main.c: 110: V.s_state = SEQ_STATE_RUN;
 "110
-[e = . _V 0 . `E16559 1 ]
+[e = . _V 0 . `E16563 1 ]
 [; ;main.c: 111: break;
 "111
 [e $U 2233  ]
@@ -18770,7 +18773,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 2257 ]
 [; ;main.c: 114: V.s_state = SEQ_STATE_INIT;
 "114
-[e = . _V 0 . `E16559 0 ]
+[e = . _V 0 . `E16563 0 ]
 [; ;main.c: 115: break;
 "115
 [e $U 2233  ]
@@ -18780,12 +18783,12 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 2233  ]
 "76
 [e :U 2234 ]
-[e [\ . _V 0 , $ . `E16559 0 2235
- , $ . `E16559 1 2236
- , $ . `E16559 2 2243
- , $ . `E16559 3 2244
- , $ . `E16559 4 2252
- , $ . `E16559 5 2256
+[e [\ . _V 0 , $ . `E16563 0 2235
+ , $ . `E16563 1 2236
+ , $ . `E16563 2 2243
+ , $ . `E16563 3 2244
+ , $ . `E16563 4 2252
+ , $ . `E16563 5 2256
  2257 ]
 "116
 [e :U 2233 ]
