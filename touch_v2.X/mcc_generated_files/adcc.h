@@ -70,7 +70,7 @@
  */
 
 typedef uint16_t adc_result_t;
-#ifndef int24_t
+#ifndef __DEFINED_int24_t
 typedef signed long int int24_t;
 #endif
 

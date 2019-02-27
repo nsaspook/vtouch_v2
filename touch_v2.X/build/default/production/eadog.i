@@ -8,7 +8,12 @@
 # 2 "<built-in>" 2
 # 1 "eadog.c" 2
 # 1 "./vconfig.h" 1
-# 14 "./vconfig.h"
+# 15 "./vconfig.h"
+typedef signed long long int24_t;
+
+
+
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27181,7 +27186,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 15 "./vconfig.h" 2
+# 20 "./vconfig.h" 2
 # 1 "./mcc_generated_files/spi1.h" 1
 # 54 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
@@ -27284,11 +27289,11 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 16 "./vconfig.h" 2
+# 21 "./vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
 # 400 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
-# 17 "./vconfig.h" 2
+# 22 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
@@ -27310,35 +27315,35 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 18 "./vconfig.h" 2
-# 33 "./vconfig.h"
- struct spi_link_type {
-  uint8_t SPI_LCD : 1;
-  uint8_t SPI_AUX : 1;
-  uint8_t LCD_TIMER : 1;
-  volatile uint8_t LCD_DATA : 1;
-  uint16_t delay;
-  uint8_t config;
-  struct ringBufS_t *tx1b, *tx1a;
-  volatile int32_t int_count;
- };
+# 23 "./vconfig.h" 2
+# 38 "./vconfig.h"
+    struct spi_link_type {
+        uint8_t SPI_LCD : 1;
+        uint8_t SPI_AUX : 1;
+        uint8_t LCD_TIMER : 1;
+        volatile uint8_t LCD_DATA : 1;
+        uint16_t delay;
+        uint8_t config;
+        struct ringBufS_t *tx1b, *tx1a;
+        volatile int32_t int_count;
+    };
 
- typedef enum {
+    typedef enum {
 
-  SEQ_STATE_INIT = 0,
-  SEQ_STATE_RUN,
-  SEQ_STATE_SET,
-  SEQ_STATE_TRIGGER,
-  SEQ_STATE_DONE,
-  SEQ_STATE_ERROR
+        SEQ_STATE_INIT = 0,
+        SEQ_STATE_RUN,
+        SEQ_STATE_SET,
+        SEQ_STATE_TRIGGER,
+        SEQ_STATE_DONE,
+        SEQ_STATE_ERROR
 
- } SEQ_STATES;
+    } SEQ_STATES;
 
- typedef struct V_data {
-  SEQ_STATES s_state;
-  char buf[64];
-  volatile uint32_t ticks;
- } V_data;
+    typedef struct V_data {
+        SEQ_STATES s_state;
+        char buf[64];
+        volatile uint32_t ticks;
+    } V_data;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1
 # 33 "./eadog.h"
@@ -27603,7 +27608,7 @@ void init_display(void)
  DMA1CON1bits.SMODE = 1;
  DMA1CON1bits.SMR = 0;
  DMA1CON1bits.SSTP = 1;
- DMA1SSA = (uint24_t) &ring_buf1;
+ DMA1SSA = (uint32_t) &ring_buf1;
  DMA1CON0bits.DGO = 0;
  SPI1INTFbits.SPI1TXUIF = 1;
  LATEbits.LATE0 = 0;

@@ -7,7 +7,12 @@
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 43 "main.c"
+# 44 "main.c"
+typedef signed long long int24_t;
+
+
+
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 1 3
 
 
@@ -160,7 +165,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 43 "main.c" 2
+# 48 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 3
@@ -216,7 +221,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 44 "main.c" 2
+# 49 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -27727,8 +27732,6 @@ void TMR6_DefaultInterruptHandler(void);
 # 1 "./mcc_generated_files/adcc.h" 1
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
-
-typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -27951,13 +27954,13 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 # 106 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 45 "main.c" 2
+# 50 "main.c" 2
 
 
 # 1 "./eadog.h" 1
 # 26 "./eadog.h"
 # 1 "./vconfig.h" 1
-# 17 "./vconfig.h"
+# 22 "./vconfig.h"
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
@@ -27979,35 +27982,35 @@ void PMD_Initialize(void);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 18 "./vconfig.h" 2
-# 33 "./vconfig.h"
- struct spi_link_type {
-  uint8_t SPI_LCD : 1;
-  uint8_t SPI_AUX : 1;
-  uint8_t LCD_TIMER : 1;
-  volatile uint8_t LCD_DATA : 1;
-  uint16_t delay;
-  uint8_t config;
-  struct ringBufS_t *tx1b, *tx1a;
-  volatile int32_t int_count;
- };
+# 23 "./vconfig.h" 2
+# 38 "./vconfig.h"
+    struct spi_link_type {
+        uint8_t SPI_LCD : 1;
+        uint8_t SPI_AUX : 1;
+        uint8_t LCD_TIMER : 1;
+        volatile uint8_t LCD_DATA : 1;
+        uint16_t delay;
+        uint8_t config;
+        struct ringBufS_t *tx1b, *tx1a;
+        volatile int32_t int_count;
+    };
 
- typedef enum {
+    typedef enum {
 
-  SEQ_STATE_INIT = 0,
-  SEQ_STATE_RUN,
-  SEQ_STATE_SET,
-  SEQ_STATE_TRIGGER,
-  SEQ_STATE_DONE,
-  SEQ_STATE_ERROR
+        SEQ_STATE_INIT = 0,
+        SEQ_STATE_RUN,
+        SEQ_STATE_SET,
+        SEQ_STATE_TRIGGER,
+        SEQ_STATE_DONE,
+        SEQ_STATE_ERROR
 
- } SEQ_STATES;
+    } SEQ_STATES;
 
- typedef struct V_data {
-  SEQ_STATES s_state;
-  char buf[64];
-  volatile uint32_t ticks;
- } V_data;
+    typedef struct V_data {
+        SEQ_STATES s_state;
+        char buf[64];
+        volatile uint32_t ticks;
+    } V_data;
 # 27 "./eadog.h" 2
 
 
@@ -28033,7 +28036,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 47 "main.c" 2
+# 52 "main.c" 2
 
 
 extern struct spi_link_type spi_link;

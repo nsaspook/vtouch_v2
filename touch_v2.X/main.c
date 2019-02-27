@@ -40,6 +40,11 @@
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
  */
+#ifndef __DEFINED_int24_t
+typedef signed long long int24_t;
+#define __DEFINED_int24_t
+#endif
+
 #include <stdio.h>
 #include <string.h>
 #include "mcc_generated_files/mcc.h"

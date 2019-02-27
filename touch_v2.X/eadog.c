@@ -60,7 +60,7 @@ void init_display(void)
 	DMA1CON1bits.SMODE = 1;
 	DMA1CON1bits.SMR = 0;
 	DMA1CON1bits.SSTP = 1;
-	DMA1SSA = (uint24_t) &ring_buf1;
+	DMA1SSA = (uint32_t) &ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
 	SLED = false;
