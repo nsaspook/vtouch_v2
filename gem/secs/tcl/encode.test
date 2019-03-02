@@ -1,0 +1,137 @@
+#!/bin/sh
+# The next line restarts using tclsh\
+exec tclsh $0 ${1+"$@"}
+
+#initializatie
+::tcl::tm::path add [file dirname [info script]]
+package require secs
+package require tcltest
+namespace import tcltest::*
+
+# test cases
+
+# on Tcl < 8.5 this will result in -1 because of overflow
+set maxint [expr {9223372036854775807*2+1}]
+
+set nochange [list\
+	A\
+	{A xyz}\
+	J\
+	[list J \uff61\uff62]\
+	U1\
+	{U1 123 255}\
+	I1\
+	{I1 123 127}\
+	{I1 123 -128}\
+	U2\
+	{U2 123 65535}\
+	I2\
+	{I2 123 32767}\
+	{I2 123 -32768}\
+	U4\
+	{U4 123 4294967295}\
+	I4\
+	{I4 123 2147483647}\
+	{I4 123 -2147483648}\
+	U8\
+	I8\
+	{I8 123 9223372036854775807}\
+	{I8 123 -9223372036854775808}\
+	F4\
+	{F4 12.5 4.5}\
+	F8\
+	{F8 12.5 4.5}\
+	BL\
+	{BL 0 1}\
+	B\
+	{B 2}\
+	{B 0 1}\
+	V\
+	{V 2}\
+	{V 0 15}\
+	V1\
+	V2\
+	V3\
+	V4\
+	V6\
+	V8\
+	V9\
+	VA\
+	VB\
+	VC\
+	VD\
+	{V1 ABC}\
+	{V2 ABC}\
+	{V3 ABC}\
+	{V4 ABC}\
+	{V6 ABC}\
+	{V8 ABC}\
+	{V9 ABC}\
+	{VA ABC}\
+	{VB ABC}\
+	{VC ABC}\
+	{VD ABC}\
+]
+
+# automatic upgrade to higher format or from U->I, when necessary,
+# and various other intended changes when converting to binary and back.
+set change [list\
+	{} A\
+	{xy z} {A {xy z}}\
+	{A {}} A\
+	{A xy z} {A {xy z}}\
+	{J {}} J\
+	[list J \uff60] {J ?}\
+	[list J \uff61 \uff62] [list J \uff61\ \uff62]\
+	{U1 123 256} {U2 123 256}\
+	{I1 123 128} {I2 123 128}\
+	{I1 123 -129} {I2 123 -129}\
+	{U1 123 -1} {I1 123 -1}\
+	{U2 123 65536} {U4 123 65536}\
+	{I2 123 32768} {I4 123 32768}\
+	{I2 123 -32769} {I4 123 -32769}\
+	{U2 123 -1} {I2 123 -1}\
+	{U4 123 4294967296} {U8 123 4294967296}\
+	{I4 123 2147483648} {I8 123 2147483648}\
+	{I4 123 -2147483649} {I8 123 -2147483649}\
+	{U4 123 -1} {I4 123 -1}\
+	{U8 123 -1} [list U8 123 $maxint]\
+	{U8 123 18446744073709551615} [list U8 123 $maxint]\
+	{I8 123 -1} {I8 123 -1}\
+	{I8 123 18446744073709551615} {I8 123 -1}\
+	{BL F T} {BL 0 1}\
+	{B 0 1 -1} {B 0 1 255}\
+	{V1 X Y Z} {V1 {X Y Z}}\
+	{V 0 1} V1\
+	{V 0 1 0 65 0 66 0 67} {V1 ABC}\
+	{V 0 2 65 66 67 68} {V2 ABCD}\
+	{V 0 3 65 66 67 68} {V3 ABCD}\
+	{V 0 4 65 66 67 68} {V4 ABCD}\
+	{V 0 6 65 66 67 68} {V6 ABCD}\
+	{V 0 8 65 66 67 68} {V8 ABCD}\
+	{V 0 9 65 66 67 68} {V9 ABCD}\
+	{V 0 10 65 66 67 68} {VA ABCD}\
+	{V 0 11 65 66 67 68} {VB ABCD}\
+	{V 0 12 65 66 67 68} {VC ABCD}\
+	{V 0 13 65 66 67 68} {VD ABCD}\
+]
+
+set count 0
+foreach f $nochange {
+	incr count
+	test decode-1.$count "decode $f" -body {
+		::secs::_decode [::secs::_encode $f]
+	} -result $f
+}
+
+set count 0
+foreach {f g} $change {
+	incr count
+	test format-2.$count "format $f" -body {
+		::secs::_decode [::secs::_encode $f]
+	} -result $g
+}
+
+# cleanup
+cleanupTests
+return

@@ -1,0 +1,102 @@
+#!/bin/sh
+# The next line restarts using tclsh \
+exec tclsh $0 ${1+"$@"}
+
+#initializatie
+::tcl::tm::path add [file dirname [info script]]
+package require secs
+package require tcltest
+namespace import tcltest::*
+
+# test cases
+
+proc log {args} {
+	puts stdout [join $args]
+}
+
+proc connect {sock host port} {
+	global dev
+	if {$host == ""} {
+		log Opened passive connection($sock) to port $port
+		set dev [list [lindex $dev 0] $sock]
+	} else {
+		log Opened active connection($sock) to $host:$port
+	}
+}
+
+proc S1F1 {dev cmd msg} {
+	global result
+	set cmd S[expr {($cmd>>8)&127}]F[expr {$cmd&255}][expr {($cmd&32768)?"(R)":""}]
+	set result [list [lindex $dev 0] $cmd $msg]
+}
+
+
+set result {}
+set dev 0
+
+set SOFTWARE L
+set RTY 3
+set T0 60000
+set T1 300
+set T2 500
+set T3 45000
+set T4 45000
+set T5 10000
+set T6 5000
+set T7 10000
+set T8 5000
+
+# passive connection to port 6508
+secs init {} -6508
+# active connection to port 6508
+secs init 127.0.0.1 -6508
+
+set longmsg [list L]
+set el [list A abcdef]
+for {set count 0} {$count<100} {incr count} {
+	lappend longmsg $el
+}
+
+test write-1.1 {write simple message} -body {
+	set timer [after 1000 {set dev [set result timeout]}]
+	while {[llength $dev]<2} {
+		vwait dev
+	}
+	secs write $dev S1F1 $longmsg
+	while {$result == ""} {
+		vwait result
+	}
+	after cancel $timer
+	set result
+} -result [list -32768 S1F1 $longmsg]
+
+proc proc1 args {
+	global result
+	tailcall {*}$args
+	set result wrong
+}
+
+proc proc2 args {
+	return abc
+}
+
+test write-1.2 {tailcall} -body {
+	set result OK
+	list [proc1 proc2] $result
+} -result {abc OK}
+
+test write-1.3 {tailcall} -body {
+	set result OK
+	list [proc1] $result
+} -result {{} OK}
+
+test write-1.4 {tailcall} -body {
+	set result OK
+	list [proc1 proc2 foo] $result
+} -result {abc OK}
+
+
+
+# cleanup
+cleanupTests
+return

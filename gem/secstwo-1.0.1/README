@@ -1,0 +1,78 @@
+FREESECS HSMS Readme
+--------------------
+
+    This is a developers release of FREESECS SECSTWO.
+    FREESECS SECSTWO is software designed to provide
+    SEMI E5 protocol facilities.
+    Check http://freesecs.sourceforge.net for more
+    info.
+    FREESECS SECSTWO 1.0.1 release is a static library
+    which is exporting C++ classes that do data transcoding:
+    SEMI E5 binary format <--> FREESECS SECSTWO internal C++ format <--> XML format (see xsd/secstwo.xsd)
+    See test example to discover the capabilities provided.
+
+
+Supported Operating Systems
+---------------------------
+
+    - GNU/Linux
+    - Mac OS X
+    - NetBSD
+
+
+Build Requirements
+------------------
+
+    - libstdc++ (version >= 6.0.8)
+    - libxml    (version >= 2.6.30)
+    - libiconv  (version >= 2.5.0)
+
+Usage Requirements
+------------------
+
+Installation
+------------
+
+    In the FREESECS SECSTWO directory type:
+        ./configure <options>
+        make
+        make install (as superuser)
+
+    Use './configure --help' to get a list of possible configure options.
+    Main config options:
+        --with-tests:  build SECSTWO test suite (will no be installed with "make install").
+                       Built will be secstwo_test app, which exercises the facilities of
+                       FREESECS SECSTWO library.
+                       secstwo_test app is not installed anywhere. 
+                       It uses <secstwo distro dir>/xml/secstwo.xsd and
+                       <secstwo distro dir>/xml/test.xml
+                       to do the tests.
+
+    Installed files:
+        * <prefix>/lib/libsecstwo.a             - FREESECS SECSTWO static library
+        * <prefix>/include/secstwomsg.h         - FREESECS SECSTWO message and message item defines in C++
+        * <prefix>/include/secstwo_serialize.h  - FREESECS SECSTWO serializers' definition in C++
+        * <prefix>/include/secstwo_shared_ptr.h - FREESECS SECSTWO shared ptr helper classes definition in C++
+        * <prefix>/etc/secstwo.xsd              - FREESECS SECSTWO message XML format define. With my Linux,
+                                                  <prefix>/etc is symlinked to /etc
+
+Documentation
+-------------
+    * You may access the API reference as well as a concepts overview, 
+      tutorials and the FAQ online at http://opensecs.sourceforge.net.
+    * You may generate API ref document youself with doxygen using <secstwo distro top dir>doxy.cfg file
+
+-----------
+Legal stuff
+-----------
+
+   (c) Copyright 2008  Philipp Skadorov <phil_s@users.sourceforge.net>
+
+   All rights reserved.
+
+   This library is free software; you can redistribute it and/or
+   modify it under the terms of the GNU Lesser General Public
+   License as published by the Free Software Foundation; either
+   version 2 of the License, or (at your option) any later version.
+
+   The complete text of the license is found in the file COPYING.

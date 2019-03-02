@@ -55,6 +55,7 @@
 #include "tmr6.h"
 #include "adcc.h"
 #include "nco1.h"
+#include "memory.h"
 #include "ext_int.h"
 #include "clc1.h"
 #include "dsm.h"

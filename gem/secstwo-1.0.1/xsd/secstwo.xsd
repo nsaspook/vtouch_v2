@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/*   
+ *   (c) Copyright 2008 Philipp Skadorov (philipp_s@users.sourceforge.net)
+ *
+ *   This file is part of FREESECS.
+ *
+ *   FREESECS is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   FREESECS is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with FREESECS, see COPYING.
+ *   If not, see <http://www.gnu.org/licenses/>.
+ */
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+            elementFormDefault="qualified">
+    <!--Declaration for vectors of simple types-->
+    <xsd:simpleType name="ubyteVectorType">
+        <xsd:list itemType="xsd:unsignedByte"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ushortVectorType">
+        <xsd:list itemType="xsd:unsignedShort"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="uintVectorType">
+        <xsd:list itemType="xsd:nonNegativeInteger"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="ulongVectorType">
+        <xsd:list itemType="xsd:unsignedLong"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="byteVectorType">
+        <xsd:list itemType="xsd:byte"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="shortVectorType">
+        <xsd:list itemType="xsd:short"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="intVectorType">
+        <xsd:list itemType="xsd:integer"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="longVectorType">
+        <xsd:list itemType="xsd:long"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="doubleVectorType">
+        <xsd:list itemType="xsd:double"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="floatVectorType">
+        <xsd:list itemType="xsd:float"/>
+    </xsd:simpleType>
+    <xsd:simpleType name="booleanVectorType">
+        <xsd:list itemType="xsd:boolean"/>
+    </xsd:simpleType>
+    <!--Declaration for message item types-->
+    <xsd:complexType name="BINARY">
+        <xsd:simpleContent>
+            <xsd:extension base="ubyteVectorType">
+                <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="BOOLEAN">
+        <xsd:simpleContent>
+            <xsd:extension base="booleanVectorType">
+                <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="ASCII">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="JIS-8">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="UNICODE">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="INT64">
+        <xsd:simpleContent>
+            <xsd:extension base="longVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="INT8">
+        <xsd:simpleContent>
+            <xsd:extension base="byteVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="INT16">
+        <xsd:simpleContent>
+            <xsd:extension base="shortVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="INT32">
+        <xsd:simpleContent>
+            <xsd:extension base="intVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="DOUBLE">
+        <xsd:simpleContent>
+            <xsd:extension base="doubleVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="FLOAT">
+        <xsd:simpleContent>
+            <xsd:extension base="floatVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="UINT64">
+        <xsd:simpleContent>
+            <xsd:extension base="ulongVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="UINT8">
+        <xsd:simpleContent>
+            <xsd:extension base="ubyteVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="UINT16">
+        <xsd:simpleContent>
+            <xsd:extension base="ushortVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="UINT32">
+        <xsd:simpleContent>
+            <xsd:extension base="uintVectorType">
+                    <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+    <xsd:complexType name="LIST">
+        <xsd:sequence>
+            <xsd:group ref="msgItemType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:token"/>
+        <xsd:attribute name="variable" type="xsd:boolean" use="optional"/>
+    </xsd:complexType>
+    <xsd:group name="msgItemType">
+        <xsd:choice>
+            <xsd:element name="binary"   type="BINARY"/>
+            <xsd:element name="boolean"  type="BOOLEAN"/>
+            <xsd:element name="ascii"    type="ASCII"/>
+            <xsd:element name="jis8"     type="JIS-8"/>
+            <xsd:element name="unicode"  type="UNICODE"/>
+            <xsd:element name="int64"    type="INT64"/>
+            <xsd:element name="int8"     type="INT8"/>
+            <xsd:element name="int16"    type="INT16"/>
+            <xsd:element name="int32"    type="INT32"/>
+            <xsd:element name="double"   type="DOUBLE"/>
+            <xsd:element name="float"    type="FLOAT"/>
+            <xsd:element name="uint64"   type="UINT64"/>
+            <xsd:element name="uint8"    type="UINT8"/>
+            <xsd:element name="uint16"   type="UINT16"/>
+            <xsd:element name="uint32"   type="UINT32"/>
+            <xsd:element name="list"     type="LIST"/>
+        </xsd:choice>
+    </xsd:group>
+    <xsd:complexType name="secsIImsg_t">
+        <xsd:sequence>
+            <xsd:element name="stream"       type="xsd:unsignedByte"      minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="function"     type="xsd:unsignedByte"      minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="wbit"         type="xsd:boolean"           minOccurs="0" maxOccurs="1"/>
+            <xsd:group ref="msgItemType"                              minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="name" type="xsd:token" use="optional"/>
+        <xsd:attribute name="sysbytes" type="xsd:nonNegativeInteger" use="optional"/>
+    </xsd:complexType>
+    <xsd:element name="messages">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="secsIImsg" type="secsIImsg_t" minOccurs="1" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>

@@ -1,0 +1,52 @@
+#!/bin/sh
+# The next line restarts using tclsh\
+exec tclsh $0 ${1+"$@"}
+
+#initializatie
+::tcl::tm::path add [file dirname [info script]]
+package require secs
+package require tcltest
+namespace import tcltest::*
+
+# test cases
+
+# For the L format, the first argument is stripped off, that's all
+test foreach-1.1 {foreach (L format)} -body {
+	set result {}
+		::secs::foreach {x y} {L 123 45 67} z {L 89} {
+		lappend result $x $y $z
+	}
+	set result
+} -result {123 45 89 67 {} {}}
+
+set count 0
+
+# For invalid formats, each element $e becomes a two-element list of the form {A $e}
+foreach f {Z U0 U3 U7 I0 I3 I7 F1 V0 V00 V01 V10000} {
+	incr count
+	test foreach-2.$count [list foreach (invalid format ${f})] -body "
+		set result {}
+		::secs::foreach {x y} {$f 123 45} z {$f 67} {
+			lappend result \$x \$y \$z
+		}
+		set result
+	" -result "{A $f} {A 123} {A $f} {A 45} {A {}} {A 67}"
+}
+
+set count 0
+
+# For valid formats, each element $e becomes a two-element list of the form {$f $e}
+foreach f {A U1 U2 U4 U8 I1 I2 I4 I8 F4 F8 V V1 VF VFFFF} {
+	incr count
+	test foreach-3.$count [list foreach (valid format ${f})] -body "
+		set result {}
+		::secs::foreach {x y} {$f 123 45 67} z {$f 89} {
+			lappend result \$x \$y \$z
+		}
+		set result
+	" -result "{$f 123} {$f 45} {$f 89} {$f 67} {$f {}} {$f {}}"
+}
+
+# cleanup
+cleanupTests
+return

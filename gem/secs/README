@@ -1,0 +1,61 @@
+SECS 0.2 (Milestone 2, Dec 2 2008)
+
+This is SECS, a Tcl library which forms the basis of
+an Semiconductor Equipment Server/Manager/Simulator
+or whatever you like to call it. Any piece of software
+which wants to communicate to another device using
+the SECS/HSMS protocol can use this library.
+
+HOW TO INSTALL THE LIBRARY:
+
+First, make sure you have Tcl 8.5 or later
+installed for your platform. The library simply
+consists of a single file:
+    secs-0.2.0.tm
+Just copy this file to some place where Tcl
+can find it, e.g.:
+    C:\Tcl\lib\tcl8\8.5 (windows)
+    /usr/local/lib/tcl8/8.5 (UNIX)
+If the directory cannot be found by Tcl yet,
+set the environment variable TCL8_5_TM_PATH to
+the directory where secs-0.2.0.tm is (or its
+parent). That's all there is to do.
+
+HOW TO CREATE A SIMPLE SERVER.
+
+The most simple server can be written as follows:
+
+======== begin server.tcl ========
+package require secs
+namespace eval server {
+    set RTY 3
+    set SOFTWARE {L {A SECS} {A 0.2}}
+    set T0 60000
+    set T1 1000
+    set T2 10000
+    set T3 45000
+    set T4 45000
+    set T5 10000
+    set T6 5000
+    set T7 10000
+    set T8 5000
+    secs init {} 6500
+}
+vwait forever
+======== end server.tcl ========
+
+Running this file, it will start up a server
+listening on port 6500 using the HSMS protocol.
+Sending any valid SECS message to it, the server
+will always answer with an Acknowledge. If you
+request it's software version, it will report
+SECS 0.2, and some more basic things.
+
+Now you can modify the behavior of the server,
+by defining your own procs in this namespace.
+
+For more information, see the documentation which
+can be found on secs.sf.net.
+
+Regards,
+         Jan Nijtmans

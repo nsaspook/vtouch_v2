@@ -7,6 +7,7 @@ mcc_generated_files/pin_manager.h  \
 mcc_generated_files/tmr6.h  \
 mcc_generated_files/adcc.h  \
 mcc_generated_files/nco1.h  \
+mcc_generated_files/memory.h  \
 mcc_generated_files/ext_int.h  \
 mcc_generated_files/clc1.h  \
 mcc_generated_files/dsm.h  \

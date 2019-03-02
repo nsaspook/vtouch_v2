@@ -1,0 +1,134 @@
+#                                               -*- Autoconf -*-
+# Process this file with autoconf to produce a configure script.
+
+AC_PREREQ(2.61)
+
+
+#versioning
+m4_define([SECSTWO_MAJOR_VERSION],1)
+m4_define([SECSTWO_MINOR_VERSION],0)
+m4_define([SECSTWO_MICRO_VERSION],1)
+m4_define([SECSTWO_VERSION],SECSTWO_MAJOR_VERSION.SECSTWO_MINOR_VERSION.SECSTWO_MICRO_VERSION)
+
+AC_INIT([secstwo], [SECSTWO_VERSION], [philipp_s@users.sourceforge.net])
+
+AC_CONFIG_HEADERS([config.h])
+
+AM_INIT_AUTOMAKE
+
+#libtool versioning
+LT_RELEASE=SECSTWO_VERSION
+LT_CURRENT=SECSTWO_MAJOR_VERSION
+LT_REVISION=SECSTWO_MINOR_VERSION
+LT_AGE=SECSTWO_MICRO_VERSION
+
+AC_SUBST(LT_RELEASE)
+AC_SUBST(LT_CURRENT)
+AC_SUBST(LT_REVISION)
+AC_SUBST(LT_AGE)
+
+
+AC_ARG_WITH(    [tests],
+                [AS_HELP_STRING([--with-tests],
+                    [build tests for SECSTWO library @<:@default=yes@:>@])],
+                [],
+                [with_tests=yes])
+#########################################
+######Start system checks from here######
+#########################################
+
+# Checks for typedefs, structures, and compiler characteristics.
+AC_HEADER_STDBOOL
+AC_C_CONST
+AC_TYPE_SIZE_T
+AC_HEADER_TIME
+AC_TYPE_UINT16_T
+AC_TYPE_UINT32_T
+
+AC_PROG_CPP
+AC_PROG_CXX
+AC_PROG_LIBTOOL
+
+#default cflags
+#CFLAGS="-O2 -Wall `xml2-config --cflags`"
+CFLAGS="`xml2-config --cflags`"
+#CXXFLAGS="-O2 -Wall `xml2-config --cflags`"
+CXXFLAGS="`xml2-config --cflags`"
+
+########libxml2 config presense check##
+AC_CHECK_TOOL([XML2_CONFIG],[xml2-config], [missing])
+if test "$XML2_CONFIG" = "missing"; then
+        AC_MSG_ERROR([
+****************************************************************
+ LIBXML2 xml2-config tool not found. Please chech whether
+ libxml2 is installed.
+****************************************************************])
+fi
+
+########secstwo core lib start#########
+# Checks for secstwo core header files.
+AC_HEADER_STDC
+AC_CHECK_HEADERS([unistd.h string.h arpa/inet.h wchar.h])
+AC_CHECK_HEADER([iconv.h],,[AC_MSG_ERROR([
+****************************************************************
+ LIBICONV header not found. 
+ Please check whether LIBICONV is installed. 
+****************************************************************])])
+AC_CHECK_HEADERS([libxml/tree.h libxml/encoding.h libxml/xmlwriter.h libxml/xmlsave.h libxml/xmlschemas.h],,
+[AC_MSG_ERROR([
+****************************************************************
+ LIBXML2 headers not found. Please chech whether
+ libxml2 is installed.
+****************************************************************])])
+
+
+# Checks for library dependencies.
+AC_CHECK_LIB([xml2], [xmlTextWriterStartElement],,[AC_MSG_ERROR([ 
+**************************************************************** 
+ LIBXML2 library test failed. 
+ Please check whether libxml2 is installed. 
+****************************************************************])])
+AC_CHECK_LIB([iconv], [iconv_open],,[AC_MSG_ERROR([
+**************************************************************** 
+ LIBICONV library test failed. 
+ Please check whether libiconv is installed. 
+****************************************************************])])
+
+# Checks for secstwo core library functions.
+AC_CHECK_FUNCS([htonl])
+########secstwo core lib end###########
+
+
+#check for different iconv() notations
+AC_LANG_PUSH(C++)
+AC_CACHE_CHECK(whether iconf func required const inbuf (NetBSD),
+		ac_cv_iconv_const,
+		[AC_COMPILE_IFELSE(
+			[AC_LANG_PROGRAM(
+				[[#include <iconv.h>]], 
+				[[	const char *inbuf;
+					iconv(	(iconv_t)0,
+						&inbuf,
+						(size_t*)NULL,
+						(char**)NULL,
+						(size_t*)NULL);]])],
+[ac_cv_iconv_const=yes], [ac_cv_iconv_const=no])])
+
+if test "$ac_cv_iconv_const" = "yes"; then
+AC_DEFINE(HAVE_CONST_IBUF_IN_ICONV,1,iconv func requires constant input buf ptr (NetBSD??))
+fi
+AC_LANG_POP(C++)
+
+#######tests start#######
+#if test "$with_tests" = "yes"; then
+#    MAYBE_TEST=yes
+#else
+#    MAYBE_TEST=
+#fi
+#AC_SUBST([MAYBE_TEST])
+AM_CONDITIONAL([MAYBE_TEST], [test "$with_tests" = "yes"])
+#######tests end#########
+
+
+AC_CONFIG_FILES([   Makefile    ])
+AC_OUTPUT 

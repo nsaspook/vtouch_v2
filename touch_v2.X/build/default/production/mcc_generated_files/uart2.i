@@ -39,6 +39,8 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27242,7 +27244,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27306,12 +27308,12 @@ void INTERRUPT_Initialize (void);
 # 64 "mcc_generated_files/uart2.c"
 static volatile uint8_t uart2TxHead = 0;
 static volatile uint8_t uart2TxTail = 0;
-static volatile uint8_t uart2TxBuffer[8];
+static volatile uint8_t uart2TxBuffer[64];
 volatile uint8_t uart2TxBufferRemaining;
 
 static volatile uint8_t uart2RxHead = 0;
 static volatile uint8_t uart2RxTail = 0;
-static volatile uint8_t uart2RxBuffer[8];
+static volatile uint8_t uart2RxBuffer[64];
 volatile uint8_t uart2RxCount;
 
 
@@ -27347,10 +27349,10 @@ void UART2_Initialize(void)
     U2CON2 = 0x00;
 
 
-    U2BRGL = 0x40;
+    U2BRGL = 0x82;
 
 
-    U2BRGH = 0x03;
+    U2BRGH = 0x06;
 
 
     U2FIFO = 0x00;

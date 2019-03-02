@@ -54,8 +54,8 @@
 /**
   Section: Macro Declarations
 */
-#define UART2_TX_BUFFER_SIZE 8
-#define UART2_RX_BUFFER_SIZE 8
+#define UART2_TX_BUFFER_SIZE 64
+#define UART2_RX_BUFFER_SIZE 64
 
 /**
   Section: Global Variables
@@ -103,11 +103,11 @@ void UART2_Initialize(void)
     // TXPOL not inverted; FLO off; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
     U2CON2 = 0x00;
 
-    // BRGL 64; 
-    U2BRGL = 0x40;
+    // BRGL 130; 
+    U2BRGL = 0x82;
 
-    // BRGH 3; 
-    U2BRGH = 0x03;
+    // BRGH 6; 
+    U2BRGH = 0x06;
 
     // STPMD in middle of first Stop bit; TXWRE No error; 
     U2FIFO = 0x00;
