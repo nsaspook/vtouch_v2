@@ -55,14 +55,14 @@ typedef signed long long int24_t;
 extern struct spi_link_type spi_link;
 
 struct V_data V;
-struct header10 H10[] ={
+struct header10 H10[] = {
 	{
-	.length=10,
-	.block.rbit=0,
-	.block.wbit=1,
-	.block.stream=1,
-	.block.function=1,
-	.block.systemb=0x0c9f75,
+		.length = 10,
+		.block.rbit = 0,
+		.block.wbit = 1,
+		.block.stream = 1,
+		.block.function = 1,
+		.block.systemb = 0x0c9f75,
 	},
 };
 
@@ -72,6 +72,7 @@ struct header10 H10[] ={
 void main(void)
 {
 	uint8_t i;
+	uint16_t sum;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -83,8 +84,10 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	init_display();
+	sum = block_checkmark((uint8_t*) & H10[0].block, sizeof(block10));
+	sprintf(V.buf, "CS %d, %x", sizeof(block10), sum);
 
-	eaDogM_WriteString((char*) "Testing 12345678Testing 12345678Testing 12345678");
+	eaDogM_WriteString(V.buf);
 	wait_lcd_done();
 	V.s_state = SEQ_STATE_INIT;
 
@@ -104,7 +107,7 @@ void main(void)
 			}
 
 			if (PRLOCKbits.PRLOCKED) {
-				strcpy(V.buf, "Testing 12345678Testing 12345678Testing 12345678");
+				//strcpy(V.buf, "Testing 12345678Testing 12345678Testing 12345678");
 			} else {
 				strcpy(V.buf, "Test");
 			}

@@ -1,22 +1,22 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F16786 `(v ~T0 @X0 0 tf ]
-[v F16788 `(v ~T0 @X0 0 tf ]
-[v F16809 `(v ~T0 @X0 0 tf ]
-[v F16811 `(v ~T0 @X0 0 tf ]
+[v F16787 `(v ~T0 @X0 0 tf ]
+[v F16789 `(v ~T0 @X0 0 tf ]
+[v F16810 `(v ~T0 @X0 0 tf ]
+[v F16812 `(v ~T0 @X0 0 tf ]
 "57 main.c
 [; ;main.c: 57: struct V_data V;
-[c E16866 0 1 2 3 4 5 .. ]
-[n E16866 . SEQ_STATE_INIT SEQ_STATE_RUN SEQ_STATE_SET SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
+[c E16867 0 1 2 3 4 5 .. ]
+[n E16867 . SEQ_STATE_INIT SEQ_STATE_RUN SEQ_STATE_SET SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
 "60 ./vconfig.h
 [; ;./vconfig.h: 60:     typedef struct V_data {
-[s S2231 `E16866 1 `uc -> 64 `i `Vul 1 ]
+[s S2231 `E16867 1 `uc -> 64 `i `Vul 1 ]
 [n S2231 V_data s_state buf ticks ]
-"15 ./gemsecs.h
-[; ;./gemsecs.h: 15: typedef struct block10 {
+"17 ./gemsecs.h
+[; ;./gemsecs.h: 17:  typedef struct block10 {
 [s S2232 :1 `uc 1 :7 `uc 1 `uc 1 :1 `uc 1 :7 `uc 1 `uc 1 :1 `uc 1 :7 `uc 1 `uc 1 `ul 1 ]
 [n S2232 block10 rbit didh didl wbit stream function ebit bidh bidl systemb ]
-"28
-[; ;./gemsecs.h: 28: typedef struct header10 {
+"30
+[; ;./gemsecs.h: 30:  typedef struct header10 {
 [s S2233 `uc 1 `S2232 1 `us 1 ]
 [n S2233 header10 length block checksum ]
 [p mainexit ]
@@ -41,7 +41,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 "35 ./eadog.h
 [; ;./eadog.h: 35:  void init_display(void);
 [v _init_display `(v ~T0 @X0 0 ef ]
-"47
+"36 ./gemsecs.h
+[; ;./gemsecs.h: 36:  uint16_t block_checkmark(uint8_t *, uint16_t);
+[v _block_checkmark `(us ~T0 @X0 0 ef2`*uc`us ]
+"115 /opt/microchip/xc8/v2.05/pic/include/c99/stdio.h
+[v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
+"47 ./eadog.h
 [; ;./eadog.h: 47:  void eaDogM_WriteString(char *);
 [v _eaDogM_WriteString `(v ~T0 @X0 0 ef1`*uc ]
 "42
@@ -2334,21 +2339,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "387 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 387: void (*UART2_RxInterruptHandler)(void);
-[v _UART2_RxInterruptHandler `*F16786 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F16787 ~T0 @X0 1 e ]
 "405
 [; ;./mcc_generated_files/uart2.h: 405: void (*UART2_TxInterruptHandler)(void);
-[v _UART2_TxInterruptHandler `*F16788 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F16789 ~T0 @X0 1 e ]
 "387 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 387: void (*UART1_RxInterruptHandler)(void);
-[v _UART1_RxInterruptHandler `*F16809 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F16810 ~T0 @X0 1 e ]
 "405
 [; ;./mcc_generated_files/uart1.h: 405: void (*UART1_TxInterruptHandler)(void);
-[v _UART1_TxInterruptHandler `*F16811 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F16812 ~T0 @X0 1 e ]
 "57 main.c
 [; ;main.c: 57: struct V_data V;
 [v _V `S2231 ~T0 @X0 1 e ]
 "58
-[; ;main.c: 58: struct header10 H10[] ={
+[; ;main.c: 58: struct header10 H10[] = {
 [v _H10 `S2233 ~T0 @X0 -> -> 1 `i `ux e ]
 [i _H10
 :U ..
@@ -2383,192 +2388,198 @@ Version 4.0 HI-TECH Software Intermediate Code
 "74
 [; ;main.c: 74:  uint8_t i;
 [v _i `uc ~T0 @X0 1 a ]
-"77
-[; ;main.c: 77:  SYSTEM_Initialize();
+"75
+[; ;main.c: 75:  uint16_t sum;
+[v _sum `us ~T0 @X0 1 a ]
+"78
+[; ;main.c: 78:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"80
-[; ;main.c: 80:  (INTCON0bits.GIEH = 1);
+"81
+[; ;main.c: 81:  (INTCON0bits.GIEH = 1);
 [e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-"83
-[; ;main.c: 83:  (INTCON0bits.GIEL = 1);
+"84
+[; ;main.c: 84:  (INTCON0bits.GIEL = 1);
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-"85
-[; ;main.c: 85:  init_display();
+"86
+[; ;main.c: 86:  init_display();
 [e ( _init_display ..  ]
 "87
-[; ;main.c: 87:  eaDogM_WriteString((char*) "Testing 12345678Testing 12345678Testing 12345678");
-[e ( _eaDogM_WriteString (1 :s 1C ]
+[; ;main.c: 87:  sum = block_checkmark((uint8_t*) & H10[0].block, sizeof(block10));
+[e = _sum ( _block_checkmark (2 , -> &U . *U + &U _H10 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 `*uc -> -> # `S2232 `ui `us ]
 "88
-[; ;main.c: 88:  wait_lcd_done();
-[e ( _wait_lcd_done ..  ]
-"89
-[; ;main.c: 89:  V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16866 0 ]
+[; ;main.c: 88:  sprintf(V.buf, "CS %d, %x", sizeof(block10), sum);
+[e ( _sprintf (1 , , (. , &U . _V 1 :s 1C -> # `S2232 `ui -> _sum `ui ]
+"90
+[; ;main.c: 90:  eaDogM_WriteString(V.buf);
+[e ( _eaDogM_WriteString (1 &U . _V 1 ]
 "91
-[; ;main.c: 91:  while (1) {
+[; ;main.c: 91:  wait_lcd_done();
+[e ( _wait_lcd_done ..  ]
+"92
+[; ;main.c: 92:  V.s_state = SEQ_STATE_INIT;
+[e = . _V 0 . `E16867 0 ]
+"94
+[; ;main.c: 94:  while (1) {
 [e :U 2236 ]
 {
-"92
-[; ;main.c: 92:   switch (V.s_state) {
+"95
+[; ;main.c: 95:   switch (V.s_state) {
 [e $U 2239  ]
 {
-"93
-[; ;main.c: 93:   case SEQ_STATE_INIT:
-[e :U 2240 ]
-"94
-[; ;main.c: 94:    V.s_state = SEQ_STATE_RUN;
-[e = . _V 0 . `E16866 1 ]
-"95
-[; ;main.c: 95:    break;
-[e $U 2238  ]
 "96
-[; ;main.c: 96:   case SEQ_STATE_RUN:
+[; ;main.c: 96:   case SEQ_STATE_INIT:
+[e :U 2240 ]
+"97
+[; ;main.c: 97:    V.s_state = SEQ_STATE_RUN;
+[e = . _V 0 . `E16867 1 ]
+"98
+[; ;main.c: 98:    break;
+[e $U 2238  ]
+"99
+[; ;main.c: 99:   case SEQ_STATE_RUN:
 [e :U 2241 ]
-"100
-[; ;main.c: 100:    if (UART1_is_tx_ready() > 30) {
+"103
+[; ;main.c: 103:    if (UART1_is_tx_ready() > 30) {
 [e $ ! > -> ( _UART1_is_tx_ready ..  `i -> 30 `i 2242  ]
 {
-"101
-[; ;main.c: 101:     for (i = 0; i <= 30; i++) {
+"104
+[; ;main.c: 104:     for (i = 0; i <= 30; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ <= -> _i `i -> 30 `i 2243  ]
 [e $U 2244  ]
 [e :U 2243 ]
 {
-"102
-[; ;main.c: 102:      UART1_Write(0x4f);
+"105
+[; ;main.c: 105:      UART1_Write(0x4f);
 [e ( _UART1_Write (1 -> -> 79 `i `uc ]
-"103
-[; ;main.c: 103:     }
+"106
+[; ;main.c: 106:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e $ <= -> _i `i -> 30 `i 2243  ]
 [e :U 2244 ]
 }
-"104
-[; ;main.c: 104:    }
+"107
+[; ;main.c: 107:    }
 }
 [e :U 2242 ]
-"106
-[; ;main.c: 106:    if (PRLOCKbits.PRLOCKED) {
+"109
+[; ;main.c: 109:    if (PRLOCKbits.PRLOCKED) {
 [e $ ! != -> . . _PRLOCKbits 0 0 `i -> 0 `i 2246  ]
 {
-"107
-[; ;main.c: 107:     strcpy(V.buf, "Testing 12345678Testing 12345678Testing 12345678");
-[e ( _strcpy (2 , &U . _V 1 :s 2C ]
-"108
-[; ;main.c: 108:    } else {
+"111
+[; ;main.c: 111:    } else {
 }
 [e $U 2247  ]
 [e :U 2246 ]
 {
-"109
-[; ;main.c: 109:     strcpy(V.buf, "Test");
-[e ( _strcpy (2 , &U . _V 1 :s 3C ]
-"110
-[; ;main.c: 110:    }
+"112
+[; ;main.c: 112:     strcpy(V.buf, "Test");
+[e ( _strcpy (2 , &U . _V 1 :s 2C ]
+"113
+[; ;main.c: 113:    }
 }
 [e :U 2247 ]
-"111
-[; ;main.c: 111:    V.s_state = SEQ_STATE_SET;
-[e = . _V 0 . `E16866 2 ]
-"112
-[; ;main.c: 112:    break;
-[e $U 2238  ]
-"113
-[; ;main.c: 113:   case SEQ_STATE_SET:
-[e :U 2248 ]
 "114
-[; ;main.c: 114:    eaDogM_WriteString(V.buf);
-[e ( _eaDogM_WriteString (1 &U . _V 1 ]
+[; ;main.c: 114:    V.s_state = SEQ_STATE_SET;
+[e = . _V 0 . `E16867 2 ]
 "115
-[; ;main.c: 115:    V.s_state = SEQ_STATE_TRIGGER;
-[e = . _V 0 . `E16866 3 ]
-"116
-[; ;main.c: 116:    break;
+[; ;main.c: 115:    break;
 [e $U 2238  ]
+"116
+[; ;main.c: 116:   case SEQ_STATE_SET:
+[e :U 2248 ]
 "117
-[; ;main.c: 117:   case SEQ_STATE_TRIGGER:
-[e :U 2249 ]
+[; ;main.c: 117:    eaDogM_WriteString(V.buf);
+[e ( _eaDogM_WriteString (1 &U . _V 1 ]
 "118
-[; ;main.c: 118:    do { LATEbits.LATE1 = 1; } while(0);
+[; ;main.c: 118:    V.s_state = SEQ_STATE_TRIGGER;
+[e = . _V 0 . `E16867 3 ]
+"119
+[; ;main.c: 119:    break;
+[e $U 2238  ]
+"120
+[; ;main.c: 120:   case SEQ_STATE_TRIGGER:
+[e :U 2249 ]
+"121
+[; ;main.c: 121:    do { LATEbits.LATE1 = 1; } while(0);
 [e :U 2252 ]
 {
 [e = . . _LATEbits 0 1 -> -> 1 `i `uc ]
 }
 [e :U 2251 ]
-"119
-[; ;main.c: 119:    if (wait_lcd_check())
+"122
+[; ;main.c: 122:    if (wait_lcd_check())
 [e $ ! != -> ( _wait_lcd_check ..  `i -> 0 `i 2253  ]
-"120
-[; ;main.c: 120:     V.s_state = SEQ_STATE_DONE;
-[e = . _V 0 . `E16866 4 ]
+"123
+[; ;main.c: 123:     V.s_state = SEQ_STATE_DONE;
+[e = . _V 0 . `E16867 4 ]
 [e :U 2253 ]
-"121
-[; ;main.c: 121:    do { LATEbits.LATE1 = 0; } while(0);
+"124
+[; ;main.c: 124:    do { LATEbits.LATE1 = 0; } while(0);
 [e :U 2256 ]
 {
 [e = . . _LATEbits 0 1 -> -> 0 `i `uc ]
 }
 [e :U 2255 ]
-"122
-[; ;main.c: 122:    break;
-[e $U 2238  ]
-"123
-[; ;main.c: 123:   case SEQ_STATE_DONE:
-[e :U 2257 ]
-"124
-[; ;main.c: 124:    wait_lcd_done();
-[e ( _wait_lcd_done ..  ]
 "125
-[; ;main.c: 125:    do { LATEbits.LATE2 = 1; } while(0);
+[; ;main.c: 125:    break;
+[e $U 2238  ]
+"126
+[; ;main.c: 126:   case SEQ_STATE_DONE:
+[e :U 2257 ]
+"127
+[; ;main.c: 127:    wait_lcd_done();
+[e ( _wait_lcd_done ..  ]
+"128
+[; ;main.c: 128:    do { LATEbits.LATE2 = 1; } while(0);
 [e :U 2260 ]
 {
 [e = . . _LATEbits 0 2 -> -> 1 `i `uc ]
 }
 [e :U 2259 ]
-"126
-[; ;main.c: 126:    V.s_state = SEQ_STATE_RUN;
-[e = . _V 0 . `E16866 1 ]
-"127
-[; ;main.c: 127:    break;
-[e $U 2238  ]
-"128
-[; ;main.c: 128:   case SEQ_STATE_ERROR:
-[e :U 2261 ]
 "129
-[; ;main.c: 129:   default:
-[e :U 2262 ]
+[; ;main.c: 129:    V.s_state = SEQ_STATE_RUN;
+[e = . _V 0 . `E16867 1 ]
 "130
-[; ;main.c: 130:    V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16866 0 ]
-"131
-[; ;main.c: 131:    break;
+[; ;main.c: 130:    break;
 [e $U 2238  ]
+"131
+[; ;main.c: 131:   case SEQ_STATE_ERROR:
+[e :U 2261 ]
 "132
-[; ;main.c: 132:   }
+[; ;main.c: 132:   default:
+[e :U 2262 ]
+"133
+[; ;main.c: 133:    V.s_state = SEQ_STATE_INIT;
+[e = . _V 0 . `E16867 0 ]
+"134
+[; ;main.c: 134:    break;
+[e $U 2238  ]
+"135
+[; ;main.c: 135:   }
 }
 [e $U 2238  ]
 [e :U 2239 ]
-[e [\ -> . _V 0 `ui , $ -> . `E16866 0 `ui 2240
- , $ -> . `E16866 1 `ui 2241
- , $ -> . `E16866 2 `ui 2248
- , $ -> . `E16866 3 `ui 2249
- , $ -> . `E16866 4 `ui 2257
- , $ -> . `E16866 5 `ui 2261
+[e [\ -> . _V 0 `ui , $ -> . `E16867 0 `ui 2240
+ , $ -> . `E16867 1 `ui 2241
+ , $ -> . `E16867 2 `ui 2248
+ , $ -> . `E16867 3 `ui 2249
+ , $ -> . `E16867 4 `ui 2257
+ , $ -> . `E16867 5 `ui 2261
  2262 ]
 [e :U 2238 ]
-"133
-[; ;main.c: 133:  }
+"136
+[; ;main.c: 136:  }
 }
 [e :U 2235 ]
 [e $U 2236  ]
 [e :U 2237 ]
-"134
-[; ;main.c: 134: }
+"137
+[; ;main.c: 137: }
 [e :UE 2234 ]
 }
-[a 3C 84 101 115 116 0 ]
-[a 1C 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 0 ]
-[a 2C 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 84 101 115 116 105 110 103 32 49 50 51 52 53 54 55 56 0 ]
+[p f _sprintf 12583040 ]
+[a 1C 67 83 32 37 100 44 32 37 120 0 ]
+[a 2C 84 101 115 116 0 ]
