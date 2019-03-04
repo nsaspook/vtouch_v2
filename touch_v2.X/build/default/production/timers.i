@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/clkref.c"
+# 1 "timers.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,7 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/clkref.c" 2
-# 51 "mcc_generated_files/clkref.c"
+# 1 "timers.c" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27180,13 +27179,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 51 "mcc_generated_files/clkref.c" 2
-
-# 1 "mcc_generated_files/clkref.h" 1
-# 54 "mcc_generated_files/clkref.h"
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 54 "mcc_generated_files/clkref.h" 2
-
+# 2 "timers.c" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
@@ -27269,20 +27262,136 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/clkref.h" 2
-# 92 "mcc_generated_files/clkref.h"
-void CLKREF_Initialize(void);
-# 52 "mcc_generated_files/clkref.c" 2
+# 3 "timers.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 4 "timers.c" 2
+# 1 "./vconfig.h" 1
+# 15 "./vconfig.h"
+typedef signed long long int24_t;
 
 
 
 
 
+# 1 "./mcc_generated_files/spi1.h" 1
+# 55 "./mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 140 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 2 3
+# 55 "./mcc_generated_files/spi1.h" 2
+# 117 "./mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 21 "./vconfig.h" 2
+# 1 "./mcc_generated_files/pin_manager.h" 1
+# 400 "./mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+# 22 "./vconfig.h" 2
+# 1 "./ringbufs.h" 1
+# 15 "./ringbufs.h"
+# 1 "./vconfig.h" 1
+# 16 "./ringbufs.h" 2
 
-void CLKREF_Initialize(void)
+
+
+ typedef struct ringBufS_t {
+  uint8_t buf[64];
+  uint8_t head;
+  uint8_t tail;
+  uint8_t count;
+ } ringBufS_t;
+
+ void ringBufS_init(volatile ringBufS_t *_this);
+ int8_t ringBufS_empty(ringBufS_t *_this);
+ int8_t ringBufS_full(ringBufS_t *_this);
+ uint8_t ringBufS_get(ringBufS_t *_this);
+ void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+# 23 "./vconfig.h" 2
+# 38 "./vconfig.h"
+    struct spi_link_type {
+        uint8_t SPI_LCD : 1;
+        uint8_t SPI_AUX : 1;
+        uint8_t LCD_TIMER : 1;
+        volatile uint8_t LCD_DATA : 1;
+        uint16_t delay;
+        uint8_t config;
+        struct ringBufS_t *tx1b, *tx1a;
+        volatile int32_t int_count;
+    };
+
+    typedef enum {
+
+        SEQ_STATE_INIT = 0,
+        SEQ_STATE_RUN,
+        SEQ_STATE_SET,
+        SEQ_STATE_TRIGGER,
+        SEQ_STATE_DONE,
+        SEQ_STATE_ERROR
+
+    } SEQ_STATES;
+
+    typedef struct V_data {
+        SEQ_STATES s_state;
+        char buf[64];
+        volatile uint32_t ticks;
+    } V_data;
+# 5 "timers.c" 2
+# 1 "./timers.h" 1
+# 11 "./timers.h"
+enum APP_TIMERS {
+    TMR_INTERNAL = 0,
+    TMR_T1,
+    TMR_T2,
+    TMR_T3,
+    TMR_T4,
+    TMR_MC_TX,
+
+
+
+    TMR_COUNT
+};
+
+__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+__attribute__((inline)) _Bool TimerDone(uint8_t timer);
+void WaitMs(uint16_t numMilliseconds);
+# 6 "timers.c" 2
+
+extern volatile uint16_t tickCount[TMR_COUNT];
+
+
+
+
+__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count)
 {
+ tickCount[timer] = count << 1;
+}
 
-    CLKRCLK = 0x00;
 
-    CLKRCON = 0x94;
+
+
+__attribute__((inline)) _Bool TimerDone(uint8_t timer)
+{
+ if (tickCount[timer] == 0) {
+  return 1;
+ }
+ return 0;
+}
+
+
+
+
+void WaitMs(uint16_t numMilliseconds)
+{
+ StartTimer(TMR_INTERNAL, numMilliseconds);
+ while (!TimerDone(TMR_INTERNAL)) {
+
+ }
 }

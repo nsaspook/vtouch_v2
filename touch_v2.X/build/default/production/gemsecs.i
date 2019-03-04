@@ -27260,7 +27260,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27351,23 +27351,28 @@ void PIN_MANAGER_Initialize (void);
     } V_data;
 # 16 "./gemsecs.h" 2
 
- typedef struct block10 {
-  uint8_t rbit : 1;
-  uint8_t didh : 7;
-  uint8_t didl;
-  uint8_t wbit : 1;
-  uint8_t stream : 7;
-  uint8_t function;
-  uint8_t ebit : 1;
-  uint8_t bidh : 7;
-  uint8_t bidl;
+ typedef struct block10_type {
   uint32_t systemb;
+  uint8_t bidl;
+  uint8_t bidh : 7;
+  uint8_t ebit : 1;
+  uint8_t function;
+  uint8_t stream : 7;
+  uint8_t wbit : 1;
+  uint8_t didl;
+  uint8_t didh : 7;
+  uint8_t rbit : 1;
+ } block10_type;
+
+ typedef union block10 {
+  uint8_t b[10];
+  struct block10_type block;
  } block10;
 
  typedef struct header10 {
-  uint8_t length;
-  struct block10 block;
   uint16_t checksum;
+  union block10 block;
+  uint8_t length;
  } header10;
 
  uint16_t block_checkmark(uint8_t *, uint16_t);

@@ -6,4 +6,5 @@ mcc_generated_files/../vconfig.h  \
 mcc_generated_files/spi1.h  \
 mcc_generated_files/pin_manager.h  \
 ringbufs.h  \
-vconfig.h 
+vconfig.h  \
+mcc_generated_files/../timers.h 

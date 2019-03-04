@@ -1,4 +1,11 @@
 Version 4.0 HI-TECH Software Intermediate Code
+"7 timers.c
+[; ;timers.c: 7: extern volatile uint16_t tickCount[TMR_COUNT];
+[v _tickCount `Vus ~T0 @X0 -> 0 `x e ]
+"33
+[; ;timers.c: 33:  StartTimer(TMR_INTERNAL, numMilliseconds);
+[c E16160 0 1 2 3 4 5 6 .. ]
+[n E16160 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_COUNT  ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2246,48 +2253,92 @@ Version 4.0 HI-TECH Software Intermediate Code
 "48558
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 48558: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"33 gemsecs.c
-[; ;gemsecs.c: 33: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
-[v _block_checkmark `(us ~T0 @X0 1 ef2`*uc`us ]
-"34
-[; ;gemsecs.c: 34: {
+[v F16179 `(v ~T0 @X0 1 tf2`uc`us ]
+"12 timers.c
+[; ;timers.c: 12: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count)
+[v _StartTimer `TF16179 ~T0 @X0 1 e ]
+"13
+[; ;timers.c: 13: {
 {
-[e :U _block_checkmark ]
-"33
-[; ;gemsecs.c: 33: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
-[v _byte_block `*uc ~T0 @X0 1 r1 ]
-[v _byte_count `us ~T0 @X0 1 r2 ]
-"34
-[; ;gemsecs.c: 34: {
+[e :U _StartTimer ]
+"12
+[; ;timers.c: 12: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count)
+[v _timer `uc ~T0 @X0 1 r1 ]
+[v _count `us ~T0 @X0 1 r2 ]
+"13
+[; ;timers.c: 13: {
 [f ]
-"35
-[; ;gemsecs.c: 35:  uint16_t sum = 0, i;
-[v _sum `us ~T0 @X0 1 a ]
-[e = _sum -> -> 0 `i `us ]
-[v _i `us ~T0 @X0 1 a ]
-"37
-[; ;gemsecs.c: 37:  for (i = 0; i < byte_count; i++) {
-{
-[e = _i -> -> 0 `i `us ]
-[e $U 2236  ]
-[e :U 2233 ]
-{
-"38
-[; ;gemsecs.c: 38:   sum += byte_block[i];
-[e =+ _sum -> *U + _byte_block * -> _i `ux -> -> # *U _byte_block `ui `ux `us ]
-"39
-[; ;gemsecs.c: 39:  }
+"14
+[; ;timers.c: 14:  tickCount[timer] = count << 1;
+[e = *U + &U _tickCount * -> _timer `ux -> -> # *U &U _tickCount `ui `ux -> << -> _count `ui -> 1 `i `us ]
+"15
+[; ;timers.c: 15: }
+[e :UE 2229 ]
 }
-[e ++ _i -> -> 1 `i `us ]
-[e :U 2236 ]
-[e $ < -> _i `ui -> _byte_count `ui 2233  ]
+[v F16183 `(a ~T0 @X0 1 tf1`uc ]
+"20
+[; ;timers.c: 20: __attribute__((inline)) _Bool TimerDone(uint8_t timer)
+[v _TimerDone `TF16183 ~T0 @X0 1 e ]
+"21
+[; ;timers.c: 21: {
+{
+[e :U _TimerDone ]
+"20
+[; ;timers.c: 20: __attribute__((inline)) _Bool TimerDone(uint8_t timer)
+[v _timer `uc ~T0 @X0 1 r1 ]
+"21
+[; ;timers.c: 21: {
+[f ]
+"22
+[; ;timers.c: 22:  if (tickCount[timer] == 0) {
+[e $ ! == -> *U + &U _tickCount * -> _timer `ux -> -> # *U &U _tickCount `ui `ux `ui -> -> 0 `i `ui 2231  ]
+{
+"23
+[; ;timers.c: 23:   return 1;
+[e ) -> -> 1 `i `a ]
+[e $UE 2230  ]
+"24
+[; ;timers.c: 24:  }
+}
+[e :U 2231 ]
+"25
+[; ;timers.c: 25:  return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2230  ]
+"26
+[; ;timers.c: 26: }
+[e :UE 2230 ]
+}
+"31
+[; ;timers.c: 31: void WaitMs(uint16_t numMilliseconds)
+[v _WaitMs `(v ~T0 @X0 1 ef1`us ]
+"32
+[; ;timers.c: 32: {
+{
+[e :U _WaitMs ]
+"31
+[; ;timers.c: 31: void WaitMs(uint16_t numMilliseconds)
+[v _numMilliseconds `us ~T0 @X0 1 r1 ]
+"32
+[; ;timers.c: 32: {
+[f ]
+"33
+[; ;timers.c: 33:  StartTimer(TMR_INTERNAL, numMilliseconds);
+[e ( _StartTimer (2 , -> . `E16160 0 `uc _numMilliseconds ]
+"34
+[; ;timers.c: 34:  while (!TimerDone(TMR_INTERNAL)) {
+[e $U 2233  ]
 [e :U 2234 ]
+{
+"36
+[; ;timers.c: 36:  }
 }
-"40
-[; ;gemsecs.c: 40:  return sum;
-[e ) _sum ]
-[e $UE 2232  ]
-"41
-[; ;gemsecs.c: 41: }
+[e :U 2233 ]
+"34
+[; ;timers.c: 34:  while (!TimerDone(TMR_INTERNAL)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16160 0 `uc `i -> 0 `i 2234  ]
+[e :U 2235 ]
+"37
+[; ;timers.c: 37: }
 [e :UE 2232 ]
 }

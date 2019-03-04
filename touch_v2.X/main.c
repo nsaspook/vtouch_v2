@@ -51,6 +51,7 @@ typedef signed long long int24_t;
 #include "mcc_generated_files/uart1.h"
 #include "eadog.h"
 #include "gemsecs.h"
+#include "timers.h"
 
 extern struct spi_link_type spi_link;
 
@@ -58,20 +59,34 @@ struct V_data V;
 struct header10 H10[] = {
 	{
 		.length = 10,
-		.block.rbit = 0,
-		.block.wbit = 1,
-		.block.stream = 1,
-		.block.function = 1,
-		.block.systemb = 0x0c9f75,
+		.block.block.rbit = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 1,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x0c9f75,
+	},
+	{
+		.length = 10,
+		.block.block.rbit = 1,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 0x11,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x1b,
 	},
 };
+
+volatile uint16_t tickCount[TMR_COUNT] = {0};
 
 /*
 			 Main application
  */
 void main(void)
 {
-	uint8_t i;
+	uint8_t i, j = 1, *k;
 	uint16_t sum;
 
 	// Initialize the device
@@ -84,11 +99,28 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	init_display();
-	sum = block_checkmark((uint8_t*) & H10[0].block, sizeof(block10));
-	sprintf(V.buf, "CS %d, %x", sizeof(block10), sum);
-
+	sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
+	H10[j].checksum = sum;
+	sprintf(V.buf, " %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, 0x%04x",
+		H10[j].block.b[9],
+		H10[j].block.b[8],
+		H10[j].block.b[7],
+		H10[j].block.b[6],
+		H10[j].block.b[5],
+		H10[j].block.b[4],
+		H10[j].block.b[3],
+		H10[j].block.b[2],
+		H10[j].block.b[1],
+		H10[j].block.b[0],
+		sum);
 	eaDogM_WriteString(V.buf);
 	wait_lcd_done();
+
+	//	sum = block_checkmark((uint8_t*) & H10[1].block, sizeof(block10));
+	//	sprintf(V.buf, " %d, 0x%x", sizeof(block10), sum);
+	//	eaDogM_WriteString(V.buf);
+	//	wait_lcd_done();
+
 	V.s_state = SEQ_STATE_INIT;
 
 	while (true) {
@@ -100,21 +132,17 @@ void main(void)
 			/*
 			 * Do something
 			 */
+			k = (void*) &H10[j];
 			if (UART1_is_tx_ready() > 30) {
-				for (i = 0; i <= 30; i++) {
-					UART1_Write(0x4f);
+				for (i = sizeof(header10); i > 0; i--) {
+					UART1_Write(k[i - 1]);
 				}
 			}
-
-			if (PRLOCKbits.PRLOCKED) {
-				//strcpy(V.buf, "Testing 12345678Testing 12345678Testing 12345678");
-			} else {
-				strcpy(V.buf, "Test");
-			}
-			V.s_state = SEQ_STATE_SET;
+			StartTimer(TMR_T1, 20);
+			V.s_state = SEQ_STATE_DONE;
 			break;
 		case SEQ_STATE_SET:
-			eaDogM_WriteString(V.buf);
+			//eaDogM_WriteString(V.buf);
 			V.s_state = SEQ_STATE_TRIGGER;
 			break;
 		case SEQ_STATE_TRIGGER:
@@ -124,9 +152,9 @@ void main(void)
 			DEBUG1_SetLow();
 			break;
 		case SEQ_STATE_DONE:
-			wait_lcd_done();
-			DEBUG2_SetHigh();
-			V.s_state = SEQ_STATE_RUN;
+			if (TimerDone(TMR_T1)) {
+				V.s_state = SEQ_STATE_RUN;
+			}
 			break;
 		case SEQ_STATE_ERROR:
 		default:

@@ -19,4 +19,5 @@ mcc_generated_files/clkref.h  \
 eadog.h  \
 vconfig.h  \
 ringbufs.h  \
-gemsecs.h 
+gemsecs.h  \
+timers.h 

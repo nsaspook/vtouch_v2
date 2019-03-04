@@ -49,12 +49,13 @@
  */
 
 #include <xc.h>
-#include <pic18f57k42.h>
 #include "tmr6.h"
 #include "interrupt_manager.h"
 #include "../vconfig.h"
+#include "../timers.h"
 
 extern struct V_data V;
+extern volatile uint16_t tickCount[TMR_COUNT];
 
 /**
   Section: Global Variables Definitions
@@ -79,8 +80,8 @@ void TMR6_Initialize(void)
 	// T6RSEL T6CKIPPS pin; 
 	T6RST = 0x00;
 
-	// PR6 49; 
-	T6PR = 0x31;
+	// PR6 3; 
+	T6PR = 0x03;
 
 	// TMR6 0; 
 	T6TMR = 0x00;
@@ -94,8 +95,8 @@ void TMR6_Initialize(void)
 	// Set Default Interrupt Handler
 	TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
 
-	// T6CKPS 1:1; T6OUTPS 1:16; TMR6ON on; 
-	T6CON = 0x8F;
+	// T6CKPS 1:128; T6OUTPS 1:16; TMR6ON on; 
+	T6CON = 0xFF;
 }
 
 void TMR6_ModeSet(TMR6_HLT_MODE mode)
@@ -194,10 +195,18 @@ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
 
 void TMR6_DefaultInterruptHandler(void)
 {
+	uint8_t i;
 	// add your TMR6 interrupt custom code
 	// or set custom function using TMR6_SetInterruptHandler()
 	SLED = (uint8_t) ~SLED;
 	++V.ticks;
+
+	//Decrement each software timer
+	for (i = 0; i < TMR_COUNT; i++) {
+		if (tickCount[i] != 0) {
+			tickCount[i]--;
+		}
+	}
 }
 
 /**

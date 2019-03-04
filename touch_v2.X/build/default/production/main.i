@@ -27446,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28059,27 +28059,52 @@ void PMD_Initialize(void);
 
 # 1 "./gemsecs.h" 1
 # 17 "./gemsecs.h"
- typedef struct block10 {
-  uint8_t rbit : 1;
-  uint8_t didh : 7;
-  uint8_t didl;
-  uint8_t wbit : 1;
-  uint8_t stream : 7;
-  uint8_t function;
-  uint8_t ebit : 1;
-  uint8_t bidh : 7;
-  uint8_t bidl;
+ typedef struct block10_type {
   uint32_t systemb;
+  uint8_t bidl;
+  uint8_t bidh : 7;
+  uint8_t ebit : 1;
+  uint8_t function;
+  uint8_t stream : 7;
+  uint8_t wbit : 1;
+  uint8_t didl;
+  uint8_t didh : 7;
+  uint8_t rbit : 1;
+ } block10_type;
+
+ typedef union block10 {
+  uint8_t b[10];
+  struct block10_type block;
  } block10;
 
  typedef struct header10 {
-  uint8_t length;
-  struct block10 block;
   uint16_t checksum;
+  union block10 block;
+  uint8_t length;
  } header10;
 
  uint16_t block_checkmark(uint8_t *, uint16_t);
 # 53 "main.c" 2
+
+# 1 "./timers.h" 1
+# 11 "./timers.h"
+enum APP_TIMERS {
+    TMR_INTERNAL = 0,
+    TMR_T1,
+    TMR_T2,
+    TMR_T3,
+    TMR_T4,
+    TMR_MC_TX,
+
+
+
+    TMR_COUNT
+};
+
+__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+__attribute__((inline)) _Bool TimerDone(uint8_t timer);
+void WaitMs(uint16_t numMilliseconds);
+# 54 "main.c" 2
 
 
 extern struct spi_link_type spi_link;
@@ -28088,20 +28113,34 @@ struct V_data V;
 struct header10 H10[] = {
  {
   .length = 10,
-  .block.rbit = 0,
-  .block.wbit = 1,
-  .block.stream = 1,
-  .block.function = 1,
-  .block.systemb = 0x0c9f75,
+  .block.block.rbit = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 1,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 0x0c9f75,
+ },
+ {
+  .length = 10,
+  .block.block.rbit = 1,
+  .block.block.wbit = 1,
+  .block.block.stream = 2,
+  .block.block.function = 0x11,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 0x1b,
  },
 };
+
+volatile uint16_t tickCount[TMR_COUNT] = {0};
 
 
 
 
 void main(void)
 {
- uint8_t i;
+ uint8_t i, j = 1, *k;
  uint16_t sum;
 
 
@@ -28114,11 +28153,28 @@ void main(void)
  (INTCON0bits.GIEL = 1);
 
  init_display();
- sum = block_checkmark((uint8_t*) & H10[0].block, sizeof(block10));
- sprintf(V.buf, "CS %d, %x", sizeof(block10), sum);
-
+ sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
+ H10[j].checksum = sum;
+ sprintf(V.buf, " %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, 0x%04x",
+  H10[j].block.b[9],
+  H10[j].block.b[8],
+  H10[j].block.b[7],
+  H10[j].block.b[6],
+  H10[j].block.b[5],
+  H10[j].block.b[4],
+  H10[j].block.b[3],
+  H10[j].block.b[2],
+  H10[j].block.b[1],
+  H10[j].block.b[0],
+  sum);
  eaDogM_WriteString(V.buf);
  wait_lcd_done();
+
+
+
+
+
+
  V.s_state = SEQ_STATE_INIT;
 
  while (1) {
@@ -28130,21 +28186,17 @@ void main(void)
 
 
 
+   k = (void*) &H10[j];
    if (UART1_is_tx_ready() > 30) {
-    for (i = 0; i <= 30; i++) {
-     UART1_Write(0x4f);
+    for (i = sizeof(header10); i > 0; i--) {
+     UART1_Write(k[i - 1]);
     }
    }
-
-   if (PRLOCKbits.PRLOCKED) {
-
-   } else {
-    strcpy(V.buf, "Test");
-   }
-   V.s_state = SEQ_STATE_SET;
+   StartTimer(TMR_T1, 20);
+   V.s_state = SEQ_STATE_DONE;
    break;
   case SEQ_STATE_SET:
-   eaDogM_WriteString(V.buf);
+
    V.s_state = SEQ_STATE_TRIGGER;
    break;
   case SEQ_STATE_TRIGGER:
@@ -28154,9 +28206,9 @@ void main(void)
    do { LATEbits.LATE1 = 0; } while(0);
    break;
   case SEQ_STATE_DONE:
-   wait_lcd_done();
-   do { LATEbits.LATE2 = 1; } while(0);
-   V.s_state = SEQ_STATE_RUN;
+   if (TimerDone(TMR_T1)) {
+    V.s_state = SEQ_STATE_RUN;
+   }
    break;
   case SEQ_STATE_ERROR:
   default:

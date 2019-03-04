@@ -39,8 +39,6 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27183,7 +27181,6 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
 # 52 "mcc_generated_files/tmr6.c" 2
-
 # 1 "mcc_generated_files/tmr6.h" 1
 # 54 "mcc_generated_files/tmr6.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
@@ -27241,7 +27238,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27268,9 +27265,10 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/tmr6.h" 2
+# 54 "mcc_generated_files/tmr6.h" 2
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 56 "mcc_generated_files/tmr6.h" 2
+# 55 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27514,13 +27512,19 @@ void TMR6_LoadPeriodRegister(uint8_t periodVal);
 extern void (*TMR6_InterruptHandler)(void);
 # 882 "mcc_generated_files/tmr6.h"
 void TMR6_DefaultInterruptHandler(void);
-# 54 "mcc_generated_files/tmr6.c" 2
+# 53 "mcc_generated_files/tmr6.c" 2
 # 1 "mcc_generated_files/interrupt_manager.h" 1
 # 109 "mcc_generated_files/interrupt_manager.h"
 void INTERRUPT_Initialize (void);
-# 55 "mcc_generated_files/tmr6.c" 2
+# 54 "mcc_generated_files/tmr6.c" 2
 # 1 "mcc_generated_files/../vconfig.h" 1
-# 20 "mcc_generated_files/../vconfig.h"
+# 15 "mcc_generated_files/../vconfig.h"
+typedef signed long long int24_t;
+
+
+
+
+
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -27591,9 +27595,29 @@ void PIN_MANAGER_Initialize (void);
         char buf[64];
         volatile uint32_t ticks;
     } V_data;
+# 55 "mcc_generated_files/tmr6.c" 2
+# 1 "mcc_generated_files/../timers.h" 1
+# 11 "mcc_generated_files/../timers.h"
+enum APP_TIMERS {
+    TMR_INTERNAL = 0,
+    TMR_T1,
+    TMR_T2,
+    TMR_T3,
+    TMR_T4,
+    TMR_MC_TX,
+
+
+
+    TMR_COUNT
+};
+
+__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+__attribute__((inline)) _Bool TimerDone(uint8_t timer);
+void WaitMs(uint16_t numMilliseconds);
 # 56 "mcc_generated_files/tmr6.c" 2
 
 extern struct V_data V;
+extern volatile uint16_t tickCount[TMR_COUNT];
 
 
 
@@ -27619,7 +27643,7 @@ void TMR6_Initialize(void)
  T6RST = 0x00;
 
 
- T6PR = 0x31;
+ T6PR = 0x03;
 
 
  T6TMR = 0x00;
@@ -27634,7 +27658,7 @@ void TMR6_Initialize(void)
  TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
 
 
- T6CON = 0x8F;
+ T6CON = 0xFF;
 }
 
 void TMR6_ModeSet(TMR6_HLT_MODE mode)
@@ -27733,8 +27757,16 @@ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
 
 void TMR6_DefaultInterruptHandler(void)
 {
+ uint8_t i;
 
 
  LATEbits.LATE0 = (uint8_t) ~LATEbits.LATE0;
  ++V.ticks;
+
+
+ for (i = 0; i < TMR_COUNT; i++) {
+  if (tickCount[i] != 0) {
+   tickCount[i]--;
+  }
+ }
 }
