@@ -50,10 +50,21 @@ typedef signed long long int24_t;
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/uart1.h"
 #include "eadog.h"
+#include "gemsecs.h"
 
 extern struct spi_link_type spi_link;
 
 struct V_data V;
+struct header10 H10[] ={
+	{
+	.length=10,
+	.block.rbit=0,
+	.block.wbit=1,
+	.block.stream=1,
+	.block.function=1,
+	.block.systemb=0x0c9f75,
+	},
+};
 
 /*
 			 Main application
