@@ -86,8 +86,9 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
  */
 void main(void)
 {
-	uint8_t i, j = 1, *k;
+	uint8_t i, j = 0, *k;
 	uint16_t sum;
+	UI_STATES mode = UI_STATE_HOST; /* link configuration host/equipment/etc ... */
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -98,67 +99,75 @@ void main(void)
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
 
-	init_display();
-	sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
-	H10[j].checksum = sum;
-	sprintf(V.buf, " %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, 0x%04x",
-		H10[j].block.b[9],
-		H10[j].block.b[8],
-		H10[j].block.b[7],
-		H10[j].block.b[6],
-		H10[j].block.b[5],
-		H10[j].block.b[4],
-		H10[j].block.b[3],
-		H10[j].block.b[2],
-		H10[j].block.b[1],
-		H10[j].block.b[0],
-		sum);
-	eaDogM_WriteString(V.buf);
-	wait_lcd_done();
-
-	//	sum = block_checkmark((uint8_t*) & H10[1].block, sizeof(block10));
-	//	sprintf(V.buf, " %d, 0x%x", sizeof(block10), sum);
-	//	eaDogM_WriteString(V.buf);
-	//	wait_lcd_done();
-
-	V.s_state = SEQ_STATE_INIT;
+	V.ui_state = UI_STATE_INIT;
 
 	while (true) {
-		switch (V.s_state) {
-		case SEQ_STATE_INIT:
-			V.s_state = SEQ_STATE_RUN;
-			break;
-		case SEQ_STATE_RUN:
-			/*
-			 * Do something
-			 */
-			k = (void*) &H10[j];
-			if (UART1_is_tx_ready() > 30) {
-				for (i = sizeof(header10); i > 0; i--) {
-					UART1_Write(k[i - 1]);
-				}
-			}
-			StartTimer(TMR_T1, 20);
-			V.s_state = SEQ_STATE_DONE;
-			break;
-		case SEQ_STATE_SET:
-			//eaDogM_WriteString(V.buf);
-			V.s_state = SEQ_STATE_TRIGGER;
-			break;
-		case SEQ_STATE_TRIGGER:
-			DEBUG1_SetHigh();
-			if (wait_lcd_check())
-				V.s_state = SEQ_STATE_DONE;
-			DEBUG1_SetLow();
-			break;
-		case SEQ_STATE_DONE:
-			if (TimerDone(TMR_T1)) {
-				V.s_state = SEQ_STATE_RUN;
-			}
-			break;
-		case SEQ_STATE_ERROR:
-		default:
+		switch (V.ui_state) {
+		case UI_STATE_INIT:
+			init_display();
+			sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
+			H10[j].checksum = sum;
+			sprintf(V.buf, "H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+				H10[j].block.b[9],
+				H10[j].block.b[8],
+				H10[j].block.b[7],
+				H10[j].block.b[6],
+				H10[j].block.b[5],
+				H10[j].block.b[4],
+				H10[j].block.b[3],
+				H10[j].block.b[2],
+				H10[j].block.b[1],
+				H10[j].block.b[0],
+				sum);
+			eaDogM_WriteString(V.buf);
+			wait_lcd_done();
+			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
+			V.r_l_state = LINK_STATE_IDLE;
+			V.t_l_state = LINK_STATE_IDLE;
+			break;
+		case UI_STATE_HOST:
+			switch (V.s_state) {
+			case SEQ_STATE_INIT:
+				V.s_state = SEQ_STATE_RUN;
+				break;
+			case SEQ_STATE_RUN:
+				/*
+				 * Do something
+				 */
+				k = (void*) &H10[j];
+				if (UART1_is_tx_ready() > 30) {
+					for (i = sizeof(header10); i > 0; i--) {
+						UART1_Write(k[i - 1]);
+					}
+				}
+				StartTimer(TMR_T1, 20);
+				V.s_state = SEQ_STATE_DONE;
+				break;
+			case SEQ_STATE_SET:
+				//eaDogM_WriteString(V.buf);
+				V.s_state = SEQ_STATE_TRIGGER;
+				break;
+			case SEQ_STATE_TRIGGER:
+				DEBUG1_SetHigh();
+				if (wait_lcd_check())
+					V.s_state = SEQ_STATE_DONE;
+				DEBUG1_SetLow();
+				break;
+			case SEQ_STATE_DONE:
+				if (TimerDone(TMR_T1)) {
+					V.s_state = SEQ_STATE_RUN;
+				}
+				break;
+			case SEQ_STATE_ERROR:
+			default:
+				V.s_state = SEQ_STATE_INIT;
+				break;
+			}
+			break;
+		case UI_STATE_ERROR:
+		default:
+			V.ui_state = UI_STATE_INIT;
 			break;
 		}
 	}

@@ -1,16 +1,20 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F16786 `(v ~T0 @X0 0 tf ]
-[v F16788 `(v ~T0 @X0 0 tf ]
-[v F16809 `(v ~T0 @X0 0 tf ]
-[v F16811 `(v ~T0 @X0 0 tf ]
+[v F16787 `(v ~T0 @X0 0 tf ]
+[v F16789 `(v ~T0 @X0 0 tf ]
+[v F16810 `(v ~T0 @X0 0 tf ]
+[v F16812 `(v ~T0 @X0 0 tf ]
 "58 main.c
 [; ;main.c: 58: struct V_data V;
-[c E16866 0 1 2 3 4 5 .. ]
-[n E16866 . SEQ_STATE_INIT SEQ_STATE_RUN SEQ_STATE_SET SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
-"60 ./vconfig.h
-[; ;./vconfig.h: 60:     typedef struct V_data {
-[s S2231 `E16866 1 `uc -> 64 `i `Vul 1 ]
-[n S2231 V_data s_state buf ticks ]
+[c E16867 0 1 2 3 4 5 .. ]
+[n E16867 . SEQ_STATE_INIT SEQ_STATE_RUN SEQ_STATE_SET SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
+[c E16875 0 1 2 3 4 5 .. ]
+[n E16875 . UI_STATE_INIT UI_STATE_HOST UI_STATE_EQUIP UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
+[c E16883 0 1 2 3 4 5 .. ]
+[n E16883 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_NAK LINK_STATE_ERROR  ]
+"76 ./vconfig.h
+[; ;./vconfig.h: 76:  typedef struct V_data {
+[s S2231 `E16867 1 `E16875 1 `E16883 1 `E16883 1 `uc -> 64 `i `Vul 1 ]
+[n S2231 V_data s_state ui_state r_l_state t_l_state buf ticks ]
 "22 ./gemsecs.h
 [; ;./gemsecs.h: 22:  typedef struct block10_type {
 [s S2232 `ul 1 `uc 1 :7 `uc 1 :1 `uc 1 `uc 1 :7 `uc 1 :1 `uc 1 `uc 1 :7 `uc 1 :1 `uc 1 ]
@@ -62,14 +66,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "325
 [; ;./mcc_generated_files/uart1.h: 325: void UART1_Write(uint8_t txData);
 [v _UART1_Write `(v ~T0 @X0 0 ef1`uc ]
-[v F16947 `(v ~T0 @X0 1 tf2`uc`us ]
+[v F16971 `(v ~T0 @X0 1 tf2`uc`us ]
 "24 ./timers.h
 [; ;./timers.h: 24: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF16947 ~T0 @X0 0 e ]
-"141 main.c
-[; ;main.c: 141:    StartTimer(TMR_T1, 20);
-[c E16938 0 1 2 3 4 5 6 .. ]
-[n E16938 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_COUNT  ]
+[v _StartTimer `TF16971 ~T0 @X0 0 e ]
+"144 main.c
+[; ;main.c: 144:     StartTimer(TMR_T1, 20);
+[c E16962 0 1 2 3 4 5 6 .. ]
+[n E16962 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_COUNT  ]
 "46188 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46188:     struct {
 [s S2086 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -88,10 +92,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "41 ./eadog.h
 [; ;./eadog.h: 41:  _Bool wait_lcd_check(void);
 [v _wait_lcd_check `(a ~T0 @X0 0 ef ]
-[v F16951 `(a ~T0 @X0 1 tf1`uc ]
+[v F16975 `(a ~T0 @X0 1 tf1`uc ]
 "25 ./timers.h
 [; ;./timers.h: 25: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF16951 ~T0 @X0 0 e ]
+[v _TimerDone `TF16975 ~T0 @X0 0 e ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2341,16 +2345,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "387 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 387: void (*UART2_RxInterruptHandler)(void);
-[v _UART2_RxInterruptHandler `*F16786 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F16787 ~T0 @X0 1 e ]
 "405
 [; ;./mcc_generated_files/uart2.h: 405: void (*UART2_TxInterruptHandler)(void);
-[v _UART2_TxInterruptHandler `*F16788 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F16789 ~T0 @X0 1 e ]
 "387 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 387: void (*UART1_RxInterruptHandler)(void);
-[v _UART1_RxInterruptHandler `*F16809 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F16810 ~T0 @X0 1 e ]
 "405
 [; ;./mcc_generated_files/uart1.h: 405: void (*UART1_TxInterruptHandler)(void);
-[v _UART1_TxInterruptHandler `*F16811 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F16812 ~T0 @X0 1 e ]
 "58 main.c
 [; ;main.c: 58: struct V_data V;
 [v _V `S2231 ~T0 @X0 1 e ]
@@ -2423,189 +2427,243 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _main ]
 [f ]
 "89
-[; ;main.c: 89:  uint8_t i, j = 1, *k;
+[; ;main.c: 89:  uint8_t i, j = 0, *k;
 [v _i `uc ~T0 @X0 1 a ]
 [v _j `uc ~T0 @X0 1 a ]
-[e = _j -> -> 1 `i `uc ]
+[e = _j -> -> 0 `i `uc ]
 [v _k `*uc ~T0 @X0 1 a ]
 "90
 [; ;main.c: 90:  uint16_t sum;
 [v _sum `us ~T0 @X0 1 a ]
-"93
-[; ;main.c: 93:  SYSTEM_Initialize();
+"91
+[; ;main.c: 91:  UI_STATES mode = UI_STATE_HOST;
+[v _mode `E16875 ~T0 @X0 1 a ]
+[e = _mode . `E16875 1 ]
+"94
+[; ;main.c: 94:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"96
-[; ;main.c: 96:  (INTCON0bits.GIEH = 1);
+"97
+[; ;main.c: 97:  (INTCON0bits.GIEH = 1);
 [e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-"99
-[; ;main.c: 99:  (INTCON0bits.GIEL = 1);
+"100
+[; ;main.c: 100:  (INTCON0bits.GIEL = 1);
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-"101
-[; ;main.c: 101:  init_display();
-[e ( _init_display ..  ]
 "102
-[; ;main.c: 102:  sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
-[e = _sum ( _block_checkmark (2 , -> &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 1 `*uc -> -> # `S2233 `ui `us ]
-"103
-[; ;main.c: 103:  H10[j].checksum = sum;
-[e = . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 0 _sum ]
+[; ;main.c: 102:  V.ui_state = UI_STATE_INIT;
+[e = . _V 1 . `E16875 0 ]
 "104
-[; ;main.c: 104:  sprintf(V.buf, " %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, 0x%04x",
-[e ( _sprintf (1 , , , , , , , , , , , (. , &U . _V 1 :s 1C -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 9 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 8 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 7 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 6 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> _sum `ui ]
-"116
-[; ;main.c: 116:  eaDogM_WriteString(V.buf);
-[e ( _eaDogM_WriteString (1 &U . _V 1 ]
-"117
-[; ;main.c: 117:  wait_lcd_done();
-[e ( _wait_lcd_done ..  ]
-"124
-[; ;main.c: 124:  V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16866 0 ]
-"126
-[; ;main.c: 126:  while (1) {
+[; ;main.c: 104:  while (1) {
 [e :U 2237 ]
 {
-"127
-[; ;main.c: 127:   switch (V.s_state) {
+"105
+[; ;main.c: 105:   switch (V.ui_state) {
 [e $U 2240  ]
 {
-"128
-[; ;main.c: 128:   case SEQ_STATE_INIT:
+"106
+[; ;main.c: 106:   case UI_STATE_INIT:
 [e :U 2241 ]
-"129
-[; ;main.c: 129:    V.s_state = SEQ_STATE_RUN;
-[e = . _V 0 . `E16866 1 ]
-"130
-[; ;main.c: 130:    break;
+"107
+[; ;main.c: 107:    init_display();
+[e ( _init_display ..  ]
+"108
+[; ;main.c: 108:    sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
+[e = _sum ( _block_checkmark (2 , -> &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 1 `*uc -> -> # `S2233 `ui `us ]
+"109
+[; ;main.c: 109:    H10[j].checksum = sum;
+[e = . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 0 _sum ]
+"110
+[; ;main.c: 110:    sprintf(V.buf, "H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+[e ( _sprintf (1 , , , , , , , , , , , (. , &U . _V 4 :s 1C -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 9 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 8 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 7 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 6 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 3 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 2 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 1 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> *U + &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux `i -> _sum `ui ]
+"122
+[; ;main.c: 122:    eaDogM_WriteString(V.buf);
+[e ( _eaDogM_WriteString (1 &U . _V 4 ]
+"123
+[; ;main.c: 123:    wait_lcd_done();
+[e ( _wait_lcd_done ..  ]
+"124
+[; ;main.c: 124:    V.ui_state = mode;
+[e = . _V 1 _mode ]
+"125
+[; ;main.c: 125:    V.s_state = SEQ_STATE_INIT;
+[e = . _V 0 . `E16867 0 ]
+"126
+[; ;main.c: 126:    V.r_l_state = LINK_STATE_IDLE;
+[e = . _V 2 . `E16883 0 ]
+"127
+[; ;main.c: 127:    V.t_l_state = LINK_STATE_IDLE;
+[e = . _V 3 . `E16883 0 ]
+"128
+[; ;main.c: 128:    break;
 [e $U 2239  ]
-"131
-[; ;main.c: 131:   case SEQ_STATE_RUN:
+"129
+[; ;main.c: 129:   case UI_STATE_HOST:
 [e :U 2242 ]
-"135
-[; ;main.c: 135:    k = (void*) &H10[j];
-[e = _k -> -> &U *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux `*v `*uc ]
-"136
-[; ;main.c: 136:    if (UART1_is_tx_ready() > 30) {
-[e $ ! > -> ( _UART1_is_tx_ready ..  `i -> 30 `i 2243  ]
+"130
+[; ;main.c: 130:    switch (V.s_state) {
+[e $U 2244  ]
 {
-"137
-[; ;main.c: 137:     for (i = sizeof(header10); i > 0; i--) {
+"131
+[; ;main.c: 131:    case SEQ_STATE_INIT:
+[e :U 2245 ]
+"132
+[; ;main.c: 132:     V.s_state = SEQ_STATE_RUN;
+[e = . _V 0 . `E16867 1 ]
+"133
+[; ;main.c: 133:     break;
+[e $U 2243  ]
+"134
+[; ;main.c: 134:    case SEQ_STATE_RUN:
+[e :U 2246 ]
+"138
+[; ;main.c: 138:     k = (void*) &H10[j];
+[e = _k -> -> &U *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux `*v `*uc ]
+"139
+[; ;main.c: 139:     if (UART1_is_tx_ready() > 30) {
+[e $ ! > -> ( _UART1_is_tx_ready ..  `i -> 30 `i 2247  ]
+{
+"140
+[; ;main.c: 140:      for (i = sizeof(header10); i > 0; i--) {
 {
 [e = _i -> -> # `S2234 `ui `uc ]
-[e $ > -> _i `i -> 0 `i 2244  ]
-[e $U 2245  ]
-[e :U 2244 ]
+[e $ > -> _i `i -> 0 `i 2248  ]
+[e $U 2249  ]
+[e :U 2248 ]
 {
-"138
-[; ;main.c: 138:      UART1_Write(k[i - 1]);
+"141
+[; ;main.c: 141:       UART1_Write(k[i - 1]);
 [e ( _UART1_Write (1 *U + _k * -> - -> _i `i -> 1 `i `x -> -> # *U _k `i `x ]
-"139
-[; ;main.c: 139:     }
+"142
+[; ;main.c: 142:      }
 }
 [e -- _i -> -> 1 `i `uc ]
-[e $ > -> _i `i -> 0 `i 2244  ]
-[e :U 2245 ]
+[e $ > -> _i `i -> 0 `i 2248  ]
+[e :U 2249 ]
 }
-"140
-[; ;main.c: 140:    }
-}
-[e :U 2243 ]
-"141
-[; ;main.c: 141:    StartTimer(TMR_T1, 20);
-[e ( _StartTimer (2 , -> . `E16938 1 `uc -> -> 20 `i `us ]
-"142
-[; ;main.c: 142:    V.s_state = SEQ_STATE_DONE;
-[e = . _V 0 . `E16866 4 ]
 "143
-[; ;main.c: 143:    break;
-[e $U 2239  ]
-"144
-[; ;main.c: 144:   case SEQ_STATE_SET:
+[; ;main.c: 143:     }
+}
 [e :U 2247 ]
+"144
+[; ;main.c: 144:     StartTimer(TMR_T1, 20);
+[e ( _StartTimer (2 , -> . `E16962 1 `uc -> -> 20 `i `us ]
+"145
+[; ;main.c: 145:     V.s_state = SEQ_STATE_DONE;
+[e = . _V 0 . `E16867 4 ]
 "146
-[; ;main.c: 146:    V.s_state = SEQ_STATE_TRIGGER;
-[e = . _V 0 . `E16866 3 ]
+[; ;main.c: 146:     break;
+[e $U 2243  ]
 "147
-[; ;main.c: 147:    break;
-[e $U 2239  ]
-"148
-[; ;main.c: 148:   case SEQ_STATE_TRIGGER:
-[e :U 2248 ]
-"149
-[; ;main.c: 149:    do { LATEbits.LATE1 = 1; } while(0);
+[; ;main.c: 147:    case SEQ_STATE_SET:
 [e :U 2251 ]
+"149
+[; ;main.c: 149:     V.s_state = SEQ_STATE_TRIGGER;
+[e = . _V 0 . `E16867 3 ]
+"150
+[; ;main.c: 150:     break;
+[e $U 2243  ]
+"151
+[; ;main.c: 151:    case SEQ_STATE_TRIGGER:
+[e :U 2252 ]
+"152
+[; ;main.c: 152:     do { LATEbits.LATE1 = 1; } while(0);
+[e :U 2255 ]
 {
 [e = . . _LATEbits 0 1 -> -> 1 `i `uc ]
 }
-[e :U 2250 ]
-"150
-[; ;main.c: 150:    if (wait_lcd_check())
-[e $ ! != -> ( _wait_lcd_check ..  `i -> 0 `i 2252  ]
-"151
-[; ;main.c: 151:     V.s_state = SEQ_STATE_DONE;
-[e = . _V 0 . `E16866 4 ]
-[e :U 2252 ]
-"152
-[; ;main.c: 152:    do { LATEbits.LATE1 = 0; } while(0);
-[e :U 2255 ]
+[e :U 2254 ]
+"153
+[; ;main.c: 153:     if (wait_lcd_check())
+[e $ ! != -> ( _wait_lcd_check ..  `i -> 0 `i 2256  ]
+"154
+[; ;main.c: 154:      V.s_state = SEQ_STATE_DONE;
+[e = . _V 0 . `E16867 4 ]
+[e :U 2256 ]
+"155
+[; ;main.c: 155:     do { LATEbits.LATE1 = 0; } while(0);
+[e :U 2259 ]
 {
 [e = . . _LATEbits 0 1 -> -> 0 `i `uc ]
 }
-[e :U 2254 ]
-"153
-[; ;main.c: 153:    break;
-[e $U 2239  ]
-"154
-[; ;main.c: 154:   case SEQ_STATE_DONE:
-[e :U 2256 ]
-"155
-[; ;main.c: 155:    if (TimerDone(TMR_T1)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16938 1 `uc `i -> 0 `i 2257  ]
-{
-"156
-[; ;main.c: 156:     V.s_state = SEQ_STATE_RUN;
-[e = . _V 0 . `E16866 1 ]
-"157
-[; ;main.c: 157:    }
-}
-[e :U 2257 ]
-"158
-[; ;main.c: 158:    break;
-[e $U 2239  ]
-"159
-[; ;main.c: 159:   case SEQ_STATE_ERROR:
 [e :U 2258 ]
+"156
+[; ;main.c: 156:     break;
+[e $U 2243  ]
+"157
+[; ;main.c: 157:    case SEQ_STATE_DONE:
+[e :U 2260 ]
+"158
+[; ;main.c: 158:     if (TimerDone(TMR_T1)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16962 1 `uc `i -> 0 `i 2261  ]
+{
+"159
+[; ;main.c: 159:      V.s_state = SEQ_STATE_RUN;
+[e = . _V 0 . `E16867 1 ]
 "160
-[; ;main.c: 160:   default:
-[e :U 2259 ]
+[; ;main.c: 160:     }
+}
+[e :U 2261 ]
 "161
-[; ;main.c: 161:    V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16866 0 ]
+[; ;main.c: 161:     break;
+[e $U 2243  ]
 "162
-[; ;main.c: 162:    break;
-[e $U 2239  ]
+[; ;main.c: 162:    case SEQ_STATE_ERROR:
+[e :U 2262 ]
 "163
-[; ;main.c: 163:   }
+[; ;main.c: 163:    default:
+[e :U 2263 ]
+"164
+[; ;main.c: 164:     V.s_state = SEQ_STATE_INIT;
+[e = . _V 0 . `E16867 0 ]
+"165
+[; ;main.c: 165:     break;
+[e $U 2243  ]
+"166
+[; ;main.c: 166:    }
+}
+[e $U 2243  ]
+[e :U 2244 ]
+[e [\ -> . _V 0 `ui , $ -> . `E16867 0 `ui 2245
+ , $ -> . `E16867 1 `ui 2246
+ , $ -> . `E16867 2 `ui 2251
+ , $ -> . `E16867 3 `ui 2252
+ , $ -> . `E16867 4 `ui 2260
+ , $ -> . `E16867 5 `ui 2262
+ 2263 ]
+[e :U 2243 ]
+"167
+[; ;main.c: 167:    break;
+[e $U 2239  ]
+"168
+[; ;main.c: 168:   case UI_STATE_ERROR:
+[e :U 2264 ]
+"169
+[; ;main.c: 169:   default:
+[e :U 2265 ]
+"170
+[; ;main.c: 170:    V.ui_state = UI_STATE_INIT;
+[e = . _V 1 . `E16875 0 ]
+"171
+[; ;main.c: 171:    break;
+[e $U 2239  ]
+"172
+[; ;main.c: 172:   }
 }
 [e $U 2239  ]
 [e :U 2240 ]
-[e [\ -> . _V 0 `ui , $ -> . `E16866 0 `ui 2241
- , $ -> . `E16866 1 `ui 2242
- , $ -> . `E16866 2 `ui 2247
- , $ -> . `E16866 3 `ui 2248
- , $ -> . `E16866 4 `ui 2256
- , $ -> . `E16866 5 `ui 2258
- 2259 ]
+[e [\ -> . _V 1 `ui , $ -> . `E16875 0 `ui 2241
+ , $ -> . `E16875 1 `ui 2242
+ , $ -> . `E16875 5 `ui 2264
+ 2265 ]
 [e :U 2239 ]
-"164
-[; ;main.c: 164:  }
+"173
+[; ;main.c: 173:  }
 }
 [e :U 2236 ]
 [e $U 2237  ]
 [e :U 2238 ]
-"165
-[; ;main.c: 165: }
+"174
+[; ;main.c: 174: }
 [e :UE 2235 ]
 }
 [p f _sprintf 12615684 ]
-[a 1C 32 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 44 32 48 120 37 48 52 120 0 ]
+[a 1C 72 32 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 37 48 50 120 44 32 67 32 48 120 37 48 52 120 0 ]

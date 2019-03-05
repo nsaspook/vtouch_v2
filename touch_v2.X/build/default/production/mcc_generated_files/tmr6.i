@@ -39,6 +39,8 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27238,7 +27240,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27265,10 +27267,9 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 54 "mcc_generated_files/tmr6.h" 2
-
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
 # 55 "mcc_generated_files/tmr6.h" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 56 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27518,13 +27519,7 @@ void TMR6_DefaultInterruptHandler(void);
 void INTERRUPT_Initialize (void);
 # 54 "mcc_generated_files/tmr6.c" 2
 # 1 "mcc_generated_files/../vconfig.h" 1
-# 15 "mcc_generated_files/../vconfig.h"
-typedef signed long long int24_t;
-
-
-
-
-
+# 20 "mcc_generated_files/../vconfig.h"
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -27568,33 +27563,52 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
 # 38 "./vconfig.h"
-    struct spi_link_type {
-        uint8_t SPI_LCD : 1;
-        uint8_t SPI_AUX : 1;
-        uint8_t LCD_TIMER : 1;
-        volatile uint8_t LCD_DATA : 1;
-        uint16_t delay;
-        uint8_t config;
-        struct ringBufS_t *tx1b, *tx1a;
-        volatile int32_t int_count;
-    };
+ struct spi_link_type {
+  uint8_t SPI_LCD : 1;
+  uint8_t SPI_AUX : 1;
+  uint8_t LCD_TIMER : 1;
+  volatile uint8_t LCD_DATA : 1;
+  uint16_t delay;
+  uint8_t config;
+  struct ringBufS_t *tx1b, *tx1a;
+  volatile int32_t int_count;
+ };
 
-    typedef enum {
+ typedef enum {
+  SEQ_STATE_INIT = 0,
+  SEQ_STATE_RUN,
+  SEQ_STATE_SET,
+  SEQ_STATE_TRIGGER,
+  SEQ_STATE_DONE,
+  SEQ_STATE_ERROR
+ } SEQ_STATES;
 
-        SEQ_STATE_INIT = 0,
-        SEQ_STATE_RUN,
-        SEQ_STATE_SET,
-        SEQ_STATE_TRIGGER,
-        SEQ_STATE_DONE,
-        SEQ_STATE_ERROR
+ typedef enum {
+  UI_STATE_INIT = 0,
+  UI_STATE_HOST,
+  UI_STATE_EQUIP,
+  UI_STATE_DEBUG,
+  UI_STATE_LOG,
+  UI_STATE_ERROR
+ } UI_STATES;
 
-    } SEQ_STATES;
+ typedef enum {
+  LINK_STATE_IDLE = 0,
+  LINK_STATE_ENQ,
+  LINK_STATE_EOT,
+  LINK_STATE_ACK,
+  LINK_STATE_NAK,
+  LINK_STATE_ERROR
+ } LINK_STATES;
 
-    typedef struct V_data {
-        SEQ_STATES s_state;
-        char buf[64];
-        volatile uint32_t ticks;
-    } V_data;
+ typedef struct V_data {
+  SEQ_STATES s_state;
+  UI_STATES ui_state;
+  LINK_STATES r_l_state;
+  LINK_STATES t_l_state;
+  char buf[64];
+  volatile uint32_t ticks;
+ } V_data;
 # 55 "mcc_generated_files/tmr6.c" 2
 # 1 "mcc_generated_files/../timers.h" 1
 # 11 "mcc_generated_files/../timers.h"

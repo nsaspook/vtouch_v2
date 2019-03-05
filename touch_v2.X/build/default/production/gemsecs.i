@@ -7,14 +7,11 @@
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "gemsecs.c" 2
-
-
-
 # 1 "./gemsecs.h" 1
 # 20 "./gemsecs.h"
 # 1 "./vconfig.h" 1
 # 15 "./vconfig.h"
-typedef signed long long int24_t;
+ typedef signed long long int24_t;
 
 
 
@@ -27260,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27322,33 +27319,52 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
 # 38 "./vconfig.h"
-    struct spi_link_type {
-        uint8_t SPI_LCD : 1;
-        uint8_t SPI_AUX : 1;
-        uint8_t LCD_TIMER : 1;
-        volatile uint8_t LCD_DATA : 1;
-        uint16_t delay;
-        uint8_t config;
-        struct ringBufS_t *tx1b, *tx1a;
-        volatile int32_t int_count;
-    };
+ struct spi_link_type {
+  uint8_t SPI_LCD : 1;
+  uint8_t SPI_AUX : 1;
+  uint8_t LCD_TIMER : 1;
+  volatile uint8_t LCD_DATA : 1;
+  uint16_t delay;
+  uint8_t config;
+  struct ringBufS_t *tx1b, *tx1a;
+  volatile int32_t int_count;
+ };
 
-    typedef enum {
+ typedef enum {
+  SEQ_STATE_INIT = 0,
+  SEQ_STATE_RUN,
+  SEQ_STATE_SET,
+  SEQ_STATE_TRIGGER,
+  SEQ_STATE_DONE,
+  SEQ_STATE_ERROR
+ } SEQ_STATES;
 
-        SEQ_STATE_INIT = 0,
-        SEQ_STATE_RUN,
-        SEQ_STATE_SET,
-        SEQ_STATE_TRIGGER,
-        SEQ_STATE_DONE,
-        SEQ_STATE_ERROR
+ typedef enum {
+  UI_STATE_INIT = 0,
+  UI_STATE_HOST,
+  UI_STATE_EQUIP,
+  UI_STATE_DEBUG,
+  UI_STATE_LOG,
+  UI_STATE_ERROR
+ } UI_STATES;
 
-    } SEQ_STATES;
+ typedef enum {
+  LINK_STATE_IDLE = 0,
+  LINK_STATE_ENQ,
+  LINK_STATE_EOT,
+  LINK_STATE_ACK,
+  LINK_STATE_NAK,
+  LINK_STATE_ERROR
+ } LINK_STATES;
 
-    typedef struct V_data {
-        SEQ_STATES s_state;
-        char buf[64];
-        volatile uint32_t ticks;
-    } V_data;
+ typedef struct V_data {
+  SEQ_STATES s_state;
+  UI_STATES ui_state;
+  LINK_STATES r_l_state;
+  LINK_STATES t_l_state;
+  char buf[64];
+  volatile uint32_t ticks;
+ } V_data;
 # 21 "./gemsecs.h" 2
 
  typedef struct block10_type {
@@ -27376,7 +27392,11 @@ void PIN_MANAGER_Initialize (void);
  } header10;
 
  uint16_t block_checkmark(uint8_t *, uint16_t);
-# 5 "gemsecs.c" 2
+ LINK_STATES r_protocol(LINK_STATES *);
+ LINK_STATES t_protocol(LINK_STATES *);
+# 2 "gemsecs.c" 2
+
+extern struct V_data V;
 
 
 
@@ -27389,4 +27409,48 @@ uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
   sum += byte_block[i];
  }
  return sum;
+}
+
+LINK_STATES r_protocol(LINK_STATES *r_link)
+{
+ switch (*r_link) {
+ case LINK_STATE_IDLE:
+  break;
+ case LINK_STATE_ENQ:
+  break;
+ case LINK_STATE_EOT:
+  break;
+ case LINK_STATE_ACK:
+  break;
+ case LINK_STATE_NAK:
+  break;
+ case LINK_STATE_ERROR:
+ default:
+  *r_link = LINK_STATE_IDLE;
+  break;
+ }
+
+ return *r_link;
+}
+
+LINK_STATES t_protocol(LINK_STATES *t_link)
+{
+ switch (*t_link) {
+ case LINK_STATE_IDLE:
+  break;
+ case LINK_STATE_ENQ:
+  break;
+ case LINK_STATE_EOT:
+  break;
+ case LINK_STATE_ACK:
+  break;
+ case LINK_STATE_NAK:
+  break;
+ case LINK_STATE_ERROR:
+ default:
+  *t_link = LINK_STATE_IDLE;
+  break;
+ }
+
+ return *t_link;
 }

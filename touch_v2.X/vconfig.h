@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 #ifndef __DEFINED_int24_t
-typedef signed long long int24_t;
+	typedef signed long long int24_t;
 #define __DEFINED_int24_t
 #endif
 
@@ -35,33 +35,52 @@ typedef signed long long int24_t;
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
 
-    struct spi_link_type { // internal state table
-        uint8_t SPI_LCD : 1;
-        uint8_t SPI_AUX : 1;
-        uint8_t LCD_TIMER : 1;
-        volatile uint8_t LCD_DATA : 1;
-        uint16_t delay;
-        uint8_t config;
-        struct ringBufS_t *tx1b, *tx1a;
-        volatile int32_t int_count;
-    };
+	struct spi_link_type { // internal SPI state table
+		uint8_t SPI_LCD : 1;
+		uint8_t SPI_AUX : 1;
+		uint8_t LCD_TIMER : 1;
+		volatile uint8_t LCD_DATA : 1;
+		uint16_t delay;
+		uint8_t config;
+		struct ringBufS_t *tx1b, *tx1a;
+		volatile int32_t int_count;
+	};
 
-    typedef enum {
-        /* rotation state machine */
-        SEQ_STATE_INIT = 0,
-        SEQ_STATE_RUN,
-        SEQ_STATE_SET,
-        SEQ_STATE_TRIGGER,
-        SEQ_STATE_DONE,
-        SEQ_STATE_ERROR
+	typedef enum {
+		SEQ_STATE_INIT = 0,
+		SEQ_STATE_RUN,
+		SEQ_STATE_SET,
+		SEQ_STATE_TRIGGER,
+		SEQ_STATE_DONE,
+		SEQ_STATE_ERROR
+	} SEQ_STATES;
 
-    } SEQ_STATES;
+	typedef enum {
+		UI_STATE_INIT = 0,
+		UI_STATE_HOST,
+		UI_STATE_EQUIP,
+		UI_STATE_DEBUG,
+		UI_STATE_LOG,
+		UI_STATE_ERROR
+	} UI_STATES;
 
-    typedef struct V_data { // control data structure with possible volatile issues
-        SEQ_STATES s_state;
-        char buf[64];
-        volatile uint32_t ticks;
-    } V_data;
+	typedef enum {
+		LINK_STATE_IDLE = 0,
+		LINK_STATE_ENQ,
+		LINK_STATE_EOT,
+		LINK_STATE_ACK,
+		LINK_STATE_NAK,
+		LINK_STATE_ERROR
+	} LINK_STATES;
+
+	typedef struct V_data { // control data structure with possible volatile issues
+		SEQ_STATES s_state;
+		UI_STATES ui_state;
+		LINK_STATES r_l_state;
+		LINK_STATES t_l_state;
+		char buf[64];
+		volatile uint32_t ticks;
+	} V_data;
 #ifdef	__cplusplus
 }
 #endif

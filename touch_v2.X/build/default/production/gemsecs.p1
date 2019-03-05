@@ -1,4 +1,8 @@
 Version 4.0 HI-TECH Software Intermediate Code
+"18 gemsecs.c
+[; ;gemsecs.c: 18: LINK_STATES r_protocol(LINK_STATES *r_link)
+[c E16164 0 1 2 3 4 5 .. ]
+[n E16164 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_NAK LINK_STATE_ERROR  ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2246,48 +2250,208 @@ Version 4.0 HI-TECH Software Intermediate Code
 "48558
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 48558: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"9 gemsecs.c
-[; ;gemsecs.c: 9: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
+"8 gemsecs.c
+[; ;gemsecs.c: 8: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
 [v _block_checkmark `(us ~T0 @X0 1 ef2`*uc`us ]
-"10
-[; ;gemsecs.c: 10: {
+"9
+[; ;gemsecs.c: 9: {
 {
 [e :U _block_checkmark ]
-"9
-[; ;gemsecs.c: 9: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
+"8
+[; ;gemsecs.c: 8: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
 [v _byte_block `*uc ~T0 @X0 1 r1 ]
 [v _byte_count `us ~T0 @X0 1 r2 ]
-"10
-[; ;gemsecs.c: 10: {
+"9
+[; ;gemsecs.c: 9: {
 [f ]
-"11
-[; ;gemsecs.c: 11:  uint16_t sum = 0, i;
+"10
+[; ;gemsecs.c: 10:  uint16_t sum = 0, i;
 [v _sum `us ~T0 @X0 1 a ]
 [e = _sum -> -> 0 `i `us ]
 [v _i `us ~T0 @X0 1 a ]
-"13
-[; ;gemsecs.c: 13:  for (i = 0; i < byte_count; i++) {
+"12
+[; ;gemsecs.c: 12:  for (i = 0; i < byte_count; i++) {
 {
 [e = _i -> -> 0 `i `us ]
 [e $U 2236  ]
 [e :U 2233 ]
 {
-"14
-[; ;gemsecs.c: 14:   sum += byte_block[i];
+"13
+[; ;gemsecs.c: 13:   sum += byte_block[i];
 [e =+ _sum -> *U + _byte_block * -> _i `ux -> -> # *U _byte_block `ui `ux `us ]
-"15
-[; ;gemsecs.c: 15:  }
+"14
+[; ;gemsecs.c: 14:  }
 }
 [e ++ _i -> -> 1 `i `us ]
 [e :U 2236 ]
 [e $ < -> _i `ui -> _byte_count `ui 2233  ]
 [e :U 2234 ]
 }
-"16
-[; ;gemsecs.c: 16:  return sum;
+"15
+[; ;gemsecs.c: 15:  return sum;
 [e ) _sum ]
 [e $UE 2232  ]
-"17
-[; ;gemsecs.c: 17: }
+"16
+[; ;gemsecs.c: 16: }
 [e :UE 2232 ]
+}
+"18
+[; ;gemsecs.c: 18: LINK_STATES r_protocol(LINK_STATES *r_link)
+[v _r_protocol `(E16164 ~T0 @X0 1 ef1`*E16164 ]
+"19
+[; ;gemsecs.c: 19: {
+{
+[e :U _r_protocol ]
+"18
+[; ;gemsecs.c: 18: LINK_STATES r_protocol(LINK_STATES *r_link)
+[v _r_link `*E16164 ~T0 @X0 1 r1 ]
+"19
+[; ;gemsecs.c: 19: {
+[f ]
+"20
+[; ;gemsecs.c: 20:  switch (*r_link) {
+[e $U 2239  ]
+{
+"21
+[; ;gemsecs.c: 21:  case LINK_STATE_IDLE:
+[e :U 2240 ]
+"22
+[; ;gemsecs.c: 22:   break;
+[e $U 2238  ]
+"23
+[; ;gemsecs.c: 23:  case LINK_STATE_ENQ:
+[e :U 2241 ]
+"24
+[; ;gemsecs.c: 24:   break;
+[e $U 2238  ]
+"25
+[; ;gemsecs.c: 25:  case LINK_STATE_EOT:
+[e :U 2242 ]
+"26
+[; ;gemsecs.c: 26:   break;
+[e $U 2238  ]
+"27
+[; ;gemsecs.c: 27:  case LINK_STATE_ACK:
+[e :U 2243 ]
+"28
+[; ;gemsecs.c: 28:   break;
+[e $U 2238  ]
+"29
+[; ;gemsecs.c: 29:  case LINK_STATE_NAK:
+[e :U 2244 ]
+"30
+[; ;gemsecs.c: 30:   break;
+[e $U 2238  ]
+"31
+[; ;gemsecs.c: 31:  case LINK_STATE_ERROR:
+[e :U 2245 ]
+"32
+[; ;gemsecs.c: 32:  default:
+[e :U 2246 ]
+"33
+[; ;gemsecs.c: 33:   *r_link = LINK_STATE_IDLE;
+[e = *U _r_link . `E16164 0 ]
+"34
+[; ;gemsecs.c: 34:   break;
+[e $U 2238  ]
+"35
+[; ;gemsecs.c: 35:  }
+}
+[e $U 2238  ]
+[e :U 2239 ]
+[e [\ -> *U _r_link `ui , $ -> . `E16164 0 `ui 2240
+ , $ -> . `E16164 1 `ui 2241
+ , $ -> . `E16164 2 `ui 2242
+ , $ -> . `E16164 3 `ui 2243
+ , $ -> . `E16164 4 `ui 2244
+ , $ -> . `E16164 5 `ui 2245
+ 2246 ]
+[e :U 2238 ]
+"37
+[; ;gemsecs.c: 37:  return *r_link;
+[e ) *U _r_link ]
+[e $UE 2237  ]
+"38
+[; ;gemsecs.c: 38: }
+[e :UE 2237 ]
+}
+"40
+[; ;gemsecs.c: 40: LINK_STATES t_protocol(LINK_STATES *t_link)
+[v _t_protocol `(E16164 ~T0 @X0 1 ef1`*E16164 ]
+"41
+[; ;gemsecs.c: 41: {
+{
+[e :U _t_protocol ]
+"40
+[; ;gemsecs.c: 40: LINK_STATES t_protocol(LINK_STATES *t_link)
+[v _t_link `*E16164 ~T0 @X0 1 r1 ]
+"41
+[; ;gemsecs.c: 41: {
+[f ]
+"42
+[; ;gemsecs.c: 42:  switch (*t_link) {
+[e $U 2249  ]
+{
+"43
+[; ;gemsecs.c: 43:  case LINK_STATE_IDLE:
+[e :U 2250 ]
+"44
+[; ;gemsecs.c: 44:   break;
+[e $U 2248  ]
+"45
+[; ;gemsecs.c: 45:  case LINK_STATE_ENQ:
+[e :U 2251 ]
+"46
+[; ;gemsecs.c: 46:   break;
+[e $U 2248  ]
+"47
+[; ;gemsecs.c: 47:  case LINK_STATE_EOT:
+[e :U 2252 ]
+"48
+[; ;gemsecs.c: 48:   break;
+[e $U 2248  ]
+"49
+[; ;gemsecs.c: 49:  case LINK_STATE_ACK:
+[e :U 2253 ]
+"50
+[; ;gemsecs.c: 50:   break;
+[e $U 2248  ]
+"51
+[; ;gemsecs.c: 51:  case LINK_STATE_NAK:
+[e :U 2254 ]
+"52
+[; ;gemsecs.c: 52:   break;
+[e $U 2248  ]
+"53
+[; ;gemsecs.c: 53:  case LINK_STATE_ERROR:
+[e :U 2255 ]
+"54
+[; ;gemsecs.c: 54:  default:
+[e :U 2256 ]
+"55
+[; ;gemsecs.c: 55:   *t_link = LINK_STATE_IDLE;
+[e = *U _t_link . `E16164 0 ]
+"56
+[; ;gemsecs.c: 56:   break;
+[e $U 2248  ]
+"57
+[; ;gemsecs.c: 57:  }
+}
+[e $U 2248  ]
+[e :U 2249 ]
+[e [\ -> *U _t_link `ui , $ -> . `E16164 0 `ui 2250
+ , $ -> . `E16164 1 `ui 2251
+ , $ -> . `E16164 2 `ui 2252
+ , $ -> . `E16164 3 `ui 2253
+ , $ -> . `E16164 4 `ui 2254
+ , $ -> . `E16164 5 `ui 2255
+ 2256 ]
+[e :U 2248 ]
+"59
+[; ;gemsecs.c: 59:  return *t_link;
+[e ) *U _t_link ]
+[e $UE 2247  ]
+"60
+[; ;gemsecs.c: 60: }
+[e :UE 2247 ]
 }

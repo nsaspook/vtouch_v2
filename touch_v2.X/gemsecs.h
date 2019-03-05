@@ -44,6 +44,8 @@ extern "C" {
 	} header10;
 
 	uint16_t block_checkmark(uint8_t *, uint16_t);
+	LINK_STATES r_protocol(LINK_STATES *);
+	LINK_STATES t_protocol(LINK_STATES *);
 
 #ifdef	__cplusplus
 }
