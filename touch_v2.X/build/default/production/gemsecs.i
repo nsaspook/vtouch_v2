@@ -11,7 +11,7 @@
 
 
 # 1 "./gemsecs.h" 1
-# 15 "./gemsecs.h"
+# 20 "./gemsecs.h"
 # 1 "./vconfig.h" 1
 # 15 "./vconfig.h"
 typedef signed long long int24_t;
@@ -27349,7 +27349,7 @@ void PIN_MANAGER_Initialize (void);
         char buf[64];
         volatile uint32_t ticks;
     } V_data;
-# 16 "./gemsecs.h" 2
+# 21 "./gemsecs.h" 2
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -27377,7 +27377,10 @@ void PIN_MANAGER_Initialize (void);
 
  uint16_t block_checkmark(uint8_t *, uint16_t);
 # 5 "gemsecs.c" 2
-# 33 "gemsecs.c"
+
+
+
+
 uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
 {
  uint16_t sum = 0, i;

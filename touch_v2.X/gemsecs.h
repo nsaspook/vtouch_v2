@@ -12,6 +12,11 @@
 extern "C" {
 #endif
 
+#define ENQ	0x05
+#define EOT	0x04
+#define ACK	0x06
+#define NAK	0x15
+
 #include "vconfig.h"
 
 	typedef struct block10_type {
@@ -39,6 +44,7 @@ extern "C" {
 	} header10;
 
 	uint16_t block_checkmark(uint8_t *, uint16_t);
+
 #ifdef	__cplusplus
 }
 #endif

@@ -2246,48 +2246,48 @@ Version 4.0 HI-TECH Software Intermediate Code
 "48558
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 48558: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"33 gemsecs.c
-[; ;gemsecs.c: 33: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
+"9 gemsecs.c
+[; ;gemsecs.c: 9: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
 [v _block_checkmark `(us ~T0 @X0 1 ef2`*uc`us ]
-"34
-[; ;gemsecs.c: 34: {
+"10
+[; ;gemsecs.c: 10: {
 {
 [e :U _block_checkmark ]
-"33
-[; ;gemsecs.c: 33: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
+"9
+[; ;gemsecs.c: 9: uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
 [v _byte_block `*uc ~T0 @X0 1 r1 ]
 [v _byte_count `us ~T0 @X0 1 r2 ]
-"34
-[; ;gemsecs.c: 34: {
+"10
+[; ;gemsecs.c: 10: {
 [f ]
-"35
-[; ;gemsecs.c: 35:  uint16_t sum = 0, i;
+"11
+[; ;gemsecs.c: 11:  uint16_t sum = 0, i;
 [v _sum `us ~T0 @X0 1 a ]
 [e = _sum -> -> 0 `i `us ]
 [v _i `us ~T0 @X0 1 a ]
-"37
-[; ;gemsecs.c: 37:  for (i = 0; i < byte_count; i++) {
+"13
+[; ;gemsecs.c: 13:  for (i = 0; i < byte_count; i++) {
 {
 [e = _i -> -> 0 `i `us ]
 [e $U 2236  ]
 [e :U 2233 ]
 {
-"38
-[; ;gemsecs.c: 38:   sum += byte_block[i];
+"14
+[; ;gemsecs.c: 14:   sum += byte_block[i];
 [e =+ _sum -> *U + _byte_block * -> _i `ux -> -> # *U _byte_block `ui `ux `us ]
-"39
-[; ;gemsecs.c: 39:  }
+"15
+[; ;gemsecs.c: 15:  }
 }
 [e ++ _i -> -> 1 `i `us ]
 [e :U 2236 ]
 [e $ < -> _i `ui -> _byte_count `ui 2233  ]
 [e :U 2234 ]
 }
-"40
-[; ;gemsecs.c: 40:  return sum;
+"16
+[; ;gemsecs.c: 16:  return sum;
 [e ) _sum ]
 [e $UE 2232  ]
-"41
-[; ;gemsecs.c: 41: }
+"17
+[; ;gemsecs.c: 17: }
 [e :UE 2232 ]
 }
