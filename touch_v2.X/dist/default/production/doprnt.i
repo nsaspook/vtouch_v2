@@ -60,15 +60,7 @@ typedef signed char int8_t;
 
 
 typedef short int16_t;
-
-
-
-
-typedef __int24 int24_t;
-
-
-
-
+# 181 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long int32_t;
 
 
@@ -117,7 +109,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -933,6 +925,49 @@ static int pad(FILE *fp, char *buf, int p)
 
     return strlen(buf) + w;
 }
+# 274 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+static int dtoa(FILE *fp, long long d)
+{
+    int i, p, s, w;
+    long long n;
+
+
+    n = d;
+    s = n < 0 ? 1 : 0;
+    if (s) {
+        n = -n;
+    }
+
+
+    if (!(prec < 0)) {
+        flags &= ~(1 << 1);
+    }
+    p = (0 < prec) ? prec : 1;
+    w = width;
+    if (s || (flags & (1 << 2))) {
+        --w;
+    }
+
+
+    i = sizeof(dbuf) - 1;
+    dbuf[i] = '\0';
+    while (!(i < 1) && (n || (0 < p) || ((0 < w) && (flags & (1 << 1))))) {
+        --i;
+        dbuf[i] = '0' + abs(n % 10);
+        --p;
+        --w;
+        n = n / 10;
+    }
+
+
+    if (s || (flags & (1 << 2))) {
+        --i;
+        dbuf[i] = s ? '-' : '+';
+    }
+
+
+    return pad(fp, &dbuf[i], w);
+}
 # 546 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
 static int stoa(FILE *fp, char *s)
 {
@@ -1091,6 +1126,14 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
             while ((0 ? isdigit((*fmt)[0]) : ((unsigned)((*fmt)[0])-'0') < 10)) {
                 ++*fmt;
             }
+        }
+# 825 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+        if ((*fmt[0] == 'd') || (*fmt[0] == 'i')) {
+
+            ++*fmt;
+            ll = (long long)(*(int *)__va_arg(*(int **)ap, (int)0));
+
+            return dtoa(fp, ll);
         }
 # 1149 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if (*fmt[0] == 's') {

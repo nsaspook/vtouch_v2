@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27366,6 +27366,514 @@ void PIN_MANAGER_Initialize (void);
   volatile uint32_t ticks;
  } V_data;
 # 21 "./gemsecs.h" 2
+# 1 "./mcc_generated_files/mcc.h" 1
+# 50 "./mcc_generated_files/mcc.h"
+# 1 "./mcc_generated_files/device_config.h" 1
+# 50 "./mcc_generated_files/mcc.h" 2
+
+
+
+
+# 1 "./mcc_generated_files/interrupt_manager.h" 1
+# 109 "./mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 54 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/tmr6.h" 1
+# 79 "./mcc_generated_files/tmr6.h"
+typedef enum
+{
+# 89 "./mcc_generated_files/tmr6.h"
+   TMR6_ROP_STARTS_TMRON,
+
+
+
+
+   TMR6_ROP_STARTS_TMRON_ERSHIGH,
+
+
+
+
+   TMR6_ROP_STARTS_TMRON_ERSLOW,
+
+
+
+
+   TMR6_ROP_RESETS_ERSBOTHEDGE,
+
+
+
+
+   TMR6_ROP_RESETS_ERSRISINGEDGE,
+
+
+
+
+   TMR6_ROP_RESETS_ERSFALLINGEDGE,
+
+
+
+
+   TMR6_ROP_RESETS_ERSLOW,
+
+
+
+
+   TMR6_ROP_RESETS_ERSHIGH,
+# 135 "./mcc_generated_files/tmr6.h"
+   TMR6_OS_STARTS_TMRON,
+
+
+
+
+   TMR6_OS_STARTS_ERSRISINGEDGE ,
+
+
+
+
+   TMR6_OS_STARTS_ERSFALLINGEDGE ,
+
+
+
+
+   TMR6_OS_STARTS_ERSBOTHEDGE,
+
+
+
+
+
+   TMR6_OS_STARTS_ERSFIRSTRISINGEDGE,
+
+
+
+
+
+   TMR6_OS_STARTS_ERSFIRSTFALLINGEDGE,
+
+
+
+
+
+   TMR6_OS_STARTS_ERSRISINGEDGEDETECT,
+
+
+
+
+   TMR6_OS_STARTS_ERSFALLINGEDGEDETECT,
+
+
+
+
+   TMR6_OS_STARTS_TMRON_ERSHIGH = 0x16,
+
+
+
+
+   TMR6_OS_STARTS_TMRON_ERSLOW = 0x17,
+# 192 "./mcc_generated_files/tmr6.h"
+   TMR6_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
+
+
+
+
+   TMR6_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
+
+
+
+
+
+   TMR6_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
+
+} TMR6_HLT_MODE;
+# 220 "./mcc_generated_files/tmr6.h"
+typedef enum
+{
+
+
+    TMR6_T6INPPS,
+
+
+
+    TMR6_T2POSTSCALED,
+
+
+
+    TMR6_T4POSTSCALED,
+
+
+
+    TMR6_RESERVED,
+
+
+
+    TMR6_CCP1_OUT,
+
+
+
+    TMR6_CCP2_OUT,
+
+
+
+    TMR6_CCP3_OUT,
+
+
+
+    TMR6_CCP4_OUT,
+
+
+
+    TMR6_PWM5_OUT,
+
+
+
+    TMR6_PWM6_OUT,
+
+
+
+    TMR6_PWM7_OUT,
+
+
+
+    TMR6_PWM8_OUT,
+
+
+
+    TMR6_RESERVED_2,
+
+
+
+    TMR6_RESERVED_3,
+
+
+
+    TMR6_C1_OUT_SYNC,
+
+
+
+    TMR6_C2_OUT_SYNC,
+
+
+
+    TMR6_ZCD_OUTPUT,
+
+
+
+    TMR6_CLC1_OUT,
+
+
+
+    TMR6_CLC2_OUT,
+
+
+
+    TMR6_CLC3_OUT,
+
+
+
+    TMR6_CLC4_OUT,
+
+
+
+    TMR6_UART1_RX_EDGE,
+
+
+
+    TMR6_UART1_TX_EDGE,
+
+
+
+    TMR6_UART2_RX_EDGE,
+
+
+
+    TMR6_UART2_TX_EDGE
+
+} TMR6_HLT_EXT_RESET_SOURCE;
+# 365 "./mcc_generated_files/tmr6.h"
+void TMR6_Initialize(void);
+# 401 "./mcc_generated_files/tmr6.h"
+void TMR6_ModeSet(TMR6_HLT_MODE mode);
+# 436 "./mcc_generated_files/tmr6.h"
+void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset);
+# 465 "./mcc_generated_files/tmr6.h"
+void TMR6_Start(void);
+# 494 "./mcc_generated_files/tmr6.h"
+void TMR6_StartTimer(void);
+# 526 "./mcc_generated_files/tmr6.h"
+void TMR6_Stop(void);
+# 558 "./mcc_generated_files/tmr6.h"
+void TMR6_StopTimer(void);
+# 593 "./mcc_generated_files/tmr6.h"
+uint8_t TMR6_Counter8BitGet(void);
+# 628 "./mcc_generated_files/tmr6.h"
+uint8_t TMR6_ReadTimer(void);
+# 667 "./mcc_generated_files/tmr6.h"
+void TMR6_Counter8BitSet(uint8_t timerVal);
+# 706 "./mcc_generated_files/tmr6.h"
+void TMR6_WriteTimer(uint8_t timerVal);
+# 758 "./mcc_generated_files/tmr6.h"
+void TMR6_Period8BitSet(uint8_t periodVal);
+# 810 "./mcc_generated_files/tmr6.h"
+void TMR6_LoadPeriodRegister(uint8_t periodVal);
+# 829 "./mcc_generated_files/tmr6.h"
+ void TMR6_CallBack(void);
+# 846 "./mcc_generated_files/tmr6.h"
+ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
+# 864 "./mcc_generated_files/tmr6.h"
+extern void (*TMR6_InterruptHandler)(void);
+# 882 "./mcc_generated_files/tmr6.h"
+void TMR6_DefaultInterruptHandler(void);
+# 55 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/adcc.h" 1
+# 72 "./mcc_generated_files/adcc.h"
+typedef uint16_t adc_result_t;
+# 89 "./mcc_generated_files/adcc.h"
+typedef enum
+{
+    channel_ANA0 = 0x0,
+    channel_ANA1 = 0x1,
+    channel_ANA2 = 0x2,
+    channel_VSS = 0x3B,
+    channel_Temp = 0x3C,
+    channel_DAC1 = 0x3D,
+    channel_FVR_Buffer1 = 0x3E,
+    channel_FVR_Buffer2 = 0x3F
+} adcc_channel_t;
+# 133 "./mcc_generated_files/adcc.h"
+void ADCC_Initialize(void);
+# 162 "./mcc_generated_files/adcc.h"
+void ADCC_StartConversion(adcc_channel_t channel);
+# 192 "./mcc_generated_files/adcc.h"
+_Bool ADCC_IsConversionDone();
+# 224 "./mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetConversionResult(void);
+# 255 "./mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+# 280 "./mcc_generated_files/adcc.h"
+void ADCC_StopConversion(void);
+# 307 "./mcc_generated_files/adcc.h"
+void ADCC_SetStopOnInterrupt(void);
+# 332 "./mcc_generated_files/adcc.h"
+void ADCC_DischargeSampleCapacitor(void);
+# 358 "./mcc_generated_files/adcc.h"
+void ADCC_LoadAcquisitionRegister(uint16_t);
+# 384 "./mcc_generated_files/adcc.h"
+void ADCC_SetPrechargeTime(uint16_t);
+# 409 "./mcc_generated_files/adcc.h"
+void ADCC_SetRepeatCount(uint8_t);
+# 437 "./mcc_generated_files/adcc.h"
+uint8_t ADCC_GetCurrentCountofConversions(void);
+# 461 "./mcc_generated_files/adcc.h"
+void ADCC_ClearAccumulator(void);
+# 486 "./mcc_generated_files/adcc.h"
+int24_t ADCC_GetAccumulatorValue(void);
+# 514 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasAccumulatorOverflowed(void);
+# 539 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetFilterValue(void);
+# 567 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetPreviousResult(void);
+# 593 "./mcc_generated_files/adcc.h"
+void ADCC_DefineSetPoint(uint16_t);
+# 619 "./mcc_generated_files/adcc.h"
+void ADCC_SetUpperThreshold(uint16_t);
+# 645 "./mcc_generated_files/adcc.h"
+void ADCC_SetLowerThreshold(uint16_t);
+# 672 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetErrorCalculation(void);
+# 699 "./mcc_generated_files/adcc.h"
+void ADCC_EnableDoubleSampling(void);
+# 723 "./mcc_generated_files/adcc.h"
+void ADCC_EnableContinuousConversion(void);
+# 747 "./mcc_generated_files/adcc.h"
+void ADCC_DisableContinuousConversion(void);
+# 775 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedUpperThreshold(void);
+# 803 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedLowerThreshold(void);
+# 830 "./mcc_generated_files/adcc.h"
+uint8_t ADCC_GetConversionStageStatus(void);
+# 847 "./mcc_generated_files/adcc.h"
+void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
+# 867 "./mcc_generated_files/adcc.h"
+void ADCC_DefaultInterruptHandler(void);
+# 56 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/nco1.h" 1
+# 93 "./mcc_generated_files/nco1.h"
+void NCO1_Initialize(void);
+# 128 "./mcc_generated_files/nco1.h"
+_Bool NCO1_GetOutputStatus(void);
+# 57 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/ext_int.h" 1
+# 562 "./mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
+# 590 "./mcc_generated_files/ext_int.h"
+void INT0_CallBack(void);
+# 613 "./mcc_generated_files/ext_int.h"
+void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
+# 637 "./mcc_generated_files/ext_int.h"
+extern void (*INT0_InterruptHandler)(void);
+# 661 "./mcc_generated_files/ext_int.h"
+void INT0_DefaultInterruptHandler(void);
+# 685 "./mcc_generated_files/ext_int.h"
+void INT1_CallBack(void);
+# 708 "./mcc_generated_files/ext_int.h"
+void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
+# 732 "./mcc_generated_files/ext_int.h"
+extern void (*INT1_InterruptHandler)(void);
+# 756 "./mcc_generated_files/ext_int.h"
+void INT1_DefaultInterruptHandler(void);
+# 780 "./mcc_generated_files/ext_int.h"
+void INT2_CallBack(void);
+# 803 "./mcc_generated_files/ext_int.h"
+void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
+# 827 "./mcc_generated_files/ext_int.h"
+extern void (*INT2_InterruptHandler)(void);
+# 851 "./mcc_generated_files/ext_int.h"
+void INT2_DefaultInterruptHandler(void);
+# 58 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
+# 59 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/clc1.h" 1
+# 91 "./mcc_generated_files/clc1.h"
+void CLC1_Initialize(void);
+# 113 "./mcc_generated_files/clc1.h"
+_Bool CLC1_OutputStatusGet(void);
+# 60 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/dsm.h" 1
+# 90 "./mcc_generated_files/dsm.h"
+void DSM_Initialize(void);
+# 115 "./mcc_generated_files/dsm.h"
+void DSM_ManualModulationSet (void);
+# 140 "./mcc_generated_files/dsm.h"
+void DSM_ManualModulationClear (void);
+# 164 "./mcc_generated_files/dsm.h"
+void DSM_ManualModulationToggle (void);
+# 189 "./mcc_generated_files/dsm.h"
+void DSM_ModulationStart (void);
+# 216 "./mcc_generated_files/dsm.h"
+void DSM_ModulationStop (void);
+# 61 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/uart2.h" 1
+# 77 "./mcc_generated_files/uart2.h"
+extern volatile uint8_t uart2TxBufferRemaining;
+extern volatile uint8_t uart2RxCount;
+# 105 "./mcc_generated_files/uart2.h"
+void UART2_Initialize(void);
+# 154 "./mcc_generated_files/uart2.h"
+uint8_t UART2_is_rx_ready(void);
+# 204 "./mcc_generated_files/uart2.h"
+uint8_t UART2_is_tx_ready(void);
+# 251 "./mcc_generated_files/uart2.h"
+_Bool UART2_is_tx_done(void);
+# 300 "./mcc_generated_files/uart2.h"
+uint8_t UART2_Read(void);
+# 325 "./mcc_generated_files/uart2.h"
+void UART2_Write(uint8_t txData);
+# 346 "./mcc_generated_files/uart2.h"
+void UART2_Transmit_ISR(void);
+# 367 "./mcc_generated_files/uart2.h"
+void UART2_Receive_ISR(void);
+# 387 "./mcc_generated_files/uart2.h"
+void (*UART2_RxInterruptHandler)(void);
+# 405 "./mcc_generated_files/uart2.h"
+void (*UART2_TxInterruptHandler)(void);
+# 425 "./mcc_generated_files/uart2.h"
+void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 443 "./mcc_generated_files/uart2.h"
+void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 62 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/uart1.h" 1
+# 77 "./mcc_generated_files/uart1.h"
+extern volatile uint8_t uart1TxBufferRemaining;
+extern volatile uint8_t uart1RxCount;
+# 105 "./mcc_generated_files/uart1.h"
+void UART1_Initialize(void);
+# 154 "./mcc_generated_files/uart1.h"
+uint8_t UART1_is_rx_ready(void);
+# 204 "./mcc_generated_files/uart1.h"
+uint8_t UART1_is_tx_ready(void);
+# 251 "./mcc_generated_files/uart1.h"
+_Bool UART1_is_tx_done(void);
+# 300 "./mcc_generated_files/uart1.h"
+uint8_t UART1_Read(void);
+# 325 "./mcc_generated_files/uart1.h"
+void UART1_Write(uint8_t txData);
+# 346 "./mcc_generated_files/uart1.h"
+void UART1_Transmit_ISR(void);
+# 367 "./mcc_generated_files/uart1.h"
+void UART1_Receive_ISR(void);
+# 387 "./mcc_generated_files/uart1.h"
+void (*UART1_RxInterruptHandler)(void);
+# 405 "./mcc_generated_files/uart1.h"
+void (*UART1_TxInterruptHandler)(void);
+# 425 "./mcc_generated_files/uart1.h"
+void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 443 "./mcc_generated_files/uart1.h"
+void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 63 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/dma1.h" 1
+# 114 "./mcc_generated_files/dma1.h"
+void DMA1_Initialize(void);
+# 64 "./mcc_generated_files/mcc.h" 2
+
+
+# 1 "./mcc_generated_files/clkref.h" 1
+# 92 "./mcc_generated_files/clkref.h"
+void CLKREF_Initialize(void);
+# 66 "./mcc_generated_files/mcc.h" 2
+# 81 "./mcc_generated_files/mcc.h"
+void SYSTEM_Initialize(void);
+# 94 "./mcc_generated_files/mcc.h"
+void OSCILLATOR_Initialize(void);
+# 107 "./mcc_generated_files/mcc.h"
+void PMD_Initialize(void);
+# 22 "./gemsecs.h" 2
+
+# 1 "./timers.h" 1
+# 11 "./timers.h"
+enum APP_TIMERS {
+ TMR_INTERNAL = 0,
+ TMR_T1,
+ TMR_T2,
+ TMR_T3,
+ TMR_T4,
+ TMR_MC_TX,
+
+
+
+ TMR_COUNT
+};
+
+__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+__attribute__((inline)) _Bool TimerDone(uint8_t timer);
+void WaitMs(uint16_t numMilliseconds);
+# 24 "./gemsecs.h" 2
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -27391,12 +27899,28 @@ void PIN_MANAGER_Initialize (void);
   uint8_t length;
  } header10;
 
+ typedef struct header12 {
+  uint16_t checksum;
+  uint8_t data[2];
+  union block10 block;
+  uint8_t length;
+ } header12;
+
+ typedef struct header13 {
+  uint16_t checksum;
+  uint8_t data[3];
+  union block10 block;
+  uint8_t length;
+ } header13;
+
  uint16_t block_checkmark(uint8_t *, uint16_t);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
 # 2 "gemsecs.c" 2
 
 extern struct V_data V;
+extern header10 r_block;
+extern struct header10 H10[];
 
 
 
@@ -27413,16 +27937,56 @@ uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
 
 LINK_STATES r_protocol(LINK_STATES *r_link)
 {
+ uint8_t rxData;
+ static uint8_t rxData_l = 0, length = 10;
+
  switch (*r_link) {
  case LINK_STATE_IDLE:
+  if (UART1_is_rx_ready()) {
+   rxData = UART1_Read();
+   if (rxData == 0x05) {
+    *r_link = LINK_STATE_ENQ;
+   }
+  }
   break;
  case LINK_STATE_ENQ:
+  rxData_l = 0;
+  UART1_Write(0x04);
+  StartTimer(TMR_T2, 1000);
+  *r_link = LINK_STATE_EOT;
   break;
  case LINK_STATE_EOT:
+  if (TimerDone(TMR_T2)) {
+   *r_link = LINK_STATE_NAK;
+  } else {
+   if (UART1_is_rx_ready()) {
+    rxData = UART1_Read();
+    if (rxData_l == 0) {
+     r_block.length = rxData;
+     length = rxData + 2;
+     rxData_l++;
+    } else {
+     if (rxData_l >= length) {
+      *r_link = LINK_STATE_ACK;
+     }
+     if (length == 12) {
+      H10[1].block.b[length] = rxData;
+     }
+     rxData_l++;
+    }
+   }
+  }
   break;
  case LINK_STATE_ACK:
+  UART1_Write(0x06);
+  *r_link = LINK_STATE_IDLE;
   break;
  case LINK_STATE_NAK:
+  UART1_Write(0x15);
+  *r_link = LINK_STATE_IDLE;
+  while ((uart1RxCount)) {
+   UART1_Read();
+  }
   break;
  case LINK_STATE_ERROR:
  default:
@@ -27433,7 +27997,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
  return *r_link;
 }
 
-LINK_STATES t_protocol(LINK_STATES *t_link)
+LINK_STATES t_protocol(LINK_STATES * t_link)
 {
  switch (*t_link) {
  case LINK_STATE_IDLE:

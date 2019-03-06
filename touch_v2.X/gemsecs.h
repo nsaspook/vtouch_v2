@@ -18,6 +18,9 @@ extern "C" {
 #define NAK	0x15
 
 #include "vconfig.h"
+#include "mcc_generated_files/mcc.h"
+#include "mcc_generated_files/uart1.h"
+#include "timers.h"
 
 	typedef struct block10_type {
 		uint32_t systemb;
@@ -42,6 +45,20 @@ extern "C" {
 		union block10 block;
 		uint8_t length;
 	} header10;
+
+	typedef struct header12 {
+		uint16_t checksum;
+		uint8_t data[2];
+		union block10 block;
+		uint8_t length;
+	} header12;
+
+	typedef struct header13 {
+		uint16_t checksum;
+		uint8_t data[3];
+		union block10 block;
+		uint8_t length;
+	} header13;
 
 	uint16_t block_checkmark(uint8_t *, uint16_t);
 	LINK_STATES r_protocol(LINK_STATES *);

@@ -57,7 +57,7 @@ extern struct spi_link_type spi_link;
 
 struct V_data V;
 struct header10 H10[] = {
-	{
+	{ // S1F1 send
 		.length = 10,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
@@ -67,7 +67,7 @@ struct header10 H10[] = {
 		.block.block.bidl = 1,
 		.block.block.systemb = 0x0c9f75,
 	},
-	{
+	{ // S1F1 receive
 		.length = 10,
 		.block.block.rbit = 1,
 		.block.block.wbit = 1,
@@ -78,6 +78,54 @@ struct header10 H10[] = {
 		.block.block.systemb = 0x1b,
 	},
 };
+
+struct header12 H12[] = {
+	{ // S1F2 send
+		.length = 12,
+		.block.block.rbit = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 1,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x0c9f75,
+	},
+	{ // S2F2 receive
+		.length = 12,
+		.block.block.rbit = 1,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 0x11,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x1b,
+	},
+};
+
+struct header12 H13[] = {
+	{ // S6F12 send
+		.length = 13,
+		.block.block.rbit = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 1,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x0c9f75,
+	},
+	{ // S6F12 receive
+		.length = 13,
+		.block.block.rbit = 1,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 0x11,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x1b,
+	},
+};
+
+struct header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 
@@ -107,7 +155,8 @@ void main(void)
 			init_display();
 			sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
 			H10[j].checksum = sum;
-			sprintf(V.buf, "H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+			sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+				mode,
 				H10[j].block.b[9],
 				H10[j].block.b[8],
 				H10[j].block.b[7],
@@ -135,6 +184,9 @@ void main(void)
 				/*
 				 * Do something
 				 */
+				r_protocol(&V.r_l_state);
+				//				t_protocol(&V.t_l_state);
+
 				k = (void*) &H10[j];
 				if (UART1_is_tx_ready() > 30) {
 					for (i = sizeof(header10); i > 0; i--) {

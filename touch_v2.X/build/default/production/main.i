@@ -27446,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28077,7 +28077,27 @@ void PMD_Initialize(void);
 # 52 "main.c" 2
 
 # 1 "./gemsecs.h" 1
-# 22 "./gemsecs.h"
+# 23 "./gemsecs.h"
+# 1 "./timers.h" 1
+# 11 "./timers.h"
+enum APP_TIMERS {
+ TMR_INTERNAL = 0,
+ TMR_T1,
+ TMR_T2,
+ TMR_T3,
+ TMR_T4,
+ TMR_MC_TX,
+
+
+
+ TMR_COUNT
+};
+
+__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+__attribute__((inline)) _Bool TimerDone(uint8_t timer);
+void WaitMs(uint16_t numMilliseconds);
+# 24 "./gemsecs.h" 2
+
  typedef struct block10_type {
   uint32_t systemb;
   uint8_t bidl;
@@ -28102,30 +28122,25 @@ void PMD_Initialize(void);
   uint8_t length;
  } header10;
 
+ typedef struct header12 {
+  uint16_t checksum;
+  uint8_t data[2];
+  union block10 block;
+  uint8_t length;
+ } header12;
+
+ typedef struct header13 {
+  uint16_t checksum;
+  uint8_t data[3];
+  union block10 block;
+  uint8_t length;
+ } header13;
+
  uint16_t block_checkmark(uint8_t *, uint16_t);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
 # 53 "main.c" 2
 
-# 1 "./timers.h" 1
-# 11 "./timers.h"
-enum APP_TIMERS {
- TMR_INTERNAL = 0,
- TMR_T1,
- TMR_T2,
- TMR_T3,
- TMR_T4,
- TMR_MC_TX,
-
-
-
- TMR_COUNT
-};
-
-__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-__attribute__((inline)) _Bool TimerDone(uint8_t timer);
-void WaitMs(uint16_t numMilliseconds);
-# 54 "main.c" 2
 
 
 extern struct spi_link_type spi_link;
@@ -28153,6 +28168,54 @@ struct header10 H10[] = {
   .block.block.systemb = 0x1b,
  },
 };
+
+struct header12 H12[] = {
+ {
+  .length = 12,
+  .block.block.rbit = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 1,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 0x0c9f75,
+ },
+ {
+  .length = 12,
+  .block.block.rbit = 1,
+  .block.block.wbit = 1,
+  .block.block.stream = 2,
+  .block.block.function = 0x11,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 0x1b,
+ },
+};
+
+struct header12 H13[] = {
+ {
+  .length = 13,
+  .block.block.rbit = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 1,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 0x0c9f75,
+ },
+ {
+  .length = 13,
+  .block.block.rbit = 1,
+  .block.block.wbit = 1,
+  .block.block.stream = 2,
+  .block.block.function = 0x11,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 0x1b,
+ },
+};
+
+struct header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 
@@ -28182,7 +28245,8 @@ void main(void)
    init_display();
    sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
    H10[j].checksum = sum;
-   sprintf(V.buf, "H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+   sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+    mode,
     H10[j].block.b[9],
     H10[j].block.b[8],
     H10[j].block.b[7],
@@ -28208,6 +28272,9 @@ void main(void)
     break;
    case SEQ_STATE_RUN:
 
+
+
+    r_protocol(&V.r_l_state);
 
 
     k = (void*) &H10[j];
