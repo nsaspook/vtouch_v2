@@ -27925,19 +27925,21 @@ uint8_t UART1_is_tx_ready(void);
 _Bool UART1_is_tx_done(void);
 # 300 "./mcc_generated_files/uart1.h"
 uint8_t UART1_Read(void);
-# 325 "./mcc_generated_files/uart1.h"
+
+void UART1_put_buffer(uint8_t);
+# 327 "./mcc_generated_files/uart1.h"
 void UART1_Write(uint8_t txData);
-# 346 "./mcc_generated_files/uart1.h"
+# 348 "./mcc_generated_files/uart1.h"
 void UART1_Transmit_ISR(void);
-# 367 "./mcc_generated_files/uart1.h"
+# 369 "./mcc_generated_files/uart1.h"
 void UART1_Receive_ISR(void);
-# 387 "./mcc_generated_files/uart1.h"
+# 389 "./mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
-# 405 "./mcc_generated_files/uart1.h"
+# 407 "./mcc_generated_files/uart1.h"
 void (*UART1_TxInterruptHandler)(void);
-# 425 "./mcc_generated_files/uart1.h"
+# 427 "./mcc_generated_files/uart1.h"
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 443 "./mcc_generated_files/uart1.h"
+# 445 "./mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 63 "./mcc_generated_files/mcc.h" 2
 
@@ -28002,7 +28004,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 38 "./vconfig.h"
+# 44 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28042,6 +28044,16 @@ void PMD_Initialize(void);
   LINK_STATE_ERROR
  } LINK_STATES;
 
+ typedef enum {
+  LINK_ERROR_NONE = 0,
+  LINK_ERROR_T1,
+  LINK_ERROR_T2,
+  LINK_ERROR_T3,
+  LINK_ERROR_T4,
+  LINK_ERROR_CHECKSUM,
+  LINK_ERROR_NAK
+ } LINK_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -28049,7 +28061,8 @@ void PMD_Initialize(void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
-  uint8_t stream, function;
+  uint8_t stream, function, error;
+  uint16_t r_checksum, t_checksum;
 
  } V_data;
 # 27 "./eadog.h" 2
@@ -28153,7 +28166,15 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header18;
 
- uint16_t block_checkmark(uint8_t *, uint16_t);
+ typedef struct header24 {
+  uint16_t checksum;
+  uint8_t data[14];
+  union block10 block;
+  uint8_t length;
+ } header24;
+
+ uint16_t block_checksum(uint8_t *, uint16_t);
+ uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
 # 53 "main.c" 2
@@ -28172,10 +28193,20 @@ struct header10 H10[] = {
   .block.block.function = 1,
   .block.block.ebit = 1,
   .block.block.bidl = 1,
-  .block.block.systemb = 0x0c9f75,
+  .block.block.systemb = 1,
  },
  {
   .length = 10,
+ },
+ {
+  .length = 10,
+  .block.block.rbit = 0,
+  .block.block.wbit = 0,
+  .block.block.stream = 1,
+  .block.block.function = 0,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
  },
 };
 
@@ -28231,6 +28262,19 @@ struct header18 H18[] = {
  },
 };
 
+struct header24 H24[] = {
+ {
+  .length = 24,
+  .block.block.rbit = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 2,
+  .block.block.function = 18,
+  .block.block.ebit = 1,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
 struct header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
@@ -28259,9 +28303,9 @@ void main(void)
   switch (V.ui_state) {
   case UI_STATE_INIT:
    init_display();
-   sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
+   sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
    H10[j].checksum = sum;
-   sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+   sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x #",
     mode,
     H10[j].block.b[9],
     H10[j].block.b[8],
@@ -28291,19 +28335,28 @@ void main(void)
 
 
 
-    if (r_protocol(&V.r_l_state) == LINK_STATE_DONE)
+    if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+     sprintf(V.buf, " S%dF%d #", V.stream, V.function);
+     eaDogM_WriteString(V.buf);
+     wait_lcd_done();
      V.s_state = SEQ_STATE_TX;
+    }
+    if (V.r_l_state == LINK_STATE_ERROR)
+     V.s_state = SEQ_STATE_ERROR;
     break;
    case SEQ_STATE_TX:
 
 
 
-    if (t_protocol(&V.t_l_state) == LINK_STATE_DONE)
+    if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
      V.s_state = SEQ_STATE_TRIGGER;
+    }
+    if (V.t_l_state == LINK_STATE_ERROR)
+     V.s_state = SEQ_STATE_ERROR;
     break;
    case SEQ_STATE_TRIGGER:
     do { LATEbits.LATE1 = 1; } while(0);
-    sprintf(V.buf, " OK");
+    sprintf(V.buf, " OK #");
     eaDogM_WriteString(V.buf);
     if (wait_lcd_check())
      V.s_state = SEQ_STATE_DONE;
@@ -28315,7 +28368,7 @@ void main(void)
    case SEQ_STATE_ERROR:
    default:
     UART1_Write(0x15);
-    sprintf(V.buf, " ERR");
+    sprintf(V.buf, " ERR R%d T%d E%d #", V.r_l_state, V.t_l_state, V.error);
     eaDogM_WriteString(V.buf);
     wait_lcd_done();
     V.s_state = SEQ_STATE_INIT;

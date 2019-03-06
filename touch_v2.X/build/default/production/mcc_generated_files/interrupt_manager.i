@@ -27729,19 +27729,21 @@ uint8_t UART1_is_tx_ready(void);
 _Bool UART1_is_tx_done(void);
 # 300 "mcc_generated_files/uart1.h"
 uint8_t UART1_Read(void);
-# 325 "mcc_generated_files/uart1.h"
+
+void UART1_put_buffer(uint8_t);
+# 327 "mcc_generated_files/uart1.h"
 void UART1_Write(uint8_t txData);
-# 346 "mcc_generated_files/uart1.h"
+# 348 "mcc_generated_files/uart1.h"
 void UART1_Transmit_ISR(void);
-# 367 "mcc_generated_files/uart1.h"
+# 369 "mcc_generated_files/uart1.h"
 void UART1_Receive_ISR(void);
-# 387 "mcc_generated_files/uart1.h"
+# 389 "mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
-# 405 "mcc_generated_files/uart1.h"
+# 407 "mcc_generated_files/uart1.h"
 void (*UART1_TxInterruptHandler)(void);
-# 425 "mcc_generated_files/uart1.h"
+# 427 "mcc_generated_files/uart1.h"
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 443 "mcc_generated_files/uart1.h"
+# 445 "mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 63 "mcc_generated_files/mcc.h" 2
 

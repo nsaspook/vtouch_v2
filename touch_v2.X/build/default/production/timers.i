@@ -27311,7 +27311,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 38 "./vconfig.h"
+# 44 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27351,6 +27351,16 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATE_ERROR
  } LINK_STATES;
 
+ typedef enum {
+  LINK_ERROR_NONE = 0,
+  LINK_ERROR_T1,
+  LINK_ERROR_T2,
+  LINK_ERROR_T3,
+  LINK_ERROR_T4,
+  LINK_ERROR_CHECKSUM,
+  LINK_ERROR_NAK
+ } LINK_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -27358,7 +27368,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
-  uint8_t stream, function;
+  uint8_t stream, function, error;
+  uint16_t r_checksum, t_checksum;
 
  } V_data;
 # 5 "timers.c" 2

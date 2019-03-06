@@ -34,6 +34,12 @@ extern "C" {
 #define EADOGM_CMD_SELECT_R1     0b00010000
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
+	
+#define T1	500
+#define T2	2000
+#define T3	5000
+#define T4	5000
+#define	RTY	3
 
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;
@@ -74,6 +80,16 @@ extern "C" {
 		LINK_STATE_ERROR
 	} LINK_STATES;
 
+	typedef enum {
+		LINK_ERROR_NONE = 0,
+		LINK_ERROR_T1,
+		LINK_ERROR_T2,
+		LINK_ERROR_T3,
+		LINK_ERROR_T4,
+		LINK_ERROR_CHECKSUM,
+		LINK_ERROR_NAK
+	} LINK_ERRORS;
+
 	typedef struct V_data { // control data structure with possible volatile issues
 		SEQ_STATES s_state;
 		UI_STATES ui_state;
@@ -81,7 +97,8 @@ extern "C" {
 		LINK_STATES t_l_state;
 		char buf[64];
 		volatile uint32_t ticks;
-		uint8_t stream, function;
+		uint8_t stream, function, error;
+		uint16_t r_checksum, t_checksum;
 
 	} V_data;
 #ifdef	__cplusplus

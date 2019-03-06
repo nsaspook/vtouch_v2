@@ -27285,19 +27285,21 @@ uint8_t UART1_is_tx_ready(void);
 _Bool UART1_is_tx_done(void);
 # 300 "mcc_generated_files/uart1.h"
 uint8_t UART1_Read(void);
-# 325 "mcc_generated_files/uart1.h"
+
+void UART1_put_buffer(uint8_t);
+# 327 "mcc_generated_files/uart1.h"
 void UART1_Write(uint8_t txData);
-# 346 "mcc_generated_files/uart1.h"
+# 348 "mcc_generated_files/uart1.h"
 void UART1_Transmit_ISR(void);
-# 367 "mcc_generated_files/uart1.h"
+# 369 "mcc_generated_files/uart1.h"
 void UART1_Receive_ISR(void);
-# 387 "mcc_generated_files/uart1.h"
+# 389 "mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
-# 405 "mcc_generated_files/uart1.h"
+# 407 "mcc_generated_files/uart1.h"
 void (*UART1_TxInterruptHandler)(void);
-# 425 "mcc_generated_files/uart1.h"
+# 427 "mcc_generated_files/uart1.h"
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 443 "mcc_generated_files/uart1.h"
+# 445 "mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 51 "mcc_generated_files/uart1.c" 2
 
@@ -27323,163 +27325,161 @@ volatile uint8_t uart1RxCount;
 void UART1_Initialize(void)
 {
 
-    PIE3bits.U1RXIE = 0;
-    UART1_SetRxInterruptHandler(UART1_Receive_ISR);
-    PIE3bits.U1TXIE = 0;
-    UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
+ PIE3bits.U1RXIE = 0;
+ UART1_SetRxInterruptHandler(UART1_Receive_ISR);
+ PIE3bits.U1TXIE = 0;
+ UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
 
 
 
 
-    U1P1L = 0x00;
+ U1P1L = 0x00;
 
 
-    U1P1H = 0x00;
+ U1P1H = 0x00;
 
 
-    U1P2L = 0x00;
+ U1P2L = 0x00;
 
 
-    U1P2H = 0x00;
+ U1P2H = 0x00;
 
 
-    U1P3L = 0x00;
+ U1P3L = 0x00;
 
 
-    U1P3H = 0x00;
+ U1P3H = 0x00;
 
 
-    U1CON0 = 0xB0;
+ U1CON0 = 0xB0;
 
 
-    U1CON1 = 0x80;
+ U1CON1 = 0x80;
 
 
-    U1CON2 = 0x30;
+ U1CON2 = 0x30;
 
 
-    U1BRGL = 0x82;
+ U1BRGL = 0x82;
 
 
-    U1BRGH = 0x06;
+ U1BRGH = 0x06;
 
 
-    U1FIFO = 0x00;
+ U1FIFO = 0x00;
 
 
-    U1UIR = 0x00;
+ U1UIR = 0x00;
 
 
-    U1ERRIR = 0x00;
+ U1ERRIR = 0x00;
 
 
-    U1ERRIE = 0x00;
+ U1ERRIE = 0x00;
 
 
 
-    uart1TxHead = 0;
-    uart1TxTail = 0;
-    uart1TxBufferRemaining = sizeof(uart1TxBuffer);
-    uart1RxHead = 0;
-    uart1RxTail = 0;
-    uart1RxCount = 0;
+ uart1TxHead = 0;
+ uart1TxTail = 0;
+ uart1TxBufferRemaining = sizeof(uart1TxBuffer);
+ uart1RxHead = 0;
+ uart1RxTail = 0;
+ uart1RxCount = 0;
 
 
-    PIE3bits.U1RXIE = 1;
+ PIE3bits.U1RXIE = 1;
 }
 
 uint8_t UART1_is_rx_ready(void)
 {
-    return uart1RxCount;
+ return uart1RxCount;
 }
 
 uint8_t UART1_is_tx_ready(void)
 {
-    return uart1TxBufferRemaining;
+ return uart1TxBufferRemaining;
 }
 
 _Bool UART1_is_tx_done(void)
 {
-    return U1ERRIRbits.TXMTIF;
+ return U1ERRIRbits.TXMTIF;
 }
 
 uint8_t UART1_Read(void)
 {
-    uint8_t readValue = 0;
+ uint8_t readValue = 0;
 
-    while(0 == uart1RxCount)
-    {
-    }
+ while (0 == uart1RxCount) {
+ }
 
-    readValue = uart1RxBuffer[uart1RxTail++];
-    if(sizeof(uart1RxBuffer) <= uart1RxTail)
-    {
-        uart1RxTail = 0;
-    }
-    PIE3bits.U1RXIE = 0;
-    uart1RxCount--;
-    PIE3bits.U1RXIE = 1;
+ readValue = uart1RxBuffer[uart1RxTail++];
+ if (sizeof(uart1RxBuffer) <= uart1RxTail) {
+  uart1RxTail = 0;
+ }
+ PIE3bits.U1RXIE = 0;
+ uart1RxCount--;
+ PIE3bits.U1RXIE = 1;
 
-    return readValue;
+ return readValue;
+}
+
+
+void UART1_put_buffer(uint8_t bufData)
+{
+ PIE3bits.U1RXIE = 0;
+ uart1RxBuffer[uart1RxHead++] = bufData;
+ if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+  uart1RxHead = 0;
+ }
+
+ uart1RxCount++;
+ PIE3bits.U1RXIE = 1;
 }
 
 void UART1_Write(uint8_t txData)
 {
-    while(0 == uart1TxBufferRemaining)
-    {
-    }
+ while (0 == uart1TxBufferRemaining) {
+ }
 
-    if(0 == PIE3bits.U1TXIE)
-    {
-        U1TXB = txData;
-    }
-    else
-    {
-        PIE3bits.U1TXIE = 0;
-        uart1TxBuffer[uart1TxHead++] = txData;
-        if(sizeof(uart1TxBuffer) <= uart1TxHead)
-        {
-            uart1TxHead = 0;
-        }
-        uart1TxBufferRemaining--;
-    }
-    PIE3bits.U1TXIE = 1;
+ if (0 == PIE3bits.U1TXIE) {
+  U1TXB = txData;
+ } else {
+  PIE3bits.U1TXIE = 0;
+  uart1TxBuffer[uart1TxHead++] = txData;
+  if (sizeof(uart1TxBuffer) <= uart1TxHead) {
+   uart1TxHead = 0;
+  }
+  uart1TxBufferRemaining--;
+ }
+ PIE3bits.U1TXIE = 1;
 }
 
-void __attribute__((picinterrupt(("irq(U1TX),base(8)")))) UART1_tx_vect_isr()
+void __attribute__((picinterrupt(("irq(U1TX), base(8)")))) UART1_tx_vect_isr()
 {
-    if(UART1_TxInterruptHandler)
-    {
-        UART1_TxInterruptHandler();
-    }
+ if (UART1_TxInterruptHandler) {
+  UART1_TxInterruptHandler();
+ }
 }
 
-void __attribute__((picinterrupt(("irq(U1RX),base(8)")))) UART1_rx_vect_isr()
+void __attribute__((picinterrupt(("irq(U1RX), base(8)")))) UART1_rx_vect_isr()
 {
-    if(UART1_RxInterruptHandler)
-    {
-        UART1_RxInterruptHandler();
-    }
+ if (UART1_RxInterruptHandler) {
+  UART1_RxInterruptHandler();
+ }
 }
-
-
 
 void UART1_Transmit_ISR(void)
 {
 
-    if(sizeof(uart1TxBuffer) > uart1TxBufferRemaining)
-    {
-        U1TXB = uart1TxBuffer[uart1TxTail++];
-       if(sizeof(uart1TxBuffer) <= uart1TxTail)
-        {
-            uart1TxTail = 0;
-        }
-        uart1TxBufferRemaining++;
-    }
-    else
-    {
-        PIE3bits.U1TXIE = 0;
-    }
+ if (sizeof(uart1TxBuffer) > uart1TxBufferRemaining) {
+  U1TXB = uart1TxBuffer[uart1TxTail++];
+  if (sizeof(uart1TxBuffer) <= uart1TxTail) {
+   uart1TxTail = 0;
+  }
+  uart1TxBufferRemaining++;
+ } else {
+  PIE3bits.U1TXIE = 0;
+ }
 
 
 }
@@ -27487,22 +27487,21 @@ void UART1_Transmit_ISR(void)
 void UART1_Receive_ISR(void)
 {
 
-    uart1RxBuffer[uart1RxHead++] = U1RXB;
-    if(sizeof(uart1RxBuffer) <= uart1RxHead)
-    {
-        uart1RxHead = 0;
-    }
-    uart1RxCount++;
+ uart1RxBuffer[uart1RxHead++] = U1RXB;
+ if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+  uart1RxHead = 0;
+ }
+ uart1RxCount++;
 
 
 }
 
-
-
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void)){
-    UART1_RxInterruptHandler = InterruptHandler;
+void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
+{
+ UART1_RxInterruptHandler = InterruptHandler;
 }
 
-void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void)){
-    UART1_TxInterruptHandler = InterruptHandler;
+void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void))
+{
+ UART1_TxInterruptHandler = InterruptHandler;
 }

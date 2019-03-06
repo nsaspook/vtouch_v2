@@ -27316,7 +27316,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 38 "./vconfig.h"
+# 44 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27356,6 +27356,16 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATE_ERROR
  } LINK_STATES;
 
+ typedef enum {
+  LINK_ERROR_NONE = 0,
+  LINK_ERROR_T1,
+  LINK_ERROR_T2,
+  LINK_ERROR_T3,
+  LINK_ERROR_T4,
+  LINK_ERROR_CHECKSUM,
+  LINK_ERROR_NAK
+ } LINK_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -27363,7 +27373,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
-  uint8_t stream, function;
+  uint8_t stream, function, error;
+  uint16_t r_checksum, t_checksum;
 
  } V_data;
 # 2 "eadog.c" 2
@@ -27586,6 +27597,8 @@ struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
 struct ringBufS_t ring_buf2;
 
+extern struct V_data V;
+
 void wdtdelay(uint32_t delay)
 {
  static uint32_t dcount;
@@ -27630,7 +27643,7 @@ void init_display(void)
  DMA1CON1bits.SMODE = 1;
  DMA1CON1bits.SMR = 0;
  DMA1CON1bits.SSTP = 1;
- DMA1SSA = (uint32_t) &ring_buf1;
+ DMA1SSA = (uint32_t) & ring_buf1;
  DMA1CON0bits.DGO = 0;
  SPI1INTFbits.SPI1TXUIF = 1;
  LATEbits.LATE0 = 0;
@@ -27745,6 +27758,7 @@ void eaDogM_WriteString(char *strPtr)
  printf("%s", strPtr);
  do { LATEbits.LATE2 = 0; } while(0);
  start_lcd();
+ ++V.ticks;
 }
 
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)

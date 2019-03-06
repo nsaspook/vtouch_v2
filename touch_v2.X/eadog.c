@@ -16,6 +16,8 @@ struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
 struct ringBufS_t ring_buf2;
 
+extern struct V_data V;
+
 void wdtdelay(uint32_t delay)
 {
 	static uint32_t dcount;
@@ -60,7 +62,7 @@ void init_display(void)
 	DMA1CON1bits.SMODE = 1;
 	DMA1CON1bits.SMR = 0;
 	DMA1CON1bits.SSTP = 1;
-	DMA1SSA = (uint32_t) &ring_buf1;
+	DMA1SSA = (uint32_t) & ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
 	SLED = false;
@@ -175,6 +177,7 @@ void eaDogM_WriteString(char *strPtr)
 	printf("%s", strPtr); // STDOUT redirected to user putch
 	DEBUG2_SetLow();
 	start_lcd();
+	++V.ticks; // transaction ID for messages
 }
 
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)

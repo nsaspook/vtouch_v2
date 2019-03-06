@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 38 "./vconfig.h"
+# 44 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27358,6 +27358,16 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATE_ERROR
  } LINK_STATES;
 
+ typedef enum {
+  LINK_ERROR_NONE = 0,
+  LINK_ERROR_T1,
+  LINK_ERROR_T2,
+  LINK_ERROR_T3,
+  LINK_ERROR_T4,
+  LINK_ERROR_CHECKSUM,
+  LINK_ERROR_NAK
+ } LINK_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -27365,7 +27375,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
-  uint8_t stream, function;
+  uint8_t stream, function, error;
+  uint16_t r_checksum, t_checksum;
 
  } V_data;
 # 21 "./gemsecs.h" 2
@@ -27824,19 +27835,21 @@ uint8_t UART1_is_tx_ready(void);
 _Bool UART1_is_tx_done(void);
 # 300 "./mcc_generated_files/uart1.h"
 uint8_t UART1_Read(void);
-# 325 "./mcc_generated_files/uart1.h"
+
+void UART1_put_buffer(uint8_t);
+# 327 "./mcc_generated_files/uart1.h"
 void UART1_Write(uint8_t txData);
-# 346 "./mcc_generated_files/uart1.h"
+# 348 "./mcc_generated_files/uart1.h"
 void UART1_Transmit_ISR(void);
-# 367 "./mcc_generated_files/uart1.h"
+# 369 "./mcc_generated_files/uart1.h"
 void UART1_Receive_ISR(void);
-# 387 "./mcc_generated_files/uart1.h"
+# 389 "./mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
-# 405 "./mcc_generated_files/uart1.h"
+# 407 "./mcc_generated_files/uart1.h"
 void (*UART1_TxInterruptHandler)(void);
-# 425 "./mcc_generated_files/uart1.h"
+# 427 "./mcc_generated_files/uart1.h"
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 443 "./mcc_generated_files/uart1.h"
+# 445 "./mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 63 "./mcc_generated_files/mcc.h" 2
 
@@ -27930,7 +27943,15 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header18;
 
- uint16_t block_checkmark(uint8_t *, uint16_t);
+ typedef struct header24 {
+  uint16_t checksum;
+  uint8_t data[14];
+  union block10 block;
+  uint8_t length;
+ } header24;
+
+ uint16_t block_checksum(uint8_t *, uint16_t);
+ uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
 # 2 "gemsecs.c" 2
@@ -27942,13 +27963,27 @@ extern struct header10 H10[];
 
 
 
-uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
+uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
 {
  uint16_t sum = 0, i;
 
  for (i = 0; i < byte_count; i++) {
   sum += byte_block[i];
  }
+ return sum;
+}
+
+
+
+
+uint16_t run_checksum(uint8_t byte_block, _Bool clear)
+{
+ static uint16_t sum = 0;
+
+ if (clear)
+  sum = 0;
+
+ sum += byte_block;
  return sum;
 }
 
@@ -27962,6 +27997,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
+    V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
    }
   }
@@ -27969,25 +28005,43 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
  case LINK_STATE_ENQ:
   rxData_l = 0;
   UART1_Write(0x04);
-  StartTimer(TMR_T2, 1000);
+  StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
+   V.error = LINK_ERROR_T2;
    *r_link = LINK_STATE_NAK;
   } else {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData_l == 0) {
      r_block.length = rxData;
+     run_checksum(0, 1);
      rxData_l++;
     } else {
-     if (rxData_l >= (r_block.length + 2)) {
-      *r_link = LINK_STATE_ACK;
-     }
+
+
+
      if (rxData_l <= 10)
       H10[1].block.b[r_block.length - rxData_l] = rxData;
+     if (rxData_l <= r_block.length)
+      V.r_checksum = run_checksum(rxData, 0);
+
+     if (rxData_l == r_block.length + 1)
+      H10[1].checksum = (uint16_t) rxData << 8;
+     if (rxData_l == r_block.length + 2)
+      H10[1].checksum += rxData;
+
      rxData_l++;
+     if (rxData_l > (r_block.length + 2)) {
+      if (V.r_checksum == H10[1].checksum) {
+       *r_link = LINK_STATE_ACK;
+      } else {
+       V.error = LINK_ERROR_CHECKSUM;
+       *r_link = LINK_STATE_NAK;
+      }
+     }
     }
    }
   }
@@ -27999,7 +28053,6 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   *r_link = LINK_STATE_DONE;
   break;
  case LINK_STATE_NAK:
-  UART1_Write(0x15);
   *r_link = LINK_STATE_ERROR;
   while ((uart1RxCount)) {
    UART1_Read();
@@ -28018,17 +28071,49 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
+ uint8_t rxData;
+ static uint8_t txData_l = 0;
+
  switch (*t_link) {
  case LINK_STATE_IDLE:
+  V.error = LINK_ERROR_NONE;
+  txData_l = 0;
+  UART1_Write(0x05);
+  StartTimer(TMR_T2, 2000);
+  *t_link = LINK_STATE_ENQ;
   break;
  case LINK_STATE_ENQ:
+  if (TimerDone(TMR_T2)) {
+   V.error = LINK_ERROR_T2;
+   *t_link = LINK_STATE_NAK;
+  } else {
+   if (UART1_is_rx_ready()) {
+    rxData = UART1_Read();
+    if (rxData == 0x04) {
+     StartTimer(TMR_T3, 5000);
+     *t_link = LINK_STATE_EOT;
+    }
+   }
+  }
   break;
  case LINK_STATE_EOT:
+
+  *t_link = LINK_STATE_ACK;
   break;
  case LINK_STATE_ACK:
+  if (TimerDone(TMR_T3)) {
+   V.error = LINK_ERROR_T3;
+   *t_link = LINK_STATE_NAK;
+  } else {
+   if (UART1_is_rx_ready()) {
+    rxData = UART1_Read();
+    if (rxData == 0x06) {
+     *t_link = LINK_STATE_DONE;
+    }
+   }
+  }
   break;
  case LINK_STATE_NAK:
-  UART1_Write(0x15);
   *t_link = LINK_STATE_ERROR;
   while ((uart1RxCount)) {
    UART1_Read();
@@ -28037,6 +28122,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  case LINK_STATE_ERROR:
   break;
  case LINK_STATE_DONE:
+  break;
  default:
   *t_link = LINK_STATE_IDLE;
   break;

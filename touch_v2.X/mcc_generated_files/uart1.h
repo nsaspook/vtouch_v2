@@ -299,6 +299,8 @@ bool UART1_is_tx_done(void);
 */
 uint8_t UART1_Read(void);
 
+void UART1_put_buffer(uint8_t);
+
  /**
   @Summary
     Writes a byte of data to the UART1.

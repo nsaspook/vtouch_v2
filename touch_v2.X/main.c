@@ -57,7 +57,7 @@ extern struct spi_link_type spi_link;
 
 struct V_data V;
 struct header10 H10[] = {
-	{ // S1F1 send
+	{ // S1F1 send 'are you there?'
 		.length = 10,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
@@ -65,15 +65,25 @@ struct header10 H10[] = {
 		.block.block.function = 1,
 		.block.block.ebit = 1,
 		.block.block.bidl = 1,
-		.block.block.systemb = 0x0c9f75,
+		.block.block.systemb = 1,
 	},
 	{ // all stream and function header receive buffer
 		.length = 10,
 	},
+	{ // S1F0 send 'ABORT'
+		.length = 10,
+		.block.block.rbit = 0,
+		.block.block.wbit = 0,
+		.block.block.stream = 1,
+		.block.block.function = 0,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
 };
 
 struct header12 H12[] = {
-	{ // S1F2 send
+	{ // S1F2 send 'yes, were are here '
 		.length = 12,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
@@ -86,7 +96,7 @@ struct header12 H12[] = {
 };
 
 struct header13 H13[] = {
-	{ // S6F12 send
+	{ // S6F12 send 'online'
 		.length = 13,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
@@ -99,7 +109,7 @@ struct header13 H13[] = {
 };
 
 struct header14 H14[] = {
-	{ // S1F4 send
+	{ // S1F4 send 'status response '
 		.length = 14,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
@@ -112,12 +122,25 @@ struct header14 H14[] = {
 };
 
 struct header18 H18[] = {
-	{ // S1F3 send
+	{ // S1F3 send 'status request '
 		.length = 18,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
 		.block.block.function = 3,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
+};
+
+struct header24 H24[] = {
+	{ // S2F18 send 'host time '
+		.length = 24,
+		.block.block.rbit = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 18,
 		.block.block.ebit = 1,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
@@ -152,9 +175,9 @@ void main(void)
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			init_display();
-			sum = block_checkmark((uint8_t*) & H10[j].block.block, sizeof(block10));
+			sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
 			H10[j].checksum = sum;
-			sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x",
+			sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x #",
 				mode,
 				H10[j].block.b[9],
 				H10[j].block.b[8],
@@ -184,19 +207,28 @@ void main(void)
 				/*
 				 * receive message from equipment
 				 */
-				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE)
+				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+					sprintf(V.buf, " S%dF%d #", V.stream, V.function);
+					eaDogM_WriteString(V.buf);
+					wait_lcd_done();
 					V.s_state = SEQ_STATE_TX;
+				}
+				if (V.r_l_state == LINK_STATE_ERROR)
+					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TX:
 				/*
 				 * send response message to equipment
 				 */
-				if (t_protocol(&V.t_l_state) == LINK_STATE_DONE)
+				if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
 					V.s_state = SEQ_STATE_TRIGGER;
+				}
+				if (V.t_l_state == LINK_STATE_ERROR)
+					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TRIGGER:
 				DEBUG1_SetHigh();
-				sprintf(V.buf, " OK");
+				sprintf(V.buf, " OK #");
 				eaDogM_WriteString(V.buf);
 				if (wait_lcd_check())
 					V.s_state = SEQ_STATE_DONE;
@@ -208,7 +240,7 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				UART1_Write(NAK);
-				sprintf(V.buf, " ERR");
+				sprintf(V.buf, " ERR R%d T%d E%d #", V.r_l_state, V.t_l_state, V.error);
 				eaDogM_WriteString(V.buf);
 				wait_lcd_done();
 				V.s_state = SEQ_STATE_INIT;

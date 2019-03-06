@@ -199,7 +199,6 @@ void TMR6_DefaultInterruptHandler(void)
 	// add your TMR6 interrupt custom code
 	// or set custom function using TMR6_SetInterruptHandler()
 	SLED = (uint8_t) ~SLED;
-	++V.ticks;
 
 	//Decrement each software timer
 	for (i = 0; i < TMR_COUNT; i++) {
