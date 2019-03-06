@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27332,8 +27332,8 @@ void PIN_MANAGER_Initialize (void);
 
  typedef enum {
   SEQ_STATE_INIT = 0,
-  SEQ_STATE_RUN,
-  SEQ_STATE_SET,
+  SEQ_STATE_RX,
+  SEQ_STATE_TX,
   SEQ_STATE_TRIGGER,
   SEQ_STATE_DONE,
   SEQ_STATE_ERROR
@@ -27353,6 +27353,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
   LINK_STATE_ACK,
+  LINK_STATE_DONE,
   LINK_STATE_NAK,
   LINK_STATE_ERROR
  } LINK_STATES;
@@ -27364,6 +27365,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
+  uint8_t stream, function;
+
  } V_data;
 # 21 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
@@ -27913,6 +27916,20 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header13;
 
+ typedef struct header14 {
+  uint16_t checksum;
+  uint8_t data[4];
+  union block10 block;
+  uint8_t length;
+ } header14;
+
+ typedef struct header18 {
+  uint16_t checksum;
+  uint8_t data[8];
+  union block10 block;
+  uint8_t length;
+ } header18;
+
  uint16_t block_checkmark(uint8_t *, uint16_t);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
@@ -27938,7 +27955,7 @@ uint16_t block_checkmark(uint8_t *byte_block, uint16_t byte_count)
 LINK_STATES r_protocol(LINK_STATES *r_link)
 {
  uint8_t rxData;
- static uint8_t rxData_l = 0, length = 10;
+ static uint8_t rxData_l = 0;
 
  switch (*r_link) {
  case LINK_STATE_IDLE:
@@ -27963,32 +27980,34 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
     rxData = UART1_Read();
     if (rxData_l == 0) {
      r_block.length = rxData;
-     length = rxData + 2;
      rxData_l++;
     } else {
-     if (rxData_l >= length) {
+     if (rxData_l >= (r_block.length + 2)) {
       *r_link = LINK_STATE_ACK;
      }
-     if (length == 12) {
-      H10[1].block.b[length] = rxData;
-     }
+     if (rxData_l <= 10)
+      H10[1].block.b[r_block.length - rxData_l] = rxData;
      rxData_l++;
     }
    }
   }
   break;
  case LINK_STATE_ACK:
+  V.stream = H10[1].block.block.stream;
+  V.function = H10[1].block.block.function;
   UART1_Write(0x06);
-  *r_link = LINK_STATE_IDLE;
+  *r_link = LINK_STATE_DONE;
   break;
  case LINK_STATE_NAK:
   UART1_Write(0x15);
-  *r_link = LINK_STATE_IDLE;
+  *r_link = LINK_STATE_ERROR;
   while ((uart1RxCount)) {
    UART1_Read();
   }
   break;
  case LINK_STATE_ERROR:
+  break;
+ case LINK_STATE_DONE:
  default:
   *r_link = LINK_STATE_IDLE;
   break;
@@ -28009,8 +28028,15 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  case LINK_STATE_ACK:
   break;
  case LINK_STATE_NAK:
+  UART1_Write(0x15);
+  *t_link = LINK_STATE_ERROR;
+  while ((uart1RxCount)) {
+   UART1_Read();
+  }
   break;
  case LINK_STATE_ERROR:
+  break;
+ case LINK_STATE_DONE:
  default:
   *t_link = LINK_STATE_IDLE;
   break;

@@ -60,7 +60,15 @@ typedef signed char int8_t;
 
 
 typedef short int16_t;
-# 181 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+
+
+
+
+typedef __int24 int24_t;
+
+
+
+
 typedef long int32_t;
 
 
@@ -109,7 +117,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 

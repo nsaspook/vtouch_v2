@@ -67,15 +67,8 @@ struct header10 H10[] = {
 		.block.block.bidl = 1,
 		.block.block.systemb = 0x0c9f75,
 	},
-	{ // S1F1 receive
+	{ // all stream and function header receive buffer
 		.length = 10,
-		.block.block.rbit = 1,
-		.block.block.wbit = 1,
-		.block.block.stream = 2,
-		.block.block.function = 0x11,
-		.block.block.ebit = 1,
-		.block.block.bidl = 1,
-		.block.block.systemb = 0x1b,
 	},
 };
 
@@ -85,43 +78,49 @@ struct header12 H12[] = {
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
-		.block.block.function = 1,
+		.block.block.function = 2,
 		.block.block.ebit = 1,
 		.block.block.bidl = 1,
-		.block.block.systemb = 0x0c9f75,
-	},
-	{ // S2F2 receive
-		.length = 12,
-		.block.block.rbit = 1,
-		.block.block.wbit = 1,
-		.block.block.stream = 2,
-		.block.block.function = 0x11,
-		.block.block.ebit = 1,
-		.block.block.bidl = 1,
-		.block.block.systemb = 0x1b,
+		.block.block.systemb = 1,
 	},
 };
 
-struct header12 H13[] = {
+struct header13 H13[] = {
 	{ // S6F12 send
 		.length = 13,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
-		.block.block.stream = 1,
-		.block.block.function = 1,
+		.block.block.stream = 6,
+		.block.block.function = 12,
 		.block.block.ebit = 1,
 		.block.block.bidl = 1,
-		.block.block.systemb = 0x0c9f75,
+		.block.block.systemb = 1,
 	},
-	{ // S6F12 receive
-		.length = 13,
-		.block.block.rbit = 1,
+};
+
+struct header14 H14[] = {
+	{ // S1F4 send
+		.length = 14,
+		.block.block.rbit = 0,
 		.block.block.wbit = 1,
-		.block.block.stream = 2,
-		.block.block.function = 0x11,
+		.block.block.stream = 1,
+		.block.block.function = 4,
 		.block.block.ebit = 1,
 		.block.block.bidl = 1,
-		.block.block.systemb = 0x1b,
+		.block.block.systemb = 1,
+	},
+};
+
+struct header18 H18[] = {
+	{ // S1F3 send
+		.length = 18,
+		.block.block.rbit = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 3,
+		.block.block.ebit = 1,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
 	},
 };
 
@@ -172,47 +171,46 @@ void main(void)
 			wait_lcd_done();
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
-			V.r_l_state = LINK_STATE_IDLE;
-			V.t_l_state = LINK_STATE_IDLE;
+
 			break;
 		case UI_STATE_HOST:
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
-				V.s_state = SEQ_STATE_RUN;
+				V.r_l_state = LINK_STATE_IDLE;
+				V.t_l_state = LINK_STATE_IDLE;
+				V.s_state = SEQ_STATE_RX;
 				break;
-			case SEQ_STATE_RUN:
+			case SEQ_STATE_RX:
 				/*
-				 * Do something
+				 * receive message from equipment
 				 */
-				r_protocol(&V.r_l_state);
-				//				t_protocol(&V.t_l_state);
-
-				k = (void*) &H10[j];
-				if (UART1_is_tx_ready() > 30) {
-					for (i = sizeof(header10); i > 0; i--) {
-						UART1_Write(k[i - 1]);
-					}
-				}
-				StartTimer(TMR_T1, 20);
-				V.s_state = SEQ_STATE_DONE;
+				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE)
+					V.s_state = SEQ_STATE_TX;
 				break;
-			case SEQ_STATE_SET:
-				//eaDogM_WriteString(V.buf);
-				V.s_state = SEQ_STATE_TRIGGER;
+			case SEQ_STATE_TX:
+				/*
+				 * send response message to equipment
+				 */
+				if (t_protocol(&V.t_l_state) == LINK_STATE_DONE)
+					V.s_state = SEQ_STATE_TRIGGER;
 				break;
 			case SEQ_STATE_TRIGGER:
 				DEBUG1_SetHigh();
+				sprintf(V.buf, " OK");
+				eaDogM_WriteString(V.buf);
 				if (wait_lcd_check())
 					V.s_state = SEQ_STATE_DONE;
 				DEBUG1_SetLow();
 				break;
 			case SEQ_STATE_DONE:
-				if (TimerDone(TMR_T1)) {
-					V.s_state = SEQ_STATE_RUN;
-				}
+				V.s_state = SEQ_STATE_INIT;
 				break;
 			case SEQ_STATE_ERROR:
 			default:
+				UART1_Write(NAK);
+				sprintf(V.buf, " ERR");
+				eaDogM_WriteString(V.buf);
+				wait_lcd_done();
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}

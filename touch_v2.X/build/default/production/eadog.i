@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27330,8 +27330,8 @@ void PIN_MANAGER_Initialize (void);
 
  typedef enum {
   SEQ_STATE_INIT = 0,
-  SEQ_STATE_RUN,
-  SEQ_STATE_SET,
+  SEQ_STATE_RX,
+  SEQ_STATE_TX,
   SEQ_STATE_TRIGGER,
   SEQ_STATE_DONE,
   SEQ_STATE_ERROR
@@ -27351,6 +27351,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
   LINK_STATE_ACK,
+  LINK_STATE_DONE,
   LINK_STATE_NAK,
   LINK_STATE_ERROR
  } LINK_STATES;
@@ -27362,6 +27363,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
+  uint8_t stream, function;
+
  } V_data;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1

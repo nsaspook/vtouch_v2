@@ -24,6 +24,8 @@
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 419 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -81,12 +83,7 @@ void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27312,7 +27309,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27367,8 +27364,8 @@ void PIN_MANAGER_Initialize (void);
 
  typedef enum {
   SEQ_STATE_INIT = 0,
-  SEQ_STATE_RUN,
-  SEQ_STATE_SET,
+  SEQ_STATE_RX,
+  SEQ_STATE_TX,
   SEQ_STATE_TRIGGER,
   SEQ_STATE_DONE,
   SEQ_STATE_ERROR
@@ -27388,6 +27385,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
   LINK_STATE_ACK,
+  LINK_STATE_DONE,
   LINK_STATE_NAK,
   LINK_STATE_ERROR
  } LINK_STATES;
@@ -27399,6 +27397,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
+  uint8_t stream, function;
+
  } V_data;
 # 16 "./ringbufs.h" 2
 

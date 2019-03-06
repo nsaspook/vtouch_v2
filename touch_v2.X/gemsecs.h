@@ -60,6 +60,20 @@ extern "C" {
 		uint8_t length;
 	} header13;
 
+	typedef struct header14 {
+		uint16_t checksum;
+		uint8_t data[4];
+		union block10 block;
+		uint8_t length;
+	} header14;
+
+	typedef struct header18 {
+		uint16_t checksum;
+		uint8_t data[8];
+		union block10 block;
+		uint8_t length;
+	} header18;
+
 	uint16_t block_checkmark(uint8_t *, uint16_t);
 	LINK_STATES r_protocol(LINK_STATES *);
 	LINK_STATES t_protocol(LINK_STATES *);

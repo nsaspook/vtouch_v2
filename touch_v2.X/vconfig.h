@@ -48,8 +48,8 @@ extern "C" {
 
 	typedef enum {
 		SEQ_STATE_INIT = 0,
-		SEQ_STATE_RUN,
-		SEQ_STATE_SET,
+		SEQ_STATE_RX,
+		SEQ_STATE_TX,
 		SEQ_STATE_TRIGGER,
 		SEQ_STATE_DONE,
 		SEQ_STATE_ERROR
@@ -69,6 +69,7 @@ extern "C" {
 		LINK_STATE_ENQ,
 		LINK_STATE_EOT,
 		LINK_STATE_ACK,
+		LINK_STATE_DONE,
 		LINK_STATE_NAK,
 		LINK_STATE_ERROR
 	} LINK_STATES;
@@ -80,6 +81,8 @@ extern "C" {
 		LINK_STATES t_l_state;
 		char buf[64];
 		volatile uint32_t ticks;
+		uint8_t stream, function;
+
 	} V_data;
 #ifdef	__cplusplus
 }
