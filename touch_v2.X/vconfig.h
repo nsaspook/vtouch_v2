@@ -21,6 +21,14 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
+	/*
+	 * debug testing and loopbacks
+	 */
+#define DB1
+#define DB2
+#define DB3
+#define DB4
+
 #define SLED	LATEbits.LATE0
 
 #define EADOGM_CMD_CLR		1

@@ -57,41 +57,63 @@ extern struct spi_link_type spi_link;
 
 struct V_data V;
 struct header10 H10[] = {
-	{ // S1F1 send 'are you there?'
+	{ // S1F1 send 'are you there?' from host
 		.length = 10,
 		.block.block.rbit = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
 		.block.block.function = 1,
 		.block.block.ebit = 1,
+		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 0x000c9f75,
 	},
-	{ // all stream and function header receive buffer
+	{ // all stream and function header receive buffer from equipment
 		.length = 10,
 	},
 	{ // S1F0 send 'ABORT'
 		.length = 10,
 		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
 		.block.block.wbit = 0,
 		.block.block.stream = 1,
 		.block.block.function = 0,
 		.block.block.ebit = 1,
+		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
+	},
+	{ // S1F1 send 'are you there?' from equipment
+		.length = 10,
+		.block.block.rbit = 1,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 1,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x00000d89,
 	},
 };
 
 struct header12 H12[] = {
-	{ // S1F2 send 'yes, were are here '
+	{ // S1F2 send 'yes, were are here ' from host
 		.length = 12,
 		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
 		.block.block.function = 2,
 		.block.block.ebit = 1,
+		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
+		.data[1] = 1,
+		.data[0] = 0,
 	},
 };
 
@@ -99,10 +121,13 @@ struct header13 H13[] = {
 	{ // S6F12 send 'online'
 		.length = 13,
 		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 6,
 		.block.block.function = 12,
 		.block.block.ebit = 1,
+		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
 	},
@@ -112,10 +137,13 @@ struct header14 H14[] = {
 	{ // S1F4 send 'status response '
 		.length = 14,
 		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
 		.block.block.function = 4,
 		.block.block.ebit = 1,
+		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
 	},
@@ -125,10 +153,13 @@ struct header18 H18[] = {
 	{ // S1F3 send 'status request '
 		.length = 18,
 		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
 		.block.block.function = 3,
 		.block.block.ebit = 1,
+		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
 	},
@@ -138,10 +169,13 @@ struct header24 H24[] = {
 	{ // S2F18 send 'host time '
 		.length = 24,
 		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 2,
 		.block.block.function = 18,
 		.block.block.ebit = 1,
+		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
 	},
@@ -156,7 +190,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
  */
 void main(void)
 {
-	uint8_t i, j = 0, *k;
+	uint8_t j = 3;
 	uint16_t sum;
 	UI_STATES mode = UI_STATE_HOST; /* link configuration host/equipment/etc ... */
 
@@ -207,6 +241,10 @@ void main(void)
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
+#ifdef DB1
+				WaitMs(75);
+				UART1_put_buffer(ENQ);
+#endif
 				break;
 			case SEQ_STATE_RX:
 				/*
@@ -216,6 +254,9 @@ void main(void)
 					sprintf(V.buf, " S%dF%d #", V.stream, V.function);
 					eaDogM_WriteString(V.buf);
 					wait_lcd_done();
+#ifdef DB1
+					WaitMs(5);
+#endif
 					V.s_state = SEQ_STATE_TX;
 				}
 				if (V.r_l_state == LINK_STATE_ERROR)

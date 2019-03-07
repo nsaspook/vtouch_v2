@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 50 "./vconfig.h"
+# 58 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27961,6 +27961,7 @@ void WaitMs(uint16_t numMilliseconds);
 extern struct V_data V;
 extern header10 r_block;
 extern struct header10 H10[];
+extern struct header12 H12[];
 
 
 
@@ -28009,6 +28010,10 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
+
+  WaitMs(5);
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 1);
+
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
@@ -28075,14 +28080,16 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 {
  uint8_t rxData;
 
-
  switch (*t_link) {
  case LINK_STATE_IDLE:
   V.error = LINK_ERROR_NONE;
-
   UART1_Write(0x05);
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
+
+  WaitMs(5);
+  UART1_put_buffer(0x04);
+
   break;
  case LINK_STATE_ENQ:
   if (TimerDone(TMR_T2)) {
@@ -28099,8 +28106,12 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_EOT:
-
+  secs_send((uint8_t*) & H12[0], sizeof(header12), 0);
   *t_link = LINK_STATE_ACK;
+
+  WaitMs(5);
+  UART1_put_buffer(0x06);
+
   break;
  case LINK_STATE_ACK:
   if (TimerDone(TMR_T3)) {
@@ -28157,7 +28168,7 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
  k[1] = (checksum >> 8)&0xff;
  V.t_checksum = checksum;
 
- while (UART1_is_tx_ready() < 59);
+ while (UART1_is_tx_ready() < 64);
  for (i = length; i > 0; i--) {
   if (fake) {
    UART1_put_buffer(k[i - 1]);

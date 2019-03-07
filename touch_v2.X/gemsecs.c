@@ -3,6 +3,7 @@
 extern struct V_data V;
 extern header10 r_block;
 extern struct header10 H10[];
+extern struct header12 H12[];
 
 /*
  * Checksum for message and header block after length byte
@@ -51,6 +52,10 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 		UART1_Write(EOT);
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
+#ifdef DB2
+		WaitMs(5);
+		secs_send((uint8_t*) & H10[3], sizeof(header10), true);
+#endif
 		break;
 	case LINK_STATE_EOT:
 		if (TimerDone(TMR_T2)) {
@@ -116,15 +121,17 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
 	uint8_t rxData;
-	//	static uint8_t txData_l = 0;
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
 		V.error = LINK_ERROR_NONE; // reset error status
-		//		txData_l = 0;
 		UART1_Write(ENQ);
 		StartTimer(TMR_T2, T2);
 		*t_link = LINK_STATE_ENQ;
+#ifdef DB3
+		WaitMs(5);
+		UART1_put_buffer(EOT);
+#endif
 		break;
 	case LINK_STATE_ENQ:
 		if (TimerDone(TMR_T2)) {
@@ -141,8 +148,12 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_EOT: // transmit the secondary message response
-
+		secs_send((uint8_t*) & H12[0], sizeof(header12), false);
 		*t_link = LINK_STATE_ACK;
+#ifdef DB4
+		WaitMs(5);
+		UART1_put_buffer(ACK);
+#endif
 		break;
 	case LINK_STATE_ACK:
 		if (TimerDone(TMR_T3)) {
@@ -199,7 +210,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 	k[1] = (checksum >> 8)&0xff;
 	V.t_checksum = checksum;
 
-	while (UART1_is_tx_ready() < 59); // wait for tx buffer to drain
+	while (UART1_is_tx_ready() < 64); // wait for tx buffer to drain
 	for (i = length; i > 0; i--) {
 		if (fake) {
 			UART1_put_buffer(k[i - 1]);

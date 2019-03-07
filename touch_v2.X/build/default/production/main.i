@@ -28004,7 +28004,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 50 "./vconfig.h"
+# 58 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28194,6 +28194,7 @@ struct header10 H10[] = {
   .block.block.stream = 1,
   .block.block.function = 1,
   .block.block.ebit = 1,
+  .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 0x000c9f75,
  },
@@ -28203,12 +28204,28 @@ struct header10 H10[] = {
  {
   .length = 10,
   .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
   .block.block.wbit = 0,
   .block.block.stream = 1,
   .block.block.function = 0,
   .block.block.ebit = 1,
+  .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
+ },
+ {
+  .length = 10,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 1,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 0x00000d89,
  },
 };
 
@@ -28216,12 +28233,17 @@ struct header12 H12[] = {
  {
   .length = 12,
   .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 1,
   .block.block.function = 2,
   .block.block.ebit = 1,
+  .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
+  .data[1] = 1,
+  .data[0] = 0,
  },
 };
 
@@ -28229,10 +28251,13 @@ struct header13 H13[] = {
  {
   .length = 13,
   .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 6,
   .block.block.function = 12,
   .block.block.ebit = 1,
+  .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
  },
@@ -28242,10 +28267,13 @@ struct header14 H14[] = {
  {
   .length = 14,
   .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 1,
   .block.block.function = 4,
   .block.block.ebit = 1,
+  .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
  },
@@ -28255,10 +28283,13 @@ struct header18 H18[] = {
  {
   .length = 18,
   .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 1,
   .block.block.function = 3,
   .block.block.ebit = 1,
+  .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
  },
@@ -28268,10 +28299,13 @@ struct header24 H24[] = {
  {
   .length = 24,
   .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 2,
   .block.block.function = 18,
   .block.block.ebit = 1,
+  .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
  },
@@ -28286,7 +28320,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 
 void main(void)
 {
- uint8_t i, j = 0, *k;
+ uint8_t j = 3;
  uint16_t sum;
  UI_STATES mode = UI_STATE_HOST;
 
@@ -28337,6 +28371,10 @@ void main(void)
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
+
+    WaitMs(75);
+    UART1_put_buffer(0x05);
+
     break;
    case SEQ_STATE_RX:
 
@@ -28346,6 +28384,9 @@ void main(void)
      sprintf(V.buf, " S%dF%d #", V.stream, V.function);
      eaDogM_WriteString(V.buf);
      wait_lcd_done();
+
+     WaitMs(5);
+
      V.s_state = SEQ_STATE_TX;
     }
     if (V.r_l_state == LINK_STATE_ERROR)
