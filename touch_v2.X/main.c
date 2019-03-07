@@ -233,13 +233,13 @@ void main(void)
 				H10[j].block.b[1],
 				H10[j].block.b[0],
 				sum);
-			eaDogM_WriteString(V.buf);
 			wait_lcd_done();
+			eaDogM_WriteString(V.buf);
 
 			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
 			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
-			eaDogM_WriteString(V.buf);
 			wait_lcd_done();
+			eaDogM_WriteString(V.buf);
 #endif
 
 			break;
@@ -260,8 +260,8 @@ void main(void)
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
 					sprintf(V.buf, " S%dF%d #", V.stream, V.function);
-					eaDogM_WriteString(V.buf);
 					wait_lcd_done();
+					eaDogM_WriteString(V.buf);
 #ifdef DB1
 					WaitMs(5);
 #endif
@@ -283,9 +283,9 @@ void main(void)
 			case SEQ_STATE_TRIGGER:
 				DEBUG1_SetHigh();
 				sprintf(V.buf, " OK #");
+				wait_lcd_done();
 				eaDogM_WriteString(V.buf);
-				if (wait_lcd_check())
-					V.s_state = SEQ_STATE_DONE;
+				V.s_state = SEQ_STATE_DONE;
 				DEBUG1_SetLow();
 				break;
 			case SEQ_STATE_DONE:
@@ -295,8 +295,8 @@ void main(void)
 			default:
 				UART1_Write(NAK);
 				sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
-				eaDogM_WriteString(V.buf);
 				wait_lcd_done();
+				eaDogM_WriteString(V.buf);
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}

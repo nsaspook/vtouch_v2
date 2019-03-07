@@ -30,7 +30,7 @@ void wdtdelay(uint32_t delay)
 }
 
 /*
- * Init the EA DOGM163 in 8bit serial mode
+ * Init the EA DOGM163 in 8-bit serial mode
  */
 void init_display(void)
 {
@@ -174,7 +174,7 @@ void eaDogM_WriteString(char *strPtr)
 	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
 	DMA1SSZ = strlen(strPtr);
 	DMA1CON0bits.EN = 1; /* enable DMA */
-	printf("%s", strPtr); // STDOUT redirected to user putch
+	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
 	DEBUG2_SetLow();
 	start_lcd();
 	++V.ticks; // transaction ID for messages
