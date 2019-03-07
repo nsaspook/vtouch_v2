@@ -181,7 +181,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 	uint8_t i, *k;
 	uint16_t checksum;
 
-	k = (void*) byte_block;
+	k = (uint8_t *) byte_block;
 
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
@@ -189,7 +189,12 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 		return false; // don't send and return mismatch error
 	}
 
-	checksum = block_checksum(&k[length - 2], length - 3);
+	/*
+	 * space up from bottom two bytes and don't include last byte
+	 * for checksums
+	 * we send C structures from the max byte to first in uC memory
+	 */
+	checksum = block_checksum(&k[2], length - 3);
 	k[0] = checksum & 0xff;
 	k[1] = (checksum >> 8)&0xff;
 	V.t_checksum = checksum;
@@ -199,7 +204,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 		if (fake) {
 			UART1_put_buffer(k[i - 1]);
 		} else {
-			UART1_Write(k[i - 1]);
+			UART1_Write(k[i - 1]); // -1 for array memory addressing
 		}
 	}
 

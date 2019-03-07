@@ -99,16 +99,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _U1TXB `Vuc ~T0 @X0 0 e@15850 ]
 [t ~ __interrupt . k ]
 [t T1 __interrupt irq ( U1TX ) base ( 8 ) ]
-[v F16153 `(v ~T0 @X0 0 tf ]
+[v F16151 `(v ~T0 @X0 0 tf ]
 [t T2 __interrupt irq ( U1RX ) base ( 8 ) ]
-[v F16155 `(v ~T0 @X0 0 tf ]
+[v F16153 `(v ~T0 @X0 0 tf ]
 "26852
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 26852: extern volatile unsigned char U1RXB __attribute__((address(0x3DE8)));
 [v _U1RXB `Vuc ~T0 @X0 0 e@15848 ]
+[v F16157 `(v ~T0 @X0 0 tf ]
 [v F16159 `(v ~T0 @X0 0 tf ]
-[v F16161 `(v ~T0 @X0 0 tf ]
+[v F16162 `(v ~T0 @X0 0 tf ]
 [v F16164 `(v ~T0 @X0 0 tf ]
-[v F16166 `(v ~T0 @X0 0 tf ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2443,8 +2443,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/uart1.c: 110:  U1CON1 = 0x80;
 [e = _U1CON1 -> -> 128 `i `uc ]
 "113
-[; ;mcc_generated_files/uart1.c: 113:  U1CON2 = 0x30;
-[e = _U1CON2 -> -> 48 `i `uc ]
+[; ;mcc_generated_files/uart1.c: 113:  U1CON2 = 0x00;
+[e = _U1CON2 -> -> 0 `i `uc ]
 "116
 [; ;mcc_generated_files/uart1.c: 116:  U1BRGL = 0x82;
 [e = _U1BRGL -> -> 130 `i `uc ]
@@ -2592,276 +2592,276 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/uart1.c: 177: }
 [e :UE 2230 ]
 }
-"180
-[; ;mcc_generated_files/uart1.c: 180: void UART1_put_buffer(uint8_t bufData)
-[v _UART1_put_buffer `(v ~T0 @X0 1 ef1`uc ]
-"181
-[; ;mcc_generated_files/uart1.c: 181: {
-{
-[e :U _UART1_put_buffer ]
-"180
-[; ;mcc_generated_files/uart1.c: 180: void UART1_put_buffer(uint8_t bufData)
-[v _bufData `uc ~T0 @X0 1 r1 ]
-"181
-[; ;mcc_generated_files/uart1.c: 181: {
-[f ]
-"182
-[; ;mcc_generated_files/uart1.c: 182:  PIE3bits.U1RXIE = 0;
-[e = . . _PIE3bits 0 3 -> -> 0 `i `uc ]
-"183
-[; ;mcc_generated_files/uart1.c: 183:  uart1RxBuffer[uart1RxHead++] = bufData;
-[e = *U + &U _uart1RxBuffer * -> ++ _uart1RxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart1RxBuffer `ui `ux _bufData ]
-"184
-[; ;mcc_generated_files/uart1.c: 184:  if (sizeof(uart1RxBuffer) <= uart1RxHead) {
-[e $ ! <= -> # _uart1RxBuffer `ui -> _uart1RxHead `ui 2236  ]
-{
-"185
-[; ;mcc_generated_files/uart1.c: 185:   uart1RxHead = 0;
-[e = _uart1RxHead -> -> 0 `i `uc ]
-"186
-[; ;mcc_generated_files/uart1.c: 186:  }
-}
-[e :U 2236 ]
-"188
-[; ;mcc_generated_files/uart1.c: 188:  uart1RxCount++;
-[e ++ _uart1RxCount -> -> 1 `i `Vuc ]
-"189
-[; ;mcc_generated_files/uart1.c: 189:  PIE3bits.U1RXIE = 1;
-[e = . . _PIE3bits 0 3 -> -> 1 `i `uc ]
-"190
-[; ;mcc_generated_files/uart1.c: 190: }
-[e :UE 2235 ]
-}
-"192
-[; ;mcc_generated_files/uart1.c: 192: void UART1_Write(uint8_t txData)
+"179
+[; ;mcc_generated_files/uart1.c: 179: void UART1_Write(uint8_t txData)
 [v _UART1_Write `(v ~T0 @X0 1 ef1`uc ]
-"193
-[; ;mcc_generated_files/uart1.c: 193: {
+"180
+[; ;mcc_generated_files/uart1.c: 180: {
 {
 [e :U _UART1_Write ]
-"192
-[; ;mcc_generated_files/uart1.c: 192: void UART1_Write(uint8_t txData)
+"179
+[; ;mcc_generated_files/uart1.c: 179: void UART1_Write(uint8_t txData)
 [v _txData `uc ~T0 @X0 1 r1 ]
-"193
-[; ;mcc_generated_files/uart1.c: 193: {
+"180
+[; ;mcc_generated_files/uart1.c: 180: {
 [f ]
-"194
-[; ;mcc_generated_files/uart1.c: 194:  while (0 == uart1TxBufferRemaining) {
-[e $U 2238  ]
+"181
+[; ;mcc_generated_files/uart1.c: 181:  while (0 == uart1TxBufferRemaining) {
+[e $U 2236  ]
+[e :U 2237 ]
+{
+"182
+[; ;mcc_generated_files/uart1.c: 182:  }
+}
+[e :U 2236 ]
+"181
+[; ;mcc_generated_files/uart1.c: 181:  while (0 == uart1TxBufferRemaining) {
+[e $ == -> 0 `i -> _uart1TxBufferRemaining `i 2237  ]
+[e :U 2238 ]
+"184
+[; ;mcc_generated_files/uart1.c: 184:  if (0 == PIE3bits.U1TXIE) {
+[e $ ! == -> 0 `i -> . . _PIE3bits 0 4 `i 2239  ]
+{
+"185
+[; ;mcc_generated_files/uart1.c: 185:   U1TXB = txData;
+[e = _U1TXB _txData ]
+"186
+[; ;mcc_generated_files/uart1.c: 186:  } else {
+}
+[e $U 2240  ]
 [e :U 2239 ]
 {
-"195
-[; ;mcc_generated_files/uart1.c: 195:  }
-}
-[e :U 2238 ]
-"194
-[; ;mcc_generated_files/uart1.c: 194:  while (0 == uart1TxBufferRemaining) {
-[e $ == -> 0 `i -> _uart1TxBufferRemaining `i 2239  ]
-[e :U 2240 ]
-"197
-[; ;mcc_generated_files/uart1.c: 197:  if (0 == PIE3bits.U1TXIE) {
-[e $ ! == -> 0 `i -> . . _PIE3bits 0 4 `i 2241  ]
-{
-"198
-[; ;mcc_generated_files/uart1.c: 198:   U1TXB = txData;
-[e = _U1TXB _txData ]
-"199
-[; ;mcc_generated_files/uart1.c: 199:  } else {
-}
-[e $U 2242  ]
-[e :U 2241 ]
-{
-"200
-[; ;mcc_generated_files/uart1.c: 200:   PIE3bits.U1TXIE = 0;
+"187
+[; ;mcc_generated_files/uart1.c: 187:   PIE3bits.U1TXIE = 0;
 [e = . . _PIE3bits 0 4 -> -> 0 `i `uc ]
-"201
-[; ;mcc_generated_files/uart1.c: 201:   uart1TxBuffer[uart1TxHead++] = txData;
+"188
+[; ;mcc_generated_files/uart1.c: 188:   uart1TxBuffer[uart1TxHead++] = txData;
 [e = *U + &U _uart1TxBuffer * -> ++ _uart1TxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart1TxBuffer `ui `ux _txData ]
-"202
-[; ;mcc_generated_files/uart1.c: 202:   if (sizeof(uart1TxBuffer) <= uart1TxHead) {
-[e $ ! <= -> # _uart1TxBuffer `ui -> _uart1TxHead `ui 2243  ]
+"189
+[; ;mcc_generated_files/uart1.c: 189:   if (sizeof(uart1TxBuffer) <= uart1TxHead) {
+[e $ ! <= -> # _uart1TxBuffer `ui -> _uart1TxHead `ui 2241  ]
 {
-"203
-[; ;mcc_generated_files/uart1.c: 203:    uart1TxHead = 0;
+"190
+[; ;mcc_generated_files/uart1.c: 190:    uart1TxHead = 0;
 [e = _uart1TxHead -> -> 0 `i `uc ]
-"204
-[; ;mcc_generated_files/uart1.c: 204:   }
+"191
+[; ;mcc_generated_files/uart1.c: 191:   }
 }
-[e :U 2243 ]
-"205
-[; ;mcc_generated_files/uart1.c: 205:   uart1TxBufferRemaining--;
+[e :U 2241 ]
+"192
+[; ;mcc_generated_files/uart1.c: 192:   uart1TxBufferRemaining--;
 [e -- _uart1TxBufferRemaining -> -> 1 `i `Vuc ]
-"206
-[; ;mcc_generated_files/uart1.c: 206:  }
+"193
+[; ;mcc_generated_files/uart1.c: 193:  }
 }
-[e :U 2242 ]
-"207
-[; ;mcc_generated_files/uart1.c: 207:  PIE3bits.U1TXIE = 1;
+[e :U 2240 ]
+"194
+[; ;mcc_generated_files/uart1.c: 194:  PIE3bits.U1TXIE = 1;
 [e = . . _PIE3bits 0 4 -> -> 1 `i `uc ]
-"208
-[; ;mcc_generated_files/uart1.c: 208: }
-[e :UE 2237 ]
+"195
+[; ;mcc_generated_files/uart1.c: 195: }
+[e :UE 2235 ]
 }
 [v $root$_UART1_tx_vect_isr `(v ~T0 @X0 0 e ]
-"210
-[; ;mcc_generated_files/uart1.c: 210: void __attribute__((picinterrupt(("irq(U1TX), base(8)")))) UART1_tx_vect_isr()
+"197
+[; ;mcc_generated_files/uart1.c: 197: void __attribute__((picinterrupt(("irq(U1TX), base(8)")))) UART1_tx_vect_isr()
 [v _UART1_tx_vect_isr `(v ~T1 @X0 1 ef ]
-"211
-[; ;mcc_generated_files/uart1.c: 211: {
+"198
+[; ;mcc_generated_files/uart1.c: 198: {
 {
 [e :U _UART1_tx_vect_isr ]
 [f ]
-"212
-[; ;mcc_generated_files/uart1.c: 212:  if (UART1_TxInterruptHandler) {
-[e $ ! != _UART1_TxInterruptHandler -> -> 0 `i `*F16153 2245  ]
+"199
+[; ;mcc_generated_files/uart1.c: 199:  if (UART1_TxInterruptHandler) {
+[e $ ! != _UART1_TxInterruptHandler -> -> 0 `i `*F16151 2243  ]
 {
-"213
-[; ;mcc_generated_files/uart1.c: 213:   UART1_TxInterruptHandler();
+"200
+[; ;mcc_generated_files/uart1.c: 200:   UART1_TxInterruptHandler();
 [e ( *U _UART1_TxInterruptHandler ..  ]
-"214
-[; ;mcc_generated_files/uart1.c: 214:  }
+"201
+[; ;mcc_generated_files/uart1.c: 201:  }
 }
-[e :U 2245 ]
-"215
-[; ;mcc_generated_files/uart1.c: 215: }
-[e :UE 2244 ]
+[e :U 2243 ]
+"202
+[; ;mcc_generated_files/uart1.c: 202: }
+[e :UE 2242 ]
 }
 [v $root$_UART1_rx_vect_isr `(v ~T0 @X0 0 e ]
-"217
-[; ;mcc_generated_files/uart1.c: 217: void __attribute__((picinterrupt(("irq(U1RX), base(8)")))) UART1_rx_vect_isr()
+"204
+[; ;mcc_generated_files/uart1.c: 204: void __attribute__((picinterrupt(("irq(U1RX), base(8)")))) UART1_rx_vect_isr()
 [v _UART1_rx_vect_isr `(v ~T2 @X0 1 ef ]
-"218
-[; ;mcc_generated_files/uart1.c: 218: {
+"205
+[; ;mcc_generated_files/uart1.c: 205: {
 {
 [e :U _UART1_rx_vect_isr ]
 [f ]
-"219
-[; ;mcc_generated_files/uart1.c: 219:  if (UART1_RxInterruptHandler) {
-[e $ ! != _UART1_RxInterruptHandler -> -> 0 `i `*F16155 2247  ]
+"206
+[; ;mcc_generated_files/uart1.c: 206:  if (UART1_RxInterruptHandler) {
+[e $ ! != _UART1_RxInterruptHandler -> -> 0 `i `*F16153 2245  ]
 {
-"220
-[; ;mcc_generated_files/uart1.c: 220:   UART1_RxInterruptHandler();
+"207
+[; ;mcc_generated_files/uart1.c: 207:   UART1_RxInterruptHandler();
 [e ( *U _UART1_RxInterruptHandler ..  ]
-"221
-[; ;mcc_generated_files/uart1.c: 221:  }
+"208
+[; ;mcc_generated_files/uart1.c: 208:  }
 }
-[e :U 2247 ]
-"222
-[; ;mcc_generated_files/uart1.c: 222: }
-[e :UE 2246 ]
+[e :U 2245 ]
+"209
+[; ;mcc_generated_files/uart1.c: 209: }
+[e :UE 2244 ]
 }
-"224
-[; ;mcc_generated_files/uart1.c: 224: void UART1_Transmit_ISR(void)
+"211
+[; ;mcc_generated_files/uart1.c: 211: void UART1_Transmit_ISR(void)
 [v _UART1_Transmit_ISR `(v ~T0 @X0 1 ef ]
-"225
-[; ;mcc_generated_files/uart1.c: 225: {
+"212
+[; ;mcc_generated_files/uart1.c: 212: {
 {
 [e :U _UART1_Transmit_ISR ]
 [f ]
-"227
-[; ;mcc_generated_files/uart1.c: 227:  if (sizeof(uart1TxBuffer) > uart1TxBufferRemaining) {
-[e $ ! > -> # _uart1TxBuffer `ui -> _uart1TxBufferRemaining `ui 2249  ]
+"214
+[; ;mcc_generated_files/uart1.c: 214:  if (sizeof(uart1TxBuffer) > uart1TxBufferRemaining) {
+[e $ ! > -> # _uart1TxBuffer `ui -> _uart1TxBufferRemaining `ui 2247  ]
 {
-"228
-[; ;mcc_generated_files/uart1.c: 228:   U1TXB = uart1TxBuffer[uart1TxTail++];
+"215
+[; ;mcc_generated_files/uart1.c: 215:   U1TXB = uart1TxBuffer[uart1TxTail++];
 [e = _U1TXB *U + &U _uart1TxBuffer * -> ++ _uart1TxTail -> -> 1 `i `Vuc `ux -> -> # *U &U _uart1TxBuffer `ui `ux ]
-"229
-[; ;mcc_generated_files/uart1.c: 229:   if (sizeof(uart1TxBuffer) <= uart1TxTail) {
-[e $ ! <= -> # _uart1TxBuffer `ui -> _uart1TxTail `ui 2250  ]
+"216
+[; ;mcc_generated_files/uart1.c: 216:   if (sizeof(uart1TxBuffer) <= uart1TxTail) {
+[e $ ! <= -> # _uart1TxBuffer `ui -> _uart1TxTail `ui 2248  ]
 {
-"230
-[; ;mcc_generated_files/uart1.c: 230:    uart1TxTail = 0;
+"217
+[; ;mcc_generated_files/uart1.c: 217:    uart1TxTail = 0;
 [e = _uart1TxTail -> -> 0 `i `uc ]
-"231
-[; ;mcc_generated_files/uart1.c: 231:   }
+"218
+[; ;mcc_generated_files/uart1.c: 218:   }
 }
-[e :U 2250 ]
-"232
-[; ;mcc_generated_files/uart1.c: 232:   uart1TxBufferRemaining++;
+[e :U 2248 ]
+"219
+[; ;mcc_generated_files/uart1.c: 219:   uart1TxBufferRemaining++;
 [e ++ _uart1TxBufferRemaining -> -> 1 `i `Vuc ]
-"233
-[; ;mcc_generated_files/uart1.c: 233:  } else {
+"220
+[; ;mcc_generated_files/uart1.c: 220:  } else {
 }
-[e $U 2251  ]
-[e :U 2249 ]
+[e $U 2249  ]
+[e :U 2247 ]
 {
-"234
-[; ;mcc_generated_files/uart1.c: 234:   PIE3bits.U1TXIE = 0;
+"221
+[; ;mcc_generated_files/uart1.c: 221:   PIE3bits.U1TXIE = 0;
 [e = . . _PIE3bits 0 4 -> -> 0 `i `uc ]
-"235
-[; ;mcc_generated_files/uart1.c: 235:  }
+"222
+[; ;mcc_generated_files/uart1.c: 222:  }
 }
-[e :U 2251 ]
-"238
-[; ;mcc_generated_files/uart1.c: 238: }
-[e :UE 2248 ]
+[e :U 2249 ]
+"225
+[; ;mcc_generated_files/uart1.c: 225: }
+[e :UE 2246 ]
 }
-"240
-[; ;mcc_generated_files/uart1.c: 240: void UART1_Receive_ISR(void)
+"227
+[; ;mcc_generated_files/uart1.c: 227: void UART1_Receive_ISR(void)
 [v _UART1_Receive_ISR `(v ~T0 @X0 1 ef ]
-"241
-[; ;mcc_generated_files/uart1.c: 241: {
+"228
+[; ;mcc_generated_files/uart1.c: 228: {
 {
 [e :U _UART1_Receive_ISR ]
 [f ]
-"243
-[; ;mcc_generated_files/uart1.c: 243:  uart1RxBuffer[uart1RxHead++] = U1RXB;
+"230
+[; ;mcc_generated_files/uart1.c: 230:  uart1RxBuffer[uart1RxHead++] = U1RXB;
 [e = *U + &U _uart1RxBuffer * -> ++ _uart1RxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart1RxBuffer `ui `ux _U1RXB ]
-"244
-[; ;mcc_generated_files/uart1.c: 244:  if (sizeof(uart1RxBuffer) <= uart1RxHead) {
-[e $ ! <= -> # _uart1RxBuffer `ui -> _uart1RxHead `ui 2253  ]
+"231
+[; ;mcc_generated_files/uart1.c: 231:  if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+[e $ ! <= -> # _uart1RxBuffer `ui -> _uart1RxHead `ui 2251  ]
 {
-"245
-[; ;mcc_generated_files/uart1.c: 245:   uart1RxHead = 0;
+"232
+[; ;mcc_generated_files/uart1.c: 232:   uart1RxHead = 0;
 [e = _uart1RxHead -> -> 0 `i `uc ]
-"246
-[; ;mcc_generated_files/uart1.c: 246:  }
+"233
+[; ;mcc_generated_files/uart1.c: 233:  }
 }
-[e :U 2253 ]
-"247
-[; ;mcc_generated_files/uart1.c: 247:  uart1RxCount++;
+[e :U 2251 ]
+"234
+[; ;mcc_generated_files/uart1.c: 234:  uart1RxCount++;
 [e ++ _uart1RxCount -> -> 1 `i `Vuc ]
-"250
-[; ;mcc_generated_files/uart1.c: 250: }
-[e :UE 2252 ]
+"237
+[; ;mcc_generated_files/uart1.c: 237: }
+[e :UE 2250 ]
 }
-"252
-[; ;mcc_generated_files/uart1.c: 252: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
-[v _UART1_SetRxInterruptHandler `(v ~T0 @X0 1 ef1`*F16159 ]
-"253
-[; ;mcc_generated_files/uart1.c: 253: {
+"239
+[; ;mcc_generated_files/uart1.c: 239: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
+[v _UART1_SetRxInterruptHandler `(v ~T0 @X0 1 ef1`*F16157 ]
+"240
+[; ;mcc_generated_files/uart1.c: 240: {
 {
 [e :U _UART1_SetRxInterruptHandler ]
-"252
-[; ;mcc_generated_files/uart1.c: 252: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
-[v _InterruptHandler `*F16161 ~T0 @X0 1 r1 ]
-"253
-[; ;mcc_generated_files/uart1.c: 253: {
+"239
+[; ;mcc_generated_files/uart1.c: 239: void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
+[v _InterruptHandler `*F16159 ~T0 @X0 1 r1 ]
+"240
+[; ;mcc_generated_files/uart1.c: 240: {
 [f ]
-"254
-[; ;mcc_generated_files/uart1.c: 254:  UART1_RxInterruptHandler = InterruptHandler;
+"241
+[; ;mcc_generated_files/uart1.c: 241:  UART1_RxInterruptHandler = InterruptHandler;
 [e = _UART1_RxInterruptHandler _InterruptHandler ]
-"255
-[; ;mcc_generated_files/uart1.c: 255: }
-[e :UE 2254 ]
+"242
+[; ;mcc_generated_files/uart1.c: 242: }
+[e :UE 2252 ]
 }
-"257
-[; ;mcc_generated_files/uart1.c: 257: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void))
-[v _UART1_SetTxInterruptHandler `(v ~T0 @X0 1 ef1`*F16164 ]
-"258
-[; ;mcc_generated_files/uart1.c: 258: {
+"244
+[; ;mcc_generated_files/uart1.c: 244: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void))
+[v _UART1_SetTxInterruptHandler `(v ~T0 @X0 1 ef1`*F16162 ]
+"245
+[; ;mcc_generated_files/uart1.c: 245: {
 {
 [e :U _UART1_SetTxInterruptHandler ]
-"257
-[; ;mcc_generated_files/uart1.c: 257: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void))
-[v _InterruptHandler `*F16166 ~T0 @X0 1 r1 ]
-"258
-[; ;mcc_generated_files/uart1.c: 258: {
+"244
+[; ;mcc_generated_files/uart1.c: 244: void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void))
+[v _InterruptHandler `*F16164 ~T0 @X0 1 r1 ]
+"245
+[; ;mcc_generated_files/uart1.c: 245: {
 [f ]
-"259
-[; ;mcc_generated_files/uart1.c: 259:  UART1_TxInterruptHandler = InterruptHandler;
+"246
+[; ;mcc_generated_files/uart1.c: 246:  UART1_TxInterruptHandler = InterruptHandler;
 [e = _UART1_TxInterruptHandler _InterruptHandler ]
+"247
+[; ;mcc_generated_files/uart1.c: 247: }
+[e :UE 2253 ]
+}
+"250
+[; ;mcc_generated_files/uart1.c: 250: void UART1_put_buffer(uint8_t bufData)
+[v _UART1_put_buffer `(v ~T0 @X0 1 ef1`uc ]
+"251
+[; ;mcc_generated_files/uart1.c: 251: {
+{
+[e :U _UART1_put_buffer ]
+"250
+[; ;mcc_generated_files/uart1.c: 250: void UART1_put_buffer(uint8_t bufData)
+[v _bufData `uc ~T0 @X0 1 r1 ]
+"251
+[; ;mcc_generated_files/uart1.c: 251: {
+[f ]
+"252
+[; ;mcc_generated_files/uart1.c: 252:  PIE3bits.U1RXIE = 0;
+[e = . . _PIE3bits 0 3 -> -> 0 `i `uc ]
+"253
+[; ;mcc_generated_files/uart1.c: 253:  uart1RxBuffer[uart1RxHead++] = bufData;
+[e = *U + &U _uart1RxBuffer * -> ++ _uart1RxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart1RxBuffer `ui `ux _bufData ]
+"254
+[; ;mcc_generated_files/uart1.c: 254:  if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+[e $ ! <= -> # _uart1RxBuffer `ui -> _uart1RxHead `ui 2255  ]
+{
+"255
+[; ;mcc_generated_files/uart1.c: 255:   uart1RxHead = 0;
+[e = _uart1RxHead -> -> 0 `i `uc ]
+"256
+[; ;mcc_generated_files/uart1.c: 256:  }
+}
+[e :U 2255 ]
+"258
+[; ;mcc_generated_files/uart1.c: 258:  uart1RxCount++;
+[e ++ _uart1RxCount -> -> 1 `i `Vuc ]
+"259
+[; ;mcc_generated_files/uart1.c: 259:  PIE3bits.U1RXIE = 1;
+[e = . . _PIE3bits 0 3 -> -> 1 `i `uc ]
 "260
 [; ;mcc_generated_files/uart1.c: 260: }
-[e :UE 2255 ]
+[e :UE 2254 ]
 }

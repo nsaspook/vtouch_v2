@@ -19,8 +19,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16148 . SEQ_STATE_INIT SEQ_STATE_RX SEQ_STATE_TX SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
 [c E16156 0 1 2 3 4 5 .. ]
 [n E16156 . UI_STATE_INIT UI_STATE_HOST UI_STATE_EQUIP UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
-"94 ./vconfig.h
-[; ;./vconfig.h: 94:  typedef struct V_data {
+"100 ./vconfig.h
+[; ;./vconfig.h: 100:  typedef struct V_data {
 [s S2228 `E16148 1 `E16156 1 `E16164 1 `E16164 1 `uc -> 64 `i `Vul 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 ]
 [n S2228 V_data s_state ui_state r_l_state t_l_state buf ticks stream function error r_checksum t_checksum ]
 "3 gemsecs.c
@@ -2931,8 +2931,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;gemsecs.c: 182:  uint16_t checksum;
 [v _checksum `us ~T0 @X0 1 a ]
 "184
-[; ;gemsecs.c: 184:  k = (void*) byte_block;
-[e = _k -> -> _byte_block `*v `*uc ]
+[; ;gemsecs.c: 184:  k = (uint8_t *) byte_block;
+[e = _k _byte_block ]
 "186
 [; ;gemsecs.c: 186:  V.error = LINK_ERROR_NONE;
 [e = . _V 8 -> . `E16173 0 `uc ]
@@ -2951,65 +2951,65 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;gemsecs.c: 190:  }
 }
 [e :U 2295 ]
-"192
-[; ;gemsecs.c: 192:  checksum = block_checksum(&k[length - 2], length - 3);
-[e = _checksum ( _block_checksum (2 , &U *U + _k * -> - -> _length `i -> 2 `i `x -> -> # *U _k `i `x -> - -> _length `i -> 3 `i `us ]
-"193
-[; ;gemsecs.c: 193:  k[0] = checksum & 0xff;
-[e = *U + _k * -> -> 0 `i `x -> -> # *U _k `i `x -> & -> _checksum `ui -> -> 255 `i `ui `uc ]
-"194
-[; ;gemsecs.c: 194:  k[1] = (checksum >> 8)&0xff;
-[e = *U + _k * -> -> 1 `i `x -> -> # *U _k `i `x -> & >> -> _checksum `ui -> 8 `i -> -> 255 `i `ui `uc ]
-"195
-[; ;gemsecs.c: 195:  V.t_checksum = checksum;
-[e = . _V 10 _checksum ]
 "197
-[; ;gemsecs.c: 197:  while (UART1_is_tx_ready() < 59);
+[; ;gemsecs.c: 197:  checksum = block_checksum(&k[2], length - 3);
+[e = _checksum ( _block_checksum (2 , &U *U + _k * -> -> 2 `i `x -> -> # *U _k `i `x -> - -> _length `i -> 3 `i `us ]
+"198
+[; ;gemsecs.c: 198:  k[0] = checksum & 0xff;
+[e = *U + _k * -> -> 0 `i `x -> -> # *U _k `i `x -> & -> _checksum `ui -> -> 255 `i `ui `uc ]
+"199
+[; ;gemsecs.c: 199:  k[1] = (checksum >> 8)&0xff;
+[e = *U + _k * -> -> 1 `i `x -> -> # *U _k `i `x -> & >> -> _checksum `ui -> 8 `i -> -> 255 `i `ui `uc ]
+"200
+[; ;gemsecs.c: 200:  V.t_checksum = checksum;
+[e = . _V 10 _checksum ]
+"202
+[; ;gemsecs.c: 202:  while (UART1_is_tx_ready() < 59);
 [e $U 2296  ]
 [e :U 2297 ]
 [e :U 2296 ]
 [e $ < -> ( _UART1_is_tx_ready ..  `i -> 59 `i 2297  ]
 [e :U 2298 ]
-"198
-[; ;gemsecs.c: 198:  for (i = length; i > 0; i--) {
+"203
+[; ;gemsecs.c: 203:  for (i = length; i > 0; i--) {
 {
 [e = _i _length ]
 [e $ > -> _i `i -> 0 `i 2299  ]
 [e $U 2300  ]
 [e :U 2299 ]
 {
-"199
-[; ;gemsecs.c: 199:   if (fake) {
+"204
+[; ;gemsecs.c: 204:   if (fake) {
 [e $ ! != -> _fake `i -> 0 `i 2302  ]
 {
-"200
-[; ;gemsecs.c: 200:    UART1_put_buffer(k[i - 1]);
+"205
+[; ;gemsecs.c: 205:    UART1_put_buffer(k[i - 1]);
 [e ( _UART1_put_buffer (1 *U + _k * -> - -> _i `i -> 1 `i `x -> -> # *U _k `i `x ]
-"201
-[; ;gemsecs.c: 201:   } else {
+"206
+[; ;gemsecs.c: 206:   } else {
 }
 [e $U 2303  ]
 [e :U 2302 ]
 {
-"202
-[; ;gemsecs.c: 202:    UART1_Write(k[i - 1]);
+"207
+[; ;gemsecs.c: 207:    UART1_Write(k[i - 1]);
 [e ( _UART1_Write (1 *U + _k * -> - -> _i `i -> 1 `i `x -> -> # *U _k `i `x ]
-"203
-[; ;gemsecs.c: 203:   }
+"208
+[; ;gemsecs.c: 208:   }
 }
 [e :U 2303 ]
-"204
-[; ;gemsecs.c: 204:  }
+"209
+[; ;gemsecs.c: 209:  }
 }
 [e -- _i -> -> 1 `i `uc ]
 [e $ > -> _i `i -> 0 `i 2299  ]
 [e :U 2300 ]
 }
-"206
-[; ;gemsecs.c: 206:  return 1;
+"211
+[; ;gemsecs.c: 211:  return 1;
 [e ) -> -> 1 `i `a ]
 [e $UE 2294  ]
-"207
-[; ;gemsecs.c: 207: }
+"212
+[; ;gemsecs.c: 212: }
 [e :UE 2294 ]
 }

@@ -28004,7 +28004,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 44 "./vconfig.h"
+# 50 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28326,7 +28326,7 @@ void main(void)
    V.s_state = SEQ_STATE_INIT;
 
    secs_send((uint8_t*) & H10[j], sizeof(header10), 0);
-   sprintf(V.buf, " C 0x%04x #", sum);
+   sprintf(V.buf, " C 0x%04x #", V.t_checksum);
    eaDogM_WriteString(V.buf);
    wait_lcd_done();
 

@@ -34,12 +34,18 @@ extern "C" {
 #define EADOGM_CMD_SELECT_R1     0b00010000
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
-	
+
 #define T1	500
 #define T2	2000
 #define T3	5000
 #define T4	5000
 #define	RTY	3
+
+	/*
+	 * offsets in bytes
+	 */
+
+#define TX_RESERVE	59
 
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;

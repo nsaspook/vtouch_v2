@@ -196,7 +196,7 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 
 			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
-			sprintf(V.buf, " C 0x%04x #", sum);
+			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
 			eaDogM_WriteString(V.buf);
 			wait_lcd_done();
 

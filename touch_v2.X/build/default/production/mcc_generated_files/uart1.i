@@ -27357,7 +27357,7 @@ void UART1_Initialize(void)
  U1CON1 = 0x80;
 
 
- U1CON2 = 0x30;
+ U1CON2 = 0x00;
 
 
  U1BRGL = 0x82;
@@ -27421,19 +27421,6 @@ uint8_t UART1_Read(void)
  PIE3bits.U1RXIE = 1;
 
  return readValue;
-}
-
-
-void UART1_put_buffer(uint8_t bufData)
-{
- PIE3bits.U1RXIE = 0;
- uart1RxBuffer[uart1RxHead++] = bufData;
- if (sizeof(uart1RxBuffer) <= uart1RxHead) {
-  uart1RxHead = 0;
- }
-
- uart1RxCount++;
- PIE3bits.U1RXIE = 1;
 }
 
 void UART1_Write(uint8_t txData)
@@ -27504,4 +27491,17 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void))
 {
  UART1_TxInterruptHandler = InterruptHandler;
+}
+
+
+void UART1_put_buffer(uint8_t bufData)
+{
+ PIE3bits.U1RXIE = 0;
+ uart1RxBuffer[uart1RxHead++] = bufData;
+ if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+  uart1RxHead = 0;
+ }
+
+ uart1RxCount++;
+ PIE3bits.U1RXIE = 1;
 }

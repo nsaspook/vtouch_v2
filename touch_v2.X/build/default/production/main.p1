@@ -11,8 +11,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16877 . UI_STATE_INIT UI_STATE_HOST UI_STATE_EQUIP UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
 [c E16885 0 1 2 3 4 5 6 .. ]
 [n E16885 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
-"94 ./vconfig.h
-[; ;./vconfig.h: 94:  typedef struct V_data {
+"100 ./vconfig.h
+[; ;./vconfig.h: 100:  typedef struct V_data {
 [s S2231 `E16869 1 `E16877 1 `E16885 1 `E16885 1 `uc -> 64 `i `Vul 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 ]
 [n S2231 V_data s_state ui_state r_l_state t_l_state buf ticks stream function error r_checksum t_checksum ]
 "25 ./gemsecs.h
@@ -2713,8 +2713,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 198:    secs_send((uint8_t*) & H10[j], sizeof(header10), 0);
 [e ( _secs_send (3 , , -> &U *U + &U _H10 * -> _j `ux -> -> # *U &U _H10 `ui `ux `*uc -> -> # `S2234 `ui `uc -> -> 0 `i `a ]
 "199
-[; ;main.c: 199:    sprintf(V.buf, " C 0x%04x #", sum);
-[e ( _sprintf (1 , (. , &U . _V 4 :s 2C -> _sum `ui ]
+[; ;main.c: 199:    sprintf(V.buf, " C 0x%04x #", V.t_checksum);
+[e ( _sprintf (1 , (. , &U . _V 4 :s 2C -> . _V 10 `ui ]
 "200
 [; ;main.c: 200:    eaDogM_WriteString(V.buf);
 [e ( _eaDogM_WriteString (1 &U . _V 4 ]

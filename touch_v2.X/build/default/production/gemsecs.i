@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 44 "./vconfig.h"
+# 50 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28139,7 +28139,7 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
  uint8_t i, *k;
  uint16_t checksum;
 
- k = (void*) byte_block;
+ k = (uint8_t *) byte_block;
 
  V.error = LINK_ERROR_NONE;
  if ((length - 3) != k[length - 1]) {
@@ -28147,7 +28147,12 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
   return 0;
  }
 
- checksum = block_checksum(&k[length - 2], length - 3);
+
+
+
+
+
+ checksum = block_checksum(&k[2], length - 3);
  k[0] = checksum & 0xff;
  k[1] = (checksum >> 8)&0xff;
  V.t_checksum = checksum;
