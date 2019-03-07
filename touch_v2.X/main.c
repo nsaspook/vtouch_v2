@@ -40,6 +40,10 @@
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
  */
+
+#pragma warning disable 520
+#pragma warning disable 1498 
+
 #ifndef __DEFINED_int24_t
 typedef signed long long int24_t;
 #define __DEFINED_int24_t
@@ -190,7 +194,6 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
  */
 void main(void)
 {
-	uint8_t j = 3;
 	uint16_t sum;
 	UI_STATES mode = UI_STATE_HOST; /* link configuration host/equipment/etc ... */
 
@@ -209,6 +212,12 @@ void main(void)
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			init_display();
+			V.ui_state = mode;
+			V.s_state = SEQ_STATE_INIT;
+#ifdef TESTING
+			uint8_t j;
+
+			j = 3; // set H10 block for testing
 			sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
 			H10[j].checksum = sum;
 			sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x #",
@@ -226,13 +235,12 @@ void main(void)
 				sum);
 			eaDogM_WriteString(V.buf);
 			wait_lcd_done();
-			V.ui_state = mode;
-			V.s_state = SEQ_STATE_INIT;
 
 			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
 			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
 			eaDogM_WriteString(V.buf);
 			wait_lcd_done();
+#endif
 
 			break;
 		case UI_STATE_HOST:
@@ -286,7 +294,7 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				UART1_Write(NAK);
-				sprintf(V.buf, " ERR R%d T%d E%d #", V.r_l_state, V.t_l_state, V.error);
+				sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
 				eaDogM_WriteString(V.buf);
 				wait_lcd_done();
 				V.s_state = SEQ_STATE_INIT;

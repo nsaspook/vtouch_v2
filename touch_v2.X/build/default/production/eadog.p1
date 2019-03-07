@@ -3,8 +3,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./ringbufs.h: 19:  typedef struct ringBufS_t {
 [s S2226 `uc -> 64 `i `uc 1 `uc 1 `uc 1 ]
 [n S2226 ringBufS_t buf head tail count ]
-"58 ./vconfig.h
-[; ;./vconfig.h: 58:  struct spi_link_type {
+"59 ./vconfig.h
+[; ;./vconfig.h: 59:  struct spi_link_type {
 [s S2227 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `us 1 `uc 1 `*S2226 1 `*S2226 1 `Vl 1 ]
 [n S2227 spi_link_type SPI_LCD SPI_AUX LCD_TIMER LCD_DATA delay config tx1b tx1a int_count ]
 "50 /opt/microchip/xc8/v2.05/pic/include/pic18.h
@@ -127,10 +127,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16156 . UI_STATE_INIT UI_STATE_HOST UI_STATE_EQUIP UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
 [c E16164 0 1 2 3 4 5 6 .. ]
 [n E16164 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
-"108 ./vconfig.h
-[; ;./vconfig.h: 108:  typedef struct V_data {
-[s S2228 `E16148 1 `E16156 1 `E16164 1 `E16164 1 `uc -> 64 `i `Vul 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 ]
-[n S2228 V_data s_state ui_state r_l_state t_l_state buf ticks stream function error r_checksum t_checksum ]
+"110 ./vconfig.h
+[; ;./vconfig.h: 110:  typedef struct V_data {
+[s S2228 `E16148 1 `E16156 1 `E16164 1 `E16164 1 `uc -> 64 `i `Vul 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 ]
+[n S2228 V_data s_state ui_state r_l_state t_l_state buf ticks stream function error abort r_checksum t_checksum ]
 "19 eadog.c
 [; ;eadog.c: 19: extern struct V_data V;
 [v _V `S2228 ~T0 @X0 0 e ]
@@ -2405,11 +2405,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "23
 [; ;eadog.c: 23:  static uint32_t dcount;
-[v F16722 `ul ~T0 @X0 1 s dcount ]
+[v F16724 `ul ~T0 @X0 1 s dcount ]
 "25
 [; ;eadog.c: 25:  for (dcount = 0; dcount <= delay; dcount++) {
 {
-[e = F16722 -> -> -> 0 `i `l `ul ]
+[e = F16724 -> -> -> 0 `i `l `ul ]
 [e $U 2236  ]
 [e :U 2233 ]
 {
@@ -2422,9 +2422,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "28
 [; ;eadog.c: 28:  };
 }
-[e ++ F16722 -> -> -> 1 `i `l `ul ]
+[e ++ F16724 -> -> -> 1 `i `l `ul ]
 [e :U 2236 ]
-[e $ <= F16722 _delay 2233  ]
+[e $ <= F16724 _delay 2233  ]
 [e :U 2234 ]
 }
 "30

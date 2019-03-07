@@ -8,6 +8,10 @@
 # 2 "<built-in>" 2
 # 1 "main.c" 2
 # 44 "main.c"
+#pragma warning disable 520
+#pragma warning disable 1498
+
+
 typedef signed long long int24_t;
 
 
@@ -165,7 +169,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 48 "main.c" 2
+# 52 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 3
@@ -221,7 +225,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 49 "main.c" 2
+# 53 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -27975,7 +27979,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 # 107 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 50 "main.c" 2
+# 54 "main.c" 2
 
 
 # 1 "./eadog.h" 1
@@ -28004,7 +28008,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 58 "./vconfig.h"
+# 59 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28052,6 +28056,7 @@ void PMD_Initialize(void);
   LINK_ERROR_T4,
   LINK_ERROR_CHECKSUM,
   LINK_ERROR_NAK,
+  LINK_ERROR_ABORT,
   LINK_ERROR_SEND
  } LINK_ERRORS;
 
@@ -28062,7 +28067,7 @@ void PMD_Initialize(void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
-  uint8_t stream, function, error;
+  uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
 
  } V_data;
@@ -28091,7 +28096,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 52 "main.c" 2
+# 56 "main.c" 2
 
 # 1 "./gemsecs.h" 1
 # 23 "./gemsecs.h"
@@ -28174,12 +28179,18 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header24;
 
+ typedef struct response_type {
+  uint8_t *header;
+  uint8_t length;
+ } response_type;
+
  uint16_t block_checksum(uint8_t *, uint16_t);
  uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool);
-# 53 "main.c" 2
+ response_type secs_II_message(uint8_t, uint8_t);
+# 57 "main.c" 2
 
 
 
@@ -28320,7 +28331,6 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 
 void main(void)
 {
- uint8_t j = 3;
  uint16_t sum;
  UI_STATES mode = UI_STATE_HOST;
 
@@ -28339,6 +28349,12 @@ void main(void)
   switch (V.ui_state) {
   case UI_STATE_INIT:
    init_display();
+   V.ui_state = mode;
+   V.s_state = SEQ_STATE_INIT;
+
+   uint8_t j;
+
+   j = 3;
    sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
    H10[j].checksum = sum;
    sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x #",
@@ -28356,13 +28372,12 @@ void main(void)
     sum);
    eaDogM_WriteString(V.buf);
    wait_lcd_done();
-   V.ui_state = mode;
-   V.s_state = SEQ_STATE_INIT;
 
    secs_send((uint8_t*) & H10[j], sizeof(header10), 0);
    sprintf(V.buf, " C 0x%04x #", V.t_checksum);
    eaDogM_WriteString(V.buf);
    wait_lcd_done();
+
 
    break;
   case UI_STATE_HOST:
@@ -28416,7 +28431,7 @@ void main(void)
    case SEQ_STATE_ERROR:
    default:
     UART1_Write(0x15);
-    sprintf(V.buf, " ERR R%d T%d E%d #", V.r_l_state, V.t_l_state, V.error);
+    sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
     eaDogM_WriteString(V.buf);
     wait_lcd_done();
     V.s_state = SEQ_STATE_INIT;

@@ -121,6 +121,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
 	uint8_t rxData;
+	response_type block;
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
@@ -148,8 +149,18 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_EOT: // transmit the secondary message response
-		secs_send((uint8_t*) & H12[0], sizeof(header12), false);
-		*t_link = LINK_STATE_ACK;
+		block = secs_II_message(V.stream, V.function); // parse proper response
+		if (V.abort == LINK_ERROR_ABORT) {
+			secs_send((uint8_t*) block.header, block.length, false);
+			*t_link = LINK_STATE_ERROR;
+		} else {
+			secs_send((uint8_t*) block.header, block.length, false);
+			if (V.error == LINK_ERROR_NONE) {
+				*t_link = LINK_STATE_ACK;
+			} else {
+				*t_link = LINK_STATE_ERROR;
+			}
+		}
 #ifdef DB4
 		WaitMs(5);
 		UART1_put_buffer(ACK);
@@ -220,4 +231,37 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 	}
 
 	return true;
+}
+
+/*
+ * parse stream and response codes into a message pointer and length to send in response
+ */
+response_type secs_II_message(uint8_t stream, uint8_t function)
+{
+	static response_type block;
+
+	V.abort = LINK_ERROR_NONE;
+
+	switch (stream) {
+	case 1:
+		switch (function) {
+		case 1: // S1F2
+			block.header = (uint8_t*) & H12[0];
+			block.length = sizeof(header12);
+			break;
+		default: // S1F0 abort
+			block.header = (uint8_t*) & H10[2];
+			block.length = sizeof(header10);
+			V.abort = LINK_ERROR_ABORT;
+			break;
+		}
+		break;
+	default: // S1F0 abort
+		block.header = (uint8_t*) & H10[2];
+		block.length = sizeof(header10);
+		V.abort = LINK_ERROR_ABORT;
+		break;
+	}
+
+	return(block);
 }

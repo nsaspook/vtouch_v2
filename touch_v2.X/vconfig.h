@@ -24,6 +24,7 @@ extern "C" {
 	/*
 	 * debug testing and loopbacks
 	 */
+#define TESTING
 #define DB1
 #define DB2
 #define DB3
@@ -102,6 +103,7 @@ extern "C" {
 		LINK_ERROR_T4,
 		LINK_ERROR_CHECKSUM,
 		LINK_ERROR_NAK,
+		LINK_ERROR_ABORT,
 		LINK_ERROR_SEND
 	} LINK_ERRORS;
 
@@ -112,7 +114,7 @@ extern "C" {
 		LINK_STATES t_l_state;
 		char buf[64];
 		volatile uint32_t ticks;
-		uint8_t stream, function, error;
+		uint8_t stream, function, error, abort;
 		uint16_t r_checksum, t_checksum;
 
 	} V_data;

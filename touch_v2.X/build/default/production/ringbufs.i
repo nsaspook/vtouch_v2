@@ -27350,7 +27350,7 @@ void PIN_MANAGER_Initialize (void);
 # 22 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 23 "./vconfig.h" 2
-# 58 "./vconfig.h"
+# 59 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27398,6 +27398,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_ERROR_T4,
   LINK_ERROR_CHECKSUM,
   LINK_ERROR_NAK,
+  LINK_ERROR_ABORT,
   LINK_ERROR_SEND
  } LINK_ERRORS;
 
@@ -27408,7 +27409,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
-  uint8_t stream, function, error;
+  uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
 
  } V_data;

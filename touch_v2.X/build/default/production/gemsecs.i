@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 58 "./vconfig.h"
+# 59 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27366,6 +27366,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_ERROR_T4,
   LINK_ERROR_CHECKSUM,
   LINK_ERROR_NAK,
+  LINK_ERROR_ABORT,
   LINK_ERROR_SEND
  } LINK_ERRORS;
 
@@ -27376,7 +27377,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64];
   volatile uint32_t ticks;
-  uint8_t stream, function, error;
+  uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
 
  } V_data;
@@ -27951,11 +27952,17 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header24;
 
+ typedef struct response_type {
+  uint8_t *header;
+  uint8_t length;
+ } response_type;
+
  uint16_t block_checksum(uint8_t *, uint16_t);
  uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool);
+ response_type secs_II_message(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
 
 extern struct V_data V;
@@ -28079,6 +28086,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
  uint8_t rxData;
+ response_type block;
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
@@ -28106,8 +28114,18 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_EOT:
-  secs_send((uint8_t*) & H12[0], sizeof(header12), 0);
-  *t_link = LINK_STATE_ACK;
+  block = secs_II_message(V.stream, V.function);
+  if (V.abort == LINK_ERROR_ABORT) {
+   secs_send((uint8_t*) block.header, block.length, 0);
+   *t_link = LINK_STATE_ERROR;
+  } else {
+   secs_send((uint8_t*) block.header, block.length, 0);
+   if (V.error == LINK_ERROR_NONE) {
+    *t_link = LINK_STATE_ACK;
+   } else {
+    *t_link = LINK_STATE_ERROR;
+   }
+  }
 
   WaitMs(5);
   UART1_put_buffer(0x06);
@@ -28178,4 +28196,37 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
  }
 
  return 1;
+}
+
+
+
+
+response_type secs_II_message(uint8_t stream, uint8_t function)
+{
+ static response_type block;
+
+ V.abort = LINK_ERROR_NONE;
+
+ switch (stream) {
+ case 1:
+  switch (function) {
+  case 1:
+   block.header = (uint8_t*) & H12[0];
+   block.length = sizeof(header12);
+   break;
+  default:
+   block.header = (uint8_t*) & H10[2];
+   block.length = sizeof(header10);
+   V.abort = LINK_ERROR_ABORT;
+   break;
+  }
+  break;
+ default:
+  block.header = (uint8_t*) & H10[2];
+  block.length = sizeof(header10);
+  V.abort = LINK_ERROR_ABORT;
+  break;
+ }
+
+ return(block);
 }
