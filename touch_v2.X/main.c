@@ -65,7 +65,7 @@ struct header10 H10[] = {
 		.block.block.function = 1,
 		.block.block.ebit = 1,
 		.block.block.bidl = 1,
-		.block.block.systemb = 1,
+		.block.block.systemb = 0x000c9f75,
 	},
 	{ // all stream and function header receive buffer
 		.length = 10,
@@ -194,6 +194,11 @@ void main(void)
 			wait_lcd_done();
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
+
+			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
+			sprintf(V.buf, " C 0x%04x #", sum);
+			eaDogM_WriteString(V.buf);
+			wait_lcd_done();
 
 			break;
 		case UI_STATE_HOST:

@@ -28051,7 +28051,8 @@ void PMD_Initialize(void);
   LINK_ERROR_T3,
   LINK_ERROR_T4,
   LINK_ERROR_CHECKSUM,
-  LINK_ERROR_NAK
+  LINK_ERROR_NAK,
+  LINK_ERROR_SEND
  } LINK_ERRORS;
 
  typedef struct V_data {
@@ -28177,6 +28178,7 @@ void WaitMs(uint16_t numMilliseconds);
  uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
+ _Bool secs_send(uint8_t *, uint8_t, _Bool);
 # 53 "main.c" 2
 
 
@@ -28193,7 +28195,7 @@ struct header10 H10[] = {
   .block.block.function = 1,
   .block.block.ebit = 1,
   .block.block.bidl = 1,
-  .block.block.systemb = 1,
+  .block.block.systemb = 0x000c9f75,
  },
  {
   .length = 10,
@@ -28322,6 +28324,11 @@ void main(void)
    wait_lcd_done();
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
+
+   secs_send((uint8_t*) & H10[j], sizeof(header10), 0);
+   sprintf(V.buf, " C 0x%04x #", sum);
+   eaDogM_WriteString(V.buf);
+   wait_lcd_done();
 
    break;
   case UI_STATE_HOST:

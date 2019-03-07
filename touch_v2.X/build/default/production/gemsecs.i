@@ -27365,7 +27365,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_ERROR_T3,
   LINK_ERROR_T4,
   LINK_ERROR_CHECKSUM,
-  LINK_ERROR_NAK
+  LINK_ERROR_NAK,
+  LINK_ERROR_SEND
  } LINK_ERRORS;
 
  typedef struct V_data {
@@ -27954,6 +27955,7 @@ void WaitMs(uint16_t numMilliseconds);
  uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
+ _Bool secs_send(uint8_t *, uint8_t, _Bool);
 # 2 "gemsecs.c" 2
 
 extern struct V_data V;
@@ -28072,12 +28074,12 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
  uint8_t rxData;
- static uint8_t txData_l = 0;
+
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
   V.error = LINK_ERROR_NONE;
-  txData_l = 0;
+
   UART1_Write(0x05);
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
@@ -28129,4 +28131,35 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  }
 
  return *t_link;
+}
+
+
+_Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
+{
+ uint8_t i, *k;
+ uint16_t checksum;
+
+ k = (void*) byte_block;
+
+ V.error = LINK_ERROR_NONE;
+ if ((length - 3) != k[length - 1]) {
+  V.error = LINK_ERROR_SEND;
+  return 0;
+ }
+
+ checksum = block_checksum(&k[length - 2], length - 3);
+ k[0] = checksum & 0xff;
+ k[1] = (checksum >> 8)&0xff;
+ V.t_checksum = checksum;
+
+ while (UART1_is_tx_ready() < 59);
+ for (i = length; i > 0; i--) {
+  if (fake) {
+   UART1_put_buffer(k[i - 1]);
+  } else {
+   UART1_Write(k[i - 1]);
+  }
+ }
+
+ return 1;
 }

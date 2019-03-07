@@ -116,12 +116,12 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
 	uint8_t rxData;
-	static uint8_t txData_l = 0;
+	//	static uint8_t txData_l = 0;
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
 		V.error = LINK_ERROR_NONE; // reset error status
-		txData_l = 0;
+		//		txData_l = 0;
 		UART1_Write(ENQ);
 		StartTimer(TMR_T2, T2);
 		*t_link = LINK_STATE_ENQ;
@@ -173,4 +173,35 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	}
 
 	return *t_link;
+}
+
+/* send the whole sequence including length and checksum bytes */
+bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
+{
+	uint8_t i, *k;
+	uint16_t checksum;
+
+	k = (void*) byte_block;
+
+	V.error = LINK_ERROR_NONE;
+	if ((length - 3) != k[length - 1]) { // check header length field byte
+		V.error = LINK_ERROR_SEND;
+		return false; // don't send and return mismatch error
+	}
+
+	checksum = block_checksum(&k[length - 2], length - 3);
+	k[0] = checksum & 0xff;
+	k[1] = (checksum >> 8)&0xff;
+	V.t_checksum = checksum;
+
+	while (UART1_is_tx_ready() < 59); // wait for tx buffer to drain
+	for (i = length; i > 0; i--) {
+		if (fake) {
+			UART1_put_buffer(k[i - 1]);
+		} else {
+			UART1_Write(k[i - 1]);
+		}
+	}
+
+	return true;
 }

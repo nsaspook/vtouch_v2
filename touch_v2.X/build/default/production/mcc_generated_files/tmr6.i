@@ -27609,7 +27609,8 @@ void PIN_MANAGER_Initialize (void);
   LINK_ERROR_T3,
   LINK_ERROR_T4,
   LINK_ERROR_CHECKSUM,
-  LINK_ERROR_NAK
+  LINK_ERROR_NAK,
+  LINK_ERROR_SEND
  } LINK_ERRORS;
 
  typedef struct V_data {

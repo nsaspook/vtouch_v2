@@ -67,7 +67,7 @@ TMR6_UART2_RX_EDGE 23
 TMR6_UART2_TX_EDGE 24
 ]
 "204
-[e E16273 APP_TIMERS `uc
+[e E16274 APP_TIMERS `uc
 TMR_INTERNAL 0
 TMR_T1 1
 TMR_T2 2
@@ -163,9 +163,10 @@ LINK_ERROR_T3 3
 LINK_ERROR_T4 4
 LINK_ERROR_CHECKSUM 5
 LINK_ERROR_NAK 6
+LINK_ERROR_SEND 7
 ]
 "52
-[e E16431 APP_TIMERS `uc
+[e E16432 APP_TIMERS `uc
 TMR_INTERNAL 0
 TMR_T1 1
 TMR_T2 2
@@ -175,7 +176,7 @@ TMR_MC_TX 5
 TMR_COUNT 6
 ]
 "33 /root/MPLABXProjects/vtouch_v2/touch_v2.X/timers.c
-[e E16195 APP_TIMERS `uc
+[e E16196 APP_TIMERS `uc
 TMR_INTERNAL 0
 TMR_T1 1
 TMR_T2 2
@@ -292,6 +293,8 @@ TMR_COUNT 6
 [v _r_protocol r_protocol `R(E16885  1 e 1 0 ]
 "116
 [v _t_protocol t_protocol `R(E16885  1 e 1 0 ]
+"179
+[v _secs_send secs_send `R(a  1 e 1 0 ]
 "157 /root/MPLABXProjects/vtouch_v2/touch_v2.X/main.c
 [v _main main `R(v  1 e 1 0 ]
 "64 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/adcc.c
@@ -392,8 +395,12 @@ TMR_COUNT 6
 [v _UART1_Initialize UART1_Initialize `R(v  1 e 1 0 ]
 "146
 [v _UART1_is_rx_ready UART1_is_rx_ready `R(uc  1 e 1 0 ]
+"151
+[v _UART1_is_tx_ready UART1_is_tx_ready `R(uc  1 e 1 0 ]
 "161
 [v _UART1_Read UART1_Read `R(uc  1 e 1 0 ]
+"180
+[v _UART1_put_buffer UART1_put_buffer `R(v  1 e 1 0 ]
 "192
 [v _UART1_Write UART1_Write `R(v  1 e 1 0 ]
 "210
@@ -835,7 +842,7 @@ TMR_COUNT 6
 [v _DMA1SSA DMA1SSA `VEum  1 e 3 @15353 ]
 "17357
 [v _DMA1CON0 DMA1CON0 `VEuc  1 e 1 @15356 ]
-[s S2900 . 1 `uc 1 XIP 1 0 :1:0 
+[s S2908 . 1 `uc 1 XIP 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 AIRQEN 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
@@ -844,7 +851,7 @@ TMR_COUNT 6
 `uc 1 EN 1 0 :1:7 
 ]
 "17382
-[s S2908 . 1 `uc 1 DMA1XIP 1 0 :1:0 
+[s S2916 . 1 `uc 1 DMA1XIP 1 0 :1:0 
 `uc 1 . 1 0 :1:1 
 `uc 1 DMA1AIRQEN 1 0 :1:2 
 `uc 1 . 1 0 :2:3 
@@ -852,19 +859,19 @@ TMR_COUNT 6
 `uc 1 DMA1SIRQEN 1 0 :1:6 
 `uc 1 DMA1EN 1 0 :1:7 
 ]
-[u S2916 . 1 `S2900 1 . 1 0 `S2908 1 . 1 0 ]
-[v _DMA1CON0bits DMA1CON0bits `VES2916  1 e 1 @15356 ]
+[u S2924 . 1 `S2908 1 . 1 0 `S2916 1 . 1 0 ]
+[v _DMA1CON0bits DMA1CON0bits `VES2924  1 e 1 @15356 ]
 "17437
 [v _DMA1CON1 DMA1CON1 `VEuc  1 e 1 @15357 ]
-[s S2884 . 1 `uc 1 SSTP 1 0 :1:0 
+[s S2892 . 1 `uc 1 SSTP 1 0 :1:0 
 `uc 1 SMODE 1 0 :2:1 
 `uc 1 SMR 1 0 :2:3 
 `uc 1 DSTP 1 0 :1:5 
 `uc 1 DMODE 1 0 :2:6 
 ]
 "17451
-[u S2890 . 1 `S2884 1 . 1 0 ]
-[v _DMA1CON1bits DMA1CON1bits `VES2890  1 e 1 @15357 ]
+[u S2898 . 1 `S2892 1 . 1 0 ]
+[v _DMA1CON1bits DMA1CON1bits `VES2898  1 e 1 @15357 ]
 "17481
 [v _DMA1AIRQ DMA1AIRQ `VEuc  1 e 1 @15358 ]
 "17597
@@ -945,7 +952,7 @@ TMR_COUNT 6
 [v _SPI1CON2 SPI1CON2 `VEuc  1 e 1 @15638 ]
 "23546
 [v _SPI1BAUD SPI1BAUD `VEuc  1 e 1 @15641 ]
-[s S2844 . 1 `uc 1 . 1 0 :1:0 
+[s S2852 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 TXUIF 1 0 :1:1 
 `uc 1 RXOIF 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -955,7 +962,7 @@ TMR_COUNT 6
 `uc 1 SRMTIF 1 0 :1:7 
 ]
 "23643
-[s S2853 . 1 `uc 1 . 1 0 :1:0 
+[s S2861 . 1 `uc 1 . 1 0 :1:0 
 `uc 1 SPI1TXUIF 1 0 :1:1 
 `uc 1 SPI1RXOIF 1 0 :1:2 
 `uc 1 . 1 0 :1:3 
@@ -964,8 +971,8 @@ TMR_COUNT 6
 `uc 1 SPI1TCZIF 1 0 :1:6 
 `uc 1 SPI1SRMTIF 1 0 :1:7 
 ]
-[u S2862 . 1 `S2844 1 . 1 0 `S2853 1 . 1 0 ]
-[v _SPI1INTFbits SPI1INTFbits `VES2862  1 e 1 @15642 ]
+[u S2870 . 1 `S2852 1 . 1 0 `S2861 1 . 1 0 ]
+[v _SPI1INTFbits SPI1INTFbits `VES2870  1 e 1 @15642 ]
 "23800
 [v _SPI1CLK SPI1CLK `VEuc  1 e 1 @15644 ]
 "25910
@@ -1128,7 +1135,7 @@ TMR_COUNT 6
 [v _LATB LATB `VEuc  1 e 1 @16315 ]
 "45958
 [v _LATC LATC `VEuc  1 e 1 @16316 ]
-[s S2791 . 1 `uc 1 LATC0 1 0 :1:0 
+[s S2799 . 1 `uc 1 LATC0 1 0 :1:0 
 `uc 1 LATC1 1 0 :1:1 
 `uc 1 LATC2 1 0 :1:2 
 `uc 1 LATC3 1 0 :1:3 
@@ -1138,7 +1145,7 @@ TMR_COUNT 6
 `uc 1 LATC7 1 0 :1:7 
 ]
 "45985
-[s S2800 . 1 `uc 1 LC0 1 0 :1:0 
+[s S2808 . 1 `uc 1 LC0 1 0 :1:0 
 `uc 1 LC1 1 0 :1:1 
 `uc 1 LC2 1 0 :1:2 
 `uc 1 LC3 1 0 :1:3 
@@ -1148,10 +1155,10 @@ TMR_COUNT 6
 `uc 1 LC7 1 0 :1:7 
 ]
 "45985
-[u S2809 . 1 `S2791 1 . 1 0 `S2800 1 . 1 0 ]
+[u S2817 . 1 `S2799 1 . 1 0 `S2808 1 . 1 0 ]
 "45985
 "45985
-[v _LATCbits LATCbits `VES2809  1 e 1 @16316 ]
+[v _LATCbits LATCbits `VES2817  1 e 1 @16316 ]
 "46070
 [v _LATD LATD `VEuc  1 e 1 @16317 ]
 "46182
@@ -1303,7 +1310,7 @@ TMR_COUNT 6
 [v _j j `uc  1 a 1 2 ]
 "161
 [v _mode mode `E16877  1 a 1 3 ]
-"256
+"261
 } 4
 "124 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _wait_lcd_done wait_lcd_done `R(v  1 e 1 0 ]
@@ -1327,9 +1334,9 @@ TMR_COUNT 6
 "9 /opt/microchip/xc8/v2.05/pic/sources/c99/common/nf_sprintf.c
 [v _sprintf sprintf `R(i  1 e 2 0 ]
 {
-[s S3911 _IO_FILE 5 `*.30uc 1 buffer 1 0 `i 1 count 2 1 `i 1 limit 2 3 ]
+[s S3930 _IO_FILE 5 `*.30uc 1 buffer 1 0 `i 1 count 2 1 `i 1 limit 2 3 ]
 "13
-[v _f f `S3911  1 a 5 0 ]
+[v _f f `S3930  1 a 5 0 ]
 "12
 [v _ap ap `[1]*.39v  1 a 2 5 ]
 "9
@@ -1337,6 +1344,42 @@ TMR_COUNT 6
 [v _fmt fmt `*.31Cuc  1 p 1 -3 ]
 "23
 } 7
+"179 /root/MPLABXProjects/vtouch_v2/touch_v2.X/gemsecs.c
+[v _secs_send secs_send `R(a  1 e 1 0 ]
+{
+"182
+[v _checksum checksum `us  1 a 2 0 ]
+"181
+[v _k k `*.30uc  1 a 1 2 ]
+[v _i i `uc  1 a 1 3 ]
+"179
+[v _byte_block byte_block `*.30uc  1 p 1 -1 ]
+[v _length length `uc  1 p 1 -2 ]
+[v _fake fake `a  1 p 1 -3 ]
+"207
+} 4
+"10
+[v _block_checksum block_checksum `R(us  1 e 2 0 ]
+{
+"12
+[v _i i `us  1 a 2 0 ]
+[v _sum sum `us  1 a 2 2 ]
+"10
+[v _byte_block byte_block `*.30uc  1 p 1 -1 ]
+[v _byte_count byte_count `us  1 p 2 -3 ]
+"18
+} 4
+"180 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/uart1.c
+[v _UART1_put_buffer UART1_put_buffer `R(v  1 e 1 0 ]
+{
+[v _bufData bufData `uc  1 p 1 -1 ]
+"190
+} 0
+"151
+[v _UART1_is_tx_ready UART1_is_tx_ready `R(uc  1 e 1 0 ]
+{
+"154
+} 0
 "34 /root/MPLABXProjects/vtouch_v2/touch_v2.X/gemsecs.c
 [v _r_protocol r_protocol `R(E16885  1 e 1 0 ]
 {
@@ -1477,9 +1520,9 @@ TMR_COUNT 6
 {
 "1371
 [v _cfmt cfmt `*.31uc  1 a 1 0 ]
-[s S3301 _IO_FILE 0 ]
+[s S3320 _IO_FILE 0 ]
 "1368
-[v _fp fp `*.39S3301  1 p 2 -2 ]
+[v _fp fp `*.39S3320  1 p 2 -2 ]
 [v _fmt fmt `*.31Cuc  1 p 1 -3 ]
 [v _ap ap `*.39*.39v  1 p 2 -5 ]
 "1382
@@ -1496,9 +1539,9 @@ TMR_COUNT 6
 "672
 [v _cp cp `*.39uc  1 a 2 20 ]
 [v _c c `uc  1 a 1 22 ]
-[s S3301 _IO_FILE 0 ]
+[s S3320 _IO_FILE 0 ]
 "670
-[v _fp fp `*.39S3301  1 p 2 -2 ]
+[v _fp fp `*.39S3320  1 p 2 -2 ]
 [v _fmt fmt `*.39*.31uc  1 p 2 -4 ]
 [v _ap ap `*.39*.39v  1 p 2 -6 ]
 "1365
@@ -1513,9 +1556,9 @@ TMR_COUNT 6
 [v _i i `i  1 a 2 14 ]
 [v _w w `i  1 a 2 16 ]
 [v _p p `i  1 a 2 18 ]
-[s S3301 _IO_FILE 0 ]
+[s S3320 _IO_FILE 0 ]
 "623
-[v _fp fp `*.39S3301  1 p 2 -2 ]
+[v _fp fp `*.39S3320  1 p 2 -2 ]
 [v _d d `uo  1 p 8 -10 ]
 [v _x x `uc  1 p 1 -11 ]
 "665
@@ -1557,9 +1600,9 @@ TMR_COUNT 6
 "549
 [v _w w `i  1 a 2 13 ]
 [v _i i `i  1 a 2 15 ]
-[s S3301 _IO_FILE 0 ]
+[s S3320 _IO_FILE 0 ]
 "546
-[v _fp fp `*.39S3301  1 p 2 -2 ]
+[v _fp fp `*.39S3320  1 p 2 -2 ]
 [v _s s `*.39uc  1 p 2 -4 ]
 "548
 [v stoa@F1139 F1139 `[7]uc  1 s 7 F1139 ]
@@ -1575,9 +1618,9 @@ TMR_COUNT 6
 [v _s s `i  1 a 2 12 ]
 [v _w w `i  1 a 2 14 ]
 [v _p p `i  1 a 2 16 ]
-[s S3301 _IO_FILE 0 ]
+[s S3320 _IO_FILE 0 ]
 "274
-[v _fp fp `*.39S3301  1 p 2 -2 ]
+[v _fp fp `*.39S3320  1 p 2 -2 ]
 [v _d d `o  1 p 8 -10 ]
 "315
 } 18
@@ -1587,9 +1630,9 @@ TMR_COUNT 6
 "74
 [v _w w `i  1 a 2 0 ]
 [v _i i `i  1 a 2 2 ]
-[s S3301 _IO_FILE 0 ]
+[s S3320 _IO_FILE 0 ]
 "72
-[v _fp fp `*.39S3301  1 p 2 -2 ]
+[v _fp fp `*.39S3320  1 p 2 -2 ]
 [v _buf buf `*.39uc  1 p 2 -4 ]
 [v _p p `i  1 p 2 -6 ]
 "95
@@ -1612,16 +1655,16 @@ TMR_COUNT 6
 [v _c c `uc  1 a 1 2 ]
 "8
 [v _s s `*.39Cuc  1 p 2 -2 ]
-[s S3911 _IO_FILE 5 `*.30uc 1 buffer 1 0 `i 1 count 2 1 `i 1 limit 2 3 ]
-[v _fp fp `*.39S3911  1 p 2 -4 ]
+[s S3930 _IO_FILE 5 `*.30uc 1 buffer 1 0 `i 1 count 2 1 `i 1 limit 2 3 ]
+[v _fp fp `*.39S3930  1 p 2 -4 ]
 "19
 } 3
 "8 /opt/microchip/xc8/v2.05/pic/sources/c99/common/nf_fputc.c
 [v _fputc fputc `R(i  1 e 2 0 ]
 {
 [v _c c `i  1 p 2 -2 ]
-[s S3911 _IO_FILE 5 `*.30uc 1 buffer 1 0 `i 1 count 2 1 `i 1 limit 2 3 ]
-[v _fp fp `*.39S3911  1 p 2 -4 ]
+[s S3930 _IO_FILE 5 `*.30uc 1 buffer 1 0 `i 1 count 2 1 `i 1 limit 2 3 ]
+[v _fp fp `*.39S3930  1 p 2 -4 ]
 "21
 } 0
 "138 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
@@ -1690,17 +1733,6 @@ TMR_COUNT 6
 [v _c c `i  1 p 2 -2 ]
 "8
 } 0
-"10 /root/MPLABXProjects/vtouch_v2/touch_v2.X/gemsecs.c
-[v _block_checksum block_checksum `R(us  1 e 2 0 ]
-{
-"12
-[v _i i `us  1 a 2 0 ]
-[v _sum sum `us  1 a 2 2 ]
-"10
-[v _byte_block byte_block `*.30uc  1 p 1 -1 ]
-[v _byte_count byte_count `us  1 p 2 -3 ]
-"18
-} 4
 "50 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `R(v  1 e 1 0 ]
 {
