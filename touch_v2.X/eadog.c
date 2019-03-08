@@ -4,11 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define eaDogM_Cls()             eaDogM_WriteCommand(EADOGM_CMD_CLR)
-#define eaDogM_CursorOn()        eaDogM_WriteCommand(EADOGM_CMD_CURSOR_ON)
-#define eaDogM_CursorOff()       eaDogM_WriteCommand(EADOGM_CMD_CURSOR_OFF)
-#define eaDogM_DisplayOn()       eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_ON)
-#define eaDogM_DisplayOff()      eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_OFF)
+
 
 #define max_strlen	64
 
@@ -17,6 +13,10 @@ struct ringBufS_t ring_buf1;
 struct ringBufS_t ring_buf2;
 
 extern struct V_data V;
+
+static void send_lcd_cmd_long(uint8_t); // for display init only
+static void send_lcd_data(uint8_t);
+static void send_lcd_cmd(uint8_t);
 
 void wdtdelay(uint32_t delay)
 {
@@ -71,7 +71,7 @@ void init_display(void)
 /*
  * add short spi delay (default)
  */
-void send_lcd_data(uint8_t data)
+static void send_lcd_data(uint8_t data)
 {
 	RS_SetHigh();
 	CSB_SetLow();
@@ -82,7 +82,7 @@ void send_lcd_data(uint8_t data)
 /*
  * add inst spi delay
  */
-void send_lcd_cmd(uint8_t cmd)
+static void send_lcd_cmd(uint8_t cmd)
 {
 	RS_SetLow();
 	CSB_SetLow();
@@ -94,7 +94,7 @@ void send_lcd_cmd(uint8_t cmd)
 /*
  * add clear/home spi delay
  */
-void send_lcd_cmd_long(uint8_t cmd)
+static void send_lcd_cmd_long(uint8_t cmd)
 {
 	RS_SetLow();
 	CSB_SetLow();
@@ -129,7 +129,7 @@ void wait_lcd_done(void)
 
 void eaDogM_WriteChr(int8_t value)
 {
-	send_lcd_data((uint8_t) value);
+	send_lcd_data_dma((uint8_t) value);
 }
 
 /*
@@ -142,7 +142,7 @@ void putch(char c)
 
 void eaDogM_WriteCommand(uint8_t cmd)
 {
-	send_lcd_cmd(cmd);
+	send_lcd_cmd_dma(cmd);
 }
 
 void eaDogM_SetPos(uint8_t r, uint8_t c)
@@ -180,11 +180,49 @@ void eaDogM_WriteString(char *strPtr)
 	++V.ticks; // transaction ID for messages
 }
 
+/*
+ * uses DMA channel 1 for transfers
+ */
+void send_lcd_cmd_dma(uint8_t strPtr)
+{
+	wait_lcd_set();
+	/* reset buffer for DMA */
+	ringBufS_flush(spi_link.tx1a, false);
+	RS_SetLow();
+	CSB_SetLow(); /* SPI select display */
+	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
+	DMA1SSZ = 1;
+	DMA1CON0bits.EN = 1; /* enable DMA */
+	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
+	DEBUG2_SetLow();
+	start_lcd();
+	wait_lcd_done();
+	RS_SetHigh();
+}
+
+/*
+ * uses DMA channel 1 for transfers
+ */
+void send_lcd_data_dma(uint8_t strPtr)
+{
+	wait_lcd_set();
+	/* reset buffer for DMA */
+	ringBufS_flush(spi_link.tx1a, false);
+	RS_SetHigh();
+	CSB_SetLow(); /* SPI select display */
+	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
+	DMA1SSZ = 1;
+	DMA1CON0bits.EN = 1; /* enable DMA */
+	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
+	DEBUG2_SetLow();
+	start_lcd();
+	wait_lcd_done();
+}
+
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
-	send_lcd_cmd((EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c));
-	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0;
-	printf("%s", strPtr);
+	send_lcd_cmd_dma((EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c));
+	eaDogM_WriteString(strPtr);
 }
 
 void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)

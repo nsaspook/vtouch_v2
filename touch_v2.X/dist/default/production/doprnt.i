@@ -933,7 +933,22 @@ static int pad(FILE *fp, char *buf, int p)
 
     return strlen(buf) + w;
 }
-# 274 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+# 259 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+static int ctoa(FILE *fp, char c)
+{
+    int l, w;
+
+
+    w = width ? width - 1 : width;
+
+
+    dbuf[0] = c;
+    dbuf[1] = '\0';
+    return pad(fp, &dbuf[0], w);
+}
+
+
+
 static int dtoa(FILE *fp, long long d)
 {
     int i, p, s, w;
@@ -1134,6 +1149,12 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
             while ((0 ? isdigit((*fmt)[0]) : ((unsigned)((*fmt)[0])-'0') < 10)) {
                 ++*fmt;
             }
+        }
+# 792 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+        if (*fmt[0] == 'c') {
+            ++*fmt;
+            c = (unsigned char)(*(int *)__va_arg(*(int **)ap, (int)0));
+            return ctoa(fp, c);
         }
 # 825 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if ((*fmt[0] == 'd') || (*fmt[0] == 'i')) {

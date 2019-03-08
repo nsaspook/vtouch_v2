@@ -33,9 +33,8 @@ extern "C" {
 	void wdtdelay(uint32_t);
 
 	void init_display(void);
-	void send_lcd_data(uint8_t);
-	void send_lcd_cmd(uint8_t);
-	void send_lcd_cmd_long(uint8_t);
+	void send_lcd_data_dma(uint8_t);
+	void send_lcd_cmd_dma(uint8_t);
 	void start_lcd(void);
 	void wait_lcd_set(void);
 	bool wait_lcd_check(void);
@@ -48,6 +47,12 @@ extern "C" {
 	void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
 	void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
 	void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
+
+#define eaDogM_Cls()             eaDogM_WriteCommand(EADOGM_CMD_CLR)
+#define eaDogM_CursorOn()        eaDogM_WriteCommand(EADOGM_CMD_CURSOR_ON)
+#define eaDogM_CursorOff()       eaDogM_WriteCommand(EADOGM_CMD_CURSOR_OFF)
+#define eaDogM_DisplayOn()       eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_ON)
+#define eaDogM_DisplayOff()      eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_OFF)
 
 #ifdef	__cplusplus
 }

@@ -75,7 +75,7 @@ struct header10 H10[] = {
 	{ // all stream and function header receive buffer from equipment
 		.length = 10,
 	},
-	{ // S1F0 send 'ABORT'
+	{ // S1F0 send 'ABORT' from host
 		.length = 10,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -96,6 +96,19 @@ struct header10 H10[] = {
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
 		.block.block.function = 1,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 0x00000d89,
+	},
+	{ // S2F17 send 'date and time request?' from host
+		.length = 10,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 17,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
@@ -122,7 +135,7 @@ struct header12 H12[] = {
 };
 
 struct header13 H13[] = {
-	{ // S6F12 send 'online' reply
+	{ // S6F12 send 'online' reply from host
 		.length = 13,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -141,7 +154,7 @@ struct header13 H13[] = {
 };
 
 struct header14 H14[] = {
-	{ // S1F4 send 'status response '
+	{ // S1F4 send 'status response ' from host
 		.length = 14,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -161,7 +174,7 @@ struct header14 H14[] = {
 };
 
 struct header18 H18[] = {
-	{ // S1F3 send 'status request '
+	{ // S1F3 send 'status request ' from host
 		.length = 18,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -177,7 +190,7 @@ struct header18 H18[] = {
 };
 
 struct header24 H24[] = {
-	{ // S2F18 send 'host time '
+	{ // S2F18 send 'host time ' from host
 		.length = 24,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -189,11 +202,12 @@ struct header24 H24[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
+		.data = "010911084600",
 	},
 };
 
 struct header53 H53[] = {
-	{ // S1F11 send 'online' command
+	{ // S1F11 send 'online' command from host
 		.length = 53,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -205,6 +219,20 @@ struct header53 H53[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
+	},
+	{ // S10F3 send 'terminal text display ' command from host
+		.length = 53,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 10,
+		.block.block.function = 3,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data = "\x000\x016 Now We Are Talking...",
 	},
 };
 
@@ -235,6 +263,7 @@ void main(void)
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			init_display();
+			eaDogM_CursorOff();
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 #ifdef TESTING
@@ -282,9 +311,10 @@ void main(void)
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, " S%dF%d #", V.stream, V.function);
+					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+					V.buf[11]=0; // string size limit
 					wait_lcd_done();
-					eaDogM_WriteString(V.buf);
+					eaDogM_WriteStringAtPos(0, 0, V.buf);
 #ifdef DB1
 					WaitMs(5);
 #endif
