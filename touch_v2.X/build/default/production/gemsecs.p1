@@ -3,8 +3,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F16395 `(v ~T0 @X0 0 tf ]
 [v F16418 `(v ~T0 @X0 0 tf ]
 [v F16420 `(v ~T0 @X0 0 tf ]
-"35 gemsecs.c
-[; ;gemsecs.c: 35: LINK_STATES r_protocol(LINK_STATES *r_link)
+"40 gemsecs.c
+[; ;gemsecs.c: 40: LINK_STATES r_protocol(LINK_STATES *r_link)
 [c E16164 0 1 2 3 4 5 6 .. ]
 [n E16164 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
 "154 ./mcc_generated_files/uart1.h
@@ -13,8 +13,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "300
 [; ;./mcc_generated_files/uart1.h: 300: uint8_t UART1_Read(void);
 [v _UART1_Read `(uc ~T0 @X0 0 ef ]
-"45 gemsecs.c
-[; ;gemsecs.c: 45:     V.error = LINK_ERROR_NONE;
+"50 gemsecs.c
+[; ;gemsecs.c: 50:     V.error = LINK_ERROR_NONE;
 [c E16148 0 1 2 3 4 5 .. ]
 [n E16148 . SEQ_STATE_INIT SEQ_STATE_RX SEQ_STATE_TX SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
 [c E16156 0 1 2 3 4 5 .. ]
@@ -26,8 +26,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "3 gemsecs.c
 [; ;gemsecs.c: 3: extern struct V_data V;
 [v _V `S2228 ~T0 @X0 0 e ]
-"45
-[; ;gemsecs.c: 45:     V.error = LINK_ERROR_NONE;
+"50
+[; ;gemsecs.c: 50:     V.error = LINK_ERROR_NONE;
 [c E16173 0 1 2 3 4 5 6 7 8 .. ]
 [n E16173 . LINK_ERROR_NONE LINK_ERROR_T1 LINK_ERROR_T2 LINK_ERROR_T3 LINK_ERROR_T4 LINK_ERROR_CHECKSUM LINK_ERROR_NAK LINK_ERROR_ABORT LINK_ERROR_SEND  ]
 "327 ./mcc_generated_files/uart1.h
@@ -37,15 +37,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "24 ./timers.h
 [; ;./timers.h: 24: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 [v _StartTimer `TF16443 ~T0 @X0 0 e ]
-"53 gemsecs.c
-[; ;gemsecs.c: 53:   StartTimer(TMR_T2, 2000);
+"58 gemsecs.c
+[; ;gemsecs.c: 58:   StartTimer(TMR_T2, 2000);
 [c E16434 0 1 2 3 4 5 6 .. ]
 [n E16434 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_COUNT  ]
 "26 ./timers.h
 [; ;./timers.h: 26: void WaitMs(uint16_t numMilliseconds);
 [v _WaitMs `(v ~T0 @X0 0 ef1`us ]
-"93 ./gemsecs.h
-[; ;./gemsecs.h: 93:  _Bool secs_send(uint8_t *, uint8_t, _Bool);
+"100 ./gemsecs.h
+[; ;./gemsecs.h: 100:  _Bool secs_send(uint8_t *, uint8_t, _Bool);
 [v _secs_send `(a ~T0 @X0 0 ef3`*uc`uc`a ]
 "25
 [; ;./gemsecs.h: 25:  typedef struct block10_type {
@@ -72,16 +72,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 "78 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 78: extern volatile uint8_t uart1RxCount;
 [v _uart1RxCount `Vuc ~T0 @X0 0 e ]
-"84 ./gemsecs.h
-[; ;./gemsecs.h: 84:  typedef struct response_type {
-[s S2237 `*uc 1 `uc 1 ]
-[n S2237 response_type header length ]
+"91 ./gemsecs.h
+[; ;./gemsecs.h: 91:  typedef struct response_type {
+[s S2238 `*uc 1 `uc 1 ]
+[n S2238 response_type header length ]
 "302 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 302: void UART1_put_buffer(uint8_t);
 [v _UART1_put_buffer `(v ~T0 @X0 0 ef1`uc ]
-"94 ./gemsecs.h
-[; ;./gemsecs.h: 94:  response_type secs_II_message(uint8_t, uint8_t);
-[v _secs_II_message `(S2237 ~T0 @X0 0 ef2`uc`uc ]
+"101 ./gemsecs.h
+[; ;./gemsecs.h: 101:  response_type secs_II_message(uint8_t, uint8_t);
+[v _secs_II_message `(S2238 ~T0 @X0 0 ef2`uc`uc ]
 "204 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 204: uint8_t UART1_is_tx_ready(void);
 [v _UART1_is_tx_ready `(uc ~T0 @X0 0 ef ]
@@ -92,6 +92,41 @@ Version 4.0 HI-TECH Software Intermediate Code
 "6 gemsecs.c
 [; ;gemsecs.c: 6: extern struct header12 H12[];
 [v _H12 `S2232 ~T0 @X0 -> 0 `x e ]
+"63 ./gemsecs.h
+[; ;./gemsecs.h: 63:  typedef struct header14 {
+[s S2234 `us 1 `uc -> 4 `i `S2230 1 `uc 1 ]
+[n S2234 header14 checksum data block length ]
+"8 gemsecs.c
+[; ;gemsecs.c: 8: extern struct header14 H14[];
+[v _H14 `S2234 ~T0 @X0 -> 0 `x e ]
+"70 ./gemsecs.h
+[; ;./gemsecs.h: 70:  typedef struct header18 {
+[s S2235 `us 1 `uc -> 8 `i `S2230 1 `uc 1 ]
+[n S2235 header18 checksum data block length ]
+"9 gemsecs.c
+[; ;gemsecs.c: 9: extern struct header18 H18[];
+[v _H18 `S2235 ~T0 @X0 -> 0 `x e ]
+"77 ./gemsecs.h
+[; ;./gemsecs.h: 77:  typedef struct header24 {
+[s S2236 `us 1 `uc -> 14 `i `S2230 1 `uc 1 ]
+[n S2236 header24 checksum data block length ]
+"10 gemsecs.c
+[; ;gemsecs.c: 10: extern struct header24 H24[];
+[v _H24 `S2236 ~T0 @X0 -> 0 `x e ]
+"56 ./gemsecs.h
+[; ;./gemsecs.h: 56:  typedef struct header13 {
+[s S2233 `us 1 `uc -> 3 `i `S2230 1 `uc 1 ]
+[n S2233 header13 checksum data block length ]
+"7 gemsecs.c
+[; ;gemsecs.c: 7: extern struct header13 H13[];
+[v _H13 `S2233 ~T0 @X0 -> 0 `x e ]
+"84 ./gemsecs.h
+[; ;./gemsecs.h: 84:  typedef struct header53 {
+[s S2237 `us 1 `uc -> 43 `i `S2230 1 `uc 1 ]
+[n S2237 header53 checksum data block length ]
+"11 gemsecs.c
+[; ;gemsecs.c: 11: extern struct header53 H53[];
+[v _H53 `S2237 ~T0 @X0 -> 0 `x e ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2351,849 +2386,993 @@ Version 4.0 HI-TECH Software Intermediate Code
 "407
 [; ;./mcc_generated_files/uart1.h: 407: void (*UART1_TxInterruptHandler)(void);
 [v _UART1_TxInterruptHandler `*F16420 ~T0 @X0 1 e ]
-"11 gemsecs.c
-[; ;gemsecs.c: 11: uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
+"16 gemsecs.c
+[; ;gemsecs.c: 16: uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
 [v _block_checksum `(us ~T0 @X0 1 ef2`*uc`us ]
-"12
-[; ;gemsecs.c: 12: {
+"17
+[; ;gemsecs.c: 17: {
 {
 [e :U _block_checksum ]
-"11
-[; ;gemsecs.c: 11: uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
+"16
+[; ;gemsecs.c: 16: uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
 [v _byte_block `*uc ~T0 @X0 1 r1 ]
 [v _byte_count `us ~T0 @X0 1 r2 ]
-"12
-[; ;gemsecs.c: 12: {
+"17
+[; ;gemsecs.c: 17: {
 [f ]
-"13
-[; ;gemsecs.c: 13:  uint16_t sum = 0, i;
+"18
+[; ;gemsecs.c: 18:  uint16_t sum = 0, i;
 [v _sum `us ~T0 @X0 1 a ]
 [e = _sum -> -> 0 `i `us ]
 [v _i `us ~T0 @X0 1 a ]
-"15
-[; ;gemsecs.c: 15:  for (i = 0; i < byte_count; i++) {
+"20
+[; ;gemsecs.c: 20:  for (i = 0; i < byte_count; i++) {
 {
 [e = _i -> -> 0 `i `us ]
-[e $U 2242  ]
-[e :U 2239 ]
+[e $U 2243  ]
+[e :U 2240 ]
 {
-"16
-[; ;gemsecs.c: 16:   sum += byte_block[i];
+"21
+[; ;gemsecs.c: 21:   sum += byte_block[i];
 [e =+ _sum -> *U + _byte_block * -> _i `ux -> -> # *U _byte_block `ui `ux `us ]
-"17
-[; ;gemsecs.c: 17:  }
+"22
+[; ;gemsecs.c: 22:  }
 }
 [e ++ _i -> -> 1 `i `us ]
-[e :U 2242 ]
-[e $ < -> _i `ui -> _byte_count `ui 2239  ]
-[e :U 2240 ]
+[e :U 2243 ]
+[e $ < -> _i `ui -> _byte_count `ui 2240  ]
+[e :U 2241 ]
 }
-"18
-[; ;gemsecs.c: 18:  return sum;
+"23
+[; ;gemsecs.c: 23:  return sum;
 [e ) _sum ]
-[e $UE 2238  ]
-"19
-[; ;gemsecs.c: 19: }
-[e :UE 2238 ]
-}
+[e $UE 2239  ]
 "24
-[; ;gemsecs.c: 24: uint16_t run_checksum(uint8_t byte_block, _Bool clear)
+[; ;gemsecs.c: 24: }
+[e :UE 2239 ]
+}
+"29
+[; ;gemsecs.c: 29: uint16_t run_checksum(uint8_t byte_block, _Bool clear)
 [v _run_checksum `(us ~T0 @X0 1 ef2`uc`a ]
-"25
-[; ;gemsecs.c: 25: {
+"30
+[; ;gemsecs.c: 30: {
 {
 [e :U _run_checksum ]
-"24
-[; ;gemsecs.c: 24: uint16_t run_checksum(uint8_t byte_block, _Bool clear)
+"29
+[; ;gemsecs.c: 29: uint16_t run_checksum(uint8_t byte_block, _Bool clear)
 [v _byte_block `uc ~T0 @X0 1 r1 ]
 [v _clear `a ~T0 @X0 1 r2 ]
-"25
-[; ;gemsecs.c: 25: {
+"30
+[; ;gemsecs.c: 30: {
 [f ]
-"26
-[; ;gemsecs.c: 26:  static uint16_t sum = 0;
-[v F16535 `us ~T0 @X0 1 s sum ]
-[i F16535
+"31
+[; ;gemsecs.c: 31:  static uint16_t sum = 0;
+[v F16546 `us ~T0 @X0 1 s sum ]
+[i F16546
 -> -> 0 `i `us
 ]
-"28
-[; ;gemsecs.c: 28:  if (clear)
-[e $ ! != -> _clear `i -> 0 `i 2244  ]
-"29
-[; ;gemsecs.c: 29:   sum = 0;
-[e = F16535 -> -> 0 `i `us ]
-[e :U 2244 ]
-"31
-[; ;gemsecs.c: 31:  sum += byte_block;
-[e =+ F16535 -> _byte_block `us ]
-"32
-[; ;gemsecs.c: 32:  return sum;
-[e ) F16535 ]
-[e $UE 2243  ]
 "33
-[; ;gemsecs.c: 33: }
-[e :UE 2243 ]
-}
-"35
-[; ;gemsecs.c: 35: LINK_STATES r_protocol(LINK_STATES *r_link)
-[v _r_protocol `(E16164 ~T0 @X0 1 ef1`*E16164 ]
+[; ;gemsecs.c: 33:  if (clear)
+[e $ ! != -> _clear `i -> 0 `i 2245  ]
+"34
+[; ;gemsecs.c: 34:   sum = 0;
+[e = F16546 -> -> 0 `i `us ]
+[e :U 2245 ]
 "36
-[; ;gemsecs.c: 36: {
+[; ;gemsecs.c: 36:  sum += byte_block;
+[e =+ F16546 -> _byte_block `us ]
+"37
+[; ;gemsecs.c: 37:  return sum;
+[e ) F16546 ]
+[e $UE 2244  ]
+"38
+[; ;gemsecs.c: 38: }
+[e :UE 2244 ]
+}
+"40
+[; ;gemsecs.c: 40: LINK_STATES r_protocol(LINK_STATES *r_link)
+[v _r_protocol `(E16164 ~T0 @X0 1 ef1`*E16164 ]
+"41
+[; ;gemsecs.c: 41: {
 {
 [e :U _r_protocol ]
-"35
-[; ;gemsecs.c: 35: LINK_STATES r_protocol(LINK_STATES *r_link)
+"40
+[; ;gemsecs.c: 40: LINK_STATES r_protocol(LINK_STATES *r_link)
 [v _r_link `*E16164 ~T0 @X0 1 r1 ]
-"36
-[; ;gemsecs.c: 36: {
+"41
+[; ;gemsecs.c: 41: {
 [f ]
-"37
-[; ;gemsecs.c: 37:  uint8_t rxData;
+"42
+[; ;gemsecs.c: 42:  uint8_t rxData;
 [v _rxData `uc ~T0 @X0 1 a ]
-"38
-[; ;gemsecs.c: 38:  static uint8_t rxData_l = 0;
-[v F16539 `uc ~T0 @X0 1 s rxData_l ]
-[i F16539
+"43
+[; ;gemsecs.c: 43:  static uint8_t rxData_l = 0;
+[v F16550 `uc ~T0 @X0 1 s rxData_l ]
+[i F16550
 -> -> 0 `i `uc
 ]
-"40
-[; ;gemsecs.c: 40:  switch (*r_link) {
-[e $U 2247  ]
-{
-"41
-[; ;gemsecs.c: 41:  case LINK_STATE_IDLE:
-[e :U 2248 ]
-"42
-[; ;gemsecs.c: 42:   if (UART1_is_rx_ready()) {
-[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2249  ]
-{
-"43
-[; ;gemsecs.c: 43:    rxData = UART1_Read();
-[e = _rxData ( _UART1_Read ..  ]
-"44
-[; ;gemsecs.c: 44:    if (rxData == 0x05) {
-[e $ ! == -> _rxData `i -> 5 `i 2250  ]
-{
 "45
-[; ;gemsecs.c: 45:     V.error = LINK_ERROR_NONE;
-[e = . _V 8 -> . `E16173 0 `uc ]
+[; ;gemsecs.c: 45:  switch (*r_link) {
+[e $U 2248  ]
+{
 "46
-[; ;gemsecs.c: 46:     *r_link = LINK_STATE_ENQ;
-[e = *U _r_link . `E16164 1 ]
+[; ;gemsecs.c: 46:  case LINK_STATE_IDLE:
+[e :U 2249 ]
 "47
-[; ;gemsecs.c: 47:    }
+[; ;gemsecs.c: 47:   if (UART1_is_rx_ready()) {
+[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2250  ]
+{
+"48
+[; ;gemsecs.c: 48:    rxData = UART1_Read();
+[e = _rxData ( _UART1_Read ..  ]
+"49
+[; ;gemsecs.c: 49:    if (rxData == 0x05) {
+[e $ ! == -> _rxData `i -> 5 `i 2251  ]
+{
+"50
+[; ;gemsecs.c: 50:     V.error = LINK_ERROR_NONE;
+[e = . _V 8 -> . `E16173 0 `uc ]
+"51
+[; ;gemsecs.c: 51:     *r_link = LINK_STATE_ENQ;
+[e = *U _r_link . `E16164 1 ]
+"52
+[; ;gemsecs.c: 52:    }
+}
+[e :U 2251 ]
+"53
+[; ;gemsecs.c: 53:   }
 }
 [e :U 2250 ]
-"48
-[; ;gemsecs.c: 48:   }
-}
-[e :U 2249 ]
-"49
-[; ;gemsecs.c: 49:   break;
-[e $U 2246  ]
-"50
-[; ;gemsecs.c: 50:  case LINK_STATE_ENQ:
-[e :U 2251 ]
-"51
-[; ;gemsecs.c: 51:   rxData_l = 0;
-[e = F16539 -> -> 0 `i `uc ]
-"52
-[; ;gemsecs.c: 52:   UART1_Write(0x04);
-[e ( _UART1_Write (1 -> -> 4 `i `uc ]
-"53
-[; ;gemsecs.c: 53:   StartTimer(TMR_T2, 2000);
-[e ( _StartTimer (2 , -> . `E16434 2 `uc -> -> 2000 `i `us ]
 "54
-[; ;gemsecs.c: 54:   *r_link = LINK_STATE_EOT;
-[e = *U _r_link . `E16164 2 ]
-"56
-[; ;gemsecs.c: 56:   WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
-"57
-[; ;gemsecs.c: 57:   secs_send((uint8_t*) & H10[3], sizeof(header10), 1);
-[e ( _secs_send (3 , , -> &U *U + &U _H10 * -> -> -> 3 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc -> -> # `S2231 `ui `uc -> -> 1 `i `a ]
-"59
-[; ;gemsecs.c: 59:   break;
-[e $U 2246  ]
-"60
-[; ;gemsecs.c: 60:  case LINK_STATE_EOT:
+[; ;gemsecs.c: 54:   break;
+[e $U 2247  ]
+"55
+[; ;gemsecs.c: 55:  case LINK_STATE_ENQ:
 [e :U 2252 ]
+"56
+[; ;gemsecs.c: 56:   rxData_l = 0;
+[e = F16550 -> -> 0 `i `uc ]
+"57
+[; ;gemsecs.c: 57:   UART1_Write(0x04);
+[e ( _UART1_Write (1 -> -> 4 `i `uc ]
+"58
+[; ;gemsecs.c: 58:   StartTimer(TMR_T2, 2000);
+[e ( _StartTimer (2 , -> . `E16434 2 `uc -> -> 2000 `i `us ]
+"59
+[; ;gemsecs.c: 59:   *r_link = LINK_STATE_EOT;
+[e = *U _r_link . `E16164 2 ]
 "61
-[; ;gemsecs.c: 61:   if (TimerDone(TMR_T2)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16434 2 `uc `i -> 0 `i 2253  ]
-{
+[; ;gemsecs.c: 61:   WaitMs(5);
+[e ( _WaitMs (1 -> -> 5 `i `us ]
 "62
-[; ;gemsecs.c: 62:    V.error = LINK_ERROR_T2;
-[e = . _V 8 -> . `E16173 2 `uc ]
-"63
-[; ;gemsecs.c: 63:    *r_link = LINK_STATE_NAK;
-[e = *U _r_link . `E16164 5 ]
+[; ;gemsecs.c: 62:   secs_send((uint8_t*) & H10[3], sizeof(header10), 1);
+[e ( _secs_send (3 , , -> &U *U + &U _H10 * -> -> -> 3 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc -> -> # `S2231 `ui `uc -> -> 1 `i `a ]
 "64
-[; ;gemsecs.c: 64:   } else {
-}
-[e $U 2254  ]
-[e :U 2253 ]
-{
+[; ;gemsecs.c: 64:   break;
+[e $U 2247  ]
 "65
-[; ;gemsecs.c: 65:    if (UART1_is_rx_ready()) {
-[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2255  ]
-{
+[; ;gemsecs.c: 65:  case LINK_STATE_EOT:
+[e :U 2253 ]
 "66
-[; ;gemsecs.c: 66:     rxData = UART1_Read();
-[e = _rxData ( _UART1_Read ..  ]
+[; ;gemsecs.c: 66:   if (TimerDone(TMR_T2)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16434 2 `uc `i -> 0 `i 2254  ]
+{
 "67
-[; ;gemsecs.c: 67:     if (rxData_l == 0) {
-[e $ ! == -> F16539 `i -> 0 `i 2256  ]
-{
+[; ;gemsecs.c: 67:    V.error = LINK_ERROR_T2;
+[e = . _V 8 -> . `E16173 2 `uc ]
 "68
-[; ;gemsecs.c: 68:      r_block.length = rxData;
-[e = . _r_block 2 _rxData ]
-"69
-[; ;gemsecs.c: 69:      run_checksum(0, 1);
-[e ( _run_checksum (2 , -> -> 0 `i `uc -> -> 1 `i `a ]
-"70
-[; ;gemsecs.c: 70:      rxData_l++;
-[e ++ F16539 -> -> 1 `i `uc ]
-"71
-[; ;gemsecs.c: 71:     } else {
-}
-[e $U 2257  ]
-[e :U 2256 ]
-{
-"75
-[; ;gemsecs.c: 75:      if (rxData_l <= 10)
-[e $ ! <= -> F16539 `i -> 10 `i 2258  ]
-"76
-[; ;gemsecs.c: 76:       H10[1].block.b[r_block.length - rxData_l] = rxData;
-[e = *U + &U . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> - -> . _r_block 2 `i -> F16539 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux _rxData ]
-[e :U 2258 ]
-"77
-[; ;gemsecs.c: 77:      if (rxData_l <= r_block.length)
-[e $ ! <= -> F16539 `i -> . _r_block 2 `i 2259  ]
-"78
-[; ;gemsecs.c: 78:       V.r_checksum = run_checksum(rxData, 0);
-[e = . _V 10 ( _run_checksum (2 , _rxData -> -> 0 `i `a ]
-[e :U 2259 ]
-"80
-[; ;gemsecs.c: 80:      if (rxData_l == r_block.length + 1)
-[e $ ! == -> F16539 `i + -> . _r_block 2 `i -> 1 `i 2260  ]
-"81
-[; ;gemsecs.c: 81:       H10[1].checksum = (uint16_t) rxData << 8;
-[e = . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 0 -> << -> -> _rxData `us `ui -> 8 `i `us ]
-[e :U 2260 ]
-"82
-[; ;gemsecs.c: 82:      if (rxData_l == r_block.length + 2)
-[e $ ! == -> F16539 `i + -> . _r_block 2 `i -> 2 `i 2261  ]
-"83
-[; ;gemsecs.c: 83:       H10[1].checksum += rxData;
-[e =+ . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 0 -> _rxData `us ]
-[e :U 2261 ]
-"85
-[; ;gemsecs.c: 85:      rxData_l++;
-[e ++ F16539 -> -> 1 `i `uc ]
-"86
-[; ;gemsecs.c: 86:      if (rxData_l > (r_block.length + 2)) {
-[e $ ! > -> F16539 `i + -> . _r_block 2 `i -> 2 `i 2262  ]
-{
-"87
-[; ;gemsecs.c: 87:       if (V.r_checksum == H10[1].checksum) {
-[e $ ! == -> . _V 10 `ui -> . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 0 `ui 2263  ]
-{
-"88
-[; ;gemsecs.c: 88:        *r_link = LINK_STATE_ACK;
-[e = *U _r_link . `E16164 3 ]
-"89
-[; ;gemsecs.c: 89:       } else {
-}
-[e $U 2264  ]
-[e :U 2263 ]
-{
-"90
-[; ;gemsecs.c: 90:        V.error = LINK_ERROR_CHECKSUM;
-[e = . _V 8 -> . `E16173 5 `uc ]
-"91
-[; ;gemsecs.c: 91:        *r_link = LINK_STATE_NAK;
+[; ;gemsecs.c: 68:    *r_link = LINK_STATE_NAK;
 [e = *U _r_link . `E16164 5 ]
-"92
-[; ;gemsecs.c: 92:       }
+"69
+[; ;gemsecs.c: 69:   } else {
 }
-[e :U 2264 ]
-"93
-[; ;gemsecs.c: 93:      }
+[e $U 2255  ]
+[e :U 2254 ]
+{
+"70
+[; ;gemsecs.c: 70:    if (UART1_is_rx_ready()) {
+[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2256  ]
+{
+"71
+[; ;gemsecs.c: 71:     rxData = UART1_Read();
+[e = _rxData ( _UART1_Read ..  ]
+"72
+[; ;gemsecs.c: 72:     if (rxData_l == 0) {
+[e $ ! == -> F16550 `i -> 0 `i 2257  ]
+{
+"73
+[; ;gemsecs.c: 73:      r_block.length = rxData;
+[e = . _r_block 2 _rxData ]
+"74
+[; ;gemsecs.c: 74:      run_checksum(0, 1);
+[e ( _run_checksum (2 , -> -> 0 `i `uc -> -> 1 `i `a ]
+"75
+[; ;gemsecs.c: 75:      rxData_l++;
+[e ++ F16550 -> -> 1 `i `uc ]
+"76
+[; ;gemsecs.c: 76:     } else {
 }
-[e :U 2262 ]
-"94
-[; ;gemsecs.c: 94:     }
-}
+[e $U 2258  ]
 [e :U 2257 ]
+{
+"80
+[; ;gemsecs.c: 80:      if (rxData_l <= 10)
+[e $ ! <= -> F16550 `i -> 10 `i 2259  ]
+"81
+[; ;gemsecs.c: 81:       H10[1].block.b[r_block.length - rxData_l] = rxData;
+[e = *U + &U . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 0 * -> -> - -> . _r_block 2 `i -> F16550 `i `ui `ux -> -> # *U &U . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 0 `ui `ux _rxData ]
+[e :U 2259 ]
+"82
+[; ;gemsecs.c: 82:      if (rxData_l <= r_block.length)
+[e $ ! <= -> F16550 `i -> . _r_block 2 `i 2260  ]
+"83
+[; ;gemsecs.c: 83:       V.r_checksum = run_checksum(rxData, 0);
+[e = . _V 10 ( _run_checksum (2 , _rxData -> -> 0 `i `a ]
+[e :U 2260 ]
+"85
+[; ;gemsecs.c: 85:      if (rxData_l == r_block.length + 1)
+[e $ ! == -> F16550 `i + -> . _r_block 2 `i -> 1 `i 2261  ]
+"86
+[; ;gemsecs.c: 86:       H10[1].checksum = (uint16_t) rxData << 8;
+[e = . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 0 -> << -> -> _rxData `us `ui -> 8 `i `us ]
+[e :U 2261 ]
+"87
+[; ;gemsecs.c: 87:      if (rxData_l == r_block.length + 2)
+[e $ ! == -> F16550 `i + -> . _r_block 2 `i -> 2 `i 2262  ]
+"88
+[; ;gemsecs.c: 88:       H10[1].checksum += rxData;
+[e =+ . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 0 -> _rxData `us ]
+[e :U 2262 ]
+"90
+[; ;gemsecs.c: 90:      rxData_l++;
+[e ++ F16550 -> -> 1 `i `uc ]
+"91
+[; ;gemsecs.c: 91:      if (rxData_l > (r_block.length + 2)) {
+[e $ ! > -> F16550 `i + -> . _r_block 2 `i -> 2 `i 2263  ]
+{
+"92
+[; ;gemsecs.c: 92:       if (V.r_checksum == H10[1].checksum) {
+[e $ ! == -> . _V 10 `ui -> . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 0 `ui 2264  ]
+{
+"93
+[; ;gemsecs.c: 93:        *r_link = LINK_STATE_ACK;
+[e = *U _r_link . `E16164 3 ]
+"94
+[; ;gemsecs.c: 94:       } else {
+}
+[e $U 2265  ]
+[e :U 2264 ]
+{
 "95
-[; ;gemsecs.c: 95:    }
+[; ;gemsecs.c: 95:        V.error = LINK_ERROR_CHECKSUM;
+[e = . _V 8 -> . `E16173 5 `uc ]
+"96
+[; ;gemsecs.c: 96:        *r_link = LINK_STATE_NAK;
+[e = *U _r_link . `E16164 5 ]
+"97
+[; ;gemsecs.c: 97:       }
+}
+[e :U 2265 ]
+"98
+[; ;gemsecs.c: 98:      }
+}
+[e :U 2263 ]
+"99
+[; ;gemsecs.c: 99:     }
+}
+[e :U 2258 ]
+"100
+[; ;gemsecs.c: 100:    }
+}
+[e :U 2256 ]
+"101
+[; ;gemsecs.c: 101:   }
 }
 [e :U 2255 ]
-"96
-[; ;gemsecs.c: 96:   }
-}
-[e :U 2254 ]
-"97
-[; ;gemsecs.c: 97:   break;
-[e $U 2246  ]
-"98
-[; ;gemsecs.c: 98:  case LINK_STATE_ACK:
-[e :U 2265 ]
-"99
-[; ;gemsecs.c: 99:   V.stream = H10[1].block.block.stream;
-[e = . _V 6 . . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 1 5 ]
-"100
-[; ;gemsecs.c: 100:   V.function = H10[1].block.block.function;
-[e = . _V 7 . . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 1 4 ]
-"101
-[; ;gemsecs.c: 101:   UART1_Write(0x06);
-[e ( _UART1_Write (1 -> -> 6 `i `uc ]
 "102
-[; ;gemsecs.c: 102:   *r_link = LINK_STATE_DONE;
-[e = *U _r_link . `E16164 4 ]
+[; ;gemsecs.c: 102:   break;
+[e $U 2247  ]
 "103
-[; ;gemsecs.c: 103:   break;
-[e $U 2246  ]
-"104
-[; ;gemsecs.c: 104:  case LINK_STATE_NAK:
+[; ;gemsecs.c: 103:  case LINK_STATE_ACK:
 [e :U 2266 ]
+"104
+[; ;gemsecs.c: 104:   V.stream = H10[1].block.block.stream;
+[e = . _V 6 . . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 1 5 ]
 "105
-[; ;gemsecs.c: 105:   *r_link = LINK_STATE_ERROR;
-[e = *U _r_link . `E16164 6 ]
+[; ;gemsecs.c: 105:   V.function = H10[1].block.block.function;
+[e = . _V 7 . . . *U + &U _H10 * -> -> -> 1 `i `ui `ux -> -> # *U &U _H10 `ui `ux 1 1 4 ]
 "106
-[; ;gemsecs.c: 106:   while ((uart1RxCount)) {
-[e $U 2267  ]
-[e :U 2268 ]
-{
+[; ;gemsecs.c: 106:   UART1_Write(0x06);
+[e ( _UART1_Write (1 -> -> 6 `i `uc ]
 "107
-[; ;gemsecs.c: 107:    UART1_Read();
-[e ( _UART1_Read ..  ]
+[; ;gemsecs.c: 107:   *r_link = LINK_STATE_DONE;
+[e = *U _r_link . `E16164 4 ]
 "108
-[; ;gemsecs.c: 108:   }
-}
-[e :U 2267 ]
-"106
-[; ;gemsecs.c: 106:   while ((uart1RxCount)) {
-[e $ != -> _uart1RxCount `i -> 0 `i 2268  ]
-[e :U 2269 ]
+[; ;gemsecs.c: 108:   break;
+[e $U 2247  ]
 "109
-[; ;gemsecs.c: 109:   break;
-[e $U 2246  ]
+[; ;gemsecs.c: 109:  case LINK_STATE_NAK:
+[e :U 2267 ]
 "110
-[; ;gemsecs.c: 110:  case LINK_STATE_ERROR:
-[e :U 2270 ]
+[; ;gemsecs.c: 110:   *r_link = LINK_STATE_ERROR;
+[e = *U _r_link . `E16164 6 ]
 "111
-[; ;gemsecs.c: 111:   break;
-[e $U 2246  ]
+[; ;gemsecs.c: 111:   while ((uart1RxCount)) {
+[e $U 2268  ]
+[e :U 2269 ]
+{
 "112
-[; ;gemsecs.c: 112:  case LINK_STATE_DONE:
-[e :U 2271 ]
+[; ;gemsecs.c: 112:    UART1_Read();
+[e ( _UART1_Read ..  ]
 "113
-[; ;gemsecs.c: 113:  default:
-[e :U 2272 ]
+[; ;gemsecs.c: 113:   }
+}
+[e :U 2268 ]
+"111
+[; ;gemsecs.c: 111:   while ((uart1RxCount)) {
+[e $ != -> _uart1RxCount `i -> 0 `i 2269  ]
+[e :U 2270 ]
 "114
-[; ;gemsecs.c: 114:   *r_link = LINK_STATE_IDLE;
-[e = *U _r_link . `E16164 0 ]
+[; ;gemsecs.c: 114:   break;
+[e $U 2247  ]
 "115
-[; ;gemsecs.c: 115:   break;
-[e $U 2246  ]
+[; ;gemsecs.c: 115:  case LINK_STATE_ERROR:
+[e :U 2271 ]
 "116
-[; ;gemsecs.c: 116:  }
-}
-[e $U 2246  ]
-[e :U 2247 ]
-[e [\ -> *U _r_link `ui , $ -> . `E16164 0 `ui 2248
- , $ -> . `E16164 1 `ui 2251
- , $ -> . `E16164 2 `ui 2252
- , $ -> . `E16164 3 `ui 2265
- , $ -> . `E16164 5 `ui 2266
- , $ -> . `E16164 6 `ui 2270
- , $ -> . `E16164 4 `ui 2271
- 2272 ]
-[e :U 2246 ]
+[; ;gemsecs.c: 116:   break;
+[e $U 2247  ]
+"117
+[; ;gemsecs.c: 117:  case LINK_STATE_DONE:
+[e :U 2272 ]
 "118
-[; ;gemsecs.c: 118:  return *r_link;
-[e ) *U _r_link ]
-[e $UE 2245  ]
+[; ;gemsecs.c: 118:  default:
+[e :U 2273 ]
 "119
-[; ;gemsecs.c: 119: }
-[e :UE 2245 ]
-}
+[; ;gemsecs.c: 119:   *r_link = LINK_STATE_IDLE;
+[e = *U _r_link . `E16164 0 ]
+"120
+[; ;gemsecs.c: 120:   break;
+[e $U 2247  ]
 "121
-[; ;gemsecs.c: 121: LINK_STATES t_protocol(LINK_STATES * t_link)
+[; ;gemsecs.c: 121:  }
+}
+[e $U 2247  ]
+[e :U 2248 ]
+[e [\ -> *U _r_link `ui , $ -> . `E16164 0 `ui 2249
+ , $ -> . `E16164 1 `ui 2252
+ , $ -> . `E16164 2 `ui 2253
+ , $ -> . `E16164 3 `ui 2266
+ , $ -> . `E16164 5 `ui 2267
+ , $ -> . `E16164 6 `ui 2271
+ , $ -> . `E16164 4 `ui 2272
+ 2273 ]
+[e :U 2247 ]
+"123
+[; ;gemsecs.c: 123:  return *r_link;
+[e ) *U _r_link ]
+[e $UE 2246  ]
+"124
+[; ;gemsecs.c: 124: }
+[e :UE 2246 ]
+}
+"126
+[; ;gemsecs.c: 126: LINK_STATES t_protocol(LINK_STATES * t_link)
 [v _t_protocol `(E16164 ~T0 @X0 1 ef1`*E16164 ]
-"122
-[; ;gemsecs.c: 122: {
+"127
+[; ;gemsecs.c: 127: {
 {
 [e :U _t_protocol ]
-"121
-[; ;gemsecs.c: 121: LINK_STATES t_protocol(LINK_STATES * t_link)
-[v _t_link `*E16164 ~T0 @X0 1 r1 ]
-"122
-[; ;gemsecs.c: 122: {
-[f ]
-"123
-[; ;gemsecs.c: 123:  uint8_t rxData;
-[v _rxData `uc ~T0 @X0 1 a ]
-"124
-[; ;gemsecs.c: 124:  response_type block;
-[v _block `S2237 ~T0 @X0 1 a ]
 "126
-[; ;gemsecs.c: 126:  switch (*t_link) {
-[e $U 2275  ]
-{
+[; ;gemsecs.c: 126: LINK_STATES t_protocol(LINK_STATES * t_link)
+[v _t_link `*E16164 ~T0 @X0 1 r1 ]
 "127
-[; ;gemsecs.c: 127:  case LINK_STATE_IDLE:
-[e :U 2276 ]
+[; ;gemsecs.c: 127: {
+[f ]
 "128
-[; ;gemsecs.c: 128:   V.error = LINK_ERROR_NONE;
-[e = . _V 8 -> . `E16173 0 `uc ]
+[; ;gemsecs.c: 128:  uint8_t rxData;
+[v _rxData `uc ~T0 @X0 1 a ]
 "129
-[; ;gemsecs.c: 129:   UART1_Write(0x05);
-[e ( _UART1_Write (1 -> -> 5 `i `uc ]
-"130
-[; ;gemsecs.c: 130:   StartTimer(TMR_T2, 2000);
-[e ( _StartTimer (2 , -> . `E16434 2 `uc -> -> 2000 `i `us ]
+[; ;gemsecs.c: 129:  response_type block;
+[v _block `S2238 ~T0 @X0 1 a ]
 "131
-[; ;gemsecs.c: 131:   *t_link = LINK_STATE_ENQ;
-[e = *U _t_link . `E16164 1 ]
-"133
-[; ;gemsecs.c: 133:   WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
-"134
-[; ;gemsecs.c: 134:   UART1_put_buffer(0x04);
-[e ( _UART1_put_buffer (1 -> -> 4 `i `uc ]
-"136
-[; ;gemsecs.c: 136:   break;
-[e $U 2274  ]
-"137
-[; ;gemsecs.c: 137:  case LINK_STATE_ENQ:
+[; ;gemsecs.c: 131:  switch (*t_link) {
+[e $U 2276  ]
+{
+"132
+[; ;gemsecs.c: 132:  case LINK_STATE_IDLE:
 [e :U 2277 ]
+"133
+[; ;gemsecs.c: 133:   V.error = LINK_ERROR_NONE;
+[e = . _V 8 -> . `E16173 0 `uc ]
+"134
+[; ;gemsecs.c: 134:   UART1_Write(0x05);
+[e ( _UART1_Write (1 -> -> 5 `i `uc ]
+"135
+[; ;gemsecs.c: 135:   StartTimer(TMR_T2, 2000);
+[e ( _StartTimer (2 , -> . `E16434 2 `uc -> -> 2000 `i `us ]
+"136
+[; ;gemsecs.c: 136:   *t_link = LINK_STATE_ENQ;
+[e = *U _t_link . `E16164 1 ]
 "138
-[; ;gemsecs.c: 138:   if (TimerDone(TMR_T2)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16434 2 `uc `i -> 0 `i 2278  ]
-{
+[; ;gemsecs.c: 138:   WaitMs(5);
+[e ( _WaitMs (1 -> -> 5 `i `us ]
 "139
-[; ;gemsecs.c: 139:    V.error = LINK_ERROR_T2;
-[e = . _V 8 -> . `E16173 2 `uc ]
-"140
-[; ;gemsecs.c: 140:    *t_link = LINK_STATE_NAK;
-[e = *U _t_link . `E16164 5 ]
+[; ;gemsecs.c: 139:   UART1_put_buffer(0x04);
+[e ( _UART1_put_buffer (1 -> -> 4 `i `uc ]
 "141
-[; ;gemsecs.c: 141:   } else {
-}
-[e $U 2279  ]
-[e :U 2278 ]
-{
+[; ;gemsecs.c: 141:   break;
+[e $U 2275  ]
 "142
-[; ;gemsecs.c: 142:    if (UART1_is_rx_ready()) {
-[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2280  ]
-{
+[; ;gemsecs.c: 142:  case LINK_STATE_ENQ:
+[e :U 2278 ]
 "143
-[; ;gemsecs.c: 143:     rxData = UART1_Read();
-[e = _rxData ( _UART1_Read ..  ]
-"144
-[; ;gemsecs.c: 144:     if (rxData == 0x04) {
-[e $ ! == -> _rxData `i -> 4 `i 2281  ]
+[; ;gemsecs.c: 143:   if (TimerDone(TMR_T2)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16434 2 `uc `i -> 0 `i 2279  ]
 {
+"144
+[; ;gemsecs.c: 144:    V.error = LINK_ERROR_T2;
+[e = . _V 8 -> . `E16173 2 `uc ]
 "145
-[; ;gemsecs.c: 145:      StartTimer(TMR_T3, 5000);
-[e ( _StartTimer (2 , -> . `E16434 3 `uc -> -> 5000 `i `us ]
+[; ;gemsecs.c: 145:    *t_link = LINK_STATE_NAK;
+[e = *U _t_link . `E16164 5 ]
 "146
-[; ;gemsecs.c: 146:      *t_link = LINK_STATE_EOT;
-[e = *U _t_link . `E16164 2 ]
+[; ;gemsecs.c: 146:   } else {
+}
+[e $U 2280  ]
+[e :U 2279 ]
+{
 "147
-[; ;gemsecs.c: 147:     }
+[; ;gemsecs.c: 147:    if (UART1_is_rx_ready()) {
+[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2281  ]
+{
+"148
+[; ;gemsecs.c: 148:     rxData = UART1_Read();
+[e = _rxData ( _UART1_Read ..  ]
+"149
+[; ;gemsecs.c: 149:     if (rxData == 0x04) {
+[e $ ! == -> _rxData `i -> 4 `i 2282  ]
+{
+"150
+[; ;gemsecs.c: 150:      StartTimer(TMR_T3, 5000);
+[e ( _StartTimer (2 , -> . `E16434 3 `uc -> -> 5000 `i `us ]
+"151
+[; ;gemsecs.c: 151:      *t_link = LINK_STATE_EOT;
+[e = *U _t_link . `E16164 2 ]
+"152
+[; ;gemsecs.c: 152:     }
+}
+[e :U 2282 ]
+"153
+[; ;gemsecs.c: 153:    }
 }
 [e :U 2281 ]
-"148
-[; ;gemsecs.c: 148:    }
+"154
+[; ;gemsecs.c: 154:   }
 }
 [e :U 2280 ]
-"149
-[; ;gemsecs.c: 149:   }
-}
-[e :U 2279 ]
-"150
-[; ;gemsecs.c: 150:   break;
-[e $U 2274  ]
-"151
-[; ;gemsecs.c: 151:  case LINK_STATE_EOT:
-[e :U 2282 ]
-"152
-[; ;gemsecs.c: 152:   block = secs_II_message(V.stream, V.function);
-[e = _block ( _secs_II_message (2 , . _V 6 . _V 7 ]
-"153
-[; ;gemsecs.c: 153:   if (V.abort == LINK_ERROR_ABORT) {
-[e $ ! == -> . _V 9 `i -> . `E16173 7 `i 2283  ]
-{
-"154
-[; ;gemsecs.c: 154:    secs_send((uint8_t*) block.header, block.length, 0);
-[e ( _secs_send (3 , , . _block 0 . _block 1 -> -> 0 `i `a ]
 "155
-[; ;gemsecs.c: 155:    *t_link = LINK_STATE_ERROR;
-[e = *U _t_link . `E16164 6 ]
+[; ;gemsecs.c: 155:   break;
+[e $U 2275  ]
 "156
-[; ;gemsecs.c: 156:   } else {
-}
-[e $U 2284  ]
+[; ;gemsecs.c: 156:  case LINK_STATE_EOT:
 [e :U 2283 ]
-{
 "157
-[; ;gemsecs.c: 157:    secs_send((uint8_t*) block.header, block.length, 0);
-[e ( _secs_send (3 , , . _block 0 . _block 1 -> -> 0 `i `a ]
+[; ;gemsecs.c: 157:   block = secs_II_message(V.stream, V.function);
+[e = _block ( _secs_II_message (2 , . _V 6 . _V 7 ]
 "158
-[; ;gemsecs.c: 158:    if (V.error == LINK_ERROR_NONE) {
-[e $ ! == -> . _V 8 `i -> . `E16173 0 `i 2285  ]
+[; ;gemsecs.c: 158:   if (V.abort == LINK_ERROR_ABORT) {
+[e $ ! == -> . _V 9 `i -> . `E16173 7 `i 2284  ]
 {
 "159
-[; ;gemsecs.c: 159:     *t_link = LINK_STATE_ACK;
-[e = *U _t_link . `E16164 3 ]
+[; ;gemsecs.c: 159:    secs_send((uint8_t*) block.header, block.length, 0);
+[e ( _secs_send (3 , , . _block 0 . _block 1 -> -> 0 `i `a ]
 "160
-[; ;gemsecs.c: 160:    } else {
-}
-[e $U 2286  ]
-[e :U 2285 ]
-{
-"161
-[; ;gemsecs.c: 161:     *t_link = LINK_STATE_ERROR;
+[; ;gemsecs.c: 160:    *t_link = LINK_STATE_ERROR;
 [e = *U _t_link . `E16164 6 ]
-"162
-[; ;gemsecs.c: 162:    }
+"161
+[; ;gemsecs.c: 161:   } else {
 }
-[e :U 2286 ]
-"163
-[; ;gemsecs.c: 163:   }
-}
+[e $U 2285  ]
 [e :U 2284 ]
+{
+"162
+[; ;gemsecs.c: 162:    secs_send((uint8_t*) block.header, block.length, 0);
+[e ( _secs_send (3 , , . _block 0 . _block 1 -> -> 0 `i `a ]
+"163
+[; ;gemsecs.c: 163:    if (V.error == LINK_ERROR_NONE) {
+[e $ ! == -> . _V 8 `i -> . `E16173 0 `i 2286  ]
+{
+"164
+[; ;gemsecs.c: 164:     *t_link = LINK_STATE_ACK;
+[e = *U _t_link . `E16164 3 ]
 "165
-[; ;gemsecs.c: 165:   WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
-"166
-[; ;gemsecs.c: 166:   UART1_put_buffer(0x06);
-[e ( _UART1_put_buffer (1 -> -> 6 `i `uc ]
-"168
-[; ;gemsecs.c: 168:   break;
-[e $U 2274  ]
-"169
-[; ;gemsecs.c: 169:  case LINK_STATE_ACK:
-[e :U 2287 ]
-"170
-[; ;gemsecs.c: 170:   if (TimerDone(TMR_T3)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16434 3 `uc `i -> 0 `i 2288  ]
-{
-"171
-[; ;gemsecs.c: 171:    V.error = LINK_ERROR_T3;
-[e = . _V 8 -> . `E16173 3 `uc ]
-"172
-[; ;gemsecs.c: 172:    *t_link = LINK_STATE_NAK;
-[e = *U _t_link . `E16164 5 ]
-"173
-[; ;gemsecs.c: 173:   } else {
+[; ;gemsecs.c: 165:    } else {
 }
-[e $U 2289  ]
-[e :U 2288 ]
+[e $U 2287  ]
+[e :U 2286 ]
 {
+"166
+[; ;gemsecs.c: 166:     *t_link = LINK_STATE_ERROR;
+[e = *U _t_link . `E16164 6 ]
+"167
+[; ;gemsecs.c: 167:    }
+}
+[e :U 2287 ]
+"168
+[; ;gemsecs.c: 168:   }
+}
+[e :U 2285 ]
+"170
+[; ;gemsecs.c: 170:   WaitMs(5);
+[e ( _WaitMs (1 -> -> 5 `i `us ]
+"171
+[; ;gemsecs.c: 171:   UART1_put_buffer(0x06);
+[e ( _UART1_put_buffer (1 -> -> 6 `i `uc ]
+"173
+[; ;gemsecs.c: 173:   break;
+[e $U 2275  ]
 "174
-[; ;gemsecs.c: 174:    if (UART1_is_rx_ready()) {
-[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2290  ]
-{
+[; ;gemsecs.c: 174:  case LINK_STATE_ACK:
+[e :U 2288 ]
 "175
-[; ;gemsecs.c: 175:     rxData = UART1_Read();
-[e = _rxData ( _UART1_Read ..  ]
-"176
-[; ;gemsecs.c: 176:     if (rxData == 0x06) {
-[e $ ! == -> _rxData `i -> 6 `i 2291  ]
+[; ;gemsecs.c: 175:   if (TimerDone(TMR_T3)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16434 3 `uc `i -> 0 `i 2289  ]
 {
+"176
+[; ;gemsecs.c: 176:    V.error = LINK_ERROR_T3;
+[e = . _V 8 -> . `E16173 3 `uc ]
 "177
-[; ;gemsecs.c: 177:      *t_link = LINK_STATE_DONE;
-[e = *U _t_link . `E16164 4 ]
+[; ;gemsecs.c: 177:    *t_link = LINK_STATE_NAK;
+[e = *U _t_link . `E16164 5 ]
 "178
-[; ;gemsecs.c: 178:     }
+[; ;gemsecs.c: 178:   } else {
+}
+[e $U 2290  ]
+[e :U 2289 ]
+{
+"179
+[; ;gemsecs.c: 179:    if (UART1_is_rx_ready()) {
+[e $ ! != -> ( _UART1_is_rx_ready ..  `i -> 0 `i 2291  ]
+{
+"180
+[; ;gemsecs.c: 180:     rxData = UART1_Read();
+[e = _rxData ( _UART1_Read ..  ]
+"181
+[; ;gemsecs.c: 181:     if (rxData == 0x06) {
+[e $ ! == -> _rxData `i -> 6 `i 2292  ]
+{
+"182
+[; ;gemsecs.c: 182:      *t_link = LINK_STATE_DONE;
+[e = *U _t_link . `E16164 4 ]
+"183
+[; ;gemsecs.c: 183:     }
+}
+[e :U 2292 ]
+"184
+[; ;gemsecs.c: 184:    }
 }
 [e :U 2291 ]
-"179
-[; ;gemsecs.c: 179:    }
+"185
+[; ;gemsecs.c: 185:   }
 }
 [e :U 2290 ]
-"180
-[; ;gemsecs.c: 180:   }
-}
-[e :U 2289 ]
-"181
-[; ;gemsecs.c: 181:   break;
-[e $U 2274  ]
-"182
-[; ;gemsecs.c: 182:  case LINK_STATE_NAK:
-[e :U 2292 ]
-"183
-[; ;gemsecs.c: 183:   *t_link = LINK_STATE_ERROR;
-[e = *U _t_link . `E16164 6 ]
-"184
-[; ;gemsecs.c: 184:   while ((uart1RxCount)) {
-[e $U 2293  ]
-[e :U 2294 ]
-{
-"185
-[; ;gemsecs.c: 185:    UART1_Read();
-[e ( _UART1_Read ..  ]
 "186
-[; ;gemsecs.c: 186:   }
-}
-[e :U 2293 ]
-"184
-[; ;gemsecs.c: 184:   while ((uart1RxCount)) {
-[e $ != -> _uart1RxCount `i -> 0 `i 2294  ]
-[e :U 2295 ]
+[; ;gemsecs.c: 186:   break;
+[e $U 2275  ]
 "187
-[; ;gemsecs.c: 187:   break;
-[e $U 2274  ]
+[; ;gemsecs.c: 187:  case LINK_STATE_NAK:
+[e :U 2293 ]
 "188
-[; ;gemsecs.c: 188:  case LINK_STATE_ERROR:
-[e :U 2296 ]
+[; ;gemsecs.c: 188:   *t_link = LINK_STATE_ERROR;
+[e = *U _t_link . `E16164 6 ]
 "189
-[; ;gemsecs.c: 189:   break;
-[e $U 2274  ]
+[; ;gemsecs.c: 189:   while ((uart1RxCount)) {
+[e $U 2294  ]
+[e :U 2295 ]
+{
 "190
-[; ;gemsecs.c: 190:  case LINK_STATE_DONE:
-[e :U 2297 ]
+[; ;gemsecs.c: 190:    UART1_Read();
+[e ( _UART1_Read ..  ]
 "191
-[; ;gemsecs.c: 191:   break;
-[e $U 2274  ]
+[; ;gemsecs.c: 191:   }
+}
+[e :U 2294 ]
+"189
+[; ;gemsecs.c: 189:   while ((uart1RxCount)) {
+[e $ != -> _uart1RxCount `i -> 0 `i 2295  ]
+[e :U 2296 ]
 "192
-[; ;gemsecs.c: 192:  default:
-[e :U 2298 ]
+[; ;gemsecs.c: 192:   break;
+[e $U 2275  ]
 "193
-[; ;gemsecs.c: 193:   *t_link = LINK_STATE_IDLE;
-[e = *U _t_link . `E16164 0 ]
+[; ;gemsecs.c: 193:  case LINK_STATE_ERROR:
+[e :U 2297 ]
 "194
 [; ;gemsecs.c: 194:   break;
-[e $U 2274  ]
+[e $U 2275  ]
 "195
-[; ;gemsecs.c: 195:  }
-}
-[e $U 2274  ]
-[e :U 2275 ]
-[e [\ -> *U _t_link `ui , $ -> . `E16164 0 `ui 2276
- , $ -> . `E16164 1 `ui 2277
- , $ -> . `E16164 2 `ui 2282
- , $ -> . `E16164 3 `ui 2287
- , $ -> . `E16164 5 `ui 2292
- , $ -> . `E16164 6 `ui 2296
- , $ -> . `E16164 4 `ui 2297
- 2298 ]
-[e :U 2274 ]
+[; ;gemsecs.c: 195:  case LINK_STATE_DONE:
+[e :U 2298 ]
+"196
+[; ;gemsecs.c: 196:   break;
+[e $U 2275  ]
 "197
-[; ;gemsecs.c: 197:  return *t_link;
-[e ) *U _t_link ]
-[e $UE 2273  ]
+[; ;gemsecs.c: 197:  default:
+[e :U 2299 ]
 "198
-[; ;gemsecs.c: 198: }
-[e :UE 2273 ]
+[; ;gemsecs.c: 198:   *t_link = LINK_STATE_IDLE;
+[e = *U _t_link . `E16164 0 ]
+"199
+[; ;gemsecs.c: 199:   break;
+[e $U 2275  ]
+"200
+[; ;gemsecs.c: 200:  }
 }
-"201
-[; ;gemsecs.c: 201: _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
-[v _secs_send `(a ~T0 @X0 1 ef3`*uc`uc`a ]
+[e $U 2275  ]
+[e :U 2276 ]
+[e [\ -> *U _t_link `ui , $ -> . `E16164 0 `ui 2277
+ , $ -> . `E16164 1 `ui 2278
+ , $ -> . `E16164 2 `ui 2283
+ , $ -> . `E16164 3 `ui 2288
+ , $ -> . `E16164 5 `ui 2293
+ , $ -> . `E16164 6 `ui 2297
+ , $ -> . `E16164 4 `ui 2298
+ 2299 ]
+[e :U 2275 ]
 "202
-[; ;gemsecs.c: 202: {
+[; ;gemsecs.c: 202:  return *t_link;
+[e ) *U _t_link ]
+[e $UE 2274  ]
+"203
+[; ;gemsecs.c: 203: }
+[e :UE 2274 ]
+}
+"206
+[; ;gemsecs.c: 206: _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
+[v _secs_send `(a ~T0 @X0 1 ef3`*uc`uc`a ]
+"207
+[; ;gemsecs.c: 207: {
 {
 [e :U _secs_send ]
-"201
-[; ;gemsecs.c: 201: _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
+"206
+[; ;gemsecs.c: 206: _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
 [v _byte_block `*uc ~T0 @X0 1 r1 ]
 [v _length `uc ~T0 @X0 1 r2 ]
 [v _fake `a ~T0 @X0 1 r3 ]
-"202
-[; ;gemsecs.c: 202: {
+"207
+[; ;gemsecs.c: 207: {
 [f ]
-"203
-[; ;gemsecs.c: 203:  uint8_t i, *k;
+"208
+[; ;gemsecs.c: 208:  uint8_t i, *k;
 [v _i `uc ~T0 @X0 1 a ]
 [v _k `*uc ~T0 @X0 1 a ]
-"204
-[; ;gemsecs.c: 204:  uint16_t checksum;
-[v _checksum `us ~T0 @X0 1 a ]
-"206
-[; ;gemsecs.c: 206:  k = (uint8_t *) byte_block;
-[e = _k _byte_block ]
-"208
-[; ;gemsecs.c: 208:  V.error = LINK_ERROR_NONE;
-[e = . _V 8 -> . `E16173 0 `uc ]
 "209
-[; ;gemsecs.c: 209:  if ((length - 3) != k[length - 1]) {
-[e $ ! != - -> _length `i -> 3 `i -> *U + _k * -> - -> _length `i -> 1 `i `x -> -> # *U _k `i `x `i 2300  ]
-{
-"210
-[; ;gemsecs.c: 210:   V.error = LINK_ERROR_SEND;
-[e = . _V 8 -> . `E16173 8 `uc ]
+[; ;gemsecs.c: 209:  uint16_t checksum;
+[v _checksum `us ~T0 @X0 1 a ]
 "211
-[; ;gemsecs.c: 211:   return 0;
+[; ;gemsecs.c: 211:  k = (uint8_t *) byte_block;
+[e = _k _byte_block ]
+"213
+[; ;gemsecs.c: 213:  V.error = LINK_ERROR_NONE;
+[e = . _V 8 -> . `E16173 0 `uc ]
+"214
+[; ;gemsecs.c: 214:  if ((length - 3) != k[length - 1]) {
+[e $ ! != - -> _length `i -> 3 `i -> *U + _k * -> - -> _length `i -> 1 `i `x -> -> # *U _k `i `x `i 2301  ]
+{
+"215
+[; ;gemsecs.c: 215:   V.error = LINK_ERROR_SEND;
+[e = . _V 8 -> . `E16173 8 `uc ]
+"216
+[; ;gemsecs.c: 216:   return 0;
 [e ) -> -> 0 `i `a ]
-[e $UE 2299  ]
-"212
-[; ;gemsecs.c: 212:  }
+[e $UE 2300  ]
+"217
+[; ;gemsecs.c: 217:  }
 }
-[e :U 2300 ]
-"219
-[; ;gemsecs.c: 219:  checksum = block_checksum(&k[2], length - 3);
-[e = _checksum ( _block_checksum (2 , &U *U + _k * -> -> 2 `i `x -> -> # *U _k `i `x -> - -> _length `i -> 3 `i `us ]
-"220
-[; ;gemsecs.c: 220:  k[0] = checksum & 0xff;
-[e = *U + _k * -> -> 0 `i `x -> -> # *U _k `i `x -> & -> _checksum `ui -> -> 255 `i `ui `uc ]
-"221
-[; ;gemsecs.c: 221:  k[1] = (checksum >> 8)&0xff;
-[e = *U + _k * -> -> 1 `i `x -> -> # *U _k `i `x -> & >> -> _checksum `ui -> 8 `i -> -> 255 `i `ui `uc ]
-"222
-[; ;gemsecs.c: 222:  V.t_checksum = checksum;
-[e = . _V 11 _checksum ]
-"224
-[; ;gemsecs.c: 224:  while (UART1_is_tx_ready() < 64);
-[e $U 2301  ]
-[e :U 2302 ]
 [e :U 2301 ]
-[e $ < -> ( _UART1_is_tx_ready ..  `i -> 64 `i 2302  ]
-[e :U 2303 ]
+"224
+[; ;gemsecs.c: 224:  checksum = block_checksum(&k[2], length - 3);
+[e = _checksum ( _block_checksum (2 , &U *U + _k * -> -> 2 `i `x -> -> # *U _k `i `x -> - -> _length `i -> 3 `i `us ]
 "225
-[; ;gemsecs.c: 225:  for (i = length; i > 0; i--) {
+[; ;gemsecs.c: 225:  k[0] = checksum & 0xff;
+[e = *U + _k * -> -> 0 `i `x -> -> # *U _k `i `x -> & -> _checksum `ui -> -> 255 `i `ui `uc ]
+"226
+[; ;gemsecs.c: 226:  k[1] = (checksum >> 8)&0xff;
+[e = *U + _k * -> -> 1 `i `x -> -> # *U _k `i `x -> & >> -> _checksum `ui -> 8 `i -> -> 255 `i `ui `uc ]
+"227
+[; ;gemsecs.c: 227:  V.t_checksum = checksum;
+[e = . _V 11 _checksum ]
+"229
+[; ;gemsecs.c: 229:  while (UART1_is_tx_ready() < 64);
+[e $U 2302  ]
+[e :U 2303 ]
+[e :U 2302 ]
+[e $ < -> ( _UART1_is_tx_ready ..  `i -> 64 `i 2303  ]
+[e :U 2304 ]
+"230
+[; ;gemsecs.c: 230:  for (i = length; i > 0; i--) {
 {
 [e = _i _length ]
-[e $ > -> _i `i -> 0 `i 2304  ]
-[e $U 2305  ]
-[e :U 2304 ]
+[e $ > -> _i `i -> 0 `i 2305  ]
+[e $U 2306  ]
+[e :U 2305 ]
 {
-"226
-[; ;gemsecs.c: 226:   if (fake) {
-[e $ ! != -> _fake `i -> 0 `i 2307  ]
-{
-"227
-[; ;gemsecs.c: 227:    UART1_put_buffer(k[i - 1]);
-[e ( _UART1_put_buffer (1 *U + _k * -> - -> _i `i -> 1 `i `x -> -> # *U _k `i `x ]
-"228
-[; ;gemsecs.c: 228:   } else {
-}
-[e $U 2308  ]
-[e :U 2307 ]
-{
-"229
-[; ;gemsecs.c: 229:    UART1_Write(k[i - 1]);
-[e ( _UART1_Write (1 *U + _k * -> - -> _i `i -> 1 `i `x -> -> # *U _k `i `x ]
-"230
-[; ;gemsecs.c: 230:   }
-}
-[e :U 2308 ]
 "231
-[; ;gemsecs.c: 231:  }
+[; ;gemsecs.c: 231:   if (fake) {
+[e $ ! != -> _fake `i -> 0 `i 2308  ]
+{
+"232
+[; ;gemsecs.c: 232:    UART1_put_buffer(k[i - 1]);
+[e ( _UART1_put_buffer (1 *U + _k * -> - -> _i `i -> 1 `i `x -> -> # *U _k `i `x ]
+"233
+[; ;gemsecs.c: 233:   } else {
+}
+[e $U 2309  ]
+[e :U 2308 ]
+{
+"234
+[; ;gemsecs.c: 234:    UART1_Write(k[i - 1]);
+[e ( _UART1_Write (1 *U + _k * -> - -> _i `i -> 1 `i `x -> -> # *U _k `i `x ]
+"235
+[; ;gemsecs.c: 235:   }
+}
+[e :U 2309 ]
+"236
+[; ;gemsecs.c: 236:  }
 }
 [e -- _i -> -> 1 `i `uc ]
-[e $ > -> _i `i -> 0 `i 2304  ]
-[e :U 2305 ]
+[e $ > -> _i `i -> 0 `i 2305  ]
+[e :U 2306 ]
 }
-"233
-[; ;gemsecs.c: 233:  return 1;
+"238
+[; ;gemsecs.c: 238:  return 1;
 [e ) -> -> 1 `i `a ]
-[e $UE 2299  ]
-"234
-[; ;gemsecs.c: 234: }
-[e :UE 2299 ]
-}
+[e $UE 2300  ]
 "239
-[; ;gemsecs.c: 239: response_type secs_II_message(uint8_t stream, uint8_t function)
-[v _secs_II_message `(S2237 ~T0 @X0 1 ef2`uc`uc ]
-"240
-[; ;gemsecs.c: 240: {
+[; ;gemsecs.c: 239: }
+[e :UE 2300 ]
+}
+"244
+[; ;gemsecs.c: 244: response_type secs_II_message(uint8_t stream, uint8_t function)
+[v _secs_II_message `(S2238 ~T0 @X0 1 ef2`uc`uc ]
+"245
+[; ;gemsecs.c: 245: {
 {
 [e :U _secs_II_message ]
-"239
-[; ;gemsecs.c: 239: response_type secs_II_message(uint8_t stream, uint8_t function)
+"244
+[; ;gemsecs.c: 244: response_type secs_II_message(uint8_t stream, uint8_t function)
 [v _stream `uc ~T0 @X0 1 r1 ]
 [v _function `uc ~T0 @X0 1 r2 ]
-"240
-[; ;gemsecs.c: 240: {
-[f ]
-"241
-[; ;gemsecs.c: 241:  static response_type block;
-[v F16554 `S2237 ~T0 @X0 1 s block ]
-"243
-[; ;gemsecs.c: 243:  V.abort = LINK_ERROR_NONE;
-[e = . _V 9 -> . `E16173 0 `uc ]
 "245
-[; ;gemsecs.c: 245:  switch (stream) {
-[e $U 2311  ]
-{
+[; ;gemsecs.c: 245: {
+[f ]
 "246
-[; ;gemsecs.c: 246:  case 1:
-[e :U 2312 ]
-"247
-[; ;gemsecs.c: 247:   switch (function) {
-[e $U 2314  ]
-{
+[; ;gemsecs.c: 246:  static response_type block;
+[v F16565 `S2238 ~T0 @X0 1 s block ]
 "248
-[; ;gemsecs.c: 248:   case 1:
-[e :U 2315 ]
-"249
-[; ;gemsecs.c: 249:    block.header = (uint8_t*) & H12[0];
-[e = . F16554 0 -> &U *U + &U _H12 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H12 `ui `ux `*uc ]
+[; ;gemsecs.c: 248:  V.abort = LINK_ERROR_NONE;
+[e = . _V 9 -> . `E16173 0 `uc ]
 "250
-[; ;gemsecs.c: 250:    block.length = sizeof(header12);
-[e = . F16554 1 -> -> # `S2232 `ui `uc ]
+[; ;gemsecs.c: 250:  switch (stream) {
+[e $U 2312  ]
+{
 "251
-[; ;gemsecs.c: 251:    break;
-[e $U 2313  ]
+[; ;gemsecs.c: 251:  case 1:
+[e :U 2313 ]
 "252
-[; ;gemsecs.c: 252:   default:
-[e :U 2316 ]
+[; ;gemsecs.c: 252:   switch (function) {
+[e $U 2315  ]
+{
 "253
-[; ;gemsecs.c: 253:    block.header = (uint8_t*) & H10[2];
-[e = . F16554 0 -> &U *U + &U _H10 * -> -> -> 2 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc ]
+[; ;gemsecs.c: 253:   case 1:
+[e :U 2316 ]
 "254
-[; ;gemsecs.c: 254:    block.length = sizeof(header10);
-[e = . F16554 1 -> -> # `S2231 `ui `uc ]
+[; ;gemsecs.c: 254:    block.header = (uint8_t*) & H12[0];
+[e = . F16565 0 -> &U *U + &U _H12 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H12 `ui `ux `*uc ]
 "255
-[; ;gemsecs.c: 255:    V.abort = LINK_ERROR_ABORT;
-[e = . _V 9 -> . `E16173 7 `uc ]
+[; ;gemsecs.c: 255:    block.length = sizeof(header12);
+[e = . F16565 1 -> -> # `S2232 `ui `uc ]
 "256
 [; ;gemsecs.c: 256:    break;
-[e $U 2313  ]
+[e $U 2314  ]
 "257
-[; ;gemsecs.c: 257:   }
-}
-[e $U 2313  ]
-[e :U 2314 ]
-[e [\ -> _function `i , $ -> 1 `i 2315
- 2316 ]
-[e :U 2313 ]
-"258
-[; ;gemsecs.c: 258:   break;
-[e $U 2310  ]
-"259
-[; ;gemsecs.c: 259:  default:
+[; ;gemsecs.c: 257:   case 2:
 [e :U 2317 ]
+"258
+[; ;gemsecs.c: 258:    block.header = (uint8_t*) & H10[0];
+[e = . F16565 0 -> &U *U + &U _H10 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc ]
+"259
+[; ;gemsecs.c: 259:    block.length = sizeof(header10);
+[e = . F16565 1 -> -> # `S2231 `ui `uc ]
 "260
-[; ;gemsecs.c: 260:   block.header = (uint8_t*) & H10[2];
-[e = . F16554 0 -> &U *U + &U _H10 * -> -> -> 2 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc ]
+[; ;gemsecs.c: 260:    break;
+[e $U 2314  ]
 "261
-[; ;gemsecs.c: 261:   block.length = sizeof(header10);
-[e = . F16554 1 -> -> # `S2231 `ui `uc ]
+[; ;gemsecs.c: 261:   case 3:
+[e :U 2318 ]
 "262
-[; ;gemsecs.c: 262:   V.abort = LINK_ERROR_ABORT;
-[e = . _V 9 -> . `E16173 7 `uc ]
+[; ;gemsecs.c: 262:    block.header = (uint8_t*) & H14[0];
+[e = . F16565 0 -> &U *U + &U _H14 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H14 `ui `ux `*uc ]
 "263
-[; ;gemsecs.c: 263:   break;
-[e $U 2310  ]
+[; ;gemsecs.c: 263:    block.length = sizeof(header14);
+[e = . F16565 1 -> -> # `S2234 `ui `uc ]
 "264
-[; ;gemsecs.c: 264:  }
-}
-[e $U 2310  ]
-[e :U 2311 ]
-[e [\ -> _stream `i , $ -> 1 `i 2312
- 2317 ]
-[e :U 2310 ]
+[; ;gemsecs.c: 264:    break;
+[e $U 2314  ]
+"265
+[; ;gemsecs.c: 265:   case 4:
+[e :U 2319 ]
 "266
-[; ;gemsecs.c: 266:  return(block);
-[e ) F16554 ]
-[e $UE 2309  ]
+[; ;gemsecs.c: 266:    block.header = (uint8_t*) & H18[0];
+[e = . F16565 0 -> &U *U + &U _H18 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H18 `ui `ux `*uc ]
 "267
-[; ;gemsecs.c: 267: }
-[e :UE 2309 ]
+[; ;gemsecs.c: 267:    block.length = sizeof(header18);
+[e = . F16565 1 -> -> # `S2235 `ui `uc ]
+"268
+[; ;gemsecs.c: 268:    break;
+[e $U 2314  ]
+"269
+[; ;gemsecs.c: 269:   default:
+[e :U 2320 ]
+"270
+[; ;gemsecs.c: 270:    block.header = (uint8_t*) & H10[2];
+[e = . F16565 0 -> &U *U + &U _H10 * -> -> -> 2 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc ]
+"271
+[; ;gemsecs.c: 271:    block.length = sizeof(header10);
+[e = . F16565 1 -> -> # `S2231 `ui `uc ]
+"272
+[; ;gemsecs.c: 272:    V.abort = LINK_ERROR_ABORT;
+[e = . _V 9 -> . `E16173 7 `uc ]
+"273
+[; ;gemsecs.c: 273:    break;
+[e $U 2314  ]
+"274
+[; ;gemsecs.c: 274:   }
+}
+[e $U 2314  ]
+[e :U 2315 ]
+[e [\ -> _function `i , $ -> 1 `i 2316
+ , $ -> 2 `i 2317
+ , $ -> 3 `i 2318
+ , $ -> 4 `i 2319
+ 2320 ]
+[e :U 2314 ]
+"275
+[; ;gemsecs.c: 275:   break;
+[e $U 2311  ]
+"276
+[; ;gemsecs.c: 276:  case 2:
+[e :U 2321 ]
+"277
+[; ;gemsecs.c: 277:   switch (function) {
+[e $U 2323  ]
+{
+"278
+[; ;gemsecs.c: 278:   case 17:
+[e :U 2324 ]
+"279
+[; ;gemsecs.c: 279:    block.header = (uint8_t*) & H24[0];
+[e = . F16565 0 -> &U *U + &U _H24 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H24 `ui `ux `*uc ]
+"280
+[; ;gemsecs.c: 280:    block.length = sizeof(header24);
+[e = . F16565 1 -> -> # `S2236 `ui `uc ]
+"281
+[; ;gemsecs.c: 281:    break;
+[e $U 2322  ]
+"282
+[; ;gemsecs.c: 282:   default:
+[e :U 2325 ]
+"283
+[; ;gemsecs.c: 283:    block.header = (uint8_t*) & H10[2];
+[e = . F16565 0 -> &U *U + &U _H10 * -> -> -> 2 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc ]
+"284
+[; ;gemsecs.c: 284:    block.length = sizeof(header10);
+[e = . F16565 1 -> -> # `S2231 `ui `uc ]
+"285
+[; ;gemsecs.c: 285:    V.abort = LINK_ERROR_ABORT;
+[e = . _V 9 -> . `E16173 7 `uc ]
+"286
+[; ;gemsecs.c: 286:    break;
+[e $U 2322  ]
+"287
+[; ;gemsecs.c: 287:   }
+}
+[e $U 2322  ]
+[e :U 2323 ]
+[e [\ -> _function `i , $ -> 17 `i 2324
+ 2325 ]
+[e :U 2322 ]
+"288
+[; ;gemsecs.c: 288:   break;
+[e $U 2311  ]
+"289
+[; ;gemsecs.c: 289:  case 6:
+[e :U 2326 ]
+"290
+[; ;gemsecs.c: 290:   switch (function) {
+[e $U 2328  ]
+{
+"291
+[; ;gemsecs.c: 291:   case 11:
+[e :U 2329 ]
+"292
+[; ;gemsecs.c: 292:    block.header = (uint8_t*) & H13[0];
+[e = . F16565 0 -> &U *U + &U _H13 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H13 `ui `ux `*uc ]
+"293
+[; ;gemsecs.c: 293:    block.length = sizeof(header13);
+[e = . F16565 1 -> -> # `S2233 `ui `uc ]
+"294
+[; ;gemsecs.c: 294:    break;
+[e $U 2327  ]
+"295
+[; ;gemsecs.c: 295:   case 12:
+[e :U 2330 ]
+"296
+[; ;gemsecs.c: 296:    block.header = (uint8_t*) & H53[0];
+[e = . F16565 0 -> &U *U + &U _H53 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H53 `ui `ux `*uc ]
+"297
+[; ;gemsecs.c: 297:    block.length = sizeof(header53);
+[e = . F16565 1 -> -> # `S2237 `ui `uc ]
+"298
+[; ;gemsecs.c: 298:    break;
+[e $U 2327  ]
+"299
+[; ;gemsecs.c: 299:   default:
+[e :U 2331 ]
+"300
+[; ;gemsecs.c: 300:    block.header = (uint8_t*) & H10[2];
+[e = . F16565 0 -> &U *U + &U _H10 * -> -> -> 2 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc ]
+"301
+[; ;gemsecs.c: 301:    block.length = sizeof(header10);
+[e = . F16565 1 -> -> # `S2231 `ui `uc ]
+"302
+[; ;gemsecs.c: 302:    V.abort = LINK_ERROR_ABORT;
+[e = . _V 9 -> . `E16173 7 `uc ]
+"303
+[; ;gemsecs.c: 303:    break;
+[e $U 2327  ]
+"304
+[; ;gemsecs.c: 304:   }
+}
+[e $U 2327  ]
+[e :U 2328 ]
+[e [\ -> _function `i , $ -> 11 `i 2329
+ , $ -> 12 `i 2330
+ 2331 ]
+[e :U 2327 ]
+"305
+[; ;gemsecs.c: 305:   break;
+[e $U 2311  ]
+"306
+[; ;gemsecs.c: 306:  default:
+[e :U 2332 ]
+"307
+[; ;gemsecs.c: 307:   block.header = (uint8_t*) & H10[2];
+[e = . F16565 0 -> &U *U + &U _H10 * -> -> -> 2 `i `ui `ux -> -> # *U &U _H10 `ui `ux `*uc ]
+"308
+[; ;gemsecs.c: 308:   block.length = sizeof(header10);
+[e = . F16565 1 -> -> # `S2231 `ui `uc ]
+"309
+[; ;gemsecs.c: 309:   V.abort = LINK_ERROR_ABORT;
+[e = . _V 9 -> . `E16173 7 `uc ]
+"310
+[; ;gemsecs.c: 310:   break;
+[e $U 2311  ]
+"311
+[; ;gemsecs.c: 311:  }
+}
+[e $U 2311  ]
+[e :U 2312 ]
+[e [\ -> _stream `i , $ -> 1 `i 2313
+ , $ -> 2 `i 2321
+ , $ -> 6 `i 2326
+ 2332 ]
+[e :U 2311 ]
+"313
+[; ;gemsecs.c: 313:  return(block);
+[e ) F16565 ]
+[e $UE 2310  ]
+"314
+[; ;gemsecs.c: 314: }
+[e :UE 2310 ]
 }

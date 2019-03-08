@@ -27952,6 +27952,13 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header24;
 
+ typedef struct header53 {
+  uint16_t checksum;
+  uint8_t data[43];
+  union block10 block;
+  uint8_t length;
+ } header53;
+
  typedef struct response_type {
   uint8_t *header;
   uint8_t length;
@@ -27969,6 +27976,11 @@ extern struct V_data V;
 extern header10 r_block;
 extern struct header10 H10[];
 extern struct header12 H12[];
+extern struct header13 H13[];
+extern struct header14 H14[];
+extern struct header18 H18[];
+extern struct header24 H24[];
+extern struct header53 H53[];
 
 
 
@@ -28213,6 +28225,48 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   case 1:
    block.header = (uint8_t*) & H12[0];
    block.length = sizeof(header12);
+   break;
+  case 2:
+   block.header = (uint8_t*) & H10[0];
+   block.length = sizeof(header10);
+   break;
+  case 3:
+   block.header = (uint8_t*) & H14[0];
+   block.length = sizeof(header14);
+   break;
+  case 4:
+   block.header = (uint8_t*) & H18[0];
+   block.length = sizeof(header18);
+   break;
+  default:
+   block.header = (uint8_t*) & H10[2];
+   block.length = sizeof(header10);
+   V.abort = LINK_ERROR_ABORT;
+   break;
+  }
+  break;
+ case 2:
+  switch (function) {
+  case 17:
+   block.header = (uint8_t*) & H24[0];
+   block.length = sizeof(header24);
+   break;
+  default:
+   block.header = (uint8_t*) & H10[2];
+   block.length = sizeof(header10);
+   V.abort = LINK_ERROR_ABORT;
+   break;
+  }
+  break;
+ case 6:
+  switch (function) {
+  case 11:
+   block.header = (uint8_t*) & H13[0];
+   block.length = sizeof(header13);
+   break;
+  case 12:
+   block.header = (uint8_t*) & H53[0];
+   block.length = sizeof(header53);
    break;
   default:
    block.header = (uint8_t*) & H10[2];

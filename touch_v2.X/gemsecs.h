@@ -81,6 +81,13 @@ extern "C" {
 		uint8_t length;
 	} header24;
 
+	typedef struct header53 {
+		uint16_t checksum;
+		uint8_t data[43];
+		union block10 block;
+		uint8_t length;
+	} header53;
+
 	typedef struct response_type {
 		uint8_t *header;
 		uint8_t length;

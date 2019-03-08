@@ -122,7 +122,7 @@ struct header12 H12[] = {
 };
 
 struct header13 H13[] = {
-	{ // S6F12 send 'online'
+	{ // S6F12 send 'online' reply
 		.length = 13,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -134,6 +134,9 @@ struct header13 H13[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
+		.data[2] = 0x21,
+		.data[1] = 0x01,
+		.data[0] = 0x00,
 	},
 };
 
@@ -150,6 +153,10 @@ struct header14 H14[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
+		.data[3] = 0x01,
+		.data[2] = 0x11,
+		.data[1] = 0x41,
+		.data[0] = 0x00,
 	},
 };
 
@@ -178,6 +185,22 @@ struct header24 H24[] = {
 		.block.block.wbit = 1,
 		.block.block.stream = 2,
 		.block.block.function = 18,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
+};
+
+struct header53 H53[] = {
+	{ // S1F11 send 'online' command
+		.length = 53,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 11,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,

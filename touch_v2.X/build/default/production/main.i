@@ -28179,6 +28179,13 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header24;
 
+ typedef struct header53 {
+  uint16_t checksum;
+  uint8_t data[43];
+  union block10 block;
+  uint8_t length;
+ } header53;
+
  typedef struct response_type {
   uint8_t *header;
   uint8_t length;
@@ -28271,6 +28278,9 @@ struct header13 H13[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
+  .data[2] = 0x21,
+  .data[1] = 0x01,
+  .data[0] = 0x00,
  },
 };
 
@@ -28287,6 +28297,10 @@ struct header14 H14[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
+  .data[3] = 0x01,
+  .data[2] = 0x11,
+  .data[1] = 0x41,
+  .data[0] = 0x00,
  },
 };
 
@@ -28315,6 +28329,22 @@ struct header24 H24[] = {
   .block.block.wbit = 1,
   .block.block.stream = 2,
   .block.block.function = 18,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+struct header53 H53[] = {
+ {
+  .length = 53,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 11,
   .block.block.ebit = 1,
   .block.block.bidh = 0,
   .block.block.bidl = 1,
