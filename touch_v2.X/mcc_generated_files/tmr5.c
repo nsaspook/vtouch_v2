@@ -13,13 +13,13 @@
   @Description
     This source file provides APIs for TMR5.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-        Device            :  PIC18F57K42
-        Driver Version    :  2.11
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+	Device            :  PIC18F57K42
+	Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB 	          :  MPLAB X 4.15
-*/
+	Compiler          :  XC8 1.45
+	MPLAB 	          :  MPLAB X 4.15
+ */
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -42,163 +42,162 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
-*/
+ */
 
 /**
   Section: Included Files
-*/
+ */
 
 #include <xc.h>
 #include "tmr5.h"
 #include "interrupt_manager.h"
+#include "../vconfig.h"
 
 /**
   Section: Global Variables Definitions
-*/
+ */
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
 
 /**
   Section: TMR5 APIs
-*/
+ */
 
 void TMR5_Initialize(void)
 {
-    //Set the Timer to the options selected in the GUI
+	//Set the Timer to the options selected in the GUI
 
-    //T5GE disabled; T5GTM disabled; T5GPOL low; T5GGO done; T5GSPM disabled; 
-    T5GCON = 0x00;
+	//T5GE disabled; T5GTM disabled; T5GPOL low; T5GGO done; T5GSPM disabled; 
+	T5GCON = 0x00;
 
-    //GSS T5G_pin; 
-    T5GATE = 0x00;
+	//GSS T5G_pin; 
+	T5GATE = 0x00;
 
-    //CS FOSC/4; 
-    T5CLK = 0x01;
+	//CS FOSC/4; 
+	T5CLK = 0x01;
 
-    //TMR5H 99; 
-    TMR5H = 0x63;
+	//TMR5H 99; 
+	TMR5H = 0x63;
 
-    //TMR5L 192; 
-    TMR5L = 0xC0;
+	//TMR5L 192; 
+	TMR5L = 0xC0;
 
-    // Load the TMR value to reload variable
-    timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
+	// Load the TMR value to reload variable
+	timer5ReloadVal = (uint16_t) ((TMR5H << 8) | TMR5L);
 
-    // Clearing IF flag before enabling the interrupt.
-    PIR8bits.TMR5IF = 0;
+	// Clearing IF flag before enabling the interrupt.
+	PIR8bits.TMR5IF = 0;
 
-    // Enabling TMR5 interrupt.
-    PIE8bits.TMR5IE = 1;
+	// Enabling TMR5 interrupt.
+	PIE8bits.TMR5IE = 1;
 
-    // Set Default Interrupt Handler
-    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
+	// Set Default Interrupt Handler
+	TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
-    // CKPS 1:8; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
-    T5CON = 0x31;
+	// CKPS 1:8; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
+	T5CON = 0x31;
 }
 
 void TMR5_StartTimer(void)
 {
-    // Start the Timer by writing to TMRxON bit
-    T5CONbits.TMR5ON = 1;
+	// Start the Timer by writing to TMRxON bit
+	T5CONbits.TMR5ON = 1;
 }
 
 void TMR5_StopTimer(void)
 {
-    // Stop the Timer by writing to TMRxON bit
-    T5CONbits.TMR5ON = 0;
+	// Stop the Timer by writing to TMRxON bit
+	T5CONbits.TMR5ON = 0;
 }
 
 uint16_t TMR5_ReadTimer(void)
 {
-    uint16_t readVal;
-    uint8_t readValHigh;
-    uint8_t readValLow;
-    
-    T5CONbits.T5RD16 = 1;
-	
-    readValLow = TMR5L;
-    readValHigh = TMR5H;
-    
-    readVal = ((uint16_t)readValHigh << 8) | readValLow;
+	uint16_t readVal;
+	uint8_t readValHigh;
+	uint8_t readValLow;
 
-    return readVal;
+	T5CONbits.T5RD16 = 1;
+
+	readValLow = TMR5L;
+	readValHigh = TMR5H;
+
+	readVal = ((uint16_t) readValHigh << 8) | readValLow;
+
+	return readVal;
 }
 
 void TMR5_WriteTimer(uint16_t timerVal)
 {
-    if (T5CONbits.NOT_SYNC == 1)
-    {
-        // Stop the Timer by writing to TMRxON bit
-        T5CONbits.TMR5ON = 0;
+	if (T5CONbits.NOT_SYNC == 1) {
+		// Stop the Timer by writing to TMRxON bit
+		T5CONbits.TMR5ON = 0;
 
-        // Write to the Timer5 register
-        TMR5H = (timerVal >> 8);
-        TMR5L = timerVal;
+		// Write to the Timer5 register
+		TMR5H = (timerVal >> 8);
+		TMR5L = timerVal;
 
-        // Start the Timer after writing to the register
-        T5CONbits.TMR5ON =1;
-    }
-    else
-    {
-        // Write to the Timer5 register
-        TMR5H = (timerVal >> 8);
-        TMR5L = timerVal;
-    }
+		// Start the Timer after writing to the register
+		T5CONbits.TMR5ON = 1;
+	} else {
+		// Write to the Timer5 register
+		TMR5H = (timerVal >> 8);
+		TMR5L = timerVal;
+	}
 }
 
 void TMR5_Reload(void)
 {
-    TMR5_WriteTimer(timer5ReloadVal);
+	TMR5_WriteTimer(timer5ReloadVal);
 }
 
 void TMR5_StartSinglePulseAcquisition(void)
 {
-    T5GCONbits.T5GGO = 1;
+	T5GCONbits.T5GGO = 1;
 }
 
 uint8_t TMR5_CheckGateValueStatus(void)
 {
-    return (T5GCONbits.T5GVAL);
+	return(T5GCONbits.T5GVAL);
 }
 
-void __interrupt(irq(TMR5),base(8)) TMR5_ISR()
+void __interrupt(irq(TMR5), base(8)) TMR5_ISR()
 {
-    static volatile unsigned int CountCallBack = 0;
+	static volatile unsigned int CountCallBack = 0;
 
-    // Clear the TMR5 interrupt flag
-    PIR8bits.TMR5IF = 0;
-    TMR5_WriteTimer(timer5ReloadVal);
+	// Clear the TMR5 interrupt flag
+	PIR8bits.TMR5IF = 0;
+	TMR5_WriteTimer(timer5ReloadVal);
 
-    // callback function - called every 100th pass
-    if (++CountCallBack >= TMR5_INTERRUPT_TICKER_FACTOR)
-    {
-        // ticker function call
-        TMR5_CallBack();
+	// callback function - called every 100th pass
+	if (++CountCallBack >= TMR5_INTERRUPT_TICKER_FACTOR) {
+		// ticker function call
+		TMR5_CallBack();
 
-        // reset ticker counter
-        CountCallBack = 0;
-    }
+		// reset ticker counter
+		CountCallBack = 0;
+	}
 }
 
 void TMR5_CallBack(void)
 {
-    // Add your custom callback code here
-    if(TMR5_InterruptHandler)
-    {
-        TMR5_InterruptHandler();
-    }
+	// Add your custom callback code here
+	if (TMR5_InterruptHandler) {
+		TMR5_InterruptHandler();
+	}
 }
 
-void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
-    TMR5_InterruptHandler = InterruptHandler;
+void TMR5_SetInterruptHandler(void (* InterruptHandler)(void))
+{
+	TMR5_InterruptHandler = InterruptHandler;
 }
 
-void TMR5_DefaultInterruptHandler(void){
-    // add your TMR5 interrupt custom code
-    // or set custom function using TMR5_SetInterruptHandler()
+void TMR5_DefaultInterruptHandler(void)
+{
+	// add your TMR5 interrupt custom code
+	// or set custom function using TMR5_SetInterruptHandler()
+	SLED = (uint8_t) ~SLED;
 }
 
 /**
   End of File
-*/
+ */

@@ -27303,6 +27303,115 @@ void TMR5_DefaultInterruptHandler(void);
 void INTERRUPT_Initialize (void);
 # 53 "mcc_generated_files/tmr5.c" 2
 
+# 1 "mcc_generated_files/../vconfig.h" 1
+# 20 "mcc_generated_files/../vconfig.h"
+# 1 "./mcc_generated_files/spi1.h" 1
+# 55 "./mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 140 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 2 3
+# 55 "./mcc_generated_files/spi1.h" 2
+# 117 "./mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 21 "mcc_generated_files/../vconfig.h" 2
+# 1 "./mcc_generated_files/pin_manager.h" 1
+# 400 "./mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+# 22 "mcc_generated_files/../vconfig.h" 2
+# 1 "./ringbufs.h" 1
+# 15 "./ringbufs.h"
+# 1 "./vconfig.h" 1
+# 16 "./ringbufs.h" 2
+
+
+
+ typedef struct ringBufS_t {
+  uint8_t buf[64];
+  uint8_t head;
+  uint8_t tail;
+  uint8_t count;
+ } ringBufS_t;
+
+ void ringBufS_init(volatile ringBufS_t *_this);
+ int8_t ringBufS_empty(ringBufS_t *_this);
+ int8_t ringBufS_full(ringBufS_t *_this);
+ uint8_t ringBufS_get(ringBufS_t *_this);
+ void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+# 23 "./vconfig.h" 2
+# 59 "./vconfig.h"
+ struct spi_link_type {
+  uint8_t SPI_LCD : 1;
+  uint8_t SPI_AUX : 1;
+  uint8_t LCD_TIMER : 1;
+  volatile uint8_t LCD_DATA : 1;
+  uint16_t delay;
+  uint8_t config;
+  struct ringBufS_t *tx1b, *tx1a;
+  volatile int32_t int_count;
+ };
+
+ typedef enum {
+  SEQ_STATE_INIT = 0,
+  SEQ_STATE_RX,
+  SEQ_STATE_TX,
+  SEQ_STATE_TRIGGER,
+  SEQ_STATE_DONE,
+  SEQ_STATE_ERROR
+ } SEQ_STATES;
+
+ typedef enum {
+  UI_STATE_INIT = 0,
+  UI_STATE_HOST,
+  UI_STATE_EQUIP,
+  UI_STATE_DEBUG,
+  UI_STATE_LOG,
+  UI_STATE_ERROR
+ } UI_STATES;
+
+ typedef enum {
+  LINK_STATE_IDLE = 0,
+  LINK_STATE_ENQ,
+  LINK_STATE_EOT,
+  LINK_STATE_ACK,
+  LINK_STATE_DONE,
+  LINK_STATE_NAK,
+  LINK_STATE_ERROR
+ } LINK_STATES;
+
+ typedef enum {
+  LINK_ERROR_NONE = 0,
+  LINK_ERROR_T1,
+  LINK_ERROR_T2,
+  LINK_ERROR_T3,
+  LINK_ERROR_T4,
+  LINK_ERROR_CHECKSUM,
+  LINK_ERROR_NAK,
+  LINK_ERROR_ABORT,
+  LINK_ERROR_SEND
+ } LINK_ERRORS;
+
+ typedef struct V_data {
+  SEQ_STATES s_state;
+  UI_STATES ui_state;
+  LINK_STATES r_l_state;
+  LINK_STATES t_l_state;
+  char buf[64];
+  volatile uint32_t ticks;
+  uint8_t stream, function, error, abort;
+  uint16_t r_checksum, t_checksum;
+
+ } V_data;
+# 54 "mcc_generated_files/tmr5.c" 2
+
 
 
 
@@ -27319,134 +27428,132 @@ void TMR5_Initialize(void)
 
 
 
-    T5GCON = 0x00;
+ T5GCON = 0x00;
 
 
-    T5GATE = 0x00;
+ T5GATE = 0x00;
 
 
-    T5CLK = 0x01;
+ T5CLK = 0x01;
 
 
-    TMR5H = 0x63;
+ TMR5H = 0x63;
 
 
-    TMR5L = 0xC0;
+ TMR5L = 0xC0;
 
 
-    timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
+ timer5ReloadVal = (uint16_t) ((TMR5H << 8) | TMR5L);
 
 
-    PIR8bits.TMR5IF = 0;
+ PIR8bits.TMR5IF = 0;
 
 
-    PIE8bits.TMR5IE = 1;
+ PIE8bits.TMR5IE = 1;
 
 
-    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
+ TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
 
-    T5CON = 0x31;
+ T5CON = 0x31;
 }
 
 void TMR5_StartTimer(void)
 {
 
-    T5CONbits.TMR5ON = 1;
+ T5CONbits.TMR5ON = 1;
 }
 
 void TMR5_StopTimer(void)
 {
 
-    T5CONbits.TMR5ON = 0;
+ T5CONbits.TMR5ON = 0;
 }
 
 uint16_t TMR5_ReadTimer(void)
 {
-    uint16_t readVal;
-    uint8_t readValHigh;
-    uint8_t readValLow;
+ uint16_t readVal;
+ uint8_t readValHigh;
+ uint8_t readValLow;
 
-    T5CONbits.T5RD16 = 1;
+ T5CONbits.T5RD16 = 1;
 
-    readValLow = TMR5L;
-    readValHigh = TMR5H;
+ readValLow = TMR5L;
+ readValHigh = TMR5H;
 
-    readVal = ((uint16_t)readValHigh << 8) | readValLow;
+ readVal = ((uint16_t) readValHigh << 8) | readValLow;
 
-    return readVal;
+ return readVal;
 }
 
 void TMR5_WriteTimer(uint16_t timerVal)
 {
-    if (T5CONbits.NOT_SYNC == 1)
-    {
+ if (T5CONbits.NOT_SYNC == 1) {
 
-        T5CONbits.TMR5ON = 0;
-
-
-        TMR5H = (timerVal >> 8);
-        TMR5L = timerVal;
+  T5CONbits.TMR5ON = 0;
 
 
-        T5CONbits.TMR5ON =1;
-    }
-    else
-    {
+  TMR5H = (timerVal >> 8);
+  TMR5L = timerVal;
 
-        TMR5H = (timerVal >> 8);
-        TMR5L = timerVal;
-    }
+
+  T5CONbits.TMR5ON = 1;
+ } else {
+
+  TMR5H = (timerVal >> 8);
+  TMR5L = timerVal;
+ }
 }
 
 void TMR5_Reload(void)
 {
-    TMR5_WriteTimer(timer5ReloadVal);
+ TMR5_WriteTimer(timer5ReloadVal);
 }
 
 void TMR5_StartSinglePulseAcquisition(void)
 {
-    T5GCONbits.T5GGO = 1;
+ T5GCONbits.T5GGO = 1;
 }
 
 uint8_t TMR5_CheckGateValueStatus(void)
 {
-    return (T5GCONbits.T5GVAL);
+ return(T5GCONbits.T5GVAL);
 }
 
-void __attribute__((picinterrupt(("irq(TMR5),base(8)")))) TMR5_ISR()
+void __attribute__((picinterrupt(("irq(TMR5), base(8)")))) TMR5_ISR()
 {
-    static volatile unsigned int CountCallBack = 0;
+ static volatile unsigned int CountCallBack = 0;
 
 
-    PIR8bits.TMR5IF = 0;
-    TMR5_WriteTimer(timer5ReloadVal);
+ PIR8bits.TMR5IF = 0;
+ TMR5_WriteTimer(timer5ReloadVal);
 
 
-    if (++CountCallBack >= 100)
-    {
+ if (++CountCallBack >= 50) {
 
-        TMR5_CallBack();
+  TMR5_CallBack();
 
 
-        CountCallBack = 0;
-    }
+  CountCallBack = 0;
+ }
 }
 
 void TMR5_CallBack(void)
 {
 
-    if(TMR5_InterruptHandler)
-    {
-        TMR5_InterruptHandler();
-    }
+ if (TMR5_InterruptHandler) {
+  TMR5_InterruptHandler();
+ }
 }
 
-void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
-    TMR5_InterruptHandler = InterruptHandler;
+void TMR5_SetInterruptHandler(void (* InterruptHandler)(void))
+{
+ TMR5_InterruptHandler = InterruptHandler;
 }
 
-void TMR5_DefaultInterruptHandler(void){
+void TMR5_DefaultInterruptHandler(void)
+{
 
 
+ LATEbits.LATE0 = (uint8_t) ~LATEbits.LATE0;
 }

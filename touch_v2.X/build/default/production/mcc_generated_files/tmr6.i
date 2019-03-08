@@ -27790,7 +27790,6 @@ void TMR6_DefaultInterruptHandler(void)
  uint8_t i;
 
 
- LATEbits.LATE0 = (uint8_t) ~LATEbits.LATE0;
 
 
  for (i = 0; i < TMR_COUNT; i++) {
