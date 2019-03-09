@@ -28035,7 +28035,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 59 "./vconfig.h"
+# 60 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28415,7 +28415,6 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 
 void main(void)
 {
- uint16_t sum;
  UI_STATES mode;
 
 
@@ -28442,34 +28441,18 @@ void main(void)
    }
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-
-   uint8_t j;
-
-   j = 3;
-   sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
-   H10[j].checksum = sum;
-   sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x #",
-    mode,
-    H10[j].block.b[9],
-    H10[j].block.b[8],
-    H10[j].block.b[7],
-    H10[j].block.b[6],
-    H10[j].block.b[5],
-    H10[j].block.b[4],
-    H10[j].block.b[3],
-    H10[j].block.b[2],
-    H10[j].block.b[1],
-    H10[j].block.b[0],
-    sum);
+# 302 "main.c"
+   sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
-   eaDogM_WriteString(V.buf);
-
-   secs_send((uint8_t*) & H10[j], sizeof(header10), 0);
-   sprintf(V.buf, " C 0x%04x #", V.t_checksum);
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " Version %s", "0.1A");
    wait_lcd_done();
-   eaDogM_WriteString(V.buf);
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   sprintf(V.buf, " FGB@MCHP FAB4");
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(2, 0, V.buf);
 
-
+   WaitMs(3000);
    break;
   case UI_STATE_HOST:
    switch (V.s_state) {

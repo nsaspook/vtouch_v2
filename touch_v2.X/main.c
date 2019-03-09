@@ -245,7 +245,6 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
  */
 void main(void)
 {
-	uint16_t sum;
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
 
 	// Initialize the device
@@ -274,6 +273,7 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 #ifdef TESTING
 			uint8_t j;
+			uint16_t sum;
 
 			j = 3; // set H10 block for testing
 			sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
@@ -298,8 +298,18 @@ void main(void)
 			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
 			wait_lcd_done();
 			eaDogM_WriteString(V.buf);
+#else
+			sprintf(V.buf, " RVI HOST TESTER");
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, " Version %s", VER);
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			sprintf(V.buf, " FGB@MCHP FAB4");
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(2, 0, V.buf);
 #endif
-
+			WaitMs(3000);
 			break;
 		case UI_STATE_HOST:
 			switch (V.s_state) {
