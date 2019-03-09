@@ -28434,9 +28434,12 @@ void main(void)
   case UI_STATE_INIT:
    init_display();
    eaDogM_WriteCommand(0b00001100);
+   do { LATDbits.LATD0 = 0; } while(0);
    mode = PORTDbits.RD2 + UI_STATE_EQUIP;
-   if (!PORTDbits.RD3)
+   if (!PORTDbits.RD3) {
+    do { LATDbits.LATD0 = 1; } while(0);
     mode = UI_STATE_LOG;
+   }
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
 
@@ -28475,7 +28478,7 @@ void main(void)
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
 
-    WaitMs(75);
+    WaitMs(50);
     UART1_put_buffer(0x05);
 
     break;

@@ -264,9 +264,12 @@ void main(void)
 		case UI_STATE_INIT:
 			init_display();
 			eaDogM_CursorOff();
+			RELAY0_SetLow();
 			mode = SW0_GetValue() + UI_STATE_EQUIP; /* link configuration host/equipment/etc ... */
-			if (!SW1_GetValue())
+			if (!SW1_GetValue()) {
+				RELAY0_SetHigh();
 				mode = UI_STATE_LOG;
+			}
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 #ifdef TESTING
@@ -305,7 +308,7 @@ void main(void)
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 #ifdef DB1
-				WaitMs(75);
+				WaitMs(50);
 				UART1_put_buffer(ENQ);
 #endif
 				break;
