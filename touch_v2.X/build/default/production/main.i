@@ -28445,7 +28445,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.1A");
+   sprintf(V.buf, " Version %s", "0.2A");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28460,6 +28460,7 @@ void main(void)
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
+    do { LATEbits.LATE2 = 0; } while(0);
 
     WaitMs(50);
     UART1_put_buffer(0x05);
@@ -28470,6 +28471,7 @@ void main(void)
 
 
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+     do { LATEbits.LATE2 = 0; } while(0);
      sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
      V.buf[11] = 0;
      wait_lcd_done();
@@ -28487,29 +28489,31 @@ void main(void)
 
 
     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
+     do { LATEbits.LATE2 = 0; } while(0);
      V.s_state = SEQ_STATE_TRIGGER;
     }
     if (V.t_l_state == LINK_STATE_ERROR)
      V.s_state = SEQ_STATE_ERROR;
     break;
    case SEQ_STATE_TRIGGER:
-    do { LATEbits.LATE1 = 1; } while(0);
+    V.s_state = SEQ_STATE_DONE;
     sprintf(V.buf, " OK #");
+    do { LATEbits.LATE2 = 0; } while(0);
     wait_lcd_done();
     eaDogM_WriteStringAtPos(0, 11, V.buf);
-    V.s_state = SEQ_STATE_DONE;
-    do { LATEbits.LATE1 = 0; } while(0);
+
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
+    do { LATEbits.LATE2 = 0; } while(0);
     break;
    case SEQ_STATE_ERROR:
    default:
+    V.s_state = SEQ_STATE_INIT;
     UART1_Write(0x15);
     sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
     wait_lcd_done();
     eaDogM_WriteStringAtPos(0, 0, V.buf);
-    V.s_state = SEQ_STATE_INIT;
     break;
    }
    sprintf(V.buf, " HOST MODE     #");
@@ -28534,9 +28538,12 @@ void main(void)
    V.ui_state = UI_STATE_INIT;
    break;
   }
+  do { LATEbits.LATE1 = 1; } while(0);
   sprintf(V.buf, " R%d T%d E%d A%d   #", V.r_l_state, V.t_l_state, V.error, V.abort);
   V.buf[16] = 0;
   wait_lcd_done();
   eaDogM_WriteStringAtPos(1, 0, V.buf);
+  do { LATEbits.LATE1 = 0; } while(0);
+  do { LATEbits.LATE2 = 1; } while(0);
  }
 }

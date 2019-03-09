@@ -310,13 +310,14 @@ void main(void)
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
 #endif
 			WaitMs(3000);
-			break;
+			break; 
 		case UI_STATE_HOST:
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
+				DEBUG2_SetLow();
 #ifdef DB1
 				WaitMs(50);
 				UART1_put_buffer(ENQ);
@@ -327,6 +328,7 @@ void main(void)
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+					DEBUG2_SetLow();
 					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
 					V.buf[11] = 0; // string size limit
 					wait_lcd_done();
@@ -344,29 +346,31 @@ void main(void)
 				 * send response message to equipment
 				 */
 				if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
+					DEBUG2_SetLow();
 					V.s_state = SEQ_STATE_TRIGGER;
 				}
 				if (V.t_l_state == LINK_STATE_ERROR)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TRIGGER:
-				DEBUG1_SetHigh();
+				V.s_state = SEQ_STATE_DONE;
 				sprintf(V.buf, " OK #");
+				DEBUG2_SetLow();
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(0, 11, V.buf);
-				V.s_state = SEQ_STATE_DONE;
-				DEBUG1_SetLow();
+
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
+				DEBUG2_SetLow();
 				break;
 			case SEQ_STATE_ERROR:
 			default:
+				V.s_state = SEQ_STATE_INIT;
 				UART1_Write(NAK);
 				sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(0, 0, V.buf);
-				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
 			sprintf(V.buf, " HOST MODE     #");
@@ -391,10 +395,13 @@ void main(void)
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
+		DEBUG1_SetHigh();
 		sprintf(V.buf, " R%d T%d E%d A%d   #", V.r_l_state, V.t_l_state, V.error, V.abort);
 		V.buf[16] = 0; // string size limit
 		wait_lcd_done();
 		eaDogM_WriteStringAtPos(1, 0, V.buf);
+		DEBUG1_SetLow();
+		DEBUG2_SetHigh();
 	}
 }
 /**

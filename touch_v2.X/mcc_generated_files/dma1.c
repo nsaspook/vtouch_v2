@@ -156,7 +156,6 @@ void __interrupt(irq(DMA1OR), base(8)) DMA1_DMAOR_ISR()
 {
 	PIR2bits.DMA1ORIF = 0; // clear overrun Interrupt Flag 
 	// add your DMA channel 1 overrun interrupt custom code
-	LATEbits.LATE1 = 0;
 }
 /**
   End of File

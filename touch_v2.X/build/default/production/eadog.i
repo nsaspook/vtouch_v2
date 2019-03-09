@@ -27765,7 +27765,6 @@ void eaDogM_WriteString(char *strPtr)
  DMA1SSZ = strlen(strPtr);
  DMA1CON0bits.EN = 1;
  printf("%s", strPtr);
- do { LATEbits.LATE2 = 0; } while(0);
  start_lcd();
  ++V.ticks;
 }
@@ -27784,7 +27783,6 @@ void send_lcd_cmd_dma(uint8_t strPtr)
  DMA1SSZ = 1;
  DMA1CON0bits.EN = 1;
  printf("%c", strPtr);
- do { LATEbits.LATE2 = 0; } while(0);
  start_lcd();
  wait_lcd_done();
  do { LATCbits.LATC1 = 1; } while(0);
@@ -27806,7 +27804,6 @@ void send_lcd_data_dma(uint8_t strPtr)
  printf("%c", strPtr);
  do { LATEbits.LATE2 = 0; } while(0);
  start_lcd();
- wait_lcd_done();
 }
 
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)

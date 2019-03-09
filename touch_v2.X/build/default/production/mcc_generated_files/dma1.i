@@ -27470,5 +27470,4 @@ void __attribute__((picinterrupt(("irq(DMA1OR), base(8)")))) DMA1_DMAOR_ISR()
 {
  PIR2bits.DMA1ORIF = 0;
 
- LATEbits.LATE1 = 0;
 }

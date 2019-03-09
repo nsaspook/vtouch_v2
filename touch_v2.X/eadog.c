@@ -175,7 +175,6 @@ void eaDogM_WriteString(char *strPtr)
 	DMA1SSZ = strlen(strPtr);
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
-	DEBUG2_SetLow();
 	start_lcd();
 	++V.ticks; // transaction ID for messages
 }
@@ -194,7 +193,6 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 	DMA1SSZ = 1;
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
-	DEBUG2_SetLow();
 	start_lcd();
 	wait_lcd_done();
 	RS_SetHigh();
@@ -216,7 +214,6 @@ void send_lcd_data_dma(uint8_t strPtr)
 	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
 	DEBUG2_SetLow();
 	start_lcd();
-	wait_lcd_done();
 }
 
 void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
