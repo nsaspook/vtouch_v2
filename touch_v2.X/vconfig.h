@@ -114,9 +114,10 @@ extern "C" {
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
 		char buf[64];
-		volatile uint32_t ticks;
+		volatile uint32_t ticks, systemb;
 		uint8_t stream, function, error, abort;
 		uint16_t r_checksum, t_checksum;
+		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 1, failed_receive : 1;
 
 	} V_data;
 #ifdef	__cplusplus

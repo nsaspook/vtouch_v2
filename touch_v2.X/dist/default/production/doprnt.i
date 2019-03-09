@@ -1066,6 +1066,17 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
             return dtoa(fp, ll);
         }
+
+
+
+        if (!strncmp(*fmt, "ld", ((sizeof("ld")/sizeof("ld"[0]))-1)) || !strncmp(*fmt, "li", ((sizeof("li")/sizeof("li"[0]))-1))) {
+
+
+            *fmt += ((sizeof("ld")/sizeof("ld"[0]))-1);
+            ll = (long long)(*(long *)__va_arg(*(long **)ap, (long)0));
+
+            return dtoa(fp, ll);
+        }
 # 1149 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if (*fmt[0] == 's') {
 

@@ -28093,9 +28093,10 @@ void PMD_Initialize(void);
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[64];
-  volatile uint32_t ticks;
+  volatile uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 1, failed_receive : 1;
 
  } V_data;
 # 27 "./eadog.h" 2
@@ -28510,13 +28511,12 @@ void main(void)
    case SEQ_STATE_ERROR:
    default:
     V.s_state = SEQ_STATE_INIT;
-    UART1_Write(0x15);
     sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
     wait_lcd_done();
     eaDogM_WriteStringAtPos(0, 0, V.buf);
     break;
    }
-   sprintf(V.buf, " HOST MODE     #");
+   sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28545,5 +28545,6 @@ void main(void)
   eaDogM_WriteStringAtPos(1, 0, V.buf);
   do { LATEbits.LATE1 = 0; } while(0);
   do { LATEbits.LATE2 = 1; } while(0);
+  ++V.ticks;
  }
 }

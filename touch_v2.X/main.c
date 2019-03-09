@@ -310,8 +310,8 @@ void main(void)
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
 #endif
 			WaitMs(3000);
-			break; 
-		case UI_STATE_HOST:
+			break;
+		case UI_STATE_HOST: //slave
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
 				V.r_l_state = LINK_STATE_IDLE;
@@ -367,24 +367,23 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;
-				UART1_Write(NAK);
 				sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(0, 0, V.buf);
 				break;
 			}
-			sprintf(V.buf, " HOST MODE     #");
+			sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
 			break;
-		case UI_STATE_EQUIP:
+		case UI_STATE_EQUIP: // master
 			sprintf(V.buf, " EQUIP MODE    #");
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
 			break;
-		case UI_STATE_LOG:
+		case UI_STATE_LOG: // monitor
 			sprintf(V.buf, " LOG MODE      #");
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
@@ -402,6 +401,7 @@ void main(void)
 		eaDogM_WriteStringAtPos(1, 0, V.buf);
 		DEBUG1_SetLow();
 		DEBUG2_SetHigh();
+		++V.ticks; // transaction ID for master messages
 	}
 }
 /**

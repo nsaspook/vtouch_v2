@@ -27376,9 +27376,10 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[64];
-  volatile uint32_t ticks;
+  volatile uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 1, failed_receive : 1;
 
  } V_data;
 # 21 "./gemsecs.h" 2
@@ -28039,7 +28040,7 @@ uint16_t run_checksum(uint8_t byte_block, _Bool clear)
 LINK_STATES r_protocol(LINK_STATES *r_link)
 {
  uint8_t rxData;
- static uint8_t rxData_l = 0;
+ static uint8_t rxData_l = 0, retry = 3;
 
  switch (*r_link) {
  case LINK_STATE_IDLE:
@@ -28058,13 +28059,18 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   *r_link = LINK_STATE_EOT;
 
   WaitMs(5);
+  H10[3].block.block.systemb = V.ticks;
   secs_send((uint8_t*) & H10[3], sizeof(header10), 1);
 
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
-   V.error = LINK_ERROR_T2;
-   *r_link = LINK_STATE_NAK;
+   if (!retry--) {
+    V.error = LINK_ERROR_T2;
+    *r_link = LINK_STATE_NAK;
+   } else {
+    *r_link = LINK_STATE_IDLE;
+   }
   } else {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
@@ -28091,6 +28097,9 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
       if (V.r_checksum == H10[1].checksum) {
        *r_link = LINK_STATE_ACK;
       } else {
+       while (UART1_is_rx_ready())
+        rxData = UART1_Read();
+       WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
        *r_link = LINK_STATE_NAK;
       }
@@ -28102,18 +28111,27 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
  case LINK_STATE_ACK:
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
+  V.systemb = H10[1].block.block.systemb;
+  V.rbit = H10[1].block.block.rbit;
+  V.wbit = H10[1].block.block.wbit;
+  V.ebit = H10[1].block.block.ebit;
   UART1_Write(0x06);
+  V.failed_receive = 0;
   *r_link = LINK_STATE_DONE;
   break;
  case LINK_STATE_NAK:
+  V.failed_receive = 1;
+  UART1_Write(0x15);
   *r_link = LINK_STATE_ERROR;
   while ((uart1RxCount)) {
    UART1_Read();
   }
+  retry = 3;
   break;
  case LINK_STATE_ERROR:
   break;
  case LINK_STATE_DONE:
+  V.failed_receive = 0;
  default:
   *r_link = LINK_STATE_IDLE;
   break;
@@ -28125,11 +28143,13 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
  uint8_t rxData;
+ static uint8_t retry;
  response_type block;
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
   V.error = LINK_ERROR_NONE;
+  retry = 3;
   UART1_Write(0x05);
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
@@ -28140,14 +28160,22 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_ENQ:
   if (TimerDone(TMR_T2)) {
-   V.error = LINK_ERROR_T2;
-   *t_link = LINK_STATE_NAK;
+   if (!retry--) {
+    V.error = LINK_ERROR_T2;
+    *t_link = LINK_STATE_NAK;
+   } else {
+    StartTimer(TMR_T2, 2000);
+   }
   } else {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
      StartTimer(TMR_T3, 5000);
      *t_link = LINK_STATE_EOT;
+    }
+    if (rxData == 0x05) {
+     UART1_put_buffer(0x04);
+     *t_link = LINK_STATE_DONE;
     }
    }
   }
@@ -28178,12 +28206,14 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x06) {
+     V.failed_send = 0;
      *t_link = LINK_STATE_DONE;
     }
    }
   }
   break;
  case LINK_STATE_NAK:
+  V.failed_send = 1;
   *t_link = LINK_STATE_ERROR;
   while ((uart1RxCount)) {
    UART1_Read();
@@ -28192,6 +28222,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  case LINK_STATE_ERROR:
   break;
  case LINK_STATE_DONE:
+  V.failed_send = 0;
   break;
  default:
   *t_link = LINK_STATE_IDLE;
@@ -28252,22 +28283,27 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   case 1:
    block.header = (uint8_t*) & H12[0];
    block.length = sizeof(header12);
+   H12[0].block.block.systemb = V.systemb;
    break;
   case 2:
    block.header = (uint8_t*) & H10[0];
    block.length = sizeof(header10);
+   H10[0].block.block.systemb = V.systemb;
    break;
   case 3:
    block.header = (uint8_t*) & H14[0];
    block.length = sizeof(header14);
+   H14[0].block.block.systemb = V.systemb;
    break;
   case 4:
    block.header = (uint8_t*) & H18[0];
    block.length = sizeof(header18);
+   H18[0].block.block.systemb = V.systemb;
    break;
   default:
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
+   H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    break;
   }
@@ -28277,10 +28313,12 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   case 17:
    block.header = (uint8_t*) & H24[0];
    block.length = sizeof(header24);
+   H24[0].block.block.systemb = V.systemb;
    break;
   default:
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
+   H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    break;
   }
@@ -28290,14 +28328,17 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   case 11:
    block.header = (uint8_t*) & H13[0];
    block.length = sizeof(header13);
+   H13[0].block.block.systemb = V.systemb;
    break;
   case 12:
    block.header = (uint8_t*) & H53[0];
    block.length = sizeof(header53);
+   H53[0].block.block.systemb = V.systemb;
    break;
   default:
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
+   H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    break;
   }
@@ -28305,6 +28346,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  default:
   block.header = (uint8_t*) & H10[2];
   block.length = sizeof(header10);
+  H10[2].block.block.systemb = V.systemb;
   V.abort = LINK_ERROR_ABORT;
   break;
  }
