@@ -27322,7 +27322,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 21 "mcc_generated_files/../vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 400 "./mcc_generated_files/pin_manager.h"
+# 480 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 22 "mcc_generated_files/../vconfig.h" 2
 # 1 "./ringbufs.h" 1
@@ -27370,8 +27370,8 @@ void PIN_MANAGER_Initialize (void);
 
  typedef enum {
   UI_STATE_INIT = 0,
-  UI_STATE_HOST,
   UI_STATE_EQUIP,
+  UI_STATE_HOST,
   UI_STATE_DEBUG,
   UI_STATE_LOG,
   UI_STATE_ERROR

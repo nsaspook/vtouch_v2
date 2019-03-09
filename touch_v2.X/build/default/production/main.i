@@ -27391,7 +27391,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 400 "./mcc_generated_files/pin_manager.h"
+# 480 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "./mcc_generated_files/mcc.h" 2
 
@@ -27857,6 +27857,25 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 59 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
+# 60 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -27884,25 +27903,6 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
-# 60 "./mcc_generated_files/mcc.h" 2
-
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -28058,8 +28058,8 @@ void PMD_Initialize(void);
 
  typedef enum {
   UI_STATE_INIT = 0,
-  UI_STATE_HOST,
   UI_STATE_EQUIP,
+  UI_STATE_HOST,
   UI_STATE_DEBUG,
   UI_STATE_LOG,
   UI_STATE_ERROR
@@ -28416,7 +28416,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 void main(void)
 {
  uint16_t sum;
- UI_STATES mode = UI_STATE_HOST;
+ UI_STATES mode;
 
 
  SYSTEM_Initialize();
@@ -28434,6 +28434,9 @@ void main(void)
   case UI_STATE_INIT:
    init_display();
    eaDogM_WriteCommand(0b00001100);
+   mode = PORTDbits.RD2 + UI_STATE_EQUIP;
+   if (!PORTDbits.RD3)
+    mode = UI_STATE_LOG;
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
 
@@ -28482,7 +28485,7 @@ void main(void)
 
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
      sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
-     V.buf[11]=0;
+     V.buf[11] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
@@ -28507,7 +28510,7 @@ void main(void)
     do { LATEbits.LATE1 = 1; } while(0);
     sprintf(V.buf, " OK #");
     wait_lcd_done();
-    eaDogM_WriteString(V.buf);
+    eaDogM_WriteStringAtPos(0, 11, V.buf);
     V.s_state = SEQ_STATE_DONE;
     do { LATEbits.LATE1 = 0; } while(0);
     break;
@@ -28519,15 +28522,35 @@ void main(void)
     UART1_Write(0x15);
     sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
     wait_lcd_done();
-    eaDogM_WriteString(V.buf);
+    eaDogM_WriteStringAtPos(0, 0, V.buf);
     V.s_state = SEQ_STATE_INIT;
     break;
    }
+   sprintf(V.buf, " HOST MODE     #");
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(2, 0, V.buf);
+   break;
+  case UI_STATE_EQUIP:
+   sprintf(V.buf, " EQUIP MODE    #");
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(2, 0, V.buf);
+   break;
+  case UI_STATE_LOG:
+   sprintf(V.buf, " LOG MODE      #");
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(2, 0, V.buf);
    break;
   case UI_STATE_ERROR:
   default:
    V.ui_state = UI_STATE_INIT;
    break;
   }
+  sprintf(V.buf, " R%d T%d E%d A%d   #", V.r_l_state, V.t_l_state, V.error, V.abort);
+  V.buf[16] = 0;
+  wait_lcd_done();
+  eaDogM_WriteStringAtPos(1, 0, V.buf);
  }
 }

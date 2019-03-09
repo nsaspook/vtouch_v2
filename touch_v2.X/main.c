@@ -246,7 +246,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 void main(void)
 {
 	uint16_t sum;
-	UI_STATES mode = UI_STATE_HOST; /* link configuration host/equipment/etc ... */
+	UI_STATES mode; /* link configuration host/equipment/etc ... */
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -264,6 +264,9 @@ void main(void)
 		case UI_STATE_INIT:
 			init_display();
 			eaDogM_CursorOff();
+			mode = SW0_GetValue() + UI_STATE_EQUIP; /* link configuration host/equipment/etc ... */
+			if (!SW1_GetValue())
+				mode = UI_STATE_LOG;
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 #ifdef TESTING
@@ -312,7 +315,7 @@ void main(void)
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
 					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
-					V.buf[11]=0; // string size limit
+					V.buf[11] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(0, 0, V.buf);
 #ifdef DB1
@@ -337,7 +340,7 @@ void main(void)
 				DEBUG1_SetHigh();
 				sprintf(V.buf, " OK #");
 				wait_lcd_done();
-				eaDogM_WriteString(V.buf);
+				eaDogM_WriteStringAtPos(0, 11, V.buf);
 				V.s_state = SEQ_STATE_DONE;
 				DEBUG1_SetLow();
 				break;
@@ -349,16 +352,36 @@ void main(void)
 				UART1_Write(NAK);
 				sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
 				wait_lcd_done();
-				eaDogM_WriteString(V.buf);
+				eaDogM_WriteStringAtPos(0, 0, V.buf);
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
+			sprintf(V.buf, " HOST MODE     #");
+			V.buf[16] = 0; // string size limit
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(2, 0, V.buf);
+			break;
+		case UI_STATE_EQUIP:
+			sprintf(V.buf, " EQUIP MODE    #");
+			V.buf[16] = 0; // string size limit
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(2, 0, V.buf);
+			break;
+		case UI_STATE_LOG:
+			sprintf(V.buf, " LOG MODE      #");
+			V.buf[16] = 0; // string size limit
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(2, 0, V.buf);
 			break;
 		case UI_STATE_ERROR:
 		default:
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
+		sprintf(V.buf, " R%d T%d E%d A%d   #", V.r_l_state, V.t_l_state, V.error, V.abort);
+		V.buf[16] = 0; // string size limit
+		wait_lcd_done();
+		eaDogM_WriteStringAtPos(1, 0, V.buf);
 	}
 }
 /**

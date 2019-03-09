@@ -78,8 +78,8 @@ extern "C" {
 
 	typedef enum {
 		UI_STATE_INIT = 0,
-		UI_STATE_HOST,
 		UI_STATE_EQUIP,
+		UI_STATE_HOST,
 		UI_STATE_DEBUG,
 		UI_STATE_LOG,
 		UI_STATE_ERROR
