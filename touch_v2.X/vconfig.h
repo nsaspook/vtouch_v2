@@ -21,15 +21,15 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.2A"
+#define VER	"0.4A"
 	/*
 	 * debug testing and loopbacks
 	 */
 	//#define TESTING
-#define DB1
-#define DB2
-#define DB3
-#define DB4
+//#define DB1
+//#define DB2
+//#define DB3
+//#define DB4
 
 #define SLED	LED0_LAT
 

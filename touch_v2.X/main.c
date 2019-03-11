@@ -173,6 +173,29 @@ struct header14 H14[] = {
 	},
 };
 
+struct header17 H17[] = {
+	{ // S1F14 send 'online response ' from host
+		.length = 17,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 14,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[0] = 0x00,
+		.data[1] = 0x01,
+		.data[2] = 0x00,
+		.data[3] = 0x01,
+		.data[4] = 0x21,
+		.data[5] = 0x02,
+		.data[6] = 0x01,
+	},
+};
+
 struct header18 H18[] = {
 	{ // S1F3 send 'status request ' from host
 		.length = 18,
@@ -198,6 +221,23 @@ struct header24 H24[] = {
 		.block.block.wbit = 1,
 		.block.block.stream = 2,
 		.block.block.function = 18,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data = "010911084600",
+	},
+};
+
+struct header27 H27[] = {
+	{ // S1F13 send 'online request ' from equipment
+		.length = 27,
+		.block.block.rbit = 1,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 13,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,

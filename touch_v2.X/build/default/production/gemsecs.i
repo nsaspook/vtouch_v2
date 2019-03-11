@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27966,6 +27966,13 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header14;
 
+ typedef struct header17 {
+  uint16_t checksum;
+  uint8_t data[7];
+  union block10 block;
+  uint8_t length;
+ } header17;
+
  typedef struct header18 {
   uint16_t checksum;
   uint8_t data[8];
@@ -27979,6 +27986,13 @@ void WaitMs(uint16_t numMilliseconds);
   union block10 block;
   uint8_t length;
  } header24;
+
+ typedef struct header27 {
+  uint16_t checksum;
+  uint8_t data[17];
+  union block10 block;
+  uint8_t length;
+ } header27;
 
  typedef struct header53 {
   uint16_t checksum;
@@ -28006,8 +28020,10 @@ extern struct header10 H10[];
 extern struct header12 H12[];
 extern struct header13 H13[];
 extern struct header14 H14[];
+extern struct header17 H17[];
 extern struct header18 H18[];
 extern struct header24 H24[];
+extern struct header27 H27[];
 extern struct header53 H53[];
 
 
@@ -28058,9 +28074,9 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
-  WaitMs(5);
-  H10[3].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H10[3], sizeof(header10), 1);
+
+
+
 
   break;
  case LINK_STATE_EOT:
@@ -28154,8 +28170,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-  WaitMs(5);
-  UART1_put_buffer(0x04);
+
+
 
   break;
  case LINK_STATE_ENQ:
@@ -28194,8 +28210,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-  WaitMs(5);
-  UART1_put_buffer(0x06);
+
+
 
   break;
  case LINK_STATE_ACK:
@@ -28299,6 +28315,16 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.header = (uint8_t*) & H18[0];
    block.length = sizeof(header18);
    H18[0].block.block.systemb = V.systemb;
+   break;
+  case 13:
+   block.header = (uint8_t*) & H17[0];
+   block.length = sizeof(header17);
+   H17[0].block.block.systemb = V.systemb;
+   break;
+  case 14:
+   block.header = (uint8_t*) & H27[0];
+   block.length = sizeof(header27);
+   H27[0].block.block.systemb = V.systemb;
    break;
   default:
    block.header = (uint8_t*) & H10[2];

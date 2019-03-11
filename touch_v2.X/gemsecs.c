@@ -6,8 +6,10 @@ extern struct header10 H10[];
 extern struct header12 H12[];
 extern struct header13 H13[];
 extern struct header14 H14[];
+extern struct header17 H17[];
 extern struct header18 H18[];
 extern struct header24 H24[];
+extern struct header27 H27[];
 extern struct header53 H53[];
 
 /*
@@ -299,6 +301,16 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.header = (uint8_t*) & H18[0];
 			block.length = sizeof(header18);
 			H18[0].block.block.systemb = V.systemb;
+			break;
+		case 13: // S1F14
+			block.header = (uint8_t*) & H17[0];
+			block.length = sizeof(header17);
+			H17[0].block.block.systemb = V.systemb;
+			break;
+		case 14: // S1F13
+			block.header = (uint8_t*) & H27[0];
+			block.length = sizeof(header27);
+			H27[0].block.block.systemb = V.systemb;
 			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];

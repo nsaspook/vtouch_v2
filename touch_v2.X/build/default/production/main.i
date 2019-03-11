@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28192,6 +28192,13 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header14;
 
+ typedef struct header17 {
+  uint16_t checksum;
+  uint8_t data[7];
+  union block10 block;
+  uint8_t length;
+ } header17;
+
  typedef struct header18 {
   uint16_t checksum;
   uint8_t data[8];
@@ -28205,6 +28212,13 @@ void WaitMs(uint16_t numMilliseconds);
   union block10 block;
   uint8_t length;
  } header24;
+
+ typedef struct header27 {
+  uint16_t checksum;
+  uint8_t data[17];
+  union block10 block;
+  uint8_t length;
+ } header27;
 
  typedef struct header53 {
   uint16_t checksum;
@@ -28344,6 +28358,29 @@ struct header14 H14[] = {
  },
 };
 
+struct header17 H17[] = {
+ {
+  .length = 17,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 14,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[0] = 0x00,
+  .data[1] = 0x01,
+  .data[2] = 0x00,
+  .data[3] = 0x01,
+  .data[4] = 0x21,
+  .data[5] = 0x02,
+  .data[6] = 0x01,
+ },
+};
+
 struct header18 H18[] = {
  {
   .length = 18,
@@ -28369,6 +28406,23 @@ struct header24 H24[] = {
   .block.block.wbit = 1,
   .block.block.stream = 2,
   .block.block.function = 18,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data = "010911084600",
+ },
+};
+
+struct header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
   .block.block.ebit = 1,
   .block.block.bidh = 0,
   .block.block.bidl = 1,
@@ -28442,11 +28496,11 @@ void main(void)
    }
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 302 "main.c"
+# 342 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.2A");
+   sprintf(V.buf, " Version %s", "0.4A");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28463,8 +28517,8 @@ void main(void)
     V.s_state = SEQ_STATE_RX;
     do { LATEbits.LATE2 = 0; } while(0);
 
-    WaitMs(50);
-    UART1_put_buffer(0x05);
+
+
 
     break;
    case SEQ_STATE_RX:
@@ -28478,7 +28532,7 @@ void main(void)
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-     WaitMs(5);
+
 
      V.s_state = SEQ_STATE_TX;
     }
