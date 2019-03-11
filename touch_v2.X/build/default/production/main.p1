@@ -11,8 +11,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16894 . UI_STATE_INIT UI_STATE_EQUIP UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
 [c E16902 0 1 2 3 4 5 6 .. ]
 [n E16902 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
-"111 ./vconfig.h
-[; ;./vconfig.h: 111:  typedef struct V_data {
+"112 ./vconfig.h
+[; ;./vconfig.h: 112:  typedef struct V_data {
 [s S2231 `E16886 1 `E16894 1 `E16902 1 `E16902 1 `uc -> 64 `i `Vul 1 `Vul 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 ]
 [n S2231 V_data s_state ui_state r_l_state t_l_state buf ticks systemb stream function error abort r_checksum t_checksum rbit wbit ebit failed_send failed_receive ]
 "25 ./gemsecs.h
@@ -136,9 +136,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46199
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46199: extern volatile LATEbits_t LATEbits __attribute__((address(0x3FBE)));
 [v _LATEbits `VS2085 ~T0 @X0 0 e@16318 ]
-"302 ./mcc_generated_files/uart1.h
-[; ;./mcc_generated_files/uart1.h: 302: void UART1_put_buffer(uint8_t);
-[v _UART1_put_buffer `(v ~T0 @X0 0 ef1`uc ]
 "112 ./gemsecs.h
 [; ;./gemsecs.h: 112:  LINK_STATES r_protocol(LINK_STATES *);
 [v _r_protocol `(E16902 ~T0 @X0 0 ef1`*E16902 ]
@@ -3016,7 +3013,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 343:    eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 4 ]
 "344
-[; ;main.c: 344:    sprintf(V.buf, " Version %s", "0.4A");
+[; ;main.c: 344:    sprintf(V.buf, " Version %s", "0.5A");
 [e ( _sprintf (1 , (. , &U . _V 4 :s 2C :s 3C ]
 "345
 [; ;main.c: 345:    wait_lcd_done();
@@ -3065,12 +3062,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _LATEbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2263 ]
-"361
-[; ;main.c: 361:     WaitMs(50);
-[e ( _WaitMs (1 -> -> 50 `i `us ]
-"362
-[; ;main.c: 362:     UART1_put_buffer(0x05);
-[e ( _UART1_put_buffer (1 -> -> 5 `i `uc ]
 "364
 [; ;main.c: 364:     break;
 [e $U 2259  ]
@@ -3100,9 +3091,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "374
 [; ;main.c: 374:      eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 4 ]
-"376
-[; ;main.c: 376:      WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
 "378
 [; ;main.c: 378:      V.s_state = SEQ_STATE_TX;
 [e = . _V 0 . `E16886 2 ]
@@ -3358,7 +3346,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p f _sprintf 8650896 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 0 ]
 [a 1C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 3C 48 46 52 65 0 ]
+[a 3C 48 46 53 65 0 ]
 [a 4C 32 70 71 66 64 77 67 72 80 32 70 65 66 52 0 ]
 [a 11C 32 82 37 100 32 84 37 100 32 70 82 37 100 32 70 83 37 100 32 35 0 ]
 [a 7C 32 69 82 82 32 82 37 100 32 84 37 100 32 69 37 100 32 65 37 100 32 35 0 ]

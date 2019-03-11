@@ -19,8 +19,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16148 . SEQ_STATE_INIT SEQ_STATE_RX SEQ_STATE_TX SEQ_STATE_TRIGGER SEQ_STATE_DONE SEQ_STATE_ERROR  ]
 [c E16156 0 1 2 3 4 5 .. ]
 [n E16156 . UI_STATE_INIT UI_STATE_EQUIP UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
-"111 ./vconfig.h
-[; ;./vconfig.h: 111:  typedef struct V_data {
+"112 ./vconfig.h
+[; ;./vconfig.h: 112:  typedef struct V_data {
 [s S2228 `E16148 1 `E16156 1 `E16164 1 `E16164 1 `uc -> 64 `i `Vul 1 `Vul 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 ]
 [n S2228 V_data s_state ui_state r_l_state t_l_state buf ticks systemb stream function error abort r_checksum t_checksum rbit wbit ebit failed_send failed_receive ]
 "3 gemsecs.c
@@ -41,9 +41,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;gemsecs.c: 60:   StartTimer(TMR_T2, 2000);
 [c E16457 0 1 2 3 4 5 6 .. ]
 [n E16457 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_COUNT  ]
-"26 ./timers.h
-[; ;./timers.h: 26: void WaitMs(uint16_t numMilliseconds);
-[v _WaitMs `(v ~T0 @X0 0 ef1`us ]
+[v F16470 `(a ~T0 @X0 1 tf1`uc ]
+"25 ./timers.h
+[; ;./timers.h: 25: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
+[v _TimerDone `TF16470 ~T0 @X0 0 e ]
 "25 ./gemsecs.h
 [; ;./gemsecs.h: 25:  typedef struct block10_type {
 [s S2229 `ul 1 `uc 1 :7 `uc 1 :1 `uc 1 `uc 1 :7 `uc 1 :1 `uc 1 `uc 1 :7 `uc 1 :1 `uc 1 ]
@@ -52,21 +53,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./gemsecs.h: 38:  typedef union block10 {
 [u S2230 `uc -> 10 `i `S2229 1 ]
 [n S2230 block10 b block ]
-"91
-[; ;./gemsecs.h: 91:  typedef struct header27 {
-[s S2238 `us 1 `uc -> 17 `i `S2230 1 `uc 1 ]
-[n S2238 header27 checksum data block length ]
-"12 gemsecs.c
-[; ;gemsecs.c: 12: extern struct header27 H27[];
-[v _H27 `S2238 ~T0 @X0 -> 0 `x e ]
-"114 ./gemsecs.h
-[; ;./gemsecs.h: 114:  _Bool secs_send(uint8_t *, uint8_t, _Bool);
-[v _secs_send `(a ~T0 @X0 0 ef3`*uc`uc`a ]
-[v F16470 `(a ~T0 @X0 1 tf1`uc ]
-"25 ./timers.h
-[; ;./timers.h: 25: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF16470 ~T0 @X0 0 e ]
-"43 ./gemsecs.h
+"43
 [; ;./gemsecs.h: 43:  typedef struct header10 {
 [s S2231 `us 1 `S2230 1 `uc 1 ]
 [n S2231 header10 checksum block length ]
@@ -76,6 +63,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "5
 [; ;gemsecs.c: 5: extern struct header10 H10[];
 [v _H10 `S2231 ~T0 @X0 -> 0 `x e ]
+"26 ./timers.h
+[; ;./timers.h: 26: void WaitMs(uint16_t numMilliseconds);
+[v _WaitMs `(v ~T0 @X0 0 ef1`us ]
 "78 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 78: extern volatile uint8_t uart1RxCount;
 [v _uart1RxCount `Vuc ~T0 @X0 0 e ]
@@ -89,6 +79,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "115 ./gemsecs.h
 [; ;./gemsecs.h: 115:  response_type secs_II_message(uint8_t, uint8_t);
 [v _secs_II_message `(S2240 ~T0 @X0 0 ef2`uc`uc ]
+"114
+[; ;./gemsecs.h: 114:  _Bool secs_send(uint8_t *, uint8_t, _Bool);
+[v _secs_send `(a ~T0 @X0 0 ef3`*uc`uc`a ]
 "204 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 204: uint8_t UART1_is_tx_ready(void);
 [v _UART1_is_tx_ready `(uc ~T0 @X0 0 ef ]
@@ -120,6 +113,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 "9 gemsecs.c
 [; ;gemsecs.c: 9: extern struct header17 H17[];
 [v _H17 `S2235 ~T0 @X0 -> 0 `x e ]
+"91 ./gemsecs.h
+[; ;./gemsecs.h: 91:  typedef struct header27 {
+[s S2238 `us 1 `uc -> 17 `i `S2230 1 `uc 1 ]
+[n S2238 header27 checksum data block length ]
+"12 gemsecs.c
+[; ;gemsecs.c: 12: extern struct header27 H27[];
+[v _H27 `S2238 ~T0 @X0 -> 0 `x e ]
 "84 ./gemsecs.h
 [; ;./gemsecs.h: 84:  typedef struct header24 {
 [s S2237 `us 1 `uc -> 14 `i `S2230 1 `uc 1 ]
@@ -2559,15 +2559,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "61
 [; ;gemsecs.c: 61:   *r_link = LINK_STATE_EOT;
 [e = *U _r_link . `E16164 2 ]
-"63
-[; ;gemsecs.c: 63:   WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
-"64
-[; ;gemsecs.c: 64:   H27[0].block.block.systemb = V.ticks;
-[e = . . . *U + &U _H27 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H27 `ui `ux 2 1 0 . _V 5 ]
-"65
-[; ;gemsecs.c: 65:   secs_send((uint8_t*) & H27[0], sizeof(header27), 1);
-[e ( _secs_send (3 , , -> &U *U + &U _H27 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H27 `ui `ux `*uc -> -> # `S2238 `ui `uc -> -> 1 `i `a ]
 "67
 [; ;gemsecs.c: 67:   break;
 [e $U 2249  ]
@@ -2882,12 +2873,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "158
 [; ;gemsecs.c: 158:   *t_link = LINK_STATE_ENQ;
 [e = *U _t_link . `E16164 1 ]
-"160
-[; ;gemsecs.c: 160:   WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
-"161
-[; ;gemsecs.c: 161:   UART1_put_buffer(0x04);
-[e ( _UART1_put_buffer (1 -> -> 4 `i `uc ]
 "163
 [; ;gemsecs.c: 163:   break;
 [e $U 2282  ]
@@ -3031,12 +3016,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;gemsecs.c: 201:   }
 }
 [e :U 2295 ]
-"203
-[; ;gemsecs.c: 203:   WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
-"204
-[; ;gemsecs.c: 204:   UART1_put_buffer(0x06);
-[e ( _UART1_put_buffer (1 -> -> 6 `i `uc ]
 "206
 [; ;gemsecs.c: 206:   break;
 [e $U 2282  ]
