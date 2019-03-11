@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28096,7 +28096,7 @@ void PMD_Initialize(void);
   volatile uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 1, failed_receive : 1;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
 
  } V_data;
 # 27 "./eadog.h" 2
@@ -28427,7 +28427,6 @@ struct header27 H27[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data = "010911084600",
  },
 };
 
@@ -28496,7 +28495,7 @@ void main(void)
    }
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 342 "main.c"
+# 341 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -28517,8 +28516,8 @@ void main(void)
     V.s_state = SEQ_STATE_RX;
     do { LATEbits.LATE2 = 0; } while(0);
 
-
-
+    WaitMs(50);
+    UART1_put_buffer(0x05);
 
     break;
    case SEQ_STATE_RX:
@@ -28532,7 +28531,7 @@ void main(void)
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-
+     WaitMs(5);
 
      V.s_state = SEQ_STATE_TX;
     }
@@ -28567,13 +28566,15 @@ void main(void)
     V.s_state = SEQ_STATE_INIT;
     sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
     wait_lcd_done();
-    eaDogM_WriteStringAtPos(0, 0, V.buf);
+    eaDogM_WriteStringAtPos(2, 0, V.buf);
     break;
    }
-   sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(2, 0, V.buf);
+   if (!V.error && !V.abort) {
+    sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+    V.buf[16] = 0;
+    wait_lcd_done();
+    eaDogM_WriteStringAtPos(2, 0, V.buf);
+   }
    break;
   case UI_STATE_EQUIP:
    sprintf(V.buf, " EQUIP MODE    #");
@@ -28593,7 +28594,7 @@ void main(void)
    break;
   }
   do { LATEbits.LATE1 = 1; } while(0);
-  sprintf(V.buf, " R%d T%d E%d A%d   #", V.r_l_state, V.t_l_state, V.error, V.abort);
+  sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
   V.buf[16] = 0;
   wait_lcd_done();
   eaDogM_WriteStringAtPos(1, 0, V.buf);

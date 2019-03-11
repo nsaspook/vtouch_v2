@@ -61,14 +61,15 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 		*r_link = LINK_STATE_EOT;
 #ifdef DB2
 		WaitMs(5);
-		H10[3].block.block.systemb = V.ticks; // make distinct
-		secs_send((uint8_t*) & H10[3], sizeof(header10), true);
+		H27[0].block.block.systemb = V.ticks; // make distinct
+		secs_send((uint8_t*) & H27[0], sizeof(header27), true);
 #endif
 		break;
 	case LINK_STATE_EOT:
 		if (TimerDone(TMR_T2)) {
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
+				V.failed_receive = 1;
 				*r_link = LINK_STATE_NAK;
 			} else {
 				*r_link = LINK_STATE_IDLE; // retry
@@ -84,8 +85,8 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 					/*
 					 * skip possible message data
 					 */
-					if (rxData_l <= 10) // save header only
-						H10[1].block.b[r_block.length - rxData_l] = rxData;
+					if (rxData_l <= sizeof(block10)) // save header only
+						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
 					if (rxData_l <= r_block.length) // generate checksum from data stream
 						V.r_checksum = run_checksum(rxData, false);
 
@@ -103,6 +104,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 								rxData = UART1_Read();
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
+							V.failed_receive = 2;
 							*r_link = LINK_STATE_NAK;
 						}
 					}
@@ -122,7 +124,6 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 		*r_link = LINK_STATE_DONE;
 		break;
 	case LINK_STATE_NAK:
-		V.failed_receive = true;
 		UART1_Write(NAK);
 		*r_link = LINK_STATE_ERROR;
 		while (UART1_DataReady) { // dump the receive buffer
@@ -164,6 +165,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		if (TimerDone(TMR_T2)) {
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
+				V.failed_send = 1;
 				*t_link = LINK_STATE_NAK;
 			} else {
 				StartTimer(TMR_T2, T2); // try again
@@ -186,12 +188,14 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		block = secs_II_message(V.stream, V.function); // parse proper response
 		if (V.abort == LINK_ERROR_ABORT) {
 			secs_send((uint8_t*) block.header, block.length, false);
+			V.failed_send = 2;
 			*t_link = LINK_STATE_ERROR;
 		} else {
 			secs_send((uint8_t*) block.header, block.length, false);
 			if (V.error == LINK_ERROR_NONE) {
 				*t_link = LINK_STATE_ACK;
 			} else {
+				V.failed_send = 3;
 				*t_link = LINK_STATE_ERROR;
 			}
 		}
@@ -203,6 +207,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	case LINK_STATE_ACK:
 		if (TimerDone(TMR_T3)) {
 			V.error = LINK_ERROR_T3;
+			V.failed_send = 4;
 			*t_link = LINK_STATE_NAK;
 		} else {
 			if (UART1_is_rx_ready()) {
@@ -215,7 +220,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_NAK: // send failure
-		V.failed_send = true;
 		*t_link = LINK_STATE_ERROR;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();

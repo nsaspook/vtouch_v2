@@ -242,7 +242,6 @@ struct header27 H27[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data = "010911084600",
 	},
 };
 
@@ -409,13 +408,15 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
 				wait_lcd_done();
-				eaDogM_WriteStringAtPos(0, 0, V.buf);
+				eaDogM_WriteStringAtPos(2, 0, V.buf);
 				break;
 			}
-			sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
-			V.buf[16] = 0; // string size limit
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(2, 0, V.buf);
+			if (!V.error && !V.abort) {
+				sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+				V.buf[16] = 0; // string size limit
+				wait_lcd_done();
+				eaDogM_WriteStringAtPos(2, 0, V.buf);
+			}
 			break;
 		case UI_STATE_EQUIP: // master
 			sprintf(V.buf, " EQUIP MODE    #");
@@ -435,7 +436,7 @@ void main(void)
 			break;
 		}
 		DEBUG1_SetHigh();
-		sprintf(V.buf, " R%d T%d E%d A%d   #", V.r_l_state, V.t_l_state, V.error, V.abort);
+		sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
 		V.buf[16] = 0; // string size limit
 		wait_lcd_done();
 		eaDogM_WriteStringAtPos(1, 0, V.buf);

@@ -26,10 +26,10 @@ extern "C" {
 	 * debug testing and loopbacks
 	 */
 	//#define TESTING
-//#define DB1
-//#define DB2
-//#define DB3
-//#define DB4
+#define DB1
+#define DB2
+#define DB3
+#define DB4
 
 #define SLED	LED0_LAT
 
@@ -117,7 +117,7 @@ extern "C" {
 		volatile uint32_t ticks, systemb;
 		uint8_t stream, function, error, abort;
 		uint16_t r_checksum, t_checksum;
-		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 1, failed_receive : 1;
+		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
 
 	} V_data;
 #ifdef	__cplusplus

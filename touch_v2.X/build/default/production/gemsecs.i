@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27379,7 +27379,7 @@ void PIN_MANAGER_Initialize (void);
   volatile uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 1, failed_receive : 1;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
 
  } V_data;
 # 21 "./gemsecs.h" 2
@@ -28074,15 +28074,16 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
-
-
-
+  WaitMs(5);
+  H27[0].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H27[0], sizeof(header27), 1);
 
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
    if (!retry--) {
     V.error = LINK_ERROR_T2;
+    V.failed_receive = 1;
     *r_link = LINK_STATE_NAK;
    } else {
     *r_link = LINK_STATE_IDLE;
@@ -28098,8 +28099,8 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 
 
 
-     if (rxData_l <= 10)
-      H10[1].block.b[r_block.length - rxData_l] = rxData;
+     if (rxData_l <= sizeof(block10))
+      H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
 
@@ -28117,6 +28118,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
         rxData = UART1_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
+       V.failed_receive = 2;
        *r_link = LINK_STATE_NAK;
       }
      }
@@ -28136,7 +28138,6 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   *r_link = LINK_STATE_DONE;
   break;
  case LINK_STATE_NAK:
-  V.failed_receive = 1;
   UART1_Write(0x15);
   *r_link = LINK_STATE_ERROR;
   while ((uart1RxCount)) {
@@ -28170,14 +28171,15 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x04);
 
   break;
  case LINK_STATE_ENQ:
   if (TimerDone(TMR_T2)) {
    if (!retry--) {
     V.error = LINK_ERROR_T2;
+    V.failed_send = 1;
     *t_link = LINK_STATE_NAK;
    } else {
     StartTimer(TMR_T2, 2000);
@@ -28200,23 +28202,26 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   block = secs_II_message(V.stream, V.function);
   if (V.abort == LINK_ERROR_ABORT) {
    secs_send((uint8_t*) block.header, block.length, 0);
+   V.failed_send = 2;
    *t_link = LINK_STATE_ERROR;
   } else {
    secs_send((uint8_t*) block.header, block.length, 0);
    if (V.error == LINK_ERROR_NONE) {
     *t_link = LINK_STATE_ACK;
    } else {
+    V.failed_send = 3;
     *t_link = LINK_STATE_ERROR;
    }
   }
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x06);
 
   break;
  case LINK_STATE_ACK:
   if (TimerDone(TMR_T3)) {
    V.error = LINK_ERROR_T3;
+   V.failed_send = 4;
    *t_link = LINK_STATE_NAK;
   } else {
    if (UART1_is_rx_ready()) {
@@ -28229,7 +28234,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_NAK:
-  V.failed_send = 1;
   *t_link = LINK_STATE_ERROR;
   while ((uart1RxCount)) {
    UART1_Read();
