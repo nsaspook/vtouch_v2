@@ -114,7 +114,7 @@ struct header10 H10[] = {
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
-		.block.block.systemb = 0x00000d89,
+		.block.block.systemb = 1,
 	},
 };
 
@@ -134,7 +134,7 @@ struct header12 H12[] = {
 		.data[1] = 1,
 		.data[0] = 0,
 	},
-	{ // S1F13 send '' from host
+	{ // S1F13 send 'online request ' from host to equipment
 		.length = 12,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -191,7 +191,7 @@ struct header14 H14[] = {
 };
 
 struct header17 H17[] = {
-	{ // S1F14 send 'online response ' from host
+	{ // S1F14 send 'online response ' from host to equipment
 		.length = 17,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -213,24 +213,24 @@ struct header17 H17[] = {
 	},
 };
 
-struct header18 H18[] = {
-	{ // S1F3 send 'status request ' from host
-		.length = 18,
-		.block.block.rbit = 0,
-		.block.block.didh = 0,
-		.block.block.didl = 0,
-		.block.block.wbit = 0,
-		.block.block.stream = 1,
-		.block.block.function = 3,
-		.block.block.ebit = 1,
-		.block.block.bidh = 0,
-		.block.block.bidl = 1,
-		.block.block.systemb = 1,
-	},
-};
+//struct header18 H18[] = {
+//	{ // S1F3 send 'status request ' from host to equipment
+//		.length = 18,
+//		.block.block.rbit = 0,
+//		.block.block.didh = 0,
+//		.block.block.didl = 0,
+//		.block.block.wbit = 1,
+//		.block.block.stream = 1,
+//		.block.block.function = 3,
+//		.block.block.ebit = 1,
+//		.block.block.bidh = 0,
+//		.block.block.bidl = 1,
+//		.block.block.systemb = 1,
+//	},
+//};
 
 struct header24 H24[] = {
-	{ // S2F18 send 'host time ' from host
+	{ // S2F18 send 'host time ' from host to equipment
 		.length = 24,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -246,10 +246,11 @@ struct header24 H24[] = {
 	},
 };
 
+#ifdef DB2
 struct header27 H27[] = {
-	{ // S1F13 send 'online request ' from host to equipment
+	{ // S1F13 send 'online request ' from equipment to host for TESTING
 		.length = 27,
-		.block.block.rbit = 0,
+		.block.block.rbit = 1,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
 		.block.block.wbit = 1,
@@ -261,22 +262,23 @@ struct header27 H27[] = {
 		.block.block.systemb = 1,
 	},
 };
+#endif
 
 struct header53 H53[] = {
-	{ // S1F11 send 'online' command from host
-		.length = 53,
-		.block.block.rbit = 0,
-		.block.block.didh = 0,
-		.block.block.didl = 0,
-		.block.block.wbit = 1,
-		.block.block.stream = 1,
-		.block.block.function = 11,
-		.block.block.ebit = 1,
-		.block.block.bidh = 0,
-		.block.block.bidl = 1,
-		.block.block.systemb = 1,
-	},
-	{ // S10F3 send 'terminal text display ' command from host
+	//	{ // S1F11 send 'online' command from host to equipment
+	//		.length = 53,
+	//		.block.block.rbit = 0,
+	//		.block.block.didh = 0,
+	//		.block.block.didl = 0,
+	//		.block.block.wbit = 1,
+	//		.block.block.stream = 1,
+	//		.block.block.function = 11,
+	//		.block.block.ebit = 1,
+	//		.block.block.bidh = 0,
+	//		.block.block.bidl = 1,
+	//		.block.block.systemb = 1,
+	//	},
+	{ // S10F3 send 'terminal text display ' command from host to equipment
 		.length = 53,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -374,7 +376,6 @@ void main(void)
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				DEBUG2_SetLow();
 #ifdef DB1
 				WaitMs(50);
 				UART1_put_buffer(ENQ);
@@ -385,7 +386,6 @@ void main(void)
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-					DEBUG2_SetLow();
 					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
 					V.buf[11] = 0; // string size limit
 					wait_lcd_done();
@@ -409,7 +409,6 @@ void main(void)
 				 * send response message to equipment
 				 */
 				if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
-					DEBUG2_SetLow();
 					V.s_state = SEQ_STATE_TRIGGER;
 				}
 				if (V.t_l_state == LINK_STATE_ERROR)
@@ -417,19 +416,21 @@ void main(void)
 				break;
 			case SEQ_STATE_TRIGGER:
 				if (V.queue) {
+					DEBUG2_Toggle();
+					V.r_l_state = LINK_STATE_IDLE;
+					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
+					sprintf(V.buf, " OKQ#");
 				} else {
 					V.s_state = SEQ_STATE_DONE;
+					sprintf(V.buf, " OK #");
 				}
-				sprintf(V.buf, " OK #");
-				DEBUG2_SetLow();
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(0, 11, V.buf);
 
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
-				DEBUG2_SetLow();
 				break;
 			case SEQ_STATE_ERROR:
 			default:
@@ -470,7 +471,6 @@ void main(void)
 		wait_lcd_done();
 		eaDogM_WriteStringAtPos(1, 0, V.buf);
 		DEBUG1_SetLow();
-		DEBUG2_SetHigh();
 		++V.ticks; // transaction ID for master messages
 	}
 }

@@ -21,16 +21,16 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.62A"
+#define VER	"0.63A"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
 	 */
 	//#define TESTING
-	//#define DB1
-	//#define DB2
-	//#define DB3
-	//#define DB4
+#define DB1
+#define DB2
+#define DB3
+#define DB4
 
 #define SLED	LED0_LAT
 
@@ -110,16 +110,16 @@ extern "C" {
 		LINK_ERROR_SEND
 	} LINK_ERRORS;
 
-	typedef struct V_data { // control data structure with possible volatile issues
+	typedef struct V_data { // control data structure 
 		SEQ_STATES s_state;
 		UI_STATES ui_state;
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
 		char buf[64];
-		volatile uint32_t ticks, systemb;
+		uint32_t ticks, systemb;
 		uint8_t stream, function, error, abort;
 		uint16_t r_checksum, t_checksum;
-		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1;
+		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1, connect : 2;
 	} V_data;
 #ifdef	__cplusplus
 }

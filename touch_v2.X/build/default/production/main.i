@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28094,10 +28094,10 @@ void PMD_Initialize(void);
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[64];
-  volatile uint32_t ticks, systemb;
+  uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1, connect : 2;
  } V_data;
 # 27 "./eadog.h" 2
 
@@ -28302,7 +28302,7 @@ struct header10 H10[] = {
   .block.block.ebit = 1,
   .block.block.bidh = 0,
   .block.block.bidl = 1,
-  .block.block.systemb = 0x00000d89,
+  .block.block.systemb = 1,
  },
 };
 
@@ -28400,23 +28400,7 @@ struct header17 H17[] = {
   .data[6] = 0x01,
  },
 };
-
-struct header18 H18[] = {
- {
-  .length = 18,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 3,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
+# 232 "main.c"
 struct header24 H24[] = {
  {
   .length = 24,
@@ -28434,10 +28418,11 @@ struct header24 H24[] = {
  },
 };
 
+
 struct header27 H27[] = {
  {
   .length = 27,
-  .block.block.rbit = 0,
+  .block.block.rbit = 1,
   .block.block.didh = 0,
   .block.block.didl = 0,
   .block.block.wbit = 1,
@@ -28450,20 +28435,9 @@ struct header27 H27[] = {
  },
 };
 
+
 struct header53 H53[] = {
- {
-  .length = 53,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 11,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
+# 281 "main.c"
  {
   .length = 53,
   .block.block.rbit = 0,
@@ -28515,11 +28489,11 @@ void main(void)
    }
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 359 "main.c"
+# 361 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.62A");
+   sprintf(V.buf, " Version %s", "0.63A");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28534,10 +28508,9 @@ void main(void)
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
-    do { LATEbits.LATE2 = 0; } while(0);
 
-
-
+    WaitMs(50);
+    UART1_put_buffer(0x05);
 
     break;
    case SEQ_STATE_RX:
@@ -28545,13 +28518,12 @@ void main(void)
 
 
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-     do { LATEbits.LATE2 = 0; } while(0);
      sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
      V.buf[11] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-
+     WaitMs(5);
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -28569,7 +28541,6 @@ void main(void)
 
 
     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
-     do { LATEbits.LATE2 = 0; } while(0);
      V.s_state = SEQ_STATE_TRIGGER;
     }
     if (V.t_l_state == LINK_STATE_ERROR)
@@ -28577,19 +28548,21 @@ void main(void)
     break;
    case SEQ_STATE_TRIGGER:
     if (V.queue) {
+     do { LATEbits.LATE2 = ~LATEbits.LATE2; } while(0);
+     V.r_l_state = LINK_STATE_IDLE;
+     V.t_l_state = LINK_STATE_IDLE;
      V.s_state = SEQ_STATE_TX;
+     sprintf(V.buf, " OKQ#");
     } else {
      V.s_state = SEQ_STATE_DONE;
+     sprintf(V.buf, " OK #");
     }
-    sprintf(V.buf, " OK #");
-    do { LATEbits.LATE2 = 0; } while(0);
     wait_lcd_done();
     eaDogM_WriteStringAtPos(0, 11, V.buf);
 
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
-    do { LATEbits.LATE2 = 0; } while(0);
     break;
    case SEQ_STATE_ERROR:
    default:
@@ -28630,7 +28603,6 @@ void main(void)
   wait_lcd_done();
   eaDogM_WriteStringAtPos(1, 0, V.buf);
   do { LATEbits.LATE1 = 0; } while(0);
-  do { LATEbits.LATE2 = 1; } while(0);
   ++V.ticks;
  }
 }
