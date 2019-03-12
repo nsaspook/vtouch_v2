@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27335,6 +27335,7 @@ void PIN_MANAGER_Initialize (void);
   SEQ_STATE_RX,
   SEQ_STATE_TX,
   SEQ_STATE_TRIGGER,
+  SEQ_STATE_QUEUE,
   SEQ_STATE_DONE,
   SEQ_STATE_ERROR
  } SEQ_STATES;
@@ -27379,8 +27380,7 @@ void PIN_MANAGER_Initialize (void);
   volatile uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
-
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1;
  } V_data;
 # 21 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
@@ -28004,6 +28004,9 @@ void WaitMs(uint16_t numMilliseconds);
  typedef struct response_type {
   uint8_t *header;
   uint8_t length;
+  uint8_t *reply;
+  uint8_t reply_length;
+  uint8_t respond : 1;
  } response_type;
 
  uint16_t block_checksum(uint8_t *, uint16_t);
@@ -28205,7 +28208,12 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    V.failed_send = 2;
    *t_link = LINK_STATE_ERROR;
   } else {
-   secs_send((uint8_t*) block.header, block.length, 0);
+   if (!V.queue) {
+    secs_send((uint8_t*) block.header, block.length, 0);
+   } else {
+    V.queue = 0;
+    secs_send((uint8_t*) block.reply, block.reply_length, 0);
+   }
    if (V.error == LINK_ERROR_NONE) {
     *t_link = LINK_STATE_ACK;
    } else {
@@ -28296,6 +28304,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  static response_type block;
 
  V.abort = LINK_ERROR_NONE;
+ V.queue = 0;
+ block.respond = 0;
 
  switch (stream) {
  case 1:
@@ -28304,6 +28314,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.header = (uint8_t*) & H12[0];
    block.length = sizeof(header12);
    H12[0].block.block.systemb = V.systemb;
+   H10[0].block.block.systemb = V.systemb;
+   block.respond = 1;
+   block.reply = (uint8_t*) & H10[0];
+   block.reply_length = sizeof(header10);
+   V.queue = 1;
    break;
   case 2:
    block.header = (uint8_t*) & H10[0];
@@ -28324,6 +28339,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.header = (uint8_t*) & H17[0];
    block.length = sizeof(header17);
    H17[0].block.block.systemb = V.systemb;
+   H12[1].block.block.systemb = V.systemb;
+   block.respond = 1;
+   block.reply = (uint8_t*) & H12[1];
+   block.reply_length = sizeof(header12);
+   V.queue = 1;
    break;
   case 14:
    block.header = (uint8_t*) & H27[0];

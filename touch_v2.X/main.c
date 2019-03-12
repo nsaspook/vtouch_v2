@@ -61,16 +61,18 @@ extern struct spi_link_type spi_link;
 
 struct V_data V;
 struct header10 H10[] = {
-	{ // S1F1 send 'are you there?' from host
+	{ // S1F1 send 'are you there?' from host to equipment
 		.length = 10,
 		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 1,
 		.block.block.function = 1,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
-		.block.block.systemb = 0x000c9f75,
+		.block.block.systemb = 1,
 	},
 	{ // all stream and function header receive buffer from equipment
 		.length = 10,
@@ -88,7 +90,7 @@ struct header10 H10[] = {
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
 	},
-	{ // S1F1 send 'are you there?' from equipment
+	{ // S1F1 send 'are you there?' from equipment to host
 		.length = 10,
 		.block.block.rbit = 1,
 		.block.block.didh = 0,
@@ -99,7 +101,7 @@ struct header10 H10[] = {
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
-		.block.block.systemb = 0x00000d89,
+		.block.block.systemb = 1,
 	},
 	{ // S2F17 send 'date and time request?' from host
 		.length = 10,
@@ -122,9 +124,24 @@ struct header12 H12[] = {
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
-		.block.block.wbit = 1,
+		.block.block.wbit = 0,
 		.block.block.stream = 1,
 		.block.block.function = 2,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[1] = 1,
+		.data[0] = 0,
+	},
+	{ // S1F13 send '' from host
+		.length = 12,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 13,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
@@ -140,7 +157,7 @@ struct header13 H13[] = {
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
-		.block.block.wbit = 1,
+		.block.block.wbit = 0,
 		.block.block.stream = 6,
 		.block.block.function = 12,
 		.block.block.ebit = 1,
@@ -159,7 +176,7 @@ struct header14 H14[] = {
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
-		.block.block.wbit = 1,
+		.block.block.wbit = 0,
 		.block.block.stream = 1,
 		.block.block.function = 4,
 		.block.block.ebit = 1,
@@ -179,7 +196,7 @@ struct header17 H17[] = {
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
-		.block.block.wbit = 1,
+		.block.block.wbit = 0,
 		.block.block.stream = 1,
 		.block.block.function = 14,
 		.block.block.ebit = 1,
@@ -202,7 +219,7 @@ struct header18 H18[] = {
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
-		.block.block.wbit = 1,
+		.block.block.wbit = 0,
 		.block.block.stream = 1,
 		.block.block.function = 3,
 		.block.block.ebit = 1,
@@ -218,7 +235,7 @@ struct header24 H24[] = {
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
-		.block.block.wbit = 1,
+		.block.block.wbit = 0,
 		.block.block.stream = 2,
 		.block.block.function = 18,
 		.block.block.ebit = 1,
@@ -230,9 +247,9 @@ struct header24 H24[] = {
 };
 
 struct header27 H27[] = {
-	{ // S1F13 send 'online request ' from equipment
+	{ // S1F13 send 'online request ' from host to equipment
 		.length = 27,
-		.block.block.rbit = 1,
+		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
 		.block.block.wbit = 1,
@@ -335,6 +352,7 @@ void main(void)
 
 			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
 			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
+			e
 			wait_lcd_done();
 			eaDogM_WriteString(V.buf);
 #else
@@ -375,7 +393,13 @@ void main(void)
 #ifdef DB1
 					WaitMs(5);
 #endif
-					V.s_state = SEQ_STATE_TX;
+					if (V.wbit) { // check for receive only messages
+						V.s_state = SEQ_STATE_TX;
+						V.failed_send = false;
+						V.t_l_state = LINK_STATE_IDLE;
+					} else { // don't send a reply
+						V.s_state = SEQ_STATE_TRIGGER;
+					}
 				}
 				if (V.r_l_state == LINK_STATE_ERROR)
 					V.s_state = SEQ_STATE_ERROR;
@@ -392,7 +416,11 @@ void main(void)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TRIGGER:
-				V.s_state = SEQ_STATE_DONE;
+				if (V.queue) {
+					V.s_state = SEQ_STATE_TX;
+				} else {
+					V.s_state = SEQ_STATE_DONE;
+				}
 				sprintf(V.buf, " OK #");
 				DEBUG2_SetLow();
 				wait_lcd_done();
@@ -406,7 +434,8 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
+				sprintf(V.buf, "E R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
+				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
 				break;

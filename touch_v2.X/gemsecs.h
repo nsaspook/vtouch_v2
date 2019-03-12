@@ -105,6 +105,9 @@ extern "C" {
 	typedef struct response_type {
 		uint8_t *header;
 		uint8_t length;
+		uint8_t *reply;
+		uint8_t reply_length;
+		uint8_t respond : 1;
 	} response_type;
 
 	uint16_t block_checksum(uint8_t *, uint16_t);

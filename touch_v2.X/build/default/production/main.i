@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28052,6 +28052,7 @@ void PMD_Initialize(void);
   SEQ_STATE_RX,
   SEQ_STATE_TX,
   SEQ_STATE_TRIGGER,
+  SEQ_STATE_QUEUE,
   SEQ_STATE_DONE,
   SEQ_STATE_ERROR
  } SEQ_STATES;
@@ -28096,8 +28097,7 @@ void PMD_Initialize(void);
   volatile uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
-
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1;
  } V_data;
 # 27 "./eadog.h" 2
 
@@ -28230,6 +28230,9 @@ void WaitMs(uint16_t numMilliseconds);
  typedef struct response_type {
   uint8_t *header;
   uint8_t length;
+  uint8_t *reply;
+  uint8_t reply_length;
+  uint8_t respond : 1;
  } response_type;
 
  uint16_t block_checksum(uint8_t *, uint16_t);
@@ -28249,13 +28252,15 @@ struct header10 H10[] = {
  {
   .length = 10,
   .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 1,
   .block.block.function = 1,
   .block.block.ebit = 1,
   .block.block.bidh = 0,
   .block.block.bidl = 1,
-  .block.block.systemb = 0x000c9f75,
+  .block.block.systemb = 1,
  },
  {
   .length = 10,
@@ -28284,7 +28289,7 @@ struct header10 H10[] = {
   .block.block.ebit = 1,
   .block.block.bidh = 0,
   .block.block.bidl = 1,
-  .block.block.systemb = 0x00000d89,
+  .block.block.systemb = 1,
  },
  {
   .length = 10,
@@ -28307,9 +28312,24 @@ struct header12 H12[] = {
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
-  .block.block.wbit = 1,
+  .block.block.wbit = 0,
   .block.block.stream = 1,
   .block.block.function = 2,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[1] = 1,
+  .data[0] = 0,
+ },
+ {
+  .length = 12,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
   .block.block.ebit = 1,
   .block.block.bidh = 0,
   .block.block.bidl = 1,
@@ -28325,7 +28345,7 @@ struct header13 H13[] = {
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
-  .block.block.wbit = 1,
+  .block.block.wbit = 0,
   .block.block.stream = 6,
   .block.block.function = 12,
   .block.block.ebit = 1,
@@ -28344,7 +28364,7 @@ struct header14 H14[] = {
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
-  .block.block.wbit = 1,
+  .block.block.wbit = 0,
   .block.block.stream = 1,
   .block.block.function = 4,
   .block.block.ebit = 1,
@@ -28364,7 +28384,7 @@ struct header17 H17[] = {
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
-  .block.block.wbit = 1,
+  .block.block.wbit = 0,
   .block.block.stream = 1,
   .block.block.function = 14,
   .block.block.ebit = 1,
@@ -28387,7 +28407,7 @@ struct header18 H18[] = {
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
-  .block.block.wbit = 1,
+  .block.block.wbit = 0,
   .block.block.stream = 1,
   .block.block.function = 3,
   .block.block.ebit = 1,
@@ -28403,7 +28423,7 @@ struct header24 H24[] = {
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
-  .block.block.wbit = 1,
+  .block.block.wbit = 0,
   .block.block.stream = 2,
   .block.block.function = 18,
   .block.block.ebit = 1,
@@ -28417,7 +28437,7 @@ struct header24 H24[] = {
 struct header27 H27[] = {
  {
   .length = 27,
-  .block.block.rbit = 1,
+  .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
   .block.block.wbit = 1,
@@ -28495,11 +28515,11 @@ void main(void)
    }
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 341 "main.c"
+# 359 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.5A");
+   sprintf(V.buf, " Version %s", "0.62A");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28533,7 +28553,13 @@ void main(void)
 
 
 
-     V.s_state = SEQ_STATE_TX;
+     if (V.wbit) {
+      V.s_state = SEQ_STATE_TX;
+      V.failed_send = 0;
+      V.t_l_state = LINK_STATE_IDLE;
+     } else {
+      V.s_state = SEQ_STATE_TRIGGER;
+     }
     }
     if (V.r_l_state == LINK_STATE_ERROR)
      V.s_state = SEQ_STATE_ERROR;
@@ -28550,7 +28576,11 @@ void main(void)
      V.s_state = SEQ_STATE_ERROR;
     break;
    case SEQ_STATE_TRIGGER:
-    V.s_state = SEQ_STATE_DONE;
+    if (V.queue) {
+     V.s_state = SEQ_STATE_TX;
+    } else {
+     V.s_state = SEQ_STATE_DONE;
+    }
     sprintf(V.buf, " OK #");
     do { LATEbits.LATE2 = 0; } while(0);
     wait_lcd_done();
@@ -28564,7 +28594,8 @@ void main(void)
    case SEQ_STATE_ERROR:
    default:
     V.s_state = SEQ_STATE_INIT;
-    sprintf(V.buf, " ERR R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
+    sprintf(V.buf, "E R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
+    V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
     break;

@@ -191,7 +191,12 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			V.failed_send = 2;
 			*t_link = LINK_STATE_ERROR;
 		} else {
-			secs_send((uint8_t*) block.header, block.length, false);
+			if (!V.queue) {
+				secs_send((uint8_t*) block.header, block.length, false);
+			} else {
+				V.queue = false;
+				secs_send((uint8_t*) block.reply, block.reply_length, false);
+			}
 			if (V.error == LINK_ERROR_NONE) {
 				*t_link = LINK_STATE_ACK;
 			} else {
@@ -282,6 +287,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	static response_type block;
 
 	V.abort = LINK_ERROR_NONE;
+	V.queue = false;
+	block.respond = false;
 
 	switch (stream) {
 	case 1:
@@ -290,6 +297,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.header = (uint8_t*) & H12[0];
 			block.length = sizeof(header12);
 			H12[0].block.block.systemb = V.systemb;
+			H10[0].block.block.systemb = V.systemb;
+			block.respond = true;
+			block.reply = (uint8_t*) & H10[0];
+			block.reply_length = sizeof(header10);
+			V.queue = true;
 			break;
 		case 2: // S1F1
 			block.header = (uint8_t*) & H10[0];
@@ -310,6 +322,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.header = (uint8_t*) & H17[0];
 			block.length = sizeof(header17);
 			H17[0].block.block.systemb = V.systemb;
+			H12[1].block.block.systemb = V.systemb;
+			block.respond = true;
+			block.reply = (uint8_t*) & H12[1];
+			block.reply_length = sizeof(header12);
+			V.queue = true;
 			break;
 		case 14: // S1F13
 			block.header = (uint8_t*) & H27[0];

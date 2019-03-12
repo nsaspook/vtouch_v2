@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27333,6 +27333,7 @@ void PIN_MANAGER_Initialize (void);
   SEQ_STATE_RX,
   SEQ_STATE_TX,
   SEQ_STATE_TRIGGER,
+  SEQ_STATE_QUEUE,
   SEQ_STATE_DONE,
   SEQ_STATE_ERROR
  } SEQ_STATES;
@@ -27377,8 +27378,7 @@ void PIN_MANAGER_Initialize (void);
   volatile uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
-
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1;
  } V_data;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1
