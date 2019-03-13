@@ -344,7 +344,6 @@ void main(void)
 
 			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
 			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
-			e
 			wait_lcd_done();
 			eaDogM_WriteString(V.buf);
 #else
@@ -417,7 +416,6 @@ void main(void)
 				}
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(0, 11, V.buf);
-
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
@@ -439,6 +437,40 @@ void main(void)
 			}
 			break;
 		case UI_STATE_LOG: // monitor
+			switch (V.s_state) {
+			case SEQ_STATE_INIT:
+				V.m_l_state = LINK_STATE_IDLE;
+				V.s_state = SEQ_STATE_RX;
+				V.uart = 0;
+				break;
+			case SEQ_STATE_RX:
+				/*
+				 * receive rx and tx messages from comm link
+				 */
+				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
+					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+					V.buf[11] = 0; // string size limit
+					wait_lcd_done();
+					eaDogM_WriteStringAtPos(V.uart, 0, V.buf);
+					V.s_state = SEQ_STATE_TRIGGER;
+				}
+				if (V.m_l_state == LINK_STATE_ERROR)
+					V.s_state = SEQ_STATE_ERROR;
+				break;
+			case SEQ_STATE_TRIGGER:
+				V.s_state = SEQ_STATE_DONE;
+				sprintf(V.buf, " OK #");
+				wait_lcd_done();
+				eaDogM_WriteStringAtPos(V.uart, 11, V.buf);
+				break;
+			case SEQ_STATE_DONE:
+				V.s_state = SEQ_STATE_INIT;
+				break;
+			case SEQ_STATE_ERROR:
+			default:
+				V.s_state = SEQ_STATE_INIT;
+				break;
+			}
 			sprintf(V.buf, " LOG MODE      #");
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();

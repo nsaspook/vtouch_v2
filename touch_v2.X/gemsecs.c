@@ -39,6 +39,171 @@ uint16_t run_checksum(uint8_t byte_block, bool clear)
 	return sum;
 }
 
+LINK_STATES m_protocol(LINK_STATES *m_link)
+{
+	uint8_t rxData;
+	static uint8_t rxData_l = 0;
+
+	switch (*m_link) {
+	case LINK_STATE_IDLE:
+		if (UART1_is_rx_ready()) {
+			rxData = UART1_Read();
+			if (rxData == ENQ) {
+				V.uart = 0;
+				StartTimer(TMR_T2, T2);
+				V.error = LINK_ERROR_NONE; // reset error status
+				*m_link = LINK_STATE_ENQ;
+			}
+		}
+		if (UART2_is_rx_ready()) {
+			rxData = UART2_Read();
+			if (rxData == ENQ) {
+				V.uart = 1;
+				StartTimer(TMR_T2, T2);
+				V.error = LINK_ERROR_NONE; // reset error status
+				*m_link = LINK_STATE_ENQ;
+			}
+		}
+		break;
+	case LINK_STATE_ENQ:
+		if (TimerDone(TMR_T2)) {
+			V.error = LINK_ERROR_T2;
+			V.failed_receive = 1;
+			*m_link = LINK_STATE_NAK;
+		} else {
+			if (UART1_is_rx_ready()) {
+				rxData = UART1_Read();
+				if (rxData == EOT) {
+					V.uart = 1;
+					rxData_l = 0;
+					StartTimer(TMR_T2, T2);
+					V.error = LINK_ERROR_NONE; // reset error status
+					*m_link = LINK_STATE_EOT;
+				}
+			}
+			if (UART2_is_rx_ready()) {
+				rxData = UART2_Read();
+				if (rxData == EOT) {
+					V.uart = 0;
+					rxData_l = 0;
+					StartTimer(TMR_T2, T2);
+					V.error = LINK_ERROR_NONE; // reset error status
+					*m_link = LINK_STATE_EOT;
+				}
+			}
+		}
+		break;
+	case LINK_STATE_EOT:
+		if (TimerDone(TMR_T2)) {
+			V.error = LINK_ERROR_T2;
+			V.failed_receive = 2;
+			*m_link = LINK_STATE_NAK;
+		} else {
+			if (UART1_is_rx_ready() && (V.uart == 0)) {
+				rxData = UART1_Read();
+				if (rxData_l == 0) { // start header reads
+					r_block.length = rxData; // header+message bytes
+					run_checksum(0, true);
+					rxData_l++;
+				} else {
+					/*
+					 * skip possible message data
+					 */
+					if (rxData_l <= sizeof(block10)) // save header only
+						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+					if (rxData_l <= r_block.length) // generate checksum from data stream
+						V.r_checksum = run_checksum(rxData, false);
+
+					if (rxData_l == r_block.length + 1) // checksum high byte
+						H10[1].checksum = (uint16_t) rxData << 8;
+					if (rxData_l == r_block.length + 2) // checksum low byte
+						H10[1].checksum += rxData;
+
+					rxData_l++;
+					if (rxData_l > (r_block.length + 2)) { // end of total data stream
+						if (V.r_checksum == H10[1].checksum) {
+							*m_link = LINK_STATE_ACK;
+						} else { // bad checksum
+							while (UART1_is_rx_ready()) // dump receive buffer of bad data
+								rxData = UART1_Read();
+							WaitMs(T1); // inter-character timeout
+							V.error = LINK_ERROR_CHECKSUM;
+							V.failed_receive = 3;
+							*m_link = LINK_STATE_NAK;
+						}
+					}
+				}
+			}
+
+			if (UART2_is_rx_ready() && (V.uart == 1)) {
+				rxData = UART2_Read();
+				if (rxData_l == 0) { // start header reads
+					r_block.length = rxData; // header+message bytes
+					run_checksum(0, true);
+					rxData_l++;
+				} else {
+					/*
+					 * skip possible message data
+					 */
+					if (rxData_l <= sizeof(block10)) // save header only
+						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+					if (rxData_l <= r_block.length) // generate checksum from data stream
+						V.r_checksum = run_checksum(rxData, false);
+
+					if (rxData_l == r_block.length + 1) // checksum high byte
+						H10[1].checksum = (uint16_t) rxData << 8;
+					if (rxData_l == r_block.length + 2) // checksum low byte
+						H10[1].checksum += rxData;
+
+					rxData_l++;
+					if (rxData_l > (r_block.length + 2)) { // end of total data stream
+						if (V.r_checksum == H10[1].checksum) {
+							*m_link = LINK_STATE_ACK;
+						} else { // bad checksum
+							while (UART2_is_rx_ready()) // dump receive buffer of bad data
+								rxData = UART2_Read();
+							WaitMs(T1); // inter-character timeout
+							V.error = LINK_ERROR_CHECKSUM;
+							V.failed_receive = 4;
+							*m_link = LINK_STATE_NAK;
+						}
+					}
+				}
+			}
+		}
+		break;
+	case LINK_STATE_ACK:
+		V.stream = H10[1].block.block.stream;
+		V.function = H10[1].block.block.function;
+		V.systemb = H10[1].block.block.systemb;
+		V.rbit = H10[1].block.block.rbit;
+		V.wbit = H10[1].block.block.wbit;
+		V.ebit = H10[1].block.block.ebit;
+		V.failed_receive = false;
+		*m_link = LINK_STATE_DONE;
+		break;
+	case LINK_STATE_NAK:
+		*m_link = LINK_STATE_ERROR;
+		while (UART1_DataReady) { // dump the receive buffer
+			UART1_Read();
+		}
+		while (UART2_DataReady) { // dump the receive buffer
+			UART2_Read();
+		}
+		break;
+	case LINK_STATE_ERROR:
+		break;
+	case LINK_STATE_DONE: // auto move to idle to receive data from link
+		V.failed_receive = false;
+	default:
+		*m_link = LINK_STATE_IDLE;
+
+		break;
+	}
+
+	return *m_link;
+}
+
 LINK_STATES r_protocol(LINK_STATES *r_link)
 {
 	uint8_t rxData;
@@ -137,6 +302,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 		V.failed_receive = false;
 	default:
 		*r_link = LINK_STATE_IDLE;
+
 		break;
 	}
 
@@ -242,6 +408,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	default:
 		*t_link = LINK_STATE_IDLE;
+
 		break;
 	}
 
@@ -278,6 +445,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 		if (fake) {
 			UART1_put_buffer(k[i - 1]);
 		} else {
+
 			UART1_Write(k[i - 1]); // -1 for array memory addressing
 		}
 	}

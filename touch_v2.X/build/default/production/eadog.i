@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27371,6 +27371,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
+  LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[64];
@@ -27379,7 +27380,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2;
+  queue : 1, connect : 2, uart : 1;
  } V_data;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1

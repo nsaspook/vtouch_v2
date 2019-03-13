@@ -112,6 +112,7 @@ extern "C" {
 
 	uint16_t block_checksum(uint8_t *, uint16_t);
 	uint16_t run_checksum(uint8_t, bool);
+	LINK_STATES m_protocol(LINK_STATES *);
 	LINK_STATES r_protocol(LINK_STATES *);
 	LINK_STATES t_protocol(LINK_STATES *);
 	bool secs_send(uint8_t *, uint8_t, bool);
