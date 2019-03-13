@@ -242,7 +242,7 @@ struct header24 H24[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data = "010911084600",
+		.data = "A 010911084600",
 	},
 };
 
@@ -265,19 +265,6 @@ struct header27 H27[] = {
 #endif
 
 struct header53 H53[] = {
-	//	{ // S1F11 send 'online' command from host to equipment
-	//		.length = 53,
-	//		.block.block.rbit = 0,
-	//		.block.block.didh = 0,
-	//		.block.block.didl = 0,
-	//		.block.block.wbit = 1,
-	//		.block.block.stream = 1,
-	//		.block.block.function = 11,
-	//		.block.block.ebit = 1,
-	//		.block.block.bidh = 0,
-	//		.block.block.bidl = 1,
-	//		.block.block.systemb = 1,
-	//	},
 	{ // S10F3 send 'terminal text display ' command from host to equipment
 		.length = 53,
 		.block.block.rbit = 0,
@@ -290,7 +277,10 @@ struct header53 H53[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data = "\x000\x016 Now We Are Talking...",
+		.data[42] = 0,
+		.data[41] = 'A',
+		.data[40] = 1,
+		.data[39] = 'F',
 	},
 };
 
@@ -322,7 +312,7 @@ void main(void)
 			init_display();
 			eaDogM_CursorOff();
 			RELAY0_SetLow();
-			mode = SW0_GetValue() + UI_STATE_EQUIP; /* link configuration host/equipment/etc ... */
+			mode = UI_STATE_HOST; /* link configuration host/log ... */
 			if (!SW1_GetValue()) {
 				RELAY0_SetHigh();
 				mode = UI_STATE_LOG;
@@ -448,12 +438,6 @@ void main(void)
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
 			}
 			break;
-		case UI_STATE_EQUIP: // master
-			sprintf(V.buf, " EQUIP MODE    #");
-			V.buf[16] = 0; // string size limit
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(2, 0, V.buf);
-			break;
 		case UI_STATE_LOG: // monitor
 			sprintf(V.buf, " LOG MODE      #");
 			V.buf[16] = 0; // string size limit
@@ -471,7 +455,6 @@ void main(void)
 		wait_lcd_done();
 		eaDogM_WriteStringAtPos(1, 0, V.buf);
 		DEBUG1_SetLow();
-		++V.ticks; // transaction ID for master messages
 	}
 }
 /**

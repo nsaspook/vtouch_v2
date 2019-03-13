@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27342,7 +27342,6 @@ void PIN_MANAGER_Initialize (void);
 
  typedef enum {
   UI_STATE_INIT = 0,
-  UI_STATE_EQUIP,
   UI_STATE_HOST,
   UI_STATE_DEBUG,
   UI_STATE_LOG,
@@ -27380,7 +27379,9 @@ void PIN_MANAGER_Initialize (void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1, connect : 2;
+  uint8_t rbit : 1, wbit : 1, ebit : 1,
+  failed_send : 4, failed_receive : 4,
+  queue : 1, connect : 2;
  } V_data;
 # 21 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
@@ -27853,34 +27854,34 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
 # 1 "./mcc_generated_files/uart1.h" 1
 # 77 "./mcc_generated_files/uart1.h"
-extern volatile uint8_t uart1TxBufferRemaining;
-extern volatile uint8_t uart1RxCount;
+ extern volatile uint8_t uart1TxBufferRemaining;
+ extern volatile uint8_t uart1RxCount;
 # 105 "./mcc_generated_files/uart1.h"
-void UART1_Initialize(void);
+ void UART1_Initialize(void);
 # 154 "./mcc_generated_files/uart1.h"
-uint8_t UART1_is_rx_ready(void);
+ uint8_t UART1_is_rx_ready(void);
 # 204 "./mcc_generated_files/uart1.h"
-uint8_t UART1_is_tx_ready(void);
+ uint8_t UART1_is_tx_ready(void);
 # 251 "./mcc_generated_files/uart1.h"
-_Bool UART1_is_tx_done(void);
+ _Bool UART1_is_tx_done(void);
 # 300 "./mcc_generated_files/uart1.h"
-uint8_t UART1_Read(void);
+ uint8_t UART1_Read(void);
 
-void UART1_put_buffer(uint8_t);
+ void UART1_put_buffer(uint8_t);
 # 327 "./mcc_generated_files/uart1.h"
-void UART1_Write(uint8_t txData);
+ void UART1_Write(uint8_t txData);
 # 348 "./mcc_generated_files/uart1.h"
-void UART1_Transmit_ISR(void);
+ void UART1_Transmit_ISR(void);
 # 369 "./mcc_generated_files/uart1.h"
-void UART1_Receive_ISR(void);
+ void UART1_Receive_ISR(void);
 # 389 "./mcc_generated_files/uart1.h"
-void (*UART1_RxInterruptHandler)(void);
+ void (*UART1_RxInterruptHandler)(void);
 # 407 "./mcc_generated_files/uart1.h"
-void (*UART1_TxInterruptHandler)(void);
+ void (*UART1_TxInterruptHandler)(void);
 # 427 "./mcc_generated_files/uart1.h"
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
+ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 445 "./mcc_generated_files/uart1.h"
-void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
+ void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 64 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/dma1.h" 1
@@ -28077,9 +28078,9 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
-  WaitMs(5);
-  H27[0].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H27[0], sizeof(header27), 1);
+
+
+
 
   break;
  case LINK_STATE_EOT:
@@ -28174,8 +28175,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-  WaitMs(5);
-  UART1_put_buffer(0x04);
+
+
 
   break;
  case LINK_STATE_ENQ:
@@ -28227,8 +28228,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-  WaitMs(5);
-  UART1_put_buffer(0x06);
+
+
 
   break;
  case LINK_STATE_ACK:
@@ -28273,6 +28274,7 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
 
  k = (uint8_t *) byte_block;
 
+ ++V.ticks;
  V.error = LINK_ERROR_NONE;
  if ((length - 3) != k[length - 1]) {
   V.error = LINK_ERROR_SEND;
@@ -28325,21 +28327,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.reply_length = sizeof(header10);
    V.queue = 1;
    break;
-
-
-
-
-
   case 3:
    block.header = (uint8_t*) & H14[0];
    block.length = sizeof(header14);
    H14[0].block.block.systemb = V.systemb;
    break;
-
-
-
-
-
   case 13:
    block.header = (uint8_t*) & H17[0];
    block.length = sizeof(header17);
@@ -28350,11 +28342,6 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.reply_length = sizeof(header12);
    V.queue = 1;
    break;
-
-
-
-
-
   default:
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
@@ -28369,6 +28356,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.header = (uint8_t*) & H24[0];
    block.length = sizeof(header24);
    H24[0].block.block.systemb = V.systemb;
+   H24[0].data[12] = 12;
    break;
   default:
    block.header = (uint8_t*) & H10[2];
@@ -28385,11 +28373,50 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.length = sizeof(header13);
    H13[0].block.block.systemb = V.systemb;
    break;
-
-
-
-
-
+  default:
+   block.header = (uint8_t*) & H10[2];
+   block.length = sizeof(header10);
+   H10[2].block.block.systemb = V.systemb;
+   V.abort = LINK_ERROR_ABORT;
+   break;
+  }
+  break;
+ case 9:
+  switch (function) {
+  case 1:
+   break;
+  case 3:
+   break;
+  case 5:
+   break;
+  case 7:
+   break;
+  case 9:
+   break;
+  case 11:
+   break;
+  case 13:
+   break;
+  default:
+   block.header = (uint8_t*) & H10[2];
+   block.length = sizeof(header10);
+   H10[2].block.block.systemb = V.systemb;
+   V.abort = LINK_ERROR_ABORT;
+   break;
+  }
+  break;
+ case 10:
+  switch (function) {
+  case 1:
+   block.header = (uint8_t*) & H12[0];
+   block.length = sizeof(header12);
+   H12[0].block.block.systemb = V.systemb;
+   H53[0].block.block.systemb = V.systemb;
+   block.respond = 1;
+   block.reply = (uint8_t*) & H53[0];
+   block.reply_length = sizeof(header53);
+   V.queue = 1;
+   break;
   default:
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);

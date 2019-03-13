@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27944,34 +27944,34 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
 # 1 "./mcc_generated_files/uart1.h" 1
 # 77 "./mcc_generated_files/uart1.h"
-extern volatile uint8_t uart1TxBufferRemaining;
-extern volatile uint8_t uart1RxCount;
+ extern volatile uint8_t uart1TxBufferRemaining;
+ extern volatile uint8_t uart1RxCount;
 # 105 "./mcc_generated_files/uart1.h"
-void UART1_Initialize(void);
+ void UART1_Initialize(void);
 # 154 "./mcc_generated_files/uart1.h"
-uint8_t UART1_is_rx_ready(void);
+ uint8_t UART1_is_rx_ready(void);
 # 204 "./mcc_generated_files/uart1.h"
-uint8_t UART1_is_tx_ready(void);
+ uint8_t UART1_is_tx_ready(void);
 # 251 "./mcc_generated_files/uart1.h"
-_Bool UART1_is_tx_done(void);
+ _Bool UART1_is_tx_done(void);
 # 300 "./mcc_generated_files/uart1.h"
-uint8_t UART1_Read(void);
+ uint8_t UART1_Read(void);
 
-void UART1_put_buffer(uint8_t);
+ void UART1_put_buffer(uint8_t);
 # 327 "./mcc_generated_files/uart1.h"
-void UART1_Write(uint8_t txData);
+ void UART1_Write(uint8_t txData);
 # 348 "./mcc_generated_files/uart1.h"
-void UART1_Transmit_ISR(void);
+ void UART1_Transmit_ISR(void);
 # 369 "./mcc_generated_files/uart1.h"
-void UART1_Receive_ISR(void);
+ void UART1_Receive_ISR(void);
 # 389 "./mcc_generated_files/uart1.h"
-void (*UART1_RxInterruptHandler)(void);
+ void (*UART1_RxInterruptHandler)(void);
 # 407 "./mcc_generated_files/uart1.h"
-void (*UART1_TxInterruptHandler)(void);
+ void (*UART1_TxInterruptHandler)(void);
 # 427 "./mcc_generated_files/uart1.h"
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
+ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 445 "./mcc_generated_files/uart1.h"
-void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
+ void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 64 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/dma1.h" 1
@@ -28059,7 +28059,6 @@ void PMD_Initialize(void);
 
  typedef enum {
   UI_STATE_INIT = 0,
-  UI_STATE_EQUIP,
   UI_STATE_HOST,
   UI_STATE_DEBUG,
   UI_STATE_LOG,
@@ -28097,7 +28096,9 @@ void PMD_Initialize(void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   uint16_t r_checksum, t_checksum;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1, connect : 2;
+  uint8_t rbit : 1, wbit : 1, ebit : 1,
+  failed_send : 4, failed_receive : 4,
+  queue : 1, connect : 2;
  } V_data;
 # 27 "./eadog.h" 2
 
@@ -28414,30 +28415,11 @@ struct header24 H24[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data = "010911084600",
+  .data = "A 010911084600",
  },
 };
-
-
-struct header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 267 "main.c"
 struct header53 H53[] = {
-# 281 "main.c"
  {
   .length = 53,
   .block.block.rbit = 0,
@@ -28450,7 +28432,10 @@ struct header53 H53[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data = "\x000\x016 Now We Are Talking...",
+  .data[42] = 0,
+  .data[41] = 'A',
+  .data[40] = 1,
+  .data[39] = 'F',
  },
 };
 
@@ -28482,18 +28467,18 @@ void main(void)
    init_display();
    eaDogM_WriteCommand(0b00001100);
    do { LATDbits.LATD0 = 0; } while(0);
-   mode = PORTDbits.RD2 + UI_STATE_EQUIP;
+   mode = UI_STATE_HOST;
    if (!PORTDbits.RD3) {
     do { LATDbits.LATD0 = 1; } while(0);
     mode = UI_STATE_LOG;
    }
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 361 "main.c"
+# 351 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.63A");
+   sprintf(V.buf, " Version %s", "0.65A");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28509,8 +28494,8 @@ void main(void)
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
 
-    WaitMs(50);
-    UART1_put_buffer(0x05);
+
+
 
     break;
    case SEQ_STATE_RX:
@@ -28523,7 +28508,7 @@ void main(void)
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-     WaitMs(5);
+
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -28580,12 +28565,6 @@ void main(void)
     eaDogM_WriteStringAtPos(2, 0, V.buf);
    }
    break;
-  case UI_STATE_EQUIP:
-   sprintf(V.buf, " EQUIP MODE    #");
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(2, 0, V.buf);
-   break;
   case UI_STATE_LOG:
    sprintf(V.buf, " LOG MODE      #");
    V.buf[16] = 0;
@@ -28603,6 +28582,5 @@ void main(void)
   wait_lcd_done();
   eaDogM_WriteStringAtPos(1, 0, V.buf);
   do { LATEbits.LATE1 = 0; } while(0);
-  ++V.ticks;
  }
 }

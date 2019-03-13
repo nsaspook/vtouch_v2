@@ -21,16 +21,16 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.63A"
+#define VER	"0.65A"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
 	 */
 	//#define TESTING
-#define DB1
-#define DB2
-#define DB3
-#define DB4
+	//#define DB1
+	//#define DB2
+	//#define DB3
+	//#define DB4
 
 #define SLED	LED0_LAT
 
@@ -81,7 +81,6 @@ extern "C" {
 
 	typedef enum {
 		UI_STATE_INIT = 0,
-		UI_STATE_EQUIP,
 		UI_STATE_HOST,
 		UI_STATE_DEBUG,
 		UI_STATE_LOG,
@@ -119,7 +118,9 @@ extern "C" {
 		uint32_t ticks, systemb;
 		uint8_t stream, function, error, abort;
 		uint16_t r_checksum, t_checksum;
-		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4, queue : 1, connect : 2;
+		uint8_t rbit : 1, wbit : 1, ebit : 1,
+		failed_send : 4, failed_receive : 4,
+		queue : 1, connect : 2;
 	} V_data;
 #ifdef	__cplusplus
 }

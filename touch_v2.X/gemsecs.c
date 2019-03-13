@@ -256,6 +256,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 
 	k = (uint8_t *) byte_block;
 
+	++V.ticks; // transaction ID for host master messages
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
 		V.error = LINK_ERROR_SEND;
@@ -298,7 +299,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	switch (stream) { // from equipment
 	case 1:
 		switch (function) { // from equipment
-		case 1: // S1F2 host response
+		case 1: // S1F2 host response and S1F1 send
 			block.header = (uint8_t*) & H12[0];
 			block.length = sizeof(header12);
 			H12[0].block.block.systemb = V.systemb;
@@ -308,22 +309,12 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.reply_length = sizeof(header10);
 			V.queue = true;
 			break;
-			//		case 2: // S1F1
-			//			block.header = (uint8_t*) & H10[0];
-			//			block.length = sizeof(header10);
-			//			H10[0].block.block.systemb = V.systemb;
-			//			break;
 		case 3: // S1F4
 			block.header = (uint8_t*) & H14[0];
 			block.length = sizeof(header14);
 			H14[0].block.block.systemb = V.systemb;
 			break;
-			//		case 4: // S1F3
-			//			block.header = (uint8_t*) & H18[0];
-			//			block.length = sizeof(header18);
-			//			H18[0].block.block.systemb = V.systemb;
-			//			break;
-		case 13: // S1F14 response
+		case 13: // S1F14 response and S1F13 send
 			block.header = (uint8_t*) & H17[0];
 			block.length = sizeof(header17);
 			H17[0].block.block.systemb = V.systemb;
@@ -333,11 +324,6 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.reply_length = sizeof(header12);
 			V.queue = true;
 			break;
-			//		case 14: // S1F13
-			//			block.header = (uint8_t*) & H27[0];
-			//			block.length = sizeof(header27);
-			//			H27[0].block.block.systemb = V.systemb;
-			//			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
@@ -352,6 +338,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.header = (uint8_t*) & H24[0];
 			block.length = sizeof(header24);
 			H24[0].block.block.systemb = V.systemb;
+			H24[0].data[12] = 12;
 			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];
@@ -368,11 +355,50 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header13);
 			H13[0].block.block.systemb = V.systemb;
 			break;
-			//		case 12: // S6F11
-			//			block.header = (uint8_t*) & H53[0];
-			//			block.length = sizeof(header53);
-			//			H53[0].block.block.systemb = V.systemb;
-			//			break;
+		default: // S1F0 abort
+			block.header = (uint8_t*) & H10[2];
+			block.length = sizeof(header10);
+			H10[2].block.block.systemb = V.systemb;
+			V.abort = LINK_ERROR_ABORT;
+			break;
+		}
+		break;
+	case 9:
+		switch (function) {
+		case 1:
+			break;
+		case 3:
+			break;
+		case 5:
+			break;
+		case 7:
+			break;
+		case 9:
+			break;
+		case 11:
+			break;
+		case 13:
+			break;
+		default: // S1F0 abort
+			block.header = (uint8_t*) & H10[2];
+			block.length = sizeof(header10);
+			H10[2].block.block.systemb = V.systemb;
+			V.abort = LINK_ERROR_ABORT;
+			break;
+		}
+		break;
+	case 10:
+		switch (function) {
+		case 1: // S10F2
+			block.header = (uint8_t*) & H12[0];
+			block.length = sizeof(header12);
+			H12[0].block.block.systemb = V.systemb;
+			H53[0].block.block.systemb = V.systemb;
+			block.respond = true;
+			block.reply = (uint8_t*) & H53[0]; // S10F3 send queue
+			block.reply_length = sizeof(header53);
+			V.queue = true;
+			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
