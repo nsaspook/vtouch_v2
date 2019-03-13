@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 61 "./vconfig.h"
+# 62 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27379,6 +27379,7 @@ void PIN_MANAGER_Initialize (void);
   char buf[64];
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
+  UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
@@ -28245,9 +28246,9 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
-  WaitMs(5);
-  H27[0].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H27[0], sizeof(header27), 1);
+
+
+
 
   break;
  case LINK_STATE_EOT:
@@ -28343,8 +28344,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-  WaitMs(5);
-  UART1_put_buffer(0x04);
+
+
 
   break;
  case LINK_STATE_ENQ:
@@ -28396,8 +28397,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-  WaitMs(5);
-  UART1_put_buffer(0x06);
+
+
 
   break;
  case LINK_STATE_ACK:

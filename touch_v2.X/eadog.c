@@ -176,6 +176,9 @@ void eaDogM_WriteString(char *strPtr)
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
 	start_lcd();
+#ifdef DISPLAY_SLOW
+	wdtdelay(2000);
+#endif
 }
 
 /*

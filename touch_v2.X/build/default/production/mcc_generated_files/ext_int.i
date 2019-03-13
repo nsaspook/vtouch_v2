@@ -39,8 +39,6 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27218,86 +27216,297 @@ void INT2_DefaultInterruptHandler(void);
 void INTERRUPT_Initialize (void);
 # 29 "mcc_generated_files/ext_int.c" 2
 
+# 1 "mcc_generated_files/pin_manager.h" 1
+# 480 "mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+# 30 "mcc_generated_files/ext_int.c" 2
+
+# 1 "mcc_generated_files/../vconfig.h" 1
+# 15 "mcc_generated_files/../vconfig.h"
+ typedef signed long long int24_t;
+
+
+
+
+
+# 1 "./mcc_generated_files/spi1.h" 1
+# 54 "./mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 54 "./mcc_generated_files/spi1.h" 2
+
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 140 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 2 3
+# 55 "./mcc_generated_files/spi1.h" 2
+
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
+# 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 135 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uintptr_t;
+# 150 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long intptr_t;
+# 166 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef signed char int8_t;
+
+
+
+
+typedef short int16_t;
+# 181 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long int32_t;
+
+
+
+
+
+typedef long long int64_t;
+# 196 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long long intmax_t;
+
+
+
+
+
+typedef unsigned char uint8_t;
+
+
+
+
+typedef unsigned short uint16_t;
+# 217 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uint32_t;
+
+
+
+
+
+typedef unsigned long long uint64_t;
+# 237 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long long uintmax_t;
+# 23 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
+
+typedef int8_t int_fast8_t;
+
+typedef int64_t int_fast64_t;
+
+
+typedef int8_t int_least8_t;
+typedef int16_t int_least16_t;
+
+
+
+typedef int32_t int_least32_t;
+
+typedef int64_t int_least64_t;
+
+
+typedef uint8_t uint_fast8_t;
+
+typedef uint64_t uint_fast64_t;
+
+
+typedef uint8_t uint_least8_t;
+typedef uint16_t uint_least16_t;
+
+typedef uint24_t uint_least24_t;
+
+typedef uint32_t uint_least32_t;
+
+typedef uint64_t uint_least64_t;
+# 155 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/stdint.h" 1 3
+typedef int32_t int_fast16_t;
+typedef int32_t int_fast32_t;
+typedef uint32_t uint_fast16_t;
+typedef uint32_t uint_fast32_t;
+# 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
+# 56 "./mcc_generated_files/spi1.h" 2
+# 117 "./mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 21 "mcc_generated_files/../vconfig.h" 2
+
+# 1 "./ringbufs.h" 1
+# 15 "./ringbufs.h"
+# 1 "./vconfig.h" 1
+# 16 "./ringbufs.h" 2
+
+
+
+ typedef struct ringBufS_t {
+  uint8_t buf[64];
+  uint8_t head;
+  uint8_t tail;
+  uint8_t count;
+ } ringBufS_t;
+
+ void ringBufS_init(volatile ringBufS_t *_this);
+ int8_t ringBufS_empty(ringBufS_t *_this);
+ int8_t ringBufS_full(ringBufS_t *_this);
+ uint8_t ringBufS_get(ringBufS_t *_this);
+ void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+# 23 "./vconfig.h" 2
+# 62 "./vconfig.h"
+ struct spi_link_type {
+  uint8_t SPI_LCD : 1;
+  uint8_t SPI_AUX : 1;
+  uint8_t LCD_TIMER : 1;
+  volatile uint8_t LCD_DATA : 1;
+  uint16_t delay;
+  uint8_t config;
+  struct ringBufS_t *tx1b, *tx1a;
+  volatile int32_t int_count;
+ };
+
+ typedef enum {
+  SEQ_STATE_INIT = 0,
+  SEQ_STATE_RX,
+  SEQ_STATE_TX,
+  SEQ_STATE_TRIGGER,
+  SEQ_STATE_QUEUE,
+  SEQ_STATE_DONE,
+  SEQ_STATE_ERROR
+ } SEQ_STATES;
+
+ typedef enum {
+  UI_STATE_INIT = 0,
+  UI_STATE_HOST,
+  UI_STATE_DEBUG,
+  UI_STATE_LOG,
+  UI_STATE_ERROR
+ } UI_STATES;
+
+ typedef enum {
+  LINK_STATE_IDLE = 0,
+  LINK_STATE_ENQ,
+  LINK_STATE_EOT,
+  LINK_STATE_ACK,
+  LINK_STATE_DONE,
+  LINK_STATE_NAK,
+  LINK_STATE_ERROR
+ } LINK_STATES;
+
+ typedef enum {
+  LINK_ERROR_NONE = 0,
+  LINK_ERROR_T1,
+  LINK_ERROR_T2,
+  LINK_ERROR_T3,
+  LINK_ERROR_T4,
+  LINK_ERROR_CHECKSUM,
+  LINK_ERROR_NAK,
+  LINK_ERROR_ABORT,
+  LINK_ERROR_SEND
+ } LINK_ERRORS;
+
+ typedef struct V_data {
+  SEQ_STATES s_state;
+  UI_STATES ui_state;
+  LINK_STATES m_l_state;
+  LINK_STATES r_l_state;
+  LINK_STATES t_l_state;
+  char buf[64];
+  uint32_t ticks, systemb;
+  uint8_t stream, function, error, abort;
+  UI_STATES ui_sw;
+  uint16_t r_checksum, t_checksum;
+  uint8_t rbit : 1, wbit : 1, ebit : 1,
+  failed_send : 4, failed_receive : 4,
+  queue : 1, connect : 2, uart : 1;
+ } V_data;
+# 31 "mcc_generated_files/ext_int.c" 2
+
+
 
 void (*INT0_InterruptHandler)(void);
 void (*INT1_InterruptHandler)(void);
 void (*INT2_InterruptHandler)(void);
 
-void __attribute__((picinterrupt(("irq(INT0),base(8)")))) INT0_ISR()
+void __attribute__((picinterrupt(("irq(INT0), base(8)")))) INT0_ISR()
 {
-    (PIR1bits.INT0IF = 0);
+ (PIR1bits.INT0IF = 0);
 
 
-    INT0_CallBack();
+ INT0_CallBack();
 }
-
 
 void INT0_CallBack(void)
 {
 
-    if(INT0_InterruptHandler)
-    {
-        INT0_InterruptHandler();
-    }
+ if (INT0_InterruptHandler) {
+  INT0_InterruptHandler();
+ }
 }
 
-void INT0_SetInterruptHandler(void (* InterruptHandler)(void)){
-    INT0_InterruptHandler = InterruptHandler;
-}
-
-void INT0_DefaultInterruptHandler(void){
-
-
-}
-void __attribute__((picinterrupt(("irq(INT1),base(8)")))) INT1_ISR()
+void INT0_SetInterruptHandler(void (* InterruptHandler)(void))
 {
-    (PIR5bits.INT1IF = 0);
-
-
-    INT1_CallBack();
+ INT0_InterruptHandler = InterruptHandler;
 }
 
+void INT0_DefaultInterruptHandler(void)
+{
+
+
+}
+
+void __attribute__((picinterrupt(("irq(INT1), base(8)")))) INT1_ISR()
+{
+ (PIR5bits.INT1IF = 0);
+
+
+ INT1_CallBack();
+}
 
 void INT1_CallBack(void)
 {
 
-    if(INT1_InterruptHandler)
-    {
-        INT1_InterruptHandler();
-    }
+ if (INT1_InterruptHandler) {
+  INT1_InterruptHandler();
+ }
 }
 
-void INT1_SetInterruptHandler(void (* InterruptHandler)(void)){
-    INT1_InterruptHandler = InterruptHandler;
-}
-
-void INT1_DefaultInterruptHandler(void){
-
-
-}
-void __attribute__((picinterrupt(("irq(INT2),base(8)")))) INT2_ISR()
+void INT1_SetInterruptHandler(void (* InterruptHandler)(void))
 {
-    (PIR7bits.INT2IF = 0);
-
-
-    INT2_CallBack();
+ INT1_InterruptHandler = InterruptHandler;
 }
 
+void INT1_DefaultInterruptHandler(void)
+{
+
+
+}
+
+void __attribute__((picinterrupt(("irq(INT2), base(8)")))) INT2_ISR()
+{
+ (PIR7bits.INT2IF = 0);
+
+
+ INT2_CallBack();
+}
 
 void INT2_CallBack(void)
 {
 
-    if(INT2_InterruptHandler)
-    {
-        INT2_InterruptHandler();
-    }
+ if (INT2_InterruptHandler) {
+  INT2_InterruptHandler();
+ }
 }
 
-void INT2_SetInterruptHandler(void (* InterruptHandler)(void)){
-    INT2_InterruptHandler = InterruptHandler;
+void INT2_SetInterruptHandler(void (* InterruptHandler)(void))
+{
+ INT2_InterruptHandler = InterruptHandler;
 }
 
-void INT2_DefaultInterruptHandler(void){
+void INT2_DefaultInterruptHandler(void)
+{
 
 
 }
@@ -27307,28 +27516,28 @@ void EXT_INT_Initialize(void)
 
 
 
-    (PIR1bits.INT0IF = 0);
-    (INTCON0bits.INT0EDG = 0);
+ (PIR1bits.INT0IF = 0);
+ (INTCON0bits.INT0EDG = 0);
 
-    INT0_SetInterruptHandler(INT0_DefaultInterruptHandler);
-    (PIE1bits.INT0IE = 1);
-
-
-
-
-    (PIR5bits.INT1IF = 0);
-    (INTCON0bits.INT1EDG = 0);
-
-    INT1_SetInterruptHandler(INT1_DefaultInterruptHandler);
-    (PIE5bits.INT1IE = 1);
+ INT0_SetInterruptHandler(INT0_DefaultInterruptHandler);
+ (PIE1bits.INT0IE = 1);
 
 
 
 
-    (PIR7bits.INT2IF = 0);
-    (INTCON0bits.INT2EDG = 0);
+ (PIR5bits.INT1IF = 0);
+ (INTCON0bits.INT1EDG = 0);
 
-    INT2_SetInterruptHandler(INT2_DefaultInterruptHandler);
-    (PIE7bits.INT2IE = 1);
+ INT1_SetInterruptHandler(INT1_DefaultInterruptHandler);
+ (PIE5bits.INT1IE = 1);
+
+
+
+
+ (PIR7bits.INT2IF = 0);
+ (INTCON0bits.INT2EDG = 0);
+
+ INT2_SetInterruptHandler(INT2_DefaultInterruptHandler);
+ (PIE7bits.INT2IE = 1);
 
 }

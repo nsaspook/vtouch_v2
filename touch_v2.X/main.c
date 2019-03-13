@@ -59,7 +59,10 @@ typedef signed long long int24_t;
 
 extern struct spi_link_type spi_link;
 
-struct V_data V;
+struct V_data V = {
+	.error = false,
+};
+
 struct header10 H10[] = {
 	{ // S1F1 send 'are you there?' from host to equipment
 		.length = 10,
@@ -287,6 +290,7 @@ struct header53 H53[] = {
 struct header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
+volatile uint8_t mode_sw = false;
 
 /*
 			 Main application
@@ -305,18 +309,26 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	V.ui_state = UI_STATE_INIT;
+	if (RB0_GetValue()) {
+		mode = UI_STATE_HOST;
+	} else {
+		mode = UI_STATE_LOG;
+	}
+	
+	if (mode == UI_STATE_LOG) {
+		RELAY0_SetHigh();
+		OUT_PIN1_SetHigh();
+	} else {
+		RELAY0_SetLow();
+		OUT_PIN1_SetLow();
+	}
 
 	while (true) {
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			init_display();
 			eaDogM_CursorOff();
-			RELAY0_SetLow();
-			mode = UI_STATE_HOST; /* link configuration host/log ... */
-			if (!SW1_GetValue()) {
-				RELAY0_SetHigh();
-				mode = UI_STATE_LOG;
-			}
+
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 #ifdef TESTING
@@ -365,6 +377,12 @@ void main(void)
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
+				if (!V.error && !V.abort) {
+					sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+					V.buf[16] = 0; // string size limit
+					wait_lcd_done();
+					eaDogM_WriteStringAtPos(2, 0, V.buf);
+				}
 #ifdef DB1
 				WaitMs(50);
 				UART1_put_buffer(ENQ);
@@ -442,12 +460,17 @@ void main(void)
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				V.uart = 0;
+				sprintf(V.buf, " LOG MODE %ld     #",V.ticks);
+				V.buf[16] = 0; // string size limit
+				wait_lcd_done();
+				eaDogM_WriteStringAtPos(2, 0, V.buf);
 				break;
 			case SEQ_STATE_RX:
 				/*
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
+					V.ticks++;
 					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
 					V.buf[11] = 0; // string size limit
 					wait_lcd_done();
@@ -471,7 +494,7 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
-			sprintf(V.buf, " LOG MODE      #");
+			sprintf(V.buf, " LOG MODE %ld     #",V.ticks);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -485,7 +508,8 @@ void main(void)
 		sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
 		V.buf[16] = 0; // string size limit
 		wait_lcd_done();
-		eaDogM_WriteStringAtPos(1, 0, V.buf);
+		if (mode != UI_STATE_LOG)
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
 		DEBUG1_SetLow();
 	}
 }

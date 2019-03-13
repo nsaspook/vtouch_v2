@@ -21,16 +21,17 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.71A"
+#define VER	"0.72A"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
 	 */
 	//#define TESTING
-#define DB1
-#define DB2
-#define DB3
-#define DB4
+	//#define DISPLAY_SLOW
+	//#define DB1
+	//#define DB2
+	//#define DB3
+	//#define DB4
 
 #define SLED	LED0_LAT
 
@@ -118,6 +119,7 @@ extern "C" {
 		char buf[64];
 		uint32_t ticks, systemb;
 		uint8_t stream, function, error, abort;
+		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
