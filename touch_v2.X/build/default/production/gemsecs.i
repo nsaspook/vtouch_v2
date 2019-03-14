@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27938,69 +27938,69 @@ void WaitMs(uint16_t numMilliseconds);
  } block10_type;
 
  typedef union block10 {
-  uint8_t b[10];
-  struct block10_type block;
+  uint8_t b[sizeof(block10_type)];
+  block10_type block;
  } block10;
 
  typedef struct header10 {
   uint16_t checksum;
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header10;
 
  typedef struct header12 {
   uint16_t checksum;
   uint8_t data[2];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header12;
 
  typedef struct header13 {
   uint16_t checksum;
   uint8_t data[3];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header13;
 
  typedef struct header14 {
   uint16_t checksum;
   uint8_t data[4];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header14;
 
  typedef struct header17 {
   uint16_t checksum;
   uint8_t data[7];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header17;
 
  typedef struct header18 {
   uint16_t checksum;
   uint8_t data[8];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header18;
 
  typedef struct header24 {
   uint16_t checksum;
   uint8_t data[14];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header24;
 
  typedef struct header27 {
   uint16_t checksum;
   uint8_t data[17];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header27;
 
  typedef struct header53 {
   uint16_t checksum;
   uint8_t data[43];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header53;
 
@@ -28246,9 +28246,9 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
-
-
-
+  WaitMs(5);
+  H27[0].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H27[0], sizeof(header27), 1);
 
   break;
  case LINK_STATE_EOT:
@@ -28344,8 +28344,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x04);
 
   break;
  case LINK_STATE_ENQ:
@@ -28397,8 +28397,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x06);
 
   break;
  case LINK_STATE_ACK:

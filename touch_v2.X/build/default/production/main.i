@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28164,69 +28164,69 @@ void WaitMs(uint16_t numMilliseconds);
  } block10_type;
 
  typedef union block10 {
-  uint8_t b[10];
-  struct block10_type block;
+  uint8_t b[sizeof(block10_type)];
+  block10_type block;
  } block10;
 
  typedef struct header10 {
   uint16_t checksum;
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header10;
 
  typedef struct header12 {
   uint16_t checksum;
   uint8_t data[2];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header12;
 
  typedef struct header13 {
   uint16_t checksum;
   uint8_t data[3];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header13;
 
  typedef struct header14 {
   uint16_t checksum;
   uint8_t data[4];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header14;
 
  typedef struct header17 {
   uint16_t checksum;
   uint8_t data[7];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header17;
 
  typedef struct header18 {
   uint16_t checksum;
   uint8_t data[8];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header18;
 
  typedef struct header24 {
   uint16_t checksum;
   uint8_t data[14];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header24;
 
  typedef struct header27 {
   uint16_t checksum;
   uint8_t data[17];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header27;
 
  typedef struct header53 {
   uint16_t checksum;
   uint8_t data[43];
-  union block10 block;
+  block10 block;
   uint8_t length;
  } header53;
 
@@ -28251,11 +28251,11 @@ void WaitMs(uint16_t numMilliseconds);
 
 extern struct spi_link_type spi_link;
 
-struct V_data V = {
+V_data V = {
  .error = 0,
 };
 
-struct header10 H10[] = {
+header10 H10[] = {
  {
   .length = 10,
   .block.block.rbit = 0,
@@ -28313,7 +28313,7 @@ struct header10 H10[] = {
  },
 };
 
-struct header12 H12[] = {
+header12 H12[] = {
  {
   .length = 12,
   .block.block.rbit = 0,
@@ -28346,7 +28346,7 @@ struct header12 H12[] = {
  },
 };
 
-struct header13 H13[] = {
+header13 H13[] = {
  {
   .length = 13,
   .block.block.rbit = 0,
@@ -28365,7 +28365,7 @@ struct header13 H13[] = {
  },
 };
 
-struct header14 H14[] = {
+header14 H14[] = {
  {
   .length = 14,
   .block.block.rbit = 0,
@@ -28385,7 +28385,7 @@ struct header14 H14[] = {
  },
 };
 
-struct header17 H17[] = {
+header17 H17[] = {
  {
   .length = 17,
   .block.block.rbit = 0,
@@ -28407,8 +28407,8 @@ struct header17 H17[] = {
   .data[6] = 0x01,
  },
 };
-# 235 "main.c"
-struct header24 H24[] = {
+
+header24 H24[] = {
  {
   .length = 24,
   .block.block.rbit = 0,
@@ -28424,8 +28424,26 @@ struct header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-# 270 "main.c"
-struct header53 H53[] = {
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
+header53 H53[] = {
  {
   .length = 53,
   .block.block.rbit = 0,
@@ -28445,7 +28463,7 @@ struct header53 H53[] = {
  },
 };
 
-struct header10 r_block;
+header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
@@ -28489,7 +28507,7 @@ void main(void)
 
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 362 "main.c"
+# 346 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -28515,8 +28533,8 @@ void main(void)
      eaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
-
-
+    WaitMs(50);
+    UART1_put_buffer(0x05);
 
     break;
    case SEQ_STATE_RX:
@@ -28529,7 +28547,7 @@ void main(void)
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-
+     WaitMs(5);
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -28591,7 +28609,7 @@ void main(void)
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
     V.uart = 0;
-    sprintf(V.buf, " LOG MODE %ld     #",V.ticks);
+    sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28625,7 +28643,7 @@ void main(void)
     V.s_state = SEQ_STATE_INIT;
     break;
    }
-   sprintf(V.buf, " LOG MODE %ld     #",V.ticks);
+   sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);

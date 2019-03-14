@@ -28,10 +28,10 @@ extern "C" {
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
-	//#define DB1
-	//#define DB2
-	//#define DB3
-	//#define DB4
+#define DB1
+#define DB2
+#define DB3
+#define DB4
 
 #define SLED	LED0_LAT
 

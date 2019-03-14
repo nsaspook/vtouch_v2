@@ -59,11 +59,11 @@ typedef signed long long int24_t;
 
 extern struct spi_link_type spi_link;
 
-struct V_data V = {
+V_data V = {
 	.error = false,
 };
 
-struct header10 H10[] = {
+header10 H10[] = {
 	{ // S1F1 send 'are you there?' from host to equipment
 		.length = 10,
 		.block.block.rbit = 0,
@@ -121,7 +121,7 @@ struct header10 H10[] = {
 	},
 };
 
-struct header12 H12[] = {
+header12 H12[] = {
 	{ // S1F2 send 'yes, were are here ' from host
 		.length = 12,
 		.block.block.rbit = 0,
@@ -154,7 +154,7 @@ struct header12 H12[] = {
 	},
 };
 
-struct header13 H13[] = {
+header13 H13[] = {
 	{ // S6F12 send 'online' reply from host
 		.length = 13,
 		.block.block.rbit = 0,
@@ -173,7 +173,7 @@ struct header13 H13[] = {
 	},
 };
 
-struct header14 H14[] = {
+header14 H14[] = {
 	{ // S1F4 send 'status response ' from host
 		.length = 14,
 		.block.block.rbit = 0,
@@ -193,7 +193,7 @@ struct header14 H14[] = {
 	},
 };
 
-struct header17 H17[] = {
+header17 H17[] = {
 	{ // S1F14 send 'online response ' from host to equipment
 		.length = 17,
 		.block.block.rbit = 0,
@@ -216,23 +216,7 @@ struct header17 H17[] = {
 	},
 };
 
-//struct header18 H18[] = {
-//	{ // S1F3 send 'status request ' from host to equipment
-//		.length = 18,
-//		.block.block.rbit = 0,
-//		.block.block.didh = 0,
-//		.block.block.didl = 0,
-//		.block.block.wbit = 1,
-//		.block.block.stream = 1,
-//		.block.block.function = 3,
-//		.block.block.ebit = 1,
-//		.block.block.bidh = 0,
-//		.block.block.bidl = 1,
-//		.block.block.systemb = 1,
-//	},
-//};
-
-struct header24 H24[] = {
+header24 H24[] = {
 	{ // S2F18 send 'host time ' from host to equipment
 		.length = 24,
 		.block.block.rbit = 0,
@@ -250,7 +234,7 @@ struct header24 H24[] = {
 };
 
 #ifdef DB2
-struct header27 H27[] = {
+header27 H27[] = {
 	{ // S1F13 send 'online request ' from equipment to host for TESTING
 		.length = 27,
 		.block.block.rbit = 1,
@@ -267,7 +251,7 @@ struct header27 H27[] = {
 };
 #endif
 
-struct header53 H53[] = {
+header53 H53[] = {
 	{ // S10F3 send 'terminal text display ' command from host to equipment
 		.length = 53,
 		.block.block.rbit = 0,
@@ -287,7 +271,7 @@ struct header53 H53[] = {
 	},
 };
 
-struct header10 r_block;
+header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
@@ -314,7 +298,7 @@ void main(void)
 	} else {
 		mode = UI_STATE_LOG;
 	}
-	
+
 	if (mode == UI_STATE_LOG) {
 		RELAY0_SetHigh();
 		OUT_PIN1_SetHigh();
@@ -460,7 +444,7 @@ void main(void)
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				V.uart = 0;
-				sprintf(V.buf, " LOG MODE %ld     #",V.ticks);
+				sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -494,7 +478,7 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
-			sprintf(V.buf, " LOG MODE %ld     #",V.ticks);
+			sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);

@@ -36,69 +36,69 @@ extern "C" {
 	} block10_type;
 
 	typedef union block10 {
-		uint8_t b[10];
-		struct block10_type block;
+		uint8_t b[sizeof(block10_type)];
+		block10_type block;
 	} block10;
 
 	typedef struct header10 {
 		uint16_t checksum;
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header10;
 
 	typedef struct header12 {
 		uint16_t checksum;
 		uint8_t data[2];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header12;
 
 	typedef struct header13 {
 		uint16_t checksum;
 		uint8_t data[3];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header13;
 
 	typedef struct header14 {
 		uint16_t checksum;
 		uint8_t data[4];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header14;
 
 	typedef struct header17 {
 		uint16_t checksum;
 		uint8_t data[7];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header17;
 
 	typedef struct header18 {
 		uint16_t checksum;
 		uint8_t data[8];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header18;
 
 	typedef struct header24 {
 		uint16_t checksum;
 		uint8_t data[14];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header24;
 
 	typedef struct header27 {
 		uint16_t checksum;
 		uint8_t data[17];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header27;
 
 	typedef struct header53 {
 		uint16_t checksum;
 		uint8_t data[43];
-		union block10 block;
+		block10 block;
 		uint8_t length;
 	} header53;
 
