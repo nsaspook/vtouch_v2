@@ -253,7 +253,18 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void)){
     UART2_TxInterruptHandler = InterruptHandler;
 }
 
+/* stuff the uart2 receive buffer with testing data */
+void UART2_put_buffer(uint8_t bufData)
+{
+	PIE6bits.U2RXIE = 0;
+	uart2RxBuffer[uart2RxHead++] = bufData;
+	if (sizeof(uart2RxBuffer) <= uart2RxHead) {
+		uart2RxHead = 0;
+	}
 
+	uart2RxCount++;
+	PIE6bits.U2RXIE = 1;
+}
 /**
   End of File
 */

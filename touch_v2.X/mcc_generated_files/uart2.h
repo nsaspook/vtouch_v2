@@ -324,6 +324,8 @@ uint8_t UART2_Read(void);
 */
 void UART2_Write(uint8_t txData);
 
+void UART2_put_buffer(uint8_t);
+
 /**
   @Summary
     Maintains the driver's transmitter state machine and implements its ISR.

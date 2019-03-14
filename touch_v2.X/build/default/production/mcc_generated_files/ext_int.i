@@ -27416,7 +27416,8 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   uint16_t r_checksum, t_checksum;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2, uart : 1;
+  queue : 1, connect : 2;
+  uint8_t uart;
  } V_data;
 # 31 "mcc_generated_files/ext_int.c" 2
 

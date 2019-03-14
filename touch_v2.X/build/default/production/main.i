@@ -27928,17 +27928,19 @@ _Bool UART2_is_tx_done(void);
 uint8_t UART2_Read(void);
 # 325 "./mcc_generated_files/uart2.h"
 void UART2_Write(uint8_t txData);
-# 346 "./mcc_generated_files/uart2.h"
+
+void UART2_put_buffer(uint8_t);
+# 348 "./mcc_generated_files/uart2.h"
 void UART2_Transmit_ISR(void);
-# 367 "./mcc_generated_files/uart2.h"
+# 369 "./mcc_generated_files/uart2.h"
 void UART2_Receive_ISR(void);
-# 387 "./mcc_generated_files/uart2.h"
+# 389 "./mcc_generated_files/uart2.h"
 void (*UART2_RxInterruptHandler)(void);
-# 405 "./mcc_generated_files/uart2.h"
+# 407 "./mcc_generated_files/uart2.h"
 void (*UART2_TxInterruptHandler)(void);
-# 425 "./mcc_generated_files/uart2.h"
+# 427 "./mcc_generated_files/uart2.h"
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 443 "./mcc_generated_files/uart2.h"
+# 445 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 63 "./mcc_generated_files/mcc.h" 2
 
@@ -28100,7 +28102,8 @@ void PMD_Initialize(void);
   uint16_t r_checksum, t_checksum;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2, uart : 1;
+  queue : 1, connect : 2;
+  uint8_t uart;
  } V_data;
 # 27 "./eadog.h" 2
 
@@ -28243,7 +28246,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES m_protocol(LINK_STATES *);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
- _Bool secs_send(uint8_t *, uint8_t, _Bool);
+ _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
 # 57 "main.c" 2
 
@@ -28253,6 +28256,7 @@ extern struct spi_link_type spi_link;
 
 V_data V = {
  .error = 0,
+ .uart = 1,
 };
 
 header10 H10[] = {
@@ -28507,7 +28511,7 @@ void main(void)
 
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 346 "main.c"
+# 347 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -28608,22 +28612,28 @@ void main(void)
    case SEQ_STATE_INIT:
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
-    V.uart = 0;
-    sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
+    sprintf(V.buf, " LOG MODE %d     #", V.uart);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
+
+
+    if (LATEbits.LATE0) {
+     UART2_put_buffer(0x05);
+    } else {
+     UART1_put_buffer(0x05);
+    }
+
     break;
    case SEQ_STATE_RX:
 
 
 
     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-     V.ticks++;
-     sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+     sprintf(V.buf, " S%dF%d #%ld    ", V.stream, V.function, V.ticks);
      V.buf[11] = 0;
      wait_lcd_done();
-     eaDogM_WriteStringAtPos(V.uart, 0, V.buf);
+     eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
      V.s_state = SEQ_STATE_TRIGGER;
     }
     if (V.m_l_state == LINK_STATE_ERROR)
@@ -28633,7 +28643,7 @@ void main(void)
     V.s_state = SEQ_STATE_DONE;
     sprintf(V.buf, " OK #");
     wait_lcd_done();
-    eaDogM_WriteStringAtPos(V.uart, 11, V.buf);
+    eaDogM_WriteStringAtPos(V.uart - 1, 11, V.buf);
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
@@ -28643,7 +28653,7 @@ void main(void)
     V.s_state = SEQ_STATE_INIT;
     break;
    }
-   sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
+   sprintf(V.buf, " LOG MODE %d     #", V.uart);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);

@@ -61,6 +61,7 @@ extern struct spi_link_type spi_link;
 
 V_data V = {
 	.error = false,
+	.uart = 1,
 };
 
 header10 H10[] = {
@@ -122,7 +123,7 @@ header10 H10[] = {
 };
 
 header12 H12[] = {
-	{ // S1F2 send 'yes, were are here ' from host
+	{ // S1F2 send 'yes, we are here ' from host
 		.length = 12,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -443,22 +444,28 @@ void main(void)
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				V.uart = 0;
-				sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
+				sprintf(V.buf, " LOG MODE %d     #", V.uart);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
+#ifdef DB1
+//				WaitMs(500);
+				if (SLED) {
+					UART2_put_buffer(ENQ);
+				} else {
+					UART1_put_buffer(ENQ);
+				}
+#endif
 				break;
 			case SEQ_STATE_RX:
 				/*
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-					V.ticks++;
-					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+					sprintf(V.buf, " S%dF%d #%ld    ", V.stream, V.function, V.ticks);
 					V.buf[11] = 0; // string size limit
 					wait_lcd_done();
-					eaDogM_WriteStringAtPos(V.uart, 0, V.buf);
+					eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
 					V.s_state = SEQ_STATE_TRIGGER;
 				}
 				if (V.m_l_state == LINK_STATE_ERROR)
@@ -468,7 +475,7 @@ void main(void)
 				V.s_state = SEQ_STATE_DONE;
 				sprintf(V.buf, " OK #");
 				wait_lcd_done();
-				eaDogM_WriteStringAtPos(V.uart, 11, V.buf);
+				eaDogM_WriteStringAtPos(V.uart - 1, 11, V.buf);
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
@@ -478,7 +485,7 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
-			sprintf(V.buf, " LOG MODE %ld     #", V.ticks);
+			sprintf(V.buf, " LOG MODE %d     #", V.uart);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);

@@ -46,10 +46,13 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
 	switch (*m_link) {
 	case LINK_STATE_IDLE:
+#ifdef DB1
+		WaitMs(50);
+#endif
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
-				V.uart = 0;
+				V.uart = 1;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
 				*m_link = LINK_STATE_ENQ;
@@ -58,7 +61,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		if (UART2_is_rx_ready()) {
 			rxData = UART2_Read();
 			if (rxData == ENQ) {
-				V.uart = 1;
+				V.uart = 2;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
 				*m_link = LINK_STATE_ENQ;
@@ -66,32 +69,16 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		}
 		break;
 	case LINK_STATE_ENQ:
-		if (TimerDone(TMR_T2)) {
-			V.error = LINK_ERROR_T2;
-			V.failed_receive = 1;
-			*m_link = LINK_STATE_NAK;
-		} else {
-			if (UART1_is_rx_ready()) {
-				rxData = UART1_Read();
-				if (rxData == EOT) {
-					V.uart = 1;
-					rxData_l = 0;
-					StartTimer(TMR_T2, T2);
-					V.error = LINK_ERROR_NONE; // reset error status
-					*m_link = LINK_STATE_EOT;
-				}
-			}
-			if (UART2_is_rx_ready()) {
-				rxData = UART2_Read();
-				if (rxData == EOT) {
-					V.uart = 0;
-					rxData_l = 0;
-					StartTimer(TMR_T2, T2);
-					V.error = LINK_ERROR_NONE; // reset error status
-					*m_link = LINK_STATE_EOT;
-				}
-			}
-		}
+#ifdef DB2
+		WaitMs(50);
+		if (V.uart == 1)
+			secs_send((uint8_t*) & H27[0], sizeof(header27), true, V.uart);
+		if (V.uart == 2)
+			secs_send((uint8_t*) & H10[0], sizeof(header10), true, V.uart);
+#endif
+		V.error = LINK_ERROR_NONE; // reset error status
+		*m_link = LINK_STATE_EOT;
+		StartTimer(TMR_T2, T2);
 		break;
 	case LINK_STATE_EOT:
 		if (TimerDone(TMR_T2)) {
@@ -99,7 +86,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			V.failed_receive = 2;
 			*m_link = LINK_STATE_NAK;
 		} else {
-			if (UART1_is_rx_ready() && (V.uart == 0)) {
+			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes
@@ -135,7 +122,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 				}
 			}
 
-			if (UART2_is_rx_ready() && (V.uart == 1)) {
+			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes
@@ -173,6 +160,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		}
 		break;
 	case LINK_STATE_ACK:
+#ifdef DB1
+		WaitMs(50);
+#endif
 		V.stream = H10[1].block.block.stream;
 		V.function = H10[1].block.block.function;
 		V.systemb = H10[1].block.block.systemb;
@@ -204,7 +194,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 	return *m_link;
 }
 
-LINK_STATES r_protocol(LINK_STATES *r_link)
+LINK_STATES r_protocol(LINK_STATES * r_link)
 {
 	uint8_t rxData;
 	static uint8_t rxData_l = 0, retry = RTY;
@@ -227,7 +217,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 #ifdef DB2
 		WaitMs(5);
 		H27[0].block.block.systemb = V.ticks; // make distinct
-		secs_send((uint8_t*) & H27[0], sizeof(header27), true);
+		secs_send((uint8_t*) & H27[0], sizeof(header27), true, 1);
 #endif
 		break;
 	case LINK_STATE_EOT:
@@ -355,18 +345,18 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			block = secs_II_message(V.stream, V.function); // parse proper response
 
 		if (V.abort == LINK_ERROR_ABORT) {
-			secs_send((uint8_t*) block.header, block.length, false);
+			secs_send((uint8_t*) block.header, block.length, false, 1);
 			V.failed_send = 2;
 			*t_link = LINK_STATE_ERROR;
 		} else {
 			if (!requeue) {
-				secs_send((uint8_t*) block.header, block.length, false);
+				secs_send((uint8_t*) block.header, block.length, false, 1);
 				if (V.queue)
 					requeue = true;
 			} else {
 				requeue = false;
 				V.queue = false;
-				secs_send((uint8_t*) block.reply, block.reply_length, false);
+				secs_send((uint8_t*) block.reply, block.reply_length, false, 1);
 			}
 			if (V.error == LINK_ERROR_NONE) {
 				*t_link = LINK_STATE_ACK;
@@ -416,7 +406,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 }
 
 /* send the whole sequence including length and checksum bytes */
-bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
+bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
 {
 	uint8_t i, *k;
 	uint16_t checksum;
@@ -440,14 +430,30 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake)
 	k[1] = (checksum >> 8)&0xff;
 	V.t_checksum = checksum;
 
-	while (UART1_is_tx_ready() < 64); // wait for tx buffer to drain
-	for (i = length; i > 0; i--) {
-		if (fake) {
-			UART1_put_buffer(k[i - 1]);
-		} else {
+	switch (s_uart) {
+	case 2:
+		while (UART2_is_tx_ready() < 64); // wait for tx buffer to drain
+		for (i = length; i > 0; i--) {
+			if (fake) {
+				UART2_put_buffer(k[i - 1]);
+			} else {
 
-			UART1_Write(k[i - 1]); // -1 for array memory addressing
+				UART2_Write(k[i - 1]); // -1 for array memory addressing
+			}
 		}
+		break;
+	case 1:
+	default:
+		while (UART1_is_tx_ready() < 64); // wait for tx buffer to drain
+		for (i = length; i > 0; i--) {
+			if (fake) {
+				UART1_put_buffer(k[i - 1]);
+			} else {
+
+				UART1_Write(k[i - 1]); // -1 for array memory addressing
+			}
+		}
+		break;
 	}
 
 	return true;

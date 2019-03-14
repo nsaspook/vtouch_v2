@@ -27383,7 +27383,8 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2, uart : 1;
+  queue : 1, connect : 2;
+  uint8_t uart;
  } V_data;
 # 21 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
@@ -27840,17 +27841,19 @@ _Bool UART2_is_tx_done(void);
 uint8_t UART2_Read(void);
 # 325 "./mcc_generated_files/uart2.h"
 void UART2_Write(uint8_t txData);
-# 346 "./mcc_generated_files/uart2.h"
+
+void UART2_put_buffer(uint8_t);
+# 348 "./mcc_generated_files/uart2.h"
 void UART2_Transmit_ISR(void);
-# 367 "./mcc_generated_files/uart2.h"
+# 369 "./mcc_generated_files/uart2.h"
 void UART2_Receive_ISR(void);
-# 387 "./mcc_generated_files/uart2.h"
+# 389 "./mcc_generated_files/uart2.h"
 void (*UART2_RxInterruptHandler)(void);
-# 405 "./mcc_generated_files/uart2.h"
+# 407 "./mcc_generated_files/uart2.h"
 void (*UART2_TxInterruptHandler)(void);
-# 425 "./mcc_generated_files/uart2.h"
+# 427 "./mcc_generated_files/uart2.h"
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 443 "./mcc_generated_files/uart2.h"
+# 445 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 63 "./mcc_generated_files/mcc.h" 2
 
@@ -28017,7 +28020,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES m_protocol(LINK_STATES *);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
- _Bool secs_send(uint8_t *, uint8_t, _Bool);
+ _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
 
@@ -28067,10 +28070,13 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
  switch (*m_link) {
  case LINK_STATE_IDLE:
+
+  WaitMs(50);
+
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
-    V.uart = 0;
+    V.uart = 1;
     StartTimer(TMR_T2, 2000);
     V.error = LINK_ERROR_NONE;
     *m_link = LINK_STATE_ENQ;
@@ -28079,7 +28085,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   if (UART2_is_rx_ready()) {
    rxData = UART2_Read();
    if (rxData == 0x05) {
-    V.uart = 1;
+    V.uart = 2;
     StartTimer(TMR_T2, 2000);
     V.error = LINK_ERROR_NONE;
     *m_link = LINK_STATE_ENQ;
@@ -28087,32 +28093,16 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   break;
  case LINK_STATE_ENQ:
-  if (TimerDone(TMR_T2)) {
-   V.error = LINK_ERROR_T2;
-   V.failed_receive = 1;
-   *m_link = LINK_STATE_NAK;
-  } else {
-   if (UART1_is_rx_ready()) {
-    rxData = UART1_Read();
-    if (rxData == 0x04) {
-     V.uart = 1;
-     rxData_l = 0;
-     StartTimer(TMR_T2, 2000);
-     V.error = LINK_ERROR_NONE;
-     *m_link = LINK_STATE_EOT;
-    }
-   }
-   if (UART2_is_rx_ready()) {
-    rxData = UART2_Read();
-    if (rxData == 0x04) {
-     V.uart = 0;
-     rxData_l = 0;
-     StartTimer(TMR_T2, 2000);
-     V.error = LINK_ERROR_NONE;
-     *m_link = LINK_STATE_EOT;
-    }
-   }
-  }
+
+  WaitMs(50);
+  if (V.uart == 1)
+   secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
+  if (V.uart == 2)
+   secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
+
+  V.error = LINK_ERROR_NONE;
+  *m_link = LINK_STATE_EOT;
+  StartTimer(TMR_T2, 2000);
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
@@ -28120,7 +28110,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-   if (UART1_is_rx_ready() && (V.uart == 0)) {
+   if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData_l == 0) {
      r_block.length = rxData;
@@ -28156,7 +28146,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
     }
    }
 
-   if (UART2_is_rx_ready() && (V.uart == 1)) {
+   if (UART2_is_rx_ready()) {
     rxData = UART2_Read();
     if (rxData_l == 0) {
      r_block.length = rxData;
@@ -28194,6 +28184,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   break;
  case LINK_STATE_ACK:
+
+  WaitMs(50);
+
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
   V.systemb = H10[1].block.block.systemb;
@@ -28225,7 +28218,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  return *m_link;
 }
 
-LINK_STATES r_protocol(LINK_STATES *r_link)
+LINK_STATES r_protocol(LINK_STATES * r_link)
 {
  uint8_t rxData;
  static uint8_t rxData_l = 0, retry = 3;
@@ -28248,7 +28241,7 @@ LINK_STATES r_protocol(LINK_STATES *r_link)
 
   WaitMs(5);
   H27[0].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H27[0], sizeof(header27), 1);
+  secs_send((uint8_t*) & H27[0], sizeof(header27), 1, 1);
 
   break;
  case LINK_STATE_EOT:
@@ -28376,18 +28369,18 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    block = secs_II_message(V.stream, V.function);
 
   if (V.abort == LINK_ERROR_ABORT) {
-   secs_send((uint8_t*) block.header, block.length, 0);
+   secs_send((uint8_t*) block.header, block.length, 0, 1);
    V.failed_send = 2;
    *t_link = LINK_STATE_ERROR;
   } else {
    if (!requeue) {
-    secs_send((uint8_t*) block.header, block.length, 0);
+    secs_send((uint8_t*) block.header, block.length, 0, 1);
     if (V.queue)
      requeue = 1;
    } else {
     requeue = 0;
     V.queue = 0;
-    secs_send((uint8_t*) block.reply, block.reply_length, 0);
+    secs_send((uint8_t*) block.reply, block.reply_length, 0, 1);
    }
    if (V.error == LINK_ERROR_NONE) {
     *t_link = LINK_STATE_ACK;
@@ -28437,7 +28430,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 }
 
 
-_Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
+_Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake, uint8_t s_uart)
 {
  uint8_t i, *k;
  uint16_t checksum;
@@ -28461,14 +28454,30 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake)
  k[1] = (checksum >> 8)&0xff;
  V.t_checksum = checksum;
 
- while (UART1_is_tx_ready() < 64);
- for (i = length; i > 0; i--) {
-  if (fake) {
-   UART1_put_buffer(k[i - 1]);
-  } else {
+ switch (s_uart) {
+ case 2:
+  while (UART2_is_tx_ready() < 64);
+  for (i = length; i > 0; i--) {
+   if (fake) {
+    UART2_put_buffer(k[i - 1]);
+   } else {
 
-   UART1_Write(k[i - 1]);
+    UART2_Write(k[i - 1]);
+   }
   }
+  break;
+ case 1:
+ default:
+  while (UART1_is_tx_ready() < 64);
+  for (i = length; i > 0; i--) {
+   if (fake) {
+    UART1_put_buffer(k[i - 1]);
+   } else {
+
+    UART1_Write(k[i - 1]);
+   }
+  }
+  break;
  }
 
  return 1;

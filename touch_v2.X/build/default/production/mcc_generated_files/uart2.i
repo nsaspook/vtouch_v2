@@ -27287,17 +27287,19 @@ _Bool UART2_is_tx_done(void);
 uint8_t UART2_Read(void);
 # 325 "mcc_generated_files/uart2.h"
 void UART2_Write(uint8_t txData);
-# 346 "mcc_generated_files/uart2.h"
+
+void UART2_put_buffer(uint8_t);
+# 348 "mcc_generated_files/uart2.h"
 void UART2_Transmit_ISR(void);
-# 367 "mcc_generated_files/uart2.h"
+# 369 "mcc_generated_files/uart2.h"
 void UART2_Receive_ISR(void);
-# 387 "mcc_generated_files/uart2.h"
+# 389 "mcc_generated_files/uart2.h"
 void (*UART2_RxInterruptHandler)(void);
-# 405 "mcc_generated_files/uart2.h"
+# 407 "mcc_generated_files/uart2.h"
 void (*UART2_TxInterruptHandler)(void);
-# 425 "mcc_generated_files/uart2.h"
+# 427 "mcc_generated_files/uart2.h"
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 443 "mcc_generated_files/uart2.h"
+# 445 "mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 51 "mcc_generated_files/uart2.c" 2
 
@@ -27496,4 +27498,17 @@ void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void)){
 
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void)){
     UART2_TxInterruptHandler = InterruptHandler;
+}
+
+
+void UART2_put_buffer(uint8_t bufData)
+{
+ PIE6bits.U2RXIE = 0;
+ uart2RxBuffer[uart2RxHead++] = bufData;
+ if (sizeof(uart2RxBuffer) <= uart2RxHead) {
+  uart2RxHead = 0;
+ }
+
+ uart2RxCount++;
+ PIE6bits.U2RXIE = 1;
 }
