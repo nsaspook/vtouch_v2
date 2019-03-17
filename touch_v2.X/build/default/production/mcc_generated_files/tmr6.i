@@ -39,8 +39,6 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27240,7 +27238,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27267,9 +27265,10 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/tmr6.h" 2
+# 54 "mcc_generated_files/tmr6.h" 2
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 56 "mcc_generated_files/tmr6.h" 2
+# 55 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27519,7 +27518,13 @@ void TMR6_DefaultInterruptHandler(void);
 void INTERRUPT_Initialize (void);
 # 54 "mcc_generated_files/tmr6.c" 2
 # 1 "mcc_generated_files/../vconfig.h" 1
-# 20 "mcc_generated_files/../vconfig.h"
+# 15 "mcc_generated_files/../vconfig.h"
+ typedef signed long long int24_t;
+
+
+
+
+
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3

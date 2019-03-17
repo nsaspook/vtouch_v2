@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28071,7 +28071,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  switch (*m_link) {
  case LINK_STATE_IDLE:
 
-  WaitMs(50);
+
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
@@ -28094,11 +28094,11 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ENQ:
 
-  WaitMs(50);
-  if (V.uart == 1)
-   secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
-  if (V.uart == 2)
-   secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
+
+
+
+
+
 
   V.error = LINK_ERROR_NONE;
   *m_link = LINK_STATE_EOT;
@@ -28185,7 +28185,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ACK:
 
-  WaitMs(50);
+
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -28239,9 +28239,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
-  WaitMs(5);
-  H27[0].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H27[0], sizeof(header27), 1, 1);
+
+
+
 
   break;
  case LINK_STATE_EOT:
@@ -28337,8 +28337,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-  WaitMs(5);
-  UART1_put_buffer(0x04);
+
+
 
   break;
  case LINK_STATE_ENQ:
@@ -28390,8 +28390,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-  WaitMs(5);
-  UART1_put_buffer(0x06);
+
+
 
   break;
  case LINK_STATE_ACK:

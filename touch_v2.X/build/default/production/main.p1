@@ -1,19 +1,19 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F16806 `(v ~T0 @X0 0 tf ]
-[v F16808 `(v ~T0 @X0 0 tf ]
-[v F16831 `(v ~T0 @X0 0 tf ]
-[v F16833 `(v ~T0 @X0 0 tf ]
+[v F16805 `(v ~T0 @X0 0 tf ]
+[v F16807 `(v ~T0 @X0 0 tf ]
+[v F16830 `(v ~T0 @X0 0 tf ]
+[v F16832 `(v ~T0 @X0 0 tf ]
 "62 main.c
 [; ;main.c: 62: V_data V = {
-[c E16888 0 1 2 3 4 5 6 .. ]
-[n E16888 . SEQ_STATE_INIT SEQ_STATE_RX SEQ_STATE_TX SEQ_STATE_TRIGGER SEQ_STATE_QUEUE SEQ_STATE_DONE SEQ_STATE_ERROR  ]
-[c E16897 0 1 2 3 4 .. ]
-[n E16897 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
-[c E16904 0 1 2 3 4 5 6 .. ]
-[n E16904 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
+[c E16887 0 1 2 3 4 5 6 .. ]
+[n E16887 . SEQ_STATE_INIT SEQ_STATE_RX SEQ_STATE_TX SEQ_STATE_TRIGGER SEQ_STATE_QUEUE SEQ_STATE_DONE SEQ_STATE_ERROR  ]
+[c E16896 0 1 2 3 4 .. ]
+[n E16896 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_ERROR  ]
+[c E16903 0 1 2 3 4 5 6 .. ]
+[n E16903 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
 "113 ./vconfig.h
 [; ;./vconfig.h: 113:  typedef struct V_data {
-[s S2231 `E16888 1 `E16897 1 `E16904 1 `E16904 1 `E16904 1 `uc -> 64 `i `ul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16897 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 :2 `uc 1 `uc 1 ]
+[s S2231 `E16887 1 `E16896 1 `E16903 1 `E16903 1 `E16903 1 `uc -> 64 `i `ul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16896 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 :2 `uc 1 `uc 1 ]
 [n S2231 V_data s_state ui_state m_l_state r_l_state t_l_state buf ticks systemb stream function error abort ui_sw r_checksum t_checksum rbit wbit ebit failed_send failed_receive queue connect uart ]
 "25 ./gemsecs.h
 [; ;./gemsecs.h: 25:  typedef struct block10_type {
@@ -47,10 +47,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./gemsecs.h: 84:  typedef struct header24 {
 [s S2240 `us 1 `uc -> 14 `i `S2233 1 `uc 1 ]
 [n S2240 header24 checksum data block length ]
-"91
-[; ;./gemsecs.h: 91:  typedef struct header27 {
-[s S2241 `us 1 `uc -> 17 `i `S2233 1 `uc 1 ]
-[n S2241 header27 checksum data block length ]
 "98
 [; ;./gemsecs.h: 98:  typedef struct header53 {
 [s S2242 `us 1 `uc -> 43 `i `S2233 1 `uc 1 ]
@@ -121,15 +117,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26 ./timers.h
 [; ;./timers.h: 26: void WaitMs(uint16_t numMilliseconds);
 [v _WaitMs `(v ~T0 @X0 0 ef1`us ]
-"302 ./mcc_generated_files/uart1.h
-[; ;./mcc_generated_files/uart1.h: 302:  void UART1_put_buffer(uint8_t);
-[v _UART1_put_buffer `(v ~T0 @X0 0 ef1`uc ]
 "116 ./gemsecs.h
 [; ;./gemsecs.h: 116:  LINK_STATES r_protocol(LINK_STATES *);
-[v _r_protocol `(E16904 ~T0 @X0 0 ef1`*E16904 ]
+[v _r_protocol `(E16903 ~T0 @X0 0 ef1`*E16903 ]
 "117
 [; ;./gemsecs.h: 117:  LINK_STATES t_protocol(LINK_STATES *);
-[v _t_protocol `(E16904 ~T0 @X0 0 ef1`*E16904 ]
+[v _t_protocol `(E16903 ~T0 @X0 0 ef1`*E16903 ]
 "46188 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46188:     struct {
 [s S2086 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -145,12 +138,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46199
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46199: extern volatile LATEbits_t LATEbits __attribute__((address(0x3FBE)));
 [v _LATEbits `VS2085 ~T0 @X0 0 e@16318 ]
-"327 ./mcc_generated_files/uart2.h
-[; ;./mcc_generated_files/uart2.h: 327: void UART2_put_buffer(uint8_t);
-[v _UART2_put_buffer `(v ~T0 @X0 0 ef1`uc ]
 "115 ./gemsecs.h
 [; ;./gemsecs.h: 115:  LINK_STATES m_protocol(LINK_STATES *);
-[v _m_protocol `(E16904 ~T0 @X0 0 ef1`*E16904 ]
+[v _m_protocol `(E16903 ~T0 @X0 0 ef1`*E16903 ]
 "44 main.c
 [p n 520 ]
 "45
@@ -2404,27 +2394,27 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "389 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 389: void (*UART2_RxInterruptHandler)(void);
-[v _UART2_RxInterruptHandler `*F16806 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F16805 ~T0 @X0 1 e ]
 "407
 [; ;./mcc_generated_files/uart2.h: 407: void (*UART2_TxInterruptHandler)(void);
-[v _UART2_TxInterruptHandler `*F16808 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F16807 ~T0 @X0 1 e ]
 "389 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 389:  void (*UART1_RxInterruptHandler)(void);
-[v _UART1_RxInterruptHandler `*F16831 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F16830 ~T0 @X0 1 e ]
 "407
 [; ;./mcc_generated_files/uart1.h: 407:  void (*UART1_TxInterruptHandler)(void);
-[v _UART1_TxInterruptHandler `*F16833 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F16832 ~T0 @X0 1 e ]
 "62 main.c
 [; ;main.c: 62: V_data V = {
 [v _V `S2231 ~T0 @X0 1 e ]
 [i _V
 :U ..
 :U ..
--> -> 0 `i `E16888
--> -> 0 `i `E16897
--> -> 0 `i `E16904
--> -> 0 `i `E16904
--> -> 0 `i `E16904
+-> -> 0 `i `E16887
+-> -> 0 `i `E16896
+-> -> 0 `i `E16903
+-> -> 0 `i `E16903
+-> -> 0 `i `E16903
 :U ..
 -> -> 0 `i `uc
 -> -> 0 `i `uc
@@ -2497,7 +2487,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> -> 0 `i `uc
 -> -> 0 `i `uc
--> -> 0 `i `E16897
+-> -> 0 `i `E16896
 -> -> 0 `i `us
 -> -> 0 `i `us
 -> -> 0 `i `uc
@@ -2837,54 +2827,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-"238
-[; ;main.c: 238: header27 H27[] = {
-[v _H27 `S2241 ~T0 @X0 -> -> 1 `i `ux e ]
-[i _H27
-:U ..
-:U ..
--> -> 0 `i `us
-:U ..
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-..
-:U 1
-:U ..
-:U ..
-:U ..
--> -> -> 1 `i `l `ul
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
--> -> 13 `i `uc
--> -> 1 `i `uc
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
-..
-..
-..
-..
--> -> 27 `i `uc
-..
-..
-]
 "255
 [; ;main.c: 255: header53 H53[] = {
 [v _H53 `S2242 ~T0 @X0 -> -> 1 `i `ux e ]
@@ -2987,7 +2929,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "285
 [; ;main.c: 285:  UI_STATES mode;
-[v _mode `E16897 ~T0 @X0 1 a ]
+[v _mode `E16896 ~T0 @X0 1 a ]
 "288
 [; ;main.c: 288:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
@@ -2999,14 +2941,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
 "296
 [; ;main.c: 296:  V.ui_state = UI_STATE_INIT;
-[e = . _V 1 . `E16897 0 ]
+[e = . _V 1 . `E16896 0 ]
 "297
 [; ;main.c: 297:  if (PORTBbits.RB0) {
 [e $ ! != -> . . _PORTBbits 0 0 `i -> 0 `i 2245  ]
 {
 "298
 [; ;main.c: 298:   mode = UI_STATE_HOST;
-[e = _mode . `E16897 1 ]
+[e = _mode . `E16896 1 ]
 "299
 [; ;main.c: 299:  } else {
 }
@@ -3015,14 +2957,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "300
 [; ;main.c: 300:   mode = UI_STATE_LOG;
-[e = _mode . `E16897 3 ]
+[e = _mode . `E16896 3 ]
 "301
 [; ;main.c: 301:  }
 }
 [e :U 2246 ]
 "303
 [; ;main.c: 303:  if (mode == UI_STATE_LOG) {
-[e $ ! == -> _mode `ui -> . `E16897 3 `ui 2247  ]
+[e $ ! == -> _mode `ui -> . `E16896 3 `ui 2247  ]
 {
 "304
 [; ;main.c: 304:   do { LATDbits.LATD0 = 1; } while(0);
@@ -3084,7 +3026,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _V 1 _mode ]
 "318
 [; ;main.c: 318:    V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16888 0 ]
+[e = . _V 0 . `E16887 0 ]
 "347
 [; ;main.c: 347:    sprintf(V.buf, " RVI HOST TESTER");
 [e ( _sprintf (1 , &U . _V 5 :s 1C ]
@@ -3095,7 +3037,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 349:    eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 5 ]
 "350
-[; ;main.c: 350:    sprintf(V.buf, " Version %s", "0.72A");
+[; ;main.c: 350:    sprintf(V.buf, " Version %s", "0.73A");
 [e ( _sprintf (1 , (. , &U . _V 5 :s 2C :s 3C ]
 "351
 [; ;main.c: 351:    wait_lcd_done();
@@ -3130,13 +3072,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2270 ]
 "362
 [; ;main.c: 362:     V.r_l_state = LINK_STATE_IDLE;
-[e = . _V 3 . `E16904 0 ]
+[e = . _V 3 . `E16903 0 ]
 "363
 [; ;main.c: 363:     V.t_l_state = LINK_STATE_IDLE;
-[e = . _V 4 . `E16904 0 ]
+[e = . _V 4 . `E16903 0 ]
 "364
 [; ;main.c: 364:     V.s_state = SEQ_STATE_RX;
-[e = . _V 0 . `E16888 1 ]
+[e = . _V 0 . `E16887 1 ]
 "365
 [; ;main.c: 365:     if (!V.error && !V.abort) {
 [e $ ! && ! != -> . _V 10 `i -> 0 `i ! != -> . _V 11 `i -> 0 `i 2271  ]
@@ -3157,12 +3099,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 370:     }
 }
 [e :U 2271 ]
-"372
-[; ;main.c: 372:     WaitMs(50);
-[e ( _WaitMs (1 -> -> 50 `i `us ]
-"373
-[; ;main.c: 373:     UART1_put_buffer(0x05);
-[e ( _UART1_put_buffer (1 -> -> 5 `i `uc ]
 "375
 [; ;main.c: 375:     break;
 [e $U 2268  ]
@@ -3171,7 +3107,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2272 ]
 "380
 [; ;main.c: 380:     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-[e $ ! == -> ( _r_protocol (1 &U . _V 3 `ui -> . `E16904 4 `ui 2273  ]
+[e $ ! == -> ( _r_protocol (1 &U . _V 3 `ui -> . `E16903 4 `ui 2273  ]
 {
 "381
 [; ;main.c: 381:      sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
@@ -3185,22 +3121,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 "384
 [; ;main.c: 384:      eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 5 ]
-"386
-[; ;main.c: 386:      WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
 "388
 [; ;main.c: 388:      if (V.wbit) {
 [e $ ! != -> . _V 16 `i -> 0 `i 2274  ]
 {
 "389
 [; ;main.c: 389:       V.s_state = SEQ_STATE_TX;
-[e = . _V 0 . `E16888 2 ]
+[e = . _V 0 . `E16887 2 ]
 "390
 [; ;main.c: 390:       V.failed_send = 0;
 [e = . _V 18 -> -> 0 `i `uc ]
 "391
 [; ;main.c: 391:       V.t_l_state = LINK_STATE_IDLE;
-[e = . _V 4 . `E16904 0 ]
+[e = . _V 4 . `E16903 0 ]
 "392
 [; ;main.c: 392:      } else {
 }
@@ -3209,7 +3142,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "393
 [; ;main.c: 393:       V.s_state = SEQ_STATE_TRIGGER;
-[e = . _V 0 . `E16888 3 ]
+[e = . _V 0 . `E16887 3 ]
 "394
 [; ;main.c: 394:      }
 }
@@ -3220,10 +3153,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2273 ]
 "396
 [; ;main.c: 396:     if (V.r_l_state == LINK_STATE_ERROR)
-[e $ ! == -> . _V 3 `ui -> . `E16904 6 `ui 2276  ]
+[e $ ! == -> . _V 3 `ui -> . `E16903 6 `ui 2276  ]
 "397
 [; ;main.c: 397:      V.s_state = SEQ_STATE_ERROR;
-[e = . _V 0 . `E16888 6 ]
+[e = . _V 0 . `E16887 6 ]
 [e :U 2276 ]
 "398
 [; ;main.c: 398:     break;
@@ -3233,21 +3166,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2277 ]
 "403
 [; ;main.c: 403:     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
-[e $ ! == -> ( _t_protocol (1 &U . _V 4 `ui -> . `E16904 4 `ui 2278  ]
+[e $ ! == -> ( _t_protocol (1 &U . _V 4 `ui -> . `E16903 4 `ui 2278  ]
 {
 "404
 [; ;main.c: 404:      V.s_state = SEQ_STATE_TRIGGER;
-[e = . _V 0 . `E16888 3 ]
+[e = . _V 0 . `E16887 3 ]
 "405
 [; ;main.c: 405:     }
 }
 [e :U 2278 ]
 "406
 [; ;main.c: 406:     if (V.t_l_state == LINK_STATE_ERROR)
-[e $ ! == -> . _V 4 `ui -> . `E16904 6 `ui 2279  ]
+[e $ ! == -> . _V 4 `ui -> . `E16903 6 `ui 2279  ]
 "407
 [; ;main.c: 407:      V.s_state = SEQ_STATE_ERROR;
-[e = . _V 0 . `E16888 6 ]
+[e = . _V 0 . `E16887 6 ]
 [e :U 2279 ]
 "408
 [; ;main.c: 408:     break;
@@ -3268,13 +3201,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2283 ]
 "412
 [; ;main.c: 412:      V.r_l_state = LINK_STATE_IDLE;
-[e = . _V 3 . `E16904 0 ]
+[e = . _V 3 . `E16903 0 ]
 "413
 [; ;main.c: 413:      V.t_l_state = LINK_STATE_IDLE;
-[e = . _V 4 . `E16904 0 ]
+[e = . _V 4 . `E16903 0 ]
 "414
 [; ;main.c: 414:      V.s_state = SEQ_STATE_TX;
-[e = . _V 0 . `E16888 2 ]
+[e = . _V 0 . `E16887 2 ]
 "415
 [; ;main.c: 415:      sprintf(V.buf, " OKQ#");
 [e ( _sprintf (1 , &U . _V 5 :s 7C ]
@@ -3286,7 +3219,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "417
 [; ;main.c: 417:      V.s_state = SEQ_STATE_DONE;
-[e = . _V 0 . `E16888 5 ]
+[e = . _V 0 . `E16887 5 ]
 "418
 [; ;main.c: 418:      sprintf(V.buf, " OK #");
 [e ( _sprintf (1 , &U . _V 5 :s 8C ]
@@ -3308,7 +3241,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2286 ]
 "424
 [; ;main.c: 424:     V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16888 0 ]
+[e = . _V 0 . `E16887 0 ]
 "425
 [; ;main.c: 425:     break;
 [e $U 2268  ]
@@ -3320,7 +3253,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2288 ]
 "428
 [; ;main.c: 428:     V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16888 0 ]
+[e = . _V 0 . `E16887 0 ]
 "429
 [; ;main.c: 429:     sprintf(V.buf, "E R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
 [e ( _sprintf (1 , , , , (. , &U . _V 5 :s 9C -> . _V 3 `ui -> . _V 4 `ui -> . _V 10 `i -> . _V 11 `i ]
@@ -3341,12 +3274,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 2268  ]
 [e :U 2269 ]
-[e [\ -> . _V 0 `ui , $ -> . `E16888 0 `ui 2270
- , $ -> . `E16888 1 `ui 2272
- , $ -> . `E16888 2 `ui 2277
- , $ -> . `E16888 3 `ui 2280
- , $ -> . `E16888 5 `ui 2286
- , $ -> . `E16888 6 `ui 2287
+[e [\ -> . _V 0 `ui , $ -> . `E16887 0 `ui 2270
+ , $ -> . `E16887 1 `ui 2272
+ , $ -> . `E16887 2 `ui 2277
+ , $ -> . `E16887 3 `ui 2280
+ , $ -> . `E16887 5 `ui 2286
+ , $ -> . `E16887 6 `ui 2287
  2288 ]
 [e :U 2268 ]
 "435
@@ -3384,10 +3317,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2293 ]
 "445
 [; ;main.c: 445:     V.m_l_state = LINK_STATE_IDLE;
-[e = . _V 2 . `E16904 0 ]
+[e = . _V 2 . `E16903 0 ]
 "446
 [; ;main.c: 446:     V.s_state = SEQ_STATE_RX;
-[e = . _V 0 . `E16888 1 ]
+[e = . _V 0 . `E16887 1 ]
 "447
 [; ;main.c: 447:     sprintf(V.buf, " LOG MODE %d     #", V.uart);
 [e ( _sprintf (1 , (. , &U . _V 5 :s 11C -> . _V 22 `i ]
@@ -3400,35 +3333,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "450
 [; ;main.c: 450:     eaDogM_WriteStringAtPos(2, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 5 ]
-"453
-[; ;main.c: 453:     if (LATEbits.LATE0) {
-[e $ ! != -> . . _LATEbits 0 0 `i -> 0 `i 2294  ]
-{
-"454
-[; ;main.c: 454:      UART2_put_buffer(0x05);
-[e ( _UART2_put_buffer (1 -> -> 5 `i `uc ]
-"455
-[; ;main.c: 455:     } else {
-}
-[e $U 2295  ]
-[e :U 2294 ]
-{
-"456
-[; ;main.c: 456:      UART1_put_buffer(0x05);
-[e ( _UART1_put_buffer (1 -> -> 5 `i `uc ]
-"457
-[; ;main.c: 457:     }
-}
-[e :U 2295 ]
 "459
 [; ;main.c: 459:     break;
 [e $U 2291  ]
 "460
 [; ;main.c: 460:    case SEQ_STATE_RX:
-[e :U 2296 ]
+[e :U 2294 ]
 "464
 [; ;main.c: 464:     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-[e $ ! == -> ( _m_protocol (1 &U . _V 2 `ui -> . `E16904 4 `ui 2297  ]
+[e $ ! == -> ( _m_protocol (1 &U . _V 2 `ui -> . `E16903 4 `ui 2295  ]
 {
 "465
 [; ;main.c: 465:      sprintf(V.buf, " S%dF%d #%ld    ", V.stream, V.function, V.ticks);
@@ -3444,27 +3357,27 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _eaDogM_WriteStringAtPos (3 , , -> - -> . _V 22 `i -> 1 `i `uc -> -> 0 `i `uc &U . _V 5 ]
 "469
 [; ;main.c: 469:      V.s_state = SEQ_STATE_TRIGGER;
-[e = . _V 0 . `E16888 3 ]
+[e = . _V 0 . `E16887 3 ]
 "470
 [; ;main.c: 470:     }
 }
-[e :U 2297 ]
+[e :U 2295 ]
 "471
 [; ;main.c: 471:     if (V.m_l_state == LINK_STATE_ERROR)
-[e $ ! == -> . _V 2 `ui -> . `E16904 6 `ui 2298  ]
+[e $ ! == -> . _V 2 `ui -> . `E16903 6 `ui 2296  ]
 "472
 [; ;main.c: 472:      V.s_state = SEQ_STATE_ERROR;
-[e = . _V 0 . `E16888 6 ]
-[e :U 2298 ]
+[e = . _V 0 . `E16887 6 ]
+[e :U 2296 ]
 "473
 [; ;main.c: 473:     break;
 [e $U 2291  ]
 "474
 [; ;main.c: 474:    case SEQ_STATE_TRIGGER:
-[e :U 2299 ]
+[e :U 2297 ]
 "475
 [; ;main.c: 475:     V.s_state = SEQ_STATE_DONE;
-[e = . _V 0 . `E16888 5 ]
+[e = . _V 0 . `E16887 5 ]
 "476
 [; ;main.c: 476:     sprintf(V.buf, " OK #");
 [e ( _sprintf (1 , &U . _V 5 :s 13C ]
@@ -3479,22 +3392,22 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 2291  ]
 "480
 [; ;main.c: 480:    case SEQ_STATE_DONE:
-[e :U 2300 ]
+[e :U 2298 ]
 "481
 [; ;main.c: 481:     V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16888 0 ]
+[e = . _V 0 . `E16887 0 ]
 "482
 [; ;main.c: 482:     break;
 [e $U 2291  ]
 "483
 [; ;main.c: 483:    case SEQ_STATE_ERROR:
-[e :U 2301 ]
+[e :U 2299 ]
 "484
 [; ;main.c: 484:    default:
-[e :U 2302 ]
+[e :U 2300 ]
 "485
 [; ;main.c: 485:     V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16888 0 ]
+[e = . _V 0 . `E16887 0 ]
 "486
 [; ;main.c: 486:     break;
 [e $U 2291  ]
@@ -3503,12 +3416,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 2291  ]
 [e :U 2292 ]
-[e [\ -> . _V 0 `ui , $ -> . `E16888 0 `ui 2293
- , $ -> . `E16888 1 `ui 2296
- , $ -> . `E16888 3 `ui 2299
- , $ -> . `E16888 5 `ui 2300
- , $ -> . `E16888 6 `ui 2301
- 2302 ]
+[e [\ -> . _V 0 `ui , $ -> . `E16887 0 `ui 2293
+ , $ -> . `E16887 1 `ui 2294
+ , $ -> . `E16887 3 `ui 2297
+ , $ -> . `E16887 5 `ui 2298
+ , $ -> . `E16887 6 `ui 2299
+ 2300 ]
 [e :U 2291 ]
 "488
 [; ;main.c: 488:    sprintf(V.buf, " LOG MODE %d     #", V.uart);
@@ -3527,13 +3440,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 2264  ]
 "493
 [; ;main.c: 493:   case UI_STATE_ERROR:
-[e :U 2303 ]
+[e :U 2301 ]
 "494
 [; ;main.c: 494:   default:
-[e :U 2304 ]
+[e :U 2302 ]
 "495
 [; ;main.c: 495:    V.ui_state = UI_STATE_INIT;
-[e = . _V 1 . `E16897 0 ]
+[e = . _V 1 . `E16896 0 ]
 "496
 [; ;main.c: 496:    break;
 [e $U 2264  ]
@@ -3542,19 +3455,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 2264  ]
 [e :U 2265 ]
-[e [\ -> . _V 1 `ui , $ -> . `E16897 0 `ui 2266
- , $ -> . `E16897 1 `ui 2267
- , $ -> . `E16897 3 `ui 2290
- , $ -> . `E16897 4 `ui 2303
- 2304 ]
+[e [\ -> . _V 1 `ui , $ -> . `E16896 0 `ui 2266
+ , $ -> . `E16896 1 `ui 2267
+ , $ -> . `E16896 3 `ui 2290
+ , $ -> . `E16896 4 `ui 2301
+ 2302 ]
 [e :U 2264 ]
 "498
 [; ;main.c: 498:   do { LATEbits.LATE1 = 1; } while(0);
-[e :U 2307 ]
+[e :U 2305 ]
 {
 [e = . . _LATEbits 0 1 -> -> 1 `i `uc ]
 }
-[e :U 2306 ]
+[e :U 2304 ]
 "499
 [; ;main.c: 499:   sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
 [e ( _sprintf (1 , , , , (. , &U . _V 5 :s 15C -> . _V 3 `ui -> . _V 4 `ui -> . _V 19 `i -> . _V 18 `i ]
@@ -3566,18 +3479,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _wait_lcd_done ..  ]
 "502
 [; ;main.c: 502:   if (mode != UI_STATE_LOG)
-[e $ ! != -> _mode `ui -> . `E16897 3 `ui 2308  ]
+[e $ ! != -> _mode `ui -> . `E16896 3 `ui 2306  ]
 "503
 [; ;main.c: 503:    eaDogM_WriteStringAtPos(1, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U . _V 5 ]
-[e :U 2308 ]
+[e :U 2306 ]
 "504
 [; ;main.c: 504:   do { LATEbits.LATE1 = 0; } while(0);
-[e :U 2311 ]
+[e :U 2309 ]
 {
 [e = . . _LATEbits 0 1 -> -> 0 `i `uc ]
 }
-[e :U 2310 ]
+[e :U 2308 ]
 "505
 [; ;main.c: 505:  }
 }
@@ -3591,7 +3504,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p f _sprintf 8650896 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 0 ]
 [a 1C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 3C 48 46 55 50 65 0 ]
+[a 3C 48 46 55 51 65 0 ]
 [a 4C 32 70 71 66 64 77 67 72 80 32 70 65 66 52 0 ]
 [a 7C 32 79 75 81 35 0 ]
 [a 15C 32 82 37 100 32 84 37 100 32 70 82 37 100 32 70 83 37 100 32 35 0 ]

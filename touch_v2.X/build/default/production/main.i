@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28428,25 +28428,7 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-
-
-header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 255 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28515,7 +28497,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.72A");
+   sprintf(V.buf, " Version %s", "0.73A");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28537,8 +28519,8 @@ void main(void)
      eaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
-    WaitMs(50);
-    UART1_put_buffer(0x05);
+
+
 
     break;
    case SEQ_STATE_RX:
@@ -28551,7 +28533,7 @@ void main(void)
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-     WaitMs(5);
+
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -28616,14 +28598,7 @@ void main(void)
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
-
-
-    if (LATEbits.LATE0) {
-     UART2_put_buffer(0x05);
-    } else {
-     UART1_put_buffer(0x05);
-    }
-
+# 459 "main.c"
     break;
    case SEQ_STATE_RX:
 
