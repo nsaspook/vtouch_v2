@@ -300,7 +300,7 @@ void main(void)
 		mode = UI_STATE_LOG;
 	}
 
-	if (mode == UI_STATE_LOG) {
+	if (mode != UI_STATE_LOG) {
 		RELAY0_SetHigh();
 		OUT_PIN1_SetHigh();
 	} else {

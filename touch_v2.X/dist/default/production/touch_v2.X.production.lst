@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.05 build -831301201 
-                                                                                               Sun Mar 17 15:53:54 2019
+                                                                                               Mon Mar 18 00:12:39 2019
 
 Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9 
      1                           	processor	18F57K42
@@ -1036,7 +1036,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   1022  0020A7  30                 	db	48	;'0'
   1023  0020A8  2E                 	db	46
   1024  0020A9  37                 	db	55	;'7'
-  1025  0020AA  33                 	db	51	;'3'
+  1025  0020AA  34                 	db	52	;'4'
   1026  0020AB  41                 	db	65	;'A'
   1027  0020AC  00                 	db	0
   1028  0020AD                     STR_19:
@@ -1510,13 +1510,13 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   1483  0020DA                     l8273:
   1484                           
   1485                           ; BSR set to: 0
-  1486                           ;main.c: 303:  if (mode == UI_STATE_LOG) {
+  1486                           ;main.c: 303:  if (mode != UI_STATE_LOG) {
   1487                           ;stkvar	_mode @ sp[(-1)+0]
   1488  0020DA  0EFF               	movlw	-1
   1489  0020DC  006F FF8C  F03B    	movff	plusw1,btemp
   1490  0020E2  0E03               	movlw	3
   1491  0020E4  183B               	xorwf	btemp,w,c
-  1492  0020E6  A4D8               	btfss	status,2,c
+  1492  0020E6  B4D8               	btfsc	status,2,c
   1493  0020E8  D003               	goto	l1220
   1494                           
   1495                           ; BSR set to: 0
@@ -1588,7 +1588,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   1561  002130  EC5B  F02D         	call	_eaDogM_WriteStringAtPos	;wreg free
   1562                           
   1563                           ; BSR set to: 59
-  1564                           ;main.c: 350:    sprintf(V.buf, " Version %s", "0.73A");
+  1564                           ;main.c: 350:    sprintf(V.buf, " Version %s", "0.74A");
   1565  002134  0EA7               	movlw	STR_3& (0+255)
   1566  002136  6E46               	movwf	btemp+11,c
   1567  002138  0060  F11B  FFE6   	movff	btemp+11,postinc1
@@ -21703,7 +21703,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.05 build -831301201 
-Symbol Table                                                                                   Sun Mar 17 15:53:54 2019
+Symbol Table                                                                                   Mon Mar 18 00:12:39 2019
 
                     _SPI1_Exchange8bit 5FE4                                      _V 0067  
      __end_of_TMR5_SetInterruptHandler 5D72              __end_of_UART2_is_rx_ready 6176  

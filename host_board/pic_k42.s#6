@@ -10913,6 +10913,8 @@ Source: www.kingbright.com</description>
 <part name="VSS35" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="SV2" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA04-1" device="" package3d_urn="urn:adsk.eagle:package:8337/1" value="DEBUG"/>
 <part name="VSS36" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="X3" library="con-garry" library_urn="urn:adsk.eagle:library:147" deviceset="332-02" device="" package3d_urn="urn:adsk.eagle:package:6810/1"/>
+<part name="VSS37" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11423,6 +11425,17 @@ Source: www.kingbright.com</description>
 <instance part="VSS36" gate="G$1" x="144.78" y="20.32" smashed="yes" rot="R180">
 <attribute name="VALUE" x="147.32" y="25.4" size="1.778" layer="96" rot="R270"/>
 </instance>
+<instance part="X3" gate="-1" x="73.66" y="-10.16" smashed="yes" rot="R90">
+<attribute name="NAME" x="74.422" y="-7.62" size="1.524" layer="95" rot="R90"/>
+<attribute name="VALUE" x="72.263" y="-10.922" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="X3" gate="-2" x="73.66" y="10.16" smashed="yes" rot="R90">
+<attribute name="NAME" x="74.422" y="12.7" size="1.524" layer="95" rot="R90"/>
+<attribute name="VALUE" x="72.263" y="9.398" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS37" gate="G$1" x="73.66" y="-15.24" smashed="yes">
+<attribute name="VALUE" x="71.12" y="-20.32" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -11437,6 +11450,11 @@ Source: www.kingbright.com</description>
 <wire x1="63.5" y1="-50.8" x2="63.5" y2="0" width="0.1524" layer="91"/>
 <wire x1="63.5" y1="0" x2="58.42" y2="0" width="0.1524" layer="91"/>
 <junction x="63.5" y="-50.8"/>
+<wire x1="63.5" y1="0" x2="73.66" y2="0" width="0.1524" layer="91"/>
+<pinref part="X3" gate="-2" pin="S"/>
+<wire x1="73.66" y1="0" x2="73.66" y2="7.62" width="0.1524" layer="91"/>
+<junction x="63.5" y="0"/>
+<junction x="73.66" y="7.62"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -11743,6 +11761,10 @@ Source: www.kingbright.com</description>
 <pinref part="SV2" gate="1" pin="1"/>
 <pinref part="VSS36" gate="G$1" pin="VSS"/>
 <junction x="144.78" y="17.78"/>
+</segment>
+<segment>
+<pinref part="X3" gate="-1" pin="S"/>
+<pinref part="VSS37" gate="G$1" pin="VSS"/>
 </segment>
 </net>
 <net name="N$6" class="0">

@@ -28477,7 +28477,7 @@ void main(void)
   mode = UI_STATE_LOG;
  }
 
- if (mode == UI_STATE_LOG) {
+ if (mode != UI_STATE_LOG) {
   do { LATDbits.LATD0 = 1; } while(0);
   do { LATDbits.LATD1 = 1; } while(0);
  } else {
@@ -28497,7 +28497,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.73A");
+   sprintf(V.buf, " Version %s", "0.74A");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
