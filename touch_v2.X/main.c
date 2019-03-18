@@ -294,6 +294,7 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	V.ui_state = UI_STATE_INIT;
+
 	/*
 	 * RS-232 link I/O relay defaults to monitor/log mode with no power
 	 */
@@ -453,7 +454,7 @@ void main(void)
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
 #ifdef DB1
-//				WaitMs(500);
+				//				WaitMs(500);
 				if (SLED) {
 					UART2_put_buffer(ENQ);
 				} else {
@@ -500,6 +501,22 @@ void main(void)
 			break;
 		}
 		DEBUG1_SetHigh();
+		if (V.ticks) {
+			if (V.failed_send) {
+				BILED1_1_SetLow(); // red
+				BILED1_2_SetHigh();
+			} else {
+				BILED1_1_SetHigh(); //green
+				BILED1_2_SetLow();
+			}
+			if (V.failed_receive) {
+				BILED2_1_SetLow(); // red
+				BILED2_2_SetHigh();
+			} else {
+				BILED2_1_SetHigh(); //green
+				BILED2_2_SetLow();
+			}
+		}
 		sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
 		V.buf[16] = 0; // string size limit
 		wait_lcd_done();

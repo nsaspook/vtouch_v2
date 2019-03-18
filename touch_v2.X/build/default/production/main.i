@@ -27391,7 +27391,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 480 "./mcc_generated_files/pin_manager.h"
+# 560 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "./mcc_generated_files/mcc.h" 2
 
@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28474,6 +28474,7 @@ void main(void)
 
 
 
+
  WaitMs(300);
  if (PORTBbits.RB0) {
   mode = UI_STATE_HOST;
@@ -28497,7 +28498,7 @@ void main(void)
 
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 351 "main.c"
+# 352 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -28602,7 +28603,7 @@ void main(void)
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
-# 463 "main.c"
+# 464 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -28643,6 +28644,22 @@ void main(void)
    break;
   }
   do { LATEbits.LATE1 = 1; } while(0);
+  if (V.ticks) {
+   if (V.failed_send) {
+    do { LATDbits.LATD4 = 0; } while(0);
+    do { LATDbits.LATD5 = 1; } while(0);
+   } else {
+    do { LATDbits.LATD4 = 1; } while(0);
+    do { LATDbits.LATD5 = 0; } while(0);
+   }
+   if (V.failed_receive) {
+    do { LATDbits.LATD6 = 0; } while(0);
+    do { LATDbits.LATD7 = 1; } while(0);
+   } else {
+    do { LATDbits.LATD6 = 1; } while(0);
+    do { LATDbits.LATD7 = 0; } while(0);
+   }
+  }
   sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
   V.buf[16] = 0;
   wait_lcd_done();

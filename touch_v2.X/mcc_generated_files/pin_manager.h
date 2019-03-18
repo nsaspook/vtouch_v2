@@ -407,6 +407,86 @@
 #define SW1_SetAnalogMode()      do { ANSELDbits.ANSELD3 = 1; } while(0)
 #define SW1_SetDigitalMode()     do { ANSELDbits.ANSELD3 = 0; } while(0)
 
+// get/set BILED1_1 aliases
+#define BILED1_1_TRIS                 TRISDbits.TRISD4
+#define BILED1_1_LAT                  LATDbits.LATD4
+#define BILED1_1_PORT                 PORTDbits.RD4
+#define BILED1_1_WPU                  WPUDbits.WPUD4
+#define BILED1_1_OD                   ODCONDbits.ODCD4
+#define BILED1_1_ANS                  ANSELDbits.ANSELD4
+#define BILED1_1_SetHigh()            do { LATDbits.LATD4 = 1; } while(0)
+#define BILED1_1_SetLow()             do { LATDbits.LATD4 = 0; } while(0)
+#define BILED1_1_Toggle()             do { LATDbits.LATD4 = ~LATDbits.LATD4; } while(0)
+#define BILED1_1_GetValue()           PORTDbits.RD4
+#define BILED1_1_SetDigitalInput()    do { TRISDbits.TRISD4 = 1; } while(0)
+#define BILED1_1_SetDigitalOutput()   do { TRISDbits.TRISD4 = 0; } while(0)
+#define BILED1_1_SetPullup()          do { WPUDbits.WPUD4 = 1; } while(0)
+#define BILED1_1_ResetPullup()        do { WPUDbits.WPUD4 = 0; } while(0)
+#define BILED1_1_SetPushPull()        do { ODCONDbits.ODCD4 = 0; } while(0)
+#define BILED1_1_SetOpenDrain()       do { ODCONDbits.ODCD4 = 1; } while(0)
+#define BILED1_1_SetAnalogMode()      do { ANSELDbits.ANSELD4 = 1; } while(0)
+#define BILED1_1_SetDigitalMode()     do { ANSELDbits.ANSELD4 = 0; } while(0)
+
+// get/set BILED1_2 aliases
+#define BILED1_2_TRIS                 TRISDbits.TRISD5
+#define BILED1_2_LAT                  LATDbits.LATD5
+#define BILED1_2_PORT                 PORTDbits.RD5
+#define BILED1_2_WPU                  WPUDbits.WPUD5
+#define BILED1_2_OD                   ODCONDbits.ODCD5
+#define BILED1_2_ANS                  ANSELDbits.ANSELD5
+#define BILED1_2_SetHigh()            do { LATDbits.LATD5 = 1; } while(0)
+#define BILED1_2_SetLow()             do { LATDbits.LATD5 = 0; } while(0)
+#define BILED1_2_Toggle()             do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0)
+#define BILED1_2_GetValue()           PORTDbits.RD5
+#define BILED1_2_SetDigitalInput()    do { TRISDbits.TRISD5 = 1; } while(0)
+#define BILED1_2_SetDigitalOutput()   do { TRISDbits.TRISD5 = 0; } while(0)
+#define BILED1_2_SetPullup()          do { WPUDbits.WPUD5 = 1; } while(0)
+#define BILED1_2_ResetPullup()        do { WPUDbits.WPUD5 = 0; } while(0)
+#define BILED1_2_SetPushPull()        do { ODCONDbits.ODCD5 = 0; } while(0)
+#define BILED1_2_SetOpenDrain()       do { ODCONDbits.ODCD5 = 1; } while(0)
+#define BILED1_2_SetAnalogMode()      do { ANSELDbits.ANSELD5 = 1; } while(0)
+#define BILED1_2_SetDigitalMode()     do { ANSELDbits.ANSELD5 = 0; } while(0)
+
+// get/set BILED2_1 aliases
+#define BILED2_1_TRIS                 TRISDbits.TRISD6
+#define BILED2_1_LAT                  LATDbits.LATD6
+#define BILED2_1_PORT                 PORTDbits.RD6
+#define BILED2_1_WPU                  WPUDbits.WPUD6
+#define BILED2_1_OD                   ODCONDbits.ODCD6
+#define BILED2_1_ANS                  ANSELDbits.ANSELD6
+#define BILED2_1_SetHigh()            do { LATDbits.LATD6 = 1; } while(0)
+#define BILED2_1_SetLow()             do { LATDbits.LATD6 = 0; } while(0)
+#define BILED2_1_Toggle()             do { LATDbits.LATD6 = ~LATDbits.LATD6; } while(0)
+#define BILED2_1_GetValue()           PORTDbits.RD6
+#define BILED2_1_SetDigitalInput()    do { TRISDbits.TRISD6 = 1; } while(0)
+#define BILED2_1_SetDigitalOutput()   do { TRISDbits.TRISD6 = 0; } while(0)
+#define BILED2_1_SetPullup()          do { WPUDbits.WPUD6 = 1; } while(0)
+#define BILED2_1_ResetPullup()        do { WPUDbits.WPUD6 = 0; } while(0)
+#define BILED2_1_SetPushPull()        do { ODCONDbits.ODCD6 = 0; } while(0)
+#define BILED2_1_SetOpenDrain()       do { ODCONDbits.ODCD6 = 1; } while(0)
+#define BILED2_1_SetAnalogMode()      do { ANSELDbits.ANSELD6 = 1; } while(0)
+#define BILED2_1_SetDigitalMode()     do { ANSELDbits.ANSELD6 = 0; } while(0)
+
+// get/set BILED2_2 aliases
+#define BILED2_2_TRIS                 TRISDbits.TRISD7
+#define BILED2_2_LAT                  LATDbits.LATD7
+#define BILED2_2_PORT                 PORTDbits.RD7
+#define BILED2_2_WPU                  WPUDbits.WPUD7
+#define BILED2_2_OD                   ODCONDbits.ODCD7
+#define BILED2_2_ANS                  ANSELDbits.ANSELD7
+#define BILED2_2_SetHigh()            do { LATDbits.LATD7 = 1; } while(0)
+#define BILED2_2_SetLow()             do { LATDbits.LATD7 = 0; } while(0)
+#define BILED2_2_Toggle()             do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0)
+#define BILED2_2_GetValue()           PORTDbits.RD7
+#define BILED2_2_SetDigitalInput()    do { TRISDbits.TRISD7 = 1; } while(0)
+#define BILED2_2_SetDigitalOutput()   do { TRISDbits.TRISD7 = 0; } while(0)
+#define BILED2_2_SetPullup()          do { WPUDbits.WPUD7 = 1; } while(0)
+#define BILED2_2_ResetPullup()        do { WPUDbits.WPUD7 = 0; } while(0)
+#define BILED2_2_SetPushPull()        do { ODCONDbits.ODCD7 = 0; } while(0)
+#define BILED2_2_SetOpenDrain()       do { ODCONDbits.ODCD7 = 1; } while(0)
+#define BILED2_2_SetAnalogMode()      do { ANSELDbits.ANSELD7 = 1; } while(0)
+#define BILED2_2_SetDigitalMode()     do { ANSELDbits.ANSELD7 = 0; } while(0)
+
 // get/set LED0 aliases
 #define LED0_TRIS                 TRISEbits.TRISE0
 #define LED0_LAT                  LATEbits.LATE0

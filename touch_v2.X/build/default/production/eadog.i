@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27291,7 +27291,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 21 "./vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 480 "./mcc_generated_files/pin_manager.h"
+# 560 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 22 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1

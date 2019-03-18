@@ -39,8 +39,6 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27244,7 +27242,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27304,7 +27302,13 @@ void INTERRUPT_Initialize (void);
 # 53 "mcc_generated_files/tmr5.c" 2
 
 # 1 "mcc_generated_files/../vconfig.h" 1
-# 20 "mcc_generated_files/../vconfig.h"
+# 15 "mcc_generated_files/../vconfig.h"
+ typedef signed long long int24_t;
+
+
+
+
+
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -27322,7 +27326,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 21 "mcc_generated_files/../vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 480 "./mcc_generated_files/pin_manager.h"
+# 560 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 22 "mcc_generated_files/../vconfig.h" 2
 # 1 "./ringbufs.h" 1
