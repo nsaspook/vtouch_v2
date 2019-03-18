@@ -294,15 +294,19 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	V.ui_state = UI_STATE_INIT;
+	/*
+	 * RS-232 link I/O relay defaults to monitor/log mode with no power
+	 */
+	WaitMs(300); // wait for mode switch to settle
 	if (RB0_GetValue()) {
 		mode = UI_STATE_HOST;
 	} else {
 		mode = UI_STATE_LOG;
 	}
 
-	if (mode != UI_STATE_LOG) {
+	if (mode == UI_STATE_HOST) {
 		RELAY0_SetHigh();
-		OUT_PIN1_SetHigh();
+		OUT_PIN1_SetHigh(); // mode switch indicator lamp
 	} else {
 		RELAY0_SetLow();
 		OUT_PIN1_SetLow();

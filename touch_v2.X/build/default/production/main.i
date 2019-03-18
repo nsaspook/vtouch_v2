@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28471,13 +28471,17 @@ void main(void)
  (INTCON0bits.GIEL = 1);
 
  V.ui_state = UI_STATE_INIT;
+
+
+
+ WaitMs(300);
  if (PORTBbits.RB0) {
   mode = UI_STATE_HOST;
  } else {
   mode = UI_STATE_LOG;
  }
 
- if (mode != UI_STATE_LOG) {
+ if (mode == UI_STATE_HOST) {
   do { LATDbits.LATD0 = 1; } while(0);
   do { LATDbits.LATD1 = 1; } while(0);
  } else {
@@ -28493,7 +28497,7 @@ void main(void)
 
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 347 "main.c"
+# 351 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -28598,7 +28602,7 @@ void main(void)
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
-# 459 "main.c"
+# 463 "main.c"
     break;
    case SEQ_STATE_RX:
 
