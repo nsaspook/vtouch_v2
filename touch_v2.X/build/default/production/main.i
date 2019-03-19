@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28645,14 +28645,14 @@ void main(void)
   }
   do { LATEbits.LATE1 = 1; } while(0);
   if (V.ticks) {
-   if (V.failed_send) {
+   if (V.failed_receive) {
     do { LATDbits.LATD4 = 0; } while(0);
     do { LATDbits.LATD5 = 1; } while(0);
    } else {
     do { LATDbits.LATD4 = 1; } while(0);
     do { LATDbits.LATD5 = 0; } while(0);
    }
-   if (V.failed_receive) {
+   if (V.failed_send) {
     do { LATDbits.LATD6 = 0; } while(0);
     do { LATDbits.LATD7 = 1; } while(0);
    } else {

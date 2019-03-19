@@ -502,14 +502,14 @@ void main(void)
 		}
 		DEBUG1_SetHigh();
 		if (V.ticks) {
-			if (V.failed_send) {
+			if (V.failed_receive) {
 				BILED1_1_SetLow(); // red
 				BILED1_2_SetHigh();
 			} else {
 				BILED1_1_SetHigh(); //green
 				BILED1_2_SetLow();
 			}
-			if (V.failed_receive) {
+			if (V.failed_send) {
 				BILED2_1_SetLow(); // red
 				BILED2_2_SetHigh();
 			} else {
