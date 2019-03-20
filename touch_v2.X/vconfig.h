@@ -21,17 +21,17 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.74A"
+#define VER	"0.80B"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
 	 */
 	//#define TESTING
-	//#define DISPLAY_SLOW
-//#define DB1
-//#define DB2
-//#define DB3
-//#define DB4
+	#define DISPLAY_SLOW
+	#define DB1
+	#define DB2
+	#define DB3
+	#define DB4
 
 #define SLED	LED0_LAT
 
@@ -89,6 +89,16 @@ extern "C" {
 	} UI_STATES;
 
 	typedef enum {
+		GEM_STATE_DISABLE = 0,
+		GEM_STATE_COMM,
+		GEM_STATE_OFFLINE,
+		GEM_STATE_ONLINE,
+		GEM_STATE_REMOTE,
+		GEM_STATE_ALARM,	
+		GEM_STATE_ERROR
+	} GEM_STATES;
+
+	typedef enum {
 		LINK_STATE_IDLE = 0,
 		LINK_STATE_ENQ,
 		LINK_STATE_EOT,
@@ -113,6 +123,7 @@ extern "C" {
 	typedef struct V_data { // control data structure 
 		SEQ_STATES s_state;
 		UI_STATES ui_state;
+		GEM_STATES g_state;
 		LINK_STATES m_l_state;
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
@@ -123,7 +134,8 @@ extern "C" {
 		uint16_t r_checksum, t_checksum;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1, connect : 2;
+		queue : 1;
+		uint8_t ack[3];
 		uint8_t uart;
 	} V_data;
 #ifdef	__cplusplus

@@ -170,6 +170,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
 		V.failed_receive = false;
+		V.g_state = secs_gem_state(V.stream, V.function);
 		*m_link = LINK_STATE_DONE;
 		break;
 	case LINK_STATE_NAK:
@@ -216,8 +217,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		*r_link = LINK_STATE_EOT;
 #ifdef DB2
 		WaitMs(5);
-		H27[0].block.block.systemb = V.ticks; // make distinct
-		secs_send((uint8_t*) & H27[0], sizeof(header27), true, 1);
+		//		H27[0].block.block.systemb = V.ticks; // make distinct, testing S1F13
+		//		secs_send((uint8_t*) & H27[0], sizeof(header27), true, 1);
+		H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
+		secs_send((uint8_t*) & H10[3], sizeof(header10), true, 1);
 #endif
 		break;
 	case LINK_STATE_EOT:
@@ -242,6 +245,14 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 					 */
 					if (rxData_l <= sizeof(block10)) // save header only
 						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+
+					if (rxData_l == sizeof(block10) + 1) // save possible data format codes
+						V.ack[2] = rxData;
+					if (rxData_l == sizeof(block10) + 2) // save possible data length codes
+						V.ack[1] = rxData;
+					if (rxData_l == sizeof(block10) + 3) // save possible data value codes
+						V.ack[0] = rxData;
+
 					if (rxData_l <= r_block.length) // generate checksum from data stream
 						V.r_checksum = run_checksum(rxData, false);
 
@@ -274,6 +285,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.rbit = H10[1].block.block.rbit;
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
+		V.g_state = secs_gem_state(V.stream, V.function);
 		UART1_Write(ACK);
 		V.failed_receive = false;
 		*r_link = LINK_STATE_DONE;
@@ -586,6 +598,71 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 		block.length = sizeof(header10);
 		H10[2].block.block.systemb = V.systemb;
 		V.abort = LINK_ERROR_ABORT;
+		break;
+	}
+
+	return(block);
+}
+
+/*
+ * parse received stream and response codes for host operational state
+ */
+GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
+{
+	static GEM_STATES block = GEM_STATE_DISABLE;
+
+	switch (stream) { // from equipment
+	case 1:
+		switch (function) {
+#ifdef DB2
+		case 1:
+#endif
+		case 2:
+			block = GEM_STATE_REMOTE;
+			break;
+#ifdef DB2
+		case 13:
+#endif
+		case 14:
+			block = GEM_STATE_COMM;
+			break;
+#ifdef DB2
+		case 15:
+#endif
+		case 16:
+			block = GEM_STATE_OFFLINE;
+			break;
+#ifdef DB2
+		case 17:
+#endif
+		case 18:
+			block = GEM_STATE_ONLINE;
+			break;
+		default:
+			if (block == GEM_STATE_DISABLE) {
+				block = GEM_STATE_COMM;
+			}
+			break;
+		}
+		break;
+	case 5:
+		switch (function) {
+		default:
+			block = GEM_STATE_ALARM;
+			break;
+		}
+		break;
+	case 9:
+		switch (function) {
+		default:
+			block = GEM_STATE_ERROR;
+			break;
+		}
+		break;
+	default:
+		if (block == GEM_STATE_DISABLE) {
+			block = GEM_STATE_COMM;
+		}
 		break;
 	}
 

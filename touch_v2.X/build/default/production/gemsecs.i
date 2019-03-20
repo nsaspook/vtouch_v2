@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27349,6 +27349,16 @@ void PIN_MANAGER_Initialize (void);
  } UI_STATES;
 
  typedef enum {
+  GEM_STATE_DISABLE = 0,
+  GEM_STATE_COMM,
+  GEM_STATE_OFFLINE,
+  GEM_STATE_ONLINE,
+  GEM_STATE_REMOTE,
+  GEM_STATE_ALARM,
+  GEM_STATE_ERROR
+ } GEM_STATES;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -27373,6 +27383,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
+  GEM_STATES g_state;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -27383,7 +27394,8 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2;
+  queue : 1;
+  uint8_t ack[3];
   uint8_t uart;
  } V_data;
 # 21 "./gemsecs.h" 2
@@ -28022,6 +28034,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
+ GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
 
 extern struct V_data V;
@@ -28071,7 +28084,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  switch (*m_link) {
  case LINK_STATE_IDLE:
 
-
+  WaitMs(50);
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
@@ -28094,11 +28107,11 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ENQ:
 
-
-
-
-
-
+  WaitMs(50);
+  if (V.uart == 1)
+   secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
+  if (V.uart == 2)
+   secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
 
   V.error = LINK_ERROR_NONE;
   *m_link = LINK_STATE_EOT;
@@ -28185,7 +28198,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ACK:
 
-
+  WaitMs(50);
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -28194,6 +28207,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
   V.failed_receive = 0;
+  V.g_state = secs_gem_state(V.stream, V.function);
   *m_link = LINK_STATE_DONE;
   break;
  case LINK_STATE_NAK:
@@ -28239,9 +28253,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
+  WaitMs(5);
 
 
-
+  H10[3].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 1, 1);
 
   break;
  case LINK_STATE_EOT:
@@ -28266,6 +28282,14 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
      if (rxData_l <= sizeof(block10))
       H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+
+     if (rxData_l == sizeof(block10) + 1)
+      V.ack[2] = rxData;
+     if (rxData_l == sizeof(block10) + 2)
+      V.ack[1] = rxData;
+     if (rxData_l == sizeof(block10) + 3)
+      V.ack[0] = rxData;
+
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
 
@@ -28298,6 +28322,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.rbit = H10[1].block.block.rbit;
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
+  V.g_state = secs_gem_state(V.stream, V.function);
   UART1_Write(0x06);
   V.failed_receive = 0;
   *r_link = LINK_STATE_DONE;
@@ -28337,8 +28362,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x04);
 
   break;
  case LINK_STATE_ENQ:
@@ -28390,8 +28415,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x06);
 
   break;
  case LINK_STATE_ACK:
@@ -28610,6 +28635,71 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   block.length = sizeof(header10);
   H10[2].block.block.systemb = V.systemb;
   V.abort = LINK_ERROR_ABORT;
+  break;
+ }
+
+ return(block);
+}
+
+
+
+
+GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
+{
+ static GEM_STATES block = GEM_STATE_DISABLE;
+
+ switch (stream) {
+ case 1:
+  switch (function) {
+
+  case 1:
+
+  case 2:
+   block = GEM_STATE_REMOTE;
+   break;
+
+  case 13:
+
+  case 14:
+   block = GEM_STATE_COMM;
+   break;
+
+  case 15:
+
+  case 16:
+   block = GEM_STATE_OFFLINE;
+   break;
+
+  case 17:
+
+  case 18:
+   block = GEM_STATE_ONLINE;
+   break;
+  default:
+   if (block == GEM_STATE_DISABLE) {
+    block = GEM_STATE_COMM;
+   }
+   break;
+  }
+  break;
+ case 5:
+  switch (function) {
+  default:
+   block = GEM_STATE_ALARM;
+   break;
+  }
+  break;
+ case 9:
+  switch (function) {
+  default:
+   block = GEM_STATE_ERROR;
+   break;
+  }
+  break;
+ default:
+  if (block == GEM_STATE_DISABLE) {
+   block = GEM_STATE_COMM;
+  }
   break;
  }
 

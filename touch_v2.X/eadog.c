@@ -177,7 +177,7 @@ void eaDogM_WriteString(char *strPtr)
 	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
 	start_lcd();
 #ifdef DISPLAY_SLOW
-	wdtdelay(2000);
+	wdtdelay(9000);
 #endif
 }
 

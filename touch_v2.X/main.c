@@ -62,6 +62,7 @@ extern struct spi_link_type spi_link;
 V_data V = {
 	.error = false,
 	.uart = 1,
+	.g_state = GEM_STATE_DISABLE,
 };
 
 header10 H10[] = {
@@ -114,6 +115,32 @@ header10 H10[] = {
 		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 2,
+		.block.block.function = 17,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
+	{ // S1F15 send 'request off-line ' from host
+		.length = 10,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 15,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
+	{ // S1F17 send 'request on-line ' from host
+		.length = 10,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
 		.block.block.function = 17,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
@@ -207,13 +234,13 @@ header17 H17[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data[0] = 0x00,
-		.data[1] = 0x01,
-		.data[2] = 0x00,
-		.data[3] = 0x01,
-		.data[4] = 0x21,
-		.data[5] = 0x02,
 		.data[6] = 0x01,
+		.data[5] = 0x02,
+		.data[4] = 0x21,
+		.data[3] = 0x01,
+		.data[2] = 0x00,
+		.data[1] = 0x01,
+		.data[0] = 0x00,
 	},
 };
 
@@ -431,14 +458,14 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(V.buf, "E R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
+				sprintf(V.buf, "E R%d T%d E%d A%d G%d#", V.r_l_state, V.t_l_state, V.error, V.abort, V.g_state);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
 				break;
 			}
 			if (!V.error && !V.abort) {
-				sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+				sprintf(V.buf, "HOST MODE %ld %d  #", V.ticks, V.g_state);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -449,7 +476,7 @@ void main(void)
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				sprintf(V.buf, " LOG MODE %d     #", V.uart);
+				sprintf(V.buf, "LOG MODE %d %d     #", V.uart, V.g_state);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -490,7 +517,7 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
-			sprintf(V.buf, " LOG MODE %d     #", V.uart);
+			sprintf(V.buf, "LOG MODE %d %d     #", V.uart, V.g_state);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);

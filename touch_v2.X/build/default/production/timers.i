@@ -38,6 +38,8 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27235,7 +27237,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27266,13 +27268,7 @@ typedef uint32_t uint_fast32_t;
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
 # 4 "timers.c" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
-
+# 20 "./vconfig.h"
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -27346,6 +27342,16 @@ void PIN_MANAGER_Initialize (void);
  } UI_STATES;
 
  typedef enum {
+  GEM_STATE_DISABLE = 0,
+  GEM_STATE_COMM,
+  GEM_STATE_OFFLINE,
+  GEM_STATE_ONLINE,
+  GEM_STATE_REMOTE,
+  GEM_STATE_ALARM,
+  GEM_STATE_ERROR
+ } GEM_STATES;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -27370,6 +27376,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
+  GEM_STATES g_state;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -27380,7 +27387,8 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2;
+  queue : 1;
+  uint8_t ack[3];
   uint8_t uart;
  } V_data;
 # 5 "timers.c" 2
