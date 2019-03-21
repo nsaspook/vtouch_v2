@@ -27426,6 +27426,7 @@ void PIN_MANAGER_Initialize (void);
   queue : 1;
   uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 54 "mcc_generated_files/tmr5.c" 2
 
@@ -27435,6 +27436,7 @@ void PIN_MANAGER_Initialize (void);
 
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
+extern V_data V;
 
 
 
@@ -27546,7 +27548,7 @@ void __attribute__((picinterrupt(("irq(TMR5), base(8)")))) TMR5_ISR()
  TMR5_WriteTimer(timer5ReloadVal);
 
 
- if (++CountCallBack >= 50) {
+ if (++CountCallBack >= (5 +V.ticker)) {
 
   TMR5_CallBack();
 

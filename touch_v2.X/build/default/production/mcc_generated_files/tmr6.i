@@ -27641,6 +27641,7 @@ void PIN_MANAGER_Initialize (void);
   queue : 1;
   uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 55 "mcc_generated_files/tmr6.c" 2
 # 1 "mcc_generated_files/../timers.h" 1

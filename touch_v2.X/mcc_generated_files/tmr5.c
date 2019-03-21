@@ -58,6 +58,7 @@
  */
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
+extern V_data V;
 
 /**
   Section: TMR5 APIs
@@ -169,7 +170,7 @@ void __interrupt(irq(TMR5), base(8)) TMR5_ISR()
 	TMR5_WriteTimer(timer5ReloadVal);
 
 	// callback function - called every 100th pass
-	if (++CountCallBack >= TMR5_INTERRUPT_TICKER_FACTOR) {
+	if (++CountCallBack >= (TMR5_INTERRUPT_TICKER_FACTOR+V.ticker)) {
 		// ticker function call
 		TMR5_CallBack();
 

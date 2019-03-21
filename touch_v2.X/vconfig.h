@@ -27,11 +27,11 @@ extern "C" {
 	 * debug testing and loopbacks
 	 */
 	//#define TESTING
-	#define DISPLAY_SLOW
-	#define DB1
-	#define DB2
-	#define DB3
-	#define DB4
+	//#define DISPLAY_SLOW
+#define DB1
+#define DB2
+#define DB3
+#define DB4
 
 #define SLED	LED0_LAT
 
@@ -94,7 +94,7 @@ extern "C" {
 		GEM_STATE_OFFLINE,
 		GEM_STATE_ONLINE,
 		GEM_STATE_REMOTE,
-		GEM_STATE_ALARM,	
+		GEM_STATE_ALARM,
 		GEM_STATE_ERROR
 	} GEM_STATES;
 
@@ -137,6 +137,7 @@ extern "C" {
 		queue : 1;
 		uint8_t ack[3];
 		uint8_t uart;
+		volatile uint8_t ticker;
 	} V_data;
 #ifdef	__cplusplus
 }

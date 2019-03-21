@@ -27397,6 +27397,7 @@ void PIN_MANAGER_Initialize (void);
   queue : 1;
   uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 21 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
@@ -28254,10 +28255,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   *r_link = LINK_STATE_EOT;
 
   WaitMs(5);
+  H27[0].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H27[0], sizeof(header27), 1, 1);
 
 
-  H10[3].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H10[3], sizeof(header10), 1, 1);
 
   break;
  case LINK_STATE_EOT:
@@ -28656,28 +28657,33 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 
   case 2:
    block = GEM_STATE_REMOTE;
+   V.ticker = 0;
    break;
 
   case 13:
 
   case 14:
    block = GEM_STATE_COMM;
+   V.ticker = 15;
    break;
 
   case 15:
 
   case 16:
    block = GEM_STATE_OFFLINE;
+   V.ticker = 0;
    break;
 
   case 17:
 
   case 18:
    block = GEM_STATE_ONLINE;
+   V.ticker = 0;
    break;
   default:
    if (block == GEM_STATE_DISABLE) {
     block = GEM_STATE_COMM;
+    V.ticker = 15;
    }
    break;
   }
@@ -28686,6 +28692,8 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
   switch (function) {
   default:
    block = GEM_STATE_ALARM;
+   if (V.ticker != 45)
+    V.ticker = 15;
    break;
   }
   break;
@@ -28693,12 +28701,15 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
   switch (function) {
   default:
    block = GEM_STATE_ERROR;
+   if (V.ticker != 45)
+    V.ticker = 15;
    break;
   }
   break;
  default:
   if (block == GEM_STATE_DISABLE) {
    block = GEM_STATE_COMM;
+   V.ticker = 45;
   }
   break;
  }

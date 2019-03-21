@@ -63,6 +63,7 @@ V_data V = {
 	.error = false,
 	.uart = 1,
 	.g_state = GEM_STATE_DISABLE,
+	.ticker = 45,
 };
 
 header10 H10[] = {

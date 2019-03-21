@@ -27395,6 +27395,7 @@ void PIN_MANAGER_Initialize (void);
   queue : 1;
   uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1
@@ -27784,7 +27785,7 @@ void eaDogM_WriteString(char *strPtr)
  printf("%s", strPtr);
  start_lcd();
 
- wdtdelay(9000);
+
 
 }
 

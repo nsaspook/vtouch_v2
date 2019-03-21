@@ -28116,6 +28116,7 @@ void PMD_Initialize(void);
   queue : 1;
   uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 27 "./eadog.h" 2
 
@@ -28271,6 +28272,7 @@ V_data V = {
  .error = 0,
  .uart = 1,
  .g_state = GEM_STATE_DISABLE,
+ .ticker = 45,
 };
 
 header10 H10[] = {
@@ -28556,7 +28558,7 @@ void main(void)
 
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 379 "main.c"
+# 380 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);

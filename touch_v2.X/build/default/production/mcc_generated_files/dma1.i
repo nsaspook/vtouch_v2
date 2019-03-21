@@ -27404,6 +27404,7 @@ void PIN_MANAGER_Initialize (void);
   queue : 1;
   uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 54 "mcc_generated_files/dma1.c" 2
 
