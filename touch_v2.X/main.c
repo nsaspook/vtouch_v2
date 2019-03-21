@@ -349,34 +349,6 @@ void main(void)
 
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
-#ifdef TESTING
-			uint8_t j;
-			uint16_t sum;
-
-			j = 3; // set H10 block for testing
-			sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
-			H10[j].checksum = sum;
-			sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x #",
-				mode,
-				H10[j].block.b[9],
-				H10[j].block.b[8],
-				H10[j].block.b[7],
-				H10[j].block.b[6],
-				H10[j].block.b[5],
-				H10[j].block.b[4],
-				H10[j].block.b[3],
-				H10[j].block.b[2],
-				H10[j].block.b[1],
-				H10[j].block.b[0],
-				sum);
-			wait_lcd_done();
-			eaDogM_WriteString(V.buf);
-
-			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
-			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
-			wait_lcd_done();
-			eaDogM_WriteString(V.buf);
-#else
 			sprintf(V.buf, " RVI HOST TESTER");
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -386,7 +358,6 @@ void main(void)
 			sprintf(V.buf, " FGB@MCHP FAB4");
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
-#endif
 			WaitMs(3000);
 			break;
 		case UI_STATE_HOST: //slave
@@ -396,7 +367,7 @@ void main(void)
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				if (!V.error && !V.abort) {
-					sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+					sprintf(V.buf, "HOST MODE %ld %d  #", V.ticks, V.g_state);
 					V.buf[16] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -482,7 +453,6 @@ void main(void)
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
 #ifdef DB1
-				//				WaitMs(500);
 				if (SLED) {
 					UART2_put_buffer(ENQ);
 				} else {
@@ -495,8 +465,8 @@ void main(void)
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, " S%dF%d #%ld    ", V.stream, V.function, V.ticks);
-					V.buf[11] = 0; // string size limit
+					sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
+					V.buf[13] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
 					V.s_state = SEQ_STATE_TRIGGER;
@@ -508,7 +478,7 @@ void main(void)
 				V.s_state = SEQ_STATE_DONE;
 				sprintf(V.buf, " OK #");
 				wait_lcd_done();
-				eaDogM_WriteStringAtPos(V.uart - 1, 11, V.buf);
+				eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;

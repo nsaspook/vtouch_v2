@@ -69,6 +69,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		}
 		break;
 	case LINK_STATE_ENQ:
+		rxData_l = 0;
 #ifdef DB2
 		WaitMs(50);
 		if (V.uart == 1)

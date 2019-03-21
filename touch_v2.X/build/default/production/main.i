@@ -28558,17 +28558,15 @@ void main(void)
 
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 380 "main.c"
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.80B");
+   sprintf(V.buf, " Version %s", "0.81B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);
-
    WaitMs(3000);
    break;
   case UI_STATE_HOST:
@@ -28578,7 +28576,7 @@ void main(void)
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
     if (!V.error && !V.abort) {
-     sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+     sprintf(V.buf, "HOST MODE %ld %d  #", V.ticks, V.g_state);
      V.buf[16] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28664,7 +28662,6 @@ void main(void)
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
 
-
     if (LATEbits.LATE0) {
      UART2_put_buffer(0x05);
     } else {
@@ -28677,8 +28674,8 @@ void main(void)
 
 
     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-     sprintf(V.buf, " S%dF%d #%ld    ", V.stream, V.function, V.ticks);
-     V.buf[11] = 0;
+     sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
+     V.buf[13] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
      V.s_state = SEQ_STATE_TRIGGER;
@@ -28690,7 +28687,7 @@ void main(void)
     V.s_state = SEQ_STATE_DONE;
     sprintf(V.buf, " OK #");
     wait_lcd_done();
-    eaDogM_WriteStringAtPos(V.uart - 1, 11, V.buf);
+    eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
