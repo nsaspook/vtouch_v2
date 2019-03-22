@@ -180,7 +180,6 @@ void eaDogM_WriteString(char *strPtr)
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
 #endif
-	DEBUG1_SetLow();
 }
 
 /*
@@ -188,6 +187,7 @@ void eaDogM_WriteString(char *strPtr)
  */
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
+	DEBUG1_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -207,6 +207,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
  */
 void send_lcd_data_dma(uint8_t strPtr)
 {
+	DEBUG1_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);

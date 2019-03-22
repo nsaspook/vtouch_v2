@@ -49,10 +49,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./gemsecs.h: 84:  typedef struct header24 {
 [s S2240 `us 1 `uc -> 14 `i `S2233 1 `uc 1 ]
 [n S2240 header24 checksum data block length ]
-"91
-[; ;./gemsecs.h: 91:  typedef struct header27 {
-[s S2241 `us 1 `uc -> 17 `i `S2233 1 `uc 1 ]
-[n S2241 header27 checksum data block length ]
 "98
 [; ;./gemsecs.h: 98:  typedef struct header53 {
 [s S2242 `us 1 `uc -> 43 `i `S2233 1 `uc 1 ]
@@ -130,15 +126,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 372:     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 [c E16922 10 11 12 13 14 15 16 17 18 .. ]
 [n E16922 . LINK_ERROR_NONE LINK_ERROR_T1 LINK_ERROR_T2 LINK_ERROR_T3 LINK_ERROR_T4 LINK_ERROR_CHECKSUM LINK_ERROR_NAK LINK_ERROR_ABORT LINK_ERROR_SEND  ]
-"302 ./mcc_generated_files/uart1.h
-[; ;./mcc_generated_files/uart1.h: 302:  void UART1_put_buffer(uint8_t);
-[v _UART1_put_buffer `(v ~T0 @X0 0 ef1`uc ]
 "116 ./gemsecs.h
 [; ;./gemsecs.h: 116:  LINK_STATES r_protocol(LINK_STATES *);
 [v _r_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
 "117
 [; ;./gemsecs.h: 117:  LINK_STATES t_protocol(LINK_STATES *);
 [v _t_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
+"115
+[; ;./gemsecs.h: 115:  LINK_STATES m_protocol(LINK_STATES *);
+[v _m_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
 "46188 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46188:     struct {
 [s S2086 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -154,12 +150,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46199
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46199: extern volatile LATEbits_t LATEbits __attribute__((address(0x3FBE)));
 [v _LATEbits `VS2085 ~T0 @X0 0 e@16318 ]
-"327 ./mcc_generated_files/uart2.h
-[; ;./mcc_generated_files/uart2.h: 327: void UART2_put_buffer(uint8_t);
-[v _UART2_put_buffer `(v ~T0 @X0 0 ef1`uc ]
-"115 ./gemsecs.h
-[; ;./gemsecs.h: 115:  LINK_STATES m_protocol(LINK_STATES *);
-[v _m_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
 "44 main.c
 [p n 520 ]
 "45
@@ -2898,54 +2888,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ..
 ]
-"268
-[; ;main.c: 268: header27 H27[] = {
-[v _H27 `S2241 ~T0 @X0 -> -> 1 `i `ux e ]
-[i _H27
-:U ..
-:U ..
--> -> 0 `i `us
-:U ..
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-..
-:U 1
-:U ..
-:U ..
-:U ..
--> -> -> 1 `i `l `ul
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
--> -> 13 `i `uc
--> -> 1 `i `uc
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
-..
-..
-..
-..
--> -> 27 `i `uc
-..
-..
-]
 "285
 [; ;main.c: 285: header53 H53[] = {
 [v _H53 `S2242 ~T0 @X0 -> -> 1 `i `ux e ]
@@ -3162,7 +3104,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 357:    eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 6 ]
 "358
-[; ;main.c: 358:    sprintf(V.buf, " Version %s", "0.83B");
+[; ;main.c: 358:    sprintf(V.buf, " Version %s", "0.85B");
 [e ( _sprintf (1 , (. , &U . _V 6 :s 2C :s 3C ]
 "359
 [; ;main.c: 359:    wait_lcd_done();
@@ -3224,12 +3166,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 377:     }
 }
 [e :U 2271 ]
-"379
-[; ;main.c: 379:     WaitMs(50);
-[e ( _WaitMs (1 -> -> 50 `i `us ]
-"380
-[; ;main.c: 380:     UART1_put_buffer(0x05);
-[e ( _UART1_put_buffer (1 -> -> 5 `i `uc ]
 "382
 [; ;main.c: 382:     break;
 [e $U 2268  ]
@@ -3252,9 +3188,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "391
 [; ;main.c: 391:      eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 6 ]
-"393
-[; ;main.c: 393:      WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
 "395
 [; ;main.c: 395:      if (V.wbit) {
 [e $ ! != -> . _V 19 `i -> 0 `i 2274  ]
@@ -3463,35 +3396,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "457
 [; ;main.c: 457:     eaDogM_WriteStringAtPos(2, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 6 ]
-"459
-[; ;main.c: 459:     if (LATEbits.LATE0) {
-[e $ ! != -> . . _LATEbits 0 0 `i -> 0 `i 2291  ]
-{
-"460
-[; ;main.c: 460:      UART2_put_buffer(0x05);
-[e ( _UART2_put_buffer (1 -> -> 5 `i `uc ]
-"461
-[; ;main.c: 461:     } else {
-}
-[e $U 2292  ]
-[e :U 2291 ]
-{
-"462
-[; ;main.c: 462:      UART1_put_buffer(0x05);
-[e ( _UART1_put_buffer (1 -> -> 5 `i `uc ]
-"463
-[; ;main.c: 463:     }
-}
-[e :U 2292 ]
 "465
 [; ;main.c: 465:     break;
 [e $U 2288  ]
 "466
 [; ;main.c: 466:    case SEQ_STATE_RX:
-[e :U 2293 ]
+[e :U 2291 ]
 "470
 [; ;main.c: 470:     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-[e $ ! == -> ( _m_protocol (1 &U . _V 3 `ui -> . `E16913 4 `ui 2294  ]
+[e $ ! == -> ( _m_protocol (1 &U . _V 3 `ui -> . `E16913 4 `ui 2292  ]
 {
 "471
 [; ;main.c: 471:      sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
@@ -3511,20 +3424,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 "476
 [; ;main.c: 476:     }
 }
-[e :U 2294 ]
+[e :U 2292 ]
 "477
 [; ;main.c: 477:     if (V.m_l_state == LINK_STATE_ERROR)
-[e $ ! == -> . _V 3 `ui -> . `E16913 6 `ui 2295  ]
+[e $ ! == -> . _V 3 `ui -> . `E16913 6 `ui 2293  ]
 "478
 [; ;main.c: 478:      V.s_state = SEQ_STATE_ERROR;
 [e = . _V 0 . `E16888 6 ]
-[e :U 2295 ]
+[e :U 2293 ]
 "479
 [; ;main.c: 479:     break;
 [e $U 2288  ]
 "480
 [; ;main.c: 480:    case SEQ_STATE_TRIGGER:
-[e :U 2296 ]
+[e :U 2294 ]
 "481
 [; ;main.c: 481:     V.s_state = SEQ_STATE_DONE;
 [e = . _V 0 . `E16888 5 ]
@@ -3542,7 +3455,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 2288  ]
 "486
 [; ;main.c: 486:    case SEQ_STATE_DONE:
-[e :U 2297 ]
+[e :U 2295 ]
 "487
 [; ;main.c: 487:     V.s_state = SEQ_STATE_INIT;
 [e = . _V 0 . `E16888 0 ]
@@ -3551,10 +3464,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 2288  ]
 "489
 [; ;main.c: 489:    case SEQ_STATE_ERROR:
-[e :U 2298 ]
+[e :U 2296 ]
 "490
 [; ;main.c: 490:    default:
-[e :U 2299 ]
+[e :U 2297 ]
 "491
 [; ;main.c: 491:     V.s_state = SEQ_STATE_INIT;
 [e = . _V 0 . `E16888 0 ]
@@ -3567,11 +3480,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 2288  ]
 [e :U 2289 ]
 [e [\ -> . _V 0 `ui , $ -> . `E16888 0 `ui 2290
- , $ -> . `E16888 1 `ui 2293
- , $ -> . `E16888 3 `ui 2296
- , $ -> . `E16888 5 `ui 2297
- , $ -> . `E16888 6 `ui 2298
- 2299 ]
+ , $ -> . `E16888 1 `ui 2291
+ , $ -> . `E16888 3 `ui 2294
+ , $ -> . `E16888 5 `ui 2295
+ , $ -> . `E16888 6 `ui 2296
+ 2297 ]
 [e :U 2288 ]
 "494
 [; ;main.c: 494:    sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
@@ -3590,10 +3503,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $U 2264  ]
 "499
 [; ;main.c: 499:   case UI_STATE_ERROR:
-[e :U 2300 ]
+[e :U 2298 ]
 "500
 [; ;main.c: 500:   default:
-[e :U 2301 ]
+[e :U 2299 ]
 "501
 [; ;main.c: 501:    V.ui_state = UI_STATE_INIT;
 [e = . _V 1 . `E16897 0 ]
@@ -3608,108 +3521,108 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e [\ -> . _V 1 `ui , $ -> . `E16897 0 `ui 2266
  , $ -> . `E16897 1 `ui 2267
  , $ -> . `E16897 3 `ui 2287
- , $ -> . `E16897 4 `ui 2300
- 2301 ]
+ , $ -> . `E16897 4 `ui 2298
+ 2299 ]
 [e :U 2264 ]
 "504
 [; ;main.c: 504:   do { LATEbits.LATE2 = 1; } while(0);
-[e :U 2304 ]
+[e :U 2302 ]
 {
 [e = . . _LATEbits 0 2 -> -> 1 `i `uc ]
 }
-[e :U 2303 ]
+[e :U 2301 ]
 "505
 [; ;main.c: 505:   if (V.ticks) {
-[e $ ! != . _V 7 -> -> -> 0 `i `l `ul 2305  ]
+[e $ ! != . _V 7 -> -> -> 0 `i `l `ul 2303  ]
 {
 "506
 [; ;main.c: 506:    if (V.failed_receive) {
-[e $ ! != -> . _V 22 `i -> 0 `i 2306  ]
+[e $ ! != -> . _V 22 `i -> 0 `i 2304  ]
 {
 "507
 [; ;main.c: 507:     do { LATDbits.LATD4 = 0; } while(0);
-[e :U 2309 ]
+[e :U 2307 ]
 {
 [e = . . _LATDbits 0 4 -> -> 0 `i `uc ]
 }
-[e :U 2308 ]
+[e :U 2306 ]
 "508
 [; ;main.c: 508:     do { LATDbits.LATD5 = 1; } while(0);
-[e :U 2312 ]
+[e :U 2310 ]
 {
 [e = . . _LATDbits 0 5 -> -> 1 `i `uc ]
 }
-[e :U 2311 ]
+[e :U 2309 ]
 "509
 [; ;main.c: 509:    } else {
 }
-[e $U 2313  ]
-[e :U 2306 ]
+[e $U 2311  ]
+[e :U 2304 ]
 {
 "510
 [; ;main.c: 510:     do { LATDbits.LATD4 = 1; } while(0);
-[e :U 2316 ]
+[e :U 2314 ]
 {
 [e = . . _LATDbits 0 4 -> -> 1 `i `uc ]
 }
-[e :U 2315 ]
+[e :U 2313 ]
 "511
 [; ;main.c: 511:     do { LATDbits.LATD5 = 0; } while(0);
-[e :U 2319 ]
+[e :U 2317 ]
 {
 [e = . . _LATDbits 0 5 -> -> 0 `i `uc ]
 }
-[e :U 2318 ]
+[e :U 2316 ]
 "512
 [; ;main.c: 512:    }
 }
-[e :U 2313 ]
+[e :U 2311 ]
 "513
 [; ;main.c: 513:    if (V.failed_send) {
-[e $ ! != -> . _V 21 `i -> 0 `i 2320  ]
+[e $ ! != -> . _V 21 `i -> 0 `i 2318  ]
 {
 "514
 [; ;main.c: 514:     do { LATDbits.LATD6 = 0; } while(0);
-[e :U 2323 ]
+[e :U 2321 ]
 {
 [e = . . _LATDbits 0 6 -> -> 0 `i `uc ]
 }
-[e :U 2322 ]
+[e :U 2320 ]
 "515
 [; ;main.c: 515:     do { LATDbits.LATD7 = 1; } while(0);
-[e :U 2326 ]
+[e :U 2324 ]
 {
 [e = . . _LATDbits 0 7 -> -> 1 `i `uc ]
 }
-[e :U 2325 ]
+[e :U 2323 ]
 "516
 [; ;main.c: 516:    } else {
 }
-[e $U 2327  ]
-[e :U 2320 ]
+[e $U 2325  ]
+[e :U 2318 ]
 {
 "517
 [; ;main.c: 517:     do { LATDbits.LATD6 = 1; } while(0);
-[e :U 2330 ]
+[e :U 2328 ]
 {
 [e = . . _LATDbits 0 6 -> -> 1 `i `uc ]
 }
-[e :U 2329 ]
+[e :U 2327 ]
 "518
 [; ;main.c: 518:     do { LATDbits.LATD7 = 0; } while(0);
-[e :U 2333 ]
+[e :U 2331 ]
 {
 [e = . . _LATDbits 0 7 -> -> 0 `i `uc ]
 }
-[e :U 2332 ]
+[e :U 2330 ]
 "519
 [; ;main.c: 519:    }
 }
-[e :U 2327 ]
+[e :U 2325 ]
 "520
 [; ;main.c: 520:   }
 }
-[e :U 2305 ]
+[e :U 2303 ]
 "521
 [; ;main.c: 521:   sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
 [e ( _sprintf (1 , , , , , (. , &U . _V 6 :s 15C -> . _V 4 `ui -> . _V 22 `i -> . _V 5 `ui -> . _V 21 `i -> . _V 16 `ui ]
@@ -3721,18 +3634,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _wait_lcd_done ..  ]
 "524
 [; ;main.c: 524:   if (mode != UI_STATE_LOG)
-[e $ ! != -> _mode `ui -> . `E16897 3 `ui 2334  ]
+[e $ ! != -> _mode `ui -> . `E16897 3 `ui 2332  ]
 "525
 [; ;main.c: 525:    eaDogM_WriteStringAtPos(1, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U . _V 6 ]
-[e :U 2334 ]
+[e :U 2332 ]
 "526
 [; ;main.c: 526:   do { LATEbits.LATE2 = 0; } while(0);
-[e :U 2337 ]
+[e :U 2335 ]
 {
 [e = . . _LATEbits 0 2 -> -> 0 `i `uc ]
 }
-[e :U 2336 ]
+[e :U 2334 ]
 "527
 [; ;main.c: 527:  }
 }
@@ -3746,7 +3659,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p f _sprintf 8650896 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 0 ]
 [a 1C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 3C 48 46 56 51 66 0 ]
+[a 3C 48 46 56 53 66 0 ]
 [a 4C 32 70 71 66 64 77 67 72 80 32 70 65 66 52 0 ]
 [a 7C 32 79 75 81 35 0 ]
 [a 9C 69 37 100 32 65 37 100 32 84 37 100 32 67 37 100 32 35 0 ]

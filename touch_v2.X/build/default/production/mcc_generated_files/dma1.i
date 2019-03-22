@@ -27460,6 +27460,7 @@ void __attribute__((picinterrupt(("irq(DMA1SCNT), base(8)")))) DMA1_DMASCNT_ISR(
  PIR2bits.DMA1SCNTIF = 0;
 
  spi_link.LCD_DATA = 0;
+ do { LATEbits.LATE1 = 0; } while(0);
 }
 
 void __attribute__((picinterrupt(("irq(DMA1DCNT), base(8)")))) DMA1_DMADCNT_ISR()

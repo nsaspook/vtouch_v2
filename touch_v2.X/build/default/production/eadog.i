@@ -27788,7 +27788,6 @@ void eaDogM_WriteString(char *strPtr)
 
 
 
- do { LATEbits.LATE1 = 0; } while(0);
 }
 
 
@@ -27796,6 +27795,7 @@ void eaDogM_WriteString(char *strPtr)
 
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
+ do { LATEbits.LATE1 = 1; } while(0);
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27815,6 +27815,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 
 void send_lcd_data_dma(uint8_t strPtr)
 {
+ do { LATEbits.LATE1 = 1; } while(0);
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);

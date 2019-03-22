@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.83B"
+#define VER	"0.85B"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
@@ -29,11 +29,11 @@ extern "C" {
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
-#define DB1
-#define DB2
-#define DB3
-#define DB4
-#define RERROR	// generate 'random' checksum errors to simulate rs-232 bit errors
+	//#define DB1
+	//#define DB2
+	//#define DB3
+	//#define DB4
+	//#define RERROR	// generate 'random' checksum errors to simulate rs-232 bit errors
 
 #define SLED	LED0_LAT
 
