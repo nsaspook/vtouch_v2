@@ -22,6 +22,10 @@ uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
 	for (i = 0; i < byte_count; i++) {
 		sum += byte_block[i];
 	}
+#ifdef RERROR
+	if (rand() > ERROR_CHECKSUM)
+		sum++;
+#endif
 	return sum;
 }
 
@@ -73,9 +77,15 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 #ifdef DB2
 		WaitMs(50);
 		if (V.uart == 1)
-			secs_send((uint8_t*) & H27[0], sizeof(header27), true, V.uart);
+#ifdef RERROR
+			if (rand() < ERROR_COMM)
+#endif
+				secs_send((uint8_t*) & H27[0], sizeof(header27), true, V.uart);
 		if (V.uart == 2)
-			secs_send((uint8_t*) & H10[0], sizeof(header10), true, V.uart);
+#ifdef RERROR
+			if (rand() < ERROR_COMM)
+#endif
+				secs_send((uint8_t*) & H10[0], sizeof(header10), true, V.uart);
 #endif
 		V.error = LINK_ERROR_NONE; // reset error status
 		*m_link = LINK_STATE_EOT;
@@ -84,6 +94,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 	case LINK_STATE_EOT:
 		if (TimerDone(TMR_T2)) {
 			V.error = LINK_ERROR_T2;
+			V.timer_error++;
 			V.failed_receive = 2;
 			*m_link = LINK_STATE_NAK;
 		} else {
@@ -116,6 +127,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 								rxData = UART1_Read();
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
+							V.checksum_error++;
 							V.failed_receive = 3;
 							*m_link = LINK_STATE_NAK;
 						}
@@ -152,6 +164,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 								rxData = UART2_Read();
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
+							V.checksum_error++;
 							V.failed_receive = 4;
 							*m_link = LINK_STATE_NAK;
 						}
@@ -226,6 +239,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break;
 	case LINK_STATE_EOT:
 		if (TimerDone(TMR_T2)) {
+			V.timer_error++;
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
 				V.failed_receive = 1;
@@ -271,6 +285,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 								rxData = UART1_Read();
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
+							V.checksum_error++;
 							V.failed_receive = 2;
 							*r_link = LINK_STATE_NAK;
 						}
@@ -332,6 +347,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_ENQ:
 		if (TimerDone(TMR_T2)) {
+			V.timer_error++;
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
 				V.failed_send = 1;
@@ -380,11 +396,15 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 #ifdef DB4
 		WaitMs(5);
-		UART1_put_buffer(ACK);
+#ifdef RERROR
+		if (rand() < ERROR_COMM)
+#endif
+			UART1_put_buffer(ACK);
 #endif
 		break;
 	case LINK_STATE_ACK:
 		if (TimerDone(TMR_T3)) {
+			V.timer_error++;
 			V.error = LINK_ERROR_T3;
 			V.failed_send = 4;
 			*t_link = LINK_STATE_NAK;

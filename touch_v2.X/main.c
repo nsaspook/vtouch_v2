@@ -64,6 +64,8 @@ V_data V = {
 	.uart = 1,
 	.g_state = GEM_STATE_DISABLE,
 	.ticker = 45,
+	.checksum_error = 0,
+	.timer_error = 0,
 };
 
 header10 H10[] = {
@@ -349,6 +351,7 @@ void main(void)
 
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
+			srand(1957);
 			sprintf(V.buf, " RVI HOST TESTER");
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -366,8 +369,8 @@ void main(void)
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				if (!V.error && !V.abort) {
-					sprintf(V.buf, "HOST MODE %ld %d  #", V.ticks, V.g_state);
+				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+					sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 					V.buf[16] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -412,7 +415,6 @@ void main(void)
 				break;
 			case SEQ_STATE_TRIGGER:
 				if (V.queue) {
-					DEBUG2_Toggle();
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
@@ -430,14 +432,15 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(V.buf, "E R%d T%d E%d A%d G%d#", V.r_l_state, V.t_l_state, V.error, V.abort, V.g_state);
+				sprintf(V.buf, "E%d A%d T%d C%d #", V.error, V.abort, V.timer_error, V.checksum_error);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
+				WaitMs(2000);
 				break;
 			}
-			if (!V.error && !V.abort) {
-				sprintf(V.buf, "HOST MODE %ld %d  #", V.ticks, V.g_state);
+			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+				sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -448,7 +451,7 @@ void main(void)
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				sprintf(V.buf, "LOG MODE %d %d     #", V.uart, V.g_state);
+				sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -488,7 +491,7 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
-			sprintf(V.buf, "LOG MODE %d %d     #", V.uart, V.g_state);
+			sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -498,7 +501,7 @@ void main(void)
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
-		DEBUG1_SetHigh();
+		DEBUG2_SetHigh();
 		if (V.ticks) {
 			if (V.failed_receive) {
 				BILED1_1_SetLow(); // red
@@ -515,12 +518,12 @@ void main(void)
 				BILED2_2_SetLow();
 			}
 		}
-		sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
+		sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
 		V.buf[16] = 0; // string size limit
 		wait_lcd_done();
 		if (mode != UI_STATE_LOG)
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
-		DEBUG1_SetLow();
+		DEBUG2_SetLow();
 	}
 }
 /**

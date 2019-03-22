@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 62 "./vconfig.h"
+# 66 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27369,7 +27369,7 @@ void PIN_MANAGER_Initialize (void);
  } LINK_STATES;
 
  typedef enum {
-  LINK_ERROR_NONE = 0,
+  LINK_ERROR_NONE = 10,
   LINK_ERROR_T1,
   LINK_ERROR_T2,
   LINK_ERROR_T3,
@@ -27391,7 +27391,7 @@ void PIN_MANAGER_Initialize (void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1;
@@ -28060,6 +28060,10 @@ uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
  for (i = 0; i < byte_count; i++) {
   sum += byte_block[i];
  }
+
+ if (rand() > 30000)
+  sum++;
+
  return sum;
 }
 
@@ -28111,9 +28115,15 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
   WaitMs(50);
   if (V.uart == 1)
-   secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
+
+   if (rand() < 31000)
+
+    secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
   if (V.uart == 2)
-   secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
+
+   if (rand() < 31000)
+
+    secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
 
   V.error = LINK_ERROR_NONE;
   *m_link = LINK_STATE_EOT;
@@ -28122,6 +28132,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
    V.error = LINK_ERROR_T2;
+   V.timer_error++;
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
@@ -28154,6 +28165,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
         rxData = UART1_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
+       V.checksum_error++;
        V.failed_receive = 3;
        *m_link = LINK_STATE_NAK;
       }
@@ -28190,6 +28202,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
         rxData = UART2_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
+       V.checksum_error++;
        V.failed_receive = 4;
        *m_link = LINK_STATE_NAK;
       }
@@ -28264,6 +28277,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
+   V.timer_error++;
    if (!retry--) {
     V.error = LINK_ERROR_T2;
     V.failed_receive = 1;
@@ -28309,6 +28323,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
         rxData = UART1_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
+       V.checksum_error++;
        V.failed_receive = 2;
        *r_link = LINK_STATE_NAK;
       }
@@ -28370,6 +28385,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_ENQ:
   if (TimerDone(TMR_T2)) {
+   V.timer_error++;
    if (!retry--) {
     V.error = LINK_ERROR_T2;
     V.failed_send = 1;
@@ -28418,11 +28434,15 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
 
   WaitMs(5);
-  UART1_put_buffer(0x06);
+
+  if (rand() < 31000)
+
+   UART1_put_buffer(0x06);
 
   break;
  case LINK_STATE_ACK:
   if (TimerDone(TMR_T3)) {
+   V.timer_error++;
    V.error = LINK_ERROR_T3;
    V.failed_send = 4;
    *t_link = LINK_STATE_NAK;

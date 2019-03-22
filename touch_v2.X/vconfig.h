@@ -21,10 +21,11 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.81B"
+#define VER	"0.83B"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
+	 * 0.82	PRNG error message testing
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -32,6 +33,7 @@ extern "C" {
 #define DB2
 #define DB3
 #define DB4
+#define RERROR	// generate 'random' checksum errors to simulate rs-232 bit errors
 
 #define SLED	LED0_LAT
 
@@ -52,6 +54,8 @@ extern "C" {
 #define T3	5000
 #define T4	5000
 #define	RTY	3
+#define ERROR_CHECKSUM	30000
+#define ERROR_COMM	31000
 
 	/*
 	 * offsets in bytes
@@ -109,7 +113,7 @@ extern "C" {
 	} LINK_STATES;
 
 	typedef enum {
-		LINK_ERROR_NONE = 0,
+		LINK_ERROR_NONE = 10,
 		LINK_ERROR_T1,
 		LINK_ERROR_T2,
 		LINK_ERROR_T3,
@@ -131,7 +135,7 @@ extern "C" {
 		uint32_t ticks, systemb;
 		uint8_t stream, function, error, abort;
 		UI_STATES ui_sw;
-		uint16_t r_checksum, t_checksum;
+		uint16_t r_checksum, t_checksum, checksum_error, timer_error;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
 		queue : 1;
