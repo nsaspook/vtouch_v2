@@ -11994,27 +11994,27 @@ drill 1.0 mm</description>
 <part name="C21" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1uf"/>
 <part name="VSS33" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VSS34" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
-<part name="X1" library="con-garry" library_urn="urn:adsk.eagle:library:147" deviceset="332-02" device="" package3d_urn="urn:adsk.eagle:package:6810/1"/>
-<part name="X2" library="con-garry" library_urn="urn:adsk.eagle:library:147" deviceset="332-02" device="" package3d_urn="urn:adsk.eagle:package:6810/1"/>
+<part name="X1" library="con-garry" library_urn="urn:adsk.eagle:library:147" deviceset="332-02" device="" package3d_urn="urn:adsk.eagle:package:6810/1" value="RX-2"/>
+<part name="X2" library="con-garry" library_urn="urn:adsk.eagle:library:147" deviceset="332-02" device="" package3d_urn="urn:adsk.eagle:package:6810/1" value="TX-2"/>
 <part name="LED1" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_1206" package3d_urn="urn:adsk.eagle:package:15823/2" value="RUN"/>
 <part name="R4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R1206" package3d_urn="urn:adsk.eagle:package:23540/2" value="220"/>
 <part name="VSS35" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="SV2" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA04-1" device="" package3d_urn="urn:adsk.eagle:package:8337/1" value="DEBUG"/>
 <part name="VSS36" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
-<part name="X3" library="con-garry" library_urn="urn:adsk.eagle:library:147" deviceset="332-02" device="" package3d_urn="urn:adsk.eagle:package:6810/1"/>
+<part name="X3" library="con-garry" library_urn="urn:adsk.eagle:library:147" deviceset="332-02" device="" package3d_urn="urn:adsk.eagle:package:6810/1" value="RESETJMP"/>
 <part name="VSS37" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="K1" library="relay" library_urn="urn:adsk.eagle:library:339" deviceset="G6K" device="-2P" package3d_urn="urn:adsk.eagle:package:24346/1"/>
 <part name="VSS9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
-<part name="X4" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device=""/>
-<part name="X5" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device=""/>
-<part name="X6" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device=""/>
+<part name="SPI" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device="" value="LCD"/>
+<part name="X5" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device="" value="PORTA"/>
+<part name="X6" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device="" value="PORTD"/>
 <part name="VDD7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="VSS10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="C5" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1uf"/>
 <part name="VSS11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VDD8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="VSS12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
-<part name="X7" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device=""/>
+<part name="X7" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2101" device="" value="PORTB"/>
 <part name="VSS13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VDD9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="OPTIONS" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2021" device=""/>
@@ -12290,35 +12290,35 @@ drill 1.0 mm</description>
 <instance part="VSS9" gate="G$1" x="-76.2" y="-20.32" smashed="yes">
 <attribute name="VALUE" x="-78.74" y="-25.4" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="X4" gate="-1" x="144.78" y="86.36" smashed="yes">
+<instance part="SPI" gate="-1" x="144.78" y="86.36" smashed="yes">
 <attribute name="NAME" x="147.32" y="85.598" size="1.524" layer="95"/>
 <attribute name="VALUE" x="144.018" y="87.757" size="1.778" layer="96"/>
 </instance>
-<instance part="X4" gate="-2" x="144.78" y="83.82" smashed="yes">
+<instance part="SPI" gate="-2" x="144.78" y="83.82" smashed="yes">
 <attribute name="NAME" x="147.32" y="83.058" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-3" x="144.78" y="81.28" smashed="yes">
+<instance part="SPI" gate="-3" x="144.78" y="81.28" smashed="yes">
 <attribute name="NAME" x="147.32" y="80.518" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-4" x="144.78" y="78.74" smashed="yes">
+<instance part="SPI" gate="-4" x="144.78" y="78.74" smashed="yes">
 <attribute name="NAME" x="147.32" y="77.978" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-5" x="144.78" y="76.2" smashed="yes">
+<instance part="SPI" gate="-5" x="144.78" y="76.2" smashed="yes">
 <attribute name="NAME" x="147.32" y="75.438" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-6" x="144.78" y="73.66" smashed="yes">
+<instance part="SPI" gate="-6" x="144.78" y="73.66" smashed="yes">
 <attribute name="NAME" x="147.32" y="72.898" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-7" x="144.78" y="71.12" smashed="yes">
+<instance part="SPI" gate="-7" x="144.78" y="71.12" smashed="yes">
 <attribute name="NAME" x="147.32" y="70.358" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-8" x="144.78" y="68.58" smashed="yes">
+<instance part="SPI" gate="-8" x="144.78" y="68.58" smashed="yes">
 <attribute name="NAME" x="147.32" y="67.818" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-9" x="144.78" y="66.04" smashed="yes">
+<instance part="SPI" gate="-9" x="144.78" y="66.04" smashed="yes">
 <attribute name="NAME" x="147.32" y="65.278" size="1.524" layer="95"/>
 </instance>
-<instance part="X4" gate="-10" x="144.78" y="63.5" smashed="yes">
+<instance part="SPI" gate="-10" x="144.78" y="63.5" smashed="yes">
 <attribute name="NAME" x="147.32" y="62.738" size="1.524" layer="95"/>
 </instance>
 <instance part="X5" gate="-1" x="86.36" y="35.56" smashed="yes">
@@ -12631,7 +12631,7 @@ drill 1.0 mm</description>
 </segment>
 <segment>
 <pinref part="VDD7" gate="G$1" pin="VDD"/>
-<pinref part="X4" gate="-7" pin="S"/>
+<pinref part="SPI" gate="-7" pin="S"/>
 <wire x1="124.46" y1="71.12" x2="129.54" y2="71.12" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="1"/>
 <wire x1="129.54" y1="71.12" x2="142.24" y2="71.12" width="0.1524" layer="91"/>
@@ -12784,7 +12784,7 @@ drill 1.0 mm</description>
 <wire x1="124.46" y1="60.96" x2="129.54" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="129.54" y1="60.96" x2="132.08" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="60.96" x2="132.08" y2="68.58" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-8" pin="S"/>
+<pinref part="SPI" gate="-8" pin="S"/>
 <wire x1="132.08" y1="68.58" x2="142.24" y2="68.58" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="2"/>
 <junction x="129.54" y="60.96"/>
@@ -13167,7 +13167,7 @@ drill 1.0 mm</description>
 <wire x1="45.72" y1="114.3" x2="139.7" y2="114.3" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="114.3" x2="139.7" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="86.36" x2="142.24" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-1" pin="S"/>
+<pinref part="SPI" gate="-1" pin="S"/>
 <junction x="142.24" y="86.36"/>
 <wire x1="142.24" y1="86.36" x2="144.78" y2="86.36" width="0.1524" layer="91"/>
 <junction x="45.72" y="88.9"/>
@@ -13179,7 +13179,7 @@ drill 1.0 mm</description>
 <wire x1="43.18" y1="88.9" x2="43.18" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="111.76" x2="137.16" y2="111.76" width="0.1524" layer="91"/>
 <wire x1="137.16" y1="111.76" x2="137.16" y2="83.82" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-2" pin="S"/>
+<pinref part="SPI" gate="-2" pin="S"/>
 <wire x1="137.16" y1="83.82" x2="142.24" y2="83.82" width="0.1524" layer="91"/>
 <junction x="142.24" y="83.82"/>
 <junction x="43.18" y="88.9"/>
@@ -13191,7 +13191,7 @@ drill 1.0 mm</description>
 <wire x1="58.42" y1="88.9" x2="58.42" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="109.22" x2="134.62" y2="109.22" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="109.22" x2="134.62" y2="81.28" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-3" pin="S"/>
+<pinref part="SPI" gate="-3" pin="S"/>
 <wire x1="134.62" y1="81.28" x2="142.24" y2="81.28" width="0.1524" layer="91"/>
 <junction x="142.24" y="81.28"/>
 <junction x="58.42" y="88.9"/>
@@ -13204,7 +13204,7 @@ drill 1.0 mm</description>
 <wire x1="81.28" y1="71.12" x2="81.28" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="106.68" x2="132.08" y2="106.68" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="106.68" x2="132.08" y2="78.74" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-4" pin="S"/>
+<pinref part="SPI" gate="-4" pin="S"/>
 <wire x1="132.08" y1="78.74" x2="142.24" y2="78.74" width="0.1524" layer="91"/>
 <junction x="142.24" y="78.74"/>
 <junction x="76.2" y="71.12"/>
@@ -13216,7 +13216,7 @@ drill 1.0 mm</description>
 <wire x1="60.96" y1="88.9" x2="60.96" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="104.14" x2="129.54" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="129.54" y1="104.14" x2="129.54" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-5" pin="S"/>
+<pinref part="SPI" gate="-5" pin="S"/>
 <wire x1="129.54" y1="76.2" x2="142.24" y2="76.2" width="0.1524" layer="91"/>
 <junction x="142.24" y="76.2"/>
 <junction x="60.96" y="88.9"/>
@@ -13230,7 +13230,7 @@ drill 1.0 mm</description>
 <wire x1="104.14" y1="101.6" x2="127" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="127" y1="101.6" x2="127" y2="73.66" width="0.1524" layer="91"/>
 <wire x1="127" y1="73.66" x2="142.24" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-6" pin="S"/>
+<pinref part="SPI" gate="-6" pin="S"/>
 <junction x="142.24" y="73.66"/>
 <wire x1="142.24" y1="73.66" x2="144.78" y2="73.66" width="0.1524" layer="91"/>
 <junction x="76.2" y="68.58"/>
@@ -13316,7 +13316,7 @@ drill 1.0 mm</description>
 <wire x1="106.68" y1="58.42" x2="137.16" y2="58.42" width="0.1524" layer="91"/>
 <wire x1="137.16" y1="58.42" x2="137.16" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="137.16" y1="63.5" x2="142.24" y2="63.5" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-10" pin="S"/>
+<pinref part="SPI" gate="-10" pin="S"/>
 <junction x="142.24" y="63.5"/>
 <wire x1="142.24" y1="63.5" x2="144.78" y2="63.5" width="0.1524" layer="91"/>
 <junction x="68.58" y="88.9"/>
@@ -13329,7 +13329,7 @@ drill 1.0 mm</description>
 <wire x1="111.76" y1="73.66" x2="111.76" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="111.76" y1="55.88" x2="139.7" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="139.7" y1="55.88" x2="139.7" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-9" pin="S"/>
+<pinref part="SPI" gate="-9" pin="S"/>
 <wire x1="139.7" y1="66.04" x2="142.24" y2="66.04" width="0.1524" layer="91"/>
 <junction x="76.2" y="73.66"/>
 <junction x="142.24" y="66.04"/>
