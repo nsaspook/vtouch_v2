@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 62 "./vconfig.h"
+# 66 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28068,6 +28068,16 @@ void PMD_Initialize(void);
  } UI_STATES;
 
  typedef enum {
+  GEM_STATE_DISABLE = 0,
+  GEM_STATE_COMM,
+  GEM_STATE_OFFLINE,
+  GEM_STATE_ONLINE,
+  GEM_STATE_REMOTE,
+  GEM_STATE_ALARM,
+  GEM_STATE_ERROR
+ } GEM_STATES;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -28078,7 +28088,7 @@ void PMD_Initialize(void);
  } LINK_STATES;
 
  typedef enum {
-  LINK_ERROR_NONE = 0,
+  LINK_ERROR_NONE = 10,
   LINK_ERROR_T1,
   LINK_ERROR_T2,
   LINK_ERROR_T3,
@@ -28092,6 +28102,7 @@ void PMD_Initialize(void);
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
+  GEM_STATES g_state;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -28099,11 +28110,13 @@ void PMD_Initialize(void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2;
+  queue : 1;
+  uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 27 "./eadog.h" 2
 
@@ -28248,6 +28261,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
+ GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
 
 
@@ -28257,6 +28271,10 @@ extern struct spi_link_type spi_link;
 V_data V = {
  .error = 0,
  .uart = 1,
+ .g_state = GEM_STATE_DISABLE,
+ .ticker = 45,
+ .checksum_error = 0,
+ .timer_error = 0,
 };
 
 header10 H10[] = {
@@ -28309,6 +28327,32 @@ header10 H10[] = {
   .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 2,
+  .block.block.function = 17,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+ {
+  .length = 10,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 15,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+ {
+  .length = 10,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
   .block.block.function = 17,
   .block.block.ebit = 1,
   .block.block.bidh = 0,
@@ -28402,13 +28446,13 @@ header17 H17[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data[0] = 0x00,
-  .data[1] = 0x01,
-  .data[2] = 0x00,
-  .data[3] = 0x01,
-  .data[4] = 0x21,
-  .data[5] = 0x02,
   .data[6] = 0x01,
+  .data[5] = 0x02,
+  .data[4] = 0x21,
+  .data[3] = 0x01,
+  .data[2] = 0x00,
+  .data[1] = 0x01,
+  .data[0] = 0x00,
  },
 };
 
@@ -28428,7 +28472,7 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-# 255 "main.c"
+# 285 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28498,17 +28542,16 @@ void main(void)
 
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
-# 352 "main.c"
+   srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.74A");
+   sprintf(V.buf, " Version %s", "0.85B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);
-
    WaitMs(3000);
    break;
   case UI_STATE_HOST:
@@ -28517,8 +28560,8 @@ void main(void)
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
-    if (!V.error && !V.abort) {
-     sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+     sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
      V.buf[16] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28563,7 +28606,6 @@ void main(void)
     break;
    case SEQ_STATE_TRIGGER:
     if (V.queue) {
-     do { LATEbits.LATE2 = ~LATEbits.LATE2; } while(0);
      V.r_l_state = LINK_STATE_IDLE;
      V.t_l_state = LINK_STATE_IDLE;
      V.s_state = SEQ_STATE_TX;
@@ -28581,14 +28623,15 @@ void main(void)
    case SEQ_STATE_ERROR:
    default:
     V.s_state = SEQ_STATE_INIT;
-    sprintf(V.buf, "E R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
+    sprintf(V.buf, "E%d A%d T%d C%d #", V.error, V.abort, V.timer_error, V.checksum_error);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
+    WaitMs(2000);
     break;
    }
-   if (!V.error && !V.abort) {
-    sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+   if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+    sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28599,19 +28642,25 @@ void main(void)
    case SEQ_STATE_INIT:
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
-    sprintf(V.buf, " LOG MODE %d     #", V.uart);
+    sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
-# 464 "main.c"
+
+
+
+
+
+
+
     break;
    case SEQ_STATE_RX:
 
 
 
     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-     sprintf(V.buf, " S%dF%d #%ld    ", V.stream, V.function, V.ticks);
-     V.buf[11] = 0;
+     sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
+     V.buf[13] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
      V.s_state = SEQ_STATE_TRIGGER;
@@ -28623,7 +28672,7 @@ void main(void)
     V.s_state = SEQ_STATE_DONE;
     sprintf(V.buf, " OK #");
     wait_lcd_done();
-    eaDogM_WriteStringAtPos(V.uart - 1, 11, V.buf);
+    eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
@@ -28633,7 +28682,7 @@ void main(void)
     V.s_state = SEQ_STATE_INIT;
     break;
    }
-   sprintf(V.buf, " LOG MODE %d     #", V.uart);
+   sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28643,7 +28692,7 @@ void main(void)
    V.ui_state = UI_STATE_INIT;
    break;
   }
-  do { LATEbits.LATE1 = 1; } while(0);
+  do { LATEbits.LATE2 = 1; } while(0);
   if (V.ticks) {
    if (V.failed_receive) {
     do { LATDbits.LATD4 = 0; } while(0);
@@ -28660,11 +28709,11 @@ void main(void)
     do { LATDbits.LATD7 = 0; } while(0);
    }
   }
-  sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
+  sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
   V.buf[16] = 0;
   wait_lcd_done();
   if (mode != UI_STATE_LOG)
    eaDogM_WriteStringAtPos(1, 0, V.buf);
-  do { LATEbits.LATE1 = 0; } while(0);
+  do { LATEbits.LATE2 = 0; } while(0);
  }
 }

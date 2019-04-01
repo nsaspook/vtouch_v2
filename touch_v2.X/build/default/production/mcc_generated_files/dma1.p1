@@ -74,13 +74,28 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./ringbufs.h: 19:  typedef struct ringBufS_t {
 [s S2226 `uc -> 64 `i `uc 1 `uc 1 `uc 1 ]
 [n S2226 ringBufS_t buf head tail count ]
-"62 ./vconfig.h
-[; ;./vconfig.h: 62:  struct spi_link_type {
+"66 ./vconfig.h
+[; ;./vconfig.h: 66:  struct spi_link_type {
 [s S2227 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `us 1 `uc 1 `*S2226 1 `*S2226 1 `Vl 1 ]
 [n S2227 spi_link_type SPI_LCD SPI_AUX LCD_TIMER LCD_DATA delay config tx1b tx1a int_count ]
 "60 mcc_generated_files/dma1.c
 [; ;mcc_generated_files/dma1.c: 60: extern struct spi_link_type spi_link;
 [v _spi_link `S2227 ~T0 @X0 0 e ]
+"46188 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46188:     struct {
+[s S2083 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2083 . LATE0 LATE1 LATE2 ]
+"46193
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46193:     struct {
+[s S2084 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2084 . LE0 LE1 LE2 ]
+"46187
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46187: typedef union {
+[u S2082 `S2083 1 `S2084 1 ]
+[n S2082 . . . ]
+"46199
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46199: extern volatile LATEbits_t LATEbits __attribute__((address(0x3FBE)));
+[v _LATEbits `VS2082 ~T0 @X0 0 e@16318 ]
 [t T2 __interrupt irq ( DMA1DCNT ) base ( 8 ) ]
 [t T3 __interrupt irq ( DMA1A ) base ( 8 ) ]
 [t T4 __interrupt irq ( DMA1OR ) base ( 8 ) ]
@@ -2446,54 +2461,61 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/dma1.c: 130:  spi_link.LCD_DATA = 0;
 [e = . _spi_link 3 -> -> 0 `i `uc ]
 "131
-[; ;mcc_generated_files/dma1.c: 131: }
+[; ;mcc_generated_files/dma1.c: 131:  do { LATEbits.LATE1 = 0; } while(0);
+[e :U 2233 ]
+{
+[e = . . _LATEbits 0 1 -> -> 0 `i `uc ]
+}
+[e :U 2232 ]
+"132
+[; ;mcc_generated_files/dma1.c: 132: }
 [e :UE 2230 ]
 }
 [v $root$_DMA1_DMADCNT_ISR `(v ~T0 @X0 0 e ]
-"133
-[; ;mcc_generated_files/dma1.c: 133: void __attribute__((picinterrupt(("irq(DMA1DCNT), base(8)")))) DMA1_DMADCNT_ISR()
-[v _DMA1_DMADCNT_ISR `(v ~T2 @X0 1 ef ]
 "134
-[; ;mcc_generated_files/dma1.c: 134: {
+[; ;mcc_generated_files/dma1.c: 134: void __attribute__((picinterrupt(("irq(DMA1DCNT), base(8)")))) DMA1_DMADCNT_ISR()
+[v _DMA1_DMADCNT_ISR `(v ~T2 @X0 1 ef ]
+"135
+[; ;mcc_generated_files/dma1.c: 135: {
 {
 [e :U _DMA1_DMADCNT_ISR ]
 [f ]
-"135
-[; ;mcc_generated_files/dma1.c: 135:  PIR2bits.DMA1DCNTIF = 0;
+"136
+[; ;mcc_generated_files/dma1.c: 136:  PIR2bits.DMA1DCNTIF = 0;
 [e = . . _PIR2bits 0 1 -> -> 0 `i `uc ]
-"137
-[; ;mcc_generated_files/dma1.c: 137: }
-[e :UE 2231 ]
+"138
+[; ;mcc_generated_files/dma1.c: 138: }
+[e :UE 2234 ]
 }
 [v $root$_DMA1_DMAA_ISR `(v ~T0 @X0 0 e ]
-"143
-[; ;mcc_generated_files/dma1.c: 143: void __attribute__((picinterrupt(("irq(DMA1A), base(8)")))) DMA1_DMAA_ISR()
+"144
+[; ;mcc_generated_files/dma1.c: 144: void __attribute__((picinterrupt(("irq(DMA1A), base(8)")))) DMA1_DMAA_ISR()
 [v _DMA1_DMAA_ISR `(v ~T3 @X0 1 ef ]
-"145
-[; ;mcc_generated_files/dma1.c: 145: {
+"146
+[; ;mcc_generated_files/dma1.c: 146: {
 {
 [e :U _DMA1_DMAA_ISR ]
 [f ]
-"146
-[; ;mcc_generated_files/dma1.c: 146:  PIR2bits.DMA1AIF = 0;
+"147
+[; ;mcc_generated_files/dma1.c: 147:  PIR2bits.DMA1AIF = 0;
 [e = . . _PIR2bits 0 3 -> -> 0 `i `uc ]
-"148
-[; ;mcc_generated_files/dma1.c: 148: }
-[e :UE 2232 ]
+"149
+[; ;mcc_generated_files/dma1.c: 149: }
+[e :UE 2235 ]
 }
 [v $root$_DMA1_DMAOR_ISR `(v ~T0 @X0 0 e ]
-"154
-[; ;mcc_generated_files/dma1.c: 154: void __attribute__((picinterrupt(("irq(DMA1OR), base(8)")))) DMA1_DMAOR_ISR()
+"155
+[; ;mcc_generated_files/dma1.c: 155: void __attribute__((picinterrupt(("irq(DMA1OR), base(8)")))) DMA1_DMAOR_ISR()
 [v _DMA1_DMAOR_ISR `(v ~T4 @X0 1 ef ]
-"156
-[; ;mcc_generated_files/dma1.c: 156: {
+"157
+[; ;mcc_generated_files/dma1.c: 157: {
 {
 [e :U _DMA1_DMAOR_ISR ]
 [f ]
-"157
-[; ;mcc_generated_files/dma1.c: 157:  PIR2bits.DMA1ORIF = 0;
+"158
+[; ;mcc_generated_files/dma1.c: 158:  PIR2bits.DMA1ORIF = 0;
 [e = . . _PIR2bits 0 2 -> -> 0 `i `uc ]
-"159
-[; ;mcc_generated_files/dma1.c: 159: }
-[e :UE 2233 ]
+"160
+[; ;mcc_generated_files/dma1.c: 160: }
+[e :UE 2236 ]
 }

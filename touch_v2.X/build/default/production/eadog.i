@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27316,7 +27316,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 62 "./vconfig.h"
+# 66 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27347,6 +27347,16 @@ void PIN_MANAGER_Initialize (void);
  } UI_STATES;
 
  typedef enum {
+  GEM_STATE_DISABLE = 0,
+  GEM_STATE_COMM,
+  GEM_STATE_OFFLINE,
+  GEM_STATE_ONLINE,
+  GEM_STATE_REMOTE,
+  GEM_STATE_ALARM,
+  GEM_STATE_ERROR
+ } GEM_STATES;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -27357,7 +27367,7 @@ void PIN_MANAGER_Initialize (void);
  } LINK_STATES;
 
  typedef enum {
-  LINK_ERROR_NONE = 0,
+  LINK_ERROR_NONE = 10,
   LINK_ERROR_T1,
   LINK_ERROR_T2,
   LINK_ERROR_T3,
@@ -27371,6 +27381,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
+  GEM_STATES g_state;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -27378,11 +27389,13 @@ void PIN_MANAGER_Initialize (void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2;
+  queue : 1;
+  uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1
@@ -27761,6 +27774,7 @@ void eaDogM_ClearRow(uint8_t r)
 
 void eaDogM_WriteString(char *strPtr)
 {
+ do { LATEbits.LATE1 = 1; } while(0);
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27781,6 +27795,7 @@ void eaDogM_WriteString(char *strPtr)
 
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
+ do { LATEbits.LATE1 = 1; } while(0);
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27800,6 +27815,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 
 void send_lcd_data_dma(uint8_t strPtr)
 {
+ do { LATEbits.LATE1 = 1; } while(0);
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27809,7 +27825,6 @@ void send_lcd_data_dma(uint8_t strPtr)
  DMA1SSZ = 1;
  DMA1CON0bits.EN = 1;
  printf("%c", strPtr);
- do { LATEbits.LATE2 = 0; } while(0);
  start_lcd();
 }
 

@@ -19,6 +19,7 @@ inline void StartTimer(uint8_t timer, uint16_t count)
 
 inline bool TimerDone(uint8_t timer)
 {
+	ClrWdt(); // reset the WDT timer
 	if (tickCount[timer] == 0) { //Check if counted down to zero
 		return true; //then return true
 	}
@@ -32,6 +33,11 @@ void WaitMs(uint16_t numMilliseconds)
 {
 	StartTimer(TMR_INTERNAL, numMilliseconds); //Start software timer and wait for it to count down
 	while (!TimerDone(TMR_INTERNAL)) {
+		Nop();
+		Nop();
+		Nop();
+		Nop();
+		ClrWdt(); // reset the WDT timer
 		//		Idle();
 	} //Enter idle mode to reduce power while waiting
 } //(timer interrupt will wake part from idle)

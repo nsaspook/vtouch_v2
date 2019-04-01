@@ -2,10 +2,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 "7 timers.c
 [; ;timers.c: 7: extern volatile uint16_t tickCount[TMR_COUNT];
 [v _tickCount `Vus ~T0 @X0 -> 0 `x e ]
-"33
-[; ;timers.c: 33:  StartTimer(TMR_INTERNAL, numMilliseconds);
-[c E16208 0 1 2 3 4 5 6 .. ]
-[n E16208 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_COUNT  ]
+"34
+[; ;timers.c: 34:  StartTimer(TMR_INTERNAL, numMilliseconds);
+[c E16222 0 1 2 3 4 5 6 .. ]
+[n E16222 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_COUNT  ]
+"50 /opt/microchip/xc8/v2.05/pic/include/pic18.h
+[v ___nop `(v ~T0 @X0 0 ef ]
+[p i ___nop ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2253,10 +2256,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "48558
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 48558: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-[v F16227 `(v ~T0 @X0 1 tf2`uc`us ]
+[v F16241 `(v ~T0 @X0 1 tf2`uc`us ]
 "12 timers.c
 [; ;timers.c: 12: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count)
-[v _StartTimer `TF16227 ~T0 @X0 1 e ]
+[v _StartTimer `TF16241 ~T0 @X0 1 e ]
 "13
 [; ;timers.c: 13: {
 {
@@ -2275,10 +2278,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;timers.c: 15: }
 [e :UE 2229 ]
 }
-[v F16231 `(a ~T0 @X0 1 tf1`uc ]
+[v F16245 `(a ~T0 @X0 1 tf1`uc ]
 "20
 [; ;timers.c: 20: __attribute__((inline)) _Bool TimerDone(uint8_t timer)
-[v _TimerDone `TF16231 ~T0 @X0 1 e ]
+[v _TimerDone `TF16245 ~T0 @X0 1 e ]
 "21
 [; ;timers.c: 21: {
 {
@@ -2290,55 +2293,73 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;timers.c: 21: {
 [f ]
 "22
-[; ;timers.c: 22:  if (tickCount[timer] == 0) {
+[; ;timers.c: 22:  __asm(" clrwdt");
+[; <"  clrwdt ;# ">
+"23
+[; ;timers.c: 23:  if (tickCount[timer] == 0) {
 [e $ ! == -> *U + &U _tickCount * -> _timer `ux -> -> # *U &U _tickCount `ui `ux `ui -> -> 0 `i `ui 2231  ]
 {
-"23
-[; ;timers.c: 23:   return 1;
+"24
+[; ;timers.c: 24:   return 1;
 [e ) -> -> 1 `i `a ]
 [e $UE 2230  ]
-"24
-[; ;timers.c: 24:  }
+"25
+[; ;timers.c: 25:  }
 }
 [e :U 2231 ]
-"25
-[; ;timers.c: 25:  return 0;
+"26
+[; ;timers.c: 26:  return 0;
 [e ) -> -> 0 `i `a ]
 [e $UE 2230  ]
-"26
-[; ;timers.c: 26: }
+"27
+[; ;timers.c: 27: }
 [e :UE 2230 ]
 }
-"31
-[; ;timers.c: 31: void WaitMs(uint16_t numMilliseconds)
-[v _WaitMs `(v ~T0 @X0 1 ef1`us ]
 "32
-[; ;timers.c: 32: {
+[; ;timers.c: 32: void WaitMs(uint16_t numMilliseconds)
+[v _WaitMs `(v ~T0 @X0 1 ef1`us ]
+"33
+[; ;timers.c: 33: {
 {
 [e :U _WaitMs ]
-"31
-[; ;timers.c: 31: void WaitMs(uint16_t numMilliseconds)
-[v _numMilliseconds `us ~T0 @X0 1 r1 ]
 "32
-[; ;timers.c: 32: {
-[f ]
+[; ;timers.c: 32: void WaitMs(uint16_t numMilliseconds)
+[v _numMilliseconds `us ~T0 @X0 1 r1 ]
 "33
-[; ;timers.c: 33:  StartTimer(TMR_INTERNAL, numMilliseconds);
-[e ( _StartTimer (2 , -> . `E16208 0 `uc _numMilliseconds ]
+[; ;timers.c: 33: {
+[f ]
 "34
-[; ;timers.c: 34:  while (!TimerDone(TMR_INTERNAL)) {
+[; ;timers.c: 34:  StartTimer(TMR_INTERNAL, numMilliseconds);
+[e ( _StartTimer (2 , -> . `E16222 0 `uc _numMilliseconds ]
+"35
+[; ;timers.c: 35:  while (!TimerDone(TMR_INTERNAL)) {
 [e $U 2233  ]
 [e :U 2234 ]
 {
 "36
-[; ;timers.c: 36:  }
+[; ;timers.c: 36:   __nop();
+[e ( ___nop ..  ]
+"37
+[; ;timers.c: 37:   __nop();
+[e ( ___nop ..  ]
+"38
+[; ;timers.c: 38:   __nop();
+[e ( ___nop ..  ]
+"39
+[; ;timers.c: 39:   __nop();
+[e ( ___nop ..  ]
+"40
+[; ;timers.c: 40:   __asm(" clrwdt");
+[; <"  clrwdt ;# ">
+"42
+[; ;timers.c: 42:  }
 }
 [e :U 2233 ]
-"34
-[; ;timers.c: 34:  while (!TimerDone(TMR_INTERNAL)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16208 0 `uc `i -> 0 `i 2234  ]
+"35
+[; ;timers.c: 35:  while (!TimerDone(TMR_INTERNAL)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16222 0 `uc `i -> 0 `i 2234  ]
 [e :U 2235 ]
-"37
-[; ;timers.c: 37: }
+"43
+[; ;timers.c: 43: }
 [e :UE 2232 ]
 }

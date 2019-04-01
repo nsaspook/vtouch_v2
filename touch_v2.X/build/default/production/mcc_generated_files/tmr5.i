@@ -39,6 +39,8 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27242,7 +27244,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27302,13 +27304,7 @@ void INTERRUPT_Initialize (void);
 # 53 "mcc_generated_files/tmr5.c" 2
 
 # 1 "mcc_generated_files/../vconfig.h" 1
-# 15 "mcc_generated_files/../vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
-
+# 20 "mcc_generated_files/../vconfig.h"
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -27351,7 +27347,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 62 "./vconfig.h"
+# 66 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27382,6 +27378,16 @@ void PIN_MANAGER_Initialize (void);
  } UI_STATES;
 
  typedef enum {
+  GEM_STATE_DISABLE = 0,
+  GEM_STATE_COMM,
+  GEM_STATE_OFFLINE,
+  GEM_STATE_ONLINE,
+  GEM_STATE_REMOTE,
+  GEM_STATE_ALARM,
+  GEM_STATE_ERROR
+ } GEM_STATES;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -27392,7 +27398,7 @@ void PIN_MANAGER_Initialize (void);
  } LINK_STATES;
 
  typedef enum {
-  LINK_ERROR_NONE = 0,
+  LINK_ERROR_NONE = 10,
   LINK_ERROR_T1,
   LINK_ERROR_T2,
   LINK_ERROR_T3,
@@ -27406,6 +27412,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
+  GEM_STATES g_state;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -27413,11 +27420,13 @@ void PIN_MANAGER_Initialize (void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2;
+  queue : 1;
+  uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 54 "mcc_generated_files/tmr5.c" 2
 
@@ -27427,6 +27436,7 @@ void PIN_MANAGER_Initialize (void);
 
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
+extern V_data V;
 
 
 
@@ -27538,7 +27548,7 @@ void __attribute__((picinterrupt(("irq(TMR5), base(8)")))) TMR5_ISR()
  TMR5_WriteTimer(timer5ReloadVal);
 
 
- if (++CountCallBack >= 50) {
+ if (++CountCallBack >= (5 +V.ticker)) {
 
   TMR5_CallBack();
 

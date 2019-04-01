@@ -62,6 +62,10 @@ extern struct spi_link_type spi_link;
 V_data V = {
 	.error = false,
 	.uart = 1,
+	.g_state = GEM_STATE_DISABLE,
+	.ticker = 45,
+	.checksum_error = 0,
+	.timer_error = 0,
 };
 
 header10 H10[] = {
@@ -114,6 +118,32 @@ header10 H10[] = {
 		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 2,
+		.block.block.function = 17,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
+	{ // S1F15 send 'request off-line ' from host
+		.length = 10,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
+		.block.block.function = 15,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
+	{ // S1F17 send 'request on-line ' from host
+		.length = 10,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 1,
 		.block.block.function = 17,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
@@ -207,13 +237,13 @@ header17 H17[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data[0] = 0x00,
-		.data[1] = 0x01,
-		.data[2] = 0x00,
-		.data[3] = 0x01,
-		.data[4] = 0x21,
-		.data[5] = 0x02,
 		.data[6] = 0x01,
+		.data[5] = 0x02,
+		.data[4] = 0x21,
+		.data[3] = 0x01,
+		.data[2] = 0x00,
+		.data[1] = 0x01,
+		.data[0] = 0x00,
 	},
 };
 
@@ -321,34 +351,7 @@ void main(void)
 
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
-#ifdef TESTING
-			uint8_t j;
-			uint16_t sum;
-
-			j = 3; // set H10 block for testing
-			sum = block_checksum((uint8_t*) & H10[j].block.block, sizeof(block10));
-			H10[j].checksum = sum;
-			sprintf(V.buf, "M %d, H %02x%02x%02x%02x%02x%02x%02x%02x%02x%02x, C 0x%04x #",
-				mode,
-				H10[j].block.b[9],
-				H10[j].block.b[8],
-				H10[j].block.b[7],
-				H10[j].block.b[6],
-				H10[j].block.b[5],
-				H10[j].block.b[4],
-				H10[j].block.b[3],
-				H10[j].block.b[2],
-				H10[j].block.b[1],
-				H10[j].block.b[0],
-				sum);
-			wait_lcd_done();
-			eaDogM_WriteString(V.buf);
-
-			secs_send((uint8_t*) & H10[j], sizeof(header10), false);
-			sprintf(V.buf, " C 0x%04x #", V.t_checksum);
-			wait_lcd_done();
-			eaDogM_WriteString(V.buf);
-#else
+			srand(1957);
 			sprintf(V.buf, " RVI HOST TESTER");
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -358,7 +361,6 @@ void main(void)
 			sprintf(V.buf, " FGB@MCHP FAB4");
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
-#endif
 			WaitMs(3000);
 			break;
 		case UI_STATE_HOST: //slave
@@ -367,8 +369,8 @@ void main(void)
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				if (!V.error && !V.abort) {
-					sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+					sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 					V.buf[16] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -413,7 +415,6 @@ void main(void)
 				break;
 			case SEQ_STATE_TRIGGER:
 				if (V.queue) {
-					DEBUG2_Toggle();
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
@@ -431,14 +432,15 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(V.buf, "E R%d T%d E%d A%d #", V.r_l_state, V.t_l_state, V.error, V.abort);
+				sprintf(V.buf, "E%d A%d T%d C%d #", V.error, V.abort, V.timer_error, V.checksum_error);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
+				WaitMs(2000);
 				break;
 			}
-			if (!V.error && !V.abort) {
-				sprintf(V.buf, " HOST MODE %ld   #", V.ticks);
+			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+				sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -449,12 +451,11 @@ void main(void)
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				sprintf(V.buf, " LOG MODE %d     #", V.uart);
+				sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
 #ifdef DB1
-				//				WaitMs(500);
 				if (SLED) {
 					UART2_put_buffer(ENQ);
 				} else {
@@ -467,8 +468,8 @@ void main(void)
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, " S%dF%d #%ld    ", V.stream, V.function, V.ticks);
-					V.buf[11] = 0; // string size limit
+					sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
+					V.buf[13] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
 					V.s_state = SEQ_STATE_TRIGGER;
@@ -480,7 +481,7 @@ void main(void)
 				V.s_state = SEQ_STATE_DONE;
 				sprintf(V.buf, " OK #");
 				wait_lcd_done();
-				eaDogM_WriteStringAtPos(V.uart - 1, 11, V.buf);
+				eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
@@ -490,7 +491,7 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
-			sprintf(V.buf, " LOG MODE %d     #", V.uart);
+			sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -500,7 +501,7 @@ void main(void)
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
-		DEBUG1_SetHigh();
+		DEBUG2_SetHigh();
 		if (V.ticks) {
 			if (V.failed_receive) {
 				BILED1_1_SetLow(); // red
@@ -517,12 +518,12 @@ void main(void)
 				BILED2_2_SetLow();
 			}
 		}
-		sprintf(V.buf, " R%d T%d FR%d FS%d #", V.r_l_state, V.t_l_state, V.failed_receive, V.failed_send);
+		sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
 		V.buf[16] = 0; // string size limit
 		wait_lcd_done();
 		if (mode != UI_STATE_LOG)
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
-		DEBUG1_SetLow();
+		DEBUG2_SetLow();
 	}
 }
 /**

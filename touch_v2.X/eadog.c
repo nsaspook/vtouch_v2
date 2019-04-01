@@ -166,6 +166,7 @@ void eaDogM_ClearRow(uint8_t r)
  */
 void eaDogM_WriteString(char *strPtr)
 {
+	DEBUG1_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -177,7 +178,7 @@ void eaDogM_WriteString(char *strPtr)
 	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
 	start_lcd();
 #ifdef DISPLAY_SLOW
-	wdtdelay(2000);
+	wdtdelay(9000);
 #endif
 }
 
@@ -186,6 +187,7 @@ void eaDogM_WriteString(char *strPtr)
  */
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
+	DEBUG1_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -205,6 +207,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
  */
 void send_lcd_data_dma(uint8_t strPtr)
 {
+	DEBUG1_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -214,7 +217,6 @@ void send_lcd_data_dma(uint8_t strPtr)
 	DMA1SSZ = 1;
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
-	DEBUG2_SetLow();
 	start_lcd();
 }
 

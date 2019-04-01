@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 62 "./vconfig.h"
+# 66 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27349,6 +27349,16 @@ void PIN_MANAGER_Initialize (void);
  } UI_STATES;
 
  typedef enum {
+  GEM_STATE_DISABLE = 0,
+  GEM_STATE_COMM,
+  GEM_STATE_OFFLINE,
+  GEM_STATE_ONLINE,
+  GEM_STATE_REMOTE,
+  GEM_STATE_ALARM,
+  GEM_STATE_ERROR
+ } GEM_STATES;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -27359,7 +27369,7 @@ void PIN_MANAGER_Initialize (void);
  } LINK_STATES;
 
  typedef enum {
-  LINK_ERROR_NONE = 0,
+  LINK_ERROR_NONE = 10,
   LINK_ERROR_T1,
   LINK_ERROR_T2,
   LINK_ERROR_T3,
@@ -27373,6 +27383,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
+  GEM_STATES g_state;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -27380,11 +27391,13 @@ void PIN_MANAGER_Initialize (void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, connect : 2;
+  queue : 1;
+  uint8_t ack[3];
   uint8_t uart;
+  volatile uint8_t ticker;
  } V_data;
 # 21 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
@@ -28022,6 +28035,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
+ GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
 
 extern struct V_data V;
@@ -28046,6 +28060,10 @@ uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
  for (i = 0; i < byte_count; i++) {
   sum += byte_block[i];
  }
+
+
+
+
  return sum;
 }
 
@@ -28093,13 +28111,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   break;
  case LINK_STATE_ENQ:
-
-
-
-
-
-
-
+  rxData_l = 0;
+# 90 "gemsecs.c"
   V.error = LINK_ERROR_NONE;
   *m_link = LINK_STATE_EOT;
   StartTimer(TMR_T2, 2000);
@@ -28107,6 +28120,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
    V.error = LINK_ERROR_T2;
+   V.timer_error++;
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
@@ -28139,6 +28153,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
         rxData = UART1_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
+       V.checksum_error++;
        V.failed_receive = 3;
        *m_link = LINK_STATE_NAK;
       }
@@ -28175,6 +28190,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
         rxData = UART2_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
+       V.checksum_error++;
        V.failed_receive = 4;
        *m_link = LINK_STATE_NAK;
       }
@@ -28194,6 +28210,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
   V.failed_receive = 0;
+  V.g_state = secs_gem_state(V.stream, V.function);
   *m_link = LINK_STATE_DONE;
   break;
  case LINK_STATE_NAK:
@@ -28243,9 +28260,12 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
 
 
+
+
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
+   V.timer_error++;
    if (!retry--) {
     V.error = LINK_ERROR_T2;
     V.failed_receive = 1;
@@ -28266,6 +28286,14 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
      if (rxData_l <= sizeof(block10))
       H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+
+     if (rxData_l == sizeof(block10) + 1)
+      V.ack[2] = rxData;
+     if (rxData_l == sizeof(block10) + 2)
+      V.ack[1] = rxData;
+     if (rxData_l == sizeof(block10) + 3)
+      V.ack[0] = rxData;
+
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
 
@@ -28283,6 +28311,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
         rxData = UART1_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
+       V.checksum_error++;
        V.failed_receive = 2;
        *r_link = LINK_STATE_NAK;
       }
@@ -28298,6 +28327,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.rbit = H10[1].block.block.rbit;
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
+  V.g_state = secs_gem_state(V.stream, V.function);
   UART1_Write(0x06);
   V.failed_receive = 0;
   *r_link = LINK_STATE_DONE;
@@ -28343,6 +28373,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_ENQ:
   if (TimerDone(TMR_T2)) {
+   V.timer_error++;
    if (!retry--) {
     V.error = LINK_ERROR_T2;
     V.failed_send = 1;
@@ -28393,9 +28424,13 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
 
 
+
+
+
   break;
  case LINK_STATE_ACK:
   if (TimerDone(TMR_T3)) {
+   V.timer_error++;
    V.error = LINK_ERROR_T3;
    V.failed_send = 4;
    *t_link = LINK_STATE_NAK;
@@ -28610,6 +28645,81 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   block.length = sizeof(header10);
   H10[2].block.block.systemb = V.systemb;
   V.abort = LINK_ERROR_ABORT;
+  break;
+ }
+
+ return(block);
+}
+
+
+
+
+GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
+{
+ static GEM_STATES block = GEM_STATE_DISABLE;
+
+ switch (stream) {
+ case 1:
+  switch (function) {
+
+
+
+  case 2:
+   block = GEM_STATE_REMOTE;
+   V.ticker = 0;
+   break;
+
+
+
+  case 14:
+   block = GEM_STATE_COMM;
+   V.ticker = 15;
+   break;
+
+
+
+  case 16:
+   block = GEM_STATE_OFFLINE;
+   V.ticker = 0;
+   break;
+
+
+
+  case 18:
+   block = GEM_STATE_ONLINE;
+   V.ticker = 0;
+   break;
+  default:
+   if (block == GEM_STATE_DISABLE) {
+    block = GEM_STATE_COMM;
+    V.ticker = 15;
+   }
+   break;
+  }
+  break;
+ case 5:
+  switch (function) {
+  default:
+   block = GEM_STATE_ALARM;
+   if (V.ticker != 45)
+    V.ticker = 15;
+   break;
+  }
+  break;
+ case 9:
+  switch (function) {
+  default:
+   block = GEM_STATE_ERROR;
+   if (V.ticker != 45)
+    V.ticker = 15;
+   break;
+  }
+  break;
+ default:
+  if (block == GEM_STATE_DISABLE) {
+   block = GEM_STATE_COMM;
+   V.ticker = 45;
+  }
   break;
  }
 
