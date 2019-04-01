@@ -12044,6 +12044,9 @@ drill 1.0 mm</description>
 <part name="LSP4" library="solpad" library_urn="urn:adsk.eagle:library:364" deviceset="LSP10" device="" package3d_urn="urn:adsk.eagle:package:26501/1"/>
 <part name="R8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R1206" package3d_urn="urn:adsk.eagle:package:23540/2" value="0"/>
 <part name="R9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R1206" package3d_urn="urn:adsk.eagle:package:23540/2" value="0"/>
+<part name="C7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="0.1"/>
+<part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
+<part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12533,6 +12536,16 @@ drill 1.0 mm</description>
 <instance part="R9" gate="G$1" x="-106.68" y="55.88" smashed="yes" rot="R180">
 <attribute name="NAME" x="-105.41" y="54.3814" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="-102.87" y="59.182" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C7" gate="G$1" x="-83.82" y="68.58" smashed="yes" rot="R90">
+<attribute name="NAME" x="-84.455" y="69.596" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="-79.629" y="69.596" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="P+2" gate="VCC" x="-88.9" y="68.58" smashed="yes" rot="R90">
+<attribute name="VALUE" x="-86.36" y="66.04" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="GND4" gate="1" x="-78.74" y="66.04" smashed="yes">
+<attribute name="VALUE" x="-81.28" y="63.5" size="1.778" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -13596,6 +13609,11 @@ drill 1.0 mm</description>
 <junction x="-101.6" y="55.88"/>
 <junction x="-99.06" y="55.88"/>
 </segment>
+<segment>
+<pinref part="C7" gate="G$1" pin="2"/>
+<pinref part="GND4" gate="1" pin="GND"/>
+<junction x="-78.74" y="68.58"/>
+</segment>
 </net>
 <net name="VCC" class="0">
 <segment>
@@ -13605,6 +13623,7 @@ drill 1.0 mm</description>
 <segment>
 <pinref part="C21" gate="G$1" pin="1"/>
 <pinref part="P+3" gate="VCC" pin="VCC"/>
+<junction x="-88.9" y="81.28"/>
 </segment>
 <segment>
 <pinref part="P+4" gate="VCC" pin="VCC"/>
@@ -13612,6 +13631,11 @@ drill 1.0 mm</description>
 <wire x1="-96.52" y1="68.58" x2="-101.6" y2="68.58" width="0.1524" layer="91"/>
 <junction x="-101.6" y="68.58"/>
 <junction x="-96.52" y="68.58"/>
+</segment>
+<segment>
+<pinref part="C7" gate="G$1" pin="1"/>
+<pinref part="P+2" gate="VCC" pin="VCC"/>
+<junction x="-86.36" y="68.58"/>
 </segment>
 </net>
 <net name="N$17" class="0">
