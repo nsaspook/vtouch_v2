@@ -302,6 +302,22 @@ header53 H53[] = {
 	},
 };
 
+header254 H254[] = {
+	{ // general message buffer
+		.length = 254,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 10,
+		.block.block.function = 3,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+	},
+};
+
 header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};

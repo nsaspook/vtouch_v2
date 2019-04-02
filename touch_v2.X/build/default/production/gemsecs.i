@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28020,6 +28020,13 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header53;
 
+ typedef struct header254 {
+  uint16_t checksum;
+  uint8_t data[244];
+  block10 block;
+  uint8_t length;
+ } header254;
+
  typedef struct response_type {
   uint8_t *header;
   uint8_t length;
@@ -28049,6 +28056,7 @@ extern struct header18 H18[];
 extern struct header24 H24[];
 extern struct header27 H27[];
 extern struct header53 H53[];
+extern struct header254 H254[];
 
 
 
@@ -28112,7 +28120,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ENQ:
   rxData_l = 0;
-# 90 "gemsecs.c"
+# 91 "gemsecs.c"
   V.error = LINK_ERROR_NONE;
   *m_link = LINK_STATE_EOT;
   StartTimer(TMR_T2, 2000);

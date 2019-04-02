@@ -11,6 +11,7 @@ extern struct header18 H18[];
 extern struct header24 H24[];
 extern struct header27 H27[];
 extern struct header53 H53[];
+extern struct header254 H254[];
 
 /*
  * Checksum for message and header block after length byte
