@@ -27406,6 +27406,7 @@ enum APP_TIMERS {
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,
+ TMR_IO,
 
 
 

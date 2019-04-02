@@ -27929,6 +27929,7 @@ enum APP_TIMERS {
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,
+ TMR_IO,
 
 
 
@@ -28288,8 +28289,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     if (rxData_l == 0) {
      r_block.length = rxData;
      run_checksum(0, 1);
-     b_block[255-rxData_l] = rxData;
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
     } else {
 
 
@@ -28312,8 +28313,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
      if (rxData_l == r_block.length + 2)
       H10[1].checksum += rxData;
 
-     b_block[255-rxData_l] = rxData;
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
      if (rxData_l > (r_block.length + 2)) {
       if (V.r_checksum == H10[1].checksum) {
        *r_link = LINK_STATE_ACK;
@@ -28634,9 +28635,9 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  case 10:
   switch (function) {
   case 1:
-   block.header = (uint8_t*) & H12[0];
-   block.length = sizeof(header12);
-   H12[0].block.block.systemb = V.systemb;
+   block.header = (uint8_t*) & H13[1];
+   block.length = sizeof(header13);
+   H13[1].block.block.systemb = V.systemb;
    H53[0].block.block.systemb = V.systemb;
    block.respond = 1;
    block.reply = (uint8_t*) & H53[0];
