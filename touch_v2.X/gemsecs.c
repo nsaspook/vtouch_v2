@@ -233,10 +233,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		*r_link = LINK_STATE_EOT;
 #ifdef DB2
 		WaitMs(5);
-		H27[0].block.block.systemb = V.ticks; // make distinct, testing S1F13
-		secs_send((uint8_t*) & H27[0], sizeof(header27), true, 1);
-		//H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
-		//secs_send((uint8_t*) & H10[3], sizeof(header10), true, 1);
+		//H27[0].block.block.systemb = V.ticks; // make distinct, testing S1F13
+		//secs_send((uint8_t*) & H27[0], sizeof(header27), true, 1);
+		H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
+		secs_send((uint8_t*) & H10[3], sizeof(header10), true, 1);
 #endif
 		break;
 	case LINK_STATE_EOT:
@@ -496,6 +496,13 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
 	return true;
 }
 
+void hb_message(void)
+{
+	V.s_state = SEQ_STATE_TX;
+	V.failed_send = false;
+	V.t_l_state = LINK_STATE_IDLE;
+}
+
 /*
  * parse stream and response codes into a message pointer and length to send in response
  */
@@ -550,6 +557,21 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header24);
 			H24[0].block.block.systemb = V.systemb;
 			H24[0].data[12] = 12;
+			break;
+		default: // S1F0 abort
+			block.header = (uint8_t*) & H10[2];
+			block.length = sizeof(header10);
+			H10[2].block.block.systemb = V.systemb;
+			V.abort = LINK_ERROR_ABORT;
+			break;
+		}
+		break;
+	case 5:
+		switch (function) {
+		case 1: // S5F2
+			block.header = (uint8_t*) & H13[2];
+			block.length = sizeof(header13);
+			H13[2].block.block.systemb = V.systemb;
 			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];
@@ -645,6 +667,7 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 		case 2:
 			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
+			StartTimer(TMR_HBIO, HBT); // restart the heartbeat
 			break;
 #ifdef DB2
 		case 13:

@@ -29,11 +29,11 @@ extern "C" {
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
-	//#define DB1
-	//#define DB2
-	//#define DB3
-	//#define DB4
-	//#define RERROR	// generate 'random' checksum errors to simulate rs-232 bit errors
+	#define DB1
+	#define DB2
+	#define DB3
+	#define DB4
+	#define RERROR	// generate 'random' checksum errors to simulate rs-232 bit errors
 
 #define SLED	LED0_LAT
 
@@ -53,9 +53,12 @@ extern "C" {
 #define T2	2000
 #define T3	5000
 #define T4	5000
+#define HBT	30000
 #define	RTY	3
 #define ERROR_CHECKSUM	30000
 #define ERROR_COMM	31000
+	
+#define TID	0
 
 	/*
 	 * offsets in bytes

@@ -27185,7 +27185,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 49 "mcc_generated_files/pin_manager.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 560 "mcc_generated_files/pin_manager.h"
+# 640 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 50 "mcc_generated_files/pin_manager.c" 2
 
@@ -27213,7 +27213,7 @@ void PIN_MANAGER_Initialize(void)
 
 
     TRISE = 0x00;
-    TRISF = 0xFF;
+    TRISF = 0x0F;
     TRISA = 0x8F;
     TRISB = 0xBF;
     TRISC = 0x91;
@@ -27226,14 +27226,14 @@ void PIN_MANAGER_Initialize(void)
     ANSELC = 0x01;
     ANSELB = 0x38;
     ANSELE = 0x00;
-    ANSELF = 0xFF;
+    ANSELF = 0x0F;
     ANSELA = 0x8F;
 
 
 
 
     WPUD = 0xFC;
-    WPUF = 0x00;
+    WPUF = 0xF0;
     WPUE = 0x00;
     WPUB = 0x87;
     WPUA = 0x00;

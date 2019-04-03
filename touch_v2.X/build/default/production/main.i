@@ -27391,7 +27391,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 560 "./mcc_generated_files/pin_manager.h"
+# 640 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "./mcc_generated_files/mcc.h" 2
 
@@ -27857,25 +27857,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 59 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 60 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -27903,6 +27884,25 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
+# 60 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 66 "./vconfig.h"
+# 69 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28155,7 +28155,7 @@ enum APP_TIMERS {
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,
- TMR_IO,
+ TMR_HBIO,
 
 
 
@@ -28268,6 +28268,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
+ void hb_message(void);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28435,6 +28436,22 @@ header13 H13[] = {
   .data[1] = 0x01,
   .data[0] = 0x00,
  },
+ {
+  .length = 13,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 0,
+  .block.block.stream = 5,
+  .block.block.function = 2,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[2] = 0x21,
+  .data[1] = 0x01,
+  .data[0] = 0x00,
+ },
 };
 
 header14 H14[] = {
@@ -28496,7 +28513,25 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-# 301 "main.c"
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
 header53 H53[] = {
  {
   .length = 53,
@@ -28514,14 +28549,18 @@ header53 H53[] = {
   .data[41] = 0x02,
   .data[40] = 0x21,
   .data[39] = 0x01,
-  .data[38] = 0x01,
+  .data[38] = 0,
   .data[37] = 0x41,
   .data[36] = 0x01,
-  .data[35] = 43,
+  .data[35] = 35,
   .data[34] = 'F',
   .data[33] = 'R',
   .data[32] = 'E',
   .data[31] = 'D',
+  .data[30] = '*',
+  .data[29] = '*',
+  .data[28] = '*',
+  .data[27] = '*',
  },
 };
 
@@ -28615,8 +28654,8 @@ void main(void)
      eaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
-
-
+    WaitMs(50);
+    UART1_put_buffer(0x05);
 
     break;
    case SEQ_STATE_RX:
@@ -28629,7 +28668,7 @@ void main(void)
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-
+     WaitMs(5);
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -28671,7 +28710,7 @@ void main(void)
    case SEQ_STATE_ERROR:
    default:
     V.s_state = SEQ_STATE_INIT;
-    sprintf(V.buf, "E%d A%d T%d C%d #", V.error, V.abort, V.timer_error, V.checksum_error);
+    sprintf(V.buf, "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28683,6 +28722,17 @@ void main(void)
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
+
+
+
+    if (V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) {
+     if (TimerDone(TMR_HBIO)) {
+      StartTimer(TMR_HBIO, 30000);
+
+      hb_message();
+
+     }
+    }
    }
    break;
   case UI_STATE_LOG:
@@ -28695,11 +28745,11 @@ void main(void)
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
 
-
-
-
-
-
+    if (LATEbits.LATE0) {
+     UART2_put_buffer(0x05);
+    } else {
+     UART1_put_buffer(0x05);
+    }
 
     break;
    case SEQ_STATE_RX:
@@ -28763,5 +28813,6 @@ void main(void)
   if (mode != UI_STATE_LOG)
    eaDogM_WriteStringAtPos(1, 0, V.buf);
   do { LATEbits.LATE2 = 0; } while(0);
+
  }
 }

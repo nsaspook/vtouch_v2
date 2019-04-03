@@ -27293,7 +27293,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 21 "./vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 560 "./mcc_generated_files/pin_manager.h"
+# 640 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 22 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
@@ -27318,7 +27318,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 66 "./vconfig.h"
+# 69 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27783,25 +27783,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 59 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 60 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -27829,6 +27810,25 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
+# 60 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -27929,7 +27929,7 @@ enum APP_TIMERS {
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,
- TMR_IO,
+ TMR_HBIO,
 
 
 
@@ -28042,6 +28042,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
+ void hb_message(void);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
@@ -28070,8 +28071,8 @@ uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
   sum += byte_block[i];
  }
 
-
-
+ if (rand() > 30000)
+  sum++;
 
  return sum;
 }
@@ -28098,7 +28099,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  switch (*m_link) {
  case LINK_STATE_IDLE:
 
-
+  WaitMs(50);
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
@@ -28121,7 +28122,19 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ENQ:
   rxData_l = 0;
-# 91 "gemsecs.c"
+
+  WaitMs(50);
+  if (V.uart == 1)
+
+   if (rand() < 31000)
+
+    secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
+  if (V.uart == 2)
+
+   if (rand() < 31000)
+
+    secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
+
   V.error = LINK_ERROR_NONE;
   *m_link = LINK_STATE_EOT;
   StartTimer(TMR_T2, 2000);
@@ -28210,7 +28223,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ACK:
 
-
+  WaitMs(50);
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -28266,11 +28279,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
+  WaitMs(5);
 
 
-
-
-
+  H10[3].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 1, 1);
 
   break;
  case LINK_STATE_EOT:
@@ -28379,8 +28392,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x04);
 
   break;
  case LINK_STATE_ENQ:
@@ -28433,11 +28446,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
+  WaitMs(5);
 
+  if (rand() < 31000)
 
-
-
-
+   UART1_put_buffer(0x06);
 
   break;
  case LINK_STATE_ACK:
@@ -28530,6 +28543,13 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake, uint8_t s_uart)
  return 1;
 }
 
+void hb_message(void)
+{
+ V.s_state = SEQ_STATE_TX;
+ V.failed_send = 0;
+ V.t_l_state = LINK_STATE_IDLE;
+}
+
 
 
 
@@ -28584,6 +28604,21 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.length = sizeof(header24);
    H24[0].block.block.systemb = V.systemb;
    H24[0].data[12] = 12;
+   break;
+  default:
+   block.header = (uint8_t*) & H10[2];
+   block.length = sizeof(header10);
+   H10[2].block.block.systemb = V.systemb;
+   V.abort = LINK_ERROR_ABORT;
+   break;
+  }
+  break;
+ case 5:
+  switch (function) {
+  case 1:
+   block.header = (uint8_t*) & H13[2];
+   block.length = sizeof(header13);
+   H13[2].block.block.systemb = V.systemb;
    break;
   default:
    block.header = (uint8_t*) & H10[2];
@@ -28674,28 +28709,29 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
  case 1:
   switch (function) {
 
-
+  case 1:
 
   case 2:
    block = GEM_STATE_REMOTE;
    V.ticker = 0;
+   StartTimer(TMR_HBIO, 30000);
    break;
 
-
+  case 13:
 
   case 14:
    block = GEM_STATE_COMM;
    V.ticker = 15;
    break;
 
-
+  case 15:
 
   case 16:
    block = GEM_STATE_OFFLINE;
    V.ticker = 0;
    break;
 
-
+  case 17:
 
   case 18:
    block = GEM_STATE_ONLINE;

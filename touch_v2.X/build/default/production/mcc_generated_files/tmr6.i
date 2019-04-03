@@ -27537,7 +27537,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 21 "mcc_generated_files/../vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 560 "./mcc_generated_files/pin_manager.h"
+# 640 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 22 "mcc_generated_files/../vconfig.h" 2
 # 1 "./ringbufs.h" 1
@@ -27562,7 +27562,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 66 "./vconfig.h"
+# 69 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27653,7 +27653,7 @@ enum APP_TIMERS {
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,
- TMR_IO,
+ TMR_HBIO,
 
 
 

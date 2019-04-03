@@ -218,6 +218,22 @@ header13 H13[] = {
 		.data[1] = 0x01,
 		.data[0] = 0x00,
 	},
+	{ // S5F2 send 'Alarm Report Ack' reply from host
+		.length = 13,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 0,
+		.block.block.stream = 5,
+		.block.block.function = 2,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[2] = 0x21,
+		.data[1] = 0x01,
+		.data[0] = 0x00,
+	},
 };
 
 header14 H14[] = {
@@ -315,14 +331,18 @@ header53 H53[] = {
 		.data[41] = 0x02,
 		.data[40] = 0x21,
 		.data[39] = 0x01,
-		.data[38] = 0x01,
+		.data[38] = TID,
 		.data[37] = 0x41,
 		.data[36] = 0x01,
-		.data[35] = 43,
+		.data[35] = 35,
 		.data[34] = 'F',
 		.data[33] = 'R',
 		.data[32] = 'E',
 		.data[31] = 'D',
+		.data[30] = '*',
+		.data[29] = '*',
+		.data[28] = '*',
+		.data[27] = '*',
 	},
 };
 
@@ -472,7 +492,7 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(V.buf, "E%d A%d T%d C%d #", V.error, V.abort, V.timer_error, V.checksum_error);
+				sprintf(V.buf, "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -484,6 +504,17 @@ void main(void)
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
+				/*
+				 * HeartBeat S1F1 ping during remote idle time
+				 */
+				if (V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) {
+					if (TimerDone(TMR_HBIO)) {
+						StartTimer(TMR_HBIO, HBT);
+						// send S1F1
+						hb_message();
+
+					}
+				}
 			}
 			break;
 		case UI_STATE_LOG: // monitor
@@ -564,6 +595,7 @@ void main(void)
 		if (mode != UI_STATE_LOG)
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 		DEBUG2_SetLow();
+
 	}
 }
 /**
