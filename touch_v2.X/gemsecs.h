@@ -1,4 +1,4 @@
-/* 
+ /* 
  * File:   gemsecs.h
  * Author: root
  *
@@ -101,6 +101,13 @@ extern "C" {
 		block10 block;
 		uint8_t length;
 	} header53;
+
+	typedef struct header254 {
+		uint16_t checksum;
+		uint8_t data[244];
+		block10 block;
+		uint8_t length;
+	} header254;
 
 	typedef struct response_type {
 		uint8_t *header;

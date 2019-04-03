@@ -202,6 +202,22 @@ header13 H13[] = {
 		.data[1] = 0x01,
 		.data[0] = 0x00,
 	},
+	{ // S10F2 send 'terminal' reply from host
+		.length = 13,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 0,
+		.block.block.stream = 10,
+		.block.block.function = 2,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[2] = 0x21,
+		.data[1] = 0x01,
+		.data[0] = 0x00,
+	},
 };
 
 header14 H14[] = {
@@ -295,10 +311,34 @@ header53 H53[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data[42] = 0,
-		.data[41] = 'A',
-		.data[40] = 1,
-		.data[39] = 'F',
+		.data[42] = 0x01,
+		.data[41] = 0x02,
+		.data[40] = 0x21,
+		.data[39] = 0x01,
+		.data[38] = 0x01,
+		.data[37] = 0x41,
+		.data[36] = 0x01,
+		.data[35] = 43,
+		.data[34] = 'F',
+		.data[33] = 'R',
+		.data[32] = 'E',
+		.data[31] = 'D',
+	},
+};
+
+header254 H254[] = {
+	{ // general message buffer
+		.length = 254,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 10,
+		.block.block.function = 3,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
 	},
 };
 

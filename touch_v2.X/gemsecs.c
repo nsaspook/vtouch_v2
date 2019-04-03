@@ -11,6 +11,7 @@ extern struct header18 H18[];
 extern struct header24 H24[];
 extern struct header27 H27[];
 extern struct header53 H53[];
+extern header254 H254[];
 
 /*
  * Checksum for message and header block after length byte
@@ -212,7 +213,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 LINK_STATES r_protocol(LINK_STATES * r_link)
 {
 	uint8_t rxData;
-	static uint8_t rxData_l = 0, retry = RTY;
+	static uint8_t rxData_l = 0, retry = RTY, *b_block;
 
 	switch (*r_link) {
 	case LINK_STATE_IDLE:
@@ -226,6 +227,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break;
 	case LINK_STATE_ENQ:
 		rxData_l = 0;
+		b_block = (uint8_t*) & H254[0];
 		UART1_Write(EOT);
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
@@ -254,6 +256,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 					r_block.length = rxData; // header+message bytes
 					run_checksum(0, true);
 					rxData_l++;
+					b_block[sizeof(header254) - rxData_l] = rxData; // buffer the message
 				} else {
 					/*
 					 * skip possible message data
@@ -277,6 +280,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 						H10[1].checksum += rxData;
 
 					rxData_l++;
+					b_block[sizeof(header254) - rxData_l] = rxData;
 					if (rxData_l > (r_block.length + 2)) { // end of total data stream
 						if (V.r_checksum == H10[1].checksum) {
 							*r_link = LINK_STATE_ACK;
@@ -597,9 +601,9 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	case 10:
 		switch (function) {
 		case 1: // S10F2
-			block.header = (uint8_t*) & H12[0];
-			block.length = sizeof(header12);
-			H12[0].block.block.systemb = V.systemb;
+			block.header = (uint8_t*) & H13[1];
+			block.length = sizeof(header13);
+			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
 			block.respond = true;
 			block.reply = (uint8_t*) & H53[0]; // S10F3 send queue

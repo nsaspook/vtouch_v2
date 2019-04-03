@@ -27257,7 +27257,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27929,6 +27929,7 @@ enum APP_TIMERS {
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,
+ TMR_IO,
 
 
 
@@ -28020,6 +28021,13 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t length;
  } header53;
 
+ typedef struct header254 {
+  uint16_t checksum;
+  uint8_t data[244];
+  block10 block;
+  uint8_t length;
+ } header254;
+
  typedef struct response_type {
   uint8_t *header;
   uint8_t length;
@@ -28049,6 +28057,7 @@ extern struct header18 H18[];
 extern struct header24 H24[];
 extern struct header27 H27[];
 extern struct header53 H53[];
+extern header254 H254[];
 
 
 
@@ -28112,7 +28121,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ENQ:
   rxData_l = 0;
-# 90 "gemsecs.c"
+# 91 "gemsecs.c"
   V.error = LINK_ERROR_NONE;
   *m_link = LINK_STATE_EOT;
   StartTimer(TMR_T2, 2000);
@@ -28238,7 +28247,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 LINK_STATES r_protocol(LINK_STATES * r_link)
 {
  uint8_t rxData;
- static uint8_t rxData_l = 0, retry = 3;
+ static uint8_t rxData_l = 0, retry = 3, *b_block;
 
  switch (*r_link) {
  case LINK_STATE_IDLE:
@@ -28252,6 +28261,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_ENQ:
   rxData_l = 0;
+  b_block = (uint8_t*) & H254[0];
   UART1_Write(0x04);
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
@@ -28280,6 +28290,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
      r_block.length = rxData;
      run_checksum(0, 1);
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
     } else {
 
 
@@ -28303,6 +28314,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
       H10[1].checksum += rxData;
 
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
      if (rxData_l > (r_block.length + 2)) {
       if (V.r_checksum == H10[1].checksum) {
        *r_link = LINK_STATE_ACK;
@@ -28623,9 +28635,9 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  case 10:
   switch (function) {
   case 1:
-   block.header = (uint8_t*) & H12[0];
-   block.length = sizeof(header12);
-   H12[0].block.block.systemb = V.systemb;
+   block.header = (uint8_t*) & H13[1];
+   block.length = sizeof(header13);
+   H13[1].block.block.systemb = V.systemb;
    H53[0].block.block.systemb = V.systemb;
    block.respond = 1;
    block.reply = (uint8_t*) & H53[0];
