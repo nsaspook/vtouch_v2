@@ -547,6 +547,86 @@
 #define DEBUG2_SetAnalogMode()      do { ANSELEbits.ANSELE2 = 1; } while(0)
 #define DEBUG2_SetDigitalMode()     do { ANSELEbits.ANSELE2 = 0; } while(0)
 
+// get/set BILED3_1 aliases
+#define BILED3_1_TRIS                 TRISFbits.TRISF4
+#define BILED3_1_LAT                  LATFbits.LATF4
+#define BILED3_1_PORT                 PORTFbits.RF4
+#define BILED3_1_WPU                  WPUFbits.WPUF4
+#define BILED3_1_OD                   ODCONFbits.ODCF4
+#define BILED3_1_ANS                  ANSELFbits.ANSELF4
+#define BILED3_1_SetHigh()            do { LATFbits.LATF4 = 1; } while(0)
+#define BILED3_1_SetLow()             do { LATFbits.LATF4 = 0; } while(0)
+#define BILED3_1_Toggle()             do { LATFbits.LATF4 = ~LATFbits.LATF4; } while(0)
+#define BILED3_1_GetValue()           PORTFbits.RF4
+#define BILED3_1_SetDigitalInput()    do { TRISFbits.TRISF4 = 1; } while(0)
+#define BILED3_1_SetDigitalOutput()   do { TRISFbits.TRISF4 = 0; } while(0)
+#define BILED3_1_SetPullup()          do { WPUFbits.WPUF4 = 1; } while(0)
+#define BILED3_1_ResetPullup()        do { WPUFbits.WPUF4 = 0; } while(0)
+#define BILED3_1_SetPushPull()        do { ODCONFbits.ODCF4 = 0; } while(0)
+#define BILED3_1_SetOpenDrain()       do { ODCONFbits.ODCF4 = 1; } while(0)
+#define BILED3_1_SetAnalogMode()      do { ANSELFbits.ANSELF4 = 1; } while(0)
+#define BILED3_1_SetDigitalMode()     do { ANSELFbits.ANSELF4 = 0; } while(0)
+
+// get/set BILED3_2 aliases
+#define BILED3_2_TRIS                 TRISFbits.TRISF5
+#define BILED3_2_LAT                  LATFbits.LATF5
+#define BILED3_2_PORT                 PORTFbits.RF5
+#define BILED3_2_WPU                  WPUFbits.WPUF5
+#define BILED3_2_OD                   ODCONFbits.ODCF5
+#define BILED3_2_ANS                  ANSELFbits.ANSELF5
+#define BILED3_2_SetHigh()            do { LATFbits.LATF5 = 1; } while(0)
+#define BILED3_2_SetLow()             do { LATFbits.LATF5 = 0; } while(0)
+#define BILED3_2_Toggle()             do { LATFbits.LATF5 = ~LATFbits.LATF5; } while(0)
+#define BILED3_2_GetValue()           PORTFbits.RF5
+#define BILED3_2_SetDigitalInput()    do { TRISFbits.TRISF5 = 1; } while(0)
+#define BILED3_2_SetDigitalOutput()   do { TRISFbits.TRISF5 = 0; } while(0)
+#define BILED3_2_SetPullup()          do { WPUFbits.WPUF5 = 1; } while(0)
+#define BILED3_2_ResetPullup()        do { WPUFbits.WPUF5 = 0; } while(0)
+#define BILED3_2_SetPushPull()        do { ODCONFbits.ODCF5 = 0; } while(0)
+#define BILED3_2_SetOpenDrain()       do { ODCONFbits.ODCF5 = 1; } while(0)
+#define BILED3_2_SetAnalogMode()      do { ANSELFbits.ANSELF5 = 1; } while(0)
+#define BILED3_2_SetDigitalMode()     do { ANSELFbits.ANSELF5 = 0; } while(0)
+
+// get/set BILED4_1 aliases
+#define BILED4_1_TRIS                 TRISFbits.TRISF6
+#define BILED4_1_LAT                  LATFbits.LATF6
+#define BILED4_1_PORT                 PORTFbits.RF6
+#define BILED4_1_WPU                  WPUFbits.WPUF6
+#define BILED4_1_OD                   ODCONFbits.ODCF6
+#define BILED4_1_ANS                  ANSELFbits.ANSELF6
+#define BILED4_1_SetHigh()            do { LATFbits.LATF6 = 1; } while(0)
+#define BILED4_1_SetLow()             do { LATFbits.LATF6 = 0; } while(0)
+#define BILED4_1_Toggle()             do { LATFbits.LATF6 = ~LATFbits.LATF6; } while(0)
+#define BILED4_1_GetValue()           PORTFbits.RF6
+#define BILED4_1_SetDigitalInput()    do { TRISFbits.TRISF6 = 1; } while(0)
+#define BILED4_1_SetDigitalOutput()   do { TRISFbits.TRISF6 = 0; } while(0)
+#define BILED4_1_SetPullup()          do { WPUFbits.WPUF6 = 1; } while(0)
+#define BILED4_1_ResetPullup()        do { WPUFbits.WPUF6 = 0; } while(0)
+#define BILED4_1_SetPushPull()        do { ODCONFbits.ODCF6 = 0; } while(0)
+#define BILED4_1_SetOpenDrain()       do { ODCONFbits.ODCF6 = 1; } while(0)
+#define BILED4_1_SetAnalogMode()      do { ANSELFbits.ANSELF6 = 1; } while(0)
+#define BILED4_1_SetDigitalMode()     do { ANSELFbits.ANSELF6 = 0; } while(0)
+
+// get/set BILED4_2 aliases
+#define BILED4_2_TRIS                 TRISFbits.TRISF7
+#define BILED4_2_LAT                  LATFbits.LATF7
+#define BILED4_2_PORT                 PORTFbits.RF7
+#define BILED4_2_WPU                  WPUFbits.WPUF7
+#define BILED4_2_OD                   ODCONFbits.ODCF7
+#define BILED4_2_ANS                  ANSELFbits.ANSELF7
+#define BILED4_2_SetHigh()            do { LATFbits.LATF7 = 1; } while(0)
+#define BILED4_2_SetLow()             do { LATFbits.LATF7 = 0; } while(0)
+#define BILED4_2_Toggle()             do { LATFbits.LATF7 = ~LATFbits.LATF7; } while(0)
+#define BILED4_2_GetValue()           PORTFbits.RF7
+#define BILED4_2_SetDigitalInput()    do { TRISFbits.TRISF7 = 1; } while(0)
+#define BILED4_2_SetDigitalOutput()   do { TRISFbits.TRISF7 = 0; } while(0)
+#define BILED4_2_SetPullup()          do { WPUFbits.WPUF7 = 1; } while(0)
+#define BILED4_2_ResetPullup()        do { WPUFbits.WPUF7 = 0; } while(0)
+#define BILED4_2_SetPushPull()        do { ODCONFbits.ODCF7 = 0; } while(0)
+#define BILED4_2_SetOpenDrain()       do { ODCONFbits.ODCF7 = 1; } while(0)
+#define BILED4_2_SetAnalogMode()      do { ANSELFbits.ANSELF7 = 1; } while(0)
+#define BILED4_2_SetDigitalMode()     do { ANSELFbits.ANSELF7 = 0; } while(0)
+
 /**
    @Param
     none
