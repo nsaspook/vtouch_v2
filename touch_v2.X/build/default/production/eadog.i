@@ -27389,7 +27389,7 @@ void PIN_MANAGER_Initialize (void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1;
@@ -27786,7 +27786,7 @@ void eaDogM_WriteString(char *strPtr)
  printf("%s", strPtr);
  start_lcd();
 
-
+ wdtdelay(9000);
 
 }
 

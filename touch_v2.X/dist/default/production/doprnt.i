@@ -1052,6 +1052,20 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
         flags = width = 0;
         prec = -1;
+# 723 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+        if ((*fmt)[0] == '*') {
+            ++*fmt;
+            width = (*(int *)__va_arg(*(int **)ap, (int)0));
+            if (width < 0) {
+                flags |= (1 << 0);
+                width = -width;
+            }
+        } else {
+            width = atoi(*fmt);
+            while ((0 ? isdigit((*fmt)[0]) : ((unsigned)((*fmt)[0])-'0') < 10)) {
+                ++*fmt;
+            }
+        }
 # 792 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if (*fmt[0] == 'c') {
             ++*fmt;

@@ -28110,7 +28110,7 @@ void PMD_Initialize(void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1;
@@ -28633,7 +28633,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.87B");
+   sprintf(V.buf, " Version %s", "0.88B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28727,10 +28727,14 @@ void main(void)
 
     if (V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) {
      if (TimerDone(TMR_HBIO)) {
-      StartTimer(TMR_HBIO, 30000);
+      StartTimer(TMR_HBIO, 10000);
 
       hb_message();
-
+      sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
+      V.buf[16] = 0;
+      wait_lcd_done();
+      eaDogM_WriteStringAtPos(0, 0, V.buf);
+      WaitMs(1000);
      }
     }
    }

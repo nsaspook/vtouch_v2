@@ -27424,7 +27424,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1;

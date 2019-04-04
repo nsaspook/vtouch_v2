@@ -512,7 +512,11 @@ void main(void)
 						StartTimer(TMR_HBIO, HBT);
 						// send S1F1
 						hb_message();
-
+						sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
+						V.buf[16] = 0; // string size limit
+						wait_lcd_done();
+						eaDogM_WriteStringAtPos(0, 0, V.buf);
+						WaitMs(1000);
 					}
 				}
 			}

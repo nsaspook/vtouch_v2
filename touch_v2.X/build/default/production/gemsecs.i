@@ -27391,7 +27391,7 @@ void PIN_MANAGER_Initialize (void);
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1;
@@ -28543,11 +28543,17 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake, uint8_t s_uart)
  return 1;
 }
 
+
+
+
 void hb_message(void)
 {
+ V.ping++;
  V.s_state = SEQ_STATE_TX;
  V.failed_send = 0;
  V.t_l_state = LINK_STATE_IDLE;
+ V.stream = 1;
+ V.function = 2;
 }
 
 
@@ -28573,6 +28579,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.reply = (uint8_t*) & H10[0];
    block.reply_length = sizeof(header10);
    V.queue = 1;
+   break;
+  case 2:
+   block.header = (uint8_t*) & H10[0];
+   block.length = sizeof(header10);
+   H10[0].block.block.systemb = V.systemb;
    break;
   case 3:
    block.header = (uint8_t*) & H14[0];
@@ -28712,9 +28723,12 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
   case 1:
 
   case 2:
+   if (block != GEM_STATE_REMOTE)
+    StartTimer(TMR_HBIO, 10000);
+
    block = GEM_STATE_REMOTE;
    V.ticker = 0;
-   StartTimer(TMR_HBIO, 30000);
+
    break;
 
   case 13:

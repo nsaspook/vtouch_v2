@@ -496,11 +496,17 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
 	return true;
 }
 
+/*
+ * send the S1F1/S2F2 heartbeat message
+ */
 void hb_message(void)
 {
+	V.ping++;
 	V.s_state = SEQ_STATE_TX;
 	V.failed_send = false;
 	V.t_l_state = LINK_STATE_IDLE;
+	V.stream = 1;
+	V.function = 2;
 }
 
 /*
@@ -526,6 +532,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.reply = (uint8_t*) & H10[0]; // S1F1 send queue
 			block.reply_length = sizeof(header10);
 			V.queue = true;
+			break;
+		case 2: // S1F1 host heartbeat send to equipment
+			block.header = (uint8_t*) & H10[0];
+			block.length = sizeof(header10);
+			H10[0].block.block.systemb = V.systemb;
 			break;
 		case 3: // S1F4
 			block.header = (uint8_t*) & H14[0];
@@ -665,9 +676,12 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 		case 1:
 #endif
 		case 2:
+			if (block != GEM_STATE_REMOTE)
+				StartTimer(TMR_HBIO, HBT); // restart the heartbeat
+
 			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
-			StartTimer(TMR_HBIO, HBT); // restart the heartbeat
+
 			break;
 #ifdef DB2
 		case 13:
