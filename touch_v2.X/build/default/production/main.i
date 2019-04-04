@@ -28106,7 +28106,7 @@ void PMD_Initialize(void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[64];
+  char buf[64], terminal[160];
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;
@@ -28145,7 +28145,7 @@ void PMD_Initialize(void);
 # 56 "main.c" 2
 
 # 1 "./gemsecs.h" 1
-# 23 "./gemsecs.h"
+# 25 "./gemsecs.h"
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 enum APP_TIMERS {
@@ -28165,7 +28165,7 @@ enum APP_TIMERS {
 __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
-# 24 "./gemsecs.h" 2
+# 26 "./gemsecs.h" 2
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -28269,6 +28269,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
+ void terminal_format(uint8_t *);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28633,7 +28634,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.88B");
+   sprintf(V.buf, " Version %s", "0.89B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");

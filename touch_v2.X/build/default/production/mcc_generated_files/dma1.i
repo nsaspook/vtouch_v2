@@ -27394,7 +27394,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[64];
+  char buf[64], terminal[160];
   uint32_t ticks, systemb;
   uint8_t stream, function, error, abort;
   UI_STATES ui_sw;

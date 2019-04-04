@@ -509,6 +509,18 @@ void hb_message(void)
 	V.function = 2;
 }
 
+void terminal_format(uint8_t *data)
+{
+	uint8_t i = 34, j;
+
+	sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
+		V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+
+	for (j = 0; j < 34; j++) {
+		data[i--] = V.terminal[j];
+	}
+}
+
 /*
  * parse stream and response codes into a message pointer and length to send in response
  */
@@ -633,14 +645,15 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 		break;
 	case 10:
 		switch (function) {
-		case 1: // S10F2
+		case 1: // S10F2 Terminal Request Acknowledge
 			block.header = (uint8_t*) & H13[1];
 			block.length = sizeof(header13);
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
 			block.respond = true;
-			block.reply = (uint8_t*) & H53[0]; // S10F3 send queue
+			block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
 			block.reply_length = sizeof(header53);
+			terminal_format(H53[0].data);
 			V.queue = true;
 			break;
 		default: // S1F0 abort

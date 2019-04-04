@@ -15,50 +15,50 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16913 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
 "130 ./vconfig.h
 [; ;./vconfig.h: 130:  typedef struct V_data {
-[s S2231 `E16888 1 `E16897 1 `E16904 1 `E16913 1 `E16913 1 `E16913 1 `uc -> 64 `i `ul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16897 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 `uc -> 3 `i `uc 1 `Vuc 1 ]
-[n S2231 V_data s_state ui_state g_state m_l_state r_l_state t_l_state buf ticks systemb stream function error abort ui_sw r_checksum t_checksum checksum_error timer_error ping rbit wbit ebit failed_send failed_receive queue ack uart ticker ]
-"25 ./gemsecs.h
-[; ;./gemsecs.h: 25:  typedef struct block10_type {
+[s S2231 `E16888 1 `E16897 1 `E16904 1 `E16913 1 `E16913 1 `E16913 1 `uc -> 64 `i `uc -> 160 `i `ul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16897 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 `uc -> 3 `i `uc 1 `Vuc 1 ]
+[n S2231 V_data s_state ui_state g_state m_l_state r_l_state t_l_state buf terminal ticks systemb stream function error abort ui_sw r_checksum t_checksum checksum_error timer_error ping rbit wbit ebit failed_send failed_receive queue ack uart ticker ]
+"27 ./gemsecs.h
+[; ;./gemsecs.h: 27:  typedef struct block10_type {
 [s S2232 `ul 1 `uc 1 :7 `uc 1 :1 `uc 1 `uc 1 :7 `uc 1 :1 `uc 1 `uc 1 :7 `uc 1 :1 `uc 1 ]
 [n S2232 block10_type systemb bidl bidh ebit function stream wbit didl didh rbit ]
-"38
-[; ;./gemsecs.h: 38:  typedef union block10 {
+"40
+[; ;./gemsecs.h: 40:  typedef union block10 {
 [u S2233 `uc -> 10 `i `S2232 1 ]
 [n S2233 block10 b block ]
-"43
-[; ;./gemsecs.h: 43:  typedef struct header10 {
+"45
+[; ;./gemsecs.h: 45:  typedef struct header10 {
 [s S2234 `us 1 `S2233 1 `uc 1 ]
 [n S2234 header10 checksum block length ]
-"49
-[; ;./gemsecs.h: 49:  typedef struct header12 {
+"51
+[; ;./gemsecs.h: 51:  typedef struct header12 {
 [s S2235 `us 1 `uc -> 2 `i `S2233 1 `uc 1 ]
 [n S2235 header12 checksum data block length ]
-"56
-[; ;./gemsecs.h: 56:  typedef struct header13 {
+"58
+[; ;./gemsecs.h: 58:  typedef struct header13 {
 [s S2236 `us 1 `uc -> 3 `i `S2233 1 `uc 1 ]
 [n S2236 header13 checksum data block length ]
-"63
-[; ;./gemsecs.h: 63:  typedef struct header14 {
+"65
+[; ;./gemsecs.h: 65:  typedef struct header14 {
 [s S2237 `us 1 `uc -> 4 `i `S2233 1 `uc 1 ]
 [n S2237 header14 checksum data block length ]
-"70
-[; ;./gemsecs.h: 70:  typedef struct header17 {
+"72
+[; ;./gemsecs.h: 72:  typedef struct header17 {
 [s S2238 `us 1 `uc -> 7 `i `S2233 1 `uc 1 ]
 [n S2238 header17 checksum data block length ]
-"84
-[; ;./gemsecs.h: 84:  typedef struct header24 {
+"86
+[; ;./gemsecs.h: 86:  typedef struct header24 {
 [s S2240 `us 1 `uc -> 14 `i `S2233 1 `uc 1 ]
 [n S2240 header24 checksum data block length ]
-"91
-[; ;./gemsecs.h: 91:  typedef struct header27 {
+"93
+[; ;./gemsecs.h: 93:  typedef struct header27 {
 [s S2241 `us 1 `uc -> 17 `i `S2233 1 `uc 1 ]
 [n S2241 header27 checksum data block length ]
-"98
-[; ;./gemsecs.h: 98:  typedef struct header53 {
+"100
+[; ;./gemsecs.h: 100:  typedef struct header53 {
 [s S2242 `us 1 `uc -> 43 `i `S2233 1 `uc 1 ]
 [n S2242 header53 checksum data block length ]
-"105
-[; ;./gemsecs.h: 105:  typedef struct header254 {
+"107
+[; ;./gemsecs.h: 107:  typedef struct header254 {
 [s S2243 `us 1 `uc -> 244 `i `S2233 1 `uc 1 ]
 [n S2243 header254 checksum data block length ]
 [p mainexit ]
@@ -137,26 +137,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 "302 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 302:  void UART1_put_buffer(uint8_t);
 [v _UART1_put_buffer `(v ~T0 @X0 0 ef1`uc ]
-"123 ./gemsecs.h
-[; ;./gemsecs.h: 123:  LINK_STATES r_protocol(LINK_STATES *);
+"125 ./gemsecs.h
+[; ;./gemsecs.h: 125:  LINK_STATES r_protocol(LINK_STATES *);
 [v _r_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
-"124
-[; ;./gemsecs.h: 124:  LINK_STATES t_protocol(LINK_STATES *);
+"126
+[; ;./gemsecs.h: 126:  LINK_STATES t_protocol(LINK_STATES *);
 [v _t_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
-[v F17010 `(a ~T0 @X0 1 tf1`uc ]
+[v F17011 `(a ~T0 @X0 1 tf1`uc ]
 "26 ./timers.h
 [; ;./timers.h: 26: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF17010 ~T0 @X0 0 e ]
+[v _TimerDone `TF17011 ~T0 @X0 0 e ]
 "511 main.c
 [; ;main.c: 511:      if (TimerDone(TMR_HBIO)) {
-[c E16996 0 1 2 3 4 5 6 7 .. ]
-[n E16996 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_COUNT  ]
-[v F17006 `(v ~T0 @X0 1 tf2`uc`us ]
+[c E16997 0 1 2 3 4 5 6 7 .. ]
+[n E16997 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_COUNT  ]
+[v F17007 `(v ~T0 @X0 1 tf2`uc`us ]
 "25 ./timers.h
 [; ;./timers.h: 25: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF17006 ~T0 @X0 0 e ]
-"126 ./gemsecs.h
-[; ;./gemsecs.h: 126:  void hb_message(void);
+[v _StartTimer `TF17007 ~T0 @X0 0 e ]
+"128 ./gemsecs.h
+[; ;./gemsecs.h: 128:  void hb_message(void);
 [v _hb_message `(v ~T0 @X0 0 ef ]
 "46188 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46188:     struct {
@@ -176,8 +176,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "327 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 327: void UART2_put_buffer(uint8_t);
 [v _UART2_put_buffer `(v ~T0 @X0 0 ef1`uc ]
-"122 ./gemsecs.h
-[; ;./gemsecs.h: 122:  LINK_STATES m_protocol(LINK_STATES *);
+"124 ./gemsecs.h
+[; ;./gemsecs.h: 124:  LINK_STATES m_protocol(LINK_STATES *);
 [v _m_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
 "44 main.c
 [p n 520 ]
@@ -2520,6 +2520,168 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> -> 0 `i `uc
 ..
+:U ..
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+..
 -> -> 0 `i `ul
 -> -> 0 `i `ul
 -> -> 0 `i `uc
@@ -3511,7 +3673,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 417:    eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 6 ]
 "418
-[; ;main.c: 418:    sprintf(V.buf, " Version %s", "0.88B");
+[; ;main.c: 418:    sprintf(V.buf, " Version %s", "0.89B");
 [e ( _sprintf (1 , (. , &U . _V 6 :s 2C :s 3C ]
 "419
 [; ;main.c: 419:    wait_lcd_done();
@@ -3555,11 +3717,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _V 0 . `E16888 1 ]
 "432
 [; ;main.c: 432:     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-[e $ ! && == -> . _V 11 `i -> . `E16922 0 `i == -> . _V 12 `i -> . `E16922 0 `i 2272  ]
+[e $ ! && == -> . _V 12 `i -> . `E16922 0 `i == -> . _V 13 `i -> . `E16922 0 `i 2272  ]
 {
 "433
 [; ;main.c: 433:      sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
-[e ( _sprintf (1 , , (. , &U . _V 6 :s 5C . _V 7 -> . _V 2 `ui ]
+[e ( _sprintf (1 , , (. , &U . _V 6 :s 5C . _V 8 -> . _V 2 `ui ]
 "434
 [; ;main.c: 434:      V.buf[16] = 0;
 [e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -3591,7 +3753,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "448
 [; ;main.c: 448:      sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
-[e ( _sprintf (1 , , (. , &U . _V 6 :s 6C -> . _V 9 `i -> . _V 10 `i ]
+[e ( _sprintf (1 , , (. , &U . _V 6 :s 6C -> . _V 10 `i -> . _V 11 `i ]
 "449
 [; ;main.c: 449:      V.buf[11] = 0;
 [e = *U + &U . _V 6 * -> -> -> 11 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -3606,14 +3768,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _WaitMs (1 -> -> 5 `i `us ]
 "455
 [; ;main.c: 455:      if (V.wbit) {
-[e $ ! != -> . _V 20 `i -> 0 `i 2275  ]
+[e $ ! != -> . _V 21 `i -> 0 `i 2275  ]
 {
 "456
 [; ;main.c: 456:       V.s_state = SEQ_STATE_TX;
 [e = . _V 0 . `E16888 2 ]
 "457
 [; ;main.c: 457:       V.failed_send = 0;
-[e = . _V 22 -> -> 0 `i `uc ]
+[e = . _V 23 -> -> 0 `i `uc ]
 "458
 [; ;main.c: 458:       V.t_l_state = LINK_STATE_IDLE;
 [e = . _V 5 . `E16913 0 ]
@@ -3673,7 +3835,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2281 ]
 "477
 [; ;main.c: 477:     if (V.queue) {
-[e $ ! != -> . _V 24 `i -> 0 `i 2282  ]
+[e $ ! != -> . _V 25 `i -> 0 `i 2282  ]
 {
 "478
 [; ;main.c: 478:      V.r_l_state = LINK_STATE_IDLE;
@@ -3732,7 +3894,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _V 0 . `E16888 0 ]
 "495
 [; ;main.c: 495:     sprintf(V.buf, "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
-[e ( _sprintf (1 , , , , (. , &U . _V 6 :s 9C -> . _V 11 `i -> . _V 12 `i -> . _V 17 `ui -> . _V 2 `ui ]
+[e ( _sprintf (1 , , , , (. , &U . _V 6 :s 9C -> . _V 12 `i -> . _V 13 `i -> . _V 18 `ui -> . _V 2 `ui ]
 "496
 [; ;main.c: 496:     V.buf[16] = 0;
 [e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -3763,11 +3925,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2269 ]
 "502
 [; ;main.c: 502:    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-[e $ ! && == -> . _V 11 `i -> . `E16922 0 `i == -> . _V 12 `i -> . `E16922 0 `i 2287  ]
+[e $ ! && == -> . _V 12 `i -> . `E16922 0 `i == -> . _V 13 `i -> . `E16922 0 `i 2287  ]
 {
 "503
 [; ;main.c: 503:     sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
-[e ( _sprintf (1 , , (. , &U . _V 6 :s 10C . _V 7 -> . _V 2 `ui ]
+[e ( _sprintf (1 , , (. , &U . _V 6 :s 10C . _V 8 -> . _V 2 `ui ]
 "504
 [; ;main.c: 504:     V.buf[16] = 0;
 [e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -3783,17 +3945,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "511
 [; ;main.c: 511:      if (TimerDone(TMR_HBIO)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16996 6 `uc `i -> 0 `i 2289  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E16997 6 `uc `i -> 0 `i 2289  ]
 {
 "512
 [; ;main.c: 512:       StartTimer(TMR_HBIO, 10000);
-[e ( _StartTimer (2 , -> . `E16996 6 `uc -> -> 10000 `i `us ]
+[e ( _StartTimer (2 , -> . `E16997 6 `uc -> -> 10000 `i `us ]
 "514
 [; ;main.c: 514:       hb_message();
 [e ( _hb_message ..  ]
 "515
 [; ;main.c: 515:       sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
-[e ( _sprintf (1 , , (. , &U . _V 6 :s 11C -> . _V 2 `ui -> . _V 18 `ui ]
+[e ( _sprintf (1 , , (. , &U . _V 6 :s 11C -> . _V 2 `ui -> . _V 19 `ui ]
 "516
 [; ;main.c: 516:       V.buf[16] = 0;
 [e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -3839,7 +4001,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _V 0 . `E16888 1 ]
 "529
 [; ;main.c: 529:     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-[e ( _sprintf (1 , , , , (. , &U . _V 6 :s 12C -> . _V 26 `i -> . _V 2 `ui -> . _V 17 `ui -> . _V 16 `ui ]
+[e ( _sprintf (1 , , , , (. , &U . _V 6 :s 12C -> . _V 27 `i -> . _V 2 `ui -> . _V 18 `ui -> . _V 17 `ui ]
 "530
 [; ;main.c: 530:     V.buf[16] = 0;
 [e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -3881,7 +4043,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "546
 [; ;main.c: 546:      sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
-[e ( _sprintf (1 , , , (. , &U . _V 6 :s 13C -> . _V 9 `i -> . _V 10 `i . _V 7 ]
+[e ( _sprintf (1 , , , (. , &U . _V 6 :s 13C -> . _V 10 `i -> . _V 11 `i . _V 8 ]
 "547
 [; ;main.c: 547:      V.buf[13] = 0;
 [e = *U + &U . _V 6 * -> -> -> 13 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -3890,7 +4052,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _wait_lcd_done ..  ]
 "549
 [; ;main.c: 549:      eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
-[e ( _eaDogM_WriteStringAtPos (3 , , -> - -> . _V 26 `i -> 1 `i `uc -> -> 0 `i `uc &U . _V 6 ]
+[e ( _eaDogM_WriteStringAtPos (3 , , -> - -> . _V 27 `i -> 1 `i `uc -> -> 0 `i `uc &U . _V 6 ]
 "550
 [; ;main.c: 550:      V.s_state = SEQ_STATE_TRIGGER;
 [e = . _V 0 . `E16888 3 ]
@@ -3922,7 +4084,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _wait_lcd_done ..  ]
 "559
 [; ;main.c: 559:     eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
-[e ( _eaDogM_WriteStringAtPos (3 , , -> - -> . _V 26 `i -> 1 `i `uc -> -> 13 `i `uc &U . _V 6 ]
+[e ( _eaDogM_WriteStringAtPos (3 , , -> - -> . _V 27 `i -> 1 `i `uc -> -> 13 `i `uc &U . _V 6 ]
 "560
 [; ;main.c: 560:     break;
 [e $U 2291  ]
@@ -3961,7 +4123,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2291 ]
 "569
 [; ;main.c: 569:    sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-[e ( _sprintf (1 , , , , (. , &U . _V 6 :s 15C -> . _V 26 `i -> . _V 2 `ui -> . _V 17 `ui -> . _V 16 `ui ]
+[e ( _sprintf (1 , , , , (. , &U . _V 6 :s 15C -> . _V 27 `i -> . _V 2 `ui -> . _V 18 `ui -> . _V 17 `ui ]
 "570
 [; ;main.c: 570:    V.buf[16] = 0;
 [e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -4006,11 +4168,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2306 ]
 "580
 [; ;main.c: 580:   if (V.ticks) {
-[e $ ! != . _V 7 -> -> -> 0 `i `l `ul 2308  ]
+[e $ ! != . _V 8 -> -> -> 0 `i `l `ul 2308  ]
 {
 "581
 [; ;main.c: 581:    if (V.failed_receive) {
-[e $ ! != -> . _V 23 `i -> 0 `i 2309  ]
+[e $ ! != -> . _V 24 `i -> 0 `i 2309  ]
 {
 "582
 [; ;main.c: 582:     do { LATDbits.LATD4 = 0; } while(0);
@@ -4052,7 +4214,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2316 ]
 "588
 [; ;main.c: 588:    if (V.failed_send) {
-[e $ ! != -> . _V 22 `i -> 0 `i 2323  ]
+[e $ ! != -> . _V 23 `i -> 0 `i 2323  ]
 {
 "589
 [; ;main.c: 589:     do { LATDbits.LATD6 = 0; } while(0);
@@ -4098,7 +4260,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2308 ]
 "596
 [; ;main.c: 596:   sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
-[e ( _sprintf (1 , , , , , (. , &U . _V 6 :s 16C -> . _V 4 `ui -> . _V 23 `i -> . _V 5 `ui -> . _V 22 `i -> . _V 16 `ui ]
+[e ( _sprintf (1 , , , , , (. , &U . _V 6 :s 16C -> . _V 4 `ui -> . _V 24 `i -> . _V 5 `ui -> . _V 23 `i -> . _V 17 `ui ]
 "597
 [; ;main.c: 597:   V.buf[16] = 0;
 [e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
@@ -4132,7 +4294,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p f _sprintf 8683664 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 0 ]
 [a 1C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 3C 48 46 56 56 66 0 ]
+[a 3C 48 46 56 57 66 0 ]
 [a 4C 32 70 71 66 64 77 67 72 80 32 70 65 66 52 0 ]
 [a 7C 32 79 75 81 35 0 ]
 [a 11C 32 80 105 110 103 32 71 37 100 32 32 80 37 51 100 32 35 0 ]
