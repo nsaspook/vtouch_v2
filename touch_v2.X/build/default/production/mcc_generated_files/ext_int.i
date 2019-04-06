@@ -27351,7 +27351,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 69 "./vconfig.h"
+# 70 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27413,6 +27413,16 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   LINK_ERROR_SEND
  } LINK_ERRORS;
 
+ typedef enum {
+  MSG_ERROR_NONE = 0,
+  MSG_ERROR_ID = 1,
+  MSG_ERROR_STREAM = 3,
+  MSG_ERROR_FUNCTION = 5,
+  MSG_ERROR_DATA = 7,
+  MSG_ERROR_TIMEOUT = 9,
+  MSG_ERROR_DATASIZE = 11
+ } MSG_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -27422,7 +27432,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   LINK_STATES t_l_state;
   char buf[64], terminal[160];
   uint32_t ticks, systemb;
-  uint8_t stream, function, error, abort;
+  uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,

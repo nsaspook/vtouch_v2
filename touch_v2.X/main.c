@@ -60,7 +60,8 @@ typedef signed long long int24_t;
 extern struct spi_link_type spi_link;
 
 V_data V = {
-	.error = false,
+	.error = LINK_ERROR_NONE,
+	.msg_error = MSG_ERROR_NONE,
 	.uart = 1,
 	.g_state = GEM_STATE_DISABLE,
 	.ticker = 45,
@@ -344,6 +345,30 @@ header53 H53[] = {
 		.data[28] = '*',
 		.data[27] = '*',
 	},
+	{ // S10F9 send 'broadcast text display ' command from host to equipment
+		.length = 53,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 10,
+		.block.block.function = 9,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[42] = 0x41,
+		.data[41] = 0x01,
+		.data[40] = 35,
+		.data[39] = 'F',
+		.data[38] = 'R',
+		.data[37] = 'E',
+		.data[36] = 'D',
+		.data[35] = '*',
+		.data[34] = '*',
+		.data[33] = '*',
+		.data[32] = '*',
+	},
 };
 
 header254 H254[] = {
@@ -445,7 +470,13 @@ void main(void)
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+					if (V.stream == 9) { // error message from equipment
+						V.msg_error = V.function;
+						sprintf(V.buf, "S%dF%d Err    ", V.stream, V.function);
+					} else {
+						V.msg_error = MSG_ERROR_NONE;
+						sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+					}
 					V.buf[11] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(0, 0, V.buf);

@@ -126,7 +126,7 @@ extern "C" {
 	LINK_STATES t_protocol(LINK_STATES *);
 	bool secs_send(uint8_t *, uint8_t, bool, uint8_t);
 	void hb_message(void);
-	void terminal_format(uint8_t *);
+	void terminal_format(uint8_t *, uint8_t);
 	response_type secs_II_message(uint8_t, uint8_t);
 	GEM_STATES secs_gem_state(uint8_t, uint8_t);
 

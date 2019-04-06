@@ -21,19 +21,19 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.89B"
+#define VER	"0.91B"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
 	 * 0.82	PRNG error message testing
 	 */
 	//#define TESTING
-#define DISPLAY_SLOW
-#define DB1
-#define DB2
-#define DB3
-#define DB4
-#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
+	//#define DISPLAY_SLOW
+	//#define DB1
+	//#define DB2
+	//#define DB3
+	//#define DB4
+	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
 
 #define SLED	LED0_LAT
 
@@ -53,12 +53,13 @@ extern "C" {
 #define T2	2000
 #define T3	5000
 #define T4	5000
-#define HBT	10000
+#define HBT	30000
 #define	RTY	3
 #define ERROR_CHECKSUM	30000
 #define ERROR_COMM	31000
 
 #define TID	0
+#define BROADCAST
 
 	/*
 	 * offsets in bytes
@@ -127,6 +128,16 @@ extern "C" {
 		LINK_ERROR_SEND
 	} LINK_ERRORS;
 
+	typedef enum {
+		MSG_ERROR_NONE = 0,
+		MSG_ERROR_ID = 1,
+		MSG_ERROR_STREAM = 3,
+		MSG_ERROR_FUNCTION = 5,
+		MSG_ERROR_DATA = 7,
+		MSG_ERROR_TIMEOUT = 9,
+		MSG_ERROR_DATASIZE = 11
+	} MSG_ERRORS;
+
 	typedef struct V_data { // control data structure 
 		SEQ_STATES s_state;
 		UI_STATES ui_state;
@@ -136,7 +147,7 @@ extern "C" {
 		LINK_STATES t_l_state;
 		char buf[64], terminal[160];
 		uint32_t ticks, systemb;
-		uint8_t stream, function, error, abort;
+		uint8_t stream, function, error, abort, msg_error;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,

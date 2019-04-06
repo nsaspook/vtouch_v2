@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 69 "./vconfig.h"
+# 70 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28099,6 +28099,16 @@ void PMD_Initialize(void);
   LINK_ERROR_SEND
  } LINK_ERRORS;
 
+ typedef enum {
+  MSG_ERROR_NONE = 0,
+  MSG_ERROR_ID = 1,
+  MSG_ERROR_STREAM = 3,
+  MSG_ERROR_FUNCTION = 5,
+  MSG_ERROR_DATA = 7,
+  MSG_ERROR_TIMEOUT = 9,
+  MSG_ERROR_DATASIZE = 11
+ } MSG_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -28108,7 +28118,7 @@ void PMD_Initialize(void);
   LINK_STATES t_l_state;
   char buf[64], terminal[160];
   uint32_t ticks, systemb;
-  uint8_t stream, function, error, abort;
+  uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
@@ -28269,7 +28279,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
- void terminal_format(uint8_t *);
+ void terminal_format(uint8_t *, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28279,7 +28289,8 @@ void WaitMs(uint16_t numMilliseconds);
 extern struct spi_link_type spi_link;
 
 V_data V = {
- .error = 0,
+ .error = LINK_ERROR_NONE,
+ .msg_error = MSG_ERROR_NONE,
  .uart = 1,
  .g_state = GEM_STATE_DISABLE,
  .ticker = 45,
@@ -28514,25 +28525,7 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-
-
-header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 318 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28562,6 +28555,30 @@ header53 H53[] = {
   .data[29] = '*',
   .data[28] = '*',
   .data[27] = '*',
+ },
+ {
+  .length = 53,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 10,
+  .block.block.function = 9,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[42] = 0x41,
+  .data[41] = 0x01,
+  .data[40] = 35,
+  .data[39] = 'F',
+  .data[38] = 'R',
+  .data[37] = 'E',
+  .data[36] = 'D',
+  .data[35] = '*',
+  .data[34] = '*',
+  .data[33] = '*',
+  .data[32] = '*',
  },
 };
 
@@ -28634,7 +28651,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.89B");
+   sprintf(V.buf, " Version %s", "0.91B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28655,8 +28672,8 @@ void main(void)
      eaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
-    WaitMs(50);
-    UART1_put_buffer(0x05);
+
+
 
     break;
    case SEQ_STATE_RX:
@@ -28664,12 +28681,18 @@ void main(void)
 
 
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-     sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+     if (V.stream == 9) {
+      V.msg_error = V.function;
+      sprintf(V.buf, "S%dF%d Err    ", V.stream, V.function);
+     } else {
+      V.msg_error = MSG_ERROR_NONE;
+      sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+     }
      V.buf[11] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(0, 0, V.buf);
 
-     WaitMs(5);
+
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -28728,7 +28751,7 @@ void main(void)
 
     if (V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) {
      if (TimerDone(TMR_HBIO)) {
-      StartTimer(TMR_HBIO, 10000);
+      StartTimer(TMR_HBIO, 30000);
 
       hb_message();
       sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
@@ -28750,11 +28773,11 @@ void main(void)
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
 
-    if (LATEbits.LATE0) {
-     UART2_put_buffer(0x05);
-    } else {
-     UART1_put_buffer(0x05);
-    }
+
+
+
+
+
 
     break;
    case SEQ_STATE_RX:

@@ -505,13 +505,18 @@ void hb_message(void)
 	V.s_state = SEQ_STATE_TX;
 	V.failed_send = false;
 	V.t_l_state = LINK_STATE_IDLE;
-	V.stream = 1;
-	V.function = 2;
+	if (V.msg_error == MSG_ERROR_NONE) {
+		V.stream = 1;
+		V.function = 2; // S1F1 host ping
+	} else {
+		V.stream = 1;
+		V.function = 14; // S1F13 host ping
+	}
 }
 
-void terminal_format(uint8_t *data)
+void terminal_format(uint8_t *data, uint8_t i)
 {
-	uint8_t i = 34, j;
+	uint8_t j;
 
 	sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
 		V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
@@ -564,6 +569,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.reply = (uint8_t*) & H12[1]; // S1F13 send queue
 			block.reply_length = sizeof(header12);
 			V.queue = true;
+			break;
+		case 14: // S1F13 response
+			block.header = (uint8_t*) & H12[1];
+			block.length = sizeof(header12);
+			H12[1].block.block.systemb = V.systemb;
 			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];
@@ -651,9 +661,15 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
 			block.respond = true;
+#ifdef BROADCAST
+			block.reply = (uint8_t*) & H53[1]; // S10F9 send Terminal Display, Broadcast, queue
+			block.reply_length = sizeof(header53);
+			terminal_format(H53[1].data, 39);
+#else
 			block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
 			block.reply_length = sizeof(header53);
-			terminal_format(H53[0].data);
+			terminal_format(H53[0].data, 34);
+#endif
 			V.queue = true;
 			break;
 		default: // S1F0 abort
