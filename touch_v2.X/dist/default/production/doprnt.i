@@ -60,7 +60,15 @@ typedef signed char int8_t;
 
 
 typedef short int16_t;
-# 181 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+
+
+
+
+typedef __int24 int24_t;
+
+
+
+
 typedef long int32_t;
 
 
@@ -109,7 +117,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -1044,20 +1052,6 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
         flags = width = 0;
         prec = -1;
-# 723 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
-        if ((*fmt)[0] == '*') {
-            ++*fmt;
-            width = (*(int *)__va_arg(*(int **)ap, (int)0));
-            if (width < 0) {
-                flags |= (1 << 0);
-                width = -width;
-            }
-        } else {
-            width = atoi(*fmt);
-            while ((0 ? isdigit((*fmt)[0]) : ((unsigned)((*fmt)[0])-'0') < 10)) {
-                ++*fmt;
-            }
-        }
 # 792 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if (*fmt[0] == 'c') {
             ++*fmt;

@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27579,7 +27576,8 @@ void PIN_MANAGER_Initialize (void);
   MSG_ERROR_FUNCTION = 5,
   MSG_ERROR_DATA = 7,
   MSG_ERROR_TIMEOUT = 9,
-  MSG_ERROR_DATASIZE = 11
+  MSG_ERROR_DATASIZE = 11,
+  MSG_ERROR_RESET = 20
  } MSG_ERRORS;
 
  typedef struct V_data {
@@ -28245,7 +28243,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
- void terminal_format(uint8_t *, uint8_t);
+ uint8_t terminal_format(uint8_t *, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
@@ -28737,7 +28735,7 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake, uint8_t s_uart)
 
 
 
-void hb_message(void)
+void hb_message()
 {
  V.ping++;
  V.s_state = SEQ_STATE_TX;
@@ -28752,7 +28750,7 @@ void hb_message(void)
  }
 }
 
-void terminal_format(uint8_t *data, uint8_t i)
+uint8_t terminal_format(uint8_t *data, uint8_t i)
 {
  uint8_t j;
 
@@ -28762,6 +28760,7 @@ void terminal_format(uint8_t *data, uint8_t i)
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
  }
+ return(strlen(V.terminal));
 }
 
 
@@ -28900,13 +28899,12 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    H53[0].block.block.systemb = V.systemb;
    block.respond = 1;
 
-
-
-
-
-   block.reply = (uint8_t*) & H53[0];
+   block.reply = (uint8_t*) & H53[1];
    block.reply_length = sizeof(header53);
-   terminal_format(H53[0].data, 34);
+
+
+
+
 
    V.queue = 1;
    break;

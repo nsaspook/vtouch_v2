@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28106,7 +28106,8 @@ void PMD_Initialize(void);
   MSG_ERROR_FUNCTION = 5,
   MSG_ERROR_DATA = 7,
   MSG_ERROR_TIMEOUT = 9,
-  MSG_ERROR_DATASIZE = 11
+  MSG_ERROR_DATASIZE = 11,
+  MSG_ERROR_RESET = 20
  } MSG_ERRORS;
 
  typedef struct V_data {
@@ -28279,7 +28280,7 @@ void WaitMs(uint16_t numMilliseconds);
  LINK_STATES t_protocol(LINK_STATES *);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
- void terminal_format(uint8_t *, uint8_t);
+ uint8_t terminal_format(uint8_t *, uint8_t);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28290,7 +28291,7 @@ extern struct spi_link_type spi_link;
 
 V_data V = {
  .error = LINK_ERROR_NONE,
- .msg_error = MSG_ERROR_NONE,
+ .msg_error = MSG_ERROR_RESET,
  .uart = 1,
  .g_state = GEM_STATE_DISABLE,
  .ticker = 45,
@@ -28564,22 +28565,40 @@ header53 H53[] = {
   .block.block.didl = 0,
   .block.block.wbit = 1,
   .block.block.stream = 10,
-  .block.block.function = 9,
+  .block.block.function = 5,
   .block.block.ebit = 1,
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data[42] = 0x41,
-  .data[41] = 0x01,
-  .data[40] = 35,
-  .data[39] = 'F',
-  .data[38] = 'R',
-  .data[37] = 'E',
-  .data[36] = 'D',
-  .data[35] = '*',
-  .data[34] = '*',
-  .data[33] = '*',
-  .data[32] = '*',
+  .data[42] = 0x01,
+  .data[41] = 0x02,
+  .data[40] = 0x21,
+  .data[39] = 0x01,
+  .data[38] = 0,
+  .data[37] = 0x01,
+  .data[36] = 0x02,
+  .data[35] = 0x41,
+  .data[34] = 0x01,
+  .data[33] = 8,
+  .data[32] = 'F',
+  .data[31] = 'R',
+  .data[30] = 'E',
+  .data[29] = 'D',
+  .data[28] = '*',
+  .data[27] = '*',
+  .data[26] = '*',
+  .data[25] = '*',
+  .data[24] = 0x41,
+  .data[23] = 0x01,
+  .data[22] = 8,
+  .data[21] = 'B',
+  .data[20] = 'R',
+  .data[19] = 'O',
+  .data[18] = 'O',
+  .data[17] = 'K',
+  .data[16] = 'S',
+  .data[15] = '*',
+  .data[14] = '*',
  },
 };
 
@@ -28756,12 +28775,13 @@ void main(void)
 
       hb_message();
       if (!V.reset) {
-       sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
+       sprintf(V.buf, " Ping G%d  P%d #", V.g_state, V.ping);
        V.buf[16] = 0;
        wait_lcd_done();
        eaDogM_WriteStringAtPos(0, 0, V.buf);
        WaitMs(1000);
       }
+      V.msg_error = MSG_ERROR_NONE;
       V.reset = 0;
      }
     }

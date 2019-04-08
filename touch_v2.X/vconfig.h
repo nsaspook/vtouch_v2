@@ -59,7 +59,7 @@ extern "C" {
 #define ERROR_COMM	31000
 
 #define TID	0
-	//#define BROADCAST
+#define MBLOCK
 
 	/*
 	 * offsets in bytes
@@ -135,7 +135,8 @@ extern "C" {
 		MSG_ERROR_FUNCTION = 5,
 		MSG_ERROR_DATA = 7,
 		MSG_ERROR_TIMEOUT = 9,
-		MSG_ERROR_DATASIZE = 11
+		MSG_ERROR_DATASIZE = 11,
+		MSG_ERROR_RESET = 20
 	} MSG_ERRORS;
 
 	typedef struct V_data { // control data structure 

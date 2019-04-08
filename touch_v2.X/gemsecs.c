@@ -499,7 +499,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
 /*
  * send the S1F1/S2F2 heartbeat message
  */
-void hb_message(void)
+void hb_message()
 {
 	V.ping++;
 	V.s_state = SEQ_STATE_TX;
@@ -514,7 +514,7 @@ void hb_message(void)
 	}
 }
 
-void terminal_format(uint8_t *data, uint8_t i)
+uint8_t terminal_format(uint8_t *data, uint8_t i)
 {
 	uint8_t j;
 
@@ -524,6 +524,7 @@ void terminal_format(uint8_t *data, uint8_t i)
 	for (j = 0; j < 34; j++) {
 		data[i--] = V.terminal[j];
 	}
+	return(strlen(V.terminal));
 }
 
 /*
@@ -661,10 +662,9 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
 			block.respond = true;
-#ifdef BROADCAST
-			block.reply = (uint8_t*) & H53[1]; // S10F9 send Terminal Display, Broadcast, queue
+#ifdef MBLOCK
+			block.reply = (uint8_t*) & H53[1]; // S10F5 send Terminal Display, Multi-line, queue
 			block.reply_length = sizeof(header53);
-			terminal_format(H53[1].data, 39);
 #else
 			block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
 			block.reply_length = sizeof(header53);

@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27385,7 +27385,8 @@ void PIN_MANAGER_Initialize (void);
   MSG_ERROR_FUNCTION = 5,
   MSG_ERROR_DATA = 7,
   MSG_ERROR_TIMEOUT = 9,
-  MSG_ERROR_DATASIZE = 11
+  MSG_ERROR_DATASIZE = 11,
+  MSG_ERROR_RESET = 20
  } MSG_ERRORS;
 
  typedef struct V_data {

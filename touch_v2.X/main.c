@@ -61,7 +61,7 @@ extern struct spi_link_type spi_link;
 
 V_data V = {
 	.error = LINK_ERROR_NONE,
-	.msg_error = MSG_ERROR_NONE,
+	.msg_error = MSG_ERROR_RESET,
 	.uart = 1,
 	.g_state = GEM_STATE_DISABLE,
 	.ticker = 45,
@@ -346,29 +346,47 @@ header53 H53[] = {
 		.data[28] = '*',
 		.data[27] = '*',
 	},
-	{ // S10F9 send 'broadcast text display ' command from host to equipment
+	{ // S10F5 send 'multi-line text display ' command from host to equipment
 		.length = 53,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
 		.block.block.didl = 0,
 		.block.block.wbit = 1,
 		.block.block.stream = 10,
-		.block.block.function = 9,
+		.block.block.function = 5,
 		.block.block.ebit = 1,
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data[42] = 0x41,
-		.data[41] = 0x01,
-		.data[40] = 35,
-		.data[39] = 'F',
-		.data[38] = 'R',
-		.data[37] = 'E',
-		.data[36] = 'D',
-		.data[35] = '*',
-		.data[34] = '*',
-		.data[33] = '*',
-		.data[32] = '*',
+		.data[42] = 0x01,
+		.data[41] = 0x02,
+		.data[40] = 0x21,
+		.data[39] = 0x01,
+		.data[38] = TID,
+		.data[37] = 0x01,
+		.data[36] = 0x02,
+		.data[35] = 0x41,
+		.data[34] = 0x01,
+		.data[33] = 8,
+		.data[32] = 'F',
+		.data[31] = 'R',
+		.data[30] = 'E',
+		.data[29] = 'D',
+		.data[28] = '*',
+		.data[27] = '*',
+		.data[26] = '*',
+		.data[25] = '*',
+		.data[24] = 0x41,
+		.data[23] = 0x01,
+		.data[22] = 8,
+		.data[21] = 'B',
+		.data[20] = 'R',
+		.data[19] = 'O',
+		.data[18] = 'O',
+		.data[17] = 'K',
+		.data[16] = 'S',
+		.data[15] = '*',
+		.data[14] = '*',
 	},
 };
 
@@ -545,12 +563,13 @@ void main(void)
 						// send S1F1
 						hb_message();
 						if (!V.reset) {
-							sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
+							sprintf(V.buf, " Ping G%d  P%d #", V.g_state, V.ping);
 							V.buf[16] = 0; // string size limit
 							wait_lcd_done();
 							eaDogM_WriteStringAtPos(0, 0, V.buf);
 							WaitMs(1000);
 						}
+						V.msg_error = MSG_ERROR_NONE;
 						V.reset = false;
 					}
 				}
