@@ -668,7 +668,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 #else
 			block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
 			block.reply_length = sizeof(header53);
-			terminal_format(H53[0].data, 34);
+//			terminal_format(H53[0].data, 34);
 #endif
 			V.queue = true;
 			break;

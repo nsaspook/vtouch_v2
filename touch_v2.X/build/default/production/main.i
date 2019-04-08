@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28553,10 +28553,37 @@ header53 H53[] = {
   .data[33] = 'R',
   .data[32] = 'E',
   .data[31] = 'D',
-  .data[30] = '*',
-  .data[29] = '*',
-  .data[28] = '*',
-  .data[27] = '*',
+  .data[30] = '1',
+  .data[29] = '2',
+  .data[28] = '3',
+  .data[27] = '4',
+  .data[26] = '3',
+  .data[25] = '4',
+  .data[24] = 'B',
+  .data[23] = 'B',
+  .data[22] = 'B',
+  .data[21] = 'B',
+  .data[20] = 'R',
+  .data[19] = 'O',
+  .data[18] = 'O',
+  .data[17] = 'K',
+  .data[16] = 'S',
+  .data[15] = '1',
+  .data[14] = '2',
+  .data[13] = 'E',
+  .data[12] = 'D',
+  .data[11] = '1',
+  .data[10] = '2',
+  .data[9] = '3',
+  .data[8] = '4',
+  .data[7] = 'B',
+  .data[6] = 'B',
+  .data[5] = 'B',
+  .data[4] = 'B',
+  .data[3] = 'R',
+  .data[2] = 'O',
+  .data[1] = 'O',
+  .data[0] = 'K',
  },
  {
   .length = 53,
@@ -28584,21 +28611,35 @@ header53 H53[] = {
   .data[31] = 'R',
   .data[30] = 'E',
   .data[29] = 'D',
-  .data[28] = '*',
-  .data[27] = '*',
-  .data[26] = '*',
-  .data[25] = '*',
+  .data[28] = '1',
+  .data[27] = '2',
+  .data[26] = '3',
+  .data[25] = '4',
   .data[24] = 0x41,
   .data[23] = 0x01,
-  .data[22] = 8,
+  .data[22] = 22,
   .data[21] = 'B',
   .data[20] = 'R',
   .data[19] = 'O',
   .data[18] = 'O',
   .data[17] = 'K',
   .data[16] = 'S',
-  .data[15] = '*',
-  .data[14] = '*',
+  .data[15] = '1',
+  .data[14] = '2',
+  .data[13] = 'E',
+  .data[12] = 'D',
+  .data[11] = '1',
+  .data[10] = '2',
+  .data[9] = '3',
+  .data[8] = '4',
+  .data[7] = 'B',
+  .data[6] = 'B',
+  .data[5] = 'B',
+  .data[4] = 'B',
+  .data[3] = 'R',
+  .data[2] = 'O',
+  .data[1] = 'O',
+  .data[0] = 'K',
  },
 };
 
@@ -28671,7 +28712,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.93B");
+   sprintf(V.buf, " Version %s", "0.94B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
