@@ -67,6 +67,7 @@ V_data V = {
 	.ticker = 45,
 	.checksum_error = 0,
 	.timer_error = 0,
+	.reset = true,
 };
 
 header10 H10[] = {
@@ -538,16 +539,19 @@ void main(void)
 				/*
 				 * HeartBeat S1F1 ping during remote idle time
 				 */
-				if (V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) {
-					if (TimerDone(TMR_HBIO)) {
+				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
+					if (TimerDone(TMR_HBIO) || V.reset) {
 						StartTimer(TMR_HBIO, HBT);
 						// send S1F1
 						hb_message();
-						sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
-						V.buf[16] = 0; // string size limit
-						wait_lcd_done();
-						eaDogM_WriteStringAtPos(0, 0, V.buf);
-						WaitMs(1000);
+						if (!V.reset) {
+							sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
+							V.buf[16] = 0; // string size limit
+							wait_lcd_done();
+							eaDogM_WriteStringAtPos(0, 0, V.buf);
+							WaitMs(1000);
+						}
+						V.reset = false;
 					}
 				}
 			}

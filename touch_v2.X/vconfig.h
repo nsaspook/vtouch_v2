@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.91B"
+#define VER	"0.93B"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
@@ -59,7 +59,7 @@ extern "C" {
 #define ERROR_COMM	31000
 
 #define TID	0
-#define BROADCAST
+	//#define BROADCAST
 
 	/*
 	 * offsets in bytes
@@ -152,7 +152,7 @@ extern "C" {
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1;
+		queue : 1, reset : 1;
 		uint8_t ack[3];
 		uint8_t uart;
 		volatile uint8_t ticker;

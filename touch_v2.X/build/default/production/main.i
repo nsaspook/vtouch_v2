@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28123,7 +28123,7 @@ void PMD_Initialize(void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1;
+  queue : 1, reset : 1;
   uint8_t ack[3];
   uint8_t uart;
   volatile uint8_t ticker;
@@ -28296,6 +28296,7 @@ V_data V = {
  .ticker = 45,
  .checksum_error = 0,
  .timer_error = 0,
+ .reset = 1,
 };
 
 header10 H10[] = {
@@ -28525,7 +28526,7 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-# 318 "main.c"
+# 319 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28651,7 +28652,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.91B");
+   sprintf(V.buf, " Version %s", "0.93B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28749,16 +28750,19 @@ void main(void)
 
 
 
-    if (V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) {
-     if (TimerDone(TMR_HBIO)) {
+    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
+     if (TimerDone(TMR_HBIO) || V.reset) {
       StartTimer(TMR_HBIO, 30000);
 
       hb_message();
-      sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
-      V.buf[16] = 0;
-      wait_lcd_done();
-      eaDogM_WriteStringAtPos(0, 0, V.buf);
-      WaitMs(1000);
+      if (!V.reset) {
+       sprintf(V.buf, " Ping G%d  P%3d #", V.g_state, V.ping);
+       V.buf[16] = 0;
+       wait_lcd_done();
+       eaDogM_WriteStringAtPos(0, 0, V.buf);
+       WaitMs(1000);
+      }
+      V.reset = 0;
      }
     }
    }
