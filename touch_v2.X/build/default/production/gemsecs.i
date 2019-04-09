@@ -28758,7 +28758,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.94B");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.95B");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
