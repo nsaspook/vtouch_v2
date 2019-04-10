@@ -28323,10 +28323,33 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ENQ:
   rxData_l = 0;
-# 91 "gemsecs.c"
-  V.error = LINK_ERROR_NONE;
-  *m_link = LINK_STATE_EOT;
-  StartTimer(TMR_T2, 2000);
+  if (TimerDone(TMR_T2)) {
+   V.error = LINK_ERROR_T2;
+   V.timer_error++;
+   V.failed_receive = 2;
+   *m_link = LINK_STATE_NAK;
+  } else {
+# 100 "gemsecs.c"
+   if (UART2_is_rx_ready() || UART2_is_rx_ready()) {
+    if (UART1_is_rx_ready()) {
+     rxData = UART1_Read();
+     if (rxData == 0x04) {
+      StartTimer(TMR_T2, 2000);
+      V.error = LINK_ERROR_NONE;
+      *m_link = LINK_STATE_EOT;
+     }
+    }
+    if (UART2_is_rx_ready()) {
+     rxData = UART2_Read();
+     if (rxData == 0x04) {
+      StartTimer(TMR_T2, 2000);
+      V.error = LINK_ERROR_NONE;
+      *m_link = LINK_STATE_EOT;
+     }
+    }
+   }
+
+  }
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
@@ -28755,7 +28778,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.96B");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.97B");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];

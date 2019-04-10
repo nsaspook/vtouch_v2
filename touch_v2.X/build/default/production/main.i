@@ -28712,7 +28712,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.96B");
+   sprintf(V.buf, " Version %s", "0.97B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
@@ -28850,7 +28850,7 @@ void main(void)
 
 
     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-     sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
+     sprintf(V.buf, " S%dF%d #%ld     ", V.stream, V.function, V.ticks);
      V.buf[13] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
@@ -28861,7 +28861,7 @@ void main(void)
     break;
    case SEQ_STATE_TRIGGER:
     V.s_state = SEQ_STATE_DONE;
-    sprintf(V.buf, " OK #");
+    sprintf(V.buf, "OK ");
     wait_lcd_done();
     eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
     break;

@@ -75,22 +75,48 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_ENQ:
 		rxData_l = 0;
+		if (TimerDone(TMR_T2)) {
+			V.error = LINK_ERROR_T2;
+			V.timer_error++;
+			V.failed_receive = 2;
+			*m_link = LINK_STATE_NAK;
+		} else {
 #ifdef DB2
-		WaitMs(50);
-		if (V.uart == 1)
+			WaitMs(50);
+			if (V.uart == 1)
 #ifdef RERROR
-			if (rand() < ERROR_COMM)
+				if (rand() < ERROR_COMM)
 #endif
-				secs_send((uint8_t*) & H27[0], sizeof(header27), true, V.uart);
-		if (V.uart == 2)
+					secs_send((uint8_t*) & H27[0], sizeof(header27), true, V.uart);
+			if (V.uart == 2)
 #ifdef RERROR
-			if (rand() < ERROR_COMM)
+				if (rand() < ERROR_COMM)
 #endif
-				secs_send((uint8_t*) & H10[0], sizeof(header10), true, V.uart);
+					secs_send((uint8_t*) & H10[0], sizeof(header10), true, V.uart);
+			V.error = LINK_ERROR_NONE; // reset error status
+			*m_link = LINK_STATE_EOT;
+			StartTimer(TMR_T2, T2);
+#else
+			if (UART2_is_rx_ready() || UART2_is_rx_ready()) {
+				if (UART1_is_rx_ready()) {
+					rxData = UART1_Read();
+					if (rxData == EOT) {
+						StartTimer(TMR_T2, T2);
+						V.error = LINK_ERROR_NONE; // reset error status
+						*m_link = LINK_STATE_EOT;
+					}
+				}
+				if (UART2_is_rx_ready()) {
+					rxData = UART2_Read();
+					if (rxData == EOT) {
+						StartTimer(TMR_T2, T2);
+						V.error = LINK_ERROR_NONE; // reset error status
+						*m_link = LINK_STATE_EOT;
+					}
+				}
+			}
 #endif
-		V.error = LINK_ERROR_NONE; // reset error status
-		*m_link = LINK_STATE_EOT;
-		StartTimer(TMR_T2, T2);
+		}
 		break;
 	case LINK_STATE_EOT:
 		if (TimerDone(TMR_T2)) {
@@ -668,7 +694,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 #else
 			block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
 			block.reply_length = sizeof(header53);
-//			terminal_format(H53[0].data, 34);
+			//			terminal_format(H53[0].data, 34);
 #endif
 			V.queue = true;
 			break;

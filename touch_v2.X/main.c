@@ -638,7 +638,7 @@ void main(void)
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, " S%dF%d #%ld      ", V.stream, V.function, V.ticks);
+					sprintf(V.buf, " S%dF%d #%ld     ", V.stream, V.function, V.ticks);
 					V.buf[13] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
@@ -649,7 +649,7 @@ void main(void)
 				break;
 			case SEQ_STATE_TRIGGER:
 				V.s_state = SEQ_STATE_DONE;
-				sprintf(V.buf, " OK #");
+				sprintf(V.buf, "OK ");
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
 				break;
