@@ -58,8 +58,8 @@ extern "C" {
 #define ERROR_CHECKSUM	30000
 #define ERROR_COMM	31000
 
-#define TID	0
-#define MBLOCK
+#define TID	1
+//#define MBLOCK
 
 	/*
 	 * offsets in bytes

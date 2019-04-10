@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.05 build -831301201 
-                                                                                               Tue Apr  9 03:26:17 2019
+                                                                                               Tue Apr  9 17:29:32 2019
 
 Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9 
      1                           	processor	18F57K42
@@ -1104,10 +1104,10 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   1090  013E96  45                 	db	69
   1091  013E97  52                 	db	82
   1092  013E98  46                 	db	70
-  1093  013E99  23                 	db	35
+  1093  013E99  08                 	db	8
   1094  013E9A  01                 	db	1
   1095  013E9B  41                 	db	65
-  1096  013E9C  00                 	db	0
+  1096  013E9C  01                 	db	1
   1097  013E9D  01                 	db	1
   1098  013E9E  21                 	db	33
   1099  013E9F  02                 	db	2
@@ -1160,7 +1160,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   1146  013ED1  08                 	db	8
   1147  013ED2  01                 	db	1
   1148  013ED3  41                 	db	65
-  1149  013ED4  00                 	db	0
+  1149  013ED4  01                 	db	1
   1150  013ED5  01                 	db	1
   1151  013ED6  21                 	db	33
   1152  013ED7  02                 	db	2
@@ -5555,13 +5555,13 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   5391                           ;gemsecs.c: 664:    block.respond = 1;
   5392  0123AE  8007               	bsf	secs_II_message@block+6,0,c
   5393                           
-  5394                           ;gemsecs.c: 666:    block.reply = (uint8_t*) & H53[1];
-  5395  0123B0  0EBE               	movlw	low (_H53+56)
+  5394                           ;gemsecs.c: 669:    block.reply = (uint8_t*) & H53[0];
+  5395  0123B0  0E86               	movlw	low _H53
   5396  0123B2  6E04               	movwf	secs_II_message@block+3,c
-  5397  0123B4  0E03               	movlw	high (_H53+56)
+  5397  0123B4  0E03               	movlw	high _H53
   5398  0123B6  6E05               	movwf	secs_II_message@block+4,c
   5399                           
-  5400                           ;gemsecs.c: 667:    block.reply_length = sizeof(header53);
+  5400                           ;gemsecs.c: 670:    block.reply_length = sizeof(header53);
   5401  0123B8  0E38               	movlw	56
   5402  0123BA  D6F6               	goto	L11
   5403  0123BC                     l6696:
@@ -23466,7 +23466,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.05 build -831301201 
-Symbol Table                                                                                   Tue Apr  9 03:26:17 2019
+Symbol Table                                                                                   Tue Apr  9 17:29:32 2019
 
                     _SPI1_Exchange8bit 4B36                                      _V 03F6  
      __end_of_TMR5_SetInterruptHandler 48C4              __end_of_UART2_is_rx_ready 4CCA  

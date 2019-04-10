@@ -28899,11 +28899,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    H53[0].block.block.systemb = V.systemb;
    block.respond = 1;
 
-   block.reply = (uint8_t*) & H53[1];
+
+
+
+   block.reply = (uint8_t*) & H53[0];
    block.reply_length = sizeof(header53);
-
-
-
 
 
    V.queue = 1;
