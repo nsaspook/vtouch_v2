@@ -309,6 +309,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 						V.response.ack[7] = rxData;
 					if (rxData_l == sizeof(block10) + 9)
 						V.response.ack[8] = rxData;
+					if (rxData_l == sizeof(block10) + 10)
+						V.response.ack[9] = rxData;
 
 					if (rxData_l <= r_block.length) // generate checksum from data stream
 						V.r_checksum = run_checksum(rxData, false);
@@ -481,7 +483,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	return *t_link;
 }
 
-/* send the whole sequence including length and checksum bytes */
+/* send the whole sequence including length and checksum bytes with the variable length */
 bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
 {
 	uint8_t i, *k;
@@ -566,6 +568,9 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
 	return(strlen(V.terminal));
 }
 
+/*
+ * terminal response types
+ */
 P_CODES s10f1_opcmd(void)
 {
 	V.response.cmdlen = V.response.ack[6]; // length of command string
@@ -580,6 +585,19 @@ P_CODES s10f1_opcmd(void)
 		return CODE_TM;
 
 	return CODE_TS;
+}
+
+/*
+ * decode offline, online ceid codes
+ */
+P_CODES s6f11_opcmd(void)
+{
+	V.response.ceid = V.response.ack[9]; // CEID
+	V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9]; // get CEID using full message block buffer
+
+	V.testing = (sizeof(H254[0].data) - 1) - 9;
+
+	return(P_CODES) V.response.ceid;
 }
 
 /*

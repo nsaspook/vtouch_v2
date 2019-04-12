@@ -128,6 +128,7 @@ extern "C" {
 	void hb_message(void);
 	uint8_t terminal_format(uint8_t *, uint8_t);
 	P_CODES s10f1_opcmd(void);
+	P_CODES s6f11_opcmd(void);
 	response_type secs_II_message(uint8_t, uint8_t);
 	GEM_STATES secs_gem_state(uint8_t, uint8_t);
 

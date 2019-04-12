@@ -503,7 +503,11 @@ void main(void)
 			sprintf(V.buf, " Version %s", VER);
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
+#ifdef TESTING
+			sprintf(V.buf, " H254 %d, T%ld", sizeof(header254), V.testing);
+#else
 			sprintf(V.buf, " FGB@MCHP FAB4");
+#endif
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
 			WaitMs(3000);

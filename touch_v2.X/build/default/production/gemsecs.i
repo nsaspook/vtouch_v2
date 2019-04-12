@@ -27521,13 +27521,17 @@ void PIN_MANAGER_Initialize (void);
 
  typedef enum {
   CODE_TS = 0,
-  CODE_TM,
+  CODE_TM = 1,
+  CODE_ONLOCAL = 2,
+  CODE_ONREMOTE = 3,
+  CODE_OFFLINE = 4,
   CODE_ERR,
  } P_CODES;
 
  typedef struct terminal_type {
-  uint8_t ack[10];
+  uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen;
+  int32_t ceid;
  } terminal_type;
 
  typedef enum {
@@ -27600,6 +27604,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[64], terminal[160];
   uint32_t ticks, systemb;
+  int32_t testing;
   uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
@@ -28256,6 +28261,7 @@ void WaitMs(uint16_t numMilliseconds);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
  P_CODES s10f1_opcmd(void);
+ P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
@@ -28554,6 +28560,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
       V.response.ack[7] = rxData;
      if (rxData_l == sizeof(block10) + 9)
       V.response.ack[8] = rxData;
+     if (rxData_l == sizeof(block10) + 10)
+      V.response.ack[9] = rxData;
 
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
@@ -28811,6 +28819,9 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  return(strlen(V.terminal));
 }
 
+
+
+
 P_CODES s10f1_opcmd(void)
 {
  V.response.cmdlen = V.response.ack[6];
@@ -28825,6 +28836,19 @@ P_CODES s10f1_opcmd(void)
   return CODE_TM;
 
  return CODE_TS;
+}
+
+
+
+
+P_CODES s6f11_opcmd(void)
+{
+ V.response.ceid = V.response.ack[9];
+ V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9];
+
+ V.testing = (sizeof(H254[0].data) - 1) - 9;
+
+ return(P_CODES) V.response.ceid;
 }
 
 

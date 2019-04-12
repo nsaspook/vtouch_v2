@@ -27365,13 +27365,17 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
 
  typedef enum {
   CODE_TS = 0,
-  CODE_TM,
+  CODE_TM = 1,
+  CODE_ONLOCAL = 2,
+  CODE_ONREMOTE = 3,
+  CODE_OFFLINE = 4,
   CODE_ERR,
  } P_CODES;
 
  typedef struct terminal_type {
-  uint8_t ack[10];
+  uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen;
+  int32_t ceid;
  } terminal_type;
 
  typedef enum {
@@ -27444,6 +27448,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   LINK_STATES t_l_state;
   char buf[64], terminal[160];
   uint32_t ticks, systemb;
+  int32_t testing;
   uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;

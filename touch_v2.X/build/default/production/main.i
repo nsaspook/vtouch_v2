@@ -28051,13 +28051,17 @@ void PMD_Initialize(void);
 
  typedef enum {
   CODE_TS = 0,
-  CODE_TM,
+  CODE_TM = 1,
+  CODE_ONLOCAL = 2,
+  CODE_ONREMOTE = 3,
+  CODE_OFFLINE = 4,
   CODE_ERR,
  } P_CODES;
 
  typedef struct terminal_type {
-  uint8_t ack[10];
+  uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen;
+  int32_t ceid;
  } terminal_type;
 
  typedef enum {
@@ -28130,6 +28134,7 @@ void PMD_Initialize(void);
   LINK_STATES t_l_state;
   char buf[64], terminal[160];
   uint32_t ticks, systemb;
+  int32_t testing;
   uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
@@ -28293,6 +28298,7 @@ void WaitMs(uint16_t numMilliseconds);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
  P_CODES s10f1_opcmd(void);
+ P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28727,7 +28733,11 @@ void main(void)
    sprintf(V.buf, " Version %s", "0.99B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
-   sprintf(V.buf, " FGB@MCHP FAB4");
+
+   sprintf(V.buf, " H254 %d, T%ld", sizeof(header254), V.testing);
+
+
+
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);
    WaitMs(3000);
