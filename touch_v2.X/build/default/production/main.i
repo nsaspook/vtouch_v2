@@ -28050,6 +28050,17 @@ void PMD_Initialize(void);
  };
 
  typedef enum {
+  CODE_TS = 0,
+  CODE_TM,
+  CODE_ERR,
+ } P_CODES;
+
+ typedef struct terminal_type {
+  uint8_t ack[10];
+  uint8_t TID, mcode, mparm, cmdlen;
+ } terminal_type;
+
+ typedef enum {
   SEQ_STATE_INIT = 0,
   SEQ_STATE_RX,
   SEQ_STATE_TX,
@@ -28125,8 +28136,8 @@ void PMD_Initialize(void);
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1;
-  uint8_t ack[10];
-  uint8_t uart, TID, mcode;
+  terminal_type response;
+  uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
 # 27 "./eadog.h" 2
@@ -28281,6 +28292,7 @@ void WaitMs(uint16_t numMilliseconds);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
+ P_CODES s10f1_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28712,7 +28724,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.98B");
+   sprintf(V.buf, " Version %s", "0.99B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");

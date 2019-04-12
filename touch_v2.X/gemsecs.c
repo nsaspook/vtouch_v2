@@ -292,23 +292,23 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
 					//FIXME make proper loop
 					if (rxData_l == sizeof(block10) + 1) // save possible data format codes
-						V.ack[0] = rxData;
+						V.response.ack[0] = rxData;
 					if (rxData_l == sizeof(block10) + 2)
-						V.ack[1] = rxData;
+						V.response.ack[1] = rxData;
 					if (rxData_l == sizeof(block10) + 3)
-						V.ack[2] = rxData;
+						V.response.ack[2] = rxData;
 					if (rxData_l == sizeof(block10) + 4)
-						V.ack[3] = rxData;
+						V.response.ack[3] = rxData;
 					if (rxData_l == sizeof(block10) + 5)
-						V.ack[4] = rxData;
+						V.response.ack[4] = rxData;
 					if (rxData_l == sizeof(block10) + 6)
-						V.ack[5] = rxData;
+						V.response.ack[5] = rxData;
 					if (rxData_l == sizeof(block10) + 7)
-						V.ack[6] = rxData;
+						V.response.ack[6] = rxData;
 					if (rxData_l == sizeof(block10) + 8)
-						V.ack[7] = rxData;
+						V.response.ack[7] = rxData;
 					if (rxData_l == sizeof(block10) + 9)
-						V.ack[8] = rxData;
+						V.response.ack[8] = rxData;
 
 					if (rxData_l <= r_block.length) // generate checksum from data stream
 						V.r_checksum = run_checksum(rxData, false);
@@ -566,6 +566,22 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
 	return(strlen(V.terminal));
 }
 
+P_CODES s10f1_opcmd(void)
+{
+	V.response.cmdlen = V.response.ack[6]; // length of command string
+	V.response.TID = V.response.ack[4]; // TID of equipment message
+	V.response.mcode = V.response.ack[7]; // first char of equipment message
+	V.response.mparm = V.response.ack[8]; // second char
+
+	if (V.response.cmdlen == 0)
+		return CODE_ERR;
+
+	if (V.response.mcode == 'M' || V.response.mcode == 'm')
+		return CODE_TM;
+
+	return CODE_TS;
+}
+
 /*
  * parse stream and response codes into a message pointer and length to send in response
  */
@@ -700,21 +716,26 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header13);
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
-			block.respond = true;
-			V.TID = V.ack[4]; // TID of equipment message
-			V.mcode = V.ack[7]; // first char of equipment message
-#ifdef MBLOCK
-			block.reply = (uint8_t*) & H53[1]; // S10F5 send Terminal Display, Multi-line, queue
-			block.reply_length = sizeof(header53);
-			H53[1].data[38] = V.TID;
 
-#else
-			block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
-			block.reply_length = sizeof(header53);
-			H53[0].data[38] = V.TID;
-			//			terminal_format(H53[0].data, 34);
-#endif
-			V.queue = true;
+			switch (s10f1_opcmd()) {
+			case CODE_TM:
+				block.respond = true;
+				block.reply = (uint8_t*) & H53[1]; // S10F5 send Terminal Display, Multi-line, queue
+				block.reply_length = sizeof(header53);
+				H53[1].data[38] = V.response.TID;
+				V.queue = true;
+				break;
+			case CODE_TS:
+				block.respond = true;
+				block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
+				block.reply_length = sizeof(header53);
+				H53[0].data[38] = V.response.TID;
+				//			terminal_format(H53[0].data, 34);
+				V.queue = true;
+				break;
+			default:
+				break;
+			}
 			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];

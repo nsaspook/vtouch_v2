@@ -127,6 +127,7 @@ extern "C" {
 	bool secs_send(uint8_t *, uint8_t, bool, uint8_t);
 	void hb_message(void);
 	uint8_t terminal_format(uint8_t *, uint8_t);
+	P_CODES s10f1_opcmd(void);
 	response_type secs_II_message(uint8_t, uint8_t);
 	GEM_STATES secs_gem_state(uint8_t, uint8_t);
 

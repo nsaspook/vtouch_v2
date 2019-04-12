@@ -27338,6 +27338,17 @@ void PIN_MANAGER_Initialize (void);
  };
 
  typedef enum {
+  CODE_TS = 0,
+  CODE_TM,
+  CODE_ERR,
+ } P_CODES;
+
+ typedef struct terminal_type {
+  uint8_t ack[10];
+  uint8_t TID, mcode, mparm, cmdlen;
+ } terminal_type;
+
+ typedef enum {
   SEQ_STATE_INIT = 0,
   SEQ_STATE_RX,
   SEQ_STATE_TX,
@@ -27413,8 +27424,8 @@ void PIN_MANAGER_Initialize (void);
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1;
-  uint8_t ack[10];
-  uint8_t uart, TID, mcode;
+  terminal_type response;
+  uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
 # 54 "mcc_generated_files/dma1.c" 2

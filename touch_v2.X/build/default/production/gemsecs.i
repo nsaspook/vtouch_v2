@@ -27520,6 +27520,17 @@ void PIN_MANAGER_Initialize (void);
  };
 
  typedef enum {
+  CODE_TS = 0,
+  CODE_TM,
+  CODE_ERR,
+ } P_CODES;
+
+ typedef struct terminal_type {
+  uint8_t ack[10];
+  uint8_t TID, mcode, mparm, cmdlen;
+ } terminal_type;
+
+ typedef enum {
   SEQ_STATE_INIT = 0,
   SEQ_STATE_RX,
   SEQ_STATE_TX,
@@ -27595,8 +27606,8 @@ void PIN_MANAGER_Initialize (void);
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1;
-  uint8_t ack[10];
-  uint8_t uart, TID, mcode;
+  terminal_type response;
+  uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
 # 23 "./gemsecs.h" 2
@@ -28244,6 +28255,7 @@ void WaitMs(uint16_t numMilliseconds);
  _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
+ P_CODES s10f1_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
@@ -28525,23 +28537,23 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
 
      if (rxData_l == sizeof(block10) + 1)
-      V.ack[0] = rxData;
+      V.response.ack[0] = rxData;
      if (rxData_l == sizeof(block10) + 2)
-      V.ack[1] = rxData;
+      V.response.ack[1] = rxData;
      if (rxData_l == sizeof(block10) + 3)
-      V.ack[2] = rxData;
+      V.response.ack[2] = rxData;
      if (rxData_l == sizeof(block10) + 4)
-      V.ack[3] = rxData;
+      V.response.ack[3] = rxData;
      if (rxData_l == sizeof(block10) + 5)
-      V.ack[4] = rxData;
+      V.response.ack[4] = rxData;
      if (rxData_l == sizeof(block10) + 6)
-      V.ack[5] = rxData;
+      V.response.ack[5] = rxData;
      if (rxData_l == sizeof(block10) + 7)
-      V.ack[6] = rxData;
+      V.response.ack[6] = rxData;
      if (rxData_l == sizeof(block10) + 8)
-      V.ack[7] = rxData;
+      V.response.ack[7] = rxData;
      if (rxData_l == sizeof(block10) + 9)
-      V.ack[8] = rxData;
+      V.response.ack[8] = rxData;
 
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
@@ -28791,12 +28803,28 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.98B");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.99B");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
  }
  return(strlen(V.terminal));
+}
+
+P_CODES s10f1_opcmd(void)
+{
+ V.response.cmdlen = V.response.ack[6];
+ V.response.TID = V.response.ack[4];
+ V.response.mcode = V.response.ack[7];
+ V.response.mparm = V.response.ack[8];
+
+ if (V.response.cmdlen == 0)
+  return CODE_ERR;
+
+ if (V.response.mcode == 'M' || V.response.mcode == 'm')
+  return CODE_TM;
+
+ return CODE_TS;
 }
 
 
@@ -28933,21 +28961,26 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.length = sizeof(header13);
    H13[1].block.block.systemb = V.systemb;
    H53[0].block.block.systemb = V.systemb;
-   block.respond = 1;
-   V.TID = V.ack[4];
-   V.mcode = V.ack[7];
 
+   switch (s10f1_opcmd()) {
+   case CODE_TM:
+    block.respond = 1;
+    block.reply = (uint8_t*) & H53[1];
+    block.reply_length = sizeof(header53);
+    H53[1].data[38] = V.response.TID;
+    V.queue = 1;
+    break;
+   case CODE_TS:
+    block.respond = 1;
+    block.reply = (uint8_t*) & H53[0];
+    block.reply_length = sizeof(header53);
+    H53[0].data[38] = V.response.TID;
 
-
-
-
-
-   block.reply = (uint8_t*) & H53[0];
-   block.reply_length = sizeof(header53);
-   H53[0].data[38] = V.TID;
-
-
-   V.queue = 1;
+    V.queue = 1;
+    break;
+   default:
+    break;
+   }
    break;
   default:
    block.header = (uint8_t*) & H10[2];

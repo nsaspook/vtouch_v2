@@ -21,11 +21,12 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.98B"
+#define VER	"0.99B"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
 	 * 0.82	PRNG error message testing
+	 * 0.99 equipment terminal command parser
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -59,7 +60,6 @@ extern "C" {
 #define ERROR_COMM	31000
 
 #define DEFAULT_TID	1
-	//#define MBLOCK
 
 	/*
 	 * offsets in bytes
@@ -77,6 +77,17 @@ extern "C" {
 		struct ringBufS_t *tx1b, *tx1a;
 		volatile int32_t int_count;
 	};
+
+	typedef enum {
+		CODE_TS = 0,
+		CODE_TM,
+		CODE_ERR,
+	} P_CODES;
+
+	typedef struct terminal_type {
+		uint8_t ack[10];
+		uint8_t TID, mcode, mparm, cmdlen;
+	} terminal_type;
 
 	typedef enum {
 		SEQ_STATE_INIT = 0,
@@ -154,8 +165,8 @@ extern "C" {
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
 		queue : 1, reset : 1;
-		uint8_t ack[10];
-		uint8_t uart, TID, mcode;
+		terminal_type response;
+		uint8_t uart;
 		volatile uint8_t ticker;
 	} V_data;
 #ifdef	__cplusplus
