@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.97B"
+#define VER	"0.98B"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
@@ -58,8 +58,8 @@ extern "C" {
 #define ERROR_CHECKSUM	30000
 #define ERROR_COMM	31000
 
-#define TID	1
-//#define MBLOCK
+#define DEFAULT_TID	1
+	//#define MBLOCK
 
 	/*
 	 * offsets in bytes
@@ -154,8 +154,8 @@ extern "C" {
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
 		queue : 1, reset : 1;
-		uint8_t ack[3];
-		uint8_t uart;
+		uint8_t ack[10];
+		uint8_t uart, TID, mcode;
 		volatile uint8_t ticker;
 	} V_data;
 #ifdef	__cplusplus

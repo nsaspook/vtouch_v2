@@ -290,12 +290,25 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 					if (rxData_l <= sizeof(block10)) // save header only
 						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
 
+					//FIXME make proper loop
 					if (rxData_l == sizeof(block10) + 1) // save possible data format codes
-						V.ack[2] = rxData;
-					if (rxData_l == sizeof(block10) + 2) // save possible data length codes
-						V.ack[1] = rxData;
-					if (rxData_l == sizeof(block10) + 3) // save possible data value codes
 						V.ack[0] = rxData;
+					if (rxData_l == sizeof(block10) + 2)
+						V.ack[1] = rxData;
+					if (rxData_l == sizeof(block10) + 3)
+						V.ack[2] = rxData;
+					if (rxData_l == sizeof(block10) + 4)
+						V.ack[3] = rxData;
+					if (rxData_l == sizeof(block10) + 5)
+						V.ack[4] = rxData;
+					if (rxData_l == sizeof(block10) + 6)
+						V.ack[5] = rxData;
+					if (rxData_l == sizeof(block10) + 7)
+						V.ack[6] = rxData;
+					if (rxData_l == sizeof(block10) + 8)
+						V.ack[7] = rxData;
+					if (rxData_l == sizeof(block10) + 9)
+						V.ack[8] = rxData;
 
 					if (rxData_l <= r_block.length) // generate checksum from data stream
 						V.r_checksum = run_checksum(rxData, false);
@@ -688,12 +701,17 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
 			block.respond = true;
+			V.TID = V.ack[4]; // TID of equipment message
+			V.mcode = V.ack[7]; // first char of equipment message
 #ifdef MBLOCK
 			block.reply = (uint8_t*) & H53[1]; // S10F5 send Terminal Display, Multi-line, queue
 			block.reply_length = sizeof(header53);
+			H53[1].data[38] = V.TID;
+
 #else
 			block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
 			block.reply_length = sizeof(header53);
+			H53[0].data[38] = V.TID;
 			//			terminal_format(H53[0].data, 34);
 #endif
 			V.queue = true;

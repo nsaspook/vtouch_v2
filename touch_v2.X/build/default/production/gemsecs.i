@@ -27595,8 +27595,8 @@ void PIN_MANAGER_Initialize (void);
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1;
-  uint8_t ack[3];
-  uint8_t uart;
+  uint8_t ack[10];
+  uint8_t uart, TID, mcode;
   volatile uint8_t ticker;
  } V_data;
 # 23 "./gemsecs.h" 2
@@ -28523,12 +28523,25 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
      if (rxData_l <= sizeof(block10))
       H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
 
+
      if (rxData_l == sizeof(block10) + 1)
-      V.ack[2] = rxData;
+      V.ack[0] = rxData;
      if (rxData_l == sizeof(block10) + 2)
       V.ack[1] = rxData;
      if (rxData_l == sizeof(block10) + 3)
-      V.ack[0] = rxData;
+      V.ack[2] = rxData;
+     if (rxData_l == sizeof(block10) + 4)
+      V.ack[3] = rxData;
+     if (rxData_l == sizeof(block10) + 5)
+      V.ack[4] = rxData;
+     if (rxData_l == sizeof(block10) + 6)
+      V.ack[5] = rxData;
+     if (rxData_l == sizeof(block10) + 7)
+      V.ack[6] = rxData;
+     if (rxData_l == sizeof(block10) + 8)
+      V.ack[7] = rxData;
+     if (rxData_l == sizeof(block10) + 9)
+      V.ack[8] = rxData;
 
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
@@ -28778,7 +28791,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.97B");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "0.98B");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -28921,12 +28934,17 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    H13[1].block.block.systemb = V.systemb;
    H53[0].block.block.systemb = V.systemb;
    block.respond = 1;
+   V.TID = V.ack[4];
+   V.mcode = V.ack[7];
+
+
 
 
 
 
    block.reply = (uint8_t*) & H53[0];
    block.reply_length = sizeof(header53);
+   H53[0].data[38] = V.TID;
 
 
    V.queue = 1;

@@ -28125,8 +28125,8 @@ void PMD_Initialize(void);
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1;
-  uint8_t ack[3];
-  uint8_t uart;
+  uint8_t ack[10];
+  uint8_t uart, TID, mcode;
   volatile uint8_t ticker;
  } V_data;
 # 27 "./eadog.h" 2
@@ -28603,7 +28603,7 @@ header53 H53[] = {
   .data[39] = 0x01,
   .data[38] = 1,
   .data[37] = 0x01,
-  .data[36] = 0x01,
+  .data[36] = 0x02,
   .data[35] = 0x41,
   .data[34] = 0x01,
   .data[33] = 7,
@@ -28712,7 +28712,7 @@ void main(void)
    sprintf(V.buf, " RVI HOST TESTER");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.97B");
+   sprintf(V.buf, " Version %s", "0.98B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");

@@ -15,8 +15,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16913 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
 "142 ./vconfig.h
 [; ;./vconfig.h: 142:  typedef struct V_data {
-[s S2231 `E16888 1 `E16897 1 `E16904 1 `E16913 1 `E16913 1 `E16913 1 `uc -> 64 `i `uc -> 160 `i `ul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16897 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 :1 `uc 1 `uc -> 3 `i `uc 1 `Vuc 1 ]
-[n S2231 V_data s_state ui_state g_state m_l_state r_l_state t_l_state buf terminal ticks systemb stream function error abort msg_error ui_sw r_checksum t_checksum checksum_error timer_error ping rbit wbit ebit failed_send failed_receive queue reset ack uart ticker ]
+[s S2231 `E16888 1 `E16897 1 `E16904 1 `E16913 1 `E16913 1 `E16913 1 `uc -> 64 `i `uc -> 160 `i `ul 1 `ul 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16897 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 :1 `uc 1 `uc -> 10 `i `uc 1 `uc 1 `uc 1 `Vuc 1 ]
+[n S2231 V_data s_state ui_state g_state m_l_state r_l_state t_l_state buf terminal ticks systemb stream function error abort msg_error ui_sw r_checksum t_checksum checksum_error timer_error ping rbit wbit ebit failed_send failed_receive queue reset ack uart TID mcode ticker ]
 "62 main.c
 [; ;main.c: 62: V_data V = {
 [c E16922 10 11 12 13 14 15 16 17 18 .. ]
@@ -138,18 +138,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 "126
 [; ;./gemsecs.h: 126:  LINK_STATES t_protocol(LINK_STATES *);
 [v _t_protocol `(E16913 ~T0 @X0 0 ef1`*E16913 ]
-[v F17023 `(a ~T0 @X0 1 tf1`uc ]
+[v F17025 `(a ~T0 @X0 1 tf1`uc ]
 "26 ./timers.h
 [; ;./timers.h: 26: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF17023 ~T0 @X0 0 e ]
+[v _TimerDone `TF17025 ~T0 @X0 0 e ]
 "602 main.c
 [; ;main.c: 602:      if (TimerDone(TMR_HBIO) || V.reset) {
-[c E17009 0 1 2 3 4 5 6 7 .. ]
-[n E17009 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_COUNT  ]
-[v F17019 `(v ~T0 @X0 1 tf2`uc`us ]
+[c E17011 0 1 2 3 4 5 6 7 .. ]
+[n E17011 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_COUNT  ]
+[v F17021 `(v ~T0 @X0 1 tf2`uc`us ]
 "25 ./timers.h
 [; ;./timers.h: 25: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF17019 ~T0 @X0 0 e ]
+[v _StartTimer `TF17021 ~T0 @X0 0 e ]
 "128 ./gemsecs.h
 [; ;./gemsecs.h: 128:  void hb_message(void);
 [v _hb_message `(v ~T0 @X0 0 ef ]
@@ -2698,8 +2698,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> -> 0 `i `uc
 -> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
 ..
 -> -> 1 `i `uc
+-> -> 0 `i `uc
+-> -> 0 `i `uc
 -> -> 45 `i `uc
 ..
 ..
@@ -3239,7 +3248,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 7 `i `uc
 -> -> 1 `i `uc
 -> -> 65 `i `uc
--> -> 1 `i `uc
+-> -> 2 `i `uc
 -> -> 1 `i `uc
 -> -> 1 `i `uc
 -> -> 1 `i `uc
@@ -3686,7 +3695,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 502:    eaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 6 ]
 "503
-[; ;main.c: 503:    sprintf(V.buf, " Version %s", "0.97B");
+[; ;main.c: 503:    sprintf(V.buf, " Version %s", "0.98B");
 [e ( _sprintf (1 , (. , &U . _V 6 :s 2C :s 3C ]
 "504
 [; ;main.c: 504:    wait_lcd_done();
@@ -3972,11 +3981,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "602
 [; ;main.c: 602:      if (TimerDone(TMR_HBIO) || V.reset) {
-[e $ ! || != -> ( _TimerDone (1 -> . `E17009 6 `uc `i -> 0 `i != -> . _V 27 `i -> 0 `i 2291  ]
+[e $ ! || != -> ( _TimerDone (1 -> . `E17011 6 `uc `i -> 0 `i != -> . _V 27 `i -> 0 `i 2291  ]
 {
 "603
 [; ;main.c: 603:       StartTimer(TMR_HBIO, 30000);
-[e ( _StartTimer (2 , -> . `E17009 6 `uc -> -> 30000 `i `us ]
+[e ( _StartTimer (2 , -> . `E17011 6 `uc -> -> 30000 `i `us ]
 "605
 [; ;main.c: 605:       hb_message();
 [e ( _hb_message ..  ]
@@ -4315,7 +4324,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p f _sprintf 8650896 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 0 ]
 [a 1C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 3C 48 46 57 55 66 0 ]
+[a 3C 48 46 57 56 66 0 ]
 [a 4C 32 70 71 66 64 77 67 72 80 32 70 65 66 52 0 ]
 [a 8C 32 79 75 81 35 0 ]
 [a 12C 32 80 105 110 103 32 71 37 100 32 32 80 37 100 32 35 0 ]

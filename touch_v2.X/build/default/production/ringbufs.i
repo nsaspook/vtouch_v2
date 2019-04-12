@@ -27438,8 +27438,8 @@ void PIN_MANAGER_Initialize (void);
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1;
-  uint8_t ack[3];
-  uint8_t uart;
+  uint8_t ack[10];
+  uint8_t uart, TID, mcode;
   volatile uint8_t ticker;
  } V_data;
 # 16 "./ringbufs.h" 2
