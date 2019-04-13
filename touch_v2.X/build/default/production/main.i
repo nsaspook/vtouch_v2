@@ -28062,6 +28062,7 @@ void PMD_Initialize(void);
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen;
+  uint8_t info : 1;
   int32_t ceid;
  } terminal_type;
 
@@ -28133,7 +28134,7 @@ void PMD_Initialize(void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[64], terminal[160];
+  char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error;
@@ -28318,6 +28319,7 @@ V_data V = {
  .timer_error = 0,
  .reset = 1,
  .debug = 0,
+ .response.info = 0,
 };
 
 header10 H10[] = {
@@ -28547,7 +28549,7 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-# 320 "main.c"
+# 321 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28684,6 +28686,26 @@ header10 r_block;
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 
+static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
+{
+ wait_lcd_done();
+ if (!V.response.info) {
+  eaDogM_WriteStringAtPos(r, c, strPtr);
+ } else {
+  sprintf(V.buf, " TID %d             ", V.response.TID);
+  V.buf[16] = 0;
+  eaDogM_WriteStringAtPos(0, 0, V.buf);
+  sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+  V.buf[16] = 0;
+  wait_lcd_done();
+  eaDogM_WriteStringAtPos(1, 0, V.buf);
+  sprintf(V.buf, "%s", V.info);
+  V.buf[16] = 0;
+  wait_lcd_done();
+  eaDogM_WriteStringAtPos(2, 0, V.buf);
+ }
+}
+
 
 
 
@@ -28730,14 +28752,11 @@ void main(void)
    V.s_state = SEQ_STATE_INIT;
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   MyeaDogM_WriteStringAtPos(0, 0, V.buf);
    sprintf(V.buf, " Version %s", "0.99B");
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(2, 0, V.buf);
+   MyeaDogM_WriteStringAtPos(2, 0, V.buf);
    WaitMs(3000);
    break;
   case UI_STATE_HOST:
@@ -28752,8 +28771,7 @@ void main(void)
      else
       sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
      V.buf[16] = 0;
-     wait_lcd_done();
-     eaDogM_WriteStringAtPos(2, 0, V.buf);
+     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
 
@@ -28773,8 +28791,7 @@ void main(void)
       sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
      }
      V.buf[11] = 0;
-     wait_lcd_done();
-     eaDogM_WriteStringAtPos(0, 0, V.buf);
+     MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 
 
 
@@ -28809,8 +28826,7 @@ void main(void)
      V.s_state = SEQ_STATE_DONE;
      sprintf(V.buf, " OK #");
     }
-    wait_lcd_done();
-    eaDogM_WriteStringAtPos(0, 11, V.buf);
+    MyeaDogM_WriteStringAtPos(0, 11, V.buf);
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
@@ -28820,8 +28836,7 @@ void main(void)
     V.s_state = SEQ_STATE_INIT;
     sprintf(V.buf, "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
     V.buf[16] = 0;
-    wait_lcd_done();
-    eaDogM_WriteStringAtPos(2, 0, V.buf);
+    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
     WaitMs(2000);
     break;
    }
@@ -28831,8 +28846,7 @@ void main(void)
     else
      sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
     V.buf[16] = 0;
-    wait_lcd_done();
-    eaDogM_WriteStringAtPos(2, 0, V.buf);
+    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 
 
 
@@ -28844,8 +28858,7 @@ void main(void)
       if (!V.reset) {
        sprintf(V.buf, " Ping G%d  P%d #", V.g_state, V.ping);
        V.buf[16] = 0;
-       wait_lcd_done();
-       eaDogM_WriteStringAtPos(0, 0, V.buf);
+       MyeaDogM_WriteStringAtPos(0, 0, V.buf);
        WaitMs(1000);
       }
       V.msg_error = MSG_ERROR_NONE;
@@ -28864,8 +28877,7 @@ void main(void)
     else
      sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
     V.buf[16] = 0;
-    wait_lcd_done();
-    eaDogM_WriteStringAtPos(2, 0, V.buf);
+    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 
 
 
@@ -28881,8 +28893,7 @@ void main(void)
     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
      sprintf(V.buf, " S%dF%d #%ld     ", V.stream, V.function, V.ticks);
      V.buf[13] = 0;
-     wait_lcd_done();
-     eaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
+     MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
      V.s_state = SEQ_STATE_TRIGGER;
     }
     if (V.m_l_state == LINK_STATE_ERROR)
@@ -28891,8 +28902,7 @@ void main(void)
    case SEQ_STATE_TRIGGER:
     V.s_state = SEQ_STATE_DONE;
     sprintf(V.buf, "OK ");
-    wait_lcd_done();
-    eaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
+    MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
@@ -28907,8 +28917,7 @@ void main(void)
    else
     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
    V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(2, 0, V.buf);
+   MyeaDogM_WriteStringAtPos(2, 0, V.buf);
    break;
   case UI_STATE_ERROR:
   default:
@@ -28934,9 +28943,8 @@ void main(void)
   }
   sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
   V.buf[16] = 0;
-  wait_lcd_done();
   if (mode != UI_STATE_LOG)
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   MyeaDogM_WriteStringAtPos(1, 0, V.buf);
   do { LATEbits.LATE2 = 0; } while(0);
 
  }

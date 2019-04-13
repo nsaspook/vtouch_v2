@@ -573,6 +573,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  */
 P_CODES s10f1_opcmd(void)
 {
+	sprintf(V.info, " Terminal          ");
 	V.response.cmdlen = V.response.ack[6]; // length of command string
 	V.response.TID = V.response.ack[4]; // TID of equipment message
 	V.response.mcode = V.response.ack[7]; // first char of equipment message

@@ -27532,6 +27532,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen;
+  uint8_t info : 1;
   int32_t ceid;
  } terminal_type;
 
@@ -27603,7 +27604,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[64], terminal[160];
+  char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error;
@@ -28825,6 +28826,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
 
 P_CODES s10f1_opcmd(void)
 {
+ sprintf(V.info, " Terminal          ");
  V.response.cmdlen = V.response.ack[6];
  V.response.TID = V.response.ack[4];
  V.response.mcode = V.response.ack[7];
