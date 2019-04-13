@@ -16,6 +16,7 @@ enum APP_TIMERS {
 	TMR_T4,
 	TMR_MC_TX,
 	TMR_HBIO,
+	TMR_INFO,
 	//
 	//(Add timers here as needed)
 	//

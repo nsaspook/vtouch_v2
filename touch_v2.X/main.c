@@ -471,6 +471,8 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 		V.buf[16] = 0;
 		wait_lcd_done();
 		eaDogM_WriteStringAtPos(2, 0, V.buf);
+		if (TimerDone(TMR_INFO))
+			V.response.info = false;
 	}
 }
 

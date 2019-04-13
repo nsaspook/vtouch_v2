@@ -738,6 +738,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header13);
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
+			StartTimer(TMR_INFO, T2);
+			V.response.info = true;
 
 			switch (s10f1_opcmd()) {
 			case CODE_TM:

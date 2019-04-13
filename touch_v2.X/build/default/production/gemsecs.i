@@ -28148,6 +28148,7 @@ enum APP_TIMERS {
  TMR_T4,
  TMR_MC_TX,
  TMR_HBIO,
+ TMR_INFO,
 
 
 
@@ -28991,6 +28992,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.length = sizeof(header13);
    H13[1].block.block.systemb = V.systemb;
    H53[0].block.block.systemb = V.systemb;
+   StartTimer(TMR_INFO, 2000);
+   V.response.info = 1;
 
    switch (s10f1_opcmd()) {
    case CODE_TM:
