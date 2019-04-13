@@ -27351,7 +27351,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 70 "./vconfig.h"
+# 71 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27369,6 +27369,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   CODE_ONLOCAL = 2,
   CODE_ONREMOTE = 3,
   CODE_OFFLINE = 4,
+  CODE_DEBUG,
   CODE_ERR,
  } P_CODES;
 
@@ -27454,7 +27455,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1;
+  queue : 1, reset : 1, debug : 1;
   terminal_type response;
   uint8_t uart;
   volatile uint8_t ticker;

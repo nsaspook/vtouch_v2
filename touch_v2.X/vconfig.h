@@ -28,8 +28,9 @@ extern "C" {
 	 * 0.82	PRNG error message testing
 	 * 0.99 equipment terminal command parser
 	 */
-#define TESTING
+	//#define TESTING
 	//#define DISPLAY_SLOW
+
 	//#define DB1
 	//#define DB2
 	//#define DB3
@@ -84,6 +85,7 @@ extern "C" {
 		CODE_ONLOCAL = 2, // CEID codes
 		CODE_ONREMOTE = 3,
 		CODE_OFFLINE = 4,
+		CODE_DEBUG,
 		CODE_ERR,
 	} P_CODES;
 
@@ -169,7 +171,7 @@ extern "C" {
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1, reset : 1;
+		queue : 1, reset : 1, debug : 1;
 		terminal_type response;
 		uint8_t uart;
 		volatile uint8_t ticker;

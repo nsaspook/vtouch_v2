@@ -584,6 +584,9 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.mcode == 'M' || V.response.mcode == 'm')
 		return CODE_TM;
 
+	if (V.response.mcode == 'D' || V.response.mcode == 'd')
+		return CODE_DEBUG;
+
 	return CODE_TS;
 }
 
@@ -751,6 +754,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				//			terminal_format(H53[0].data, 34);
 				V.queue = true;
 				break;
+			case CODE_DEBUG:
+				V.debug = !V.debug;
 			default:
 				break;
 			}

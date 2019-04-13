@@ -68,6 +68,7 @@ V_data V = {
 	.checksum_error = 0,
 	.timer_error = 0,
 	.reset = true,
+	.debug = false,
 };
 
 header10 H10[] = {
@@ -503,11 +504,7 @@ void main(void)
 			sprintf(V.buf, " Version %s", VER);
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
-#ifdef TESTING
-			sprintf(V.buf, " H254 %d, T%ld", sizeof(header254), V.testing);
-#else
 			sprintf(V.buf, " FGB@MCHP FAB4");
-#endif
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);
 			WaitMs(3000);
@@ -519,7 +516,10 @@ void main(void)
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-					sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+					if (V.debug)
+						sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+					else
+						sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 					V.buf[16] = 0; // string size limit
 					wait_lcd_done();
 					eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -595,7 +595,10 @@ void main(void)
 				break;
 			}
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-				sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+				if (V.debug)
+					sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+				else
+					sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -625,7 +628,10 @@ void main(void)
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+				if (V.debug)
+					sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+				else
+					sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 				V.buf[16] = 0; // string size limit
 				wait_lcd_done();
 				eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -665,7 +671,10 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			}
-			sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+			if (V.debug)
+				sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+			else
+				sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			V.buf[16] = 0; // string size limit
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(2, 0, V.buf);

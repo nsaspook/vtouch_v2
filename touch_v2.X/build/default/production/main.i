@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 70 "./vconfig.h"
+# 71 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28055,6 +28055,7 @@ void PMD_Initialize(void);
   CODE_ONLOCAL = 2,
   CODE_ONREMOTE = 3,
   CODE_OFFLINE = 4,
+  CODE_DEBUG,
   CODE_ERR,
  } P_CODES;
 
@@ -28140,7 +28141,7 @@ void PMD_Initialize(void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1;
+  queue : 1, reset : 1, debug : 1;
   terminal_type response;
   uint8_t uart;
   volatile uint8_t ticker;
@@ -28316,6 +28317,7 @@ V_data V = {
  .checksum_error = 0,
  .timer_error = 0,
  .reset = 1,
+ .debug = 0,
 };
 
 header10 H10[] = {
@@ -28545,7 +28547,7 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-# 319 "main.c"
+# 320 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28733,11 +28735,7 @@ void main(void)
    sprintf(V.buf, " Version %s", "0.99B");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
-
-   sprintf(V.buf, " H254 %d, T%ld", sizeof(header254), V.testing);
-
-
-
+   sprintf(V.buf, " FGB@MCHP FAB4");
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);
    WaitMs(3000);
@@ -28749,7 +28747,10 @@ void main(void)
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-     sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+     if (V.debug)
+      sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+     else
+      sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
      V.buf[16] = 0;
      wait_lcd_done();
      eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28825,7 +28826,10 @@ void main(void)
     break;
    }
    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-    sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+    if (V.debug)
+     sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+    else
+     sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28855,7 +28859,10 @@ void main(void)
    case SEQ_STATE_INIT:
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
-    sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+    if (V.debug)
+     sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+    else
+     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
     V.buf[16] = 0;
     wait_lcd_done();
     eaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28895,7 +28902,10 @@ void main(void)
     V.s_state = SEQ_STATE_INIT;
     break;
    }
-   sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+   if (V.debug)
+    sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+   else
+    sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(2, 0, V.buf);

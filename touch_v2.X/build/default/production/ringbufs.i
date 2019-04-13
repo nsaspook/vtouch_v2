@@ -27350,7 +27350,7 @@ void PIN_MANAGER_Initialize (void);
 # 22 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 23 "./vconfig.h" 2
-# 70 "./vconfig.h"
+# 71 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27368,6 +27368,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_ONLOCAL = 2,
   CODE_ONREMOTE = 3,
   CODE_OFFLINE = 4,
+  CODE_DEBUG,
   CODE_ERR,
  } P_CODES;
 
@@ -27453,7 +27454,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1;
+  queue : 1, reset : 1, debug : 1;
   terminal_type response;
   uint8_t uart;
   volatile uint8_t ticker;
