@@ -246,6 +246,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
+				DEBUG2_Toggle();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
 			}
@@ -582,6 +583,9 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.cmdlen == 0)
 		return CODE_ERR;
 
+	if (V.response.mcode == 'S' || V.response.mcode == 's')
+		return CODE_TS;
+
 	if (V.response.mcode == 'M' || V.response.mcode == 'm')
 		return CODE_TM;
 
@@ -738,7 +742,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header13);
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
-			StartTimer(TMR_INFO, T2);
+			StartTimer(TMR_INFO, TDELAY);
 			V.response.info = true;
 
 			switch (s10f1_opcmd()) {

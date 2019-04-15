@@ -21,12 +21,13 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.99B"
+#define VER	"1.00G"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
 	 * 0.82	PRNG error message testing
 	 * 0.99 equipment terminal command parser
+	 * 1.00G first production release
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -61,6 +62,7 @@ extern "C" {
 #define ERROR_COMM	31000
 
 #define DEFAULT_TID	1
+#define TDELAY	3000
 
 	/*
 	 * offsets in bytes

@@ -460,7 +460,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	if (!V.response.info) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);
 	} else {
-		sprintf(V.buf, " TID %d             ", V.response.TID);
+		sprintf(V.buf, " Terminal %d             ", V.response.TID);
 		V.buf[16] = 0;
 		eaDogM_WriteStringAtPos(0, 0, V.buf);
 		sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
@@ -694,7 +694,7 @@ void main(void)
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
-		DEBUG2_SetHigh();
+//		DEBUG2_SetHigh();
 		if (V.ticks) {
 			if (V.failed_receive) {
 				BILED1_1_SetLow(); // red
@@ -715,7 +715,7 @@ void main(void)
 		V.buf[16] = 0; // string size limit
 		if (mode != UI_STATE_LOG)
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-		DEBUG2_SetLow();
+//		DEBUG2_SetLow();
 
 	}
 }

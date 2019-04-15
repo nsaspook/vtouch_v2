@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 71 "./vconfig.h"
+# 73 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28693,7 +28693,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
  if (!V.response.info) {
   eaDogM_WriteStringAtPos(r, c, strPtr);
  } else {
-  sprintf(V.buf, " TID %d             ", V.response.TID);
+  sprintf(V.buf, " Terminal %d             ", V.response.TID);
   V.buf[16] = 0;
   eaDogM_WriteStringAtPos(0, 0, V.buf);
   sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
@@ -28756,7 +28756,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "0.99B");
+   sprintf(V.buf, " Version %s", "1.00G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28927,7 +28927,7 @@ void main(void)
    V.ui_state = UI_STATE_INIT;
    break;
   }
-  do { LATEbits.LATE2 = 1; } while(0);
+
   if (V.ticks) {
    if (V.failed_receive) {
     do { LATDbits.LATD4 = 0; } while(0);
@@ -28948,7 +28948,7 @@ void main(void)
   V.buf[16] = 0;
   if (mode != UI_STATE_LOG)
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-  do { LATEbits.LATE2 = 0; } while(0);
+
 
  }
 }
