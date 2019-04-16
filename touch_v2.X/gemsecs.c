@@ -97,7 +97,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			*m_link = LINK_STATE_EOT;
 			StartTimer(TMR_T2, T2);
 #else
-			if (UART2_is_rx_ready() || UART2_is_rx_ready()) {
+			if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
 				if (UART1_is_rx_ready()) {
 					rxData = UART1_Read();
 					if (rxData == EOT) {
@@ -672,6 +672,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header24);
 			H24[0].block.block.systemb = V.systemb;
 			H24[0].data[12] = 12;
+			break;
+		case 25: // S2F26
+			block.header = (uint8_t*) & H13[3];
+			block.length = sizeof(header13);
+			H13[3].block.block.systemb = V.systemb;
 			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];

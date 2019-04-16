@@ -28489,6 +28489,22 @@ header13 H13[] = {
   .data[1] = 0x01,
   .data[0] = 0x00,
  },
+ {
+  .length = 13,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 0,
+  .block.block.stream = 2,
+  .block.block.function = 26,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[2] = 0x21,
+  .data[1] = 0x01,
+  .data[0] = 0xff,
+ },
 };
 
 header14 H14[] = {
@@ -28550,7 +28566,7 @@ header24 H24[] = {
   .data = "A 010911084600",
  },
 };
-# 321 "main.c"
+# 337 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28756,7 +28772,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.00G");
+   sprintf(V.buf, " Version %s", "1.01G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);

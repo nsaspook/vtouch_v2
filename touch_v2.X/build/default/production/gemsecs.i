@@ -28351,7 +28351,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    *m_link = LINK_STATE_NAK;
   } else {
 # 100 "gemsecs.c"
-   if (UART2_is_rx_ready() || UART2_is_rx_ready()) {
+   if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
     if (UART1_is_rx_ready()) {
      rxData = UART1_Read();
      if (rxData == 0x04) {
@@ -28815,7 +28815,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.00G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.01G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -28926,6 +28926,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.length = sizeof(header24);
    H24[0].block.block.systemb = V.systemb;
    H24[0].data[12] = 12;
+   break;
+  case 25:
+   block.header = (uint8_t*) & H13[3];
+   block.length = sizeof(header13);
+   H13[3].block.block.systemb = V.systemb;
    break;
   default:
    block.header = (uint8_t*) & H10[2];

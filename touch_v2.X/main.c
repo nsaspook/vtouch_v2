@@ -238,6 +238,22 @@ header13 H13[] = {
 		.data[1] = 0x01,
 		.data[0] = 0x00,
 	},
+	{ // S2F26 send 'loopback' reply from host
+		.length = 13,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 0,
+		.block.block.stream = 2,
+		.block.block.function = 26,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[2] = 0x21,
+		.data[1] = 0x01,
+		.data[0] = 0xff, // binary data
+	},
 };
 
 header14 H14[] = {
@@ -694,7 +710,7 @@ void main(void)
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
-//		DEBUG2_SetHigh();
+		//		DEBUG2_SetHigh();
 		if (V.ticks) {
 			if (V.failed_receive) {
 				BILED1_1_SetLow(); // red
@@ -715,7 +731,7 @@ void main(void)
 		V.buf[16] = 0; // string size limit
 		if (mode != UI_STATE_LOG)
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-//		DEBUG2_SetLow();
+		//		DEBUG2_SetLow();
 
 	}
 }
