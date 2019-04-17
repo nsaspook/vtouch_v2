@@ -299,8 +299,9 @@ header17 H17[] = {
 	},
 };
 
+#ifndef Y2KTIME
 header24 H24[] = {
-	{ // S2F18 send 'host time ' from host to equipment
+	{ // S2F18 send 'host time ' from host to equipment non-y2k
 		.length = 24,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -312,9 +313,31 @@ header24 H24[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
-		.data = "A 010911084600",
+		.data = "010911084600",
+		.datam[1] = 0x41,
+		.datam[0] = 12,
 	},
 };
+#else
+header26 H26[] = {
+	{ // S2F18 send 'host time ' from host to equipment y2k
+		.length = 26,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 0,
+		.block.block.stream = 2,
+		.block.block.function = 18,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data = "01091108460000",
+		.datam[1] = 0x41,
+		.datam[0] = 14,
+	},
+};
+#endif
 
 #ifdef DB2
 header27 H27[] = {

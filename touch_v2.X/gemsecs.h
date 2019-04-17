@@ -85,10 +85,19 @@ extern "C" {
 
 	typedef struct header24 {
 		uint16_t checksum;
-		uint8_t data[14];
+		uint8_t data[12];
+		uint8_t datam[2];
 		block10 block;
 		uint8_t length;
 	} header24;
+
+	typedef struct header26 {
+		uint16_t checksum;
+		uint8_t data[14];
+		uint8_t datam[2];
+		block10 block;
+		uint8_t length;
+	} header26;
 
 	typedef struct header27 {
 		uint16_t checksum;

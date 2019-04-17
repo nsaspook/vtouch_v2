@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 73 "./vconfig.h"
+# 75 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28258,10 +28258,19 @@ void WaitMs(uint16_t numMilliseconds);
 
  typedef struct header24 {
   uint16_t checksum;
-  uint8_t data[14];
+  uint8_t data[12];
+  uint8_t datam[2];
   block10 block;
   uint8_t length;
  } header24;
+
+ typedef struct header26 {
+  uint16_t checksum;
+  uint8_t data[14];
+  uint8_t datam[2];
+  block10 block;
+  uint8_t length;
+ } header26;
 
  typedef struct header27 {
   uint16_t checksum;
@@ -28549,10 +28558,10 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-
-header24 H24[] = {
+# 322 "main.c"
+header26 H26[] = {
  {
-  .length = 24,
+  .length = 26,
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
@@ -28563,10 +28572,12 @@ header24 H24[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data = "A 010911084600",
+  .data = "01091108460000",
+  .datam[1] = 0x41,
+  .datam[0] = 14,
  },
 };
-# 337 "main.c"
+# 360 "main.c"
 header53 H53[] = {
  {
   .length = 53,

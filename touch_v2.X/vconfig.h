@@ -63,6 +63,8 @@ extern "C" {
 
 #define DEFAULT_TID	1
 #define TDELAY	3000
+	
+#define Y2KTIME
 
 	/*
 	 * offsets in bytes

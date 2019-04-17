@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27510,7 +27507,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 73 "./vconfig.h"
+# 75 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28224,10 +28221,19 @@ void WaitMs(uint16_t numMilliseconds);
 
  typedef struct header24 {
   uint16_t checksum;
-  uint8_t data[14];
+  uint8_t data[12];
+  uint8_t datam[2];
   block10 block;
   uint8_t length;
  } header24;
+
+ typedef struct header26 {
+  uint16_t checksum;
+  uint8_t data[14];
+  uint8_t datam[2];
+  block10 block;
+  uint8_t length;
+ } header26;
 
  typedef struct header27 {
   uint16_t checksum;
@@ -28281,6 +28287,7 @@ extern struct header14 H14[];
 extern struct header17 H17[];
 extern struct header18 H18[];
 extern struct header24 H24[];
+extern struct header26 H26[];
 extern struct header27 H27[];
 extern struct header53 H53[];
 extern header254 H254[];
@@ -28353,7 +28360,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 100 "gemsecs.c"
+# 101 "gemsecs.c"
    if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
     if (UART1_is_rx_ready()) {
      rxData = UART1_Read();
@@ -28925,10 +28932,15 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  case 2:
   switch (function) {
   case 17:
-   block.header = (uint8_t*) & H24[0];
-   block.length = sizeof(header24);
-   H24[0].block.block.systemb = V.systemb;
-   H24[0].data[12] = 12;
+
+   block.header = (uint8_t*) & H26[0];
+   block.length = sizeof(header26);
+   H26[0].block.block.systemb = V.systemb;
+
+
+
+
+
    break;
   case 25:
    block.header = (uint8_t*) & H13[3];

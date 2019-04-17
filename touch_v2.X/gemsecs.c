@@ -9,6 +9,7 @@ extern struct header14 H14[];
 extern struct header17 H17[];
 extern struct header18 H18[];
 extern struct header24 H24[];
+extern struct header26 H26[];
 extern struct header27 H27[];
 extern struct header53 H53[];
 extern header254 H254[];
@@ -668,10 +669,15 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	case 2:
 		switch (function) {
 		case 17: // S2F18
+#ifdef Y2KTIME
+			block.header = (uint8_t*) & H26[0];
+			block.length = sizeof(header26);
+			H26[0].block.block.systemb = V.systemb;
+#else
 			block.header = (uint8_t*) & H24[0];
 			block.length = sizeof(header24);
 			H24[0].block.block.systemb = V.systemb;
-			H24[0].data[12] = 12;
+#endif
 			break;
 		case 25: // S2F26
 			block.header = (uint8_t*) & H13[3];
