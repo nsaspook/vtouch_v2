@@ -11952,7 +11952,6 @@ drill 1.0 mm</description>
 <part name="VSS1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VDD2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="VSS2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
-<part name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R1206" package3d_urn="urn:adsk.eagle:package:23540/2" value="0"/>
 <part name="VDD3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="VDD4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="VSS3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
@@ -12080,18 +12079,14 @@ drill 1.0 mm</description>
 <instance part="VDD1" gate="G$1" x="45.72" y="0" smashed="yes" rot="R90">
 <attribute name="VALUE" x="48.26" y="-2.54" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="VSS1" gate="G$1" x="58.42" y="-20.32" smashed="yes">
-<attribute name="VALUE" x="55.88" y="-25.4" size="1.778" layer="96" rot="R90"/>
+<instance part="VSS1" gate="G$1" x="58.42" y="-10.16" smashed="yes">
+<attribute name="VALUE" x="55.88" y="-15.24" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="VDD2" gate="G$1" x="58.42" y="-22.86" smashed="yes" rot="R90">
 <attribute name="VALUE" x="60.96" y="-25.4" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="VSS2" gate="G$1" x="55.88" y="-30.48" smashed="yes" rot="R270">
 <attribute name="VALUE" x="50.8" y="-27.94" size="1.778" layer="96"/>
-</instance>
-<instance part="R3" gate="G$1" x="58.42" y="-12.7" smashed="yes" rot="R90">
-<attribute name="NAME" x="56.9214" y="-16.51" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="61.722" y="-16.51" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="VDD3" gate="G$1" x="17.78" y="55.88" smashed="yes" rot="R180">
 <attribute name="VALUE" x="20.32" y="58.42" size="1.778" layer="96" rot="R270"/>
@@ -12686,11 +12681,6 @@ drill 1.0 mm</description>
 <junction x="58.42" y="-50.8"/>
 </segment>
 <segment>
-<pinref part="VSS1" gate="G$1" pin="VSS"/>
-<junction x="58.42" y="-17.78"/>
-<pinref part="R3" gate="G$1" pin="1"/>
-</segment>
-<segment>
 <pinref part="IC1" gate="G$1" pin="VSS_2"/>
 <wire x1="76.2" y1="60.96" x2="86.36" y2="60.96" width="0.1524" layer="91"/>
 <pinref part="VSS3" gate="G$1" pin="VSS"/>
@@ -12848,6 +12838,11 @@ drill 1.0 mm</description>
 <junction x="-116.84" y="55.88"/>
 <junction x="-111.76" y="55.88"/>
 </segment>
+<segment>
+<pinref part="C1" gate="G$1" pin="2"/>
+<pinref part="VSS1" gate="G$1" pin="VSS"/>
+<junction x="58.42" y="-7.62"/>
+</segment>
 </net>
 <net name="N$6" class="0">
 <segment>
@@ -12884,13 +12879,6 @@ drill 1.0 mm</description>
 <wire x1="17.78" y1="-25.4" x2="40.64" y2="-25.4" width="0.1524" layer="91"/>
 <junction x="17.78" y="-30.48"/>
 <junction x="40.64" y="-25.4"/>
-</segment>
-</net>
-<net name="N$3" class="0">
-<segment>
-<pinref part="C1" gate="G$1" pin="2"/>
-<pinref part="R3" gate="G$1" pin="2"/>
-<junction x="58.42" y="-7.62"/>
 </segment>
 </net>
 <net name="N$4" class="0">

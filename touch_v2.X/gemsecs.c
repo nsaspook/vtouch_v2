@@ -98,22 +98,20 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			*m_link = LINK_STATE_EOT;
 			StartTimer(TMR_T2, T2);
 #else
-			if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
-				if (UART1_is_rx_ready()) {
-					rxData = UART1_Read();
-					if (rxData == EOT) {
-						StartTimer(TMR_T2, T2);
-						V.error = LINK_ERROR_NONE; // reset error status
-						*m_link = LINK_STATE_EOT;
-					}
+			if (V.uart == 2 && UART1_is_rx_ready()) {
+				rxData = UART1_Read();
+				if (rxData == EOT) {
+					StartTimer(TMR_T2, T2);
+					V.error = LINK_ERROR_NONE; // reset error status
+					*m_link = LINK_STATE_EOT;
 				}
-				if (UART2_is_rx_ready()) {
-					rxData = UART2_Read();
-					if (rxData == EOT) {
-						StartTimer(TMR_T2, T2);
-						V.error = LINK_ERROR_NONE; // reset error status
-						*m_link = LINK_STATE_EOT;
-					}
+			}
+			if (V.uart == 1 && UART2_is_rx_ready()) {
+				rxData = UART2_Read();
+				if (rxData == EOT) {
+					StartTimer(TMR_T2, T2);
+					V.error = LINK_ERROR_NONE; // reset error status
+					*m_link = LINK_STATE_EOT;
 				}
 			}
 #endif
@@ -126,7 +124,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			V.failed_receive = 2;
 			*m_link = LINK_STATE_NAK;
 		} else {
-			if (UART1_is_rx_ready()) {
+			if (V.uart == 1 && UART1_is_rx_ready()) {
 				rxData = UART1_Read();
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes
@@ -163,7 +161,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 				}
 			}
 
-			if (UART2_is_rx_ready()) {
+			if (V.uart == 2 && UART2_is_rx_ready()) {
 				rxData = UART2_Read();
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes

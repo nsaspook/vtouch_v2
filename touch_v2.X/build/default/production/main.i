@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28783,7 +28783,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.01G");
+   sprintf(V.buf, " Version %s", "1.03G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
