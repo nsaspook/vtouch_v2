@@ -733,11 +733,14 @@ void main(void)
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
-		//		DEBUG2_SetHigh();
 		if (V.ticks) {
 			if (V.failed_receive) {
 				BILED1_1_SetLow(); // red
 				BILED1_2_SetHigh();
+				if (V.error == LINK_ERROR_CHECKSUM) {
+					BILED3_1_SetLow(); // red
+					BILED3_2_SetHigh();
+				}
 			} else {
 				BILED1_1_SetHigh(); //green
 				BILED1_2_SetLow();
@@ -745,6 +748,10 @@ void main(void)
 			if (V.failed_send) {
 				BILED2_1_SetLow(); // red
 				BILED2_2_SetHigh();
+				if (V.error == LINK_ERROR_CHECKSUM) {
+					BILED4_1_SetLow(); // red
+					BILED4_2_SetHigh();
+				}
 			} else {
 				BILED2_1_SetHigh(); //green
 				BILED2_2_SetLow();
@@ -754,8 +761,6 @@ void main(void)
 		V.buf[16] = 0; // string size limit
 		if (mode != UI_STATE_LOG)
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-		//		DEBUG2_SetLow();
-
 	}
 }
 /**

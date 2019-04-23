@@ -28783,7 +28783,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.03G");
+   sprintf(V.buf, " Version %s", "1.04G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28954,11 +28954,14 @@ void main(void)
    V.ui_state = UI_STATE_INIT;
    break;
   }
-
   if (V.ticks) {
    if (V.failed_receive) {
     do { LATDbits.LATD4 = 0; } while(0);
     do { LATDbits.LATD5 = 1; } while(0);
+    if (V.error == LINK_ERROR_CHECKSUM) {
+     do { LATFbits.LATF4 = 0; } while(0);
+     do { LATFbits.LATF5 = 1; } while(0);
+    }
    } else {
     do { LATDbits.LATD4 = 1; } while(0);
     do { LATDbits.LATD5 = 0; } while(0);
@@ -28966,6 +28969,10 @@ void main(void)
    if (V.failed_send) {
     do { LATDbits.LATD6 = 0; } while(0);
     do { LATDbits.LATD7 = 1; } while(0);
+    if (V.error == LINK_ERROR_CHECKSUM) {
+     do { LATFbits.LATF6 = 0; } while(0);
+     do { LATFbits.LATF7 = 1; } while(0);
+    }
    } else {
     do { LATDbits.LATD6 = 1; } while(0);
     do { LATDbits.LATD7 = 0; } while(0);
@@ -28975,7 +28982,5 @@ void main(void)
   V.buf[16] = 0;
   if (mode != UI_STATE_LOG)
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-
-
  }
 }

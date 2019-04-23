@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.03G"
+#define VER	"1.04G"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
@@ -63,7 +63,7 @@ extern "C" {
 
 #define DEFAULT_TID	1
 #define TDELAY	3000
-	
+
 #define Y2KTIME
 
 	/*
