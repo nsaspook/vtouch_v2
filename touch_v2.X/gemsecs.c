@@ -225,10 +225,11 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 	case LINK_STATE_ERROR:
 		break;
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
+		++V.ticks; // message sequence
 		V.failed_receive = false;
+		secs_II_monitor_message(V.stream, V.function); // parse proper response
 	default:
 		*m_link = LINK_STATE_IDLE;
-
 		break;
 	}
 
@@ -585,6 +586,9 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.mcode == 'S' || V.response.mcode == 's')
 		return CODE_TS;
 
+	if (V.response.mcode == 'L' || V.response.mcode == 'l')
+		return CODE_LOG;
+
 	if (V.response.mcode == 'M' || V.response.mcode == 'm')
 		return CODE_TM;
 
@@ -793,6 +797,47 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	}
 
 	return(block);
+}
+
+/*
+ * parse stream and response codes for log function
+ */
+void secs_II_monitor_message(uint8_t stream, uint8_t function)
+{
+	uint16_t i = 0;
+	uint8_t * msg_data = (void*) &H254[0];
+
+	switch (stream) { // from equipment
+	case 1:
+		switch (function) { // from equipment
+		case 1: // S1F1
+			do {
+				DATAEE_WriteByte(i, msg_data[255 - i]);
+			} while (i++ != 256);
+			sprintf(V.info, "Saved S1F1      ");
+			V.response.info = true;
+			break;
+		default:
+			break;
+		}
+		break;
+	case 2:
+		switch (function) {
+		case 41: // S2F41
+			do {
+				DATAEE_WriteByte(i, msg_data[255 - i]);
+			} while (i++ != 256);
+			sprintf(V.info, "Saved S2F41     ");
+			V.response.info = true;
+			break;
+		default:
+			break;
+		}
+		break;
+	default: // S1F0 abort
+
+		break;
+	}
 }
 
 /*

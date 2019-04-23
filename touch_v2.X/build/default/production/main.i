@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28056,6 +28056,7 @@ void PMD_Initialize(void);
   CODE_ONREMOTE = 3,
   CODE_OFFLINE = 4,
   CODE_DEBUG,
+  CODE_LOG,
   CODE_ERR,
  } P_CODES;
 
@@ -28312,6 +28313,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s10f1_opcmd(void);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
+ void secs_II_monitor_message(uint8_t, uint8_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
 
@@ -28783,7 +28785,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.04G");
+   sprintf(V.buf, " Version %s", "1.05G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
