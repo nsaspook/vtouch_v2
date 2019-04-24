@@ -39,8 +39,6 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27244,7 +27242,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27282,7 +27280,13 @@ void INTERRUPT_Initialize (void);
 # 53 "mcc_generated_files/dma1.c" 2
 
 # 1 "mcc_generated_files/../vconfig.h" 1
-# 20 "mcc_generated_files/../vconfig.h"
+# 15 "mcc_generated_files/../vconfig.h"
+ typedef signed long long int24_t;
+
+
+
+
+
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -27325,7 +27329,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 75 "./vconfig.h"
+# 76 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27348,10 +27352,17 @@ void PIN_MANAGER_Initialize (void);
   CODE_ERR,
  } P_CODES;
 
+ typedef enum {
+  DIS_STR = 0,
+  DIS_TERM,
+  DIS_LOG,
+  DIS_ERR,
+ } D_CODES;
+
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen;
-  uint8_t info : 1;
+  D_CODES info;
   int32_t ceid;
  } terminal_type;
 

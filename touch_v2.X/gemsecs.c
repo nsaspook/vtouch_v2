@@ -586,8 +586,10 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.mcode == 'S' || V.response.mcode == 's')
 		return CODE_TS;
 
-	if (V.response.mcode == 'L' || V.response.mcode == 'l')
+	if (V.response.mcode == 'L' || V.response.mcode == 'l') {
+		sprintf(V.info, " Log file reset          ");
 		return CODE_LOG;
+	}
 
 	if (V.response.mcode == 'M' || V.response.mcode == 'm')
 		return CODE_TM;
@@ -617,6 +619,7 @@ P_CODES s6f11_opcmd(void)
 response_type secs_II_message(uint8_t stream, uint8_t function)
 {
 	static response_type block;
+	uint16_t i = 0;
 
 	V.abort = LINK_ERROR_NONE;
 	V.queue = false;
@@ -756,7 +759,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.systemb;
 			StartTimer(TMR_INFO, TDELAY);
-			V.response.info = true;
+			V.response.info = DIS_TERM;
 
 			switch (s10f1_opcmd()) {
 			case CODE_TM:
@@ -773,6 +776,12 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				H53[0].data[38] = V.response.TID;
 				//			terminal_format(H53[0].data, 34);
 				V.queue = true;
+				break;
+			case CODE_LOG:
+				do {
+					DATAEE_WriteByte(i, 0xff);
+				} while (++i <= 1023); // overwrite EEPROM data
+				V.response.info = DIS_LOG;
 				break;
 			case CODE_DEBUG:
 				V.debug = !V.debug;
@@ -800,7 +809,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 }
 
 /*
- * parse stream and response codes for log function
+ * parse stream and response codes for log function to EEPROM
  */
 void secs_II_monitor_message(uint8_t stream, uint8_t function)
 {
@@ -816,8 +825,8 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
 				DATAEE_WriteByte(i, msg_data[254 + 2 - i]);
 			} while (++i <= 255);
 			sprintf(V.info, "Saved S1F1      ");
-			StartTimer(TMR_INFO, TDELAY);
-			V.response.info = true;
+			StartTimer(TMR_INFO, LDELAY);
+			V.response.info = DIS_LOG;
 			break;
 		default:
 			break;
@@ -825,13 +834,13 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
 		break;
 	case 2:
 		switch (function) {
-		case 41: // S2F41
+		case 41: // S2F41 // from host
 			do {
-				DATAEE_WriteByte(i, msg_data[254 + 2 - i]);
+				DATAEE_WriteByte(i + 256, msg_data[254 + 2 - i]);
 			} while (++i <= 255);
 			sprintf(V.info, "Saved S2F41     ");
-			StartTimer(TMR_INFO, TDELAY);
-			V.response.info = true;
+			StartTimer(TMR_INFO, LDELAY);
+			V.response.info = DIS_LOG;
 			break;
 		default:
 			break;

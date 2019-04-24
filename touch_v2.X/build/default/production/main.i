@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 75 "./vconfig.h"
+# 76 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28060,10 +28060,17 @@ void PMD_Initialize(void);
   CODE_ERR,
  } P_CODES;
 
+ typedef enum {
+  DIS_STR = 0,
+  DIS_TERM,
+  DIS_LOG,
+  DIS_ERR,
+ } D_CODES;
+
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen;
-  uint8_t info : 1;
+  D_CODES info;
   int32_t ceid;
  } terminal_type;
 
@@ -28331,7 +28338,7 @@ V_data V = {
  .timer_error = 0,
  .reset = 1,
  .debug = 0,
- .response.info = 0,
+ .response.info = DIS_STR,
 };
 
 header10 H10[] = {
@@ -28722,7 +28729,7 @@ volatile uint8_t mode_sw = 0;
 static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
  wait_lcd_done();
- if (!V.response.info) {
+ if (V.response.info == DIS_STR) {
   eaDogM_WriteStringAtPos(r, c, strPtr);
  } else {
   sprintf(V.buf, " Terminal %d             ", V.response.TID);
@@ -28737,7 +28744,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
   wait_lcd_done();
   eaDogM_WriteStringAtPos(2, 0, V.buf);
   if (TimerDone(TMR_INFO))
-   V.response.info = 0;
+   V.response.info = DIS_STR;
  }
 }
 

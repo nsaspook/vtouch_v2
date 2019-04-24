@@ -69,7 +69,7 @@ V_data V = {
 	.timer_error = 0,
 	.reset = true,
 	.debug = false,
-	.response.info = false,
+	.response.info = DIS_STR,
 };
 
 header10 H10[] = {
@@ -499,7 +499,7 @@ volatile uint8_t mode_sw = false;
 static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
 	wait_lcd_done();
-	if (!V.response.info) {
+	if (V.response.info == DIS_STR) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);
 	} else {
 		sprintf(V.buf, " Terminal %d             ", V.response.TID);
@@ -514,7 +514,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 		wait_lcd_done();
 		eaDogM_WriteStringAtPos(2, 0, V.buf);
 		if (TimerDone(TMR_INFO))
-			V.response.info = false;
+			V.response.info = DIS_STR;
 	}
 }
 

@@ -63,6 +63,7 @@ extern "C" {
 
 #define DEFAULT_TID	1
 #define TDELAY	3000
+#define LDELAY	1000
 
 #define Y2KTIME
 
@@ -94,10 +95,17 @@ extern "C" {
 		CODE_ERR,
 	} P_CODES;
 
+	typedef enum {
+		DIS_STR = 0,
+		DIS_TERM,
+		DIS_LOG,
+		DIS_ERR,
+	} D_CODES;
+
 	typedef struct terminal_type {
 		uint8_t ack[32];
 		uint8_t TID, mcode, mparm, cmdlen;
-		uint8_t info : 1;
+		D_CODES info;
 		int32_t ceid;
 	} terminal_type;
 
