@@ -475,9 +475,9 @@ header53 H53[] = {
 header254 H254[] = {
 	{ // general message buffer
 		.length = 254,
-		.block.block.rbit = 0,
+		.block.block.rbit = 1,
 		.block.block.didh = 0,
-		.block.block.didl = 0,
+		.block.block.didl = 0xEF,
 		.block.block.wbit = 1,
 		.block.block.stream = 10,
 		.block.block.function = 3,
@@ -485,6 +485,9 @@ header254 H254[] = {
 		.block.block.bidh = 0,
 		.block.block.bidl = 1,
 		.block.block.systemb = 1,
+		.checksum = 0x2019,
+		.data[1] = 0x19,
+		.data[0] = 0x57,
 	},
 };
 

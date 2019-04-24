@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28698,9 +28698,9 @@ header53 H53[] = {
 header254 H254[] = {
  {
   .length = 254,
-  .block.block.rbit = 0,
+  .block.block.rbit = 1,
   .block.block.didh = 0,
-  .block.block.didl = 0,
+  .block.block.didl = 0xEF,
   .block.block.wbit = 1,
   .block.block.stream = 10,
   .block.block.function = 3,
@@ -28708,6 +28708,9 @@ header254 H254[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
+  .checksum = 0x2019,
+  .data[1] = 0x19,
+  .data[0] = 0x57,
  },
 };
 
@@ -28785,7 +28788,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.06G");
+   sprintf(V.buf, " Version %s", "1.07G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
