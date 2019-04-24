@@ -3903,7 +3903,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 564:    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 6 ]
 "565
-[; ;main.c: 565:    sprintf(V.buf, " Version %s", "1.05G");
+[; ;main.c: 565:    sprintf(V.buf, " Version %s", "1.06G");
 [e ( _sprintf (1 , (. , &U . _V 6 :s 5C :s 6C ]
 "566
 [; ;main.c: 566:    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -4470,105 +4470,133 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2340 ]
 "747
-[; ;main.c: 747:    }
+[; ;main.c: 747:     do { LATFbits.LATF4 = 1; } while(0);
+[e :U 2344 ]
+{
+[e = . . _LATFbits 0 4 -> -> 1 `i `uc ]
+}
+[e :U 2343 ]
+"748
+[; ;main.c: 748:     do { LATFbits.LATF5 = 0; } while(0);
+[e :U 2347 ]
+{
+[e = . . _LATFbits 0 5 -> -> 0 `i `uc ]
+}
+[e :U 2346 ]
+"749
+[; ;main.c: 749:    }
 }
 [e :U 2335 ]
-"748
-[; ;main.c: 748:    if (V.failed_send) {
-[e $ ! != -> . _V 26 `i -> 0 `i 2342  ]
+"750
+[; ;main.c: 750:    if (V.failed_send) {
+[e $ ! != -> . _V 26 `i -> 0 `i 2348  ]
 {
-"749
-[; ;main.c: 749:     do { LATDbits.LATD6 = 0; } while(0);
-[e :U 2345 ]
+"751
+[; ;main.c: 751:     do { LATDbits.LATD6 = 0; } while(0);
+[e :U 2351 ]
 {
 [e = . . _LATDbits 0 6 -> -> 0 `i `uc ]
 }
-[e :U 2344 ]
-"750
-[; ;main.c: 750:     do { LATDbits.LATD7 = 1; } while(0);
-[e :U 2348 ]
+[e :U 2350 ]
+"752
+[; ;main.c: 752:     do { LATDbits.LATD7 = 1; } while(0);
+[e :U 2354 ]
 {
 [e = . . _LATDbits 0 7 -> -> 1 `i `uc ]
 }
-[e :U 2347 ]
-"751
-[; ;main.c: 751:     if (V.error == LINK_ERROR_CHECKSUM) {
-[e $ ! == -> . _V 14 `i -> . `E16940 5 `i 2349  ]
+[e :U 2353 ]
+"753
+[; ;main.c: 753:     if (V.error == LINK_ERROR_CHECKSUM) {
+[e $ ! == -> . _V 14 `i -> . `E16940 5 `i 2355  ]
 {
-"752
-[; ;main.c: 752:      do { LATFbits.LATF6 = 0; } while(0);
-[e :U 2352 ]
+"754
+[; ;main.c: 754:      do { LATFbits.LATF6 = 0; } while(0);
+[e :U 2358 ]
 {
 [e = . . _LATFbits 0 6 -> -> 0 `i `uc ]
 }
-[e :U 2351 ]
-"753
-[; ;main.c: 753:      do { LATFbits.LATF7 = 1; } while(0);
-[e :U 2355 ]
+[e :U 2357 ]
+"755
+[; ;main.c: 755:      do { LATFbits.LATF7 = 1; } while(0);
+[e :U 2361 ]
 {
 [e = . . _LATFbits 0 7 -> -> 1 `i `uc ]
 }
-[e :U 2354 ]
-"754
-[; ;main.c: 754:     }
-}
-[e :U 2349 ]
-"755
-[; ;main.c: 755:    } else {
-}
-[e $U 2356  ]
-[e :U 2342 ]
-{
+[e :U 2360 ]
 "756
-[; ;main.c: 756:     do { LATDbits.LATD6 = 1; } while(0);
-[e :U 2359 ]
+[; ;main.c: 756:     }
+}
+[e :U 2355 ]
+"757
+[; ;main.c: 757:    } else {
+}
+[e $U 2362  ]
+[e :U 2348 ]
+{
+"758
+[; ;main.c: 758:     do { LATDbits.LATD6 = 1; } while(0);
+[e :U 2365 ]
 {
 [e = . . _LATDbits 0 6 -> -> 1 `i `uc ]
 }
-[e :U 2358 ]
-"757
-[; ;main.c: 757:     do { LATDbits.LATD7 = 0; } while(0);
-[e :U 2362 ]
+[e :U 2364 ]
+"759
+[; ;main.c: 759:     do { LATDbits.LATD7 = 0; } while(0);
+[e :U 2368 ]
 {
 [e = . . _LATDbits 0 7 -> -> 0 `i `uc ]
 }
-[e :U 2361 ]
-"758
-[; ;main.c: 758:    }
+[e :U 2367 ]
+"760
+[; ;main.c: 760:     do { LATFbits.LATF6 = 1; } while(0);
+[e :U 2371 ]
+{
+[e = . . _LATFbits 0 6 -> -> 1 `i `uc ]
 }
-[e :U 2356 ]
-"759
-[; ;main.c: 759:   }
+[e :U 2370 ]
+"761
+[; ;main.c: 761:     do { LATFbits.LATF7 = 0; } while(0);
+[e :U 2374 ]
+{
+[e = . . _LATFbits 0 7 -> -> 0 `i `uc ]
+}
+[e :U 2373 ]
+"762
+[; ;main.c: 762:    }
+}
+[e :U 2362 ]
+"763
+[; ;main.c: 763:   }
 }
 [e :U 2320 ]
-"760
-[; ;main.c: 760:   sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
-[e ( _sprintf (1 , , , , , (. , &U . _V 6 :s 24C -> . _V 4 `ui -> . _V 27 `i -> . _V 5 `ui -> . _V 26 `i -> . _V 20 `ui ]
-"761
-[; ;main.c: 761:   V.buf[16] = 0;
-[e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
-"762
-[; ;main.c: 762:   if (mode != UI_STATE_LOG)
-[e $ ! != -> _mode `ui -> . `E16915 3 `ui 2363  ]
-"763
-[; ;main.c: 763:    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U . _V 6 ]
-[e :U 2363 ]
 "764
-[; ;main.c: 764:  }
+[; ;main.c: 764:   sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
+[e ( _sprintf (1 , , , , , (. , &U . _V 6 :s 24C -> . _V 4 `ui -> . _V 27 `i -> . _V 5 `ui -> . _V 26 `i -> . _V 20 `ui ]
+"765
+[; ;main.c: 765:   V.buf[16] = 0;
+[e = *U + &U . _V 6 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 6 `ui `ux -> -> 0 `i `uc ]
+"766
+[; ;main.c: 766:   if (mode != UI_STATE_LOG)
+[e $ ! != -> _mode `ui -> . `E16915 3 `ui 2375  ]
+"767
+[; ;main.c: 767:    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U . _V 6 ]
+[e :U 2375 ]
+"768
+[; ;main.c: 768:  }
 }
 [e :U 2268 ]
 [e $U 2269  ]
 [e :U 2270 ]
-"765
-[; ;main.c: 765: }
+"769
+[; ;main.c: 769: }
 [e :UE 2251 ]
 }
 [p f _sprintf 9175184 ]
 [a 5C 32 86 101 114 115 105 111 110 32 37 115 0 ]
 [a 3C 37 115 0 ]
 [a 4C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 6C 49 46 48 53 71 0 ]
+[a 6C 49 46 48 54 71 0 ]
 [a 7C 32 70 71 66 64 77 67 72 80 32 70 65 66 52 0 ]
 [a 12C 32 79 75 81 35 0 ]
 [a 17C 32 80 105 110 103 32 71 37 100 32 32 80 37 100 32 35 0 ]

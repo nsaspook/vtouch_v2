@@ -744,6 +744,8 @@ void main(void)
 			} else {
 				BILED1_1_SetHigh(); //green
 				BILED1_2_SetLow();
+				BILED3_1_SetHigh(); //green
+				BILED3_2_SetLow();
 			}
 			if (V.failed_send) {
 				BILED2_1_SetLow(); // red
@@ -755,6 +757,8 @@ void main(void)
 			} else {
 				BILED2_1_SetHigh(); //green
 				BILED2_2_SetLow();
+				BILED4_1_SetHigh(); //green
+				BILED4_2_SetLow();
 			}
 		}
 		sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);

@@ -28785,7 +28785,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.05G");
+   sprintf(V.buf, " Version %s", "1.06G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28967,6 +28967,8 @@ void main(void)
    } else {
     do { LATDbits.LATD4 = 1; } while(0);
     do { LATDbits.LATD5 = 0; } while(0);
+    do { LATFbits.LATF4 = 1; } while(0);
+    do { LATFbits.LATF5 = 0; } while(0);
    }
    if (V.failed_send) {
     do { LATDbits.LATD6 = 0; } while(0);
@@ -28978,6 +28980,8 @@ void main(void)
    } else {
     do { LATDbits.LATD6 = 1; } while(0);
     do { LATDbits.LATD7 = 0; } while(0);
+    do { LATFbits.LATF6 = 1; } while(0);
+    do { LATFbits.LATF7 = 0; } while(0);
    }
   }
   sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);

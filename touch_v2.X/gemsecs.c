@@ -834,8 +834,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
 			break;
 		}
 		break;
-	default: // S1F0 abort
-
+	default:
 		break;
 	}
 }
