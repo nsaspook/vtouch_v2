@@ -48,7 +48,7 @@ uint16_t run_checksum(uint8_t byte_block, bool clear)
 LINK_STATES m_protocol(LINK_STATES *m_link)
 {
 	uint8_t rxData;
-	static uint8_t rxData_l = 0;
+	static uint8_t rxData_l = 0, *b_block = (uint8_t*) & H254[0];
 
 	switch (*m_link) {
 	case LINK_STATE_IDLE:
@@ -130,6 +130,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 					r_block.length = rxData; // header+message bytes
 					run_checksum(0, true);
 					rxData_l++;
+					b_block[sizeof(header254) - rxData_l] = rxData; // buffer the message
 				} else {
 					/*
 					 * skip possible message data
@@ -145,6 +146,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 						H10[1].checksum += rxData;
 
 					rxData_l++;
+					b_block[sizeof(header254) - rxData_l] = rxData;
 					if (rxData_l > (r_block.length + 2)) { // end of total data stream
 						if (V.r_checksum == H10[1].checksum) {
 							*m_link = LINK_STATE_ACK;
@@ -167,6 +169,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 					r_block.length = rxData; // header+message bytes
 					run_checksum(0, true);
 					rxData_l++;
+					b_block[sizeof(header254) - rxData_l] = rxData; // buffer the message
 				} else {
 					/*
 					 * skip possible message data
@@ -182,6 +185,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 						H10[1].checksum += rxData;
 
 					rxData_l++;
+					b_block[sizeof(header254) - rxData_l] = rxData;
 					if (rxData_l > (r_block.length + 2)) { // end of total data stream
 						if (V.r_checksum == H10[1].checksum) {
 							*m_link = LINK_STATE_ACK;
@@ -632,7 +636,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.header = (uint8_t*) & H12[0];
 			block.length = sizeof(header12);
 			H12[0].block.block.systemb = V.systemb;
-			H10[0].block.block.systemb = V.systemb;
+			H10[0].block.block.systemb = V.ticks;
 			block.respond = true;
 			block.reply = (uint8_t*) & H10[0]; // S1F1 send queue
 			block.reply_length = sizeof(header10);
@@ -652,7 +656,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.header = (uint8_t*) & H17[0];
 			block.length = sizeof(header17);
 			H17[0].block.block.systemb = V.systemb;
-			H12[1].block.block.systemb = V.systemb;
+			H12[1].block.block.systemb = V.ticks;
 			block.respond = true;
 			block.reply = (uint8_t*) & H12[1]; // S1F13 send queue
 			block.reply_length = sizeof(header12);
@@ -757,7 +761,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.header = (uint8_t*) & H13[1];
 			block.length = sizeof(header13);
 			H13[1].block.block.systemb = V.systemb;
-			H53[0].block.block.systemb = V.systemb;
+			H53[0].block.block.systemb = V.ticks;
 			StartTimer(TMR_INFO, TDELAY);
 			V.response.info = DIS_TERM;
 

@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28339,7 +28336,7 @@ uint16_t run_checksum(uint8_t byte_block, _Bool clear)
 LINK_STATES m_protocol(LINK_STATES *m_link)
 {
  uint8_t rxData;
- static uint8_t rxData_l = 0;
+ static uint8_t rxData_l = 0, *b_block = (uint8_t*) & H254[0];
 
  switch (*m_link) {
  case LINK_STATE_IDLE:
@@ -28406,6 +28403,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
      r_block.length = rxData;
      run_checksum(0, 1);
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
     } else {
 
 
@@ -28421,6 +28419,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
       H10[1].checksum += rxData;
 
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
      if (rxData_l > (r_block.length + 2)) {
       if (V.r_checksum == H10[1].checksum) {
        *m_link = LINK_STATE_ACK;
@@ -28443,6 +28442,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
      r_block.length = rxData;
      run_checksum(0, 1);
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
     } else {
 
 
@@ -28458,6 +28458,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
       H10[1].checksum += rxData;
 
      rxData_l++;
+     b_block[sizeof(header254) - rxData_l] = rxData;
      if (rxData_l > (r_block.length + 2)) {
       if (V.r_checksum == H10[1].checksum) {
        *m_link = LINK_STATE_ACK;
@@ -28837,7 +28838,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.08G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.09G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -28908,7 +28909,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.header = (uint8_t*) & H12[0];
    block.length = sizeof(header12);
    H12[0].block.block.systemb = V.systemb;
-   H10[0].block.block.systemb = V.systemb;
+   H10[0].block.block.systemb = V.ticks;
    block.respond = 1;
    block.reply = (uint8_t*) & H10[0];
    block.reply_length = sizeof(header10);
@@ -28928,7 +28929,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.header = (uint8_t*) & H17[0];
    block.length = sizeof(header17);
    H17[0].block.block.systemb = V.systemb;
-   H12[1].block.block.systemb = V.systemb;
+   H12[1].block.block.systemb = V.ticks;
    block.respond = 1;
    block.reply = (uint8_t*) & H12[1];
    block.reply_length = sizeof(header12);
@@ -29033,7 +29034,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.header = (uint8_t*) & H13[1];
    block.length = sizeof(header13);
    H13[1].block.block.systemb = V.systemb;
-   H53[0].block.block.systemb = V.systemb;
+   H53[0].block.block.systemb = V.ticks;
    StartTimer(TMR_INFO, 3000);
    V.response.info = DIS_TERM;
 
