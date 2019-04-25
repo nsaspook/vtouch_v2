@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.07G"
+#define VER	"1.08G"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
@@ -104,9 +104,10 @@ extern "C" {
 
 	typedef struct terminal_type {
 		uint8_t ack[32];
-		uint8_t TID, mcode, mparm, cmdlen;
+		uint8_t TID, mcode, mparm, cmdlen, log_seq;
 		D_CODES info;
 		int32_t ceid;
+		uint16_t log_num;
 	} terminal_type;
 
 	typedef enum {

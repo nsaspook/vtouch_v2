@@ -27542,9 +27542,10 @@ void PIN_MANAGER_Initialize (void);
 
  typedef struct terminal_type {
   uint8_t ack[32];
-  uint8_t TID, mcode, mparm, cmdlen;
+  uint8_t TID, mcode, mparm, cmdlen, log_seq;
   D_CODES info;
   int32_t ceid;
+  uint16_t log_num;
  } terminal_type;
 
  typedef enum {
@@ -28836,7 +28837,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.07G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.08G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29056,6 +29057,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
     do {
      DATAEE_WriteByte(i, 0xff);
     } while (++i <= 1023);
+    V.response.log_num = 0;
+    V.response.log_seq = 0;
     V.response.info = DIS_LOG;
     break;
    case CODE_DEBUG:
@@ -29097,11 +29100,13 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
   switch (function) {
   case 1:
    do {
-    DATAEE_WriteByte(i, msg_data[254 + 2 - i]);
+    DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
    } while (++i <= 255);
    sprintf(V.info, "Saved S1F1      ");
    StartTimer(TMR_INFO, 1000);
    V.response.info = DIS_LOG;
+   V.response.log_num++;
+   V.response.log_seq++;
    break;
   default:
    break;
@@ -29111,11 +29116,13 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
   switch (function) {
   case 41:
    do {
-    DATAEE_WriteByte(i + 256, msg_data[254 + 2 - i]);
+    DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
    } while (++i <= 255);
    sprintf(V.info, "Saved S2F41     ");
    StartTimer(TMR_INFO, 1000);
    V.response.info = DIS_LOG;
+   V.response.log_num++;
+   V.response.log_seq++;
    break;
   default:
    break;

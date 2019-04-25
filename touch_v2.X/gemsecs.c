@@ -781,6 +781,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				do {
 					DATAEE_WriteByte(i, 0xff);
 				} while (++i <= 1023); // overwrite EEPROM data
+				V.response.log_num = 0;
+				V.response.log_seq = 0;
 				V.response.info = DIS_LOG;
 				break;
 			case CODE_DEBUG:
@@ -822,11 +824,13 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
 		switch (function) { // from equipment
 		case 1: // S1F1
 			do {
-				DATAEE_WriteByte(i, msg_data[254 + 2 - i]);
+				DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
 			} while (++i <= 255);
 			sprintf(V.info, "Saved S1F1      ");
 			StartTimer(TMR_INFO, LDELAY);
 			V.response.info = DIS_LOG;
+			V.response.log_num++;
+			V.response.log_seq++;
 			break;
 		default:
 			break;
@@ -836,11 +840,13 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
 		switch (function) {
 		case 41: // S2F41 // from host
 			do {
-				DATAEE_WriteByte(i + 256, msg_data[254 + 2 - i]);
+				DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
 			} while (++i <= 255);
 			sprintf(V.info, "Saved S2F41     ");
 			StartTimer(TMR_INFO, LDELAY);
 			V.response.info = DIS_LOG;
+			V.response.log_num++;
+			V.response.log_seq++;
 			break;
 		default:
 			break;

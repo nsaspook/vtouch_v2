@@ -27387,9 +27387,10 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
 
  typedef struct terminal_type {
   uint8_t ack[32];
-  uint8_t TID, mcode, mparm, cmdlen;
+  uint8_t TID, mcode, mparm, cmdlen, log_seq;
   D_CODES info;
   int32_t ceid;
+  uint16_t log_num;
  } terminal_type;
 
  typedef enum {

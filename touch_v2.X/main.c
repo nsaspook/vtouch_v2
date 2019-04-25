@@ -70,6 +70,8 @@ V_data V = {
 	.reset = true,
 	.debug = false,
 	.response.info = DIS_STR,
+	.response.log_num = 0,
+	.response.log_seq = 0,
 };
 
 header10 H10[] = {
@@ -502,13 +504,27 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	if (V.response.info == DIS_STR) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);
 	} else {
-		sprintf(V.buf, " Terminal %d             ", V.response.TID);
-		V.buf[16] = 0;
-		eaDogM_WriteStringAtPos(0, 0, V.buf);
-		sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
-		V.buf[16] = 0;
-		wait_lcd_done();
-		eaDogM_WriteStringAtPos(1, 0, V.buf);
+		switch (V.response.info) {
+		case DIS_LOG:
+			sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq&0x03);
+			V.buf[16] = 0;
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, " Stored #%d      ", V.response.log_num);
+			V.buf[16] = 0;
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			break;
+		case DIS_TERM:
+		default:
+			sprintf(V.buf, " Terminal %d             ", V.response.TID);
+			V.buf[16] = 0;
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+			V.buf[16] = 0;
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			break;
+		}
 		sprintf(V.buf, "%s", V.info);
 		V.buf[16] = 0;
 		wait_lcd_done();

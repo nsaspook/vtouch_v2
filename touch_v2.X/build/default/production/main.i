@@ -28069,9 +28069,10 @@ void PMD_Initialize(void);
 
  typedef struct terminal_type {
   uint8_t ack[32];
-  uint8_t TID, mcode, mparm, cmdlen;
+  uint8_t TID, mcode, mparm, cmdlen, log_seq;
   D_CODES info;
   int32_t ceid;
+  uint16_t log_num;
  } terminal_type;
 
  typedef enum {
@@ -28339,6 +28340,8 @@ V_data V = {
  .reset = 1,
  .debug = 0,
  .response.info = DIS_STR,
+ .response.log_num = 0,
+ .response.log_seq = 0,
 };
 
 header10 H10[] = {
@@ -28567,7 +28570,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 322 "main.c"
+# 324 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28586,7 +28589,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 360 "main.c"
+# 362 "main.c"
 header53 H53[] = {
  {
   .length = 53,
@@ -28732,13 +28735,27 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
  if (V.response.info == DIS_STR) {
   eaDogM_WriteStringAtPos(r, c, strPtr);
  } else {
-  sprintf(V.buf, " Terminal %d             ", V.response.TID);
-  V.buf[16] = 0;
-  eaDogM_WriteStringAtPos(0, 0, V.buf);
-  sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
-  V.buf[16] = 0;
-  wait_lcd_done();
-  eaDogM_WriteStringAtPos(1, 0, V.buf);
+  switch (V.response.info) {
+  case DIS_LOG:
+   sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq&0x03);
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " Stored #%d      ", V.response.log_num);
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
+  case DIS_TERM:
+  default:
+   sprintf(V.buf, " Terminal %d             ", V.response.TID);
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
+  }
   sprintf(V.buf, "%s", V.info);
   V.buf[16] = 0;
   wait_lcd_done();
@@ -28795,7 +28812,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.07G");
+   sprintf(V.buf, " Version %s", "1.08G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
