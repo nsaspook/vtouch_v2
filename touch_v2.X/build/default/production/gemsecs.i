@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27510,7 +27507,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 76 "./vconfig.h"
+# 77 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28287,7 +28284,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s10f1_opcmd(void);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
- void secs_II_monitor_message(uint8_t, uint8_t);
+ void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
 
@@ -28490,7 +28487,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
   V.failed_receive = 0;
-  secs_II_monitor_message(V.stream, V.function);
+  secs_II_monitor_message(V.stream, V.function, 1000);
   V.g_state = secs_gem_state(V.stream, V.function);
 
   *m_link = LINK_STATE_DONE;
@@ -28627,6 +28624,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.rbit = H10[1].block.block.rbit;
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
+  secs_II_monitor_message(V.stream, V.function, 500);
   V.g_state = secs_gem_state(V.stream, V.function);
   UART1_Write(0x06);
   V.failed_receive = 0;
@@ -29093,7 +29091,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 
 
 
-void secs_II_monitor_message(uint8_t stream, uint8_t function)
+void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 {
  uint16_t i = 0;
  uint8_t * msg_data = (uint8_t*) & H254[0];
@@ -29108,7 +29106,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
     DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
    } while (++i <= 255);
    sprintf(V.info, "Saved S1F%d      ", function);
-   StartTimer(TMR_INFO, 1000);
+   StartTimer(TMR_INFO, dtime);
    V.response.info = DIS_LOG;
    V.response.log_num++;
    V.response.log_seq++;
@@ -29124,7 +29122,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
     DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
    } while (++i <= 255);
    sprintf(V.info, "Saved S2F%d     ", function);
-   StartTimer(TMR_INFO, 1000);
+   StartTimer(TMR_INFO, dtime);
    V.response.info = DIS_LOG;
    V.response.log_num++;
    V.response.log_seq++;

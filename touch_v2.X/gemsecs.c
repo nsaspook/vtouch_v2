@@ -214,7 +214,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
 		V.failed_receive = false;
-		secs_II_monitor_message(V.stream, V.function); // parse proper response
+		secs_II_monitor_message(V.stream, V.function, LDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
 
 		*m_link = LINK_STATE_DONE;
@@ -351,6 +351,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.rbit = H10[1].block.block.rbit;
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
+		secs_II_monitor_message(V.stream, V.function, SDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
 		UART1_Write(ACK);
 		V.failed_receive = false;
@@ -817,7 +818,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 /*
  * parse stream and response codes for log function to EEPROM
  */
-void secs_II_monitor_message(uint8_t stream, uint8_t function)
+void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 {
 	uint16_t i = 0;
 	uint8_t * msg_data = (uint8_t*) & H254[0];
@@ -832,7 +833,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
 				DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
 			} while (++i <= 255);
 			sprintf(V.info, "Saved S1F%d      ", function);
-			StartTimer(TMR_INFO, LDELAY);
+			StartTimer(TMR_INFO, dtime);
 			V.response.info = DIS_LOG;
 			V.response.log_num++;
 			V.response.log_seq++;
@@ -848,7 +849,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function)
 				DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
 			} while (++i <= 255);
 			sprintf(V.info, "Saved S2F%d     ", function);
-			StartTimer(TMR_INFO, LDELAY);
+			StartTimer(TMR_INFO, dtime);
 			V.response.info = DIS_LOG;
 			V.response.log_num++;
 			V.response.log_seq++;

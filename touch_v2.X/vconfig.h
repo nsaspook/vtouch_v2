@@ -64,6 +64,7 @@ extern "C" {
 #define DEFAULT_TID	1
 #define TDELAY	3000
 #define LDELAY	1000
+#define SDELAY	500
 
 #define Y2KTIME
 

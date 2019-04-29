@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 76 "./vconfig.h"
+# 77 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28321,7 +28321,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s10f1_opcmd(void);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
- void secs_II_monitor_message(uint8_t, uint8_t);
+ void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
 
