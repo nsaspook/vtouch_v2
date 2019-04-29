@@ -11960,7 +11960,6 @@ drill 1.0 mm</description>
 <part name="C3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="0.1"/>
 <part name="VSS5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VSS6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
-<part name="VDD6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="C4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="15uf"/>
 <part name="VSS8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="POWER" library="con-amp-quick" library_urn="urn:adsk.eagle:library:125" deviceset="M02" device="" package3d_urn="urn:adsk.eagle:package:5956/1" value="5VDC"/>
@@ -12046,6 +12045,13 @@ drill 1.0 mm</description>
 <part name="C7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="0.1"/>
 <part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="P+5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
+<part name="C8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="1uf"/>
+<part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C1206" package3d_urn="urn:adsk.eagle:package:23618/2" value="0.1"/>
+<part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="P+6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
+<part name="P+7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12113,9 +12119,6 @@ drill 1.0 mm</description>
 </instance>
 <instance part="VSS6" gate="G$1" x="93.98" y="55.88" smashed="yes">
 <attribute name="VALUE" x="91.44" y="50.8" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="VDD6" gate="G$1" x="106.68" y="-12.7" smashed="yes" rot="R180">
-<attribute name="VALUE" x="109.22" y="-10.16" size="1.778" layer="96" rot="R270"/>
 </instance>
 <instance part="C4" gate="G$1" x="20.32" y="55.88" smashed="yes">
 <attribute name="NAME" x="21.336" y="56.515" size="1.778" layer="95"/>
@@ -12542,6 +12545,29 @@ drill 1.0 mm</description>
 <instance part="GND4" gate="1" x="-78.74" y="66.04" smashed="yes">
 <attribute name="VALUE" x="-81.28" y="63.5" size="1.778" layer="96"/>
 </instance>
+<instance part="P+5" gate="VCC" x="104.14" y="-10.16" smashed="yes" rot="R90">
+<attribute name="VALUE" x="106.68" y="-12.7" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="C8" gate="G$1" x="142.24" y="-7.62" smashed="yes" rot="R90">
+<attribute name="NAME" x="141.605" y="-6.604" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="146.431" y="-6.604" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND5" gate="1" x="147.32" y="-10.16" smashed="yes">
+<attribute name="VALUE" x="144.78" y="-12.7" size="1.778" layer="96"/>
+</instance>
+<instance part="C9" gate="G$1" x="142.24" y="0" smashed="yes" rot="R90">
+<attribute name="NAME" x="141.605" y="1.016" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="146.431" y="1.016" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="GND6" gate="1" x="147.32" y="-2.54" smashed="yes">
+<attribute name="VALUE" x="144.78" y="-5.08" size="1.778" layer="96"/>
+</instance>
+<instance part="P+6" gate="VCC" x="137.16" y="0" smashed="yes" rot="R90">
+<attribute name="VALUE" x="139.7" y="-2.54" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="P+7" gate="VCC" x="137.16" y="-7.62" smashed="yes" rot="R90">
+<attribute name="VALUE" x="139.7" y="-10.16" size="1.778" layer="96" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -12607,10 +12633,6 @@ drill 1.0 mm</description>
 <pinref part="C2" gate="G$1" pin="1"/>
 <junction x="86.36" y="58.42"/>
 <junction x="76.2" y="58.42"/>
-</segment>
-<segment>
-<pinref part="Q1" gate="G$1" pin="OE"/>
-<pinref part="VDD6" gate="G$1" pin="VDD"/>
 </segment>
 <segment>
 <pinref part="POWER" gate="G$1" pin="2"/>
@@ -13584,6 +13606,7 @@ drill 1.0 mm</description>
 <segment>
 <pinref part="Q1" gate="G$1" pin="GND"/>
 <pinref part="GND1" gate="1" pin="GND"/>
+<junction x="132.08" y="0"/>
 </segment>
 <segment>
 <pinref part="C21" gate="G$1" pin="2"/>
@@ -13601,6 +13624,16 @@ drill 1.0 mm</description>
 <pinref part="C7" gate="G$1" pin="2"/>
 <pinref part="GND4" gate="1" pin="GND"/>
 <junction x="-78.74" y="68.58"/>
+</segment>
+<segment>
+<pinref part="C8" gate="G$1" pin="2"/>
+<pinref part="GND5" gate="1" pin="GND"/>
+<junction x="147.32" y="-7.62"/>
+</segment>
+<segment>
+<pinref part="C9" gate="G$1" pin="2"/>
+<pinref part="GND6" gate="1" pin="GND"/>
+<junction x="147.32" y="0"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -13624,6 +13657,22 @@ drill 1.0 mm</description>
 <pinref part="C7" gate="G$1" pin="1"/>
 <pinref part="P+2" gate="VCC" pin="VCC"/>
 <junction x="-86.36" y="68.58"/>
+</segment>
+<segment>
+<pinref part="Q1" gate="G$1" pin="OE"/>
+<pinref part="P+5" gate="VCC" pin="VCC"/>
+<junction x="106.68" y="-10.16"/>
+</segment>
+<segment>
+<pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="P+6" gate="VCC" pin="VCC"/>
+<junction x="139.7" y="0"/>
+</segment>
+<segment>
+<wire x1="139.7" y1="-7.62" x2="142.24" y2="-7.62" width="0.1524" layer="91"/>
+<pinref part="C8" gate="G$1" pin="1"/>
+<pinref part="P+7" gate="VCC" pin="VCC"/>
+<junction x="139.7" y="-7.62"/>
 </segment>
 </net>
 <net name="N$17" class="0">
