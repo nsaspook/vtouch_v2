@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28842,7 +28839,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.11G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.12G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29098,21 +29095,24 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 {
  uint16_t i = 0;
  uint8_t * msg_data = (uint8_t*) & H254[0];
+ static uint8_t store1_13 = 1, store2_41 = 1, store6_11 = 1;
 
  ++V.ticks;
  switch (stream) {
  case 1:
   switch (function) {
-  case 1:
   case 13:
-   do {
-    DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
-   } while (++i <= 255);
-   sprintf(V.info, "Saved S1F%d      ", function);
-   StartTimer(TMR_INFO, dtime);
-   V.response.info = DIS_LOG;
-   V.response.log_num++;
-   V.response.log_seq++;
+   if (store1_13) {
+    do {
+     DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+    } while (++i <= 255);
+    sprintf(V.info, "Saved S1F%d      ", function);
+    StartTimer(TMR_INFO, dtime);
+    V.response.info = DIS_LOG;
+    V.response.log_num++;
+    V.response.log_seq++;
+    store1_13 = 0;
+   }
    break;
   default:
    break;
@@ -29121,18 +29121,40 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
  case 2:
   switch (function) {
   case 41:
-   do {
-    DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
-   } while (++i <= 255);
-   sprintf(V.info, "Saved S2F%d     ", function);
-   StartTimer(TMR_INFO, dtime);
-   V.response.info = DIS_LOG;
-   V.response.log_num++;
-   V.response.log_seq++;
+   if (store2_41) {
+    do {
+     DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+    } while (++i <= 255);
+    sprintf(V.info, "Saved S2F%d     ", function);
+    StartTimer(TMR_INFO, dtime);
+    V.response.info = DIS_LOG;
+    V.response.log_num++;
+    V.response.log_seq++;
+    store2_41 = 0;
+   }
    break;
   default:
    break;
   }
+ case 6:
+  switch (function) {
+  case 11:
+   if (store6_11) {
+    do {
+     DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+    } while (++i <= 255);
+    sprintf(V.info, "Saved S6F%d     ", function);
+    StartTimer(TMR_INFO, dtime);
+    V.response.info = DIS_LOG;
+    V.response.log_num++;
+    V.response.log_seq++;
+    store6_11 = 0;
+   }
+   break;
+  default:
+   break;
+  }
+
   break;
  default:
   break;

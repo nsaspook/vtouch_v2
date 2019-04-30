@@ -822,21 +822,24 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 {
 	uint16_t i = 0;
 	uint8_t * msg_data = (uint8_t*) & H254[0];
+	static uint8_t store1_13 = true, store2_41 = true, store6_11 = true;
 
 	++V.ticks; // message sequence
 	switch (stream) { // from equipment
 	case 1:
 		switch (function) { // from equipment
-		case 1: // S1F1
 		case 13:
-			do {
-				DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
-			} while (++i <= 255);
-			sprintf(V.info, "Saved S1F%d      ", function);
-			StartTimer(TMR_INFO, dtime);
-			V.response.info = DIS_LOG;
-			V.response.log_num++;
-			V.response.log_seq++;
+			if (store1_13) {
+				do {
+					DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+				} while (++i <= 255);
+				sprintf(V.info, "Saved S1F%d      ", function);
+				StartTimer(TMR_INFO, dtime);
+				V.response.info = DIS_LOG;
+				V.response.log_num++;
+				V.response.log_seq++;
+				store1_13 = false;
+			}
 			break;
 		default:
 			break;
@@ -845,18 +848,40 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 	case 2:
 		switch (function) {
 		case 41: // S2F41 // from host
-			do {
-				DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
-			} while (++i <= 255);
-			sprintf(V.info, "Saved S2F%d     ", function);
-			StartTimer(TMR_INFO, dtime);
-			V.response.info = DIS_LOG;
-			V.response.log_num++;
-			V.response.log_seq++;
+			if (store2_41) {
+				do {
+					DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+				} while (++i <= 255);
+				sprintf(V.info, "Saved S2F%d     ", function);
+				StartTimer(TMR_INFO, dtime);
+				V.response.info = DIS_LOG;
+				V.response.log_num++;
+				V.response.log_seq++;
+				store2_41 = false;
+			}
 			break;
 		default:
 			break;
 		}
+	case 6:
+		switch (function) {
+		case 11: // S6F11 // from host
+			if (store6_11) {
+				do {
+					DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+				} while (++i <= 255);
+				sprintf(V.info, "Saved S6F%d     ", function);
+				StartTimer(TMR_INFO, dtime);
+				V.response.info = DIS_LOG;
+				V.response.log_num++;
+				V.response.log_seq++;
+				store6_11 = false;
+			}
+			break;
+		default:
+			break;
+		}
+
 		break;
 	default:
 		break;
