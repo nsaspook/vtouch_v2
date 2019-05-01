@@ -11,6 +11,7 @@ extern struct header18 H18[];
 extern struct header24 H24[];
 extern struct header26 H26[];
 extern struct header27 H27[];
+extern struct header33 H33[];
 extern struct header53 H53[];
 extern header254 H254[];
 
@@ -591,6 +592,9 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.mcode == 'S' || V.response.mcode == 's')
 		return CODE_TS;
 
+	if (V.response.mcode == 'R' || V.response.mcode == 'r')
+		return CODE_LOAD;
+
 	if (V.response.mcode == 'L' || V.response.mcode == 'l') {
 		sprintf(V.info, " Log file reset          ");
 		return CODE_LOG;
@@ -774,6 +778,13 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				H53[1].data[38] = V.response.TID;
 				V.queue = true;
 				break;
+			case CODE_LOAD:
+				block.respond = true;
+				block.reply = (uint8_t*) & H33[0]; // S6F41 send load lock ready command
+				block.reply_length = sizeof(header33);
+				V.queue = true;
+				V.response.info = DIS_LOAD;
+				break;
 			case CODE_TS:
 				block.respond = true;
 				block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
@@ -815,31 +826,47 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	return(block);
 }
 
+static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t *msg_data)
+{
+	uint16_t i = 0;
+
+	do {
+		DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+	} while (++i <= 255);
+
+	sprintf(V.info, "Saved S%dF%d      ", stream, function);
+	StartTimer(TMR_INFO, dtime);
+	V.response.info = DIS_LOG;
+	V.response.log_num++;
+	V.response.log_seq++;
+}
+
 /*
  * parse stream and response codes for log function to EEPROM
  */
 void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 {
-	uint16_t i = 0;
 	uint8_t * msg_data = (uint8_t*) & H254[0];
-	static uint8_t store1_13 = true, store2_41 = true, store6_11 = true;
+	static uint8_t store1_1 = true, store1_13 = true, store2_41 = true, store6_11 = true;
+
 
 	++V.ticks; // message sequence
 	switch (stream) { // from equipment
 	case 1:
 		switch (function) { // from equipment
+		case 1:
+			if (!store1_1)
+				break;
+			store1_1 = false;
+
+			ee_logger(stream, function, dtime, msg_data);
+			break;
 		case 13:
-			if (store1_13) {
-				do {
-					DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
-				} while (++i <= 255);
-				sprintf(V.info, "Saved S1F%d      ", function);
-				StartTimer(TMR_INFO, dtime);
-				V.response.info = DIS_LOG;
-				V.response.log_num++;
-				V.response.log_seq++;
-				store1_13 = false;
-			}
+			if (!store1_13)
+				break;
+			store1_13 = false;
+
+			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
 			break;
@@ -848,17 +875,11 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 	case 2:
 		switch (function) {
 		case 41: // S2F41 // from host
-			if (store2_41) {
-				do {
-					DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
-				} while (++i <= 255);
-				sprintf(V.info, "Saved S2F%d     ", function);
-				StartTimer(TMR_INFO, dtime);
-				V.response.info = DIS_LOG;
-				V.response.log_num++;
-				V.response.log_seq++;
-				store2_41 = false;
-			}
+			if (!store2_41)
+				break;
+			store2_41 = false;
+
+			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
 			break;
@@ -866,17 +887,11 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 	case 6:
 		switch (function) {
 		case 11: // S6F11 // from host
-			if (store6_11) {
-				do {
-					DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
-				} while (++i <= 255);
-				sprintf(V.info, "Saved S6F%d     ", function);
-				StartTimer(TMR_INFO, dtime);
-				V.response.info = DIS_LOG;
-				V.response.log_num++;
-				V.response.log_seq++;
-				store6_11 = false;
-			}
+			if (!store6_11)
+				break;
+			store6_11 = false;
+
+			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
 			break;

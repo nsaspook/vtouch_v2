@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28057,6 +28057,7 @@ void PMD_Initialize(void);
   CODE_OFFLINE = 4,
   CODE_DEBUG,
   CODE_LOG,
+  CODE_LOAD,
   CODE_ERR,
  } P_CODES;
 
@@ -28064,6 +28065,7 @@ void PMD_Initialize(void);
   DIS_STR = 0,
   DIS_TERM,
   DIS_LOG,
+  DIS_LOAD,
   DIS_ERR,
  } D_CODES;
 
@@ -28287,6 +28289,13 @@ void WaitMs(uint16_t numMilliseconds);
   block10 block;
   uint8_t length;
  } header27;
+
+ typedef struct header33 {
+  uint16_t checksum;
+  uint8_t data[23];
+  block10 block;
+  uint8_t length;
+ } header33;
 
  typedef struct header53 {
   uint16_t checksum;
@@ -28590,6 +28599,45 @@ header26 H26[] = {
  },
 };
 # 362 "main.c"
+header33 H33[] = {
+ {
+  .length = 33,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 2,
+  .block.block.function = 41,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[22] = 0x01,
+  .data[21] = 0x02,
+  .data[20] = 0x41,
+  .data[19] = 0x02,
+  .data[18] = 0x31,
+  .data[17] = 0x37,
+  .data[16] = 0x01,
+  .data[15] = 0x01,
+  .data[14] = 0x01,
+  .data[13] = 0x02,
+  .data[12] = 0x41,
+  .data[11] = 0x08,
+  .data[10] = 0x4c,
+  .data[9] = 0x4f,
+  .data[8] = 0x41,
+  .data[7] = 0x44,
+  .data[6] = 0x4c,
+  .data[5] = 0x4f,
+  .data[4] = 0x43,
+  .data[3] = 0x4b,
+  .data[2] = 0xa5,
+  .data[1] = 0x01,
+  .data[0] = 0x01,
+ },
+};
+
 header53 H53[] = {
  {
   .length = 53,
@@ -28737,10 +28785,19 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
  } else {
   switch (V.response.info) {
   case DIS_LOG:
-   sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq&0x03);
+   sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq & 0x03);
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
    sprintf(V.buf, " Stored #%d      ", V.response.log_num);
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
+  case DIS_LOAD:
+   sprintf(V.buf, " Ready LL    ");
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -28812,7 +28869,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.12G");
+   sprintf(V.buf, " Version %s", "1.13G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);

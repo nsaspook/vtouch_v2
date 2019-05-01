@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.12G"
+#define VER	"1.13G"
 	/*
 	 * 0.5	correct received header reading and improve error reporting on LCD
 	 * debug testing and loopbacks
@@ -93,6 +93,7 @@ extern "C" {
 		CODE_OFFLINE = 4,
 		CODE_DEBUG,
 		CODE_LOG,
+		CODE_LOAD,
 		CODE_ERR,
 	} P_CODES;
 
@@ -100,6 +101,7 @@ extern "C" {
 		DIS_STR = 0,
 		DIS_TERM,
 		DIS_LOG,
+		DIS_LOAD,
 		DIS_ERR,
 	} D_CODES;
 

@@ -106,6 +106,13 @@ extern "C" {
 		uint8_t length;
 	} header27;
 
+	typedef struct header33 {
+		uint16_t checksum;
+		uint8_t data[23];
+		block10 block;
+		uint8_t length;
+	} header33;
+
 	typedef struct header53 {
 		uint16_t checksum;
 		uint8_t data[43];

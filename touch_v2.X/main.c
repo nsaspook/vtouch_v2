@@ -359,6 +359,45 @@ header27 H27[] = {
 };
 #endif
 
+header33 H33[] = {
+	{ // S2F41 'ready load-lock ' command from host to equipment
+		.length = 33,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 41,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[22] = 0x01,
+		.data[21] = 0x02,
+		.data[20] = 0x41,
+		.data[19] = 0x02,
+		.data[18] = 0x31,
+		.data[17] = 0x37,
+		.data[16] = 0x01,
+		.data[15] = 0x01,
+		.data[14] = 0x01,
+		.data[13] = 0x02,
+		.data[12] = 0x41,
+		.data[11] = 0x08,
+		.data[10] = 0x4c,
+		.data[9] = 0x4f,
+		.data[8] = 0x41,
+		.data[7] = 0x44,
+		.data[6] = 0x4c,
+		.data[5] = 0x4f,
+		.data[4] = 0x43,
+		.data[3] = 0x4b,
+		.data[2] = 0xa5,
+		.data[1] = 0x01,
+		.data[0] = 0x01,
+	},
+};
+
 header53 H53[] = {
 	{ // S10F3 send 'terminal text display ' command from host to equipment
 		.length = 53,
@@ -506,10 +545,19 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	} else {
 		switch (V.response.info) {
 		case DIS_LOG:
-			sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq&0x03);
+			sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq & 0x03);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " Stored #%d      ", V.response.log_num);
+			V.buf[16] = 0;
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			break;
+		case DIS_LOAD:
+			sprintf(V.buf, " Ready LL    ");
+			V.buf[16] = 0;
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
