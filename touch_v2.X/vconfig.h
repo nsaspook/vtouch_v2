@@ -21,13 +21,9 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.13G"
+#define VER	"1.14G"
 	/*
-	 * 0.5	correct received header reading and improve error reporting on LCD
-	 * debug testing and loopbacks
-	 * 0.82	PRNG error message testing
-	 * 0.99 equipment terminal command parser
-	 * 1.00G first production release
+	 * 1.13G wafer load-lock control
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

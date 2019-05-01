@@ -592,8 +592,29 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.mcode == 'S' || V.response.mcode == 's')
 		return CODE_TS;
 
-	if (V.response.mcode == 'R' || V.response.mcode == 'r')
+	if (V.response.mcode == 'R' || V.response.mcode == 'r') { // ready load-lock control
+		if (V.response.cmdlen > 1) {
+			switch (V.response.mparm) { // port selection
+			case '1':
+			case '2':
+			case '3':
+			case 'A':
+			case 'B':
+			case 'C':
+			case 'a':
+			case 'b':
+			case 'c':
+				H33[0].data[0] = V.response.mparm & 0x03;
+				break;
+			default:
+				H33[0].data[0] = 0x01;
+				break;
+			}
+		} else {
+			H33[0].data[0] = 0x01;
+		}
 		return CODE_LOAD;
+	}
 
 	if (V.response.mcode == 'L' || V.response.mcode == 'l') {
 		sprintf(V.info, " Log file reset          ");
