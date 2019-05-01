@@ -28165,8 +28165,6 @@ void PMD_Initialize(void);
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
-
- const uint8_t VII80A[] = "A08IIV";
 # 27 "./eadog.h" 2
 
 
@@ -28947,10 +28945,10 @@ void main(void)
      V.r_l_state = LINK_STATE_IDLE;
      V.t_l_state = LINK_STATE_IDLE;
      V.s_state = SEQ_STATE_TX;
-     sprintf(V.buf, " OKQ#");
+     sprintf(V.buf, " OKQ%d", V.e_types);
     } else {
      V.s_state = SEQ_STATE_DONE;
-     sprintf(V.buf, " OK #");
+     sprintf(V.buf, " OK %d", V.e_types);
     }
     MyeaDogM_WriteStringAtPos(0, 11, V.buf);
     break;
@@ -29039,7 +29037,7 @@ void main(void)
     break;
    }
    if (V.debug)
-    sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+    sprintf(V.buf, " Equip type %d     ", V.e_types);
    else
     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
    V.buf[16] = 0;

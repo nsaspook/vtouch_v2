@@ -27444,8 +27444,6 @@ void PIN_MANAGER_Initialize (void);
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
-
- const uint8_t VII80A[] = "A08IIV";
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1
 # 33 "./eadog.h"

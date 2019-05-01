@@ -27690,8 +27690,6 @@ void PIN_MANAGER_Initialize (void);
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
-
- const uint8_t VII80A[] = "A08IIV";
 # 55 "mcc_generated_files/tmr6.c" 2
 # 1 "mcc_generated_files/../timers.h" 1
 # 11 "mcc_generated_files/../timers.h"

@@ -576,7 +576,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
 }
 
 /*
- * terminal response types
+ * terminal response types for equipment
  */
 P_CODES s10f1_opcmd(void)
 {
@@ -644,7 +644,7 @@ P_CODES s6f11_opcmd(void)
 }
 
 /*
- * parse stream and response codes into a message pointer and length to send in response
+ * parse stream and response codes into a message pointer and length to send message in response
  */
 response_type secs_II_message(uint8_t stream, uint8_t function)
 {
@@ -847,6 +847,9 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	return(block);
 }
 
+/*
+ * logger helper
+ */
 static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t *msg_data)
 {
 	uint16_t i = 0;
@@ -925,7 +928,8 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 }
 
 /*
- * parse received stream and response codes for host operational state
+ * parse received stream and response codes for host operational state and
+ * equipment model types
  */
 GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 {
@@ -947,9 +951,21 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 
 			break;
 			//#ifdef DB2
-		case 13:
-			if (H254[0].data[239] == VII80A[0]) {
-				equipment = GEM_VII80A;
+		case 13: // parse equipment model from comm request response
+			switch (H254[0].data[239]) {
+			case 'V':
+				switch (H254[0].data[238]) {
+				case 'I': // VII80A for Varian viision 80 non-plus
+					equipment = GEM_VII80A;
+					break;
+				default:
+					equipment = GEM_GENERIC;
+					break;
+				}
+				break;
+			default:
+				equipment = GEM_GENERIC;
+				break;
 			}
 			block = GEM_STATE_COMM;
 			V.ticker = 15;

@@ -27479,8 +27479,6 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
-
- const uint8_t VII80A[] = "A08IIV";
 # 31 "mcc_generated_files/ext_int.c" 2
 
 

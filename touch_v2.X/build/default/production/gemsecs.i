@@ -27635,8 +27635,6 @@ void PIN_MANAGER_Initialize (void);
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
-
- const uint8_t VII80A[] = "A08IIV";
 # 23 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
 # 50 "./mcc_generated_files/mcc.h"
@@ -29138,6 +29136,9 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  return(block);
 }
 
+
+
+
 static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t *msg_data)
 {
  uint16_t i = 0;
@@ -29218,6 +29219,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 
 
 
+
 GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 {
  static GEM_STATES block = GEM_STATE_DISABLE;
@@ -29239,8 +29241,20 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
    break;
 
   case 13:
-   if (H254[0].data[239] == VII80A[0]) {
-    equipment = GEM_VII80A;
+   switch (H254[0].data[239]) {
+   case 'V':
+    switch (H254[0].data[238]) {
+    case 'I':
+     equipment = GEM_VII80A;
+     break;
+    default:
+     equipment = GEM_GENERIC;
+     break;
+    }
+    break;
+   default:
+    equipment = GEM_GENERIC;
+    break;
    }
    block = GEM_STATE_COMM;
    V.ticker = 15;

@@ -199,8 +199,6 @@ extern "C" {
 		volatile uint8_t ticker;
 	} V_data;
 
-	const uint8_t VII80A[] = "A08IIV";
-
 #ifdef	__cplusplus
 }
 #endif
