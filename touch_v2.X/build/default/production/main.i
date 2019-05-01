@@ -28037,7 +28037,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 73 "./vconfig.h"
+# 74 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28106,6 +28106,12 @@ void PMD_Initialize(void);
  } GEM_STATES;
 
  typedef enum {
+  GEM_GENERIC = 0,
+  GEM_VII80A,
+  GEM_ERROR
+ } GEM_EQUIP;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -28142,6 +28148,7 @@ void PMD_Initialize(void);
   SEQ_STATES s_state;
   UI_STATES ui_state;
   GEM_STATES g_state;
+  GEM_EQUIP e_types;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -28158,6 +28165,8 @@ void PMD_Initialize(void);
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
+
+ const uint8_t VII80A[] = "A08IIV";
 # 27 "./eadog.h" 2
 
 
@@ -28343,6 +28352,7 @@ V_data V = {
  .msg_error = MSG_ERROR_RESET,
  .uart = 1,
  .g_state = GEM_STATE_DISABLE,
+ .e_types = GEM_GENERIC,
  .ticker = 45,
  .checksum_error = 0,
  .timer_error = 0,
@@ -28579,7 +28589,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 324 "main.c"
+# 325 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28598,7 +28608,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 362 "main.c"
+# 363 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -28869,7 +28879,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.14G");
+   sprintf(V.buf, " Version %s", "1.15G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);

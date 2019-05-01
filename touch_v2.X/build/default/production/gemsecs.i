@@ -27507,7 +27507,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 73 "./vconfig.h"
+# 74 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27576,6 +27576,12 @@ void PIN_MANAGER_Initialize (void);
  } GEM_STATES;
 
  typedef enum {
+  GEM_GENERIC = 0,
+  GEM_VII80A,
+  GEM_ERROR
+ } GEM_EQUIP;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -27612,6 +27618,7 @@ void PIN_MANAGER_Initialize (void);
   SEQ_STATES s_state;
   UI_STATES ui_state;
   GEM_STATES g_state;
+  GEM_EQUIP e_types;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -27628,6 +27635,8 @@ void PIN_MANAGER_Initialize (void);
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
+
+ const uint8_t VII80A[] = "A08IIV";
 # 23 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
 # 50 "./mcc_generated_files/mcc.h"
@@ -28849,7 +28858,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.14G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.15G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -28970,11 +28979,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    block.reply_length = sizeof(header12);
    V.queue = 1;
    break;
-  case 14:
-   block.header = (uint8_t*) & H12[1];
-   block.length = sizeof(header12);
-   H12[1].block.block.systemb = V.systemb;
-   break;
+
+
+
+
+
   default:
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
@@ -29212,6 +29221,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 {
  static GEM_STATES block = GEM_STATE_DISABLE;
+ static GEM_EQUIP equipment = GEM_GENERIC;
 
  switch (stream) {
  case 1:
@@ -29228,7 +29238,13 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 
    break;
 
-
+  case 13:
+   if (H254[0].data[239] == VII80A[0]) {
+    equipment = GEM_VII80A;
+   }
+   block = GEM_STATE_COMM;
+   V.ticker = 15;
+   break;
 
   case 14:
    block = GEM_STATE_COMM;
@@ -29282,5 +29298,6 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
   break;
  }
 
+ V.e_types = equipment;
  return(block);
 }

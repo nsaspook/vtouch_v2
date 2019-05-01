@@ -27325,7 +27325,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 73 "./vconfig.h"
+# 74 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27394,6 +27394,12 @@ void PIN_MANAGER_Initialize (void);
  } GEM_STATES;
 
  typedef enum {
+  GEM_GENERIC = 0,
+  GEM_VII80A,
+  GEM_ERROR
+ } GEM_EQUIP;
+
+ typedef enum {
   LINK_STATE_IDLE = 0,
   LINK_STATE_ENQ,
   LINK_STATE_EOT,
@@ -27430,6 +27436,7 @@ void PIN_MANAGER_Initialize (void);
   SEQ_STATES s_state;
   UI_STATES ui_state;
   GEM_STATES g_state;
+  GEM_EQUIP e_types;
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
@@ -27446,6 +27453,8 @@ void PIN_MANAGER_Initialize (void);
   uint8_t uart;
   volatile uint8_t ticker;
  } V_data;
+
+ const uint8_t VII80A[] = "A08IIV";
 # 54 "mcc_generated_files/dma1.c" 2
 
 

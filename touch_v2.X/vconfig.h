@@ -21,9 +21,10 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.14G"
+#define VER	"1.15G"
 	/*
 	 * 1.13G wafer load-lock control
+	 * 1.15 add specific equipment types V.e_types
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -138,6 +139,12 @@ extern "C" {
 	} GEM_STATES;
 
 	typedef enum {
+		GEM_GENERIC = 0,
+		GEM_VII80A,
+		GEM_ERROR
+	} GEM_EQUIP;
+
+	typedef enum {
 		LINK_STATE_IDLE = 0,
 		LINK_STATE_ENQ,
 		LINK_STATE_EOT,
@@ -174,6 +181,7 @@ extern "C" {
 		SEQ_STATES s_state;
 		UI_STATES ui_state;
 		GEM_STATES g_state;
+		GEM_EQUIP e_types;
 		LINK_STATES m_l_state;
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
@@ -190,6 +198,9 @@ extern "C" {
 		uint8_t uart;
 		volatile uint8_t ticker;
 	} V_data;
+
+	const uint8_t VII80A[] = "A08IIV";
+
 #ifdef	__cplusplus
 }
 #endif

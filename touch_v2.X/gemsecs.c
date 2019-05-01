@@ -688,11 +688,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.reply_length = sizeof(header12);
 			V.queue = true;
 			break;
-		case 14: // S1F13 response
-			block.header = (uint8_t*) & H12[1];
-			block.length = sizeof(header12);
-			H12[1].block.block.systemb = V.systemb;
-			break;
+			//		case 14: // model and rev information
+			//			block.header = (uint8_t*) & H12[1];
+			//			block.length = sizeof(header12);
+			//			H12[1].block.block.systemb = V.systemb;
+			//			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
@@ -930,6 +930,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 {
 	static GEM_STATES block = GEM_STATE_DISABLE;
+	static GEM_EQUIP equipment = GEM_GENERIC;
 
 	switch (stream) { // from equipment
 	case 1:
@@ -945,9 +946,15 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 			V.ticker = 0;
 
 			break;
-#ifdef DB2
+			//#ifdef DB2
 		case 13:
-#endif
+			if (H254[0].data[239] == VII80A[0]) {
+				equipment = GEM_VII80A;
+			}
+			block = GEM_STATE_COMM;
+			V.ticker = 15;
+			break;
+			//#endif
 		case 14:
 			block = GEM_STATE_COMM;
 			V.ticker = 15;
@@ -1000,5 +1007,6 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 		break;
 	}
 
+	V.e_types = equipment;
 	return(block);
 }
