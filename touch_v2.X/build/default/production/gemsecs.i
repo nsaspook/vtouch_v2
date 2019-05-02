@@ -28533,7 +28533,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 LINK_STATES r_protocol(LINK_STATES * r_link)
 {
  uint8_t rxData;
- static uint8_t rxData_l = 0, retry = 3, *b_block;
+ static uint8_t rxData_l = 0, retry = 3, *b_block, d = 1;
 
  switch (*r_link) {
  case LINK_STATE_IDLE:
@@ -28548,6 +28548,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_ENQ:
   rxData_l = 0;
+  d = 1;
   b_block = (uint8_t*) & H254[0];
   UART1_Write(0x04);
   StartTimer(TMR_T2, 2000);
@@ -28585,28 +28586,13 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
      if (rxData_l <= sizeof(block10))
       H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
 
-
-     if (rxData_l == sizeof(block10) + 1)
-      V.response.ack[0] = rxData;
-     if (rxData_l == sizeof(block10) + 2)
-      V.response.ack[1] = rxData;
-     if (rxData_l == sizeof(block10) + 3)
-      V.response.ack[2] = rxData;
-     if (rxData_l == sizeof(block10) + 4)
-      V.response.ack[3] = rxData;
-     if (rxData_l == sizeof(block10) + 5)
-      V.response.ack[4] = rxData;
-     if (rxData_l == sizeof(block10) + 6)
-      V.response.ack[5] = rxData;
-     if (rxData_l == sizeof(block10) + 7)
-      V.response.ack[6] = rxData;
-     if (rxData_l == sizeof(block10) + 8)
-      V.response.ack[7] = rxData;
-     if (rxData_l == sizeof(block10) + 9)
-      V.response.ack[8] = rxData;
-     if (rxData_l == sizeof(block10) + 10)
-      V.response.ack[9] = rxData;
-
+     if (d <= 16) {
+      if (rxData_l == sizeof(block10) + d) {
+       V.response.ack[d - 1] = rxData;
+       d++;
+      }
+     }
+# 330 "gemsecs.c"
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
 
@@ -29241,9 +29227,9 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
    break;
 
   case 13:
-   switch (H254[0].data[239]) {
+   switch (V.response.ack[4]) {
    case 'V':
-    switch (H254[0].data[238]) {
+    switch (V.response.ack[5]) {
     case 'I':
      equipment = GEM_VII80A;
      break;

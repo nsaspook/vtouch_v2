@@ -244,7 +244,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 LINK_STATES r_protocol(LINK_STATES * r_link)
 {
 	uint8_t rxData;
-	static uint8_t rxData_l = 0, retry = RTY, *b_block;
+	static uint8_t rxData_l = 0, retry = RTY, *b_block, d = 1;
 
 	switch (*r_link) {
 	case LINK_STATE_IDLE:
@@ -258,7 +258,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		}
 		break;
 	case LINK_STATE_ENQ:
-		rxData_l = 0;
+		rxData_l = 0; // message byte counter
+		d = 1; // data byte counter
 		b_block = (uint8_t*) & H254[0];
 		UART1_Write(EOT);
 		StartTimer(TMR_T2, T2);
@@ -296,8 +297,15 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 					if (rxData_l <= sizeof(block10)) // save header only
 						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
 
-					//FIXME make proper loop
-					if (rxData_l == sizeof(block10) + 1) // save possible data format codes
+					if (d <= 16) {
+						if (rxData_l == sizeof(block10) + d) { // save possible data format codes
+							V.response.ack[d - 1] = rxData;
+							d++;
+						}
+					}
+
+					/*
+					if (rxData_l == sizeof(block10) + 1)
 						V.response.ack[0] = rxData;
 					if (rxData_l == sizeof(block10) + 2)
 						V.response.ack[1] = rxData;
@@ -317,6 +325,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 						V.response.ack[8] = rxData;
 					if (rxData_l == sizeof(block10) + 10)
 						V.response.ack[9] = rxData;
+					 * */
 
 					if (rxData_l <= r_block.length) // generate checksum from data stream
 						V.r_checksum = run_checksum(rxData, false);
@@ -952,9 +961,9 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 			break;
 			//#ifdef DB2
 		case 13: // parse equipment model from comm request response
-			switch (H254[0].data[239]) {
+			switch (V.response.ack[4]) {
 			case 'V':
-				switch (H254[0].data[238]) {
+				switch (V.response.ack[5]) {
 				case 'I': // VII80A for Varian viision 80 non-plus
 					equipment = GEM_VII80A;
 					break;
