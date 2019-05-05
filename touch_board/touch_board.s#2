@@ -12271,10 +12271,17 @@ low cost miniature fiber optic component, 5-MBd high performance link, vertical<
 <wire x1="73.66" y1="-2.54" x2="73.66" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="-12.7" x2="60.96" y2="-12.7" width="0.1524" layer="91"/>
 <junction x="73.66" y="-2.54"/>
-<wire x1="60.96" y1="-12.7" x2="60.96" y2="-40.64" width="0.1524" layer="91"/>
 <pinref part="S1" gate="G$1" pin="6"/>
+<wire x1="60.96" y1="-15.24" x2="60.96" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="-40.64" x2="45.72" y2="-40.64" width="0.1524" layer="91"/>
 <junction x="45.72" y="-40.64"/>
+<pinref part="SV7" gate="G$1" pin="8"/>
+<wire x1="30.48" y1="12.7" x2="2.54" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="2.54" y1="12.7" x2="2.54" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="2.54" y1="-12.7" x2="60.96" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="-12.7" x2="60.96" y2="-15.24" width="0.1524" layer="91"/>
+<junction x="60.96" y="-12.7"/>
+<junction x="30.48" y="12.7"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -12289,6 +12296,14 @@ low cost miniature fiber optic component, 5-MBd high performance link, vertical<
 <wire x1="20.32" y1="-40.64" x2="25.4" y2="-40.64" width="0.1524" layer="91"/>
 <pinref part="S1" gate="G$1" pin="3"/>
 <junction x="25.4" y="-40.64"/>
+<pinref part="SV7" gate="G$1" pin="7"/>
+<wire x1="45.72" y1="12.7" x2="55.88" y2="12.7" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="12.7" x2="55.88" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="20.32" x2="17.78" y2="20.32" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="20.32" x2="17.78" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="-10.16" x2="55.88" y2="-10.16" width="0.1524" layer="91"/>
+<junction x="45.72" y="12.7"/>
+<junction x="55.88" y="-10.16"/>
 </segment>
 </net>
 <net name="N$4" class="0">
