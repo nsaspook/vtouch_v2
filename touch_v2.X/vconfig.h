@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.16G"
+#define VER	"1.17G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -91,6 +91,7 @@ extern "C" {
 		CODE_DEBUG,
 		CODE_LOG,
 		CODE_LOAD,
+		CODE_UNLOAD,
 		CODE_ERR,
 	} P_CODES;
 
@@ -99,6 +100,7 @@ extern "C" {
 		DIS_TERM,
 		DIS_LOG,
 		DIS_LOAD,
+		DIS_UNLOAD,
 		DIS_ERR,
 	} D_CODES;
 

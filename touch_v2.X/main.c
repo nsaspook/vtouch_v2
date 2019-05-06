@@ -563,6 +563,15 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
+		case DIS_UNLOAD:
+			sprintf(V.buf, " Open LL    ");
+			V.buf[16] = 0;
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+			V.buf[16] = 0;
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			break;
 		case DIS_TERM:
 		default:
 			sprintf(V.buf, " Terminal %d             ", V.response.TID);

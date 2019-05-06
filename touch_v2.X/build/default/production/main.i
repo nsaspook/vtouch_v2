@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28058,6 +28058,7 @@ void PMD_Initialize(void);
   CODE_DEBUG,
   CODE_LOG,
   CODE_LOAD,
+  CODE_UNLOAD,
   CODE_ERR,
  } P_CODES;
 
@@ -28066,6 +28067,7 @@ void PMD_Initialize(void);
   DIS_TERM,
   DIS_LOG,
   DIS_LOAD,
+  DIS_UNLOAD,
   DIS_ERR,
  } D_CODES;
 
@@ -28811,6 +28813,15 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
+  case DIS_UNLOAD:
+   sprintf(V.buf, " Open LL    ");
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
   case DIS_TERM:
   default:
    sprintf(V.buf, " Terminal %d             ", V.response.TID);
@@ -28878,7 +28889,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.16G");
+   sprintf(V.buf, " Version %s", "1.17G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);

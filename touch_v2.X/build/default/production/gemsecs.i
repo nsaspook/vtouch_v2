@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27531,6 +27528,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_DEBUG,
   CODE_LOG,
   CODE_LOAD,
+  CODE_UNLOAD,
   CODE_ERR,
  } P_CODES;
 
@@ -27539,6 +27537,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_TERM,
   DIS_LOG,
   DIS_LOAD,
+  DIS_UNLOAD,
   DIS_ERR,
  } D_CODES;
 
@@ -28846,7 +28845,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.16G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.17G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -28907,6 +28906,44 @@ P_CODES s10f1_opcmd(void)
   }
 
   return CODE_LOAD;
+ }
+
+ if (V.response.mcode == 'O' || V.response.mcode == 'o') {
+  if (V.response.cmdlen > 1) {
+   switch (V.response.mparm) {
+   case '1':
+   case '2':
+   case '3':
+   case 'A':
+   case 'B':
+   case 'C':
+   case 'a':
+   case 'b':
+   case 'c':
+    H33[0].data[0] = V.response.mparm & 0x03;
+    break;
+   default:
+    H33[0].data[0] = 0x01;
+    break;
+   }
+  } else {
+   H33[0].data[0] = 0x01;
+  }
+
+  switch (V.e_types) {
+  case GEM_VII80:
+   H33[0].data[18] = '1';
+   H33[0].data[17] = '7';
+   break;
+  case GEM_E220:
+   H33[0].data[18] = '1';
+   H33[0].data[17] = '0';
+   break;
+  default:
+   break;
+  }
+
+  return CODE_UNLOAD;
  }
 
  if (V.response.mcode == 'L' || V.response.mcode == 'l') {
@@ -29098,6 +29135,13 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
     block.reply_length = sizeof(header33);
     V.queue = 1;
     V.response.info = DIS_LOAD;
+    break;
+   case CODE_UNLOAD:
+    block.respond = 1;
+    block.reply = (uint8_t*) & H33[0];
+    block.reply_length = sizeof(header33);
+    V.queue = 1;
+    V.response.info = DIS_UNLOAD;
     break;
    case CODE_TS:
     block.respond = 1;
