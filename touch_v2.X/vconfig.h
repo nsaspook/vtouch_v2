@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.15G"
+#define VER	"1.16G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -140,7 +140,8 @@ extern "C" {
 
 	typedef enum {
 		GEM_GENERIC = 0,
-		GEM_VII80A,
+		GEM_VII80,
+		GEM_E220,
 		GEM_ERROR
 	} GEM_EQUIP;
 

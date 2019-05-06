@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27386,7 +27386,8 @@ void PIN_MANAGER_Initialize (void);
 
  typedef enum {
   GEM_GENERIC = 0,
-  GEM_VII80A,
+  GEM_VII80,
+  GEM_E220,
   GEM_ERROR
  } GEM_EQUIP;
 

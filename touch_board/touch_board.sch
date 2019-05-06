@@ -11376,135 +11376,6 @@ low cost miniature fiber optic component, 5-MBd high performance link, vertical<
 </deviceset>
 </devicesets>
 </library>
-<library name="switch-omron" urn="urn:adsk.eagle:library:377">
-<description>&lt;b&gt;Omron Switches&lt;/b&gt;&lt;p&gt;
-&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
-<packages>
-<package name="B3F-10XX" urn="urn:adsk.eagle:footprint:27476/1" library_version="2">
-<description>&lt;b&gt;OMRON SWITCH&lt;/b&gt;</description>
-<wire x1="3.302" y1="-0.762" x2="3.048" y2="-0.762" width="0.1524" layer="21"/>
-<wire x1="3.302" y1="-0.762" x2="3.302" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="3.048" y1="0.762" x2="3.302" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="3.048" y1="1.016" x2="3.048" y2="2.54" width="0.1524" layer="51"/>
-<wire x1="-3.302" y1="0.762" x2="-3.048" y2="0.762" width="0.1524" layer="21"/>
-<wire x1="-3.302" y1="0.762" x2="-3.302" y2="-0.762" width="0.1524" layer="21"/>
-<wire x1="-3.048" y1="-0.762" x2="-3.302" y2="-0.762" width="0.1524" layer="21"/>
-<wire x1="3.048" y1="2.54" x2="2.54" y2="3.048" width="0.1524" layer="51"/>
-<wire x1="2.54" y1="-3.048" x2="3.048" y2="-2.54" width="0.1524" layer="51"/>
-<wire x1="3.048" y1="-2.54" x2="3.048" y2="-1.016" width="0.1524" layer="51"/>
-<wire x1="-2.54" y1="3.048" x2="-3.048" y2="2.54" width="0.1524" layer="51"/>
-<wire x1="-3.048" y1="2.54" x2="-3.048" y2="1.016" width="0.1524" layer="51"/>
-<wire x1="-2.54" y1="-3.048" x2="-3.048" y2="-2.54" width="0.1524" layer="51"/>
-<wire x1="-3.048" y1="-2.54" x2="-3.048" y2="-1.016" width="0.1524" layer="51"/>
-<wire x1="-1.27" y1="1.27" x2="-1.27" y2="-1.27" width="0.0508" layer="51"/>
-<wire x1="1.27" y1="-1.27" x2="-1.27" y2="-1.27" width="0.0508" layer="51"/>
-<wire x1="1.27" y1="-1.27" x2="1.27" y2="1.27" width="0.0508" layer="51"/>
-<wire x1="-1.27" y1="1.27" x2="1.27" y2="1.27" width="0.0508" layer="51"/>
-<wire x1="-1.27" y1="3.048" x2="-1.27" y2="2.794" width="0.0508" layer="21"/>
-<wire x1="1.27" y1="2.794" x2="-1.27" y2="2.794" width="0.0508" layer="21"/>
-<wire x1="1.27" y1="2.794" x2="1.27" y2="3.048" width="0.0508" layer="21"/>
-<wire x1="1.143" y1="-2.794" x2="-1.27" y2="-2.794" width="0.0508" layer="21"/>
-<wire x1="1.143" y1="-2.794" x2="1.143" y2="-3.048" width="0.0508" layer="21"/>
-<wire x1="-1.27" y1="-2.794" x2="-1.27" y2="-3.048" width="0.0508" layer="21"/>
-<wire x1="2.54" y1="-3.048" x2="2.159" y2="-3.048" width="0.1524" layer="51"/>
-<wire x1="-2.54" y1="-3.048" x2="-2.159" y2="-3.048" width="0.1524" layer="51"/>
-<wire x1="-2.159" y1="-3.048" x2="-1.27" y2="-3.048" width="0.1524" layer="21"/>
-<wire x1="-2.54" y1="3.048" x2="-2.159" y2="3.048" width="0.1524" layer="51"/>
-<wire x1="2.54" y1="3.048" x2="2.159" y2="3.048" width="0.1524" layer="51"/>
-<wire x1="2.159" y1="3.048" x2="1.27" y2="3.048" width="0.1524" layer="21"/>
-<wire x1="1.27" y1="3.048" x2="-1.27" y2="3.048" width="0.1524" layer="21"/>
-<wire x1="-1.27" y1="3.048" x2="-2.159" y2="3.048" width="0.1524" layer="21"/>
-<wire x1="-1.27" y1="-3.048" x2="1.143" y2="-3.048" width="0.1524" layer="21"/>
-<wire x1="1.143" y1="-3.048" x2="2.159" y2="-3.048" width="0.1524" layer="21"/>
-<wire x1="3.048" y1="-0.762" x2="3.048" y2="-1.016" width="0.1524" layer="21"/>
-<wire x1="3.048" y1="0.762" x2="3.048" y2="1.016" width="0.1524" layer="21"/>
-<wire x1="-3.048" y1="-0.762" x2="-3.048" y2="-1.016" width="0.1524" layer="21"/>
-<wire x1="-3.048" y1="0.762" x2="-3.048" y2="1.016" width="0.1524" layer="21"/>
-<wire x1="-1.27" y1="-2.159" x2="1.27" y2="-2.159" width="0.1524" layer="51"/>
-<wire x1="1.27" y1="2.286" x2="-1.27" y2="2.286" width="0.1524" layer="51"/>
-<wire x1="-2.413" y1="1.27" x2="-2.413" y2="0.508" width="0.1524" layer="51"/>
-<wire x1="-2.413" y1="-0.508" x2="-2.413" y2="-1.27" width="0.1524" layer="51"/>
-<wire x1="-2.413" y1="0.508" x2="-2.159" y2="-0.381" width="0.1524" layer="51"/>
-<circle x="0" y="0" radius="1.778" width="0.1524" layer="21"/>
-<circle x="-2.159" y="-2.159" radius="0.508" width="0.1524" layer="51"/>
-<circle x="2.159" y="-2.032" radius="0.508" width="0.1524" layer="51"/>
-<circle x="2.159" y="2.159" radius="0.508" width="0.1524" layer="51"/>
-<circle x="-2.159" y="2.159" radius="0.508" width="0.1524" layer="51"/>
-<circle x="0" y="0" radius="0.635" width="0.0508" layer="51"/>
-<circle x="0" y="0" radius="0.254" width="0.1524" layer="21"/>
-<pad name="1" x="-3.2512" y="2.2606" drill="1.016" shape="long"/>
-<pad name="3" x="-3.2512" y="-2.2606" drill="1.016" shape="long"/>
-<pad name="2" x="3.2512" y="2.2606" drill="1.016" shape="long"/>
-<pad name="4" x="3.2512" y="-2.2606" drill="1.016" shape="long"/>
-<text x="-3.048" y="3.683" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="-3.048" y="-5.08" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
-<text x="-4.318" y="1.651" size="1.27" layer="51" ratio="10">1</text>
-<text x="3.556" y="1.524" size="1.27" layer="51" ratio="10">2</text>
-<text x="-4.572" y="-2.794" size="1.27" layer="51" ratio="10">3</text>
-<text x="3.556" y="-2.794" size="1.27" layer="51" ratio="10">4</text>
-</package>
-</packages>
-<packages3d>
-<package3d name="B3F-10XX" urn="urn:adsk.eagle:package:27496/1" type="box" library_version="2">
-<description>OMRON SWITCH</description>
-<packageinstances>
-<packageinstance name="B3F-10XX"/>
-</packageinstances>
-</package3d>
-</packages3d>
-<symbols>
-<symbol name="TS2" urn="urn:adsk.eagle:symbol:27469/1" library_version="2">
-<wire x1="0" y1="1.905" x2="0" y2="2.54" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="1.905" x2="-3.175" y2="1.905" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="-1.905" x2="-3.175" y2="-1.905" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="1.905" x2="-4.445" y2="0" width="0.254" layer="94"/>
-<wire x1="-4.445" y1="0" x2="-4.445" y2="-1.905" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="0" x2="-1.905" y2="0" width="0.1524" layer="94"/>
-<wire x1="-1.27" y1="0" x2="-0.635" y2="0" width="0.1524" layer="94"/>
-<wire x1="-4.445" y1="0" x2="-3.175" y2="0" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="2.54" x2="0" y2="2.54" width="0.1524" layer="94"/>
-<wire x1="2.54" y1="-2.54" x2="0" y2="-2.54" width="0.1524" layer="94"/>
-<wire x1="0" y1="-2.54" x2="-1.27" y2="1.905" width="0.254" layer="94"/>
-<circle x="0" y="-2.54" radius="0.127" width="0.4064" layer="94"/>
-<circle x="0" y="2.54" radius="0.127" width="0.4064" layer="94"/>
-<text x="-6.35" y="-2.54" size="1.778" layer="95" rot="R90">&gt;NAME</text>
-<text x="-3.81" y="3.175" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
-<pin name="P" x="0" y="-5.08" visible="pad" length="short" direction="pas" swaplevel="2" rot="R90"/>
-<pin name="S" x="0" y="5.08" visible="pad" length="short" direction="pas" swaplevel="1" rot="R270"/>
-<pin name="S1" x="2.54" y="5.08" visible="pad" length="short" direction="pas" swaplevel="1" rot="R270"/>
-<pin name="P1" x="2.54" y="-5.08" visible="pad" length="short" direction="pas" swaplevel="2" rot="R90"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="10-XX" urn="urn:adsk.eagle:component:27498/1" prefix="S" uservalue="yes" library_version="2">
-<description>&lt;b&gt;OMRON SWITCH&lt;/b&gt;</description>
-<gates>
-<gate name="1" symbol="TS2" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="B3F-10XX">
-<connects>
-<connect gate="1" pin="P" pad="3"/>
-<connect gate="1" pin="P1" pad="4"/>
-<connect gate="1" pin="S" pad="1"/>
-<connect gate="1" pin="S1" pad="2"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:27496/1"/>
-</package3dinstances>
-<technologies>
-<technology name="">
-<attribute name="MF" value="" constant="no"/>
-<attribute name="MPN" value="B3F-1000" constant="no"/>
-<attribute name="OC_FARNELL" value="176432" constant="no"/>
-<attribute name="OC_NEWARK" value="36M3542" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="relay" urn="urn:adsk.eagle:library:339">
 <description>&lt;b&gt;Relays&lt;/b&gt;&lt;p&gt;
 &lt;ul&gt;
@@ -14456,6 +14327,84 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="SamacSys_Parts">
+<description>&lt;b&gt;https://componentsearchengine.com&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by SamacSys&lt;/author&gt;</description>
+<packages>
+<package name="B3W-9_1-LED">
+<description>&lt;b&gt;B3W-9_1-LED&lt;/b&gt;&lt;br&gt;
+</description>
+<pad name="1" x="3.25" y="-2.25" drill="1.1" diameter="1.65"/>
+<pad name="2" x="-3.25" y="-2.25" drill="1.1" diameter="1.65"/>
+<pad name="3" x="3.25" y="2.25" drill="1.1" diameter="1.65"/>
+<pad name="4" x="-3.25" y="2.25" drill="1.1" diameter="1.65"/>
+<pad name="5" x="0" y="3.6" drill="1.1" diameter="1.65"/>
+<pad name="6" x="3.6" y="0" drill="1.1" diameter="1.65"/>
+<text x="-0.406990625" y="-0.0433" size="1.27" layer="25" align="center">&gt;NAME</text>
+<text x="-0.406990625" y="-0.0433" size="1.27" layer="27" align="center">&gt;VALUE</text>
+<wire x1="-5" y1="5" x2="5" y2="5" width="0.2" layer="51"/>
+<wire x1="5" y1="5" x2="5" y2="-5" width="0.2" layer="51"/>
+<wire x1="5" y1="-5" x2="-5" y2="-5" width="0.2" layer="51"/>
+<wire x1="-5" y1="-5" x2="-5" y2="5" width="0.2" layer="51"/>
+<wire x1="-5" y1="5" x2="-5" y2="-5" width="0.2" layer="21"/>
+<wire x1="-5" y1="-5" x2="5" y2="-5" width="0.2" layer="21"/>
+<wire x1="5" y1="-5" x2="5" y2="5" width="0.2" layer="21"/>
+<wire x1="5" y1="5" x2="-5" y2="5" width="0.2" layer="21"/>
+<circle x="5.623" y="-2.318" radius="0.045" width="0.2" layer="25"/>
+</package>
+</packages>
+<symbols>
+<symbol name="B3W-9000-Y1N">
+<wire x1="5.08" y1="2.54" x2="15.24" y2="2.54" width="0.254" layer="94"/>
+<wire x1="15.24" y1="-7.62" x2="15.24" y2="2.54" width="0.254" layer="94"/>
+<wire x1="15.24" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="2.54" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<text x="16.51" y="7.62" size="1.778" layer="95" align="center-left">&gt;NAME</text>
+<text x="16.51" y="5.08" size="1.778" layer="96" align="center-left">&gt;VALUE</text>
+<pin name="1" x="0" y="0" length="middle"/>
+<pin name="2" x="0" y="-2.54" length="middle"/>
+<pin name="3" x="0" y="-5.08" length="middle"/>
+<pin name="4" x="20.32" y="0" length="middle" rot="R180"/>
+<pin name="+" x="20.32" y="-2.54" length="middle" rot="R180"/>
+<pin name="-" x="20.32" y="-5.08" length="middle" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="B3W-9000-Y1N" prefix="S">
+<description>&lt;b&gt;Illuminated Tactile Switches Illuminated Ylw LED White Cap&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="http://www.mouser.com/ds/2/307/en-b3w-9-11824.pdf"&gt; Datasheet &lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="B3W-9000-Y1N" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="B3W-9_1-LED">
+<connects>
+<connect gate="G$1" pin="+" pad="5"/>
+<connect gate="G$1" pin="-" pad="6"/>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="ALLIED_NUMBER" value="70176005" constant="no"/>
+<attribute name="ALLIED_PRICE-STOCK" value="https://www.alliedelec.com/omron-electronic-components-b3w-9000-y1n/70176005/" constant="no"/>
+<attribute name="DESCRIPTION" value="Illuminated Tactile Switches Illuminated Ylw LED White Cap" constant="no"/>
+<attribute name="HEIGHT" value="mm" constant="no"/>
+<attribute name="MANUFACTURER_NAME" value="Omron Electronics" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="B3W-9000-Y1N" constant="no"/>
+<attribute name="MOUSER_PART_NUMBER" value="653-B3W-9000-Y1N" constant="no"/>
+<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.com/Search/Refine.aspx?Keyword=653-B3W-9000-Y1N" constant="no"/>
+<attribute name="RS_PART_NUMBER" value="0492777P" constant="no"/>
+<attribute name="RS_PRICE-STOCK" value="http://uk.rs-online.com/web/p/products/0492777P" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -14500,8 +14449,6 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <part name="VDD7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="VSS9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:23553/2" value="220"/>
-<part name="LED1" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_1206" package3d_urn="urn:adsk.eagle:package:15823/2" value="RUN"/>
-<part name="VSS10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="LED2" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_1206" package3d_urn="urn:adsk.eagle:package:15823/2" value="MODE"/>
 <part name="VSS11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="R7" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:23553/2" value="220"/>
@@ -14544,7 +14491,6 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <part name="SV7" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA05-2" device="" package3d_urn="urn:adsk.eagle:package:8329/1" value="IO1"/>
 <part name="VSS19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VDD12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
-<part name="S2" library="switch-omron" library_urn="urn:adsk.eagle:library:377" deviceset="10-XX" device="" package3d_urn="urn:adsk.eagle:package:27496/1" value="RESET_PB"/>
 <part name="X4" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2021" device="" package3d_urn="urn:adsk.eagle:package:8078633/1" value="GLORY"/>
 <part name="VSS20" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="K1" library="relay" library_urn="urn:adsk.eagle:library:339" deviceset="G6K" device="-2P" package3d_urn="urn:adsk.eagle:package:24346/1"/>
@@ -14559,6 +14505,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <part name="F1" library="polyfuse-smd_10" deviceset="?" device="1206L" technology="050"/>
 <part name="D1" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="ZENER-DIODE" device="ZD-7.5" package3d_urn="urn:adsk.eagle:package:43411/1" value="5.6V"/>
 <part name="VSS23" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="S3" library="SamacSys_Parts" deviceset="B3W-9000-Y1N" device="" value="RESETSW"/>
+<part name="VSS24" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="VSS25" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -14682,13 +14631,6 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <instance part="R5" gate="G$1" x="165.1" y="-27.94" smashed="yes" rot="R90">
 <attribute name="NAME" x="163.6014" y="-31.75" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="168.402" y="-31.75" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="LED1" gate="G$1" x="165.1" y="-35.56" smashed="yes">
-<attribute name="NAME" x="168.656" y="-40.132" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="170.815" y="-40.132" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="VSS10" gate="G$1" x="165.1" y="-43.18" smashed="yes">
-<attribute name="VALUE" x="162.56" y="-48.26" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="LED2" gate="G$1" x="78.74" y="86.36" smashed="yes">
 <attribute name="NAME" x="82.296" y="81.788" size="1.778" layer="95" rot="R90"/>
@@ -14855,10 +14797,6 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <instance part="VDD12" gate="G$1" x="45.72" y="17.78" smashed="yes">
 <attribute name="VALUE" x="43.18" y="15.24" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="S2" gate="1" x="129.54" y="-40.64" smashed="yes">
-<attribute name="NAME" x="123.19" y="-43.18" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="125.73" y="-37.465" size="1.778" layer="96" rot="R90"/>
-</instance>
 <instance part="X4" gate="-1" x="99.06" y="-53.34" smashed="yes">
 <attribute name="NAME" x="101.6" y="-54.102" size="1.524" layer="95"/>
 <attribute name="VALUE" x="98.298" y="-51.943" size="1.778" layer="96"/>
@@ -14938,6 +14876,16 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <instance part="VSS23" gate="G$1" x="137.16" y="-55.88" smashed="yes" rot="R90">
 <attribute name="VALUE" x="142.24" y="-58.42" size="1.778" layer="96" rot="R180"/>
 </instance>
+<instance part="S3" gate="G$1" x="165.1" y="-53.34" smashed="yes">
+<attribute name="NAME" x="181.61" y="-45.72" size="1.778" layer="95" align="center-left"/>
+<attribute name="VALUE" x="181.61" y="-48.26" size="1.778" layer="96" align="center-left"/>
+</instance>
+<instance part="VSS24" gate="G$1" x="165.1" y="-60.96" smashed="yes">
+<attribute name="VALUE" x="162.56" y="-66.04" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS25" gate="G$1" x="185.42" y="-60.96" smashed="yes">
+<attribute name="VALUE" x="182.88" y="-66.04" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -15007,11 +14955,6 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <junction x="137.16" y="-12.7"/>
 </segment>
 <segment>
-<pinref part="LED1" gate="G$1" pin="C"/>
-<pinref part="VSS10" gate="G$1" pin="VSS"/>
-<junction x="165.1" y="-40.64"/>
-</segment>
-<segment>
 <pinref part="LED2" gate="G$1" pin="C"/>
 <pinref part="VSS11" gate="G$1" pin="VSS"/>
 <junction x="78.74" y="81.28"/>
@@ -15022,13 +14965,8 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <pinref part="VSS12" gate="G$1" pin="VSS"/>
 <pinref part="SV3" gate="G$1" pin="3"/>
 <junction x="137.16" y="-40.64"/>
-<wire x1="137.16" y1="-40.64" x2="137.16" y2="-45.72" width="0.1524" layer="91"/>
+<wire x1="137.16" y1="-40.64" x2="137.16" y2="-48.26" width="0.1524" layer="91"/>
 <junction x="137.16" y="-38.1"/>
-<pinref part="S2" gate="1" pin="P1"/>
-<wire x1="137.16" y1="-45.72" x2="137.16" y2="-48.26" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="-45.72" x2="137.16" y2="-45.72" width="0.1524" layer="91"/>
-<junction x="132.08" y="-45.72"/>
-<junction x="137.16" y="-45.72"/>
 </segment>
 <segment>
 <pinref part="X3" gate="-2" pin="S"/>
@@ -15091,6 +15029,21 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <pinref part="VSS23" gate="G$1" pin="VSS"/>
 <wire x1="134.62" y1="-55.88" x2="132.08" y2="-55.88" width="0.1524" layer="91"/>
 <junction x="134.62" y="-55.88"/>
+</segment>
+<segment>
+<pinref part="S3" gate="G$1" pin="3"/>
+<pinref part="VSS24" gate="G$1" pin="VSS"/>
+<junction x="165.1" y="-58.42"/>
+</segment>
+<segment>
+<pinref part="S3" gate="G$1" pin="-"/>
+<pinref part="VSS25" gate="G$1" pin="VSS"/>
+<junction x="185.42" y="-58.42"/>
+<pinref part="S3" gate="G$1" pin="4"/>
+<wire x1="185.42" y1="-53.34" x2="187.96" y2="-53.34" width="0.1524" layer="91"/>
+<wire x1="187.96" y1="-53.34" x2="187.96" y2="-58.42" width="0.1524" layer="91"/>
+<wire x1="187.96" y1="-58.42" x2="185.42" y2="-58.42" width="0.1524" layer="91"/>
+<junction x="185.42" y="-53.34"/>
 </segment>
 </net>
 <net name="VDD" class="0">
@@ -15285,13 +15238,22 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <junction x="83.82" y="-20.32"/>
 <junction x="137.16" y="-20.32"/>
 <wire x1="132.08" y1="-20.32" x2="137.16" y2="-20.32" width="0.1524" layer="91"/>
-<wire x1="132.08" y1="-20.32" x2="132.08" y2="-35.56" width="0.1524" layer="91"/>
+<wire x1="132.08" y1="-20.32" x2="132.08" y2="-30.48" width="0.1524" layer="91"/>
 <pinref part="SV3" gate="G$1" pin="1"/>
+<wire x1="132.08" y1="-30.48" x2="132.08" y2="-35.56" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="-35.56" x2="137.16" y2="-35.56" width="0.1524" layer="91"/>
 <junction x="137.16" y="-35.56"/>
 <junction x="132.08" y="-20.32"/>
-<pinref part="S2" gate="1" pin="S1"/>
-<junction x="132.08" y="-35.56"/>
+<pinref part="S3" gate="G$1" pin="2"/>
+<pinref part="S3" gate="G$1" pin="1"/>
+<wire x1="165.1" y1="-55.88" x2="165.1" y2="-53.34" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="-53.34" x2="165.1" y2="-50.8" width="0.1524" layer="91"/>
+<wire x1="165.1" y1="-50.8" x2="152.4" y2="-50.8" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="-50.8" x2="152.4" y2="-30.48" width="0.1524" layer="91"/>
+<wire x1="152.4" y1="-30.48" x2="132.08" y2="-30.48" width="0.1524" layer="91"/>
+<junction x="132.08" y="-30.48"/>
+<junction x="165.1" y="-53.34"/>
+<junction x="165.1" y="-55.88"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -15389,7 +15351,11 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <net name="N$9" class="0">
 <segment>
 <pinref part="R5" gate="G$1" pin="1"/>
-<pinref part="LED1" gate="G$1" pin="A"/>
+<wire x1="165.1" y1="-33.02" x2="190.5" y2="-33.02" width="0.1524" layer="91"/>
+<wire x1="190.5" y1="-33.02" x2="190.5" y2="-55.88" width="0.1524" layer="91"/>
+<pinref part="S3" gate="G$1" pin="+"/>
+<wire x1="190.5" y1="-55.88" x2="185.42" y2="-55.88" width="0.1524" layer="91"/>
+<junction x="185.42" y="-55.88"/>
 <junction x="165.1" y="-33.02"/>
 </segment>
 </net>

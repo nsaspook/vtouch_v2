@@ -622,6 +622,20 @@ P_CODES s10f1_opcmd(void)
 		} else {
 			H33[0].data[0] = 0x01;
 		}
+
+		switch (V.e_types) {
+		case GEM_VII80:
+			H33[0].data[18] = '1';
+			H33[0].data[17] = '7';
+			break;
+		case GEM_E220:
+			H33[0].data[18] = '1';
+			H33[0].data[17] = '0';
+			break;
+		default:
+			break;
+		}
+
 		return CODE_LOAD;
 	}
 
@@ -964,8 +978,19 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 			switch (V.response.ack[4]) {
 			case 'V':
 				switch (V.response.ack[5]) {
-				case 'I': // VII80A for Varian viision 80 non-plus
-					equipment = GEM_VII80A;
+				case 'I': // VII80 for Varian viision 80
+					equipment = GEM_VII80;
+					break;
+				default:
+					equipment = GEM_GENERIC;
+					break;
+				}
+				break;
+			case 'E':
+				switch (V.response.ack[5]) {
+				case '2':
+				case '5': // E220 or E500
+					equipment = GEM_E220;
 					break;
 				default:
 					equipment = GEM_GENERIC;
