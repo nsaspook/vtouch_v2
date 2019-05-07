@@ -28059,6 +28059,7 @@ void PMD_Initialize(void);
   CODE_LOG,
   CODE_LOAD,
   CODE_UNLOAD,
+  CODE_PUMP,
   CODE_ERR,
  } P_CODES;
 
@@ -28068,6 +28069,7 @@ void PMD_Initialize(void);
   DIS_LOG,
   DIS_LOAD,
   DIS_UNLOAD,
+  DIS_PUMP,
   DIS_ERR,
  } D_CODES;
 
@@ -28806,6 +28808,15 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    break;
   case DIS_LOAD:
    sprintf(V.buf, " Ready LL    ");
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
+  case DIS_PUMP:
+   sprintf(V.buf, " Pump LL    ");
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
    sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);

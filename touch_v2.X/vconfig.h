@@ -92,6 +92,7 @@ extern "C" {
 		CODE_LOG,
 		CODE_LOAD,
 		CODE_UNLOAD,
+		CODE_PUMP,
 		CODE_ERR,
 	} P_CODES;
 
@@ -101,6 +102,7 @@ extern "C" {
 		DIS_LOG,
 		DIS_LOAD,
 		DIS_UNLOAD,
+		DIS_PUMP,
 		DIS_ERR,
 	} D_CODES;
 

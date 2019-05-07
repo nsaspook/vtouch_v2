@@ -27369,6 +27369,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_LOG,
   CODE_LOAD,
   CODE_UNLOAD,
+  CODE_PUMP,
   CODE_ERR,
  } P_CODES;
 
@@ -27378,6 +27379,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_LOG,
   DIS_LOAD,
   DIS_UNLOAD,
+  DIS_PUMP,
   DIS_ERR,
  } D_CODES;
 

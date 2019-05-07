@@ -27529,6 +27529,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_LOG,
   CODE_LOAD,
   CODE_UNLOAD,
+  CODE_PUMP,
   CODE_ERR,
  } P_CODES;
 
@@ -27538,6 +27539,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_LOG,
   DIS_LOAD,
   DIS_UNLOAD,
+  DIS_PUMP,
   DIS_ERR,
  } D_CODES;
 
@@ -28908,7 +28910,7 @@ P_CODES s10f1_opcmd(void)
   return CODE_LOAD;
  }
 
- if (V.response.mcode == 'O' || V.response.mcode == 'o') {
+ if (V.response.mcode == 'P' || V.response.mcode == 'p') {
   if (V.response.cmdlen > 1) {
    switch (V.response.mparm) {
    case '1':
@@ -28943,7 +28945,7 @@ P_CODES s10f1_opcmd(void)
    break;
   }
 
-  return CODE_UNLOAD;
+  return CODE_PUMP;
  }
 
  if (V.response.mcode == 'L' || V.response.mcode == 'l') {
@@ -29136,12 +29138,12 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
     V.queue = 1;
     V.response.info = DIS_LOAD;
     break;
-   case CODE_UNLOAD:
+   case CODE_PUMP:
     block.respond = 1;
     block.reply = (uint8_t*) & H33[0];
     block.reply_length = sizeof(header33);
     V.queue = 1;
-    V.response.info = DIS_UNLOAD;
+    V.response.info = DIS_PUMP;
     break;
    case CODE_TS:
     block.respond = 1;

@@ -27373,6 +27373,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   CODE_LOG,
   CODE_LOAD,
   CODE_UNLOAD,
+  CODE_PUMP,
   CODE_ERR,
  } P_CODES;
 
@@ -27382,6 +27383,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   DIS_LOG,
   DIS_LOAD,
   DIS_UNLOAD,
+  DIS_PUMP,
   DIS_ERR,
  } D_CODES;
 

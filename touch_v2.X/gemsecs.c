@@ -639,7 +639,7 @@ P_CODES s10f1_opcmd(void)
 		return CODE_LOAD;
 	}
 
-	if (V.response.mcode == 'O' || V.response.mcode == 'o') { // unload load-lock control
+	if (V.response.mcode == 'P' || V.response.mcode == 'p') { // pump down load-lock control
 		if (V.response.cmdlen > 1) {
 			switch (V.response.mparm) { // port selection
 			case '1':
@@ -674,7 +674,7 @@ P_CODES s10f1_opcmd(void)
 			break;
 		}
 
-		return CODE_UNLOAD;
+		return CODE_PUMP;
 	}
 
 	if (V.response.mcode == 'L' || V.response.mcode == 'l') {
@@ -867,12 +867,12 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				V.queue = true;
 				V.response.info = DIS_LOAD;
 				break;
-			case CODE_UNLOAD:
+			case CODE_PUMP:
 				block.respond = true;
-				block.reply = (uint8_t*) & H33[0]; // S6F41 send load lock unload command
+				block.reply = (uint8_t*) & H33[0]; // S6F41 send pump lock unload command
 				block.reply_length = sizeof(header33);
 				V.queue = true;
-				V.response.info = DIS_UNLOAD;
+				V.response.info = DIS_PUMP;
 				break;
 			case CODE_TS:
 				block.respond = true;

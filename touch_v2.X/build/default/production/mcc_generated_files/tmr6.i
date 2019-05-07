@@ -27267,10 +27267,9 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 54 "mcc_generated_files/tmr6.h" 2
-
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
 # 55 "mcc_generated_files/tmr6.h" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 56 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27585,6 +27584,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_LOG,
   CODE_LOAD,
   CODE_UNLOAD,
+  CODE_PUMP,
   CODE_ERR,
  } P_CODES;
 
@@ -27594,6 +27594,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_LOG,
   DIS_LOAD,
   DIS_UNLOAD,
+  DIS_PUMP,
   DIS_ERR,
  } D_CODES;
 
