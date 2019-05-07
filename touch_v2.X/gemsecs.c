@@ -677,6 +677,44 @@ P_CODES s10f1_opcmd(void)
 		return CODE_PUMP;
 	}
 
+	if (V.response.mcode == 'O' || V.response.mcode == 'o') { // open load-lock control
+		if (V.response.cmdlen > 1) {
+			switch (V.response.mparm) { // port selection
+			case '1':
+			case '2':
+			case '3':
+			case 'A':
+			case 'B':
+			case 'C':
+			case 'a':
+			case 'b':
+			case 'c':
+				H33[0].data[0] = V.response.mparm & 0x03;
+				break;
+			default:
+				H33[0].data[0] = 0x01;
+				break;
+			}
+		} else {
+			H33[0].data[0] = 0x01;
+		}
+
+		switch (V.e_types) {
+		case GEM_VII80:
+			H33[0].data[18] = '1';
+			H33[0].data[17] = '2';
+			break;
+		case GEM_E220:
+			H33[0].data[18] = '1';
+			H33[0].data[17] = '0';
+			break;
+		default:
+			break;
+		}
+
+		return CODE_UNLOAD;
+	}
+
 	if (V.response.mcode == 'L' || V.response.mcode == 'l') {
 		sprintf(V.info, " Log file reset          ");
 		return CODE_LOG;
@@ -867,9 +905,16 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				V.queue = true;
 				V.response.info = DIS_LOAD;
 				break;
+			case CODE_UNLOAD:
+				block.respond = true;
+				block.reply = (uint8_t*) & H33[0]; // S6F41 send load lock unload  command
+				block.reply_length = sizeof(header33);
+				V.queue = true;
+				V.response.info = DIS_UNLOAD;
+				break;
 			case CODE_PUMP:
 				block.respond = true;
-				block.reply = (uint8_t*) & H33[0]; // S6F41 send pump lock unload command
+				block.reply = (uint8_t*) & H33[0]; // S6F41 send load lock pump command
 				block.reply_length = sizeof(header33);
 				V.queue = true;
 				V.response.info = DIS_PUMP;
