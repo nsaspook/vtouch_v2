@@ -664,7 +664,7 @@ P_CODES s10f1_opcmd(void)
 		switch (V.e_types) {
 		case GEM_VII80:
 			H33[0].data[18] = '1';
-			H33[0].data[17] = '7';
+			H33[0].data[17] = '8';
 			break;
 		case GEM_E220:
 			H33[0].data[18] = '1';
@@ -939,7 +939,7 @@ static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t 
 void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 {
 	uint8_t * msg_data = (uint8_t*) & H254[0];
-	static uint8_t store1_1 = true, store1_13 = true, store2_41 = true, store6_11 = true;
+	static uint8_t store1_1 = true, store1_13 = true, store6_11 = true;
 
 
 	++V.ticks; // message sequence
@@ -966,11 +966,8 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 		break;
 	case 2:
 		switch (function) {
-		case 41: // S2F41 // from host
-			if (!store2_41)
-				break;
-			store2_41 = false;
-
+		case 41: // S2F41 // remote command from host
+			/* always store this message */
 			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:

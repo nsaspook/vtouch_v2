@@ -4440,8 +4440,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;gemsecs.c: 666:    H33[0].data[18] = '1';
 [e = *U + &U . *U + &U _H33 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H33 `ui `ux 1 * -> -> -> 18 `i `ui `ux -> -> # *U &U . *U + &U _H33 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H33 `ui `ux 1 `ui `ux -> -> 49 `ui `uc ]
 "667
-[; ;gemsecs.c: 667:    H33[0].data[17] = '7';
-[e = *U + &U . *U + &U _H33 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H33 `ui `ux 1 * -> -> -> 17 `i `ui `ux -> -> # *U &U . *U + &U _H33 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H33 `ui `ux 1 `ui `ux -> -> 55 `ui `uc ]
+[; ;gemsecs.c: 667:    H33[0].data[17] = '8';
+[e = *U + &U . *U + &U _H33 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H33 `ui `ux 1 * -> -> -> 17 `i `ui `ux -> -> # *U &U . *U + &U _H33 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H33 `ui `ux 1 `ui `ux -> -> 56 `ui `uc ]
 "668
 [; ;gemsecs.c: 668:    break;
 [e $U 2449  ]
@@ -5270,7 +5270,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _msg_data `*uc ~T0 @X0 1 a ]
 [e = _msg_data -> &U *U + &U _H254 * -> -> -> 0 `i `ui `ux -> -> # *U &U _H254 `ui `ux `*uc ]
 "942
-[; ;gemsecs.c: 942:  static uint8_t store1_1 = 1, store1_13 = 1, store2_41 = 1, store6_11 = 1;
+[; ;gemsecs.c: 942:  static uint8_t store1_1 = 1, store1_13 = 1, store6_11 = 1;
 [v F17237 `uc ~T0 @X0 1 s store1_1 ]
 [i F17237
 -> -> 1 `i `uc
@@ -5279,12 +5279,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i F17238
 -> -> 1 `i `uc
 ]
-[v F17239 `uc ~T0 @X0 1 s store2_41 ]
+[v F17239 `uc ~T0 @X0 1 s store6_11 ]
 [i F17239
--> -> 1 `i `uc
-]
-[v F17240 `uc ~T0 @X0 1 s store6_11 ]
-[i F17240
 -> -> 1 `i `uc
 ]
 "945
@@ -5367,445 +5363,435 @@ Version 4.0 HI-TECH Software Intermediate Code
 "969
 [; ;gemsecs.c: 969:   case 41:
 [e :U 2532 ]
-"970
-[; ;gemsecs.c: 970:    if (!store2_41)
-[e $ ! ! != -> F17239 `i -> 0 `i 2533  ]
 "971
-[; ;gemsecs.c: 971:     break;
-[e $U 2530  ]
-[e :U 2533 ]
-"972
-[; ;gemsecs.c: 972:    store2_41 = 0;
-[e = F17239 -> -> 0 `i `uc ]
-"974
-[; ;gemsecs.c: 974:    ee_logger(stream, function, dtime, msg_data);
+[; ;gemsecs.c: 971:    ee_logger(stream, function, dtime, msg_data);
 [e ( _ee_logger (4 , , , _stream _function _dtime _msg_data ]
+"972
+[; ;gemsecs.c: 972:    break;
+[e $U 2530  ]
+"973
+[; ;gemsecs.c: 973:   default:
+[e :U 2533 ]
+"974
+[; ;gemsecs.c: 974:    break;
+[e $U 2530  ]
 "975
-[; ;gemsecs.c: 975:    break;
-[e $U 2530  ]
-"976
-[; ;gemsecs.c: 976:   default:
-[e :U 2534 ]
-"977
-[; ;gemsecs.c: 977:    break;
-[e $U 2530  ]
-"978
-[; ;gemsecs.c: 978:   }
+[; ;gemsecs.c: 975:   }
 }
 [e $U 2530  ]
 [e :U 2531 ]
 [e [\ -> _function `i , $ -> 41 `i 2532
- 2534 ]
+ 2533 ]
 [e :U 2530 ]
-"979
-[; ;gemsecs.c: 979:  case 6:
-[e :U 2535 ]
-"980
-[; ;gemsecs.c: 980:   switch (function) {
-[e $U 2537  ]
+"976
+[; ;gemsecs.c: 976:  case 6:
+[e :U 2534 ]
+"977
+[; ;gemsecs.c: 977:   switch (function) {
+[e $U 2536  ]
 {
-"981
-[; ;gemsecs.c: 981:   case 11:
-[e :U 2538 ]
-"982
-[; ;gemsecs.c: 982:    if (!store6_11)
-[e $ ! ! != -> F17240 `i -> 0 `i 2539  ]
-"983
-[; ;gemsecs.c: 983:     break;
-[e $U 2536  ]
-[e :U 2539 ]
-"984
-[; ;gemsecs.c: 984:    store6_11 = 0;
-[e = F17240 -> -> 0 `i `uc ]
-"986
-[; ;gemsecs.c: 986:    ee_logger(stream, function, dtime, msg_data);
-[e ( _ee_logger (4 , , , _stream _function _dtime _msg_data ]
-"987
-[; ;gemsecs.c: 987:    break;
-[e $U 2536  ]
-"988
-[; ;gemsecs.c: 988:   default:
-[e :U 2540 ]
-"989
-[; ;gemsecs.c: 989:    break;
-[e $U 2536  ]
-"990
-[; ;gemsecs.c: 990:   }
-}
-[e $U 2536  ]
+"978
+[; ;gemsecs.c: 978:   case 11:
 [e :U 2537 ]
-[e [\ -> _function `i , $ -> 11 `i 2538
- 2540 ]
+"979
+[; ;gemsecs.c: 979:    if (!store6_11)
+[e $ ! ! != -> F17239 `i -> 0 `i 2538  ]
+"980
+[; ;gemsecs.c: 980:     break;
+[e $U 2535  ]
+[e :U 2538 ]
+"981
+[; ;gemsecs.c: 981:    store6_11 = 0;
+[e = F17239 -> -> 0 `i `uc ]
+"983
+[; ;gemsecs.c: 983:    ee_logger(stream, function, dtime, msg_data);
+[e ( _ee_logger (4 , , , _stream _function _dtime _msg_data ]
+"984
+[; ;gemsecs.c: 984:    break;
+[e $U 2535  ]
+"985
+[; ;gemsecs.c: 985:   default:
+[e :U 2539 ]
+"986
+[; ;gemsecs.c: 986:    break;
+[e $U 2535  ]
+"987
+[; ;gemsecs.c: 987:   }
+}
+[e $U 2535  ]
 [e :U 2536 ]
+[e [\ -> _function `i , $ -> 11 `i 2537
+ 2539 ]
+[e :U 2535 ]
+"989
+[; ;gemsecs.c: 989:   break;
+[e $U 2519  ]
+"990
+[; ;gemsecs.c: 990:  default:
+[e :U 2540 ]
+"991
+[; ;gemsecs.c: 991:   break;
+[e $U 2519  ]
 "992
-[; ;gemsecs.c: 992:   break;
-[e $U 2519  ]
-"993
-[; ;gemsecs.c: 993:  default:
-[e :U 2541 ]
-"994
-[; ;gemsecs.c: 994:   break;
-[e $U 2519  ]
-"995
-[; ;gemsecs.c: 995:  }
+[; ;gemsecs.c: 992:  }
 }
 [e $U 2519  ]
 [e :U 2520 ]
 [e [\ -> _stream `i , $ -> 1 `i 2521
  , $ -> 2 `i 2529
- , $ -> 6 `i 2535
- 2541 ]
+ , $ -> 6 `i 2534
+ 2540 ]
 [e :U 2519 ]
-"996
-[; ;gemsecs.c: 996: }
+"993
+[; ;gemsecs.c: 993: }
 [e :UE 2518 ]
 }
-"1002
-[; ;gemsecs.c: 1002: GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
+"999
+[; ;gemsecs.c: 999: GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 [v _secs_gem_state `(E16680 ~T0 @X0 1 ef2`uc`uc ]
-"1003
-[; ;gemsecs.c: 1003: {
+"1000
+[; ;gemsecs.c: 1000: {
 {
 [e :U _secs_gem_state ]
-"1002
-[; ;gemsecs.c: 1002: GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
+"999
+[; ;gemsecs.c: 999: GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 [v _stream `uc ~T0 @X0 1 r1 ]
 [v _function `uc ~T0 @X0 1 r2 ]
-"1003
-[; ;gemsecs.c: 1003: {
+"1000
+[; ;gemsecs.c: 1000: {
 [f ]
-"1004
-[; ;gemsecs.c: 1004:  static GEM_STATES block = GEM_STATE_DISABLE;
-[v F17244 `E16680 ~T0 @X0 1 s block ]
-[i F17244
+"1001
+[; ;gemsecs.c: 1001:  static GEM_STATES block = GEM_STATE_DISABLE;
+[v F17243 `E16680 ~T0 @X0 1 s block ]
+[i F17243
 . `E16680 0
 ]
-"1005
-[; ;gemsecs.c: 1005:  static GEM_EQUIP equipment = GEM_GENERIC;
-[v F17245 `E16689 ~T0 @X0 1 s equipment ]
-[i F17245
+"1002
+[; ;gemsecs.c: 1002:  static GEM_EQUIP equipment = GEM_GENERIC;
+[v F17244 `E16689 ~T0 @X0 1 s equipment ]
+[i F17244
 . `E16689 0
 ]
-"1007
-[; ;gemsecs.c: 1007:  switch (stream) {
-[e $U 2544  ]
+"1004
+[; ;gemsecs.c: 1004:  switch (stream) {
+[e $U 2543  ]
 {
-"1008
-[; ;gemsecs.c: 1008:  case 1:
-[e :U 2545 ]
-"1009
-[; ;gemsecs.c: 1009:   switch (function) {
-[e $U 2547  ]
+"1005
+[; ;gemsecs.c: 1005:  case 1:
+[e :U 2544 ]
+"1006
+[; ;gemsecs.c: 1006:   switch (function) {
+[e $U 2546  ]
 {
-"1013
-[; ;gemsecs.c: 1013:   case 2:
+"1010
+[; ;gemsecs.c: 1010:   case 2:
+[e :U 2547 ]
+"1011
+[; ;gemsecs.c: 1011:    if (block != GEM_STATE_REMOTE)
+[e $ ! != -> F17243 `ui -> . `E16680 4 `ui 2548  ]
+"1012
+[; ;gemsecs.c: 1012:     StartTimer(TMR_HBIO, 30000);
+[e ( _StartTimer (2 , -> . `E17017 6 `uc -> -> 30000 `i `us ]
 [e :U 2548 ]
 "1014
-[; ;gemsecs.c: 1014:    if (block != GEM_STATE_REMOTE)
-[e $ ! != -> F17244 `ui -> . `E16680 4 `ui 2549  ]
+[; ;gemsecs.c: 1014:    block = GEM_STATE_REMOTE;
+[e = F17243 . `E16680 4 ]
 "1015
-[; ;gemsecs.c: 1015:     StartTimer(TMR_HBIO, 30000);
-[e ( _StartTimer (2 , -> . `E17017 6 `uc -> -> 30000 `i `us ]
-[e :U 2549 ]
-"1017
-[; ;gemsecs.c: 1017:    block = GEM_STATE_REMOTE;
-[e = F17244 . `E16680 4 ]
-"1018
-[; ;gemsecs.c: 1018:    V.ticker = 0;
+[; ;gemsecs.c: 1015:    V.ticker = 0;
 [e = . _V 34 -> -> 0 `i `uc ]
+"1017
+[; ;gemsecs.c: 1017:    break;
+[e $U 2545  ]
+"1019
+[; ;gemsecs.c: 1019:   case 13:
+[e :U 2549 ]
 "1020
-[; ;gemsecs.c: 1020:    break;
-[e $U 2546  ]
+[; ;gemsecs.c: 1020:    switch (V.response.ack[4]) {
+[e $U 2551  ]
+{
+"1021
+[; ;gemsecs.c: 1021:    case 'V':
+[e :U 2552 ]
 "1022
-[; ;gemsecs.c: 1022:   case 13:
-[e :U 2550 ]
+[; ;gemsecs.c: 1022:     switch (V.response.ack[5]) {
+[e $U 2554  ]
+{
 "1023
-[; ;gemsecs.c: 1023:    switch (V.response.ack[4]) {
-[e $U 2552  ]
-{
+[; ;gemsecs.c: 1023:     case 'I':
+[e :U 2555 ]
 "1024
-[; ;gemsecs.c: 1024:    case 'V':
-[e :U 2553 ]
+[; ;gemsecs.c: 1024:      equipment = GEM_VII80;
+[e = F17244 . `E16689 1 ]
 "1025
-[; ;gemsecs.c: 1025:     switch (V.response.ack[5]) {
-[e $U 2555  ]
-{
+[; ;gemsecs.c: 1025:      break;
+[e $U 2553  ]
 "1026
-[; ;gemsecs.c: 1026:     case 'I':
+[; ;gemsecs.c: 1026:     default:
 [e :U 2556 ]
 "1027
-[; ;gemsecs.c: 1027:      equipment = GEM_VII80;
-[e = F17245 . `E16689 1 ]
+[; ;gemsecs.c: 1027:      equipment = GEM_GENERIC;
+[e = F17244 . `E16689 0 ]
 "1028
 [; ;gemsecs.c: 1028:      break;
-[e $U 2554  ]
+[e $U 2553  ]
 "1029
-[; ;gemsecs.c: 1029:     default:
-[e :U 2557 ]
-"1030
-[; ;gemsecs.c: 1030:      equipment = GEM_GENERIC;
-[e = F17245 . `E16689 0 ]
-"1031
-[; ;gemsecs.c: 1031:      break;
-[e $U 2554  ]
-"1032
-[; ;gemsecs.c: 1032:     }
+[; ;gemsecs.c: 1029:     }
 }
-[e $U 2554  ]
-[e :U 2555 ]
-[e [\ -> *U + &U . . _V 32 0 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . _V 32 0 `ui `ux `i , $ -> -> 73 `ui `i 2556
- 2557 ]
+[e $U 2553  ]
 [e :U 2554 ]
-"1033
-[; ;gemsecs.c: 1033:     break;
-[e $U 2551  ]
-"1034
-[; ;gemsecs.c: 1034:    case 'E':
-[e :U 2558 ]
-"1035
-[; ;gemsecs.c: 1035:     switch (V.response.ack[5]) {
-[e $U 2560  ]
+[e [\ -> *U + &U . . _V 32 0 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . _V 32 0 `ui `ux `i , $ -> -> 73 `ui `i 2555
+ 2556 ]
+[e :U 2553 ]
+"1030
+[; ;gemsecs.c: 1030:     break;
+[e $U 2550  ]
+"1031
+[; ;gemsecs.c: 1031:    case 'E':
+[e :U 2557 ]
+"1032
+[; ;gemsecs.c: 1032:     switch (V.response.ack[5]) {
+[e $U 2559  ]
 {
-"1036
-[; ;gemsecs.c: 1036:     case '2':
+"1033
+[; ;gemsecs.c: 1033:     case '2':
+[e :U 2560 ]
+"1034
+[; ;gemsecs.c: 1034:     case '5':
 [e :U 2561 ]
+"1035
+[; ;gemsecs.c: 1035:      equipment = GEM_E220;
+[e = F17244 . `E16689 2 ]
+"1036
+[; ;gemsecs.c: 1036:      break;
+[e $U 2558  ]
 "1037
-[; ;gemsecs.c: 1037:     case '5':
+[; ;gemsecs.c: 1037:     default:
 [e :U 2562 ]
 "1038
-[; ;gemsecs.c: 1038:      equipment = GEM_E220;
-[e = F17245 . `E16689 2 ]
+[; ;gemsecs.c: 1038:      equipment = GEM_GENERIC;
+[e = F17244 . `E16689 0 ]
 "1039
 [; ;gemsecs.c: 1039:      break;
-[e $U 2559  ]
+[e $U 2558  ]
 "1040
-[; ;gemsecs.c: 1040:     default:
-[e :U 2563 ]
-"1041
-[; ;gemsecs.c: 1041:      equipment = GEM_GENERIC;
-[e = F17245 . `E16689 0 ]
-"1042
-[; ;gemsecs.c: 1042:      break;
-[e $U 2559  ]
-"1043
-[; ;gemsecs.c: 1043:     }
+[; ;gemsecs.c: 1040:     }
 }
-[e $U 2559  ]
-[e :U 2560 ]
-[e [\ -> *U + &U . . _V 32 0 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . _V 32 0 `ui `ux `i , $ -> -> 50 `ui `i 2561
- , $ -> -> 53 `ui `i 2562
- 2563 ]
+[e $U 2558  ]
 [e :U 2559 ]
+[e [\ -> *U + &U . . _V 32 0 * -> -> -> 5 `i `ui `ux -> -> # *U &U . . _V 32 0 `ui `ux `i , $ -> -> 50 `ui `i 2560
+ , $ -> -> 53 `ui `i 2561
+ 2562 ]
+[e :U 2558 ]
+"1041
+[; ;gemsecs.c: 1041:     break;
+[e $U 2550  ]
+"1042
+[; ;gemsecs.c: 1042:    default:
+[e :U 2563 ]
+"1043
+[; ;gemsecs.c: 1043:     equipment = GEM_GENERIC;
+[e = F17244 . `E16689 0 ]
 "1044
 [; ;gemsecs.c: 1044:     break;
-[e $U 2551  ]
+[e $U 2550  ]
 "1045
-[; ;gemsecs.c: 1045:    default:
-[e :U 2564 ]
-"1046
-[; ;gemsecs.c: 1046:     equipment = GEM_GENERIC;
-[e = F17245 . `E16689 0 ]
-"1047
-[; ;gemsecs.c: 1047:     break;
-[e $U 2551  ]
-"1048
-[; ;gemsecs.c: 1048:    }
+[; ;gemsecs.c: 1045:    }
 }
-[e $U 2551  ]
-[e :U 2552 ]
-[e [\ -> *U + &U . . _V 32 0 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . _V 32 0 `ui `ux `i , $ -> -> 86 `ui `i 2553
- , $ -> -> 69 `ui `i 2558
- 2564 ]
+[e $U 2550  ]
 [e :U 2551 ]
-"1049
-[; ;gemsecs.c: 1049:    block = GEM_STATE_COMM;
-[e = F17244 . `E16680 1 ]
+[e [\ -> *U + &U . . _V 32 0 * -> -> -> 4 `i `ui `ux -> -> # *U &U . . _V 32 0 `ui `ux `i , $ -> -> 86 `ui `i 2552
+ , $ -> -> 69 `ui `i 2557
+ 2563 ]
+[e :U 2550 ]
+"1046
+[; ;gemsecs.c: 1046:    block = GEM_STATE_COMM;
+[e = F17243 . `E16680 1 ]
+"1047
+[; ;gemsecs.c: 1047:    V.ticker = 15;
+[e = . _V 34 -> -> 15 `i `uc ]
+"1048
+[; ;gemsecs.c: 1048:    break;
+[e $U 2545  ]
 "1050
-[; ;gemsecs.c: 1050:    V.ticker = 15;
-[e = . _V 34 -> -> 15 `i `uc ]
+[; ;gemsecs.c: 1050:   case 14:
+[e :U 2564 ]
 "1051
-[; ;gemsecs.c: 1051:    break;
-[e $U 2546  ]
+[; ;gemsecs.c: 1051:    block = GEM_STATE_COMM;
+[e = F17243 . `E16680 1 ]
+"1052
+[; ;gemsecs.c: 1052:    V.ticker = 15;
+[e = . _V 34 -> -> 15 `i `uc ]
 "1053
-[; ;gemsecs.c: 1053:   case 14:
+[; ;gemsecs.c: 1053:    break;
+[e $U 2545  ]
+"1057
+[; ;gemsecs.c: 1057:   case 16:
 [e :U 2565 ]
-"1054
-[; ;gemsecs.c: 1054:    block = GEM_STATE_COMM;
-[e = F17244 . `E16680 1 ]
-"1055
-[; ;gemsecs.c: 1055:    V.ticker = 15;
-[e = . _V 34 -> -> 15 `i `uc ]
-"1056
-[; ;gemsecs.c: 1056:    break;
-[e $U 2546  ]
+"1058
+[; ;gemsecs.c: 1058:    block = GEM_STATE_OFFLINE;
+[e = F17243 . `E16680 2 ]
+"1059
+[; ;gemsecs.c: 1059:    V.ticker = 0;
+[e = . _V 34 -> -> 0 `i `uc ]
 "1060
-[; ;gemsecs.c: 1060:   case 16:
+[; ;gemsecs.c: 1060:    break;
+[e $U 2545  ]
+"1064
+[; ;gemsecs.c: 1064:   case 18:
 [e :U 2566 ]
-"1061
-[; ;gemsecs.c: 1061:    block = GEM_STATE_OFFLINE;
-[e = F17244 . `E16680 2 ]
-"1062
-[; ;gemsecs.c: 1062:    V.ticker = 0;
+"1065
+[; ;gemsecs.c: 1065:    block = GEM_STATE_ONLINE;
+[e = F17243 . `E16680 3 ]
+"1066
+[; ;gemsecs.c: 1066:    V.ticker = 0;
 [e = . _V 34 -> -> 0 `i `uc ]
-"1063
-[; ;gemsecs.c: 1063:    break;
-[e $U 2546  ]
 "1067
-[; ;gemsecs.c: 1067:   case 18:
-[e :U 2567 ]
+[; ;gemsecs.c: 1067:    break;
+[e $U 2545  ]
 "1068
-[; ;gemsecs.c: 1068:    block = GEM_STATE_ONLINE;
-[e = F17244 . `E16680 3 ]
+[; ;gemsecs.c: 1068:   default:
+[e :U 2567 ]
 "1069
-[; ;gemsecs.c: 1069:    V.ticker = 0;
-[e = . _V 34 -> -> 0 `i `uc ]
+[; ;gemsecs.c: 1069:    if (block == GEM_STATE_DISABLE) {
+[e $ ! == -> F17243 `ui -> . `E16680 0 `ui 2568  ]
+{
 "1070
-[; ;gemsecs.c: 1070:    break;
-[e $U 2546  ]
+[; ;gemsecs.c: 1070:     block = GEM_STATE_COMM;
+[e = F17243 . `E16680 1 ]
 "1071
-[; ;gemsecs.c: 1071:   default:
-[e :U 2568 ]
-"1072
-[; ;gemsecs.c: 1072:    if (block == GEM_STATE_DISABLE) {
-[e $ ! == -> F17244 `ui -> . `E16680 0 `ui 2569  ]
-{
-"1073
-[; ;gemsecs.c: 1073:     block = GEM_STATE_COMM;
-[e = F17244 . `E16680 1 ]
-"1074
-[; ;gemsecs.c: 1074:     V.ticker = 15;
+[; ;gemsecs.c: 1071:     V.ticker = 15;
 [e = . _V 34 -> -> 15 `i `uc ]
-"1075
-[; ;gemsecs.c: 1075:    }
+"1072
+[; ;gemsecs.c: 1072:    }
 }
-[e :U 2569 ]
-"1076
-[; ;gemsecs.c: 1076:    break;
-[e $U 2546  ]
-"1077
-[; ;gemsecs.c: 1077:   }
+[e :U 2568 ]
+"1073
+[; ;gemsecs.c: 1073:    break;
+[e $U 2545  ]
+"1074
+[; ;gemsecs.c: 1074:   }
 }
-[e $U 2546  ]
-[e :U 2547 ]
-[e [\ -> _function `i , $ -> 2 `i 2548
- , $ -> 13 `i 2550
- , $ -> 14 `i 2565
- , $ -> 16 `i 2566
- , $ -> 18 `i 2567
- 2568 ]
+[e $U 2545  ]
 [e :U 2546 ]
-"1078
-[; ;gemsecs.c: 1078:   break;
-[e $U 2543  ]
-"1079
-[; ;gemsecs.c: 1079:  case 5:
-[e :U 2570 ]
-"1080
-[; ;gemsecs.c: 1080:   switch (function) {
-[e $U 2572  ]
+[e [\ -> _function `i , $ -> 2 `i 2547
+ , $ -> 13 `i 2549
+ , $ -> 14 `i 2564
+ , $ -> 16 `i 2565
+ , $ -> 18 `i 2566
+ 2567 ]
+[e :U 2545 ]
+"1075
+[; ;gemsecs.c: 1075:   break;
+[e $U 2542  ]
+"1076
+[; ;gemsecs.c: 1076:  case 5:
+[e :U 2569 ]
+"1077
+[; ;gemsecs.c: 1077:   switch (function) {
+[e $U 2571  ]
 {
+"1078
+[; ;gemsecs.c: 1078:   default:
+[e :U 2572 ]
+"1079
+[; ;gemsecs.c: 1079:    block = GEM_STATE_ALARM;
+[e = F17243 . `E16680 5 ]
+"1080
+[; ;gemsecs.c: 1080:    if (V.ticker != 45)
+[e $ ! != -> . _V 34 `i -> 45 `i 2573  ]
 "1081
-[; ;gemsecs.c: 1081:   default:
+[; ;gemsecs.c: 1081:     V.ticker = 15;
+[e = . _V 34 -> -> 15 `i `uc ]
 [e :U 2573 ]
 "1082
-[; ;gemsecs.c: 1082:    block = GEM_STATE_ALARM;
-[e = F17244 . `E16680 5 ]
+[; ;gemsecs.c: 1082:    break;
+[e $U 2570  ]
 "1083
-[; ;gemsecs.c: 1083:    if (V.ticker != 45)
-[e $ ! != -> . _V 34 `i -> 45 `i 2574  ]
-"1084
-[; ;gemsecs.c: 1084:     V.ticker = 15;
-[e = . _V 34 -> -> 15 `i `uc ]
-[e :U 2574 ]
-"1085
-[; ;gemsecs.c: 1085:    break;
-[e $U 2571  ]
-"1086
-[; ;gemsecs.c: 1086:   }
+[; ;gemsecs.c: 1083:   }
 }
-[e $U 2571  ]
-[e :U 2572 ]
-[e [\ -> _function `i 2573 ]
+[e $U 2570  ]
 [e :U 2571 ]
-"1087
-[; ;gemsecs.c: 1087:   break;
-[e $U 2543  ]
-"1088
-[; ;gemsecs.c: 1088:  case 9:
-[e :U 2575 ]
-"1089
-[; ;gemsecs.c: 1089:   switch (function) {
-[e $U 2577  ]
+[e [\ -> _function `i 2572 ]
+[e :U 2570 ]
+"1084
+[; ;gemsecs.c: 1084:   break;
+[e $U 2542  ]
+"1085
+[; ;gemsecs.c: 1085:  case 9:
+[e :U 2574 ]
+"1086
+[; ;gemsecs.c: 1086:   switch (function) {
+[e $U 2576  ]
 {
+"1087
+[; ;gemsecs.c: 1087:   default:
+[e :U 2577 ]
+"1088
+[; ;gemsecs.c: 1088:    block = GEM_STATE_ERROR;
+[e = F17243 . `E16680 6 ]
+"1089
+[; ;gemsecs.c: 1089:    if (V.ticker != 45)
+[e $ ! != -> . _V 34 `i -> 45 `i 2578  ]
 "1090
-[; ;gemsecs.c: 1090:   default:
+[; ;gemsecs.c: 1090:     V.ticker = 15;
+[e = . _V 34 -> -> 15 `i `uc ]
 [e :U 2578 ]
 "1091
-[; ;gemsecs.c: 1091:    block = GEM_STATE_ERROR;
-[e = F17244 . `E16680 6 ]
+[; ;gemsecs.c: 1091:    break;
+[e $U 2575  ]
 "1092
-[; ;gemsecs.c: 1092:    if (V.ticker != 45)
-[e $ ! != -> . _V 34 `i -> 45 `i 2579  ]
-"1093
-[; ;gemsecs.c: 1093:     V.ticker = 15;
-[e = . _V 34 -> -> 15 `i `uc ]
-[e :U 2579 ]
-"1094
-[; ;gemsecs.c: 1094:    break;
-[e $U 2576  ]
-"1095
-[; ;gemsecs.c: 1095:   }
+[; ;gemsecs.c: 1092:   }
 }
-[e $U 2576  ]
-[e :U 2577 ]
-[e [\ -> _function `i 2578 ]
+[e $U 2575  ]
 [e :U 2576 ]
-"1096
-[; ;gemsecs.c: 1096:   break;
-[e $U 2543  ]
-"1097
-[; ;gemsecs.c: 1097:  default:
-[e :U 2580 ]
-"1098
-[; ;gemsecs.c: 1098:   if (block == GEM_STATE_DISABLE) {
-[e $ ! == -> F17244 `ui -> . `E16680 0 `ui 2581  ]
+[e [\ -> _function `i 2577 ]
+[e :U 2575 ]
+"1093
+[; ;gemsecs.c: 1093:   break;
+[e $U 2542  ]
+"1094
+[; ;gemsecs.c: 1094:  default:
+[e :U 2579 ]
+"1095
+[; ;gemsecs.c: 1095:   if (block == GEM_STATE_DISABLE) {
+[e $ ! == -> F17243 `ui -> . `E16680 0 `ui 2580  ]
 {
-"1099
-[; ;gemsecs.c: 1099:    block = GEM_STATE_COMM;
-[e = F17244 . `E16680 1 ]
-"1100
-[; ;gemsecs.c: 1100:    V.ticker = 45;
+"1096
+[; ;gemsecs.c: 1096:    block = GEM_STATE_COMM;
+[e = F17243 . `E16680 1 ]
+"1097
+[; ;gemsecs.c: 1097:    V.ticker = 45;
 [e = . _V 34 -> -> 45 `i `uc ]
-"1101
-[; ;gemsecs.c: 1101:   }
+"1098
+[; ;gemsecs.c: 1098:   }
 }
-[e :U 2581 ]
-"1102
-[; ;gemsecs.c: 1102:   break;
-[e $U 2543  ]
-"1103
-[; ;gemsecs.c: 1103:  }
+[e :U 2580 ]
+"1099
+[; ;gemsecs.c: 1099:   break;
+[e $U 2542  ]
+"1100
+[; ;gemsecs.c: 1100:  }
 }
-[e $U 2543  ]
-[e :U 2544 ]
-[e [\ -> _stream `i , $ -> 1 `i 2545
- , $ -> 5 `i 2570
- , $ -> 9 `i 2575
- 2580 ]
+[e $U 2542  ]
 [e :U 2543 ]
-"1105
-[; ;gemsecs.c: 1105:  V.e_types = equipment;
-[e = . _V 3 F17245 ]
-"1106
-[; ;gemsecs.c: 1106:  return(block);
-[e ) F17244 ]
-[e $UE 2542  ]
-"1107
-[; ;gemsecs.c: 1107: }
-[e :UE 2542 ]
+[e [\ -> _stream `i , $ -> 1 `i 2544
+ , $ -> 5 `i 2569
+ , $ -> 9 `i 2574
+ 2579 ]
+[e :U 2542 ]
+"1102
+[; ;gemsecs.c: 1102:  V.e_types = equipment;
+[e = . _V 3 F17244 ]
+"1103
+[; ;gemsecs.c: 1103:  return(block);
+[e ) F17243 ]
+[e $UE 2541  ]
+"1104
+[; ;gemsecs.c: 1104: }
+[e :UE 2541 ]
 }
 [p f _sprintf 8650880 ]
-[a 2C 49 46 49 55 71 0 ]
+[a 2C 49 46 49 56 71 0 ]
 [a 5C 83 97 118 101 100 32 83 37 100 70 37 100 32 32 32 32 32 32 0 ]
 [a 4C 32 76 111 103 32 102 105 108 101 32 114 101 115 101 116 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 3C 32 84 101 114 109 105 110 97 108 32 32 32 32 32 32 32 32 32 32 0 ]

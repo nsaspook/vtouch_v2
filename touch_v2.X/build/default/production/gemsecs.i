@@ -28845,7 +28845,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.17G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.18G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -28933,7 +28933,7 @@ P_CODES s10f1_opcmd(void)
   switch (V.e_types) {
   case GEM_VII80:
    H33[0].data[18] = '1';
-   H33[0].data[17] = '7';
+   H33[0].data[17] = '8';
    break;
   case GEM_E220:
    H33[0].data[18] = '1';
@@ -29208,7 +29208,7 @@ static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t 
 void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 {
  uint8_t * msg_data = (uint8_t*) & H254[0];
- static uint8_t store1_1 = 1, store1_13 = 1, store2_41 = 1, store6_11 = 1;
+ static uint8_t store1_1 = 1, store1_13 = 1, store6_11 = 1;
 
 
  ++V.ticks;
@@ -29236,9 +29236,6 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
  case 2:
   switch (function) {
   case 41:
-   if (!store2_41)
-    break;
-   store2_41 = 0;
 
    ee_logger(stream, function, dtime, msg_data);
    break;

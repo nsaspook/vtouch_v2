@@ -28889,7 +28889,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.17G");
+   sprintf(V.buf, " Version %s", "1.18G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
