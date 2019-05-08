@@ -585,6 +585,34 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
 }
 
 /*
+ * parse load-clock terminal command for port number
+ */
+
+static void parse_ll(void)
+{
+	if (V.response.cmdlen > 1) {
+		switch (V.response.mparm) { // port selection
+		case '1':
+		case '2':
+		case '3':
+		case 'A':
+		case 'B':
+		case 'C':
+		case 'a':
+		case 'b':
+		case 'c':
+			H33[0].data[0] = V.response.mparm & 0x03;
+			break;
+		default:
+			H33[0].data[0] = 0x01;
+			break;
+		}
+	} else {
+		H33[0].data[0] = 0x01;
+	}
+}
+
+/*
  * terminal response types for equipment
  */
 P_CODES s10f1_opcmd(void)
@@ -601,27 +629,27 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.mcode == 'S' || V.response.mcode == 's')
 		return CODE_TS;
 
-	if (V.response.mcode == 'R' || V.response.mcode == 'r') { // ready load-lock control
-		if (V.response.cmdlen > 1) {
-			switch (V.response.mparm) { // port selection
-			case '1':
-			case '2':
-			case '3':
-			case 'A':
-			case 'B':
-			case 'C':
-			case 'a':
-			case 'b':
-			case 'c':
-				H33[0].data[0] = V.response.mparm & 0x03;
-				break;
-			default:
-				H33[0].data[0] = 0x01;
-				break;
-			}
-		} else {
-			H33[0].data[0] = 0x01;
+	if (V.response.mcode == 'C' || V.response.mcode == 'c') { // ready cassette load-lock control
+		parse_ll();
+
+		switch (V.e_types) {
+		case GEM_VII80:
+			H33[0].data[18] = '1';
+			H33[0].data[17] = '6';
+			break;
+		case GEM_E220:
+			H33[0].data[18] = '1';
+			H33[0].data[17] = '0';
+			break;
+		default:
+			break;
 		}
+
+		return CODE_LOAD;
+	}
+
+	if (V.response.mcode == 'R' || V.response.mcode == 'r') { // close door load-lock control
+		parse_ll();
 
 		switch (V.e_types) {
 		case GEM_VII80:
@@ -639,27 +667,8 @@ P_CODES s10f1_opcmd(void)
 		return CODE_LOAD;
 	}
 
-	if (V.response.mcode == 'P' || V.response.mcode == 'p') { // pump down load-lock control
-		if (V.response.cmdlen > 1) {
-			switch (V.response.mparm) { // port selection
-			case '1':
-			case '2':
-			case '3':
-			case 'A':
-			case 'B':
-			case 'C':
-			case 'a':
-			case 'b':
-			case 'c':
-				H33[0].data[0] = V.response.mparm & 0x03;
-				break;
-			default:
-				H33[0].data[0] = 0x01;
-				break;
-			}
-		} else {
-			H33[0].data[0] = 0x01;
-		}
+	if (V.response.mcode == 'P' || V.response.mcode == 'p') { // close door, rough and hivac load-lock control
+		parse_ll();
 
 		switch (V.e_types) {
 		case GEM_VII80:
@@ -677,27 +686,8 @@ P_CODES s10f1_opcmd(void)
 		return CODE_PUMP;
 	}
 
-	if (V.response.mcode == 'O' || V.response.mcode == 'o') { // open load-lock control
-		if (V.response.cmdlen > 1) {
-			switch (V.response.mparm) { // port selection
-			case '1':
-			case '2':
-			case '3':
-			case 'A':
-			case 'B':
-			case 'C':
-			case 'a':
-			case 'b':
-			case 'c':
-				H33[0].data[0] = V.response.mparm & 0x03;
-				break;
-			default:
-				H33[0].data[0] = 0x01;
-				break;
-			}
-		} else {
-			H33[0].data[0] = 0x01;
-		}
+	if (V.response.mcode == 'O' || V.response.mcode == 'o') { // vent & open load-lock control
+		parse_ll();
 
 		switch (V.e_types) {
 		case GEM_VII80:

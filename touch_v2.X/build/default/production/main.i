@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28060,6 +28060,7 @@ void PMD_Initialize(void);
   CODE_LOAD,
   CODE_UNLOAD,
   CODE_PUMP,
+  CODE_HELP,
   CODE_ERR,
  } P_CODES;
 
@@ -28070,6 +28071,7 @@ void PMD_Initialize(void);
   DIS_LOAD,
   DIS_UNLOAD,
   DIS_PUMP,
+  DIS_HELP,
   DIS_ERR,
  } D_CODES;
 
@@ -28209,6 +28211,7 @@ enum APP_TIMERS {
  TMR_MC_TX,
  TMR_HBIO,
  TMR_INFO,
+ TMR_HELP,
 
 
 
@@ -28798,37 +28801,37 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
  } else {
   switch (V.response.info) {
   case DIS_LOG:
-   sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq & 0x03);
+   sprintf(V.buf, " S%dF%d logged %d    ", V.stream, V.function, V.response.log_seq & 0x03);
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Stored #%d      ", V.response.log_num);
+   sprintf(V.buf, " Stored #%d        ", V.response.log_num);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
   case DIS_LOAD:
-   sprintf(V.buf, " Ready LL    ");
+   sprintf(V.buf, " Ready LL        ");
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+   sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
   case DIS_PUMP:
-   sprintf(V.buf, " Pump LL    ");
+   sprintf(V.buf, " Pump LL         ");
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+   sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
   case DIS_UNLOAD:
-   sprintf(V.buf, " Open LL    ");
+   sprintf(V.buf, " Open LL         ");
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+   sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -28856,9 +28859,27 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 
 
 
+static _Bool help_button()
+{
+ if (!PORTBbits.RB0) {
+  if (TimerDone(TMR_HELP)) {
+   return 1;
+  } else {
+   return 0;
+  }
+ }
+
+ StartTimer(TMR_HELP, 500);
+ return 0;
+}
+
+
+
+
 void main(void)
 {
  UI_STATES mode;
+ D_CODES help_temp;
 
 
  SYSTEM_Initialize();
@@ -28900,7 +28921,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.19G");
+   sprintf(V.buf, " Version %s", "1.20G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -28932,10 +28953,10 @@ void main(void)
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
      if (V.stream == 9) {
       V.msg_error = V.function;
-      sprintf(V.buf, "S%dF%d Err    ", V.stream, V.function);
+      sprintf(V.buf, " S%dF%d Err    ", V.stream, V.function);
      } else {
       V.msg_error = MSG_ERROR_NONE;
-      sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+      sprintf(V.buf, " S%dF%d #      ", V.stream, V.function);
      }
      V.buf[11] = 0;
      MyeaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -29003,7 +29024,7 @@ void main(void)
 
       hb_message();
       if (!V.reset) {
-       sprintf(V.buf, " Ping G%d  P%d #", V.g_state, V.ping);
+       sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
        V.buf[16] = 0;
        MyeaDogM_WriteStringAtPos(0, 0, V.buf);
        WaitMs(1000);
@@ -29103,5 +29124,12 @@ void main(void)
   V.buf[16] = 0;
   if (mode != UI_STATE_LOG)
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+
+
+
+
+  if (help_button()) {
+   help_temp = V.response.info;
+  }
  }
 }

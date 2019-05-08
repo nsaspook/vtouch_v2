@@ -546,37 +546,37 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	} else {
 		switch (V.response.info) {
 		case DIS_LOG:
-			sprintf(V.buf, " S%dF%d logged %d  ", V.stream, V.function, V.response.log_seq & 0x03);
+			sprintf(V.buf, " S%dF%d logged %d    ", V.stream, V.function, V.response.log_seq & 0x03);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " Stored #%d      ", V.response.log_num);
+			sprintf(V.buf, " Stored #%d        ", V.response.log_num);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
 		case DIS_LOAD:
-			sprintf(V.buf, " Ready LL    ");
+			sprintf(V.buf, " Ready LL        ");
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+			sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
 		case DIS_PUMP:
-			sprintf(V.buf, " Pump LL    ");
+			sprintf(V.buf, " Pump LL         ");
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+			sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
 		case DIS_UNLOAD:
-			sprintf(V.buf, " Open LL    ");
+			sprintf(V.buf, " Open LL         ");
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " S2F41 #%c      ", V.response.mcode);
+			sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -602,11 +602,29 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 }
 
 /*
+ * mode button help mode select
+ */
+static bool help_button()
+{
+	if (!RB0_GetValue()) { // debounce and delay for button press
+		if (TimerDone(TMR_HELP)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	StartTimer(TMR_HELP, SDELAY);
+	return false;
+}
+
+/*
 			 Main application
  */
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
+	D_CODES help_temp;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -680,10 +698,10 @@ void main(void)
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
-						sprintf(V.buf, "S%dF%d Err    ", V.stream, V.function);
+						sprintf(V.buf, " S%dF%d Err    ", V.stream, V.function);
 					} else {
 						V.msg_error = MSG_ERROR_NONE;
-						sprintf(V.buf, " S%dF%d #    ", V.stream, V.function);
+						sprintf(V.buf, " S%dF%d #      ", V.stream, V.function);
 					}
 					V.buf[11] = 0; // string size limit
 					MyeaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -751,7 +769,7 @@ void main(void)
 						// send S1F1
 						hb_message();
 						if (!V.reset) {
-							sprintf(V.buf, " Ping G%d  P%d #", V.g_state, V.ping);
+							sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
 							V.buf[16] = 0; // string size limit
 							MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 							WaitMs(1000);
@@ -851,6 +869,13 @@ void main(void)
 		V.buf[16] = 0; // string size limit
 		if (mode != UI_STATE_LOG)
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+
+		/*
+		 * show help display
+		 */
+		if (help_button()) {
+			help_temp = V.response.info;
+		}
 	}
 }
 /**
