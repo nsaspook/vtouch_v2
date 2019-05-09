@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28167,7 +28167,7 @@ void PMD_Initialize(void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1, debug : 1;
+  queue : 1, reset : 1, debug : 1, help : 1;
   terminal_type response;
   uint8_t uart;
   volatile uint8_t ticker;
@@ -28212,6 +28212,7 @@ enum APP_TIMERS {
  TMR_HBIO,
  TMR_INFO,
  TMR_HELP,
+ TMR_HELPDIS,
 
 
 
@@ -28836,6 +28837,15 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
+  case DIS_HELP:
+   sprintf(V.buf, " HELP            ");
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " DISPLAY         ");
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
   case DIS_TERM:
   default:
    sprintf(V.buf, " Terminal %d             ", V.response.TID);
@@ -28863,8 +28873,10 @@ static _Bool help_button()
 {
  if (!PORTBbits.RB0) {
   if (TimerDone(TMR_HELP)) {
+   V.help = 1;
    return 1;
   } else {
+   V.help = 0;
    return 0;
   }
  }
@@ -29128,8 +29140,17 @@ void main(void)
 
 
 
-  if (help_button()) {
+  if (help_button() && V.help && V.response.info != DIS_HELP) {
    help_temp = V.response.info;
+   V.response.info = DIS_HELP;
+   StartTimer(TMR_HELPDIS, 3000);
+  } else {
+   if (V.help) {
+    if (TimerDone(TMR_HELPDIS)) {
+     V.help = 0;
+     V.response.info = help_temp;
+    }
+   }
   }
  }
 }

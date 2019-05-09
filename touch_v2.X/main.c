@@ -581,6 +581,15 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
+		case DIS_HELP:
+			sprintf(V.buf, " HELP            ");
+			V.buf[16] = 0;
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, " DISPLAY         ");
+			V.buf[16] = 0;
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			break;
 		case DIS_TERM:
 		default:
 			sprintf(V.buf, " Terminal %d             ", V.response.TID);
@@ -608,8 +617,10 @@ static bool help_button()
 {
 	if (!RB0_GetValue()) { // debounce and delay for button press
 		if (TimerDone(TMR_HELP)) {
+			V.help = true;
 			return true;
 		} else {
+			V.help = false;
 			return false;
 		}
 	}
@@ -873,8 +884,17 @@ void main(void)
 		/*
 		 * show help display
 		 */
-		if (help_button()) {
+		if (help_button() && V.help && V.response.info != DIS_HELP) {
 			help_temp = V.response.info;
+			V.response.info = DIS_HELP;
+			StartTimer(TMR_HELPDIS, TDELAY);
+		} else {
+			if (V.help) {
+				if (TimerDone(TMR_HELPDIS)) {
+					V.help = false;
+					V.response.info = help_temp;
+				}
+			}
 		}
 	}
 }
