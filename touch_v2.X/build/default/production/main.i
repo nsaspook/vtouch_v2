@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28838,6 +28838,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
   case DIS_HELP:
+   wdtdelay(9000);
    sprintf(V.buf, " HELP            ");
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -28872,16 +28873,15 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 static _Bool help_button()
 {
  if (!PORTBbits.RB0) {
-  if (TimerDone(TMR_HELP)) {
-   V.help = 1;
+  V.help = 1;
+  if (TimerDone(TMR_HELP))
    return 1;
-  } else {
-   V.help = 0;
-   return 0;
-  }
+
  }
 
- StartTimer(TMR_HELP, 500);
+ if (!V.help)
+  StartTimer(TMR_HELP, 500);
+
  return 0;
 }
 
@@ -28933,7 +28933,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.20G");
+   sprintf(V.buf, " Version %s", "1.21G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -29039,7 +29039,7 @@ void main(void)
        sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
        V.buf[16] = 0;
        MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-       WaitMs(1000);
+       WaitMs(250);
       }
       V.msg_error = MSG_ERROR_NONE;
       V.reset = 0;
@@ -29140,17 +29140,18 @@ void main(void)
 
 
 
-  if (help_button() && V.help && V.response.info != DIS_HELP) {
+  if (help_button() && V.response.info != DIS_HELP) {
    help_temp = V.response.info;
    V.response.info = DIS_HELP;
+   sprintf(V.info, " Commands        ");
    StartTimer(TMR_HELPDIS, 3000);
+   StartTimer(TMR_INFO, 3000);
   } else {
-   if (V.help) {
-    if (TimerDone(TMR_HELPDIS)) {
-     V.help = 0;
-     V.response.info = help_temp;
-    }
+   if (TimerDone(TMR_HELPDIS)) {
+    V.help = 0;
+    V.response.info = help_temp;
    }
+
   }
  }
 }

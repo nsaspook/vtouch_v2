@@ -582,6 +582,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
 		case DIS_HELP:
+			wdtdelay(9000); // slowdown updates for SPI transfers
 			sprintf(V.buf, " HELP            ");
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
@@ -616,16 +617,15 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 static bool help_button()
 {
 	if (!RB0_GetValue()) { // debounce and delay for button press
-		if (TimerDone(TMR_HELP)) {
-			V.help = true;
+		V.help = true;
+		if (TimerDone(TMR_HELP))
 			return true;
-		} else {
-			V.help = false;
-			return false;
-		}
+
 	}
 
-	StartTimer(TMR_HELP, SDELAY);
+	if (!V.help)
+		StartTimer(TMR_HELP, SDELAY);
+
 	return false;
 }
 
@@ -783,7 +783,7 @@ void main(void)
 							sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
 							V.buf[16] = 0; // string size limit
 							MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-							WaitMs(1000);
+							WaitMs(250);
 						}
 						V.msg_error = MSG_ERROR_NONE;
 						V.reset = false;
@@ -884,17 +884,18 @@ void main(void)
 		/*
 		 * show help display
 		 */
-		if (help_button() && V.help && V.response.info != DIS_HELP) {
+		if (help_button() && V.response.info != DIS_HELP) {
 			help_temp = V.response.info;
 			V.response.info = DIS_HELP;
+			sprintf(V.info, " Commands        ");
 			StartTimer(TMR_HELPDIS, TDELAY);
+			StartTimer(TMR_INFO, TDELAY);
 		} else {
-			if (V.help) {
-				if (TimerDone(TMR_HELPDIS)) {
-					V.help = false;
-					V.response.info = help_temp;
-				}
+			if (TimerDone(TMR_HELPDIS)) {
+				V.help = false;
+				V.response.info = help_temp;
 			}
+
 		}
 	}
 }
