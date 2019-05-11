@@ -28284,7 +28284,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 76 "./vconfig.h"
+# 77 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28414,7 +28414,7 @@ void PMD_Initialize(void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1, debug : 1, help : 1;
+  queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
   uint8_t uart;
   volatile uint8_t ticker;
@@ -28582,6 +28582,11 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t respond : 1;
  } response_type;
 
+ typedef struct gem_message_type {
+  header254 message;
+  response_type block;
+ } gem_message_type;
+
  uint16_t block_checksum(uint8_t *, uint16_t);
  uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES m_protocol(LINK_STATES *);
@@ -28593,6 +28598,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s10f1_opcmd(void);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
+ _Bool gem_messages(response_type *);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28615,6 +28621,8 @@ V_data V = {
  .response.info = DIS_STR,
  .response.log_num = 0,
  .response.log_seq = 0,
+ .queue = 0,
+ .stack = 0,
 };
 
 header10 H10[] = {
@@ -28843,7 +28851,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 325 "main.c"
+# 327 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28862,7 +28870,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 363 "main.c"
+# 365 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29036,6 +29044,8 @@ header254 H254[] = {
  },
 };
 
+gem_message_type S[4];
+
 header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
@@ -29182,7 +29192,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.21G");
+   sprintf(V.buf, " Version %s", "1.22G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);

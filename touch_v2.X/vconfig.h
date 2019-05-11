@@ -21,10 +21,11 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.21G"
+#define VER	"1.22G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
+	 * 1.22 message sequencing in secs_II_message
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -202,7 +203,7 @@ extern "C" {
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1, reset : 1, debug : 1, help : 1;
+		queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
 		terminal_type response;
 		uint8_t uart;
 		volatile uint8_t ticker;

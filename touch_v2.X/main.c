@@ -73,6 +73,8 @@ V_data V = {
 	.response.info = DIS_STR,
 	.response.log_num = 0,
 	.response.log_seq = 0,
+	.queue = false,
+	.stack = false, // 0 no messages, 1-4 messages in queue
 };
 
 header10 H10[] = {
@@ -532,6 +534,8 @@ header254 H254[] = {
 		.data[0] = 0x57,
 	},
 };
+
+gem_message_type S[4]; // a queue message stack
 
 header10 r_block;
 

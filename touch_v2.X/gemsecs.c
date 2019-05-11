@@ -14,6 +14,7 @@ extern struct header27 H27[];
 extern struct header33 H33[];
 extern struct header53 H53[];
 extern header254 H254[];
+extern gem_message_type S[4];
 
 /*
  * Checksum for message and header block after length byte
@@ -732,6 +733,21 @@ P_CODES s6f11_opcmd(void)
 	return(P_CODES) V.response.ceid;
 }
 
+bool gem_messages(response_type *block)
+{
+	if (!V.stack)
+		return false;
+
+	*block = S[V.stack].block; // shallow contents copy
+
+	// TESTING S1F1 host heartbeat send to equipment
+	block->header = (uint8_t*) & H10[0];
+	block->length = sizeof(header10);
+	H10[0].block.block.systemb = V.systemb;
+	V.stack--;
+	return true;
+}
+
 /*
  * parse stream and response codes into a message pointer and length to send message in response
  */
@@ -743,6 +759,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	V.abort = LINK_ERROR_NONE;
 	V.queue = false;
 	block.respond = false;
+
+	if (V.stack) {
+		gem_messages(&block);
+		return(block);
+	}
 
 	switch (stream) { // from equipment
 	case 1:

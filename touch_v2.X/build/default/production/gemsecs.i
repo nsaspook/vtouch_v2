@@ -27507,7 +27507,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 76 "./vconfig.h"
+# 77 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27637,7 +27637,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1, debug : 1, help : 1;
+  queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
   uint8_t uart;
   volatile uint8_t ticker;
@@ -28545,6 +28545,11 @@ void WaitMs(uint16_t numMilliseconds);
   uint8_t respond : 1;
  } response_type;
 
+ typedef struct gem_message_type {
+  header254 message;
+  response_type block;
+ } gem_message_type;
+
  uint16_t block_checksum(uint8_t *, uint16_t);
  uint16_t run_checksum(uint8_t, _Bool);
  LINK_STATES m_protocol(LINK_STATES *);
@@ -28556,6 +28561,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s10f1_opcmd(void);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
+ _Bool gem_messages(response_type *);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
@@ -28574,6 +28580,7 @@ extern struct header27 H27[];
 extern struct header33 H33[];
 extern struct header53 H53[];
 extern header254 H254[];
+extern gem_message_type S[4];
 
 
 
@@ -28643,7 +28650,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 102 "gemsecs.c"
+# 103 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -28848,7 +28855,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
        d++;
       }
      }
-# 330 "gemsecs.c"
+# 331 "gemsecs.c"
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
 
@@ -29098,7 +29105,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.21G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.22G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29254,6 +29261,21 @@ P_CODES s6f11_opcmd(void)
  return(P_CODES) V.response.ceid;
 }
 
+_Bool gem_messages(response_type *block)
+{
+ if (!V.stack)
+  return 0;
+
+ *block = S[V.stack].block;
+
+
+ block->header = (uint8_t*) & H10[0];
+ block->length = sizeof(header10);
+ H10[0].block.block.systemb = V.systemb;
+ V.stack--;
+ return 1;
+}
+
 
 
 
@@ -29265,6 +29287,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  V.abort = LINK_ERROR_NONE;
  V.queue = 0;
  block.respond = 0;
+
+ if (V.stack) {
+  gem_messages(&block);
+  return(block);
+ }
 
  switch (stream) {
  case 1:

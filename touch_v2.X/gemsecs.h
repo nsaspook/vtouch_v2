@@ -135,6 +135,11 @@ extern "C" {
 		uint8_t respond : 1;
 	} response_type;
 
+	typedef struct gem_message_type {
+		header254 message;
+		response_type block;
+	} gem_message_type;
+
 	uint16_t block_checksum(uint8_t *, uint16_t);
 	uint16_t run_checksum(uint8_t, bool);
 	LINK_STATES m_protocol(LINK_STATES *);
@@ -146,6 +151,7 @@ extern "C" {
 	P_CODES s10f1_opcmd(void);
 	P_CODES s6f11_opcmd(void);
 	response_type secs_II_message(uint8_t, uint8_t);
+	bool gem_messages(response_type *);
 	void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
 	GEM_STATES secs_gem_state(uint8_t, uint8_t);
 
