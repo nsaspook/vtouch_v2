@@ -36,6 +36,7 @@ extern "C" {
 	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
 
 #define SLED	LED0_LAT
+#define DLED	DEBUG2_LAT
 
 #define EADOGM_CMD_CLR		1
 #define EADOGM_CMD_CURSOR_ON     0b00001111
@@ -62,6 +63,7 @@ extern "C" {
 #define TDELAY	3000
 #define LDELAY	1000
 #define SDELAY	500
+#define BDELAY	300
 
 #define Y2KTIME
 
@@ -111,7 +113,7 @@ extern "C" {
 	typedef struct terminal_type {
 		uint8_t ack[32];
 		uint8_t TID, mcode, mparm, cmdlen, log_seq;
-		D_CODES info;
+		D_CODES info, help_temp;
 		int32_t ceid;
 		uint16_t log_num;
 	} terminal_type;
@@ -197,7 +199,7 @@ extern "C" {
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error;
 		UI_STATES ui_sw;
-		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
+		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
 		uint8_t rbit : 1, wbit : 1, ebit : 1,
 		failed_send : 4, failed_receive : 4,
 		queue : 1, reset : 1, debug : 1, help : 1;

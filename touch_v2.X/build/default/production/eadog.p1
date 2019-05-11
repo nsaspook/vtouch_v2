@@ -3,8 +3,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./ringbufs.h: 19:  typedef struct ringBufS_t {
 [s S2226 `uc -> 64 `i `uc 1 `uc 1 `uc 1 ]
 [n S2226 ringBufS_t buf head tail count ]
-"74 ./vconfig.h
-[; ;./vconfig.h: 74:  struct spi_link_type {
+"76 ./vconfig.h
+[; ;./vconfig.h: 76:  struct spi_link_type {
 [s S2227 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `us 1 `uc 1 `*S2226 1 `*S2226 1 `Vl 1 ]
 [n S2227 spi_link_type SPI_LCD SPI_AUX LCD_TIMER LCD_DATA delay config tx1b tx1a int_count ]
 "50 /opt/microchip/xc8/v2.05/pic/include/pic18.h
@@ -2396,11 +2396,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "23
 [; ;eadog.c: 23:  static uint32_t dcount;
-[v F16812 `ul ~T0 @X0 1 s dcount ]
+[v F16814 `ul ~T0 @X0 1 s dcount ]
 "25
 [; ;eadog.c: 25:  for (dcount = 0; dcount <= delay; dcount++) {
 {
-[e = F16812 -> -> -> 0 `i `l `ul ]
+[e = F16814 -> -> -> 0 `i `l `ul ]
 [e $U 2237  ]
 [e :U 2234 ]
 {
@@ -2413,9 +2413,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "28
 [; ;eadog.c: 28:  };
 }
-[e ++ F16812 -> -> -> 1 `i `l `ul ]
+[e ++ F16814 -> -> -> 1 `i `l `ul ]
 [e :U 2237 ]
-[e $ <= F16812 _delay 2234  ]
+[e $ <= F16814 _delay 2234  ]
 [e :U 2235 ]
 }
 "30
@@ -2443,8 +2443,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;eadog.c: 40:  ringBufS_init(spi_link.tx1b);
 [e ( _ringBufS_init (1 -> . _spi_link 6 `*VS2226 ]
 "42
-[; ;eadog.c: 42:  LATEbits.LATE0 = 1;
-[e = . . _LATEbits 0 0 -> -> 1 `i `uc ]
+[; ;eadog.c: 42:  LATEbits.LATE2 = 1;
+[e = . . _LATEbits 0 2 -> -> 1 `i `uc ]
 "43
 [; ;eadog.c: 43:  do { LATCbits.LATC2 = 1; } while(0);
 [e :U 2241 ]
@@ -2525,8 +2525,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;eadog.c: 67:  SPI1INTFbits.SPI1TXUIF = 1;
 [e = . . _SPI1INTFbits 1 1 -> -> 1 `i `uc ]
 "68
-[; ;eadog.c: 68:  LATEbits.LATE0 = 0;
-[e = . . _LATEbits 0 0 -> -> 0 `i `uc ]
+[; ;eadog.c: 68:  LATEbits.LATE2 = 0;
+[e = . . _LATEbits 0 2 -> -> 0 `i `uc ]
 "69
 [; ;eadog.c: 69: }
 [e :UE 2238 ]

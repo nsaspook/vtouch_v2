@@ -27322,7 +27322,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 21 "mcc_generated_files/../vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 640 "./mcc_generated_files/pin_manager.h"
+# 632 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 22 "mcc_generated_files/../vconfig.h" 2
 # 1 "./ringbufs.h" 1
@@ -27347,7 +27347,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 74 "./vconfig.h"
+# 76 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27388,7 +27388,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen, log_seq;
-  D_CODES info;
+  D_CODES info, help_temp;
   int32_t ceid;
   uint16_t log_num;
  } terminal_type;
@@ -27474,7 +27474,7 @@ void PIN_MANAGER_Initialize (void);
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1;

@@ -27195,7 +27195,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 640 "mcc_generated_files/pin_manager.h"
+# 632 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "mcc_generated_files/mcc.h" 2
 
@@ -27657,6 +27657,253 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 59 "mcc_generated_files/mcc.h" 2
 
+# 1 "mcc_generated_files/pwm8.h" 1
+# 102 "mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
+# 60 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/tmr2.h" 1
+# 79 "mcc_generated_files/tmr2.h"
+typedef enum
+{
+# 89 "mcc_generated_files/tmr2.h"
+   TMR2_ROP_STARTS_TMRON,
+
+
+
+
+   TMR2_ROP_STARTS_TMRON_ERSHIGH,
+
+
+
+
+   TMR2_ROP_STARTS_TMRON_ERSLOW,
+
+
+
+
+   TMR2_ROP_RESETS_ERSBOTHEDGE,
+
+
+
+
+   TMR2_ROP_RESETS_ERSRISINGEDGE,
+
+
+
+
+   TMR2_ROP_RESETS_ERSFALLINGEDGE,
+
+
+
+
+   TMR2_ROP_RESETS_ERSLOW,
+
+
+
+
+   TMR2_ROP_RESETS_ERSHIGH,
+# 135 "mcc_generated_files/tmr2.h"
+   TMR2_OS_STARTS_TMRON,
+
+
+
+
+   TMR2_OS_STARTS_ERSRISINGEDGE ,
+
+
+
+
+   TMR2_OS_STARTS_ERSFALLINGEDGE ,
+
+
+
+
+   TMR2_OS_STARTS_ERSBOTHEDGE,
+
+
+
+
+
+   TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
+
+
+
+
+
+   TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
+
+
+
+
+
+   TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
+
+
+
+
+   TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
+
+
+
+
+   TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
+
+
+
+
+   TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
+# 192 "mcc_generated_files/tmr2.h"
+   TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
+
+
+
+
+   TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
+
+
+
+
+
+   TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
+
+} TMR2_HLT_MODE;
+# 220 "mcc_generated_files/tmr2.h"
+typedef enum
+{
+
+
+    TMR2_T2INPPS,
+
+
+
+    TMR2_RESERVED,
+
+
+
+    TMR2_T4POSTSCALED,
+
+
+
+    TMR2_T6POSTSCALED,
+
+
+
+    TMR2_CCP1_OUT,
+
+
+
+    TMR2_CCP2_OUT,
+
+
+
+    TMR2_CCP3_OUT,
+
+
+
+    TMR2_CCP4_OUT,
+
+
+
+    TMR2_PWM5_OUT,
+
+
+
+    TMR2_PWM6_OUT,
+
+
+
+    TMR2_PWM7_OUT,
+
+
+
+    TMR2_PWM8_OUT,
+
+
+
+    TMR2_RESERVED_2,
+
+
+
+    TMR2_RESERVED_3,
+
+
+
+    TMR2_C1_OUT_SYNC,
+
+
+
+    TMR2_C2_OUT_SYNC,
+
+
+
+    TMR2_ZCD_OUTPUT,
+
+
+
+    TMR2_CLC1_OUT,
+
+
+
+    TMR2_CLC2_OUT,
+
+
+
+    TMR2_CLC3_OUT,
+
+
+
+    TMR2_CLC4_OUT,
+
+
+
+    TMR2_UART1_RX_EDGE,
+
+
+
+    TMR2_UART1_TX_EDGE,
+
+
+
+    TMR2_UART2_RX_EDGE,
+
+
+
+    TMR2_UART2_TX_EDGE
+
+} TMR2_HLT_EXT_RESET_SOURCE;
+# 364 "mcc_generated_files/tmr2.h"
+void TMR2_Initialize(void);
+# 400 "mcc_generated_files/tmr2.h"
+void TMR2_ModeSet(TMR2_HLT_MODE mode);
+# 435 "mcc_generated_files/tmr2.h"
+void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
+# 464 "mcc_generated_files/tmr2.h"
+void TMR2_Start(void);
+# 493 "mcc_generated_files/tmr2.h"
+void TMR2_StartTimer(void);
+# 525 "mcc_generated_files/tmr2.h"
+void TMR2_Stop(void);
+# 557 "mcc_generated_files/tmr2.h"
+void TMR2_StopTimer(void);
+# 592 "mcc_generated_files/tmr2.h"
+uint8_t TMR2_Counter8BitGet(void);
+# 627 "mcc_generated_files/tmr2.h"
+uint8_t TMR2_ReadTimer(void);
+# 666 "mcc_generated_files/tmr2.h"
+void TMR2_Counter8BitSet(uint8_t timerVal);
+# 705 "mcc_generated_files/tmr2.h"
+void TMR2_WriteTimer(uint8_t timerVal);
+# 757 "mcc_generated_files/tmr2.h"
+void TMR2_Period8BitSet(uint8_t periodVal);
+# 809 "mcc_generated_files/tmr2.h"
+void TMR2_LoadPeriodRegister(uint8_t periodVal);
+# 847 "mcc_generated_files/tmr2.h"
+_Bool TMR2_HasOverflowOccured(void);
+# 61 "mcc_generated_files/mcc.h" 2
+
 # 1 "mcc_generated_files/ext_int.h" 1
 # 562 "mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -27684,7 +27931,7 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
-# 60 "mcc_generated_files/mcc.h" 2
+# 62 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/memory.h" 1
 # 99 "mcc_generated_files/memory.h"
@@ -27703,14 +27950,14 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
 void MEMORY_Tasks(void);
-# 61 "mcc_generated_files/mcc.h" 2
+# 63 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/clc1.h" 1
 # 91 "mcc_generated_files/clc1.h"
 void CLC1_Initialize(void);
 # 113 "mcc_generated_files/clc1.h"
 _Bool CLC1_OutputStatusGet(void);
-# 62 "mcc_generated_files/mcc.h" 2
+# 64 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/uart2.h" 1
 # 77 "mcc_generated_files/uart2.h"
@@ -27742,7 +27989,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 445 "mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 63 "mcc_generated_files/mcc.h" 2
+# 65 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/uart1.h" 1
 # 77 "mcc_generated_files/uart1.h"
@@ -27774,12 +28021,12 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
  void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 445 "mcc_generated_files/uart1.h"
  void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 64 "mcc_generated_files/mcc.h" 2
+# 66 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/dma1.h" 1
 # 114 "mcc_generated_files/dma1.h"
 void DMA1_Initialize(void);
-# 65 "mcc_generated_files/mcc.h" 2
+# 67 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/spi1.h" 1
 # 55 "mcc_generated_files/spi1.h"
@@ -27796,17 +28043,17 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 66 "mcc_generated_files/mcc.h" 2
+# 68 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/clkref.h" 1
 # 92 "mcc_generated_files/clkref.h"
 void CLKREF_Initialize(void);
-# 67 "mcc_generated_files/mcc.h" 2
-# 82 "mcc_generated_files/mcc.h"
+# 69 "mcc_generated_files/mcc.h" 2
+# 84 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 95 "mcc_generated_files/mcc.h"
+# 97 "mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 108 "mcc_generated_files/mcc.h"
+# 110 "mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 50 "mcc_generated_files/interrupt_manager.c" 2
 

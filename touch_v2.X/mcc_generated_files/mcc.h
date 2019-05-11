@@ -57,6 +57,8 @@
 #include "dsm.h"
 #include "tmr5.h"
 #include "tmr6.h"
+#include "pwm8.h"
+#include "tmr2.h"
 #include "ext_int.h"
 #include "memory.h"
 #include "clc1.h"

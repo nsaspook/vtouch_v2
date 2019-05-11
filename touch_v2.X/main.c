@@ -540,6 +540,7 @@ volatile uint8_t mode_sw = false;
 
 static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
+	DLED = true;
 	wait_lcd_done();
 	if (V.response.info == DIS_STR) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);
@@ -609,6 +610,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 		if (TimerDone(TMR_INFO))
 			V.response.info = DIS_STR;
 	}
+	DLED = false;
 }
 
 /*
@@ -624,18 +626,17 @@ static bool help_button()
 	}
 
 	if (!V.help)
-		StartTimer(TMR_HELP, SDELAY);
+		StartTimer(TMR_HELP, BDELAY);
 
 	return false;
 }
 
 /*
-			 Main application
+ * Main application
  */
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
-	D_CODES help_temp;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -660,11 +661,12 @@ void main(void)
 
 	if (mode == UI_STATE_HOST) {
 		RELAY0_SetHigh();
-		OUT_PIN1_SetHigh(); // mode switch indicator lamp
+		V.mode_pwm = 70; // mode switch indicator lamp normal level
 	} else {
 		RELAY0_SetLow();
-		OUT_PIN1_SetLow();
+		V.mode_pwm = 0;
 	}
+	PWM8_LoadDutyValue(V.mode_pwm); // 10KHz PWM 
 
 	while (true) {
 		switch (V.ui_state) {
@@ -885,15 +887,17 @@ void main(void)
 		 * show help display
 		 */
 		if (help_button() && V.response.info != DIS_HELP) {
-			help_temp = V.response.info;
+			V.response.help_temp = V.response.info;
 			V.response.info = DIS_HELP;
 			sprintf(V.info, " Commands        ");
 			StartTimer(TMR_HELPDIS, TDELAY);
 			StartTimer(TMR_INFO, TDELAY);
+			PWM8_LoadDutyValue(300); // mode switch indicator lamp 'button' level
 		} else {
 			if (TimerDone(TMR_HELPDIS)) {
 				V.help = false;
-				V.response.info = help_temp;
+				V.response.info = V.response.help_temp;
+				PWM8_LoadDutyValue(V.mode_pwm);
 			}
 
 		}

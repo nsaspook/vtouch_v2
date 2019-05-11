@@ -930,6 +930,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			default:
 				break;
 			}
+			V.response.help_temp = V.response.info;
 			break;
 		default: // S1F0 abort
 			block.header = (uint8_t*) & H10[2];

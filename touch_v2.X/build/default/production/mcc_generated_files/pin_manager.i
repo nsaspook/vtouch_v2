@@ -27185,7 +27185,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 49 "mcc_generated_files/pin_manager.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 640 "mcc_generated_files/pin_manager.h"
+# 632 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 50 "mcc_generated_files/pin_manager.c" 2
 
@@ -27270,6 +27270,7 @@ void PIN_MANAGER_Initialize(void)
     RA4PPS = 0x01;
     RA5PPS = 0x26;
     RA6PPS = 0x28;
+    RD1PPS = 0x10;
     RC5PPS = 0x1F;
     RC6PPS = 0x13;
     SPI1SDIPPS = 0x14;

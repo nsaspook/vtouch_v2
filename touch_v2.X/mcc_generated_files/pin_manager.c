@@ -134,6 +134,7 @@ void PIN_MANAGER_Initialize(void)
     RA4PPS = 0x01;   //RA4->CLC1:CLC1;    
     RA5PPS = 0x26;   //RA5->NCO1:NCO1;    
     RA6PPS = 0x28;   //RA6->DSM:DSM1;    
+    RD1PPS = 0x10;   //RD1->PWM8:PWM8;    
     RC5PPS = 0x1F;   //RC5->SPI1:SDO1;    
     RC6PPS = 0x13;   //RC6->UART1:TX1;    
     SPI1SDIPPS = 0x14;   //RC4->SPI1:SDI1;    

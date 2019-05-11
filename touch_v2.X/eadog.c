@@ -39,7 +39,7 @@ void init_display(void)
 	ringBufS_init(spi_link.tx1a);
 	ringBufS_init(spi_link.tx1b);
 
-	SLED = true;
+	DLED = true;
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
 	send_lcd_cmd(0x39);
@@ -65,7 +65,7 @@ void init_display(void)
 	DMA1SSA = (uint32_t) & ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
-	SLED = false;
+	DLED = false;
 }
 
 /*
