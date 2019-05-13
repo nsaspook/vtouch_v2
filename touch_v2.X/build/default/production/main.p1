@@ -81,7 +81,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S2247 response_type header length reply reply_length respond ]
 "138
 [; ;./gemsecs.h: 138:  typedef struct gem_message_type {
-[s S2248 `S2246 1 `S2247 1 ]
+[s S2248 `S2244 1 `S2247 1 ]
 [n S2248 gem_message_type message block ]
 "46188 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46188:     struct {
@@ -215,6 +215,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "154 ./gemsecs.h
 [; ;./gemsecs.h: 154:  _Bool sequence_messages(uint8_t);
 [v _sequence_messages `(a ~T0 @X0 0 ef1`uc ]
+"153
+[; ;./gemsecs.h: 153:  response_type secs_II_message(uint8_t, uint8_t);
+[v _secs_II_message `(S2247 ~T0 @X0 0 ef2`uc`uc ]
 "44 main.c
 [p n 520 ]
 "45
@@ -4768,53 +4771,50 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 951:     sequence_messages(1);
 [e ( _sequence_messages (1 -> -> 1 `i `uc ]
 "952
-[; ;main.c: 952:     V.response.info = DIS_SEQUENCE;
-[e = . . _V 36 6 . `E16976 7 ]
+[; ;main.c: 952:     secs_II_message(2, 41);
+[e ( _secs_II_message (2 , -> -> 2 `i `uc -> -> 41 `i `uc ]
 "953
-[; ;main.c: 953:     V.g_state = GEM_STATE_REMOTE;
-[e = . _V 2 . `E17015 4 ]
-"954
-[; ;main.c: 954:     V.s_state = SEQ_STATE_RX;
-[e = . _V 0 . `E16999 1 ]
-"955
-[; ;main.c: 955:    }
+[; ;main.c: 953:     V.response.info = DIS_SEQUENCE;
+[e = . . _V 36 6 . `E16976 7 ]
+"956
+[; ;main.c: 956:    }
 }
 [e :U 2387 ]
-"956
-[; ;main.c: 956:   } else {
+"957
+[; ;main.c: 957:   } else {
 }
 [e $U 2388  ]
 [e :U 2386 ]
 {
-"957
-[; ;main.c: 957:    if (TimerDone(TMR_HELPDIS)) {
+"958
+[; ;main.c: 958:    if (TimerDone(TMR_HELPDIS)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17134 9 `uc `i -> 0 `i 2389  ]
 {
-"958
-[; ;main.c: 958:     V.help = 0;
-[e = . _V 34 -> -> 0 `i `uc ]
 "959
-[; ;main.c: 959:     V.response.info = V.response.help_temp;
-[e = . . _V 36 6 . . _V 36 7 ]
+[; ;main.c: 959:     V.help = 0;
+[e = . _V 34 -> -> 0 `i `uc ]
 "960
-[; ;main.c: 960:     PWM8_LoadDutyValue(V.mode_pwm);
-[e ( _PWM8_LoadDutyValue (1 . _V 24 ]
+[; ;main.c: 960:     V.response.info = V.response.help_temp;
+[e = . . _V 36 6 . . _V 36 7 ]
 "961
-[; ;main.c: 961:    }
+[; ;main.c: 961:     PWM8_LoadDutyValue(V.mode_pwm);
+[e ( _PWM8_LoadDutyValue (1 . _V 24 ]
+"962
+[; ;main.c: 962:    }
 }
 [e :U 2389 ]
-"963
-[; ;main.c: 963:   }
+"964
+[; ;main.c: 964:   }
 }
 [e :U 2388 ]
-"964
-[; ;main.c: 964:  }
+"965
+[; ;main.c: 965:  }
 }
 [e :U 2278 ]
 [e $U 2279  ]
 [e :U 2280 ]
-"965
-[; ;main.c: 965: }
+"966
+[; ;main.c: 966: }
 [e :UE 2267 ]
 }
 [p f _sprintf 9175184 ]

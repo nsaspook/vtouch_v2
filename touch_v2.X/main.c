@@ -949,9 +949,10 @@ void main(void)
 			PWM8_LoadDutyValue(300); // mode switch indicator lamp 'button' level
 			if (V.seq_test) {
 				sequence_messages(1);
+				secs_II_message(2, 41);
 				V.response.info = DIS_SEQUENCE;
-				V.g_state = GEM_STATE_REMOTE;
-				V.s_state = SEQ_STATE_RX;
+				//				V.g_state = GEM_STATE_REMOTE;
+				//				V.s_state = SEQ_STATE_RX;
 			}
 		} else {
 			if (TimerDone(TMR_HELPDIS)) {

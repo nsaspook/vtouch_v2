@@ -573,37 +573,30 @@ void hb_message()
 		V.stream = 1;
 		V.function = 14; // S1F13 host ping
 	}
-	if (V.seq_test) {
-		sequence_messages(1);
-		V.response.info = DIS_SEQUENCE;
-	}
+	//	if (V.seq_test) {
+	//		sequence_messages(1);
+	//		V.response.info = DIS_SEQUENCE;
+	//	}
 }
 
 bool sequence_messages(uint8_t sid)
 {
-	struct header33 *h;
 
 	switch (sid) {
 	case 1:
-		memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[0].message, sizeof(HC33[0]));
-		memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[1].message, sizeof(HC33[0]));
-		memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[2].message, sizeof(HC33[0]));
+		S[0].message=HC33[0];
+		S[1].message=HC33[0];
+		S[2].message=HC33[0];
 
-		h = (void *) & S[0].message;
-		h->data[0] = 0x01;
-		h = (void *) & S[1].message;
-		h->data[0] = 0x02;
-		h = (void *) & S[2].message;
-		h->data[0] = 0x03;
+		S[0].message.data[0] = 0x01;
+		S[1].message.data[0] = 0x02;
+		S[2].message.data[0] = 0x03;
 
-		S[0].block.respond = true;
-		S[0].block.reply = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
+		S[0].block.header = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
 		S[0].block.reply_length = sizeof(header33);
-		S[1].block.respond = true;
-		S[1].block.reply = (uint8_t*) & S[1].message; // S6F41 send load lock ready command
+		S[1].block.header = (uint8_t*) & S[1].message; // S6F41 send load lock ready command
 		S[1].block.reply_length = sizeof(header33);
-		S[2].block.respond = true;
-		S[2].block.reply = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
+		S[2].block.header = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
 		S[2].block.reply_length = sizeof(header33);
 		V.stack = 3; // queue up 3 messages
 		break;
@@ -792,7 +785,7 @@ bool gem_messages(response_type *block)
 
 	*block = S[V.stack - 1].block; // shallow contents copy
 	if (V.seq_test)
-		secs_send((uint8_t*) &block->header, block->length, false, 1);
+		secs_send(block->header, block->length, false, 1);
 
 	V.stack--;
 	return true;

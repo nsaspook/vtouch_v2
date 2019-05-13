@@ -28585,7 +28585,7 @@ void WaitMs(uint16_t numMilliseconds);
  } response_type;
 
  typedef struct gem_message_type {
-  header254 message;
+  header33 message;
   response_type block;
  } gem_message_type;
 
@@ -29461,9 +29461,10 @@ void main(void)
    PWM8_LoadDutyValue(300);
    if (V.seq_test) {
     sequence_messages(1);
+    secs_II_message(2, 41);
     V.response.info = DIS_SEQUENCE;
-    V.g_state = GEM_STATE_REMOTE;
-    V.s_state = SEQ_STATE_RX;
+
+
    }
   } else {
    if (TimerDone(TMR_HELPDIS)) {

@@ -136,7 +136,7 @@ extern "C" {
 	} response_type;
 
 	typedef struct gem_message_type {
-		header254 message;
+		header33 message;
 		response_type block;
 	} gem_message_type;
 
