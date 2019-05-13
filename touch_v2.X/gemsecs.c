@@ -513,6 +513,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
 		V.error = LINK_ERROR_SEND;
+		V.failed_send = true;
 		return false; // don't send and return mismatch error
 	}
 
@@ -791,7 +792,7 @@ bool gem_messages(response_type *block)
 
 	*block = S[V.stack - 1].block; // shallow contents copy
 	if (V.seq_test)
-		secs_send((uint8_t*) block->header, block->length, false, 1);
+		secs_send((uint8_t*) &block->header, block->length, false, 1);
 
 	V.stack--;
 	return true;
