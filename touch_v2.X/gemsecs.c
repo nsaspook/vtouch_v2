@@ -12,6 +12,7 @@ extern struct header24 H24[];
 extern struct header26 H26[];
 extern struct header27 H27[];
 extern struct header33 H33[];
+extern const header33 HC33[];
 extern struct header53 H53[];
 extern header254 H254[];
 extern gem_message_type S[4];
@@ -559,6 +560,7 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
  */
 void hb_message()
 {
+
 	V.ping++;
 	V.s_state = SEQ_STATE_TX;
 	V.failed_send = false;
@@ -570,6 +572,46 @@ void hb_message()
 		V.stream = 1;
 		V.function = 14; // S1F13 host ping
 	}
+	if (V.seq_test) {
+		sequence_messages(1);
+		V.response.info = DIS_SEQUENCE;
+	}
+}
+
+bool sequence_messages(uint8_t sid)
+{
+	struct header33 *h;
+
+	switch (sid) {
+	case 1:
+		memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[0].message, sizeof(HC33[0]));
+		memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[1].message, sizeof(HC33[0]));
+		memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[2].message, sizeof(HC33[0]));
+
+		h = (void *) & S[0].message;
+		h->data[0] = 0x01;
+		h = (void *) & S[1].message;
+		h->data[0] = 0x02;
+		h = (void *) & S[2].message;
+		h->data[0] = 0x03;
+
+		S[0].block.respond = true;
+		S[0].block.reply = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
+		S[0].block.reply_length = sizeof(header33);
+		S[1].block.respond = true;
+		S[1].block.reply = (uint8_t*) & S[1].message; // S6F41 send load lock ready command
+		S[1].block.reply_length = sizeof(header33);
+		S[2].block.respond = true;
+		S[2].block.reply = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
+		S[2].block.reply_length = sizeof(header33);
+		V.stack = 3; // queue up 3 messages
+		break;
+	default:
+		V.stack = false;
+		return false;
+		break;
+	}
+	return true;
 }
 
 uint8_t terminal_format(uint8_t *data, uint8_t i)
@@ -627,7 +669,7 @@ P_CODES s10f1_opcmd(void)
 	if (V.response.cmdlen == 0)
 		return CODE_ERR;
 
-	if (V.response.mcode == 'S' || V.response.mcode == 's')
+	if (V.response.mcode == 'M' || V.response.mcode == 'm')
 		return CODE_TS;
 
 	if (V.response.mcode == 'C' || V.response.mcode == 'c') { // ready cassette load-lock control
@@ -711,8 +753,17 @@ P_CODES s10f1_opcmd(void)
 		return CODE_LOG;
 	}
 
-	if (V.response.mcode == 'M' || V.response.mcode == 'm')
-		return CODE_TM;
+	if (V.response.mcode == 'S' || V.response.mcode == 's') {
+		switch (V.e_types) {
+		case GEM_VII80:
+			break;
+		case GEM_E220:
+			break;
+		default:
+			break;
+		}
+		return CODE_SEQUENCE;
+	}
 
 	if (V.response.mcode == 'D' || V.response.mcode == 'd')
 		return CODE_DEBUG;
@@ -738,12 +789,10 @@ bool gem_messages(response_type *block)
 	if (!V.stack)
 		return false;
 
-	*block = S[V.stack].block; // shallow contents copy
+	*block = S[V.stack - 1].block; // shallow contents copy
+	if (V.seq_test)
+		secs_send((uint8_t*) block->header, block->length, false, 1);
 
-	// TESTING S1F1 host heartbeat send to equipment
-	block->header = (uint8_t*) & H10[0];
-	block->length = sizeof(header10);
-	H10[0].block.block.systemb = V.systemb;
 	V.stack--;
 	return true;
 }
@@ -929,6 +978,10 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				block.reply_length = sizeof(header33);
 				V.queue = true;
 				V.response.info = DIS_PUMP;
+				break;
+			case CODE_SEQUENCE:
+				sequence_messages(1);
+				V.response.info = DIS_SEQUENCE;
 				break;
 			case CODE_TS:
 				block.respond = true;

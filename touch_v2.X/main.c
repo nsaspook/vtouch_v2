@@ -75,6 +75,7 @@ V_data V = {
 	.response.log_seq = 0,
 	.queue = false,
 	.stack = false, // 0 no messages, 1-4 messages in queue
+	.seq_test = true,
 };
 
 header10 H10[] = {
@@ -401,6 +402,45 @@ header33 H33[] = {
 	},
 };
 
+const header33 HC33[] = {//template for vii80 stack commands
+	{ // S2F41 'ready load-lock ' command from host to equipment
+		.length = 33,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 41,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[22] = 0x01, // list 2 items
+		.data[21] = 0x02,
+		.data[20] = 0x41, // 2 ascii data
+		.data[19] = 0x02,
+		.data[18] = 0x31, // 1
+		.data[17] = 0x37, // 7
+		.data[16] = 0x01, // list 1 item
+		.data[15] = 0x01,
+		.data[14] = 0x01, // list 2 items
+		.data[13] = 0x02,
+		.data[12] = 0x41, // 8 ascii data
+		.data[11] = 0x08,
+		.data[10] = 0x4c, // L
+		.data[9] = 0x4f, //  O
+		.data[8] = 0x41, //  A
+		.data[7] = 0x44, //  D
+		.data[6] = 0x4c, //  L
+		.data[5] = 0x4f, //  O
+		.data[4] = 0x43, //  C
+		.data[3] = 0x4b, //  K
+		.data[2] = 0xa5, // 1 byte integer unsigned
+		.data[1] = 0x01, // length 1
+		.data[0] = 0x01, // value
+	},
+};
+
 header53 H53[] = {
 	{ // S10F3 send 'terminal text display ' command from host to equipment
 		.length = 53,
@@ -596,6 +636,16 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
+		case DIS_SEQUENCE:
+			wdtdelay(9000); // slowdown updates for SPI transfers
+			sprintf(V.buf, " Load-lock        ");
+			V.buf[16] = 0;
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, " SEQUENCE         ");
+			V.buf[16] = 0;
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			break;
 		case DIS_TERM:
 		default:
 			sprintf(V.buf, " Terminal %d             ", V.response.TID);
@@ -780,7 +830,7 @@ void main(void)
 				/*
 				 * HeartBeat S1F1 ping during remote idle time
 				 */
-				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
+				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset || V.seq_test) {
 					if (TimerDone(TMR_HBIO) || V.reset) {
 						StartTimer(TMR_HBIO, HBT);
 						// send S1F1
@@ -897,6 +947,12 @@ void main(void)
 			StartTimer(TMR_HELPDIS, TDELAY);
 			StartTimer(TMR_INFO, TDELAY);
 			PWM8_LoadDutyValue(300); // mode switch indicator lamp 'button' level
+			if (V.seq_test) {
+				sequence_messages(1);
+				V.response.info = DIS_SEQUENCE;
+				V.g_state = GEM_STATE_REMOTE;
+				V.s_state = SEQ_STATE_RX;
+			}
 		} else {
 			if (TimerDone(TMR_HELPDIS)) {
 				V.help = false;

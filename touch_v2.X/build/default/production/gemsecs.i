@@ -35,8 +35,6 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -220,7 +218,12 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 19 "./vconfig.h"
+# 15 "./vconfig.h"
+ typedef signed long long int24_t;
+
+
+
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27446,7 +27449,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27507,7 +27510,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 77 "./vconfig.h"
+# 78 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27531,6 +27534,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_UNLOAD,
   CODE_PUMP,
   CODE_HELP,
+  CODE_SEQUENCE,
   CODE_ERR,
  } P_CODES;
 
@@ -27542,6 +27546,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_UNLOAD,
   DIS_PUMP,
   DIS_HELP,
+  DIS_SEQUENCE,
   DIS_ERR,
  } D_CODES;
 
@@ -27635,7 +27640,7 @@ void PIN_MANAGER_Initialize (void);
   uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
-  uint8_t rbit : 1, wbit : 1, ebit : 1,
+  uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
@@ -28561,6 +28566,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s10f1_opcmd(void);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
+ _Bool sequence_messages(uint8_t);
  _Bool gem_messages(response_type *);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
@@ -28578,6 +28584,7 @@ extern struct header24 H24[];
 extern struct header26 H26[];
 extern struct header27 H27[];
 extern struct header33 H33[];
+extern const header33 HC33[];
 extern struct header53 H53[];
 extern header254 H254[];
 extern gem_message_type S[4];
@@ -28650,7 +28657,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 103 "gemsecs.c"
+# 104 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -28855,7 +28862,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
        d++;
       }
      }
-# 331 "gemsecs.c"
+# 332 "gemsecs.c"
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
 
@@ -29087,6 +29094,7 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake, uint8_t s_uart)
 
 void hb_message()
 {
+
  V.ping++;
  V.s_state = SEQ_STATE_TX;
  V.failed_send = 0;
@@ -29098,6 +29106,46 @@ void hb_message()
   V.stream = 1;
   V.function = 14;
  }
+ if (V.seq_test) {
+  sequence_messages(1);
+  V.response.info = DIS_SEQUENCE;
+ }
+}
+
+_Bool sequence_messages(uint8_t sid)
+{
+ struct header33 *h;
+
+ switch (sid) {
+ case 1:
+  memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[0].message, sizeof(HC33[0]));
+  memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[1].message, sizeof(HC33[0]));
+  memcpy((uint8_t*) & HC33[0], (uint8_t*) & S[2].message, sizeof(HC33[0]));
+
+  h = (void *) & S[0].message;
+  h->data[0] = 0x01;
+  h = (void *) & S[1].message;
+  h->data[0] = 0x02;
+  h = (void *) & S[2].message;
+  h->data[0] = 0x03;
+
+  S[0].block.respond = 1;
+  S[0].block.reply = (uint8_t*) & S[0].message;
+  S[0].block.reply_length = sizeof(header33);
+  S[1].block.respond = 1;
+  S[1].block.reply = (uint8_t*) & S[1].message;
+  S[1].block.reply_length = sizeof(header33);
+  S[2].block.respond = 1;
+  S[2].block.reply = (uint8_t*) & S[2].message;
+  S[2].block.reply_length = sizeof(header33);
+  V.stack = 3;
+  break;
+ default:
+  V.stack = 0;
+  return 0;
+  break;
+ }
+ return 1;
 }
 
 uint8_t terminal_format(uint8_t *data, uint8_t i)
@@ -29105,7 +29153,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.22G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.23G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29155,7 +29203,7 @@ P_CODES s10f1_opcmd(void)
  if (V.response.cmdlen == 0)
   return CODE_ERR;
 
- if (V.response.mcode == 'S' || V.response.mcode == 's')
+ if (V.response.mcode == 'M' || V.response.mcode == 'm')
   return CODE_TS;
 
  if (V.response.mcode == 'C' || V.response.mcode == 'c') {
@@ -29239,8 +29287,17 @@ P_CODES s10f1_opcmd(void)
   return CODE_LOG;
  }
 
- if (V.response.mcode == 'M' || V.response.mcode == 'm')
-  return CODE_TM;
+ if (V.response.mcode == 'S' || V.response.mcode == 's') {
+  switch (V.e_types) {
+  case GEM_VII80:
+   break;
+  case GEM_E220:
+   break;
+  default:
+   break;
+  }
+  return CODE_SEQUENCE;
+ }
 
  if (V.response.mcode == 'D' || V.response.mcode == 'd')
   return CODE_DEBUG;
@@ -29266,12 +29323,10 @@ _Bool gem_messages(response_type *block)
  if (!V.stack)
   return 0;
 
- *block = S[V.stack].block;
+ *block = S[V.stack - 1].block;
+ if (V.seq_test)
+  secs_send((uint8_t*) block->header, block->length, 0, 1);
 
-
- block->header = (uint8_t*) & H10[0];
- block->length = sizeof(header10);
- H10[0].block.block.systemb = V.systemb;
  V.stack--;
  return 1;
 }
@@ -29457,6 +29512,10 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
     block.reply_length = sizeof(header33);
     V.queue = 1;
     V.response.info = DIS_PUMP;
+    break;
+   case CODE_SEQUENCE:
+    sequence_messages(1);
+    V.response.info = DIS_SEQUENCE;
     break;
    case CODE_TS:
     block.respond = 1;

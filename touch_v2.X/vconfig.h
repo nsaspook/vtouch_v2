@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.22G"
+#define VER	"1.23G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -35,6 +35,7 @@ extern "C" {
 	//#define DB3
 	//#define DB4
 	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
+#define SEQ_TEST	true	// testing message template transfers
 
 #define SLED	LED0_LAT
 #define DLED	DEBUG2_LAT
@@ -97,6 +98,7 @@ extern "C" {
 		CODE_UNLOAD,
 		CODE_PUMP,
 		CODE_HELP,
+		CODE_SEQUENCE,
 		CODE_ERR,
 	} P_CODES;
 
@@ -108,6 +110,7 @@ extern "C" {
 		DIS_UNLOAD,
 		DIS_PUMP,
 		DIS_HELP,
+		DIS_SEQUENCE,
 		DIS_ERR,
 	} D_CODES;
 
@@ -201,7 +204,7 @@ extern "C" {
 		uint8_t stream, function, error, abort, msg_error;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
-		uint8_t rbit : 1, wbit : 1, ebit : 1,
+		uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
 		failed_send : 4, failed_receive : 4,
 		queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
 		terminal_type response;

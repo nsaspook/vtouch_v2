@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28284,7 +28284,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 77 "./vconfig.h"
+# 78 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28308,6 +28308,7 @@ void PMD_Initialize(void);
   CODE_UNLOAD,
   CODE_PUMP,
   CODE_HELP,
+  CODE_SEQUENCE,
   CODE_ERR,
  } P_CODES;
 
@@ -28319,6 +28320,7 @@ void PMD_Initialize(void);
   DIS_UNLOAD,
   DIS_PUMP,
   DIS_HELP,
+  DIS_SEQUENCE,
   DIS_ERR,
  } D_CODES;
 
@@ -28412,7 +28414,7 @@ void PMD_Initialize(void);
   uint8_t stream, function, error, abort, msg_error;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
-  uint8_t rbit : 1, wbit : 1, ebit : 1,
+  uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
@@ -28598,6 +28600,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s10f1_opcmd(void);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
+ _Bool sequence_messages(uint8_t);
  _Bool gem_messages(response_type *);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
@@ -28623,6 +28626,7 @@ V_data V = {
  .response.log_seq = 0,
  .queue = 0,
  .stack = 0,
+ .seq_test = 1,
 };
 
 header10 H10[] = {
@@ -28851,7 +28855,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 327 "main.c"
+# 328 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28870,8 +28874,47 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 365 "main.c"
+# 366 "main.c"
 header33 H33[] = {
+ {
+  .length = 33,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 2,
+  .block.block.function = 41,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[22] = 0x01,
+  .data[21] = 0x02,
+  .data[20] = 0x41,
+  .data[19] = 0x02,
+  .data[18] = 0x31,
+  .data[17] = 0x37,
+  .data[16] = 0x01,
+  .data[15] = 0x01,
+  .data[14] = 0x01,
+  .data[13] = 0x02,
+  .data[12] = 0x41,
+  .data[11] = 0x08,
+  .data[10] = 0x4c,
+  .data[9] = 0x4f,
+  .data[8] = 0x41,
+  .data[7] = 0x44,
+  .data[6] = 0x4c,
+  .data[5] = 0x4f,
+  .data[4] = 0x43,
+  .data[3] = 0x4b,
+  .data[2] = 0xa5,
+  .data[1] = 0x01,
+  .data[0] = 0x01,
+ },
+};
+
+const header33 HC33[] = {
  {
   .length = 33,
   .block.block.rbit = 0,
@@ -29105,6 +29148,16 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
+  case DIS_SEQUENCE:
+   wdtdelay(9000);
+   sprintf(V.buf, " Load-lock        ");
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, " SEQUENCE         ");
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
   case DIS_TERM:
   default:
    sprintf(V.buf, " Terminal %d             ", V.response.TID);
@@ -29192,7 +29245,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.22G");
+   sprintf(V.buf, " Version %s", "1.23G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -29289,7 +29342,7 @@ void main(void)
 
 
 
-    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
+    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset || V.seq_test) {
      if (TimerDone(TMR_HBIO) || V.reset) {
       StartTimer(TMR_HBIO, 30000);
 
@@ -29406,6 +29459,12 @@ void main(void)
    StartTimer(TMR_HELPDIS, 3000);
    StartTimer(TMR_INFO, 3000);
    PWM8_LoadDutyValue(300);
+   if (V.seq_test) {
+    sequence_messages(1);
+    V.response.info = DIS_SEQUENCE;
+    V.g_state = GEM_STATE_REMOTE;
+    V.s_state = SEQ_STATE_RX;
+   }
   } else {
    if (TimerDone(TMR_HELPDIS)) {
     V.help = 0;
