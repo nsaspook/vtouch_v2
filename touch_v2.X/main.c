@@ -830,19 +830,21 @@ void main(void)
 				/*
 				 * HeartBeat S1F1 ping during remote idle time
 				 */
-				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset || V.seq_test) {
+				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
 					if (TimerDone(TMR_HBIO) || V.reset) {
 						StartTimer(TMR_HBIO, HBT);
 						// send S1F1
-						hb_message();
-						if (!V.reset) {
-							sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
-							V.buf[16] = 0; // string size limit
-							MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-							WaitMs(250);
+						if (V.stack) {
+							hb_message();
+							if (!V.reset) {
+								sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
+								V.buf[16] = 0; // string size limit
+								MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+								WaitMs(250);
+							}
+							V.msg_error = MSG_ERROR_NONE;
+							V.reset = false;
 						}
-						V.msg_error = MSG_ERROR_NONE;
-						V.reset = false;
 					}
 				}
 			}
@@ -932,7 +934,7 @@ void main(void)
 				BILED4_2_SetLow();
 			}
 		}
-		sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
+		sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 		V.buf[16] = 0; // string size limit
 		if (mode != UI_STATE_LOG)
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -951,8 +953,6 @@ void main(void)
 				sequence_messages(1);
 				secs_II_message(2, 41);
 				V.response.info = DIS_SEQUENCE;
-				//				V.g_state = GEM_STATE_REMOTE;
-				//				V.s_state = SEQ_STATE_RX;
 			}
 		} else {
 			if (TimerDone(TMR_HELPDIS)) {

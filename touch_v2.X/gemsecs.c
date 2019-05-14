@@ -573,10 +573,6 @@ void hb_message()
 		V.stream = 1;
 		V.function = 14; // S1F13 host ping
 	}
-	//	if (V.seq_test) {
-	//		sequence_messages(1);
-	//		V.response.info = DIS_SEQUENCE;
-	//	}
 }
 
 bool sequence_messages(uint8_t sid)
@@ -584,20 +580,20 @@ bool sequence_messages(uint8_t sid)
 
 	switch (sid) {
 	case 1:
-		S[0].message=HC33[0];
-		S[1].message=HC33[0];
-		S[2].message=HC33[0];
+		S[0].message = HC33[0];
+		S[1].message = HC33[0];
+		S[2].message = HC33[0];
 
 		S[0].message.data[0] = 0x01;
 		S[1].message.data[0] = 0x02;
 		S[2].message.data[0] = 0x03;
 
 		S[0].block.header = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
-		S[0].block.reply_length = sizeof(header33);
+		S[0].block.length = sizeof(header33);
 		S[1].block.header = (uint8_t*) & S[1].message; // S6F41 send load lock ready command
-		S[1].block.reply_length = sizeof(header33);
+		S[1].block.length = sizeof(header33);
 		S[2].block.header = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
-		S[2].block.reply_length = sizeof(header33);
+		S[2].block.length = sizeof(header33);
 		V.stack = 3; // queue up 3 messages
 		break;
 	default:
@@ -784,8 +780,10 @@ bool gem_messages(response_type *block)
 		return false;
 
 	*block = S[V.stack - 1].block; // shallow contents copy
+	S[V.stack - 1].message.block.block.systemb = V.ticks;
+	
 	if (V.seq_test)
-		secs_send(block->header, block->length, false, 1);
+		secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, false, 1);
 
 	V.stack--;
 	return true;
@@ -1070,7 +1068,8 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 		break;
 	case 2:
 		switch (function) {
-		case 41: // S2F41 // remote command from host
+		case 41: // S2F41 remote command from host
+		case 42: // S2F42 response from equipment
 			/* always store this message */
 			ee_logger(stream, function, dtime, msg_data);
 			break;
@@ -1147,8 +1146,8 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 				equipment = GEM_GENERIC;
 				break;
 			}
-			block = GEM_STATE_COMM;
-			V.ticker = 15;
+			block = GEM_STATE_REMOTE;
+			V.ticker = 0;
 			break;
 			//#endif
 		case 14:

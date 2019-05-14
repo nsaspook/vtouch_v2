@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -29245,7 +29245,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.23G");
+   sprintf(V.buf, " Version %s", "1.24G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -29342,19 +29342,21 @@ void main(void)
 
 
 
-    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset || V.seq_test) {
+    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
      if (TimerDone(TMR_HBIO) || V.reset) {
       StartTimer(TMR_HBIO, 30000);
 
-      hb_message();
-      if (!V.reset) {
-       sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
-       V.buf[16] = 0;
-       MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-       WaitMs(250);
+      if (V.stack) {
+       hb_message();
+       if (!V.reset) {
+        sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
+        V.buf[16] = 0;
+        MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+        WaitMs(250);
+       }
+       V.msg_error = MSG_ERROR_NONE;
+       V.reset = 0;
       }
-      V.msg_error = MSG_ERROR_NONE;
-      V.reset = 0;
      }
     }
    }
@@ -29444,7 +29446,7 @@ void main(void)
     do { LATFbits.LATF7 = 0; } while(0);
    }
   }
-  sprintf(V.buf, "R%d %d, T%d %d C%d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error);
+  sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
   V.buf[16] = 0;
   if (mode != UI_STATE_LOG)
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -29463,8 +29465,6 @@ void main(void)
     sequence_messages(1);
     secs_II_message(2, 41);
     V.response.info = DIS_SEQUENCE;
-
-
    }
   } else {
    if (TimerDone(TMR_HELPDIS)) {
