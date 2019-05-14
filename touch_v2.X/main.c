@@ -591,7 +591,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	} else {
 		switch (V.response.info) {
 		case DIS_LOG:
-			sprintf(V.buf, " S%dF%d logged %d    ", V.stream, V.function, V.response.log_seq & 0x03);
+			sprintf(V.buf, " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " Stored #%d        ", V.response.log_num);
