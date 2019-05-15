@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27388,7 +27388,6 @@ void PIN_MANAGER_Initialize (void);
   GEM_STATE_OFFLINE,
   GEM_STATE_ONLINE,
   GEM_STATE_REMOTE,
-  GEM_STATE_ALARM,
   GEM_STATE_ERROR
  } GEM_STATES;
 
@@ -27443,7 +27442,7 @@ void PIN_MANAGER_Initialize (void);
   char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
-  uint8_t stream, function, error, abort, msg_error;
+  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,

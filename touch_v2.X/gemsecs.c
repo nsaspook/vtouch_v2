@@ -306,29 +306,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 						}
 					}
 
-					/*
-					if (rxData_l == sizeof(block10) + 1)
-						V.response.ack[0] = rxData;
-					if (rxData_l == sizeof(block10) + 2)
-						V.response.ack[1] = rxData;
-					if (rxData_l == sizeof(block10) + 3)
-						V.response.ack[2] = rxData;
-					if (rxData_l == sizeof(block10) + 4)
-						V.response.ack[3] = rxData;
-					if (rxData_l == sizeof(block10) + 5)
-						V.response.ack[4] = rxData;
-					if (rxData_l == sizeof(block10) + 6)
-						V.response.ack[5] = rxData;
-					if (rxData_l == sizeof(block10) + 7)
-						V.response.ack[6] = rxData;
-					if (rxData_l == sizeof(block10) + 8)
-						V.response.ack[7] = rxData;
-					if (rxData_l == sizeof(block10) + 9)
-						V.response.ack[8] = rxData;
-					if (rxData_l == sizeof(block10) + 10)
-						V.response.ack[9] = rxData;
-					 * */
-
 					if (rxData_l <= r_block.length) // generate checksum from data stream
 						V.r_checksum = run_checksum(rxData, false);
 
@@ -781,7 +758,7 @@ bool gem_messages(response_type *block)
 
 	*block = S[V.stack - 1].block; // shallow contents copy
 	S[V.stack - 1].message.block.block.systemb = V.ticks;
-	
+
 	if (V.seq_test)
 		secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, false, 1);
 
@@ -1072,6 +1049,13 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 		case 42: // S2F42 response from equipment
 			/* always store this message */
 			ee_logger(stream, function, dtime, msg_data);
+			if (function == 42) { // check for failed command
+				if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
+					V.msg_error = MSG_ERROR_DATA;
+				} else {
+					V.msg_ret = 0;
+				}
+			}
 			break;
 		default:
 			break;
@@ -1118,12 +1102,11 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 			V.ticker = 0;
 
 			break;
-			//#ifdef DB2
 		case 13: // parse equipment model from comm request response
 			switch (V.response.ack[4]) {
 			case 'V':
 				switch (V.response.ack[5]) {
-				case 'I': // VII80 for Varian viision 80
+				case 'I': // VII80 for Varian Viision 80
 					equipment = GEM_VII80;
 					break;
 				default:
@@ -1149,7 +1132,6 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
 			break;
-			//#endif
 		case 14:
 			block = GEM_STATE_COMM;
 			V.ticker = 15;
@@ -1176,19 +1158,17 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 			break;
 		}
 		break;
-	case 5:
+	case 5: // alarms
 		switch (function) {
 		default:
-			block = GEM_STATE_ALARM;
-			if (V.ticker != 45)
-				V.ticker = 15;
+			V.alarm = function;
 			break;
 		}
 		break;
 	case 9:
 		switch (function) {
 		default:
-			block = GEM_STATE_ERROR;
+			V.alarm = function;
 			if (V.ticker != 45)
 				V.ticker = 15;
 			break;

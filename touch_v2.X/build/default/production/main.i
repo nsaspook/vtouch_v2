@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28356,7 +28356,6 @@ void PMD_Initialize(void);
   GEM_STATE_OFFLINE,
   GEM_STATE_ONLINE,
   GEM_STATE_REMOTE,
-  GEM_STATE_ALARM,
   GEM_STATE_ERROR
  } GEM_STATES;
 
@@ -28411,7 +28410,7 @@ void PMD_Initialize(void);
   char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
-  uint8_t stream, function, error, abort, msg_error;
+  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
@@ -29150,7 +29149,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    break;
   case DIS_SEQUENCE:
    wdtdelay(9000);
-   sprintf(V.buf, " Load-lock        ");
+   sprintf(V.buf, " Load-lock  RET %d  ", V.msg_error);
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
    sprintf(V.buf, " SEQUENCE         ");
@@ -29159,11 +29158,19 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    eaDogM_WriteStringAtPos(1, 0, V.buf);
    break;
   case DIS_TERM:
-  default:
    sprintf(V.buf, " Terminal %d             ", V.response.TID);
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
    sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+   V.buf[16] = 0;
+   wait_lcd_done();
+   eaDogM_WriteStringAtPos(1, 0, V.buf);
+   break;
+  default:
+   sprintf(V.buf, "                  ");
+   V.buf[16] = 0;
+   eaDogM_WriteStringAtPos(0, 0, V.buf);
+   sprintf(V.buf, "                  ");
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);

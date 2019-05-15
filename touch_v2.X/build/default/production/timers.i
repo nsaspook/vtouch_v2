@@ -38,8 +38,6 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27237,7 +27235,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27268,7 +27266,13 @@ typedef uint32_t uint_fast32_t;
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
 # 4 "timers.c" 2
 # 1 "./vconfig.h" 1
-# 20 "./vconfig.h"
+# 15 "./vconfig.h"
+ typedef signed long long int24_t;
+
+
+
+
+
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -27383,7 +27387,6 @@ void PIN_MANAGER_Initialize (void);
   GEM_STATE_OFFLINE,
   GEM_STATE_ONLINE,
   GEM_STATE_REMOTE,
-  GEM_STATE_ALARM,
   GEM_STATE_ERROR
  } GEM_STATES;
 
@@ -27438,7 +27441,7 @@ void PIN_MANAGER_Initialize (void);
   char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
-  uint8_t stream, function, error, abort, msg_error;
+  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,

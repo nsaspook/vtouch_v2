@@ -146,7 +146,6 @@ extern "C" {
 		GEM_STATE_OFFLINE,
 		GEM_STATE_ONLINE,
 		GEM_STATE_REMOTE,
-		GEM_STATE_ALARM,
 		GEM_STATE_ERROR
 	} GEM_STATES;
 
@@ -201,7 +200,7 @@ extern "C" {
 		char buf[64], terminal[160], info[64];
 		uint32_t ticks, systemb;
 		int32_t testing;
-		uint8_t stream, function, error, abort, msg_error;
+		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
 		uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,

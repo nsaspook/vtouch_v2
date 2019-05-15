@@ -638,7 +638,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			break;
 		case DIS_SEQUENCE:
 			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(V.buf, " Load-lock        ");
+			sprintf(V.buf, " Load-lock  RET %d  ", V.msg_error);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " SEQUENCE         ");
@@ -647,11 +647,19 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
 		case DIS_TERM:
-		default:
 			sprintf(V.buf, " Terminal %d             ", V.response.TID);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+			V.buf[16] = 0;
+			wait_lcd_done();
+			eaDogM_WriteStringAtPos(1, 0, V.buf);
+			break;
+		default:
+			sprintf(V.buf, "                  ");
+			V.buf[16] = 0;
+			eaDogM_WriteStringAtPos(0, 0, V.buf);
+			sprintf(V.buf, "                  ");
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);

@@ -35,8 +35,6 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -220,7 +218,12 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 19 "./vconfig.h"
+# 15 "./vconfig.h"
+ typedef signed long long int24_t;
+
+
+
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27446,7 +27449,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27579,7 +27582,6 @@ void PIN_MANAGER_Initialize (void);
   GEM_STATE_OFFLINE,
   GEM_STATE_ONLINE,
   GEM_STATE_REMOTE,
-  GEM_STATE_ALARM,
   GEM_STATE_ERROR
  } GEM_STATES;
 
@@ -27634,7 +27636,7 @@ void PIN_MANAGER_Initialize (void);
   char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
-  uint8_t stream, function, error, abort, msg_error;
+  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
@@ -28859,7 +28861,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
        d++;
       }
      }
-# 332 "gemsecs.c"
+
      if (rxData_l <= r_block.length)
       V.r_checksum = run_checksum(rxData, 0);
 
@@ -29603,6 +29605,13 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
   case 42:
 
    ee_logger(stream, function, dtime, msg_data);
+   if (function == 42) {
+    if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
+     V.msg_error = MSG_ERROR_DATA;
+    } else {
+     V.msg_ret = 0;
+    }
+   }
    break;
   default:
    break;
@@ -29649,7 +29658,6 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
    V.ticker = 0;
 
    break;
-
   case 13:
    switch (V.response.ack[4]) {
    case 'V':
@@ -29680,7 +29688,6 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
    block = GEM_STATE_REMOTE;
    V.ticker = 0;
    break;
-
   case 14:
    block = GEM_STATE_COMM;
    V.ticker = 15;
@@ -29710,16 +29717,14 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
  case 5:
   switch (function) {
   default:
-   block = GEM_STATE_ALARM;
-   if (V.ticker != 45)
-    V.ticker = 15;
+   V.alarm = function;
    break;
   }
   break;
  case 9:
   switch (function) {
   default:
-   block = GEM_STATE_ERROR;
+   V.alarm = function;
    if (V.ticker != 45)
     V.ticker = 15;
    break;
