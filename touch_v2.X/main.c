@@ -845,19 +845,24 @@ void main(void)
 				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
 					if (TimerDone(TMR_HBIO) || V.reset) {
 						StartTimer(TMR_HBIO, HBT);
-						// send S1F1
+						// send ping or sequence message
+
 						if (V.stack) {
 							hb_message();
-							if (!V.reset) {
+							V.msg_error = MSG_ERROR_NONE;
+							V.reset = false;
+							V.ping_count = 0;
+						} else {
+							if (V.ping_count++ > 4) {
+								hb_message();
 								sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
 								V.buf[16] = 0; // string size limit
 								MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 								WaitMs(250);
+								V.ping_count = 0;
+							} else {
+								V.response.info = DIS_STR;
 							}
-							V.msg_error = MSG_ERROR_NONE;
-							V.reset = false;
-						} else {
-							V.response.info = DIS_STR;
 						}
 					}
 				}

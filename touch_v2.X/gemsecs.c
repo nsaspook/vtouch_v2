@@ -565,13 +565,13 @@ bool sequence_messages(uint8_t sid)
 		S[1].message.data[0] = 0x02;
 		S[2].message.data[0] = 0x03;
 
-		S[0].block.header = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
+		S[0].block.header = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
 		S[0].block.length = sizeof(header33);
 		S[1].block.header = (uint8_t*) & S[1].message; // S6F41 send load lock ready command
 		S[1].block.length = sizeof(header33);
-		S[2].block.header = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
+		S[2].block.header = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
 		S[2].block.length = sizeof(header33);
-		V.stack = 3; // queue up 3 messages
+		V.stack = 3; // queue up 3 messages, pop off the top of stack
 		break;
 	default:
 		V.stack = false;
@@ -733,8 +733,10 @@ P_CODES s10f1_opcmd(void)
 		return CODE_SEQUENCE;
 	}
 
-	if (V.response.mcode == 'D' || V.response.mcode == 'd')
+	if (V.response.mcode == 'D' || V.response.mcode == 'd') {
+		sprintf(V.info, " Debug Toggle            ");
 		return CODE_DEBUG;
+	}
 
 	return CODE_TS;
 }
@@ -1054,6 +1056,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 			if (function == 42) { // check for failed command
 				if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
 					V.msg_error = MSG_ERROR_DATA;
+					V.response.info = DIS_SEQUENCE; // show error message
 				} else {
 					V.msg_ret = 0;
 				}

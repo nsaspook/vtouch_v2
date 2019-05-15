@@ -28417,7 +28417,7 @@ void PMD_Initialize(void);
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
-  uint8_t uart, llid;
+  uint8_t uart, llid, ping_count;
   volatile uint8_t ticker;
  } V_data;
 # 27 "./eadog.h" 2
@@ -28873,26 +28873,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-
-
-
-header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 366 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29296,8 +29277,8 @@ void main(void)
      MyeaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
-    WaitMs(50);
-    UART1_put_buffer(0x05);
+
+
 
     break;
    case SEQ_STATE_RX:
@@ -29315,7 +29296,7 @@ void main(void)
      V.buf[11] = 0;
      MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 
-     WaitMs(5);
+
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -29376,18 +29357,23 @@ void main(void)
      if (TimerDone(TMR_HBIO) || V.reset) {
       StartTimer(TMR_HBIO, 30000);
 
+
       if (V.stack) {
        hb_message();
-       if (!V.reset) {
+       V.msg_error = MSG_ERROR_NONE;
+       V.reset = 0;
+       V.ping_count = 0;
+      } else {
+       if (V.ping_count++ > 4) {
+        hb_message();
         sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
         V.buf[16] = 0;
         MyeaDogM_WriteStringAtPos(0, 0, V.buf);
         WaitMs(250);
+        V.ping_count = 0;
+       } else {
+        V.response.info = DIS_STR;
        }
-       V.msg_error = MSG_ERROR_NONE;
-       V.reset = 0;
-      } else {
-       V.response.info = DIS_STR;
       }
      }
     }
@@ -29405,11 +29391,11 @@ void main(void)
     V.buf[16] = 0;
     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 
-    if (LATEbits.LATE0) {
-     UART2_put_buffer(0x05);
-    } else {
-     UART1_put_buffer(0x05);
-    }
+
+
+
+
+
 
     break;
    case SEQ_STATE_RX:

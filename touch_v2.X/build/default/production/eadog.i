@@ -27449,7 +27449,7 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
-  uint8_t uart, llid;
+  uint8_t uart, llid, ping_count;
   volatile uint8_t ticker;
  } V_data;
 # 2 "eadog.c" 2

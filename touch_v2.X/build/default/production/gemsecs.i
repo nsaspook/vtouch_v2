@@ -27640,7 +27640,7 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
-  uint8_t uart, llid;
+  uint8_t uart, llid, ping_count;
   volatile uint8_t ticker;
  } V_data;
 # 23 "./gemsecs.h" 2
@@ -28624,7 +28624,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  switch (*m_link) {
  case LINK_STATE_IDLE:
 
-  WaitMs(50);
+
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
@@ -28653,22 +28653,24 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
+# 104 "gemsecs.c"
+   if (V.uart == 2 && UART1_is_rx_ready()) {
+    rxData = UART1_Read();
+    if (rxData == 0x04) {
+     StartTimer(TMR_T2, 2000);
+     V.error = LINK_ERROR_NONE;
+     *m_link = LINK_STATE_EOT;
+    }
+   }
+   if (V.uart == 1 && UART2_is_rx_ready()) {
+    rxData = UART2_Read();
+    if (rxData == 0x04) {
+     StartTimer(TMR_T2, 2000);
+     V.error = LINK_ERROR_NONE;
+     *m_link = LINK_STATE_EOT;
+    }
+   }
 
-   WaitMs(50);
-   if (V.uart == 1)
-
-
-
-     secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
-   if (V.uart == 2)
-
-
-
-     secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
-   V.error = LINK_ERROR_NONE;
-   *m_link = LINK_STATE_EOT;
-   StartTimer(TMR_T2, 2000);
-# 121 "gemsecs.c"
   }
   break;
  case LINK_STATE_EOT:
@@ -28759,7 +28761,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ACK:
 
-  WaitMs(50);
+
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -28818,11 +28820,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
-  WaitMs(5);
 
 
-  H10[3].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H10[3], sizeof(header10), 1, 1);
+
+
+
 
   break;
  case LINK_STATE_EOT:
@@ -28932,8 +28934,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-  WaitMs(5);
-  UART1_put_buffer(0x04);
+
+
 
   break;
  case LINK_STATE_ENQ:
@@ -28986,11 +28988,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-  WaitMs(5);
 
 
 
-   UART1_put_buffer(0x06);
+
+
 
   break;
  case LINK_STATE_ACK:
@@ -29116,11 +29118,11 @@ _Bool sequence_messages(uint8_t sid)
   S[1].message.data[0] = 0x02;
   S[2].message.data[0] = 0x03;
 
-  S[0].block.header = (uint8_t*) & S[0].message;
+  S[0].block.header = (uint8_t*) & S[2].message;
   S[0].block.length = sizeof(header33);
   S[1].block.header = (uint8_t*) & S[1].message;
   S[1].block.length = sizeof(header33);
-  S[2].block.header = (uint8_t*) & S[2].message;
+  S[2].block.header = (uint8_t*) & S[0].message;
   S[2].block.length = sizeof(header33);
   V.stack = 3;
   break;
@@ -29284,8 +29286,10 @@ P_CODES s10f1_opcmd(void)
   return CODE_SEQUENCE;
  }
 
- if (V.response.mcode == 'D' || V.response.mcode == 'd')
+ if (V.response.mcode == 'D' || V.response.mcode == 'd') {
+  sprintf(V.info, " Debug Toggle            ");
   return CODE_DEBUG;
+ }
 
  return CODE_TS;
 }
@@ -29605,6 +29609,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
    if (function == 42) {
     if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
      V.msg_error = MSG_ERROR_DATA;
+     V.response.info = DIS_SEQUENCE;
     } else {
      V.msg_ret = 0;
     }
@@ -29645,7 +29650,7 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
  case 1:
   switch (function) {
 
-  case 1:
+
 
   case 2:
    if (block != GEM_STATE_REMOTE)
@@ -29690,14 +29695,14 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
    V.ticker = 15;
    break;
 
-  case 15:
+
 
   case 16:
    block = GEM_STATE_OFFLINE;
    V.ticker = 0;
    break;
 
-  case 17:
+
 
   case 18:
    block = GEM_STATE_ONLINE;

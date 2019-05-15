@@ -27484,7 +27484,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
-  uint8_t uart, llid;
+  uint8_t uart, llid, ping_count;
   volatile uint8_t ticker;
  } V_data;
 # 31 "mcc_generated_files/ext_int.c" 2

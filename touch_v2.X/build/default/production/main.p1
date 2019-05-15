@@ -23,8 +23,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S2231 terminal_type ack TID mcode mparm cmdlen log_seq info help_temp ceid log_num ]
 "192
 [; ;./vconfig.h: 192:  typedef struct V_data {
-[s S2232 `E16999 1 `E17008 1 `E17015 1 `E17023 1 `E17029 1 `E17029 1 `E17029 1 `uc -> 64 `i `uc -> 160 `i `uc -> 64 `i `ul 1 `ul 1 `l 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E17008 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 `S2231 1 `uc 1 `uc 1 `Vuc 1 ]
-[n S2232 V_data s_state ui_state g_state e_types m_l_state r_l_state t_l_state buf terminal info ticks systemb testing stream function error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error timer_error ping mode_pwm rbit wbit ebit seq_test failed_send failed_receive queue reset debug help stack response uart llid ticker ]
+[s S2232 `E16999 1 `E17008 1 `E17015 1 `E17023 1 `E17029 1 `E17029 1 `E17029 1 `uc -> 64 `i `uc -> 160 `i `uc -> 64 `i `ul 1 `ul 1 `l 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E17008 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 `S2231 1 `uc 1 `uc 1 `uc 1 `Vuc 1 ]
+[n S2232 V_data s_state ui_state g_state e_types m_l_state r_l_state t_l_state buf terminal info ticks systemb testing stream function error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error timer_error ping mode_pwm rbit wbit ebit seq_test failed_send failed_receive queue reset debug help stack response uart llid ping_count ticker ]
 "62 main.c
 [; ;main.c: 62: V_data V = {
 [c E17038 10 11 12 13 14 15 16 17 18 .. ]
@@ -63,10 +63,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./gemsecs.h: 94:  typedef struct header26 {
 [s S2242 `us 1 `uc -> 14 `i `uc -> 2 `i `S2234 1 `uc 1 ]
 [n S2242 header26 checksum data datam block length ]
-"102
-[; ;./gemsecs.h: 102:  typedef struct header27 {
-[s S2243 `us 1 `uc -> 17 `i `S2234 1 `uc 1 ]
-[n S2243 header27 checksum data block length ]
 "109
 [; ;./gemsecs.h: 109:  typedef struct header33 {
 [s S2244 `us 1 `uc -> 23 `i `S2234 1 `uc 1 ]
@@ -113,14 +109,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "33 ./eadog.h
 [; ;./eadog.h: 33:  void wdtdelay(uint32_t);
 [v _wdtdelay `(v ~T0 @X0 0 ef1`ul ]
-[v F17153 `(a ~T0 @X0 1 tf1`uc ]
+[v F17154 `(a ~T0 @X0 1 tf1`uc ]
 "29 ./timers.h
 [; ;./timers.h: 29: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF17153 ~T0 @X0 0 e ]
+[v _TimerDone `TF17154 ~T0 @X0 0 e ]
 "672 main.c
 [; ;main.c: 672:   if (TimerDone(TMR_INFO))
-[c E17136 0 1 2 3 4 5 6 7 8 9 10 .. ]
-[n E17136 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_COUNT  ]
+[c E17137 0 1 2 3 4 5 6 7 8 9 10 .. ]
+[n E17137 APP_TIMERS TMR_INTERNAL TMR_T1 TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_COUNT  ]
 "46778 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46778:     struct {
 [s S2107 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -136,10 +132,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46793
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46793: extern volatile PORTBbits_t PORTBbits __attribute__((address(0x3FCB)));
 [v _PORTBbits `VS2106 ~T0 @X0 0 e@16331 ]
-[v F17149 `(v ~T0 @X0 1 tf2`uc`us ]
+[v F17150 `(v ~T0 @X0 1 tf2`uc`us ]
 "28 ./timers.h
 [; ;./timers.h: 28: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF17149 ~T0 @X0 0 e ]
+[v _StartTimer `TF17150 ~T0 @X0 0 e ]
 [p mainexit ]
 "84 ./mcc_generated_files/mcc.h
 [; ;./mcc_generated_files/mcc.h: 84: void SYSTEM_Initialize(void);
@@ -189,9 +185,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "42 /opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h: 42: void srand (unsigned);
 [v _srand `(v ~T0 @X0 0 ef1`ui ]
-"302 ./mcc_generated_files/uart1.h
-[; ;./mcc_generated_files/uart1.h: 302:  void UART1_put_buffer(uint8_t);
-[v _UART1_put_buffer `(v ~T0 @X0 0 ef1`uc ]
 "146 ./gemsecs.h
 [; ;./gemsecs.h: 146:  LINK_STATES r_protocol(LINK_STATES *);
 [v _r_protocol `(E17029 ~T0 @X0 0 ef1`*E17029 ]
@@ -201,10 +194,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "149
 [; ;./gemsecs.h: 149:  void hb_message(void);
 [v _hb_message `(v ~T0 @X0 0 ef ]
-"327 ./mcc_generated_files/uart2.h
-[; ;./mcc_generated_files/uart2.h: 327: void UART2_put_buffer(uint8_t);
-[v _UART2_put_buffer `(v ~T0 @X0 0 ef1`uc ]
-"145 ./gemsecs.h
+"145
 [; ;./gemsecs.h: 145:  LINK_STATES m_protocol(LINK_STATES *);
 [v _m_protocol `(E17029 ~T0 @X0 0 ef1`*E17029 ]
 "46240 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
@@ -2875,6 +2865,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 -> -> 1 `i `uc
 -> -> 0 `i `uc
+-> -> 0 `i `uc
 -> -> 45 `i `uc
 ..
 ..
@@ -3331,54 +3322,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ..
 -> -> 26 `i `uc
-..
-..
-]
-"349
-[; ;main.c: 349: header27 H27[] = {
-[v _H27 `S2243 ~T0 @X0 -> -> 1 `i `ux e ]
-[i _H27
-:U ..
-:U ..
--> -> 0 `i `us
-:U ..
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
-..
-:U 1
-:U ..
-:U ..
-:U ..
--> -> -> 1 `i `l `ul
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
--> -> 13 `i `uc
--> -> 1 `i `uc
--> -> 1 `i `uc
--> -> 0 `i `uc
--> -> 0 `i `uc
--> -> 1 `i `uc
-..
-..
-..
-..
--> -> 27 `i `uc
 ..
 ..
 ]
@@ -3972,7 +3915,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 7 ]
 "672
 [; ;main.c: 672:   if (TimerDone(TMR_INFO))
-[e $ ! != -> ( _TimerDone (1 -> . `E17136 7 `uc `i -> 0 `i 2262  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E17137 7 `uc `i -> 0 `i 2262  ]
 "673
 [; ;main.c: 673:    V.response.info = DIS_STR;
 [e = . . _V 38 6 . `E16976 0 ]
@@ -4005,7 +3948,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _V 36 -> -> 1 `i `uc ]
 "685
 [; ;main.c: 685:   if (TimerDone(TMR_HELP))
-[e $ ! != -> ( _TimerDone (1 -> . `E17136 8 `uc `i -> 0 `i 2265  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E17137 8 `uc `i -> 0 `i 2265  ]
 "686
 [; ;main.c: 686:    return 1;
 [e ) -> -> 1 `i `a ]
@@ -4020,7 +3963,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! ! != -> . _V 36 `i -> 0 `i 2266  ]
 "691
 [; ;main.c: 691:   StartTimer(TMR_HELP, 300);
-[e ( _StartTimer (2 , -> . `E17136 8 `uc -> -> 300 `i `us ]
+[e ( _StartTimer (2 , -> . `E17137 8 `uc -> -> 300 `i `us ]
 [e :U 2266 ]
 "693
 [; ;main.c: 693:  return 0;
@@ -4228,12 +4171,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 767:     }
 }
 [e :U 2290 ]
-"769
-[; ;main.c: 769:     WaitMs(50);
-[e ( _WaitMs (1 -> -> 50 `i `us ]
-"770
-[; ;main.c: 770:     UART1_put_buffer(0x05);
-[e ( _UART1_put_buffer (1 -> -> 5 `i `uc ]
 "772
 [; ;main.c: 772:     break;
 [e $U 2287  ]
@@ -4276,9 +4213,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "786
 [; ;main.c: 786:      MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 7 ]
-"788
-[; ;main.c: 788:      WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
 "790
 [; ;main.c: 790:      if (V.wbit) {
 [e $ ! != -> . _V 28 `i -> 0 `i 2297  ]
@@ -4460,509 +4394,504 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "846
 [; ;main.c: 846:      if (TimerDone(TMR_HBIO) || V.reset) {
-[e $ ! || != -> ( _TimerDone (1 -> . `E17136 6 `uc `i -> 0 `i != -> . _V 34 `i -> 0 `i 2313  ]
+[e $ ! || != -> ( _TimerDone (1 -> . `E17137 6 `uc `i -> 0 `i != -> . _V 34 `i -> 0 `i 2313  ]
 {
 "847
 [; ;main.c: 847:       StartTimer(TMR_HBIO, 30000);
-[e ( _StartTimer (2 , -> . `E17136 6 `uc -> -> 30000 `i `us ]
-"849
-[; ;main.c: 849:       if (V.stack) {
+[e ( _StartTimer (2 , -> . `E17137 6 `uc -> -> 30000 `i `us ]
+"850
+[; ;main.c: 850:       if (V.stack) {
 [e $ ! != -> . _V 37 `i -> 0 `i 2314  ]
 {
-"850
-[; ;main.c: 850:        hb_message();
-[e ( _hb_message ..  ]
 "851
-[; ;main.c: 851:        if (!V.reset) {
-[e $ ! ! != -> . _V 34 `i -> 0 `i 2315  ]
-{
+[; ;main.c: 851:        hb_message();
+[e ( _hb_message ..  ]
 "852
-[; ;main.c: 852:         sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
-[e ( _sprintf (1 , , (. , &U . _V 7 :s 32C -> . _V 2 `ui -> . _V 25 `ui ]
-"853
-[; ;main.c: 853:         V.buf[16] = 0;
-[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
-"854
-[; ;main.c: 854:         MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 7 ]
-"855
-[; ;main.c: 855:         WaitMs(250);
-[e ( _WaitMs (1 -> -> 250 `i `us ]
-"856
-[; ;main.c: 856:        }
-}
-[e :U 2315 ]
-"857
-[; ;main.c: 857:        V.msg_error = MSG_ERROR_NONE;
+[; ;main.c: 852:        V.msg_error = MSG_ERROR_NONE;
 [e = . _V 17 -> . `E17049 0 `uc ]
-"858
-[; ;main.c: 858:        V.reset = 0;
+"853
+[; ;main.c: 853:        V.reset = 0;
 [e = . _V 34 -> -> 0 `i `uc ]
-"859
-[; ;main.c: 859:       } else {
+"854
+[; ;main.c: 854:        V.ping_count = 0;
+[e = . _V 41 -> -> 0 `i `uc ]
+"855
+[; ;main.c: 855:       } else {
 }
-[e $U 2316  ]
+[e $U 2315  ]
 [e :U 2314 ]
 {
+"856
+[; ;main.c: 856:        if (V.ping_count++ > 4) {
+[e $ ! > -> ++ . _V 41 -> -> 1 `i `uc `i -> 4 `i 2316  ]
+{
+"857
+[; ;main.c: 857:         hb_message();
+[e ( _hb_message ..  ]
+"858
+[; ;main.c: 858:         sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
+[e ( _sprintf (1 , , (. , &U . _V 7 :s 32C -> . _V 2 `ui -> . _V 25 `ui ]
+"859
+[; ;main.c: 859:         V.buf[16] = 0;
+[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
 "860
-[; ;main.c: 860:        V.response.info = DIS_STR;
-[e = . . _V 38 6 . `E16976 0 ]
+[; ;main.c: 860:         MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 7 ]
 "861
-[; ;main.c: 861:       }
-}
-[e :U 2316 ]
+[; ;main.c: 861:         WaitMs(250);
+[e ( _WaitMs (1 -> -> 250 `i `us ]
 "862
-[; ;main.c: 862:      }
+[; ;main.c: 862:         V.ping_count = 0;
+[e = . _V 41 -> -> 0 `i `uc ]
+"863
+[; ;main.c: 863:        } else {
+}
+[e $U 2317  ]
+[e :U 2316 ]
+{
+"864
+[; ;main.c: 864:         V.response.info = DIS_STR;
+[e = . . _V 38 6 . `E16976 0 ]
+"865
+[; ;main.c: 865:        }
+}
+[e :U 2317 ]
+"866
+[; ;main.c: 866:       }
+}
+[e :U 2315 ]
+"867
+[; ;main.c: 867:      }
 }
 [e :U 2313 ]
-"863
-[; ;main.c: 863:     }
+"868
+[; ;main.c: 868:     }
 }
 [e :U 2312 ]
-"864
-[; ;main.c: 864:    }
+"869
+[; ;main.c: 869:    }
 }
 [e :U 2309 ]
-"865
-[; ;main.c: 865:    break;
-[e $U 2281  ]
-"866
-[; ;main.c: 866:   case UI_STATE_LOG:
-[e :U 2317 ]
-"867
-[; ;main.c: 867:    switch (V.s_state) {
-[e $U 2319  ]
-{
-"868
-[; ;main.c: 868:    case SEQ_STATE_INIT:
-[e :U 2320 ]
-"869
-[; ;main.c: 869:     V.m_l_state = LINK_STATE_IDLE;
-[e = . _V 4 . `E17029 0 ]
 "870
-[; ;main.c: 870:     V.s_state = SEQ_STATE_RX;
-[e = . _V 0 . `E16999 1 ]
+[; ;main.c: 870:    break;
+[e $U 2281  ]
 "871
-[; ;main.c: 871:     if (V.debug)
-[e $ ! != -> . _V 35 `i -> 0 `i 2321  ]
+[; ;main.c: 871:   case UI_STATE_LOG:
+[e :U 2318 ]
 "872
-[; ;main.c: 872:      sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
-[e ( _sprintf (1 , , (. , &U . _V 7 :s 33C -> # `S2246 `ui . _V 12 ]
-[e $U 2322  ]
+[; ;main.c: 872:    switch (V.s_state) {
+[e $U 2320  ]
+{
 "873
-[; ;main.c: 873:     else
+[; ;main.c: 873:    case SEQ_STATE_INIT:
 [e :U 2321 ]
 "874
-[; ;main.c: 874:      sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-[e ( _sprintf (1 , , , , (. , &U . _V 7 :s 34C -> . _V 39 `i -> . _V 2 `ui -> . _V 24 `ui -> . _V 23 `ui ]
-[e :U 2322 ]
+[; ;main.c: 874:     V.m_l_state = LINK_STATE_IDLE;
+[e = . _V 4 . `E17029 0 ]
 "875
-[; ;main.c: 875:     V.buf[16] = 0;
-[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
+[; ;main.c: 875:     V.s_state = SEQ_STATE_RX;
+[e = . _V 0 . `E16999 1 ]
 "876
-[; ;main.c: 876:     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
-[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 7 ]
+[; ;main.c: 876:     if (V.debug)
+[e $ ! != -> . _V 35 `i -> 0 `i 2322  ]
+"877
+[; ;main.c: 877:      sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+[e ( _sprintf (1 , , (. , &U . _V 7 :s 33C -> # `S2246 `ui . _V 12 ]
+[e $U 2323  ]
 "878
-[; ;main.c: 878:     if (LATEbits.LATE0) {
-[e $ ! != -> . . _LATEbits 0 0 `i -> 0 `i 2323  ]
-{
+[; ;main.c: 878:     else
+[e :U 2322 ]
 "879
-[; ;main.c: 879:      UART2_put_buffer(0x05);
-[e ( _UART2_put_buffer (1 -> -> 5 `i `uc ]
-"880
-[; ;main.c: 880:     } else {
-}
-[e $U 2324  ]
+[; ;main.c: 879:      sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+[e ( _sprintf (1 , , , , (. , &U . _V 7 :s 34C -> . _V 39 `i -> . _V 2 `ui -> . _V 24 `ui -> . _V 23 `ui ]
 [e :U 2323 ]
-{
+"880
+[; ;main.c: 880:     V.buf[16] = 0;
+[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
 "881
-[; ;main.c: 881:      UART1_put_buffer(0x05);
-[e ( _UART1_put_buffer (1 -> -> 5 `i `uc ]
-"882
-[; ;main.c: 882:     }
-}
-[e :U 2324 ]
-"884
-[; ;main.c: 884:     break;
-[e $U 2318  ]
-"885
-[; ;main.c: 885:    case SEQ_STATE_RX:
-[e :U 2325 ]
+[; ;main.c: 881:     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 7 ]
 "889
-[; ;main.c: 889:     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-[e $ ! == -> ( _m_protocol (1 &U . _V 4 `ui -> . `E17029 4 `ui 2326  ]
-{
+[; ;main.c: 889:     break;
+[e $U 2319  ]
 "890
-[; ;main.c: 890:      sprintf(V.buf, " S%dF%d #%ld     ", V.stream, V.function, V.ticks);
-[e ( _sprintf (1 , , , (. , &U . _V 7 :s 35C -> . _V 13 `i -> . _V 14 `i . _V 10 ]
-"891
-[; ;main.c: 891:      V.buf[13] = 0;
-[e = *U + &U . _V 7 * -> -> -> 13 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
-"892
-[; ;main.c: 892:      MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
-[e ( _MyeaDogM_WriteStringAtPos (3 , , -> - -> . _V 39 `i -> 1 `i `uc -> -> 0 `i `uc &U . _V 7 ]
-"893
-[; ;main.c: 893:      V.s_state = SEQ_STATE_TRIGGER;
-[e = . _V 0 . `E16999 3 ]
+[; ;main.c: 890:    case SEQ_STATE_RX:
+[e :U 2324 ]
 "894
-[; ;main.c: 894:     }
-}
-[e :U 2326 ]
+[; ;main.c: 894:     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
+[e $ ! == -> ( _m_protocol (1 &U . _V 4 `ui -> . `E17029 4 `ui 2325  ]
+{
 "895
-[; ;main.c: 895:     if (V.m_l_state == LINK_STATE_ERROR)
-[e $ ! == -> . _V 4 `ui -> . `E17029 6 `ui 2327  ]
+[; ;main.c: 895:      sprintf(V.buf, " S%dF%d #%ld     ", V.stream, V.function, V.ticks);
+[e ( _sprintf (1 , , , (. , &U . _V 7 :s 35C -> . _V 13 `i -> . _V 14 `i . _V 10 ]
 "896
-[; ;main.c: 896:      V.s_state = SEQ_STATE_ERROR;
-[e = . _V 0 . `E16999 6 ]
-[e :U 2327 ]
+[; ;main.c: 896:      V.buf[13] = 0;
+[e = *U + &U . _V 7 * -> -> -> 13 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
 "897
-[; ;main.c: 897:     break;
-[e $U 2318  ]
+[; ;main.c: 897:      MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
+[e ( _MyeaDogM_WriteStringAtPos (3 , , -> - -> . _V 39 `i -> 1 `i `uc -> -> 0 `i `uc &U . _V 7 ]
 "898
-[; ;main.c: 898:    case SEQ_STATE_TRIGGER:
-[e :U 2328 ]
+[; ;main.c: 898:      V.s_state = SEQ_STATE_TRIGGER;
+[e = . _V 0 . `E16999 3 ]
 "899
-[; ;main.c: 899:     V.s_state = SEQ_STATE_DONE;
-[e = . _V 0 . `E16999 5 ]
+[; ;main.c: 899:     }
+}
+[e :U 2325 ]
 "900
-[; ;main.c: 900:     sprintf(V.buf, "OK ");
-[e ( _sprintf (1 , &U . _V 7 :s 36C ]
+[; ;main.c: 900:     if (V.m_l_state == LINK_STATE_ERROR)
+[e $ ! == -> . _V 4 `ui -> . `E17029 6 `ui 2326  ]
 "901
-[; ;main.c: 901:     MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
-[e ( _MyeaDogM_WriteStringAtPos (3 , , -> - -> . _V 39 `i -> 1 `i `uc -> -> 13 `i `uc &U . _V 7 ]
+[; ;main.c: 901:      V.s_state = SEQ_STATE_ERROR;
+[e = . _V 0 . `E16999 6 ]
+[e :U 2326 ]
 "902
 [; ;main.c: 902:     break;
-[e $U 2318  ]
+[e $U 2319  ]
 "903
-[; ;main.c: 903:    case SEQ_STATE_DONE:
-[e :U 2329 ]
+[; ;main.c: 903:    case SEQ_STATE_TRIGGER:
+[e :U 2327 ]
 "904
-[; ;main.c: 904:     V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16999 0 ]
+[; ;main.c: 904:     V.s_state = SEQ_STATE_DONE;
+[e = . _V 0 . `E16999 5 ]
 "905
-[; ;main.c: 905:     break;
-[e $U 2318  ]
+[; ;main.c: 905:     sprintf(V.buf, "OK ");
+[e ( _sprintf (1 , &U . _V 7 :s 36C ]
 "906
-[; ;main.c: 906:    case SEQ_STATE_ERROR:
-[e :U 2330 ]
+[; ;main.c: 906:     MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
+[e ( _MyeaDogM_WriteStringAtPos (3 , , -> - -> . _V 39 `i -> 1 `i `uc -> -> 13 `i `uc &U . _V 7 ]
 "907
-[; ;main.c: 907:    default:
-[e :U 2331 ]
+[; ;main.c: 907:     break;
+[e $U 2319  ]
 "908
-[; ;main.c: 908:     V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16999 0 ]
+[; ;main.c: 908:    case SEQ_STATE_DONE:
+[e :U 2328 ]
 "909
-[; ;main.c: 909:     break;
-[e $U 2318  ]
+[; ;main.c: 909:     V.s_state = SEQ_STATE_INIT;
+[e = . _V 0 . `E16999 0 ]
 "910
-[; ;main.c: 910:    }
-}
-[e $U 2318  ]
-[e :U 2319 ]
-[e [\ -> . _V 0 `ui , $ -> . `E16999 0 `ui 2320
- , $ -> . `E16999 1 `ui 2325
- , $ -> . `E16999 3 `ui 2328
- , $ -> . `E16999 5 `ui 2329
- , $ -> . `E16999 6 `ui 2330
- 2331 ]
-[e :U 2318 ]
+[; ;main.c: 910:     break;
+[e $U 2319  ]
 "911
-[; ;main.c: 911:    if (V.debug)
-[e $ ! != -> . _V 35 `i -> 0 `i 2332  ]
+[; ;main.c: 911:    case SEQ_STATE_ERROR:
+[e :U 2329 ]
 "912
-[; ;main.c: 912:     sprintf(V.buf, " Equip type %d     ", V.e_types);
-[e ( _sprintf (1 , (. , &U . _V 7 :s 37C -> . _V 3 `ui ]
-[e $U 2333  ]
+[; ;main.c: 912:    default:
+[e :U 2330 ]
 "913
-[; ;main.c: 913:    else
-[e :U 2332 ]
+[; ;main.c: 913:     V.s_state = SEQ_STATE_INIT;
+[e = . _V 0 . `E16999 0 ]
 "914
-[; ;main.c: 914:     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-[e ( _sprintf (1 , , , , (. , &U . _V 7 :s 38C -> . _V 39 `i -> . _V 2 `ui -> . _V 24 `ui -> . _V 23 `ui ]
-[e :U 2333 ]
+[; ;main.c: 914:     break;
+[e $U 2319  ]
 "915
-[; ;main.c: 915:    V.buf[16] = 0;
-[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
+[; ;main.c: 915:    }
+}
+[e $U 2319  ]
+[e :U 2320 ]
+[e [\ -> . _V 0 `ui , $ -> . `E16999 0 `ui 2321
+ , $ -> . `E16999 1 `ui 2324
+ , $ -> . `E16999 3 `ui 2327
+ , $ -> . `E16999 5 `ui 2328
+ , $ -> . `E16999 6 `ui 2329
+ 2330 ]
+[e :U 2319 ]
 "916
-[; ;main.c: 916:    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
-[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 7 ]
+[; ;main.c: 916:    if (V.debug)
+[e $ ! != -> . _V 35 `i -> 0 `i 2331  ]
 "917
-[; ;main.c: 917:    break;
-[e $U 2281  ]
+[; ;main.c: 917:     sprintf(V.buf, " Equip type %d     ", V.e_types);
+[e ( _sprintf (1 , (. , &U . _V 7 :s 37C -> . _V 3 `ui ]
+[e $U 2332  ]
 "918
-[; ;main.c: 918:   case UI_STATE_ERROR:
-[e :U 2334 ]
+[; ;main.c: 918:    else
+[e :U 2331 ]
 "919
-[; ;main.c: 919:   default:
-[e :U 2335 ]
+[; ;main.c: 919:     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+[e ( _sprintf (1 , , , , (. , &U . _V 7 :s 38C -> . _V 39 `i -> . _V 2 `ui -> . _V 24 `ui -> . _V 23 `ui ]
+[e :U 2332 ]
 "920
-[; ;main.c: 920:    V.ui_state = UI_STATE_INIT;
-[e = . _V 1 . `E17008 0 ]
+[; ;main.c: 920:    V.buf[16] = 0;
+[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
 "921
-[; ;main.c: 921:    break;
-[e $U 2281  ]
+[; ;main.c: 921:    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 7 ]
 "922
-[; ;main.c: 922:   }
+[; ;main.c: 922:    break;
+[e $U 2281  ]
+"923
+[; ;main.c: 923:   case UI_STATE_ERROR:
+[e :U 2333 ]
+"924
+[; ;main.c: 924:   default:
+[e :U 2334 ]
+"925
+[; ;main.c: 925:    V.ui_state = UI_STATE_INIT;
+[e = . _V 1 . `E17008 0 ]
+"926
+[; ;main.c: 926:    break;
+[e $U 2281  ]
+"927
+[; ;main.c: 927:   }
 }
 [e $U 2281  ]
 [e :U 2282 ]
 [e [\ -> . _V 1 `ui , $ -> . `E17008 0 `ui 2283
  , $ -> . `E17008 1 `ui 2286
- , $ -> . `E17008 3 `ui 2317
- , $ -> . `E17008 4 `ui 2334
- 2335 ]
+ , $ -> . `E17008 3 `ui 2318
+ , $ -> . `E17008 4 `ui 2333
+ 2334 ]
 [e :U 2281 ]
-"923
-[; ;main.c: 923:   if (V.ticks) {
-[e $ ! != . _V 10 -> -> -> 0 `i `l `ul 2336  ]
+"928
+[; ;main.c: 928:   if (V.ticks) {
+[e $ ! != . _V 10 -> -> -> 0 `i `l `ul 2335  ]
 {
-"924
-[; ;main.c: 924:    if (V.failed_receive) {
-[e $ ! != -> . _V 32 `i -> 0 `i 2337  ]
+"929
+[; ;main.c: 929:    if (V.failed_receive) {
+[e $ ! != -> . _V 32 `i -> 0 `i 2336  ]
 {
-"925
-[; ;main.c: 925:     do { LATDbits.LATD4 = 0; } while(0);
-[e :U 2340 ]
+"930
+[; ;main.c: 930:     do { LATDbits.LATD4 = 0; } while(0);
+[e :U 2339 ]
 {
 [e = . . _LATDbits 0 4 -> -> 0 `i `uc ]
 }
-[e :U 2339 ]
-"926
-[; ;main.c: 926:     do { LATDbits.LATD5 = 1; } while(0);
-[e :U 2343 ]
+[e :U 2338 ]
+"931
+[; ;main.c: 931:     do { LATDbits.LATD5 = 1; } while(0);
+[e :U 2342 ]
 {
 [e = . . _LATDbits 0 5 -> -> 1 `i `uc ]
 }
-[e :U 2342 ]
-"927
-[; ;main.c: 927:     if (V.error == LINK_ERROR_CHECKSUM) {
-[e $ ! == -> . _V 15 `i -> . `E17038 5 `i 2344  ]
+[e :U 2341 ]
+"932
+[; ;main.c: 932:     if (V.error == LINK_ERROR_CHECKSUM) {
+[e $ ! == -> . _V 15 `i -> . `E17038 5 `i 2343  ]
 {
-"928
-[; ;main.c: 928:      do { LATFbits.LATF4 = 0; } while(0);
-[e :U 2347 ]
+"933
+[; ;main.c: 933:      do { LATFbits.LATF4 = 0; } while(0);
+[e :U 2346 ]
 {
 [e = . . _LATFbits 0 4 -> -> 0 `i `uc ]
 }
-[e :U 2346 ]
-"929
-[; ;main.c: 929:      do { LATFbits.LATF5 = 1; } while(0);
-[e :U 2350 ]
+[e :U 2345 ]
+"934
+[; ;main.c: 934:      do { LATFbits.LATF5 = 1; } while(0);
+[e :U 2349 ]
 {
 [e = . . _LATFbits 0 5 -> -> 1 `i `uc ]
 }
-[e :U 2349 ]
-"930
-[; ;main.c: 930:     }
+[e :U 2348 ]
+"935
+[; ;main.c: 935:     }
 }
-[e :U 2344 ]
-"931
-[; ;main.c: 931:    } else {
+[e :U 2343 ]
+"936
+[; ;main.c: 936:    } else {
 }
-[e $U 2351  ]
-[e :U 2337 ]
+[e $U 2350  ]
+[e :U 2336 ]
 {
-"932
-[; ;main.c: 932:     do { LATDbits.LATD4 = 1; } while(0);
-[e :U 2354 ]
+"937
+[; ;main.c: 937:     do { LATDbits.LATD4 = 1; } while(0);
+[e :U 2353 ]
 {
 [e = . . _LATDbits 0 4 -> -> 1 `i `uc ]
 }
-[e :U 2353 ]
-"933
-[; ;main.c: 933:     do { LATDbits.LATD5 = 0; } while(0);
-[e :U 2357 ]
+[e :U 2352 ]
+"938
+[; ;main.c: 938:     do { LATDbits.LATD5 = 0; } while(0);
+[e :U 2356 ]
 {
 [e = . . _LATDbits 0 5 -> -> 0 `i `uc ]
 }
-[e :U 2356 ]
-"934
-[; ;main.c: 934:     do { LATFbits.LATF4 = 1; } while(0);
-[e :U 2360 ]
+[e :U 2355 ]
+"939
+[; ;main.c: 939:     do { LATFbits.LATF4 = 1; } while(0);
+[e :U 2359 ]
 {
 [e = . . _LATFbits 0 4 -> -> 1 `i `uc ]
 }
-[e :U 2359 ]
-"935
-[; ;main.c: 935:     do { LATFbits.LATF5 = 0; } while(0);
-[e :U 2363 ]
+[e :U 2358 ]
+"940
+[; ;main.c: 940:     do { LATFbits.LATF5 = 0; } while(0);
+[e :U 2362 ]
 {
 [e = . . _LATFbits 0 5 -> -> 0 `i `uc ]
 }
-[e :U 2362 ]
-"936
-[; ;main.c: 936:    }
+[e :U 2361 ]
+"941
+[; ;main.c: 941:    }
 }
-[e :U 2351 ]
-"937
-[; ;main.c: 937:    if (V.failed_send) {
-[e $ ! != -> . _V 31 `i -> 0 `i 2364  ]
+[e :U 2350 ]
+"942
+[; ;main.c: 942:    if (V.failed_send) {
+[e $ ! != -> . _V 31 `i -> 0 `i 2363  ]
 {
-"938
-[; ;main.c: 938:     do { LATDbits.LATD6 = 0; } while(0);
-[e :U 2367 ]
+"943
+[; ;main.c: 943:     do { LATDbits.LATD6 = 0; } while(0);
+[e :U 2366 ]
 {
 [e = . . _LATDbits 0 6 -> -> 0 `i `uc ]
 }
-[e :U 2366 ]
-"939
-[; ;main.c: 939:     do { LATDbits.LATD7 = 1; } while(0);
-[e :U 2370 ]
+[e :U 2365 ]
+"944
+[; ;main.c: 944:     do { LATDbits.LATD7 = 1; } while(0);
+[e :U 2369 ]
 {
 [e = . . _LATDbits 0 7 -> -> 1 `i `uc ]
 }
-[e :U 2369 ]
-"940
-[; ;main.c: 940:     if (V.error == LINK_ERROR_CHECKSUM) {
-[e $ ! == -> . _V 15 `i -> . `E17038 5 `i 2371  ]
+[e :U 2368 ]
+"945
+[; ;main.c: 945:     if (V.error == LINK_ERROR_CHECKSUM) {
+[e $ ! == -> . _V 15 `i -> . `E17038 5 `i 2370  ]
 {
-"941
-[; ;main.c: 941:      do { LATFbits.LATF6 = 0; } while(0);
-[e :U 2374 ]
+"946
+[; ;main.c: 946:      do { LATFbits.LATF6 = 0; } while(0);
+[e :U 2373 ]
 {
 [e = . . _LATFbits 0 6 -> -> 0 `i `uc ]
 }
-[e :U 2373 ]
-"942
-[; ;main.c: 942:      do { LATFbits.LATF7 = 1; } while(0);
-[e :U 2377 ]
+[e :U 2372 ]
+"947
+[; ;main.c: 947:      do { LATFbits.LATF7 = 1; } while(0);
+[e :U 2376 ]
 {
 [e = . . _LATFbits 0 7 -> -> 1 `i `uc ]
 }
-[e :U 2376 ]
-"943
-[; ;main.c: 943:     }
+[e :U 2375 ]
+"948
+[; ;main.c: 948:     }
 }
-[e :U 2371 ]
-"944
-[; ;main.c: 944:    } else {
+[e :U 2370 ]
+"949
+[; ;main.c: 949:    } else {
 }
-[e $U 2378  ]
-[e :U 2364 ]
+[e $U 2377  ]
+[e :U 2363 ]
 {
-"945
-[; ;main.c: 945:     do { LATDbits.LATD6 = 1; } while(0);
-[e :U 2381 ]
+"950
+[; ;main.c: 950:     do { LATDbits.LATD6 = 1; } while(0);
+[e :U 2380 ]
 {
 [e = . . _LATDbits 0 6 -> -> 1 `i `uc ]
 }
-[e :U 2380 ]
-"946
-[; ;main.c: 946:     do { LATDbits.LATD7 = 0; } while(0);
-[e :U 2384 ]
+[e :U 2379 ]
+"951
+[; ;main.c: 951:     do { LATDbits.LATD7 = 0; } while(0);
+[e :U 2383 ]
 {
 [e = . . _LATDbits 0 7 -> -> 0 `i `uc ]
 }
-[e :U 2383 ]
-"947
-[; ;main.c: 947:     do { LATFbits.LATF6 = 1; } while(0);
-[e :U 2387 ]
+[e :U 2382 ]
+"952
+[; ;main.c: 952:     do { LATFbits.LATF6 = 1; } while(0);
+[e :U 2386 ]
 {
 [e = . . _LATFbits 0 6 -> -> 1 `i `uc ]
 }
-[e :U 2386 ]
-"948
-[; ;main.c: 948:     do { LATFbits.LATF7 = 0; } while(0);
-[e :U 2390 ]
+[e :U 2385 ]
+"953
+[; ;main.c: 953:     do { LATFbits.LATF7 = 0; } while(0);
+[e :U 2389 ]
 {
 [e = . . _LATFbits 0 7 -> -> 0 `i `uc ]
 }
-[e :U 2389 ]
-"949
-[; ;main.c: 949:    }
-}
-[e :U 2378 ]
-"950
-[; ;main.c: 950:   }
-}
-[e :U 2336 ]
-"951
-[; ;main.c: 951:   sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
-[e ( _sprintf (1 , , , , , , (. , &U . _V 7 :s 39C -> . _V 5 `ui -> . _V 32 `i -> . _V 6 `ui -> . _V 31 `i -> . _V 23 `ui -> . _V 37 `i ]
-"952
-[; ;main.c: 952:   V.buf[16] = 0;
-[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
-"953
-[; ;main.c: 953:   if (mode != UI_STATE_LOG)
-[e $ ! != -> _mode `ui -> . `E17008 3 `ui 2391  ]
+[e :U 2388 ]
 "954
-[; ;main.c: 954:    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U . _V 7 ]
-[e :U 2391 ]
+[; ;main.c: 954:    }
+}
+[e :U 2377 ]
+"955
+[; ;main.c: 955:   }
+}
+[e :U 2335 ]
+"956
+[; ;main.c: 956:   sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+[e ( _sprintf (1 , , , , , , (. , &U . _V 7 :s 39C -> . _V 5 `ui -> . _V 32 `i -> . _V 6 `ui -> . _V 31 `i -> . _V 23 `ui -> . _V 37 `i ]
+"957
+[; ;main.c: 957:   V.buf[16] = 0;
+[e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
+"958
+[; ;main.c: 958:   if (mode != UI_STATE_LOG)
+[e $ ! != -> _mode `ui -> . `E17008 3 `ui 2390  ]
 "959
-[; ;main.c: 959:   if (help_button() && V.response.info != DIS_HELP) {
-[e $ ! && != -> ( _help_button ..  `i -> 0 `i != -> . . _V 38 6 `ui -> . `E16976 6 `ui 2392  ]
-{
-"960
-[; ;main.c: 960:    V.response.help_temp = V.response.info;
-[e = . . _V 38 7 . . _V 38 6 ]
-"961
-[; ;main.c: 961:    V.response.info = DIS_HELP;
-[e = . . _V 38 6 . `E16976 6 ]
-"962
-[; ;main.c: 962:    sprintf(V.info, " Commands        ");
-[e ( _sprintf (1 , &U . _V 9 :s 40C ]
-"963
-[; ;main.c: 963:    StartTimer(TMR_HELPDIS, 3000);
-[e ( _StartTimer (2 , -> . `E17136 9 `uc -> -> 3000 `i `us ]
+[; ;main.c: 959:    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+[e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U . _V 7 ]
+[e :U 2390 ]
 "964
-[; ;main.c: 964:    StartTimer(TMR_INFO, 3000);
-[e ( _StartTimer (2 , -> . `E17136 7 `uc -> -> 3000 `i `us ]
-"965
-[; ;main.c: 965:    PWM8_LoadDutyValue(300);
-[e ( _PWM8_LoadDutyValue (1 -> -> 300 `i `us ]
-"966
-[; ;main.c: 966:    if (V.seq_test) {
-[e $ ! != -> . _V 30 `i -> 0 `i 2393  ]
+[; ;main.c: 964:   if (help_button() && V.response.info != DIS_HELP) {
+[e $ ! && != -> ( _help_button ..  `i -> 0 `i != -> . . _V 38 6 `ui -> . `E16976 6 `ui 2391  ]
 {
+"965
+[; ;main.c: 965:    V.response.help_temp = V.response.info;
+[e = . . _V 38 7 . . _V 38 6 ]
+"966
+[; ;main.c: 966:    V.response.info = DIS_HELP;
+[e = . . _V 38 6 . `E16976 6 ]
 "967
-[; ;main.c: 967:     sequence_messages(1);
-[e ( _sequence_messages (1 -> -> 1 `i `uc ]
+[; ;main.c: 967:    sprintf(V.info, " Commands        ");
+[e ( _sprintf (1 , &U . _V 9 :s 40C ]
 "968
-[; ;main.c: 968:     secs_II_message(2, 41);
-[e ( _secs_II_message (2 , -> -> 2 `i `uc -> -> 41 `i `uc ]
+[; ;main.c: 968:    StartTimer(TMR_HELPDIS, 3000);
+[e ( _StartTimer (2 , -> . `E17137 9 `uc -> -> 3000 `i `us ]
 "969
-[; ;main.c: 969:     V.response.info = DIS_SEQUENCE;
-[e = . . _V 38 6 . `E16976 7 ]
+[; ;main.c: 969:    StartTimer(TMR_INFO, 3000);
+[e ( _StartTimer (2 , -> . `E17137 7 `uc -> -> 3000 `i `us ]
 "970
-[; ;main.c: 970:    }
-}
-[e :U 2393 ]
+[; ;main.c: 970:    PWM8_LoadDutyValue(300);
+[e ( _PWM8_LoadDutyValue (1 -> -> 300 `i `us ]
 "971
-[; ;main.c: 971:   } else {
-}
-[e $U 2394  ]
-[e :U 2392 ]
+[; ;main.c: 971:    if (V.seq_test) {
+[e $ ! != -> . _V 30 `i -> 0 `i 2392  ]
 {
 "972
-[; ;main.c: 972:    if (TimerDone(TMR_HELPDIS)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E17136 9 `uc `i -> 0 `i 2395  ]
-{
+[; ;main.c: 972:     sequence_messages(1);
+[e ( _sequence_messages (1 -> -> 1 `i `uc ]
 "973
-[; ;main.c: 973:     V.help = 0;
-[e = . _V 36 -> -> 0 `i `uc ]
+[; ;main.c: 973:     secs_II_message(2, 41);
+[e ( _secs_II_message (2 , -> -> 2 `i `uc -> -> 41 `i `uc ]
 "974
-[; ;main.c: 974:     V.response.info = V.response.help_temp;
-[e = . . _V 38 6 . . _V 38 7 ]
+[; ;main.c: 974:     V.response.info = DIS_SEQUENCE;
+[e = . . _V 38 6 . `E16976 7 ]
 "975
-[; ;main.c: 975:     PWM8_LoadDutyValue(V.mode_pwm);
-[e ( _PWM8_LoadDutyValue (1 . _V 26 ]
-"976
-[; ;main.c: 976:    }
+[; ;main.c: 975:    }
 }
-[e :U 2395 ]
+[e :U 2392 ]
+"976
+[; ;main.c: 976:   } else {
+}
+[e $U 2393  ]
+[e :U 2391 ]
+{
+"977
+[; ;main.c: 977:    if (TimerDone(TMR_HELPDIS)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E17137 9 `uc `i -> 0 `i 2394  ]
+{
 "978
-[; ;main.c: 978:   }
+[; ;main.c: 978:     V.help = 0;
+[e = . _V 36 -> -> 0 `i `uc ]
+"979
+[; ;main.c: 979:     V.response.info = V.response.help_temp;
+[e = . . _V 38 6 . . _V 38 7 ]
+"980
+[; ;main.c: 980:     PWM8_LoadDutyValue(V.mode_pwm);
+[e ( _PWM8_LoadDutyValue (1 . _V 26 ]
+"981
+[; ;main.c: 981:    }
 }
 [e :U 2394 ]
-"979
-[; ;main.c: 979:  }
+"983
+[; ;main.c: 983:   }
+}
+[e :U 2393 ]
+"984
+[; ;main.c: 984:  }
 }
 [e :U 2278 ]
 [e $U 2279  ]
 [e :U 2280 ]
-"980
-[; ;main.c: 980: }
+"985
+[; ;main.c: 985: }
 [e :UE 2267 ]
 }
 [p f _sprintf 9175184 ]
