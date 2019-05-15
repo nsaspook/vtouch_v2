@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27643,7 +27640,7 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
-  uint8_t uart;
+  uint8_t uart, llid;
   volatile uint8_t ticker;
  } V_data;
 # 23 "./gemsecs.h" 2
@@ -28627,7 +28624,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  switch (*m_link) {
  case LINK_STATE_IDLE:
 
-
+  WaitMs(50);
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
@@ -28656,24 +28653,22 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 104 "gemsecs.c"
-   if (V.uart == 2 && UART1_is_rx_ready()) {
-    rxData = UART1_Read();
-    if (rxData == 0x04) {
-     StartTimer(TMR_T2, 2000);
-     V.error = LINK_ERROR_NONE;
-     *m_link = LINK_STATE_EOT;
-    }
-   }
-   if (V.uart == 1 && UART2_is_rx_ready()) {
-    rxData = UART2_Read();
-    if (rxData == 0x04) {
-     StartTimer(TMR_T2, 2000);
-     V.error = LINK_ERROR_NONE;
-     *m_link = LINK_STATE_EOT;
-    }
-   }
 
+   WaitMs(50);
+   if (V.uart == 1)
+
+
+
+     secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
+   if (V.uart == 2)
+
+
+
+     secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
+   V.error = LINK_ERROR_NONE;
+   *m_link = LINK_STATE_EOT;
+   StartTimer(TMR_T2, 2000);
+# 121 "gemsecs.c"
   }
   break;
  case LINK_STATE_EOT:
@@ -28764,7 +28759,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ACK:
 
-
+  WaitMs(50);
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -28823,11 +28818,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   StartTimer(TMR_T2, 2000);
   *r_link = LINK_STATE_EOT;
 
+  WaitMs(5);
 
 
-
-
-
+  H10[3].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 1, 1);
 
   break;
  case LINK_STATE_EOT:
@@ -28937,8 +28932,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 2000);
   *t_link = LINK_STATE_ENQ;
 
-
-
+  WaitMs(5);
+  UART1_put_buffer(0x04);
 
   break;
  case LINK_STATE_ENQ:
@@ -28991,11 +28986,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
+  WaitMs(5);
 
 
 
-
-
+   UART1_put_buffer(0x06);
 
   break;
  case LINK_STATE_ACK:
@@ -29110,7 +29105,7 @@ void hb_message()
 
 _Bool sequence_messages(uint8_t sid)
 {
-
+ V.msg_error = 0;
  switch (sid) {
  case 1:
   S[0].message = HC33[0];
@@ -29142,7 +29137,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.24G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.25G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29176,6 +29171,7 @@ static void parse_ll(void)
  } else {
   H33[0].data[0] = 0x01;
  }
+ V.llid = H33[0].data[0];
 }
 
 
@@ -29314,6 +29310,7 @@ _Bool gem_messages(response_type *block)
 
  *block = S[V.stack - 1].block;
  S[V.stack - 1].message.block.block.systemb = V.ticks;
+ V.llid = S[V.stack - 1].message.data[0];
 
  if (V.seq_test)
   secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, 0, 1);
@@ -29648,7 +29645,7 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
  case 1:
   switch (function) {
 
-
+  case 1:
 
   case 2:
    if (block != GEM_STATE_REMOTE)
@@ -29693,14 +29690,14 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
    V.ticker = 15;
    break;
 
-
+  case 15:
 
   case 16:
    block = GEM_STATE_OFFLINE;
    V.ticker = 0;
    break;
 
-
+  case 17:
 
   case 18:
    block = GEM_STATE_ONLINE;

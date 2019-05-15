@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28417,7 +28417,7 @@ void PMD_Initialize(void);
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
-  uint8_t uart;
+  uint8_t uart, llid;
   volatile uint8_t ticker;
  } V_data;
 # 27 "./eadog.h" 2
@@ -28625,7 +28625,7 @@ V_data V = {
  .response.log_seq = 0,
  .queue = 0,
  .stack = 0,
- .seq_test = 1,
+ .seq_test = 0,
 };
 
 header10 H10[] = {
@@ -28873,7 +28873,26 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 366 "main.c"
+
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
 header33 H33[] = {
  {
   .length = 33,
@@ -29149,7 +29168,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    break;
   case DIS_SEQUENCE:
    wdtdelay(9000);
-   sprintf(V.buf, " Load-lock  RET %d  ", V.msg_error);
+   sprintf(V.buf, " Load-lock%d R%d      ", V.llid, V.msg_error);
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
    sprintf(V.buf, " SEQUENCE         ");
@@ -29252,9 +29271,13 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.24G");
+   sprintf(V.buf, " Version %s", "1.25G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-   sprintf(V.buf, " FGB@MCHP FAB4");
+   if (V.seq_test) {
+    sprintf(V.buf, "Sequence Testing");
+   } else {
+    sprintf(V.buf, " FGB@MCHP FAB4  ");
+   }
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
    WaitMs(3000);
    break;
@@ -29273,8 +29296,8 @@ void main(void)
      MyeaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
-
-
+    WaitMs(50);
+    UART1_put_buffer(0x05);
 
     break;
    case SEQ_STATE_RX:
@@ -29292,7 +29315,7 @@ void main(void)
      V.buf[11] = 0;
      MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 
-
+     WaitMs(5);
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -29363,6 +29386,8 @@ void main(void)
        }
        V.msg_error = MSG_ERROR_NONE;
        V.reset = 0;
+      } else {
+       V.response.info = DIS_STR;
       }
      }
     }
@@ -29380,11 +29405,11 @@ void main(void)
     V.buf[16] = 0;
     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 
-
-
-
-
-
+    if (LATEbits.LATE0) {
+     UART2_put_buffer(0x05);
+    } else {
+     UART1_put_buffer(0x05);
+    }
 
     break;
    case SEQ_STATE_RX:

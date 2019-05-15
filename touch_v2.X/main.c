@@ -75,7 +75,7 @@ V_data V = {
 	.response.log_seq = 0,
 	.queue = false,
 	.stack = false, // 0 no messages, 1-4 messages in queue
-	.seq_test = true,
+	.seq_test = SEQ_TEST,
 };
 
 header10 H10[] = {
@@ -638,7 +638,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			break;
 		case DIS_SEQUENCE:
 			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(V.buf, " Load-lock  RET %d  ", V.msg_error);
+			sprintf(V.buf, " Load-lock%d R%d      ", V.llid, V.msg_error);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " SEQUENCE         ");
@@ -743,7 +743,11 @@ void main(void)
 			MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " Version %s", VER);
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-			sprintf(V.buf, " FGB@MCHP FAB4");
+			if (V.seq_test) {
+				sprintf(V.buf, "Sequence Testing");
+			} else {
+				sprintf(V.buf, " FGB@MCHP FAB4  ");
+			}
 			MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 			WaitMs(3000);
 			break;
@@ -852,6 +856,8 @@ void main(void)
 							}
 							V.msg_error = MSG_ERROR_NONE;
 							V.reset = false;
+						} else {
+							V.response.info = DIS_STR;
 						}
 					}
 				}

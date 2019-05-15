@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27449,7 +27449,7 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
   terminal_type response;
-  uint8_t uart;
+  uint8_t uart, llid;
   volatile uint8_t ticker;
  } V_data;
 # 2 "eadog.c" 2

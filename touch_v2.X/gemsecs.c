@@ -554,7 +554,7 @@ void hb_message()
 
 bool sequence_messages(uint8_t sid)
 {
-
+	V.msg_error = 0;
 	switch (sid) {
 	case 1:
 		S[0].message = HC33[0];
@@ -620,6 +620,7 @@ static void parse_ll(void)
 	} else {
 		H33[0].data[0] = 0x01;
 	}
+	V.llid = H33[0].data[0];
 }
 
 /*
@@ -758,6 +759,7 @@ bool gem_messages(response_type *block)
 
 	*block = S[V.stack - 1].block; // shallow contents copy
 	S[V.stack - 1].message.block.block.systemb = V.ticks;
+	V.llid = S[V.stack - 1].message.data[0];
 
 	if (V.seq_test)
 		secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, false, 1);
