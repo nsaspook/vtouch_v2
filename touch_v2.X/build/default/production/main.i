@@ -28415,11 +28415,15 @@ void PMD_Initialize(void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
+  queue : 1, reset : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, ping_count;
+  uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
  } V_data;
+
+ typedef struct V_help {
+  const char message[32];
+ } V_help;
 # 27 "./eadog.h" 2
 
 
@@ -28600,7 +28604,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  _Bool sequence_messages(uint8_t);
- _Bool gem_messages(response_type *);
+ _Bool gem_messages(response_type *, uint8_t);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 57 "main.c" 2
@@ -28608,6 +28612,22 @@ void WaitMs(uint16_t numMilliseconds);
 
 
 extern struct spi_link_type spi_link;
+const char *build_date = "May 16 2019", *build_time = "13:06:50";
+
+V_help T[] = {
+ {
+  .message = "commands 1",
+ },
+ {
+  .message = "commands 2",
+ },
+ {
+  .message = "commands 3",
+ },
+ {
+  .message = "commands 4",
+ },
+};
 
 V_data V = {
  .error = LINK_ERROR_NONE,
@@ -28626,6 +28646,8 @@ V_data V = {
  .queue = 0,
  .stack = 0,
  .seq_test = 0,
+ .sid = 1,
+ .help_id = 0,
 };
 
 header10 H10[] = {
@@ -28854,7 +28876,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 328 "main.c"
+# 346 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28873,7 +28895,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 366 "main.c"
+# 384 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29139,10 +29161,10 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
    break;
   case DIS_HELP:
    wdtdelay(9000);
-   sprintf(V.buf, " HELP            ");
+   sprintf(V.buf, "HELP %s           ", build_date);
    V.buf[16] = 0;
    eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " DISPLAY         ");
+   sprintf(V.buf, "DISPLAY %s        ", build_time);
    V.buf[16] = 0;
    wait_lcd_done();
    eaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -29252,7 +29274,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.25G");
+   sprintf(V.buf, " Version %s", "1.26G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    if (V.seq_test) {
     sprintf(V.buf, "Sequence Testing");
@@ -29353,10 +29375,9 @@ void main(void)
 
 
 
-    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
+    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX && !V.queue) || V.reset) {
      if (TimerDone(TMR_HBIO) || V.reset) {
       StartTimer(TMR_HBIO, 30000);
-
 
       if (V.stack) {
        hb_message();
@@ -29370,6 +29391,7 @@ void main(void)
         V.buf[16] = 0;
         MyeaDogM_WriteStringAtPos(0, 0, V.buf);
         WaitMs(250);
+        V.reset = 0;
         V.ping_count = 0;
        } else {
         V.response.info = DIS_STR;
@@ -29475,7 +29497,8 @@ void main(void)
   if (help_button() && V.response.info != DIS_HELP) {
    V.response.help_temp = V.response.info;
    V.response.info = DIS_HELP;
-   sprintf(V.info, " Commands        ");
+   sprintf(V.info, "%s              ", T[V.help_id].message);
+   V.help_id++;
    StartTimer(TMR_HELPDIS, 3000);
    StartTimer(TMR_INFO, 3000);
    PWM8_LoadDutyValue(300);

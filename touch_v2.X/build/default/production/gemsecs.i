@@ -27638,11 +27638,15 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1, debug : 1, help : 1, stack : 3;
+  queue : 1, reset : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, ping_count;
+  uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
  } V_data;
+
+ typedef struct V_help {
+  const char message[32];
+ } V_help;
 # 23 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
 # 50 "./mcc_generated_files/mcc.h"
@@ -28563,7 +28567,7 @@ void WaitMs(uint16_t numMilliseconds);
  P_CODES s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  _Bool sequence_messages(uint8_t);
- _Bool gem_messages(response_type *);
+ _Bool gem_messages(response_type *, uint8_t);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
 # 2 "gemsecs.c" 2
@@ -29091,7 +29095,6 @@ _Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake, uint8_t s_uart)
 
 void hb_message()
 {
-
  V.ping++;
  V.s_state = SEQ_STATE_TX;
  V.failed_send = 0;
@@ -29107,7 +29110,7 @@ void hb_message()
 
 _Bool sequence_messages(uint8_t sid)
 {
- V.msg_error = 0;
+ V.msg_error = MSG_ERROR_NONE;
  switch (sid) {
  case 1:
   S[0].message = HC33[0];
@@ -29139,14 +29142,13 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.25G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.26G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
  }
  return(strlen(V.terminal));
 }
-
 
 
 
@@ -29174,6 +29176,33 @@ static void parse_ll(void)
   H33[0].data[0] = 0x01;
  }
  V.llid = H33[0].data[0];
+}
+
+
+
+
+static void parse_sid(void)
+{
+ if (V.response.cmdlen > 1) {
+  switch (V.response.mparm) {
+  case '1':
+  case '2':
+  case '3':
+  case 'A':
+  case 'B':
+  case 'C':
+  case 'a':
+  case 'b':
+  case 'c':
+   V.sid = V.response.mparm & 0x03;
+   break;
+  default:
+   V.sid = 0x01;
+   break;
+  }
+ } else {
+  V.sid = 0x01;
+ }
 }
 
 
@@ -29307,16 +29336,24 @@ P_CODES s6f11_opcmd(void)
  return(P_CODES) V.response.ceid;
 }
 
-_Bool gem_messages(response_type *block)
+
+
+
+_Bool gem_messages(response_type *block, uint8_t sid)
 {
  if (!V.stack)
   return 0;
 
- *block = S[V.stack - 1].block;
- S[V.stack - 1].message.block.block.systemb = V.ticks;
- V.llid = S[V.stack - 1].message.data[0];
+ switch (sid) {
+ case 1:
+ default:
+  *block = S[V.stack - 1].block;
+  S[V.stack - 1].message.block.block.systemb = V.ticks;
+  V.llid = S[V.stack - 1].message.data[0];
+  break;
+ }
 
- if (V.seq_test)
+ if (V.seq_test && sid == 1)
   secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, 0, 1);
 
  V.stack--;
@@ -29336,7 +29373,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  block.respond = 0;
 
  if (V.stack) {
-  gem_messages(&block);
+  gem_messages(&block, V.sid);
   return(block);
  }
 
@@ -29506,7 +29543,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
     V.response.info = DIS_PUMP;
     break;
    case CODE_SEQUENCE:
-    sequence_messages(1);
+    parse_sid();
+    sequence_messages(V.sid);
     V.response.info = DIS_SEQUENCE;
     break;
    case CODE_TS:

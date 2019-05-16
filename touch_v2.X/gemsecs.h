@@ -152,7 +152,7 @@ extern "C" {
 	P_CODES s6f11_opcmd(void);
 	response_type secs_II_message(uint8_t, uint8_t);
 	bool sequence_messages(uint8_t);
-	bool gem_messages(response_type *);
+	bool gem_messages(response_type *, uint8_t);
 	void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
 	GEM_STATES secs_gem_state(uint8_t, uint8_t);
 

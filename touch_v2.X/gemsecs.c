@@ -534,16 +534,15 @@ bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
 }
 
 /*
- * send the S1F1/S2F2 heartbeat message
+ * send the host message
  */
 void hb_message()
 {
-
 	V.ping++;
 	V.s_state = SEQ_STATE_TX;
 	V.failed_send = false;
 	V.t_l_state = LINK_STATE_IDLE;
-	if (V.msg_error == MSG_ERROR_NONE) {
+	if (V.msg_error == MSG_ERROR_NONE) { // set ping message, not for streams
 		V.stream = 1;
 		V.function = 2; // S1F1 host ping
 	} else {
@@ -554,7 +553,7 @@ void hb_message()
 
 bool sequence_messages(uint8_t sid)
 {
-	V.msg_error = 0;
+	V.msg_error = MSG_ERROR_NONE;
 	switch (sid) {
 	case 1:
 		S[0].message = HC33[0];
@@ -597,7 +596,6 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
 /*
  * parse load-clock terminal command for port number
  */
-
 static void parse_ll(void)
 {
 	if (V.response.cmdlen > 1) {
@@ -621,6 +619,33 @@ static void parse_ll(void)
 		H33[0].data[0] = 0x01;
 	}
 	V.llid = H33[0].data[0];
+}
+
+/*
+ * parse sequence command for sequence number
+ */
+static void parse_sid(void)
+{
+	if (V.response.cmdlen > 1) {
+		switch (V.response.mparm) { // port selection
+		case '1':
+		case '2':
+		case '3':
+		case 'A':
+		case 'B':
+		case 'C':
+		case 'a':
+		case 'b':
+		case 'c':
+			V.sid = V.response.mparm & 0x03;
+			break;
+		default:
+			V.sid = 0x01;
+			break;
+		}
+	} else {
+		V.sid = 0x01;
+	}
 }
 
 /*
@@ -754,16 +779,24 @@ P_CODES s6f11_opcmd(void)
 	return(P_CODES) V.response.ceid;
 }
 
-bool gem_messages(response_type *block)
+/*
+ * load block structure with the correct sequence message to send
+ */
+bool gem_messages(response_type *block, uint8_t sid)
 {
 	if (!V.stack)
 		return false;
 
-	*block = S[V.stack - 1].block; // shallow contents copy
-	S[V.stack - 1].message.block.block.systemb = V.ticks;
-	V.llid = S[V.stack - 1].message.data[0];
+	switch (sid) {
+	case 1: // close doors sequence
+	default:
+		*block = S[V.stack - 1].block; // shallow contents copy
+		S[V.stack - 1].message.block.block.systemb = V.ticks;
+		V.llid = S[V.stack - 1].message.data[0];
+		break;
+	}
 
-	if (V.seq_test)
+	if (V.seq_test && sid == 1) // force rs-232 transmission for testing only
 		secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, false, 1);
 
 	V.stack--;
@@ -783,7 +816,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	block.respond = false;
 
 	if (V.stack) {
-		gem_messages(&block);
+		gem_messages(&block, V.sid);
 		return(block);
 	}
 
@@ -953,7 +986,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 				V.response.info = DIS_PUMP;
 				break;
 			case CODE_SEQUENCE:
-				sequence_messages(1);
+				parse_sid();
+				sequence_messages(V.sid);
 				V.response.info = DIS_SEQUENCE;
 				break;
 			case CODE_TS:

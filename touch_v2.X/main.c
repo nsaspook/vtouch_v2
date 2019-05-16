@@ -58,6 +58,22 @@ typedef signed long long int24_t;
 #include "timers.h"
 
 extern struct spi_link_type spi_link;
+const char *build_date = __DATE__, *build_time = __TIME__;
+
+V_help T[] = {
+	{
+		.message = "commands 1",
+	},
+	{
+		.message = "commands 2",
+	},
+	{
+		.message = "commands 3",
+	},
+	{
+		.message = "commands 4",
+	},
+};
 
 V_data V = {
 	.error = LINK_ERROR_NONE,
@@ -76,6 +92,8 @@ V_data V = {
 	.queue = false,
 	.stack = false, // 0 no messages, 1-4 messages in queue
 	.seq_test = SEQ_TEST,
+	.sid = 1,
+	.help_id = 0,
 };
 
 header10 H10[] = {
@@ -628,10 +646,10 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			break;
 		case DIS_HELP:
 			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(V.buf, " HELP            ");
+			sprintf(V.buf, "HELP %s           ", build_date);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " DISPLAY         ");
+			sprintf(V.buf, "DISPLAY %s        ", build_time);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -840,15 +858,14 @@ void main(void)
 				V.buf[16] = 0; // string size limit
 				MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 				/*
-				 * HeartBeat S1F1 ping during remote idle time
+				 * HeartBeat ping or sequence during idle times
 				 */
-				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
+				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX && !V.queue) || V.reset) {
 					if (TimerDone(TMR_HBIO) || V.reset) {
 						StartTimer(TMR_HBIO, HBT);
 						// send ping or sequence message
-
 						if (V.stack) {
-							hb_message();
+							hb_message(); // prime the TX state machine
 							V.msg_error = MSG_ERROR_NONE;
 							V.reset = false;
 							V.ping_count = 0;
@@ -859,6 +876,7 @@ void main(void)
 								V.buf[16] = 0; // string size limit
 								MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 								WaitMs(250);
+								V.reset = false;
 								V.ping_count = 0;
 							} else {
 								V.response.info = DIS_STR;
@@ -964,12 +982,13 @@ void main(void)
 		if (help_button() && V.response.info != DIS_HELP) {
 			V.response.help_temp = V.response.info;
 			V.response.info = DIS_HELP;
-			sprintf(V.info, " Commands        ");
+			sprintf(V.info, "%s              ", T[V.help_id].message);
+			V.help_id++; // cycle help text messages to LCD
 			StartTimer(TMR_HELPDIS, TDELAY);
 			StartTimer(TMR_INFO, TDELAY);
 			PWM8_LoadDutyValue(300); // mode switch indicator lamp 'button' level
 			if (V.seq_test) {
-				sequence_messages(1);
+				sequence_messages(1); // only close doors during testing
 				secs_II_message(2, 41);
 				V.response.info = DIS_SEQUENCE;
 			}
