@@ -27488,7 +27488,7 @@ void PIN_MANAGER_Initialize (void);
  } V_data;
 
  typedef struct V_help {
-  const char message[32];
+  const char message[32], display[32];
  } V_help;
 # 16 "./ringbufs.h" 2
 

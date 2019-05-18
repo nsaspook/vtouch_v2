@@ -23,4 +23,5 @@ eadog.h  \
 vconfig.h  \
 ringbufs.h  \
 gemsecs.h  \
-timers.h 
+timers.h  \
+mconfig.h 

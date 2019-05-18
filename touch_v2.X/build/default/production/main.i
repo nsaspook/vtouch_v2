@@ -28422,7 +28422,7 @@ void PMD_Initialize(void);
  } V_data;
 
  typedef struct V_help {
-  const char message[32];
+  const char message[32], display[32];
  } V_help;
 # 27 "./eadog.h" 2
 
@@ -28610,22 +28610,32 @@ void WaitMs(uint16_t numMilliseconds);
 # 57 "main.c" 2
 
 
+# 1 "./mconfig.h" 1
+# 38 "./mconfig.h"
+void mode_lamp_dim(uint16_t);
+void mode_lamp_bright(void);
+# 59 "main.c" 2
+
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 16 2019", *build_time = "13:06:50";
+const char *build_date = "May 17 2019", *build_time = "19:37:35";
 
 V_help T[] = {
  {
   .message = "commands 1",
+  .display = "displays 1",
  },
  {
   .message = "commands 2",
+  .display = "displays 2",
  },
  {
   .message = "commands 3",
+  .display = "displays 3",
  },
  {
   .message = "commands 4",
+  .display = "displays 4",
  },
 };
 
@@ -28876,7 +28886,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 346 "main.c"
+# 351 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28895,7 +28905,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 384 "main.c"
+# 389 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29117,6 +29127,8 @@ volatile uint8_t mode_sw = 0;
 
 static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
+ static D_CODES last_info;
+
  LATEbits.LATE2 = 1;
  wait_lcd_done();
  if (V.response.info == DIS_STR) {
@@ -29205,6 +29217,17 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
   if (TimerDone(TMR_INFO))
    V.response.info = DIS_STR;
  }
+
+
+
+ if (last_info == DIS_HELP && V.response.info != DIS_HELP) {
+
+  sprintf(V.buf, "%s              ", T[V.help_id].display);
+  V.buf[16] = 0;
+  eaDogM_WriteStringAtPos(0, 0, V.buf);
+ }
+
+ last_info = V.response.info;
  LATEbits.LATE2 = 0;
 }
 
@@ -29261,7 +29284,7 @@ void main(void)
   do { LATDbits.LATD0 = 0; } while(0);
   V.mode_pwm = 0;
  }
- PWM8_LoadDutyValue(V.mode_pwm);
+ mode_lamp_dim(V.mode_pwm);
 
  while (1) {
   switch (V.ui_state) {
@@ -29501,7 +29524,7 @@ void main(void)
    V.help_id++;
    StartTimer(TMR_HELPDIS, 3000);
    StartTimer(TMR_INFO, 3000);
-   PWM8_LoadDutyValue(300);
+   mode_lamp_bright();
    if (V.seq_test) {
     sequence_messages(1);
     secs_II_message(2, 41);
@@ -29511,7 +29534,7 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     V.help = 0;
     V.response.info = V.response.help_temp;
-    PWM8_LoadDutyValue(V.mode_pwm);
+    mode_lamp_dim(V.mode_pwm);
    }
 
   }

@@ -27645,7 +27645,7 @@ void PIN_MANAGER_Initialize (void);
  } V_data;
 
  typedef struct V_help {
-  const char message[32];
+  const char message[32], display[32];
  } V_help;
 # 23 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1

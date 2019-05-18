@@ -212,7 +212,7 @@ extern "C" {
 	} V_data;
 
 	typedef struct V_help {
-		const char message[32];
+		const char message[32], display[32];
 	} V_help;
 
 #ifdef	__cplusplus

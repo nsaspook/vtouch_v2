@@ -27489,7 +27489,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  } V_data;
 
  typedef struct V_help {
-  const char message[32];
+  const char message[32], display[32];
  } V_help;
 # 31 "mcc_generated_files/ext_int.c" 2
 
