@@ -1,21 +1,26 @@
 /**
-  Generated Main Source File
+  Generated Interrupt Manager Header File
 
-  Company:
+  @Company:
     Microchip Technology Inc.
 
-  File Name:
-    main.c
+  @File Name:
+    interrupt_manager.h
 
-  Summary:
-    This is the main file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+  @Summary:
+    This is the Interrupt Manager file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
-  Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+  @Description:
+    This header file provides implementations for global interrupt handling.
+    For individual peripheral handlers please see the peripheral driver for
+    all modules selected in the GUI.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.76
         Device            :  PIC18F47K42
-        Driver Version    :  2.00
+        Driver Version    :  2.12
+    The generated drivers are tested against the following:
+        Compiler          :  XC8 2.00 or later
+        MPLAB 	          :  MPLAB X 5.10
 */
 
 /*
@@ -41,40 +46,39 @@
     SOFTWARE.
 */
 
-#pragma warning disable 520
-#pragma warning disable 1498 
+#include "interrupt_manager.h"
+#include "mcc.h"
 
-#include "mcc_generated_files/mcc.h"
-
-/*
-                         Main application
- */
-void main(void)
+void  INTERRUPT_Initialize (void)
 {
-    // Initialize the device
-    SYSTEM_Initialize();
+    INTCON0bits.IPEN = 1;
 
-    // If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
-    // If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global Interrupts
-    // Use the following macros to:
+    bool state = (unsigned char)GIE;
+    GIE = 0;
+    IVTLOCK = 0x55;
+    IVTLOCK = 0xAA;
+    IVTLOCKbits.IVTLOCKED = 0x00; // unlock IVT
 
-    // Enable high priority global interrupts
-    //INTERRUPT_GlobalInterruptHighEnable();
+    IVTADU = 0;
+    IVTADH = 0;
+    IVTADL = 8;
 
-    // Enable low priority global interrupts.
-    //INTERRUPT_GlobalInterruptLowEnable();
+    IVTLOCK = 0x55;
+    IVTLOCK = 0xAA;
+    IVTLOCKbits.IVTLOCKED = 0x01; // lock IVT
 
-    // Disable high priority global interrupts
-    //INTERRUPT_GlobalInterruptHighDisable();
-
-    // Disable low priority global interrupts.
-    //INTERRUPT_GlobalInterruptLowDisable();
-
-    while (1)
-    {
-        // Add your application code
-    }
+    GIE = state;
+    // Assign peripheral interrupt priority vectors
+    IPR6bits.U2TXIP = 1;
+    IPR6bits.U2RXIP = 1;
+    IPR3bits.U1TXIP = 1;
+    IPR3bits.U1RXIP = 1;
 }
+
+void __interrupt(irq(default),base(8)) Default_ISR()
+{
+}
+
 /**
  End of File
 */

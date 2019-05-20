@@ -76,8 +76,8 @@ void PIN_MANAGER_Initialize(void)
     ANSELx registers
     */
     ANSELD = 0xFF;
-    ANSELC = 0xFF;
-    ANSELB = 0xFF;
+    ANSELC = 0x7F;
+    ANSELB = 0x7F;
     ANSELE = 0x06;
     ANSELA = 0xFF;
 
@@ -124,6 +124,9 @@ void PIN_MANAGER_Initialize(void)
 
    
     
+	
+    U2RXPPS = 0x0F;   //RB7->UART2:RX2;    
+    U1RXPPS = 0x17;   //RC7->UART1:RX1;    
 }
   
 void PIN_MANAGER_IOC(void)

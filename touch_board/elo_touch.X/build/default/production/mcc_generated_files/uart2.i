@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/pin_manager.c"
+# 1 "mcc_generated_files/uart2.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,10 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/pin_manager.c" 2
-# 49 "mcc_generated_files/pin_manager.c"
-# 1 "mcc_generated_files/pin_manager.h" 1
-# 54 "mcc_generated_files/pin_manager.h"
+# 1 "mcc_generated_files/uart2.c" 2
+# 50 "mcc_generated_files/uart2.c"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -26526,86 +26524,403 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 54 "mcc_generated_files/pin_manager.h" 2
-# 122 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 49 "mcc_generated_files/pin_manager.c" 2
+# 50 "mcc_generated_files/uart2.c" 2
+
+# 1 "mcc_generated_files/uart2.h" 1
+# 55 "mcc_generated_files/uart2.h"
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 55 "mcc_generated_files/uart2.h" 2
+
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
+# 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 135 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uintptr_t;
+# 150 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long intptr_t;
+# 166 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef signed char int8_t;
+
+
+
+
+typedef short int16_t;
+# 181 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long int32_t;
 
 
 
 
 
+typedef long long int64_t;
+# 196 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long long intmax_t;
 
-void PIN_MANAGER_Initialize(void)
+
+
+
+
+typedef unsigned char uint8_t;
+
+
+
+
+typedef unsigned short uint16_t;
+# 217 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uint32_t;
+
+
+
+
+
+typedef unsigned long long uint64_t;
+# 237 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long long uintmax_t;
+# 23 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
+
+typedef int8_t int_fast8_t;
+
+typedef int64_t int_fast64_t;
+
+
+typedef int8_t int_least8_t;
+typedef int16_t int_least16_t;
+
+typedef int24_t int_least24_t;
+
+typedef int32_t int_least32_t;
+
+typedef int64_t int_least64_t;
+
+
+typedef uint8_t uint_fast8_t;
+
+typedef uint64_t uint_fast64_t;
+
+
+typedef uint8_t uint_least8_t;
+typedef uint16_t uint_least16_t;
+
+typedef uint24_t uint_least24_t;
+
+typedef uint32_t uint_least32_t;
+
+typedef uint64_t uint_least64_t;
+# 155 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/stdint.h" 1 3
+typedef int32_t int_fast16_t;
+typedef int32_t int_fast32_t;
+typedef uint32_t uint_fast16_t;
+typedef uint32_t uint_fast32_t;
+# 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
+# 56 "mcc_generated_files/uart2.h" 2
+# 74 "mcc_generated_files/uart2.h"
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart2_status_t;
+
+
+
+
+extern volatile uint8_t uart2TxBufferRemaining;
+extern volatile uint8_t uart2RxCount;
+# 115 "mcc_generated_files/uart2.h"
+void UART2_Initialize(void);
+# 164 "mcc_generated_files/uart2.h"
+uint8_t UART2_is_rx_ready(void);
+# 214 "mcc_generated_files/uart2.h"
+uint8_t UART2_is_tx_ready(void);
+# 261 "mcc_generated_files/uart2.h"
+_Bool UART2_is_tx_done(void);
+# 309 "mcc_generated_files/uart2.h"
+uart2_status_t UART2_get_last_status(void);
+# 358 "mcc_generated_files/uart2.h"
+uint8_t UART2_Read(void);
+# 383 "mcc_generated_files/uart2.h"
+void UART2_Write(uint8_t txData);
+# 404 "mcc_generated_files/uart2.h"
+void UART2_Transmit_ISR(void);
+# 425 "mcc_generated_files/uart2.h"
+void UART2_Receive_ISR(void);
+# 446 "mcc_generated_files/uart2.h"
+void UART2_RxDataHandler(void);
+# 464 "mcc_generated_files/uart2.h"
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 482 "mcc_generated_files/uart2.h"
+void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 500 "mcc_generated_files/uart2.h"
+void UART2_SetErrorHandler(void (* interruptHandler)(void));
+# 520 "mcc_generated_files/uart2.h"
+void (*UART2_RxInterruptHandler)(void);
+# 538 "mcc_generated_files/uart2.h"
+void (*UART2_TxInterruptHandler)(void);
+# 558 "mcc_generated_files/uart2.h"
+void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 576 "mcc_generated_files/uart2.h"
+void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 51 "mcc_generated_files/uart2.c" 2
+
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 52 "mcc_generated_files/uart2.c" 2
+# 64 "mcc_generated_files/uart2.c"
+static volatile uint8_t uart2TxHead = 0;
+static volatile uint8_t uart2TxTail = 0;
+static volatile uint8_t uart2TxBuffer[8];
+volatile uint8_t uart2TxBufferRemaining;
+
+static volatile uint8_t uart2RxHead = 0;
+static volatile uint8_t uart2RxTail = 0;
+static volatile uint8_t uart2RxBuffer[8];
+static volatile uart2_status_t uart2RxStatusBuffer[8];
+volatile uint8_t uart2RxCount;
+static volatile uart2_status_t uart2RxLastError;
+
+
+
+
+void (*UART2_FramingErrorHandler)(void);
+void (*UART2_OverrunErrorHandler)(void);
+void (*UART2_ErrorHandler)(void);
+
+void UART2_DefaultFramingErrorHandler(void);
+void UART2_DefaultOverrunErrorHandler(void);
+void UART2_DefaultErrorHandler(void);
+
+void UART2_Initialize(void)
 {
 
-
-
-    LATE = 0x01;
-    LATD = 0x00;
-    LATA = 0x00;
-    LATB = 0x00;
-    LATC = 0x00;
+    PIE6bits.U2RXIE = 0;
+    UART2_SetRxInterruptHandler(UART2_Receive_ISR);
+    PIE6bits.U2TXIE = 0;
+    UART2_SetTxInterruptHandler(UART2_Transmit_ISR);
 
 
 
 
-    TRISE = 0x06;
-    TRISA = 0xFF;
-    TRISB = 0xFF;
-    TRISC = 0xFF;
-    TRISD = 0xFF;
+    U2P1L = 0x00;
 
 
+    U2P2L = 0x00;
 
 
-    ANSELD = 0xFF;
-    ANSELC = 0x7F;
-    ANSELB = 0x7F;
-    ANSELE = 0x06;
-    ANSELA = 0xFF;
+    U2P3L = 0x00;
 
 
+    U2CON0 = 0xB0;
 
 
-    WPUD = 0x00;
-    WPUE = 0x00;
-    WPUB = 0x00;
-    WPUA = 0x00;
-    WPUC = 0x00;
+    U2CON1 = 0x80;
 
 
+    U2CON2 = 0x00;
 
 
-    RB1I2C = 0x00;
-    RB2I2C = 0x00;
-    RC3I2C = 0x00;
-    RC4I2C = 0x00;
-    RD0I2C = 0x00;
-    RD1I2C = 0x00;
+    U2BRGL = 0x82;
 
 
+    U2BRGH = 0x06;
 
 
-    ODCONE = 0x00;
-    ODCONA = 0x00;
-    ODCONB = 0x00;
-    ODCONC = 0x00;
-    ODCOND = 0x00;
+    U2FIFO = 0x00;
 
 
+    U2UIR = 0x00;
 
 
-    SLRCONA = 0xFF;
-    SLRCONB = 0xFF;
-    SLRCONC = 0xFF;
-    SLRCOND = 0xFF;
-    SLRCONE = 0x07;
-# 128 "mcc_generated_files/pin_manager.c"
-    U2RXPPS = 0x0F;
-    U1RXPPS = 0x17;
+    U2ERRIR = 0x00;
+
+
+    U2ERRIE = 0x00;
+
+
+    UART2_SetFramingErrorHandler(UART2_DefaultFramingErrorHandler);
+    UART2_SetOverrunErrorHandler(UART2_DefaultOverrunErrorHandler);
+    UART2_SetErrorHandler(UART2_DefaultErrorHandler);
+
+    uart2RxLastError.status = 0;
+
+
+    uart2TxHead = 0;
+    uart2TxTail = 0;
+    uart2TxBufferRemaining = sizeof(uart2TxBuffer);
+    uart2RxHead = 0;
+    uart2RxTail = 0;
+    uart2RxCount = 0;
+
+
+    PIE6bits.U2RXIE = 1;
 }
 
-void PIN_MANAGER_IOC(void)
+uint8_t UART2_is_rx_ready(void)
 {
+    return uart2RxCount;
+}
+
+uint8_t UART2_is_tx_ready(void)
+{
+    return uart2TxBufferRemaining;
+}
+
+_Bool UART2_is_tx_done(void)
+{
+    return U2ERRIRbits.TXMTIF;
+}
+
+uart2_status_t UART2_get_last_status(void){
+    return uart2RxLastError;
+}
+
+uint8_t UART2_Read(void)
+{
+    uint8_t readValue = 0;
+
+    while(0 == uart2RxCount)
+    {
+    }
+
+    uart2RxLastError = uart2RxStatusBuffer[uart2RxTail];
+
+    readValue = uart2RxBuffer[uart2RxTail++];
+    if(sizeof(uart2RxBuffer) <= uart2RxTail)
+    {
+        uart2RxTail = 0;
+    }
+    PIE6bits.U2RXIE = 0;
+    uart2RxCount--;
+    PIE6bits.U2RXIE = 1;
+
+    return readValue;
+}
+
+void UART2_Write(uint8_t txData)
+{
+    while(0 == uart2TxBufferRemaining)
+    {
+    }
+
+    if(0 == PIE6bits.U2TXIE)
+    {
+        U2TXB = txData;
+    }
+    else
+    {
+        PIE6bits.U2TXIE = 0;
+        uart2TxBuffer[uart2TxHead++] = txData;
+        if(sizeof(uart2TxBuffer) <= uart2TxHead)
+        {
+            uart2TxHead = 0;
+        }
+        uart2TxBufferRemaining--;
+    }
+    PIE6bits.U2TXIE = 1;
+}
+
+void __attribute__((picinterrupt(("irq(U2TX),base(8)")))) UART2_tx_vect_isr()
+{
+    if(UART2_TxInterruptHandler)
+    {
+        UART2_TxInterruptHandler();
+    }
+}
+
+void __attribute__((picinterrupt(("irq(U2RX),base(8)")))) UART2_rx_vect_isr()
+{
+    if(UART2_RxInterruptHandler)
+    {
+        UART2_RxInterruptHandler();
+    }
+}
+
+
+
+void UART2_Transmit_ISR(void)
+{
+
+    if(sizeof(uart2TxBuffer) > uart2TxBufferRemaining)
+    {
+        U2TXB = uart2TxBuffer[uart2TxTail++];
+       if(sizeof(uart2TxBuffer) <= uart2TxTail)
+        {
+            uart2TxTail = 0;
+        }
+        uart2TxBufferRemaining++;
+    }
+    else
+    {
+        PIE6bits.U2TXIE = 0;
+    }
+
+
+}
+
+void UART2_Receive_ISR(void)
+{
+
+    uart2RxStatusBuffer[uart2RxHead].status = 0;
+
+    if(U2ERRIRbits.FERIF){
+        uart2RxStatusBuffer[uart2RxHead].ferr = 1;
+        UART2_FramingErrorHandler();
+    }
+
+    if(U2ERRIRbits.RXFOIF){
+        uart2RxStatusBuffer[uart2RxHead].oerr = 1;
+        UART2_OverrunErrorHandler();
+    }
+
+    if(uart2RxStatusBuffer[uart2RxHead].status){
+        UART2_ErrorHandler();
+    } else {
+        UART2_RxDataHandler();
+    }
+
+
+}
+
+void UART2_RxDataHandler(void){
+
+    uart2RxBuffer[uart2RxHead++] = U2RXB;
+    if(sizeof(uart2RxBuffer) <= uart2RxHead)
+    {
+        uart2RxHead = 0;
+    }
+    uart2RxCount++;
+}
+
+void UART2_DefaultFramingErrorHandler(void){}
+
+void UART2_DefaultOverrunErrorHandler(void){}
+
+void UART2_DefaultErrorHandler(void){
+    UART2_RxDataHandler();
+}
+
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void)){
+    UART2_FramingErrorHandler = interruptHandler;
+}
+
+void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void)){
+    UART2_OverrunErrorHandler = interruptHandler;
+}
+
+void UART2_SetErrorHandler(void (* interruptHandler)(void)){
+    UART2_ErrorHandler = interruptHandler;
+}
+
+
+
+void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void)){
+    UART2_RxInterruptHandler = InterruptHandler;
+}
+
+void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void)){
+    UART2_TxInterruptHandler = InterruptHandler;
 }

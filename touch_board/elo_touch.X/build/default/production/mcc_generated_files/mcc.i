@@ -26532,10 +26532,8 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 98 "mcc_generated_files/pin_manager.h"
+# 122 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
-# 110 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_IOC(void);
 # 51 "mcc_generated_files/mcc.h" 2
 
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
@@ -26624,11 +26622,122 @@ typedef uint32_t uint_fast32_t;
 
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
 # 53 "mcc_generated_files/mcc.h" 2
-# 68 "mcc_generated_files/mcc.h"
+
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 54 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/uart2.h" 1
+# 74 "mcc_generated_files/uart2.h"
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart2_status_t;
+
+
+
+
+extern volatile uint8_t uart2TxBufferRemaining;
+extern volatile uint8_t uart2RxCount;
+# 115 "mcc_generated_files/uart2.h"
+void UART2_Initialize(void);
+# 164 "mcc_generated_files/uart2.h"
+uint8_t UART2_is_rx_ready(void);
+# 214 "mcc_generated_files/uart2.h"
+uint8_t UART2_is_tx_ready(void);
+# 261 "mcc_generated_files/uart2.h"
+_Bool UART2_is_tx_done(void);
+# 309 "mcc_generated_files/uart2.h"
+uart2_status_t UART2_get_last_status(void);
+# 358 "mcc_generated_files/uart2.h"
+uint8_t UART2_Read(void);
+# 383 "mcc_generated_files/uart2.h"
+void UART2_Write(uint8_t txData);
+# 404 "mcc_generated_files/uart2.h"
+void UART2_Transmit_ISR(void);
+# 425 "mcc_generated_files/uart2.h"
+void UART2_Receive_ISR(void);
+# 446 "mcc_generated_files/uart2.h"
+void UART2_RxDataHandler(void);
+# 464 "mcc_generated_files/uart2.h"
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 482 "mcc_generated_files/uart2.h"
+void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 500 "mcc_generated_files/uart2.h"
+void UART2_SetErrorHandler(void (* interruptHandler)(void));
+# 520 "mcc_generated_files/uart2.h"
+void (*UART2_RxInterruptHandler)(void);
+# 538 "mcc_generated_files/uart2.h"
+void (*UART2_TxInterruptHandler)(void);
+# 558 "mcc_generated_files/uart2.h"
+void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 576 "mcc_generated_files/uart2.h"
+void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 55 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/uart1.h" 1
+# 74 "mcc_generated_files/uart1.h"
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart1_status_t;
+
+
+
+
+extern volatile uint8_t uart1TxBufferRemaining;
+extern volatile uint8_t uart1RxCount;
+# 115 "mcc_generated_files/uart1.h"
+void UART1_Initialize(void);
+# 164 "mcc_generated_files/uart1.h"
+uint8_t UART1_is_rx_ready(void);
+# 214 "mcc_generated_files/uart1.h"
+uint8_t UART1_is_tx_ready(void);
+# 261 "mcc_generated_files/uart1.h"
+_Bool UART1_is_tx_done(void);
+# 309 "mcc_generated_files/uart1.h"
+uart1_status_t UART1_get_last_status(void);
+# 358 "mcc_generated_files/uart1.h"
+uint8_t UART1_Read(void);
+# 383 "mcc_generated_files/uart1.h"
+void UART1_Write(uint8_t txData);
+# 404 "mcc_generated_files/uart1.h"
+void UART1_Transmit_ISR(void);
+# 425 "mcc_generated_files/uart1.h"
+void UART1_Receive_ISR(void);
+# 446 "mcc_generated_files/uart1.h"
+void UART1_RxDataHandler(void);
+# 464 "mcc_generated_files/uart1.h"
+void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 482 "mcc_generated_files/uart1.h"
+void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 500 "mcc_generated_files/uart1.h"
+void UART1_SetErrorHandler(void (* interruptHandler)(void));
+# 520 "mcc_generated_files/uart1.h"
+void (*UART1_RxInterruptHandler)(void);
+# 538 "mcc_generated_files/uart1.h"
+void (*UART1_TxInterruptHandler)(void);
+# 558 "mcc_generated_files/uart1.h"
+void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 576 "mcc_generated_files/uart1.h"
+void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 56 "mcc_generated_files/mcc.h" 2
+# 71 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 81 "mcc_generated_files/mcc.h"
+# 84 "mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 94 "mcc_generated_files/mcc.h"
+# 97 "mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 47 "mcc_generated_files/mcc.c" 2
 
@@ -26636,9 +26745,12 @@ void PMD_Initialize(void);
 
 void SYSTEM_Initialize(void)
 {
+    INTERRUPT_Initialize();
     PMD_Initialize();
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
+    UART2_Initialize();
+    UART1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

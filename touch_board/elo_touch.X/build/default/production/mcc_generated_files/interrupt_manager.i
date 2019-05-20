@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/pin_manager.c"
+# 1 "mcc_generated_files/interrupt_manager.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,10 +6,15 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/pin_manager.c" 2
-# 49 "mcc_generated_files/pin_manager.c"
-# 1 "mcc_generated_files/pin_manager.h" 1
-# 54 "mcc_generated_files/pin_manager.h"
+# 1 "mcc_generated_files/interrupt_manager.c" 2
+# 49 "mcc_generated_files/interrupt_manager.c"
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 49 "mcc_generated_files/interrupt_manager.c" 2
+
+# 1 "mcc_generated_files/mcc.h" 1
+# 49 "mcc_generated_files/mcc.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -26526,86 +26531,244 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 54 "mcc_generated_files/pin_manager.h" 2
+# 49 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/device_config.h" 1
+# 50 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/pin_manager.h" 1
 # 122 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
-# 49 "mcc_generated_files/pin_manager.c" 2
+# 51 "mcc_generated_files/mcc.h" 2
+
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
+# 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 135 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uintptr_t;
+# 150 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long intptr_t;
+# 166 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef signed char int8_t;
+
+
+
+
+typedef short int16_t;
+# 181 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long int32_t;
 
 
 
 
 
+typedef long long int64_t;
+# 196 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long long intmax_t;
 
-void PIN_MANAGER_Initialize(void)
+
+
+
+
+typedef unsigned char uint8_t;
+
+
+
+
+typedef unsigned short uint16_t;
+# 217 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uint32_t;
+
+
+
+
+
+typedef unsigned long long uint64_t;
+# 237 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long long uintmax_t;
+# 23 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
+
+typedef int8_t int_fast8_t;
+
+typedef int64_t int_fast64_t;
+
+
+typedef int8_t int_least8_t;
+typedef int16_t int_least16_t;
+
+typedef int24_t int_least24_t;
+
+typedef int32_t int_least32_t;
+
+typedef int64_t int_least64_t;
+
+
+typedef uint8_t uint_fast8_t;
+
+typedef uint64_t uint_fast64_t;
+
+
+typedef uint8_t uint_least8_t;
+typedef uint16_t uint_least16_t;
+
+typedef uint24_t uint_least24_t;
+
+typedef uint32_t uint_least32_t;
+
+typedef uint64_t uint_least64_t;
+# 155 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/stdint.h" 1 3
+typedef int32_t int_fast16_t;
+typedef int32_t int_fast32_t;
+typedef uint32_t uint_fast16_t;
+typedef uint32_t uint_fast32_t;
+# 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
+# 52 "mcc_generated_files/mcc.h" 2
+
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 53 "mcc_generated_files/mcc.h" 2
+
+
+# 1 "mcc_generated_files/uart2.h" 1
+# 74 "mcc_generated_files/uart2.h"
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart2_status_t;
+
+
+
+
+extern volatile uint8_t uart2TxBufferRemaining;
+extern volatile uint8_t uart2RxCount;
+# 115 "mcc_generated_files/uart2.h"
+void UART2_Initialize(void);
+# 164 "mcc_generated_files/uart2.h"
+uint8_t UART2_is_rx_ready(void);
+# 214 "mcc_generated_files/uart2.h"
+uint8_t UART2_is_tx_ready(void);
+# 261 "mcc_generated_files/uart2.h"
+_Bool UART2_is_tx_done(void);
+# 309 "mcc_generated_files/uart2.h"
+uart2_status_t UART2_get_last_status(void);
+# 358 "mcc_generated_files/uart2.h"
+uint8_t UART2_Read(void);
+# 383 "mcc_generated_files/uart2.h"
+void UART2_Write(uint8_t txData);
+# 404 "mcc_generated_files/uart2.h"
+void UART2_Transmit_ISR(void);
+# 425 "mcc_generated_files/uart2.h"
+void UART2_Receive_ISR(void);
+# 446 "mcc_generated_files/uart2.h"
+void UART2_RxDataHandler(void);
+# 464 "mcc_generated_files/uart2.h"
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 482 "mcc_generated_files/uart2.h"
+void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 500 "mcc_generated_files/uart2.h"
+void UART2_SetErrorHandler(void (* interruptHandler)(void));
+# 520 "mcc_generated_files/uart2.h"
+void (*UART2_RxInterruptHandler)(void);
+# 538 "mcc_generated_files/uart2.h"
+void (*UART2_TxInterruptHandler)(void);
+# 558 "mcc_generated_files/uart2.h"
+void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 576 "mcc_generated_files/uart2.h"
+void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 55 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/uart1.h" 1
+# 74 "mcc_generated_files/uart1.h"
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart1_status_t;
+
+
+
+
+extern volatile uint8_t uart1TxBufferRemaining;
+extern volatile uint8_t uart1RxCount;
+# 115 "mcc_generated_files/uart1.h"
+void UART1_Initialize(void);
+# 164 "mcc_generated_files/uart1.h"
+uint8_t UART1_is_rx_ready(void);
+# 214 "mcc_generated_files/uart1.h"
+uint8_t UART1_is_tx_ready(void);
+# 261 "mcc_generated_files/uart1.h"
+_Bool UART1_is_tx_done(void);
+# 309 "mcc_generated_files/uart1.h"
+uart1_status_t UART1_get_last_status(void);
+# 358 "mcc_generated_files/uart1.h"
+uint8_t UART1_Read(void);
+# 383 "mcc_generated_files/uart1.h"
+void UART1_Write(uint8_t txData);
+# 404 "mcc_generated_files/uart1.h"
+void UART1_Transmit_ISR(void);
+# 425 "mcc_generated_files/uart1.h"
+void UART1_Receive_ISR(void);
+# 446 "mcc_generated_files/uart1.h"
+void UART1_RxDataHandler(void);
+# 464 "mcc_generated_files/uart1.h"
+void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 482 "mcc_generated_files/uart1.h"
+void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 500 "mcc_generated_files/uart1.h"
+void UART1_SetErrorHandler(void (* interruptHandler)(void));
+# 520 "mcc_generated_files/uart1.h"
+void (*UART1_RxInterruptHandler)(void);
+# 538 "mcc_generated_files/uart1.h"
+void (*UART1_TxInterruptHandler)(void);
+# 558 "mcc_generated_files/uart1.h"
+void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 576 "mcc_generated_files/uart1.h"
+void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 56 "mcc_generated_files/mcc.h" 2
+# 71 "mcc_generated_files/mcc.h"
+void SYSTEM_Initialize(void);
+# 84 "mcc_generated_files/mcc.h"
+void OSCILLATOR_Initialize(void);
+# 97 "mcc_generated_files/mcc.h"
+void PMD_Initialize(void);
+# 50 "mcc_generated_files/interrupt_manager.c" 2
+
+
+void INTERRUPT_Initialize (void)
 {
+    INTCON0bits.IPEN = 1;
 
+    _Bool state = (unsigned char)GIE;
+    GIE = 0;
+    IVTLOCK = 0x55;
+    IVTLOCK = 0xAA;
+    IVTLOCKbits.IVTLOCKED = 0x00;
 
+    IVTADU = 0;
+    IVTADH = 0;
+    IVTADL = 8;
 
-    LATE = 0x01;
-    LATD = 0x00;
-    LATA = 0x00;
-    LATB = 0x00;
-    LATC = 0x00;
+    IVTLOCK = 0x55;
+    IVTLOCK = 0xAA;
+    IVTLOCKbits.IVTLOCKED = 0x01;
 
+    GIE = state;
 
-
-
-    TRISE = 0x06;
-    TRISA = 0xFF;
-    TRISB = 0xFF;
-    TRISC = 0xFF;
-    TRISD = 0xFF;
-
-
-
-
-    ANSELD = 0xFF;
-    ANSELC = 0x7F;
-    ANSELB = 0x7F;
-    ANSELE = 0x06;
-    ANSELA = 0xFF;
-
-
-
-
-    WPUD = 0x00;
-    WPUE = 0x00;
-    WPUB = 0x00;
-    WPUA = 0x00;
-    WPUC = 0x00;
-
-
-
-
-    RB1I2C = 0x00;
-    RB2I2C = 0x00;
-    RC3I2C = 0x00;
-    RC4I2C = 0x00;
-    RD0I2C = 0x00;
-    RD1I2C = 0x00;
-
-
-
-
-    ODCONE = 0x00;
-    ODCONA = 0x00;
-    ODCONB = 0x00;
-    ODCONC = 0x00;
-    ODCOND = 0x00;
-
-
-
-
-    SLRCONA = 0xFF;
-    SLRCONB = 0xFF;
-    SLRCONC = 0xFF;
-    SLRCOND = 0xFF;
-    SLRCONE = 0x07;
-# 128 "mcc_generated_files/pin_manager.c"
-    U2RXPPS = 0x0F;
-    U1RXPPS = 0x17;
+    IPR6bits.U2TXIP = 1;
+    IPR6bits.U2RXIP = 1;
+    IPR3bits.U1TXIP = 1;
+    IPR3bits.U1RXIP = 1;
 }
 
-void PIN_MANAGER_IOC(void)
+void __attribute__((picinterrupt(("irq(default),base(8)")))) Default_ISR()
 {
 }
