@@ -65,6 +65,26 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
+// get/set LED_RSET aliases
+#define LED_RSET_TRIS                 TRISEbits.TRISE0
+#define LED_RSET_LAT                  LATEbits.LATE0
+#define LED_RSET_PORT                 PORTEbits.RE0
+#define LED_RSET_WPU                  WPUEbits.WPUE0
+#define LED_RSET_OD                   ODCONEbits.ODCE0
+#define LED_RSET_ANS                  ANSELEbits.ANSELE0
+#define LED_RSET_SetHigh()            do { LATEbits.LATE0 = 1; } while(0)
+#define LED_RSET_SetLow()             do { LATEbits.LATE0 = 0; } while(0)
+#define LED_RSET_Toggle()             do { LATEbits.LATE0 = ~LATEbits.LATE0; } while(0)
+#define LED_RSET_GetValue()           PORTEbits.RE0
+#define LED_RSET_SetDigitalInput()    do { TRISEbits.TRISE0 = 1; } while(0)
+#define LED_RSET_SetDigitalOutput()   do { TRISEbits.TRISE0 = 0; } while(0)
+#define LED_RSET_SetPullup()          do { WPUEbits.WPUE0 = 1; } while(0)
+#define LED_RSET_ResetPullup()        do { WPUEbits.WPUE0 = 0; } while(0)
+#define LED_RSET_SetPushPull()        do { ODCONEbits.ODCE0 = 0; } while(0)
+#define LED_RSET_SetOpenDrain()       do { ODCONEbits.ODCE0 = 1; } while(0)
+#define LED_RSET_SetAnalogMode()      do { ANSELEbits.ANSELE0 = 1; } while(0)
+#define LED_RSET_SetDigitalMode()     do { ANSELEbits.ANSELE0 = 0; } while(0)
+
 /**
    @Param
     none
