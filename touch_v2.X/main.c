@@ -56,8 +56,29 @@ typedef signed long long int24_t;
 #include "eadog.h"
 #include "gemsecs.h"
 #include "timers.h"
+#include "mconfig.h"
 
 extern struct spi_link_type spi_link;
+const char *build_date = __DATE__, *build_time = __TIME__;
+
+V_help T[] = {
+	{
+		.message = "commands 1",
+		.display = "displays 1",
+	},
+	{
+		.message = "commands 2",
+		.display = "displays 2",
+	},
+	{
+		.message = "commands 3",
+		.display = "displays 3",
+	},
+	{
+		.message = "commands 4",
+		.display = "displays 4",
+	},
+};
 
 V_data V = {
 	.error = LINK_ERROR_NONE,
@@ -75,7 +96,9 @@ V_data V = {
 	.response.log_seq = 0,
 	.queue = false,
 	.stack = false, // 0 no messages, 1-4 messages in queue
-	.seq_test = true,
+	.seq_test = SEQ_TEST,
+	.sid = 1,
+	.help_id = 0,
 };
 
 header10 H10[] = {
@@ -584,6 +607,8 @@ volatile uint8_t mode_sw = false;
 
 static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
+	static D_CODES last_info;
+
 	DLED = true;
 	wait_lcd_done();
 	if (V.response.info == DIS_STR) {
@@ -628,17 +653,17 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 			break;
 		case DIS_HELP:
 			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(V.buf, " HELP            ");
+			sprintf(V.buf, "HELP %s           ", build_date);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " DISPLAY         ");
+			sprintf(V.buf, "DISPLAY %s        ", build_time);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);
 			break;
 		case DIS_SEQUENCE:
 			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(V.buf, " Load-lock  RET %d  ", V.msg_error);
+			sprintf(V.buf, " Load-lock%d R%d      ", V.llid, V.msg_error);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " SEQUENCE         ");
@@ -672,6 +697,17 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 		if (TimerDone(TMR_INFO))
 			V.response.info = DIS_STR;
 	}
+	/*
+	 * this is for possible message flipping with the HELP button
+	 */
+	if (last_info == DIS_HELP && V.response.info != DIS_HELP) {
+		// show some stuff, maybe
+		sprintf(V.buf, "%s              ", T[V.help_id].display);
+		V.buf[16] = 0;
+		eaDogM_WriteStringAtPos(0, 0, V.buf);
+	}
+
+	last_info = V.response.info;
 	DLED = false;
 }
 
@@ -728,7 +764,7 @@ void main(void)
 		RELAY0_SetLow();
 		V.mode_pwm = 0;
 	}
-	PWM8_LoadDutyValue(V.mode_pwm); // 10KHz PWM 
+	mode_lamp_dim(V.mode_pwm); // 10KHz PWM 
 
 	while (true) {
 		switch (V.ui_state) {
@@ -743,7 +779,11 @@ void main(void)
 			MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " Version %s", VER);
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-			sprintf(V.buf, " FGB@MCHP FAB4");
+			if (V.seq_test) {
+				sprintf(V.buf, "Sequence Testing");
+			} else {
+				sprintf(V.buf, " FGB@MCHP FAB4  ");
+			}
 			MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 			WaitMs(3000);
 			break;
@@ -836,22 +876,29 @@ void main(void)
 				V.buf[16] = 0; // string size limit
 				MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 				/*
-				 * HeartBeat S1F1 ping during remote idle time
+				 * HeartBeat ping or sequence during idle times
 				 */
-				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX) || V.reset) {
+				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX && !V.queue) || V.reset) {
 					if (TimerDone(TMR_HBIO) || V.reset) {
 						StartTimer(TMR_HBIO, HBT);
-						// send S1F1
+						// send ping or sequence message
 						if (V.stack) {
-							hb_message();
-							if (!V.reset) {
+							hb_message(); // prime the TX state machine
+							V.msg_error = MSG_ERROR_NONE;
+							V.reset = false;
+							V.ping_count = 0;
+						} else {
+							if (V.ping_count++ > 4) {
+								hb_message();
 								sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
 								V.buf[16] = 0; // string size limit
 								MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 								WaitMs(250);
+								V.reset = false;
+								V.ping_count = 0;
+							} else {
+								V.response.info = DIS_STR;
 							}
-							V.msg_error = MSG_ERROR_NONE;
-							V.reset = false;
 						}
 					}
 				}
@@ -953,12 +1000,13 @@ void main(void)
 		if (help_button() && V.response.info != DIS_HELP) {
 			V.response.help_temp = V.response.info;
 			V.response.info = DIS_HELP;
-			sprintf(V.info, " Commands        ");
+			sprintf(V.info, "%s              ", T[V.help_id].message);
+			V.help_id++; // cycle help text messages to LCD
 			StartTimer(TMR_HELPDIS, TDELAY);
 			StartTimer(TMR_INFO, TDELAY);
-			PWM8_LoadDutyValue(300); // mode switch indicator lamp 'button' level
+			mode_lamp_bright(); // mode switch indicator lamp 'button' level
 			if (V.seq_test) {
-				sequence_messages(1);
+				sequence_messages(1); // only close doors during testing
 				secs_II_message(2, 41);
 				V.response.info = DIS_SEQUENCE;
 			}
@@ -966,7 +1014,7 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				V.help = false;
 				V.response.info = V.response.help_temp;
-				PWM8_LoadDutyValue(V.mode_pwm);
+				mode_lamp_dim(V.mode_pwm);
 			}
 
 		}
