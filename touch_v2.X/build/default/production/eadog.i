@@ -9,7 +9,7 @@
 # 1 "eadog.c" 2
 # 1 "./vconfig.h" 1
 # 15 "./vconfig.h"
- typedef signed long long int24_t;
+ typedef signed long int24_t;
 
 
 
@@ -27255,7 +27255,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 

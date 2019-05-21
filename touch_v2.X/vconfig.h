@@ -12,7 +12,7 @@
 extern "C" {
 #endif
 #ifndef __DEFINED_int24_t
-	typedef signed long long int24_t;
+	typedef signed long int24_t;
 #define __DEFINED_int24_t
 #endif
 

@@ -564,11 +564,11 @@ bool sequence_messages(uint8_t sid)
 		S[1].message.data[0] = 0x02;
 		S[2].message.data[0] = 0x03;
 
-		S[0].block.header = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
+		S[0].block.header = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
 		S[0].block.length = sizeof(header33);
 		S[1].block.header = (uint8_t*) & S[1].message; // S6F41 send load lock ready command
 		S[1].block.length = sizeof(header33);
-		S[2].block.header = (uint8_t*) & S[0].message; // S6F41 send load lock ready command
+		S[2].block.header = (uint8_t*) & S[2].message; // S6F41 send load lock ready command
 		S[2].block.length = sizeof(header33);
 		V.stack = 3; // queue up 3 messages, pop off the top of stack
 		break;

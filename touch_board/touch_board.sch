@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.4.0">
+<eagle version="9.4.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -13,7 +13,7 @@
 <layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="no"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="no"/>
+<layer number="20" name="Dimension" color="24" fill="1" visible="no" active="no"/>
 <layer number="21" name="tPlace" color="7" fill="1" visible="no" active="no"/>
 <layer number="22" name="bPlace" color="7" fill="1" visible="no" active="no"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="no"/>
@@ -11269,84 +11269,6 @@ Solder type</description>
 </deviceset>
 </devicesets>
 </library>
-<library name="JS202011SCQN">
-<description>&lt;Sub miniature slide switches&lt;/b&gt;&lt;p&gt;
-&lt;author&gt;Created by SamacSys&lt;/author&gt;</description>
-<packages>
-<package name="JS202011SCQN">
-<description>&lt;b&gt;JS202011SCQN&lt;/b&gt;&lt;br&gt;
-</description>
-<smd name="1" x="-2.5" y="-2.75" dx="2.5" dy="1.2" layer="1" rot="R90"/>
-<smd name="2" x="0" y="-2.75" dx="2.5" dy="1.2" layer="1" rot="R90"/>
-<smd name="3" x="2.5" y="-2.75" dx="2.5" dy="1.2" layer="1" rot="R90"/>
-<smd name="4" x="2.5" y="2.75" dx="2.5" dy="1.2" layer="1" rot="R90"/>
-<smd name="5" x="0" y="2.75" dx="2.5" dy="1.2" layer="1" rot="R90"/>
-<smd name="6" x="-2.5" y="2.75" dx="2.5" dy="1.2" layer="1" rot="R90"/>
-<text x="-0.335" y="0.068" size="1.27" layer="25" align="center">&gt;NAME</text>
-<text x="-0.335" y="0.068" size="1.27" layer="27" align="center">&gt;VALUE</text>
-<wire x1="-4.5" y1="1.5" x2="4.5" y2="1.5" width="0.2" layer="51"/>
-<wire x1="4.5" y1="1.5" x2="4.5" y2="-1.5" width="0.2" layer="51"/>
-<wire x1="4.5" y1="-1.5" x2="-4.5" y2="-1.5" width="0.2" layer="51"/>
-<wire x1="-4.5" y1="-1.5" x2="-4.5" y2="1.5" width="0.2" layer="51"/>
-<wire x1="-4.5" y1="1.5" x2="-4.5" y2="-1.5" width="0.2" layer="21"/>
-<wire x1="4.5" y1="-1.5" x2="4.5" y2="1.5" width="0.2" layer="21"/>
-<wire x1="4.5" y1="1.5" x2="3.323" y2="1.5" width="0.2" layer="21"/>
-<wire x1="-4.5" y1="1.5" x2="-3.323" y2="1.5" width="0.2" layer="21"/>
-<wire x1="4.5" y1="-1.5" x2="3.323" y2="-1.5" width="0.2" layer="21"/>
-<wire x1="-4.5" y1="-1.5" x2="-3.323" y2="-1.5" width="0.2" layer="21"/>
-<circle x="-3.578" y="-3.968" radius="0.071590625" width="0.2" layer="25"/>
-</package>
-</packages>
-<symbols>
-<symbol name="JS202011SCQN">
-<wire x1="5.08" y1="2.54" x2="15.24" y2="2.54" width="0.254" layer="94"/>
-<wire x1="15.24" y1="-7.62" x2="15.24" y2="2.54" width="0.254" layer="94"/>
-<wire x1="15.24" y1="-7.62" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
-<wire x1="5.08" y1="2.54" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
-<text x="16.51" y="7.62" size="1.778" layer="95" align="center-left">&gt;NAME</text>
-<text x="16.51" y="5.08" size="1.778" layer="96" align="center-left">&gt;VALUE</text>
-<pin name="1" x="0" y="0" length="middle"/>
-<pin name="2" x="0" y="-2.54" length="middle"/>
-<pin name="3" x="0" y="-5.08" length="middle"/>
-<pin name="4" x="20.32" y="0" length="middle" rot="R180"/>
-<pin name="5" x="20.32" y="-2.54" length="middle" rot="R180"/>
-<pin name="6" x="20.32" y="-5.08" length="middle" rot="R180"/>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="JS202011SCQN" prefix="S">
-<description>&lt;b&gt;Sub miniature slide switches&lt;/b&gt;&lt;p&gt;
-Source: &lt;a href="http://www.ckswitches.com/media/1422/js.pdf"&gt; Datasheet &lt;/a&gt;</description>
-<gates>
-<gate name="G$1" symbol="JS202011SCQN" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="JS202011SCQN">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-<connect gate="G$1" pin="3" pad="3"/>
-<connect gate="G$1" pin="4" pad="4"/>
-<connect gate="G$1" pin="5" pad="5"/>
-<connect gate="G$1" pin="6" pad="6"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="DESCRIPTION" value="Sub miniature slide switches" constant="no"/>
-<attribute name="HEIGHT" value="mm" constant="no"/>
-<attribute name="MANUFACTURER_NAME" value="C &amp; K COMPONENTS" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="JS202011SCQN" constant="no"/>
-<attribute name="MOUSER_PART_NUMBER" value="611-JS202011SCQN" constant="no"/>
-<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.com/Search/Refine.aspx?Keyword=611-JS202011SCQN" constant="no"/>
-<attribute name="RS_PART_NUMBER" value="1534125" constant="no"/>
-<attribute name="RS_PRICE-STOCK" value="http://uk.rs-online.com/web/p/products/1534125" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="fiber-optic-hp" urn="urn:adsk.eagle:library:224">
 <description>&lt;b&gt;Hewlett-Packard Fiber Optic Components&lt;/b&gt;&lt;p&gt;
 Based on:
@@ -15155,6 +15077,106 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="JS202011SCQN_fixed">
+<packages>
+<package name="SW_JS202011SCQN">
+<wire x1="-4.5" y1="-1.5" x2="4.5" y2="-1.5" width="0.127" layer="51"/>
+<wire x1="4.5" y1="-1.5" x2="4.5" y2="1.5" width="0.127" layer="51"/>
+<wire x1="4.5" y1="1.5" x2="-4.5" y2="1.5" width="0.127" layer="51"/>
+<wire x1="-4.5" y1="1.5" x2="-4.5" y2="-1.5" width="0.127" layer="51"/>
+<text x="-4.006990625" y="5.00873125" size="1.01776875" layer="25">&gt;NAME</text>
+<text x="-4.004990625" y="-6.007490625" size="1.01726875" layer="27">&gt;VALUE</text>
+<smd name="1" x="-2.5" y="-2.75" dx="1.2" dy="2.5" layer="1"/>
+<smd name="2" x="0" y="-2.75" dx="1.2" dy="2.5" layer="1"/>
+<smd name="3" x="2.5" y="-2.75" dx="1.2" dy="2.5" layer="1"/>
+<smd name="4" x="-2.5" y="2.75" dx="1.2" dy="2.5" layer="1"/>
+<smd name="5" x="0" y="2.75" dx="1.2" dy="2.5" layer="1"/>
+<smd name="6" x="2.5" y="2.75" dx="1.2" dy="2.5" layer="1"/>
+</package>
+</packages>
+<symbols>
+<symbol name="JS202011SCQN">
+<wire x1="2.54" y1="5.08" x2="0" y2="5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="5.08" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="5.08" x2="-7.62" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="5.08" x2="-7.62" y2="2.54" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="2.54" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="2.54" x2="2.54" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="7.62" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="7.62" x2="0" y2="5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-2.54" x2="2.54" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-2.54" x2="2.54" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="2.54" y1="-5.08" x2="0" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="-5.08" x2="-5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-5.08" x2="-7.62" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-5.08" x2="-7.62" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-5.08" x2="-5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="0" y1="-5.08" x2="0" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-5.08" x2="5.08" y2="-7.62" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="0" x2="7.62" y2="0" width="0.254" layer="94"/>
+<wire x1="7.62" y1="0" x2="5.08" y2="0.635" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0.635" x2="5.08" y2="-0.635" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-0.635" x2="7.62" y2="0" width="0.254" layer="94"/>
+<wire x1="5.08" y1="5.08" x2="5.715" y2="6.985" width="0.254" layer="94"/>
+<wire x1="5.715" y1="6.985" x2="4.445" y2="6.985" width="0.254" layer="94"/>
+<wire x1="4.445" y1="6.985" x2="5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="5.08" x2="0.635" y2="6.985" width="0.254" layer="94"/>
+<wire x1="0.635" y1="6.985" x2="-0.635" y2="6.985" width="0.254" layer="94"/>
+<wire x1="-0.635" y1="6.985" x2="0" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="5.08" x2="-4.445" y2="6.985" width="0.254" layer="94"/>
+<wire x1="-4.445" y1="6.985" x2="-5.715" y2="6.985" width="0.254" layer="94"/>
+<wire x1="-5.715" y1="6.985" x2="-5.08" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-5.08" y1="-5.08" x2="-5.715" y2="-6.985" width="0.254" layer="94"/>
+<wire x1="-5.715" y1="-6.985" x2="-4.445" y2="-6.985" width="0.254" layer="94"/>
+<wire x1="-4.445" y1="-6.985" x2="-5.08" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="0" y1="-5.08" x2="-0.635" y2="-6.985" width="0.254" layer="94"/>
+<wire x1="-0.635" y1="-6.985" x2="0.635" y2="-6.985" width="0.254" layer="94"/>
+<wire x1="0.635" y1="-6.985" x2="0" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="5.08" y1="-5.08" x2="4.445" y2="-6.985" width="0.254" layer="94"/>
+<wire x1="4.445" y1="-6.985" x2="5.715" y2="-6.985" width="0.254" layer="94"/>
+<wire x1="5.715" y1="-6.985" x2="5.08" y2="-5.08" width="0.254" layer="94"/>
+<text x="-15.2622" y="2.5437" size="1.27185" layer="95">&gt;NAME</text>
+<text x="-15.2512" y="-5.083740625" size="1.270940625" layer="96">&gt;VALUE</text>
+<pin name="5" x="0" y="12.7" length="middle" direction="pas" rot="R270"/>
+<pin name="4" x="-5.08" y="12.7" length="middle" direction="pas" rot="R270"/>
+<pin name="6" x="5.08" y="12.7" length="middle" direction="pas" rot="R270"/>
+<pin name="1" x="-5.08" y="-12.7" length="middle" direction="pas" rot="R90"/>
+<pin name="2" x="0" y="-12.7" length="middle" direction="pas" rot="R90"/>
+<pin name="3" x="5.08" y="-12.7" length="middle" direction="pas" rot="R90"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="JS202011SCQN" prefix="S">
+<description>JS Series DPDT On-On Gull Wing Surface Mount Subminiature Slide Switch</description>
+<gates>
+<gate name="G$1" symbol="JS202011SCQN" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SW_JS202011SCQN">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="AVAILABILITY" value="Unavailable"/>
+<attribute name="DESCRIPTION" value=" JS Series DPDT On-On Gull Wing Surface Mount Subminiature Slide Switch "/>
+<attribute name="MF" value="C&amp;K"/>
+<attribute name="MP" value="JS202011SCQN"/>
+<attribute name="PACKAGE" value="None"/>
+<attribute name="PRICE" value="None"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -15225,9 +15247,7 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="VSS14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
-<part name="S1" library="JS202011SCQN" deviceset="JS202011SCQN" device="" value="ICD/SERIAL"/>
 <part name="XT1" library="fiber-optic-hp" library_urn="urn:adsk.eagle:library:224" deviceset="HFBR-1521" device="" package3d_urn="urn:adsk.eagle:package:13773/1"/>
-<part name="VSS15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:23553/2" value="220"/>
 <part name="SV4" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA05-2" device="" package3d_urn="urn:adsk.eagle:package:8329/1" value="IO1"/>
 <part name="VSS16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
@@ -15271,6 +15291,8 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <part name="VSS27" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="SV9" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA03-1" device="" package3d_urn="urn:adsk.eagle:package:8339/1" value="USBH"/>
 <part name="X6" library="con-hirose" library_urn="urn:adsk.eagle:library:152" deviceset="MINI-USB-" device="UX60A-MB-5ST" package3d_urn="urn:adsk.eagle:package:7263/1"/>
+<part name="ICSP/SERIAL" library="JS202011SCQN_fixed" deviceset="JS202011SCQN" device=""/>
+<part name="VDD8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -15505,20 +15527,13 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <instance part="VSS14" gate="G$1" x="10.16" y="76.2" smashed="yes" rot="R180">
 <attribute name="VALUE" x="12.7" y="81.28" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="S1" gate="G$1" x="25.4" y="-35.56" smashed="yes">
-<attribute name="NAME" x="34.29" y="-27.94" size="1.778" layer="95" align="center-left"/>
-<attribute name="VALUE" x="29.21" y="-30.48" size="1.778" layer="96" align="center-left"/>
-</instance>
 <instance part="XT1" gate="A" x="-40.64" y="-20.32" smashed="yes">
 <attribute name="NAME" x="-49.53" y="-12.065" size="1.778" layer="95"/>
 <attribute name="VALUE" x="-49.53" y="-27.94" size="1.778" layer="96"/>
 </instance>
-<instance part="VSS15" gate="G$1" x="-35.56" y="-25.4" smashed="yes">
-<attribute name="VALUE" x="-38.1" y="-30.48" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="R6" gate="G$1" x="-35.56" y="-10.16" smashed="yes" rot="R90">
-<attribute name="NAME" x="-37.0586" y="-13.97" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="-32.258" y="-13.97" size="1.778" layer="96" rot="R90"/>
+<instance part="R6" gate="G$1" x="-27.94" y="-10.16" smashed="yes" rot="R90">
+<attribute name="NAME" x="-29.4386" y="-13.97" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="-24.638" y="-13.97" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="SV4" gate="G$1" x="114.3" y="-5.08" smashed="yes">
 <attribute name="VALUE" x="110.49" y="-15.24" size="1.778" layer="96"/>
@@ -15697,6 +15712,13 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <attribute name="NAME" x="185.42" y="-8.89" size="1.778" layer="95"/>
 <attribute name="VALUE" x="198.12" y="-27.94" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="ICSP/SERIAL" gate="G$1" x="33.02" y="-60.96" smashed="yes" rot="R270">
+<attribute name="NAME" x="30.4578" y="-50.7963" size="1.27185" layer="95"/>
+<attribute name="VALUE" x="27.9288" y="-71.123740625" size="1.270940625" layer="96"/>
+</instance>
+<instance part="VDD8" gate="G$1" x="-35.56" y="-5.08" smashed="yes" rot="R90">
+<attribute name="VALUE" x="-33.02" y="-7.62" size="1.778" layer="96" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -15793,11 +15815,6 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <pinref part="VSS14" gate="G$1" pin="VSS"/>
 <wire x1="10.16" y1="73.66" x2="17.78" y2="73.66" width="0.1524" layer="91"/>
 <junction x="10.16" y="73.66"/>
-</segment>
-<segment>
-<pinref part="XT1" gate="A" pin="C"/>
-<pinref part="VSS15" gate="G$1" pin="VSS"/>
-<junction x="-35.56" y="-22.86"/>
 </segment>
 <segment>
 <pinref part="SV4" gate="G$1" pin="10"/>
@@ -15960,6 +15977,12 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <junction x="170.18" y="27.94"/>
 <junction x="193.04" y="22.86"/>
 </segment>
+<segment>
+<pinref part="R6" gate="G$1" pin="2"/>
+<pinref part="VDD8" gate="G$1" pin="VDD"/>
+<wire x1="-33.02" y1="-5.08" x2="-27.94" y2="-5.08" width="0.1524" layer="91"/>
+<junction x="-27.94" y="-5.08"/>
+</segment>
 </net>
 <net name="GND" class="0">
 <segment>
@@ -16099,16 +16122,16 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="73.66" y1="-2.54" x2="73.66" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="-12.7" x2="60.96" y2="-12.7" width="0.1524" layer="91"/>
 <junction x="73.66" y="-2.54"/>
-<wire x1="60.96" y1="-12.7" x2="60.96" y2="-38.1" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="-12.7" x2="60.96" y2="-60.96" width="0.1524" layer="91"/>
 <pinref part="SV7" gate="G$1" pin="8"/>
 <wire x1="30.48" y1="12.7" x2="2.54" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="12.7" x2="2.54" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="-12.7" x2="60.96" y2="-12.7" width="0.1524" layer="91"/>
 <junction x="60.96" y="-12.7"/>
 <junction x="30.48" y="12.7"/>
-<pinref part="S1" gate="G$1" pin="5"/>
-<wire x1="60.96" y1="-38.1" x2="45.72" y2="-38.1" width="0.1524" layer="91"/>
-<junction x="45.72" y="-38.1"/>
+<pinref part="ICSP/SERIAL" gate="G$1" pin="5"/>
+<wire x1="45.72" y1="-60.96" x2="60.96" y2="-60.96" width="0.1524" layer="91"/>
+<junction x="45.72" y="-60.96"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -16118,7 +16141,7 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="71.12" y1="-10.16" x2="55.88" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="71.12" y="-2.54"/>
 <wire x1="55.88" y1="-10.16" x2="55.88" y2="-48.26" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="-48.26" x2="15.24" y2="-48.26" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="-48.26" x2="10.16" y2="-48.26" width="0.1524" layer="91"/>
 <pinref part="SV7" gate="G$1" pin="7"/>
 <wire x1="45.72" y1="12.7" x2="55.88" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="12.7" x2="55.88" y2="20.32" width="0.1524" layer="91"/>
@@ -16127,10 +16150,10 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="17.78" y1="-10.16" x2="55.88" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="45.72" y="12.7"/>
 <junction x="55.88" y="-10.16"/>
-<pinref part="S1" gate="G$1" pin="2"/>
-<wire x1="15.24" y1="-38.1" x2="25.4" y2="-38.1" width="0.1524" layer="91"/>
-<junction x="25.4" y="-38.1"/>
-<wire x1="15.24" y1="-48.26" x2="15.24" y2="-38.1" width="0.1524" layer="91"/>
+<pinref part="ICSP/SERIAL" gate="G$1" pin="2"/>
+<wire x1="10.16" y1="-48.26" x2="10.16" y2="-60.96" width="0.1524" layer="91"/>
+<wire x1="10.16" y1="-60.96" x2="20.32" y2="-60.96" width="0.1524" layer="91"/>
+<junction x="20.32" y="-60.96"/>
 </segment>
 </net>
 <net name="N$4" class="0">
@@ -16306,17 +16329,20 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <pinref part="IC2" gate="G$1" pin="T2IN"/>
 <wire x1="-30.48" y1="22.86" x2="-40.64" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-40.64" y1="22.86" x2="-40.64" y2="5.08" width="0.1524" layer="91"/>
-<wire x1="-40.64" y1="5.08" x2="20.32" y2="5.08" width="0.1524" layer="91"/>
+<wire x1="-40.64" y1="5.08" x2="-20.32" y2="5.08" width="0.1524" layer="91"/>
 <junction x="-30.48" y="22.86"/>
-<pinref part="S1" gate="G$1" pin="1"/>
-<wire x1="25.4" y1="-35.56" x2="20.32" y2="-35.56" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="5.08" x2="20.32" y2="5.08" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="-35.56" x2="20.32" y2="5.08" width="0.1524" layer="91"/>
-<junction x="25.4" y="-35.56"/>
-<wire x1="-40.64" y1="5.08" x2="-40.64" y2="-5.08" width="0.1524" layer="91"/>
-<pinref part="R6" gate="G$1" pin="2"/>
-<wire x1="-40.64" y1="-5.08" x2="-35.56" y2="-5.08" width="0.1524" layer="91"/>
-<junction x="-40.64" y="5.08"/>
-<junction x="-35.56" y="-5.08"/>
+<wire x1="20.32" y1="-35.56" x2="7.62" y2="-35.56" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="-35.56" x2="7.62" y2="-55.88" width="0.1524" layer="91"/>
+<pinref part="ICSP/SERIAL" gate="G$1" pin="1"/>
+<wire x1="7.62" y1="-55.88" x2="20.32" y2="-55.88" width="0.1524" layer="91"/>
+<junction x="20.32" y="-55.88"/>
+<pinref part="XT1" gate="A" pin="C"/>
+<wire x1="-35.56" y1="-22.86" x2="-20.32" y2="-22.86" width="0.1524" layer="91"/>
+<wire x1="-20.32" y1="-22.86" x2="-20.32" y2="5.08" width="0.1524" layer="91"/>
+<junction x="-20.32" y="5.08"/>
+<junction x="-35.56" y="-22.86"/>
 </segment>
 </net>
 <net name="N$21" class="0">
@@ -16349,11 +16375,12 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="-35.56" y1="17.78" x2="-35.56" y2="2.54" width="0.1524" layer="91"/>
 <wire x1="-35.56" y1="2.54" x2="22.86" y2="2.54" width="0.1524" layer="91"/>
 <junction x="-30.48" y="17.78"/>
-<pinref part="S1" gate="G$1" pin="4"/>
-<wire x1="45.72" y1="-35.56" x2="45.72" y2="-30.48" width="0.1524" layer="91"/>
-<junction x="45.72" y="-35.56"/>
 <wire x1="22.86" y1="2.54" x2="22.86" y2="-30.48" width="0.1524" layer="91"/>
-<wire x1="22.86" y1="-30.48" x2="45.72" y2="-30.48" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="-30.48" x2="50.8" y2="-30.48" width="0.1524" layer="91"/>
+<pinref part="ICSP/SERIAL" gate="G$1" pin="4"/>
+<wire x1="45.72" y1="-55.88" x2="50.8" y2="-55.88" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="-55.88" x2="50.8" y2="-30.48" width="0.1524" layer="91"/>
+<junction x="45.72" y="-55.88"/>
 </segment>
 </net>
 <net name="N$23" class="0">
@@ -16362,17 +16389,19 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <junction x="76.2" y="-40.64"/>
 <wire x1="76.2" y1="-35.56" x2="76.2" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="-35.56" x2="76.2" y2="-35.56" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="-35.56" x2="58.42" y2="-40.64" width="0.1524" layer="91"/>
-<pinref part="S1" gate="G$1" pin="6"/>
-<wire x1="58.42" y1="-40.64" x2="45.72" y2="-40.64" width="0.1524" layer="91"/>
-<junction x="45.72" y="-40.64"/>
+<wire x1="58.42" y1="-35.56" x2="58.42" y2="-66.04" width="0.1524" layer="91"/>
+<pinref part="ICSP/SERIAL" gate="G$1" pin="6"/>
+<wire x1="58.42" y1="-66.04" x2="45.72" y2="-66.04" width="0.1524" layer="91"/>
+<junction x="45.72" y="-66.04"/>
 </segment>
 </net>
 <net name="N$25" class="0">
 <segment>
 <pinref part="XT1" gate="A" pin="A"/>
 <pinref part="R6" gate="G$1" pin="1"/>
+<wire x1="-27.94" y1="-15.24" x2="-35.56" y2="-15.24" width="0.1524" layer="91"/>
 <junction x="-35.56" y="-15.24"/>
+<junction x="-27.94" y="-15.24"/>
 </segment>
 </net>
 <net name="N$26" class="0">
@@ -16976,16 +17005,16 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 </net>
 <net name="N$65" class="0">
 <segment>
-<wire x1="20.32" y1="-40.64" x2="25.4" y2="-40.64" width="0.1524" layer="91"/>
-<pinref part="S1" gate="G$1" pin="3"/>
-<junction x="25.4" y="-40.64"/>
 <pinref part="SV1" gate="1" pin="5"/>
 <junction x="73.66" y="-40.64"/>
 <wire x1="73.66" y1="-38.1" x2="73.66" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="63.5" y1="-38.1" x2="73.66" y2="-38.1" width="0.1524" layer="91"/>
 <wire x1="63.5" y1="-38.1" x2="63.5" y2="-50.8" width="0.1524" layer="91"/>
-<wire x1="63.5" y1="-50.8" x2="20.32" y2="-50.8" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="-40.64" x2="20.32" y2="-50.8" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-50.8" x2="15.24" y2="-50.8" width="0.1524" layer="91"/>
+<wire x1="15.24" y1="-50.8" x2="15.24" y2="-66.04" width="0.1524" layer="91"/>
+<pinref part="ICSP/SERIAL" gate="G$1" pin="3"/>
+<wire x1="15.24" y1="-66.04" x2="20.32" y2="-66.04" width="0.1524" layer="91"/>
+<junction x="20.32" y="-66.04"/>
 </segment>
 </net>
 </nets>
