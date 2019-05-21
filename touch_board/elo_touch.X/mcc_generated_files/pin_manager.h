@@ -113,6 +113,18 @@
 #define RC7_SetAnalogMode()         do { ANSELCbits.ANSELC7 = 1; } while(0)
 #define RC7_SetDigitalMode()        do { ANSELCbits.ANSELC7 = 0; } while(0)
 
+// get/set RD1 procedures
+#define RD1_SetHigh()            do { LATDbits.LATD1 = 1; } while(0)
+#define RD1_SetLow()             do { LATDbits.LATD1 = 0; } while(0)
+#define RD1_Toggle()             do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0)
+#define RD1_GetValue()              PORTDbits.RD1
+#define RD1_SetDigitalInput()    do { TRISDbits.TRISD1 = 1; } while(0)
+#define RD1_SetDigitalOutput()   do { TRISDbits.TRISD1 = 0; } while(0)
+#define RD1_SetPullup()             do { WPUDbits.WPUD1 = 1; } while(0)
+#define RD1_ResetPullup()           do { WPUDbits.WPUD1 = 0; } while(0)
+#define RD1_SetAnalogMode()         do { ANSELDbits.ANSELD1 = 1; } while(0)
+#define RD1_SetDigitalMode()        do { ANSELDbits.ANSELD1 = 0; } while(0)
+
 // get/set LED_RSET aliases
 #define LED_RSET_TRIS                 TRISEbits.TRISE0
 #define LED_RSET_LAT                  LATEbits.LATE0

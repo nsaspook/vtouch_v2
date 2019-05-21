@@ -1,12 +1,27 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F15803 `(v ~T0 @X0 0 tf ]
-[v F15805 `(v ~T0 @X0 0 tf ]
-[v F15849 `(v ~T0 @X0 0 tf ]
-[v F15851 `(v ~T0 @X0 0 tf ]
+[v F15878 `(v ~T0 @X0 0 tf ]
+[v F15880 `(v ~T0 @X0 0 tf ]
+[v F15924 `(v ~T0 @X0 0 tf ]
+[v F15926 `(v ~T0 @X0 0 tf ]
 [p mainexit ]
-"71 ./mcc_generated_files/mcc.h
-[; ;./mcc_generated_files/mcc.h: 71: void SYSTEM_Initialize(void);
+"73 ./mcc_generated_files/mcc.h
+[; ;./mcc_generated_files/mcc.h: 73: void SYSTEM_Initialize(void);
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
+"46169 /opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46169:     struct {
+[s S2086 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2086 . INT0EDG INT1EDG INT2EDG . IPEN GIEL GIE ]
+"46178
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46178:     struct {
+[s S2087 :7 `uc 1 :1 `uc 1 ]
+[n S2087 . . GIEH ]
+"46168
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46168: typedef union {
+[u S2085 `S2086 1 `S2087 1 ]
+[n S2085 . . . ]
+"46183
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46183: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
+[v _INTCON0bits `VS2085 ~T0 @X0 0 e@16338 ]
 "44 main.c
 [p n 520 ]
 "45
@@ -2212,16 +2227,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "520 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 520: void (*UART2_RxInterruptHandler)(void);
-[v _UART2_RxInterruptHandler `*F15803 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F15878 ~T0 @X0 1 e ]
 "538
 [; ;./mcc_generated_files/uart2.h: 538: void (*UART2_TxInterruptHandler)(void);
-[v _UART2_TxInterruptHandler `*F15805 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F15880 ~T0 @X0 1 e ]
 "520 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 520: void (*UART1_RxInterruptHandler)(void);
-[v _UART1_RxInterruptHandler `*F15849 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F15924 ~T0 @X0 1 e ]
 "538
 [; ;./mcc_generated_files/uart1.h: 538: void (*UART1_TxInterruptHandler)(void);
-[v _UART1_TxInterruptHandler `*F15851 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F15926 ~T0 @X0 1 e ]
 [v $root$_main `(v ~T0 @X0 0 e ]
 "52 main.c
 [; ;main.c: 52: void main(void)
@@ -2234,6 +2249,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 "55
 [; ;main.c: 55:     SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
+"62
+[; ;main.c: 62:     (INTCON0bits.GIEH = 1);
+[e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
+"65
+[; ;main.c: 65:     (INTCON0bits.GIEL = 1);
+[e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
 "73
 [; ;main.c: 73:     while (1)
 [e :U 2199 ]

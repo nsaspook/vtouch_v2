@@ -41,6 +41,8 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -26525,7 +26527,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
 # 54 "mcc_generated_files/pin_manager.h" 2
-# 146 "mcc_generated_files/pin_manager.h"
+# 158 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 49 "mcc_generated_files/pin_manager.c" 2
 
@@ -26540,7 +26542,7 @@ void PIN_MANAGER_Initialize(void)
 
 
     LATE = 0x01;
-    LATD = 0x00;
+    LATD = 0x02;
     LATA = 0x00;
     LATB = 0x00;
     LATC = 0x00;
@@ -26552,12 +26554,12 @@ void PIN_MANAGER_Initialize(void)
     TRISA = 0xFF;
     TRISB = 0xBF;
     TRISC = 0xBF;
-    TRISD = 0xFF;
+    TRISD = 0xFD;
 
 
 
 
-    ANSELD = 0xFF;
+    ANSELD = 0xFD;
     ANSELC = 0x3F;
     ANSELB = 0x3F;
     ANSELE = 0x06;
@@ -26602,6 +26604,7 @@ void PIN_MANAGER_Initialize(void)
 # 128 "mcc_generated_files/pin_manager.c"
     U2RXPPS = 0x0F;
     RB6PPS = 0x16;
+    RD1PPS = 0x10;
     RC6PPS = 0x13;
     U1RXPPS = 0x17;
 }

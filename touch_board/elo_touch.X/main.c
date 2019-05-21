@@ -59,10 +59,10 @@ void main(void)
     // Use the following macros to:
 
     // Enable high priority global interrupts
-    //INTERRUPT_GlobalInterruptHighEnable();
+    INTERRUPT_GlobalInterruptHighEnable();
 
     // Enable low priority global interrupts.
-    //INTERRUPT_GlobalInterruptLowEnable();
+    INTERRUPT_GlobalInterruptLowEnable();
 
     // Disable high priority global interrupts
     //INTERRUPT_GlobalInterruptHighDisable();

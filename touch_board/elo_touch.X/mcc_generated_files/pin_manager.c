@@ -58,7 +58,7 @@ void PIN_MANAGER_Initialize(void)
     LATx registers
     */
     LATE = 0x01;
-    LATD = 0x00;
+    LATD = 0x02;
     LATA = 0x00;
     LATB = 0x00;
     LATC = 0x00;
@@ -70,12 +70,12 @@ void PIN_MANAGER_Initialize(void)
     TRISA = 0xFF;
     TRISB = 0xBF;
     TRISC = 0xBF;
-    TRISD = 0xFF;
+    TRISD = 0xFD;
 
     /**
     ANSELx registers
     */
-    ANSELD = 0xFF;
+    ANSELD = 0xFD;
     ANSELC = 0x3F;
     ANSELB = 0x3F;
     ANSELE = 0x06;
@@ -127,6 +127,7 @@ void PIN_MANAGER_Initialize(void)
 	
     U2RXPPS = 0x0F;   //RB7->UART2:RX2;    
     RB6PPS = 0x16;   //RB6->UART2:TX2;    
+    RD1PPS = 0x10;   //RD1->PWM8:PWM8;    
     RC6PPS = 0x13;   //RC6->UART1:TX1;    
     U1RXPPS = 0x17;   //RC7->UART1:RX1;    
 }
