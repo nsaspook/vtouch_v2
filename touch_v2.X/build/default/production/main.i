@@ -28618,7 +28618,11 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
+<<<<<<< HEAD
 const char *build_date = "May 20 2019", *build_time = "19:11:38";
+=======
+const char *build_date = "May 21 2019", *build_time = "17:00:41";
+>>>>>>> 144b5c5df052b1b86616be381071958c8e3d069b
 
 V_help T[] = {
  {
@@ -28982,6 +28986,42 @@ const header33 HC33[] = {
   .data[1] = 0x01,
   .data[0] = 0x01,
  },
+ {
+  .length = 33,
+  .block.block.rbit = 0,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 2,
+  .block.block.function = 41,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+  .data[22] = 0x01,
+  .data[21] = 0x02,
+  .data[20] = 0x41,
+  .data[19] = 0x02,
+  .data[18] = 0x31,
+  .data[17] = 0x32,
+  .data[16] = 0x01,
+  .data[15] = 0x01,
+  .data[14] = 0x01,
+  .data[13] = 0x02,
+  .data[12] = 0x41,
+  .data[11] = 0x08,
+  .data[10] = 0x4c,
+  .data[9] = 0x4f,
+  .data[8] = 0x41,
+  .data[7] = 0x44,
+  .data[6] = 0x4c,
+  .data[5] = 0x4f,
+  .data[4] = 0x43,
+  .data[3] = 0x4b,
+  .data[2] = 0xa5,
+  .data[1] = 0x01,
+  .data[0] = 0x01,
+ },
 };
 
 header53 H53[] = {
@@ -29118,7 +29158,7 @@ header254 H254[] = {
  },
 };
 
-gem_message_type S[4];
+gem_message_type S[10];
 
 header10 r_block;
 

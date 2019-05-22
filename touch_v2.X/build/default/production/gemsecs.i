@@ -29116,10 +29116,16 @@ _Bool sequence_messages(uint8_t sid)
   S[0].message = HC33[0];
   S[1].message = HC33[0];
   S[2].message = HC33[0];
+  S[3].message = HC33[1];
+  S[4].message = HC33[1];
+  S[5].message = HC33[1];
 
   S[0].message.data[0] = 0x01;
   S[1].message.data[0] = 0x02;
   S[2].message.data[0] = 0x03;
+  S[3].message.data[0] = 0x01;
+  S[4].message.data[0] = 0x02;
+  S[5].message.data[0] = 0x03;
 
   S[0].block.header = (uint8_t*) & S[0].message;
   S[0].block.length = sizeof(header33);
@@ -29127,7 +29133,13 @@ _Bool sequence_messages(uint8_t sid)
   S[1].block.length = sizeof(header33);
   S[2].block.header = (uint8_t*) & S[2].message;
   S[2].block.length = sizeof(header33);
-  V.stack = 3;
+  S[3].block.header = (uint8_t*) & S[3].message;
+  S[3].block.length = sizeof(header33);
+  S[4].block.header = (uint8_t*) & S[4].message;
+  S[4].block.length = sizeof(header33);
+  S[5].block.header = (uint8_t*) & S[5].message;
+  S[5].block.length = sizeof(header33);
+  V.stack = 6;
   break;
  default:
   V.stack = 0;

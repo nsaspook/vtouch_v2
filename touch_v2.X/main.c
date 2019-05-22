@@ -462,6 +462,42 @@ const header33 HC33[] = {//template for vii80 stack commands
 		.data[1] = 0x01, // length 1
 		.data[0] = 0x01, // value
 	},
+	{ // S2F41 'vent/open load-lock ' command from host to equipment
+		.length = 33,
+		.block.block.rbit = 0,
+		.block.block.didh = 0,
+		.block.block.didl = 0,
+		.block.block.wbit = 1,
+		.block.block.stream = 2,
+		.block.block.function = 41,
+		.block.block.ebit = 1,
+		.block.block.bidh = 0,
+		.block.block.bidl = 1,
+		.block.block.systemb = 1,
+		.data[22] = 0x01, // list 2 items
+		.data[21] = 0x02,
+		.data[20] = 0x41, // 2 ascii data
+		.data[19] = 0x02,
+		.data[18] = 0x31, // 1
+		.data[17] = 0x32, // 2
+		.data[16] = 0x01, // list 1 item
+		.data[15] = 0x01,
+		.data[14] = 0x01, // list 2 items
+		.data[13] = 0x02,
+		.data[12] = 0x41, // 8 ascii data
+		.data[11] = 0x08,
+		.data[10] = 0x4c, // L
+		.data[9] = 0x4f, //  O
+		.data[8] = 0x41, //  A
+		.data[7] = 0x44, //  D
+		.data[6] = 0x4c, //  L
+		.data[5] = 0x4f, //  O
+		.data[4] = 0x43, //  C
+		.data[3] = 0x4b, //  K
+		.data[2] = 0xa5, // 1 byte integer unsigned
+		.data[1] = 0x01, // length 1
+		.data[0] = 0x01, // value
+	},
 };
 
 header53 H53[] = {
@@ -598,7 +634,7 @@ header254 H254[] = {
 	},
 };
 
-gem_message_type S[4]; // a queue message stack
+gem_message_type S[10]; // a queue message stack
 
 header10 r_block;
 
