@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -218,12 +220,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 15 "./vconfig.h"
- typedef signed long int24_t;
-
-
-
-
+# 19 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27449,7 +27446,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -29119,10 +29116,16 @@ _Bool sequence_messages(uint8_t sid)
   S[0].message = HC33[0];
   S[1].message = HC33[0];
   S[2].message = HC33[0];
+  S[3].message = HC33[1];
+  S[4].message = HC33[1];
+  S[5].message = HC33[1];
 
   S[0].message.data[0] = 0x01;
   S[1].message.data[0] = 0x02;
   S[2].message.data[0] = 0x03;
+  S[3].message.data[0] = 0x01;
+  S[4].message.data[0] = 0x02;
+  S[5].message.data[0] = 0x03;
 
   S[0].block.header = (uint8_t*) & S[0].message;
   S[0].block.length = sizeof(header33);
@@ -29130,7 +29133,13 @@ _Bool sequence_messages(uint8_t sid)
   S[1].block.length = sizeof(header33);
   S[2].block.header = (uint8_t*) & S[2].message;
   S[2].block.length = sizeof(header33);
-  V.stack = 3;
+  S[3].block.header = (uint8_t*) & S[3].message;
+  S[3].block.length = sizeof(header33);
+  S[4].block.header = (uint8_t*) & S[4].message;
+  S[4].block.length = sizeof(header33);
+  S[5].block.header = (uint8_t*) & S[5].message;
+  S[5].block.length = sizeof(header33);
+  V.stack = 6;
   break;
  default:
   V.stack = 0;
