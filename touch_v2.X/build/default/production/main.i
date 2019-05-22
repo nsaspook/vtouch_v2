@@ -28618,11 +28618,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-<<<<<<< HEAD
-const char *build_date = "May 20 2019", *build_time = "19:11:38";
-=======
-const char *build_date = "May 21 2019", *build_time = "17:00:41";
->>>>>>> 144b5c5df052b1b86616be381071958c8e3d069b
+const char *build_date = "May 21 2019", *build_time = "18:58:14";
 
 V_help T[] = {
  {
