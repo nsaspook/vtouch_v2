@@ -334,6 +334,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		}
 		break;
 	case LINK_STATE_ACK:
+		UART1_Write(ACK);
 		V.stream = H10[1].block.block.stream;
 		V.function = H10[1].block.block.function;
 		V.systemb = H10[1].block.block.systemb;
@@ -342,7 +343,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.ebit = H10[1].block.block.ebit;
 		secs_II_monitor_message(V.stream, V.function, SDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
-		UART1_Write(ACK);
 		V.failed_receive = false;
 		*r_link = LINK_STATE_DONE;
 		break;
@@ -556,12 +556,12 @@ bool sequence_messages(uint8_t sid)
 	V.msg_error = MSG_ERROR_NONE;
 	switch (sid) {
 	case 1:
-		S[0].message = HC33[0];
-		S[1].message = HC33[0];
-		S[2].message = HC33[0];
-		S[3].message = HC33[1];
-		S[4].message = HC33[1];
-		S[5].message = HC33[1];
+		S[0].message = HC33[1]; // open doors
+		S[1].message = HC33[1];
+		S[2].message = HC33[1];
+		S[3].message = HC33[0]; // close doors
+		S[4].message = HC33[0];
+		S[5].message = HC33[0];
 
 		S[0].message.data[0] = 0x01;
 		S[1].message.data[0] = 0x02;
@@ -589,6 +589,7 @@ bool sequence_messages(uint8_t sid)
 		return false;
 		break;
 	}
+	StartTimer(TMR_HBIO, HBT); // restart sequence timer
 	return true;
 }
 

@@ -99,6 +99,7 @@ V_data V = {
 	.seq_test = SEQ_TEST,
 	.sid = 1,
 	.help_id = 0,
+	.ping_count = 0,
 };
 
 header10 H10[] = {

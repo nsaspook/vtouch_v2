@@ -2,13 +2,13 @@ build/default/production/gemsecs.p1:  \
 gemsecs.c  \
 gemsecs.h  \
 vconfig.h  \
+mcc_generated_files/adcc.h  \
 mcc_generated_files/spi1.h  \
 mcc_generated_files/pin_manager.h  \
 ringbufs.h  \
 mcc_generated_files/mcc.h  \
 mcc_generated_files/device_config.h  \
 mcc_generated_files/interrupt_manager.h  \
-mcc_generated_files/adcc.h  \
 mcc_generated_files/nco1.h  \
 mcc_generated_files/dsm.h  \
 mcc_generated_files/tmr5.h  \

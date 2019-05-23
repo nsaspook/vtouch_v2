@@ -220,7 +220,9 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 22 "./gemsecs.h" 2
 # 1 "./vconfig.h" 1
-# 19 "./vconfig.h"
+# 11 "./vconfig.h"
+# 1 "./mcc_generated_files/adcc.h" 1
+# 54 "./mcc_generated_files/adcc.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27377,19 +27379,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 20 "./vconfig.h" 2
-# 1 "./mcc_generated_files/spi1.h" 1
-# 54 "./mcc_generated_files/spi1.h"
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 54 "./mcc_generated_files/spi1.h" 2
-
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
-# 19 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 3
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
-# 140 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef long ptrdiff_t;
-# 20 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 2 3
-# 55 "./mcc_generated_files/spi1.h" 2
+# 54 "./mcc_generated_files/adcc.h" 2
 
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
@@ -27473,18 +27463,109 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 56 "./mcc_generated_files/spi1.h" 2
+# 55 "./mcc_generated_files/adcc.h" 2
+
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 56 "./mcc_generated_files/adcc.h" 2
+# 72 "./mcc_generated_files/adcc.h"
+typedef uint16_t adc_result_t;
+# 89 "./mcc_generated_files/adcc.h"
+typedef enum
+{
+    channel_ANA0 = 0x0,
+    channel_ANA1 = 0x1,
+    channel_ANA2 = 0x2,
+    channel_VSS = 0x3B,
+    channel_Temp = 0x3C,
+    channel_DAC1 = 0x3D,
+    channel_FVR_Buffer1 = 0x3E,
+    channel_FVR_Buffer2 = 0x3F
+} adcc_channel_t;
+# 133 "./mcc_generated_files/adcc.h"
+void ADCC_Initialize(void);
+# 162 "./mcc_generated_files/adcc.h"
+void ADCC_StartConversion(adcc_channel_t channel);
+# 192 "./mcc_generated_files/adcc.h"
+_Bool ADCC_IsConversionDone();
+# 224 "./mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetConversionResult(void);
+# 255 "./mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+# 280 "./mcc_generated_files/adcc.h"
+void ADCC_StopConversion(void);
+# 307 "./mcc_generated_files/adcc.h"
+void ADCC_SetStopOnInterrupt(void);
+# 332 "./mcc_generated_files/adcc.h"
+void ADCC_DischargeSampleCapacitor(void);
+# 358 "./mcc_generated_files/adcc.h"
+void ADCC_LoadAcquisitionRegister(uint16_t);
+# 384 "./mcc_generated_files/adcc.h"
+void ADCC_SetPrechargeTime(uint16_t);
+# 409 "./mcc_generated_files/adcc.h"
+void ADCC_SetRepeatCount(uint8_t);
+# 437 "./mcc_generated_files/adcc.h"
+uint8_t ADCC_GetCurrentCountofConversions(void);
+# 461 "./mcc_generated_files/adcc.h"
+void ADCC_ClearAccumulator(void);
+# 486 "./mcc_generated_files/adcc.h"
+int24_t ADCC_GetAccumulatorValue(void);
+# 514 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasAccumulatorOverflowed(void);
+# 539 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetFilterValue(void);
+# 567 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetPreviousResult(void);
+# 593 "./mcc_generated_files/adcc.h"
+void ADCC_DefineSetPoint(uint16_t);
+# 619 "./mcc_generated_files/adcc.h"
+void ADCC_SetUpperThreshold(uint16_t);
+# 645 "./mcc_generated_files/adcc.h"
+void ADCC_SetLowerThreshold(uint16_t);
+# 672 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetErrorCalculation(void);
+# 699 "./mcc_generated_files/adcc.h"
+void ADCC_EnableDoubleSampling(void);
+# 723 "./mcc_generated_files/adcc.h"
+void ADCC_EnableContinuousConversion(void);
+# 747 "./mcc_generated_files/adcc.h"
+void ADCC_DisableContinuousConversion(void);
+# 775 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedUpperThreshold(void);
+# 803 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedLowerThreshold(void);
+# 830 "./mcc_generated_files/adcc.h"
+uint8_t ADCC_GetConversionStageStatus(void);
+# 847 "./mcc_generated_files/adcc.h"
+void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
+# 867 "./mcc_generated_files/adcc.h"
+void ADCC_DefaultInterruptHandler(void);
+# 12 "./vconfig.h" 2
+
+
+
+
+
+
+# 1 "./mcc_generated_files/spi1.h" 1
+# 55 "./mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 140 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 2 3
+# 55 "./mcc_generated_files/spi1.h" 2
 # 117 "./mcc_generated_files/spi1.h"
 void SPI1_Initialize(void);
 # 152 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 21 "./vconfig.h" 2
+# 19 "./vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
 # 632 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
-# 22 "./vconfig.h" 2
+# 20 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
@@ -27506,8 +27587,8 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 23 "./vconfig.h" 2
-# 78 "./vconfig.h"
+# 21 "./vconfig.h" 2
+# 76 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27661,80 +27742,6 @@ void PIN_MANAGER_Initialize (void);
 void INTERRUPT_Initialize (void);
 # 54 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/adcc.h" 1
-# 72 "./mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
-# 89 "./mcc_generated_files/adcc.h"
-typedef enum
-{
-    channel_ANA0 = 0x0,
-    channel_ANA1 = 0x1,
-    channel_ANA2 = 0x2,
-    channel_VSS = 0x3B,
-    channel_Temp = 0x3C,
-    channel_DAC1 = 0x3D,
-    channel_FVR_Buffer1 = 0x3E,
-    channel_FVR_Buffer2 = 0x3F
-} adcc_channel_t;
-# 133 "./mcc_generated_files/adcc.h"
-void ADCC_Initialize(void);
-# 162 "./mcc_generated_files/adcc.h"
-void ADCC_StartConversion(adcc_channel_t channel);
-# 192 "./mcc_generated_files/adcc.h"
-_Bool ADCC_IsConversionDone();
-# 224 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetConversionResult(void);
-# 255 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-# 280 "./mcc_generated_files/adcc.h"
-void ADCC_StopConversion(void);
-# 307 "./mcc_generated_files/adcc.h"
-void ADCC_SetStopOnInterrupt(void);
-# 332 "./mcc_generated_files/adcc.h"
-void ADCC_DischargeSampleCapacitor(void);
-# 358 "./mcc_generated_files/adcc.h"
-void ADCC_LoadAcquisitionRegister(uint16_t);
-# 384 "./mcc_generated_files/adcc.h"
-void ADCC_SetPrechargeTime(uint16_t);
-# 409 "./mcc_generated_files/adcc.h"
-void ADCC_SetRepeatCount(uint8_t);
-# 437 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetCurrentCountofConversions(void);
-# 461 "./mcc_generated_files/adcc.h"
-void ADCC_ClearAccumulator(void);
-# 486 "./mcc_generated_files/adcc.h"
-int24_t ADCC_GetAccumulatorValue(void);
-# 514 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasAccumulatorOverflowed(void);
-# 539 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetFilterValue(void);
-# 567 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetPreviousResult(void);
-# 593 "./mcc_generated_files/adcc.h"
-void ADCC_DefineSetPoint(uint16_t);
-# 619 "./mcc_generated_files/adcc.h"
-void ADCC_SetUpperThreshold(uint16_t);
-# 645 "./mcc_generated_files/adcc.h"
-void ADCC_SetLowerThreshold(uint16_t);
-# 672 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetErrorCalculation(void);
-# 699 "./mcc_generated_files/adcc.h"
-void ADCC_EnableDoubleSampling(void);
-# 723 "./mcc_generated_files/adcc.h"
-void ADCC_EnableContinuousConversion(void);
-# 747 "./mcc_generated_files/adcc.h"
-void ADCC_DisableContinuousConversion(void);
-# 775 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedUpperThreshold(void);
-# 803 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedLowerThreshold(void);
-# 830 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetConversionStageStatus(void);
-# 847 "./mcc_generated_files/adcc.h"
-void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 867 "./mcc_generated_files/adcc.h"
-void ADCC_DefaultInterruptHandler(void);
-# 55 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/nco1.h" 1
 # 93 "./mcc_generated_files/nco1.h"
@@ -28634,7 +28641,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    rxData = UART1_Read();
    if (rxData == 0x05) {
     V.uart = 1;
-    StartTimer(TMR_T2, 2000);
+    StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
     *m_link = LINK_STATE_ENQ;
    }
@@ -28643,7 +28650,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    rxData = UART2_Read();
    if (rxData == 0x05) {
     V.uart = 2;
-    StartTimer(TMR_T2, 2000);
+    StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
     *m_link = LINK_STATE_ENQ;
    }
@@ -28661,7 +28668,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
-     StartTimer(TMR_T2, 2000);
+     StartTimer(TMR_T2, 3000);
      V.error = LINK_ERROR_NONE;
      *m_link = LINK_STATE_EOT;
     }
@@ -28669,7 +28676,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    if (V.uart == 1 && UART2_is_rx_ready()) {
     rxData = UART2_Read();
     if (rxData == 0x04) {
-     StartTimer(TMR_T2, 2000);
+     StartTimer(TMR_T2, 3000);
      V.error = LINK_ERROR_NONE;
      *m_link = LINK_STATE_EOT;
     }
@@ -28713,7 +28720,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
       } else {
        while (UART1_is_rx_ready())
         rxData = UART1_Read();
-       WaitMs(500);
+       WaitMs(1500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.failed_receive = 3;
@@ -28752,7 +28759,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
       } else {
        while (UART2_is_rx_ready())
         rxData = UART2_Read();
-       WaitMs(500);
+       WaitMs(1500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.failed_receive = 4;
@@ -28821,7 +28828,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   d = 1;
   b_block = (uint8_t*) & H254[0];
   UART1_Write(0x04);
-  StartTimer(TMR_T2, 2000);
+  StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
 
 
@@ -28879,7 +28886,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
       } else {
        while (UART1_is_rx_ready())
         rxData = UART1_Read();
-       WaitMs(500);
+       WaitMs(1500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.failed_receive = 2;
@@ -28891,6 +28898,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   }
   break;
  case LINK_STATE_ACK:
+  UART1_Write(0x06);
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
   V.systemb = H10[1].block.block.systemb;
@@ -28899,7 +28907,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.ebit = H10[1].block.block.ebit;
   secs_II_monitor_message(V.stream, V.function, 500);
   V.g_state = secs_gem_state(V.stream, V.function);
-  UART1_Write(0x06);
   V.failed_receive = 0;
   *r_link = LINK_STATE_DONE;
   break;
@@ -28935,7 +28942,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   V.error = LINK_ERROR_NONE;
   retry = 3;
   UART1_Write(0x05);
-  StartTimer(TMR_T2, 2000);
+  StartTimer(TMR_T2, 3000);
   *t_link = LINK_STATE_ENQ;
 
 
@@ -28950,7 +28957,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
     V.failed_send = 1;
     *t_link = LINK_STATE_NAK;
    } else {
-    StartTimer(TMR_T2, 2000);
+    StartTimer(TMR_T2, 3000);
    }
   } else {
    if (UART1_is_rx_ready()) {
@@ -29113,12 +29120,12 @@ _Bool sequence_messages(uint8_t sid)
  V.msg_error = MSG_ERROR_NONE;
  switch (sid) {
  case 1:
-  S[0].message = HC33[0];
-  S[1].message = HC33[0];
-  S[2].message = HC33[0];
-  S[3].message = HC33[1];
-  S[4].message = HC33[1];
-  S[5].message = HC33[1];
+  S[0].message = HC33[1];
+  S[1].message = HC33[1];
+  S[2].message = HC33[1];
+  S[3].message = HC33[0];
+  S[4].message = HC33[0];
+  S[5].message = HC33[0];
 
   S[0].message.data[0] = 0x01;
   S[1].message.data[0] = 0x02;
@@ -29146,6 +29153,7 @@ _Bool sequence_messages(uint8_t sid)
   return 0;
   break;
  }
+ StartTimer(TMR_HBIO, 20000);
  return 1;
 }
 
@@ -29154,7 +29162,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.26G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.28G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29704,7 +29712,7 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 
   case 2:
    if (block != GEM_STATE_REMOTE)
-    StartTimer(TMR_HBIO, 30000);
+    StartTimer(TMR_HBIO, 20000);
 
    block = GEM_STATE_REMOTE;
    V.ticker = 0;

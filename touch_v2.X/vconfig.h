@@ -8,12 +8,10 @@
 #ifndef VCONFIG_H
 #define	VCONFIG_H
 
+#include "mcc_generated_files/adcc.h"
+
 #ifdef	__cplusplus
 extern "C" {
-#endif
-#ifndef __DEFINED_int24_t
-	typedef signed long int24_t;
-#define __DEFINED_int24_t
 #endif
 
 #include <xc.h>
@@ -21,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.26G"
+#define VER	"1.28G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -52,11 +50,11 @@ extern "C" {
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
 
-#define T1	500
-#define T2	2000
+#define T1	1500
+#define T2	3000
 #define T3	5000
 #define T4	5000
-#define HBT	30000
+#define HBT	20000
 #define	RTY	3
 #define ERROR_CHECKSUM	30000
 #define ERROR_COMM	31000

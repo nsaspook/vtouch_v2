@@ -28261,7 +28261,7 @@ void PMD_Initialize(void);
 # 1 "./eadog.h" 1
 # 26 "./eadog.h"
 # 1 "./vconfig.h" 1
-# 22 "./vconfig.h"
+# 20 "./vconfig.h"
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
@@ -28283,8 +28283,8 @@ void PMD_Initialize(void);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 23 "./vconfig.h" 2
-# 78 "./vconfig.h"
+# 21 "./vconfig.h" 2
+# 76 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28618,7 +28618,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 21 2019", *build_time = "18:58:14";
+const char *build_date = "May 22 2019", *build_time = "17:43:38";
 
 V_help T[] = {
  {
@@ -28658,6 +28658,7 @@ V_data V = {
  .seq_test = 0,
  .sid = 1,
  .help_id = 0,
+ .ping_count = 0,
 };
 
 header10 H10[] = {
@@ -28886,7 +28887,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 351 "main.c"
+# 352 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28905,7 +28906,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 389 "main.c"
+# 390 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29333,7 +29334,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.26G");
+   sprintf(V.buf, " Version %s", "1.28G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    if (V.seq_test) {
     sprintf(V.buf, "Sequence Testing");
@@ -29436,7 +29437,7 @@ void main(void)
 
     if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX && !V.queue) || V.reset) {
      if (TimerDone(TMR_HBIO) || V.reset) {
-      StartTimer(TMR_HBIO, 30000);
+      StartTimer(TMR_HBIO, 20000);
 
       if (V.stack) {
        hb_message();
