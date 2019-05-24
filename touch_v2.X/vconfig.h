@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.28G"
+#define VER	"1.29G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -200,10 +200,10 @@ extern "C" {
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
-		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
+		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout;
 		uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1, reset : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+		queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count;
 		volatile uint8_t ticker;

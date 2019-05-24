@@ -28412,10 +28412,10 @@ void PMD_Initialize(void);
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
@@ -28618,7 +28618,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 22 2019", *build_time = "17:43:38";
+const char *build_date = "May 23 2019", *build_time = "22:37:44";
 
 V_help T[] = {
  {
@@ -28648,7 +28648,6 @@ V_data V = {
  .ticker = 45,
  .checksum_error = 0,
  .timer_error = 0,
- .reset = 1,
  .debug = 0,
  .response.info = DIS_STR,
  .response.log_num = 0,
@@ -28887,7 +28886,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 352 "main.c"
+# 351 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28906,7 +28905,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 390 "main.c"
+# 389 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29334,7 +29333,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.28G");
+   sprintf(V.buf, " Version %s", "1.29G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    if (V.seq_test) {
     sprintf(V.buf, "Sequence Testing");
@@ -29352,7 +29351,7 @@ void main(void)
     V.s_state = SEQ_STATE_RX;
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
      if (V.debug)
-      sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+      sprintf(V.buf, "H254 %d, T%ld  ", sizeof(header254), V.testing);
      else
       sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
      V.buf[16] = 0;
@@ -29427,7 +29426,7 @@ void main(void)
    }
    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
     if (V.debug)
-     sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+     sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
     V.buf[16] = 0;
@@ -29435,23 +29434,21 @@ void main(void)
 
 
 
-    if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX && !V.queue) || V.reset) {
-     if (TimerDone(TMR_HBIO) || V.reset) {
+    if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
+     if (TimerDone(TMR_HBIO)) {
       StartTimer(TMR_HBIO, 20000);
 
       if (V.stack) {
        hb_message();
        V.msg_error = MSG_ERROR_NONE;
-       V.reset = 0;
        V.ping_count = 0;
       } else {
        if (V.ping_count++ > 4) {
         hb_message();
-        sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
+        sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
         V.buf[16] = 0;
         MyeaDogM_WriteStringAtPos(0, 0, V.buf);
         WaitMs(250);
-        V.reset = 0;
         V.ping_count = 0;
        } else {
         V.response.info = DIS_STR;
@@ -29467,7 +29464,7 @@ void main(void)
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
     if (V.debug)
-     sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+     sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
     V.buf[16] = 0;
@@ -29485,7 +29482,7 @@ void main(void)
 
 
     if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-     sprintf(V.buf, " S%dF%d #%ld     ", V.stream, V.function, V.ticks);
+     sprintf(V.buf, "S%dF%d #%ld       ", V.stream, V.function, V.ticks);
      V.buf[13] = 0;
      MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
      V.s_state = SEQ_STATE_TRIGGER;
@@ -29507,7 +29504,7 @@ void main(void)
     break;
    }
    if (V.debug)
-    sprintf(V.buf, " Equip type %d     ", V.e_types);
+    sprintf(V.buf, "Equip type %d       ", V.e_types);
    else
     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
    V.buf[16] = 0;

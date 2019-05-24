@@ -872,6 +872,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			//			H12[1].block.block.systemb = V.systemb;
 			//			break;
 		default: // S1F0 abort
+			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
@@ -897,7 +898,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header13);
 			H13[3].block.block.systemb = V.systemb;
 			break;
-		default: // S1F0 abort
+		default: // S2F0 abort
+			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
@@ -912,7 +914,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			block.length = sizeof(header13);
 			H13[2].block.block.systemb = V.systemb;
 			break;
-		default: // S1F0 abort
+		default: // S5F0 abort
+			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
@@ -923,11 +926,14 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	case 6:
 		switch (function) {
 		case 11: // S6F12
+		case 13: // S6F14
+		case 25: // S6F26
 			block.header = (uint8_t*) & H13[0];
 			block.length = sizeof(header13);
 			H13[0].block.block.systemb = V.systemb;
 			break;
-		default: // S1F0 abort
+		default: // S6F0 abort
+			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
@@ -946,12 +952,14 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 		case 7:
 			break;
 		case 9:
+			V.equip_timeout++;
 			break;
 		case 11:
 			break;
 		case 13:
 			break;
-		default: // S1F0 abort
+		default: // S9F0 abort
+			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
@@ -1026,7 +1034,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			}
 			V.response.help_temp = V.response.info;
 			break;
-		default: // S1F0 abort
+		default: // S10F0 abort
+			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
@@ -1034,7 +1043,8 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			break;
 		}
 		break;
-	default: // S1F0 abort
+	default: // SxF0 abort
+		H10[2].block.block.stream = stream;
 		block.header = (uint8_t*) & H10[2];
 		block.length = sizeof(header10);
 		H10[2].block.block.systemb = V.systemb;

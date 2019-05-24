@@ -27716,10 +27716,10 @@ void PIN_MANAGER_Initialize (void);
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout;
   uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, reset : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
@@ -29162,7 +29162,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.28G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.29G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29436,6 +29436,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 
 
   default:
+   H10[2].block.block.stream = stream;
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
@@ -29462,6 +29463,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    H13[3].block.block.systemb = V.systemb;
    break;
   default:
+   H10[2].block.block.stream = stream;
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
@@ -29477,6 +29479,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    H13[2].block.block.systemb = V.systemb;
    break;
   default:
+   H10[2].block.block.stream = stream;
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
@@ -29487,11 +29490,14 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  case 6:
   switch (function) {
   case 11:
+  case 13:
+  case 25:
    block.header = (uint8_t*) & H13[0];
    block.length = sizeof(header13);
    H13[0].block.block.systemb = V.systemb;
    break;
   default:
+   H10[2].block.block.stream = stream;
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
@@ -29510,12 +29516,14 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   case 7:
    break;
   case 9:
+   V.equip_timeout++;
    break;
   case 11:
    break;
   case 13:
    break;
   default:
+   H10[2].block.block.stream = stream;
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
@@ -29591,6 +29599,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
    V.response.help_temp = V.response.info;
    break;
   default:
+   H10[2].block.block.stream = stream;
    block.header = (uint8_t*) & H10[2];
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
@@ -29599,6 +29608,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
   }
   break;
  default:
+  H10[2].block.block.stream = stream;
   block.header = (uint8_t*) & H10[2];
   block.length = sizeof(header10);
   H10[2].block.block.systemb = V.systemb;

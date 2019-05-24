@@ -27315,7 +27315,7 @@ volatile uint8_t uart2TxBufferRemaining;
 
 static volatile uint8_t uart2RxHead = 0;
 static volatile uint8_t uart2RxTail = 0;
-static volatile uint8_t uart2RxBuffer[64];
+static volatile uint8_t uart2RxBuffer[255];
 volatile uint8_t uart2RxCount;
 
 

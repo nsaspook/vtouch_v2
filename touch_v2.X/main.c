@@ -89,13 +89,12 @@ V_data V = {
 	.ticker = 45,
 	.checksum_error = 0,
 	.timer_error = 0,
-	.reset = true,
 	.debug = false,
 	.response.info = DIS_STR,
 	.response.log_num = 0,
 	.response.log_seq = 0,
 	.queue = false,
-	.stack = false, // 0 no messages, 1-4 messages in queue
+	.stack = false, // 0 no messages, 1-10 messages in queue
 	.seq_test = SEQ_TEST,
 	.sid = 1,
 	.help_id = 0,
@@ -832,7 +831,7 @@ void main(void)
 				V.s_state = SEQ_STATE_RX;
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 					if (V.debug)
-						sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+						sprintf(V.buf, "H254 %d, T%ld  ", sizeof(header254), V.testing);
 					else
 						sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 					V.buf[16] = 0; // string size limit
@@ -907,7 +906,7 @@ void main(void)
 			}
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (V.debug)
-					sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+					sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
 				else
 					sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
 				V.buf[16] = 0; // string size limit
@@ -915,23 +914,21 @@ void main(void)
 				/*
 				 * HeartBeat ping or sequence during idle times
 				 */
-				if ((V.g_state == GEM_STATE_REMOTE && V.s_state == SEQ_STATE_RX && !V.queue) || V.reset) {
-					if (TimerDone(TMR_HBIO) || V.reset) {
+				if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
+					if (TimerDone(TMR_HBIO)) {
 						StartTimer(TMR_HBIO, HBT);
 						// send ping or sequence message
 						if (V.stack) {
 							hb_message(); // prime the TX state machine
 							V.msg_error = MSG_ERROR_NONE;
-							V.reset = false;
 							V.ping_count = 0;
 						} else {
 							if (V.ping_count++ > 4) {
 								hb_message();
-								sprintf(V.buf, " Ping G%d  P%d #  ", V.g_state, V.ping);
+								sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
 								V.buf[16] = 0; // string size limit
 								MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 								WaitMs(250);
-								V.reset = false;
 								V.ping_count = 0;
 							} else {
 								V.response.info = DIS_STR;
@@ -947,7 +944,7 @@ void main(void)
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				if (V.debug)
-					sprintf(V.buf, " H254 %d, T%ld  ", sizeof(header254), V.testing);
+					sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
 				else
 					sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 				V.buf[16] = 0; // string size limit
@@ -965,7 +962,7 @@ void main(void)
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, " S%dF%d #%ld     ", V.stream, V.function, V.ticks);
+					sprintf(V.buf, "S%dF%d #%ld       ", V.stream, V.function, V.ticks);
 					V.buf[13] = 0; // string size limit
 					MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
 					V.s_state = SEQ_STATE_TRIGGER;
@@ -987,7 +984,7 @@ void main(void)
 				break;
 			}
 			if (V.debug)
-				sprintf(V.buf, " Equip type %d     ", V.e_types);
+				sprintf(V.buf, "Equip type %d       ", V.e_types);
 			else
 				sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			V.buf[16] = 0; // string size limit
