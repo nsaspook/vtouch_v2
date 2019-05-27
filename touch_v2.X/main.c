@@ -82,6 +82,7 @@ V_help T[] = {
 
 V_data V = {
 	.error = LINK_ERROR_NONE,
+	.abort = LINK_ERROR_NONE,
 	.msg_error = MSG_ERROR_RESET,
 	.uart = 1,
 	.g_state = GEM_STATE_DISABLE,
@@ -645,7 +646,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
 	static D_CODES last_info;
 
-//	DLED = true;
+	//	DLED = true;
 	wait_lcd_done();
 	if (V.response.info == DIS_STR) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);
@@ -744,7 +745,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	}
 
 	last_info = V.response.info;
-//	DLED = false;
+	//	DLED = false;
 }
 
 /*
@@ -822,6 +823,7 @@ void main(void)
 			}
 			MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 			WaitMs(3000);
+			StartTimer(TMR_DISPLAY, DDELAY);
 			break;
 		case UI_STATE_HOST: //slave
 			switch (V.s_state) {
@@ -905,12 +907,15 @@ void main(void)
 				break;
 			}
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-				if (V.debug)
-					sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
-				else
-					sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
-				V.buf[16] = 0; // string size limit
-				MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+				if (TimerDone(TMR_DISPLAY)) { // limit update rate
+					if (V.debug)
+						sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+					else
+						sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+
+					V.buf[16] = 0; // string size limit
+					MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+				}
 				/*
 				 * HeartBeat ping or sequence during idle times
 				 */
@@ -1026,7 +1031,10 @@ void main(void)
 		sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 		V.buf[16] = 0; // string size limit
 		if (mode != UI_STATE_LOG)
-			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+			if (TimerDone(TMR_DISPLAY)) { // limit update rate
+				MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+				StartTimer(TMR_DISPLAY, DDELAY);
+			}
 
 		/*
 		 * show help display

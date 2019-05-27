@@ -28284,7 +28284,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 76 "./vconfig.h"
+# 77 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28465,6 +28465,7 @@ enum APP_TIMERS {
  TMR_INFO,
  TMR_HELP,
  TMR_HELPDIS,
+ TMR_DISPLAY,
 
 
 
@@ -28618,7 +28619,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 26 2019", *build_time = "16:27:18";
+const char *build_date = "May 26 2019", *build_time = "20:35:28";
 
 V_help T[] = {
  {
@@ -28641,6 +28642,7 @@ V_help T[] = {
 
 V_data V = {
  .error = LINK_ERROR_NONE,
+ .abort = LINK_ERROR_NONE,
  .msg_error = MSG_ERROR_RESET,
  .uart = 1,
  .g_state = GEM_STATE_DISABLE,
@@ -28886,7 +28888,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 351 "main.c"
+# 352 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28905,7 +28907,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 389 "main.c"
+# 390 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29333,7 +29335,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.30G");
+   sprintf(V.buf, " Version %s", "1.31G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    if (V.seq_test) {
     sprintf(V.buf, "Sequence Testing");
@@ -29342,6 +29344,7 @@ void main(void)
    }
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
    WaitMs(3000);
+   StartTimer(TMR_DISPLAY, 300);
    break;
   case UI_STATE_HOST:
    switch (V.s_state) {
@@ -29425,12 +29428,15 @@ void main(void)
     break;
    }
    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-    if (V.debug)
-     sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
-    else
-     sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
-    V.buf[16] = 0;
-    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+    if (TimerDone(TMR_DISPLAY)) {
+     if (V.debug)
+      sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+     else
+      sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+
+     V.buf[16] = 0;
+     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+    }
 
 
 
@@ -29546,7 +29552,10 @@ void main(void)
   sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
   V.buf[16] = 0;
   if (mode != UI_STATE_LOG)
-   MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+   if (TimerDone(TMR_DISPLAY)) {
+    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+    StartTimer(TMR_DISPLAY, 300);
+   }
 
 
 

@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.30G"
+#define VER	"1.31G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -64,6 +64,7 @@ extern "C" {
 #define LDELAY	1000
 #define SDELAY	500
 #define BDELAY	300
+#define DDELAY	300 // display update spacing
 
 #define Y2KTIME
 

@@ -254,7 +254,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
 				DEBUG1_SetHigh();
-				DEBUG2_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
 			}
@@ -321,7 +320,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 						if (V.r_checksum == H10[1].checksum) {
 							*r_link = LINK_STATE_ACK;
 							DEBUG1_SetHigh();
-							DEBUG2_SetLow();
 						} else { // bad checksum
 							while (UART1_is_rx_ready()) // dump receive buffer of bad data
 								rxData = UART1_Read();

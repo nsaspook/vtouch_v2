@@ -27588,7 +27588,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 76 "./vconfig.h"
+# 77 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28435,6 +28435,7 @@ enum APP_TIMERS {
  TMR_INFO,
  TMR_HELP,
  TMR_HELPDIS,
+ TMR_DISPLAY,
 
 
 
@@ -28818,7 +28819,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
    rxData = UART1_Read();
    if (rxData == 0x05) {
     do { LATEbits.LATE1 = 1; } while(0);
-    do { LATEbits.LATE2 = 1; } while(0);
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
    }
@@ -28885,7 +28885,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
       if (V.r_checksum == H10[1].checksum) {
        *r_link = LINK_STATE_ACK;
        do { LATEbits.LATE1 = 1; } while(0);
-       do { LATEbits.LATE2 = 0; } while(0);
       } else {
        while (UART1_is_rx_ready())
         rxData = UART1_Read();
@@ -29165,7 +29164,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.30G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.31G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];

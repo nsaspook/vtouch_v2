@@ -39,7 +39,7 @@ void init_display(void)
 	ringBufS_init(spi_link.tx1a);
 	ringBufS_init(spi_link.tx1b);
 
-//	DLED = true;
+	DLED = true;
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
 	send_lcd_cmd(0x39);
@@ -65,7 +65,7 @@ void init_display(void)
 	DMA1SSA = (uint32_t) & ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
-//	DLED = false;
+	DLED = false;
 }
 
 /*
@@ -166,7 +166,7 @@ void eaDogM_ClearRow(uint8_t r)
  */
 void eaDogM_WriteString(char *strPtr)
 {
-//	DEBUG1_SetHigh();
+	DEBUG2_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -187,7 +187,7 @@ void eaDogM_WriteString(char *strPtr)
  */
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
-//	DEBUG1_SetHigh();
+	DEBUG2_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -207,7 +207,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
  */
 void send_lcd_data_dma(uint8_t strPtr)
 {
-//	DEBUG1_SetHigh();
+	DEBUG2_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
