@@ -645,7 +645,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
 	static D_CODES last_info;
 
-	DLED = true;
+//	DLED = true;
 	wait_lcd_done();
 	if (V.response.info == DIS_STR) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);
@@ -744,7 +744,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 	}
 
 	last_info = V.response.info;
-	DLED = false;
+//	DLED = false;
 }
 
 /*

@@ -28817,7 +28817,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
-    do { LATEbits.LATE2 = ~LATEbits.LATE2; } while(0);
+    do { LATEbits.LATE1 = 1; } while(0);
+    do { LATEbits.LATE2 = 1; } while(0);
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
    }
@@ -28883,6 +28884,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
      if (rxData_l > (r_block.length + 2)) {
       if (V.r_checksum == H10[1].checksum) {
        *r_link = LINK_STATE_ACK;
+       do { LATEbits.LATE1 = 1; } while(0);
+       do { LATEbits.LATE2 = 0; } while(0);
       } else {
        while (UART1_is_rx_ready())
         rxData = UART1_Read();
@@ -29153,7 +29156,7 @@ _Bool sequence_messages(uint8_t sid)
   return 0;
   break;
  }
- StartTimer(TMR_HBIO, 20000);
+ StartTimer(TMR_HBIO, 30000);
  return 1;
 }
 
@@ -29162,7 +29165,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.29G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.30G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29490,11 +29493,22 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  case 6:
   switch (function) {
   case 11:
+   block.header = (uint8_t*) & H13[0];
+   block.length = sizeof(header13);
+   H13[0].block.block.systemb = V.systemb;
+   H13[0].block.block.function = 12;
+   break;
   case 13:
+   block.header = (uint8_t*) & H13[0];
+   block.length = sizeof(header13);
+   H13[0].block.block.systemb = V.systemb;
+   H13[0].block.block.function = 14;
+   break;
   case 25:
    block.header = (uint8_t*) & H13[0];
    block.length = sizeof(header13);
    H13[0].block.block.systemb = V.systemb;
+   H13[0].block.block.function = 26;
    break;
   default:
    H10[2].block.block.stream = stream;
@@ -29722,7 +29736,7 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 
   case 2:
    if (block != GEM_STATE_REMOTE)
-    StartTimer(TMR_HBIO, 20000);
+    StartTimer(TMR_HBIO, 30000);
 
    block = GEM_STATE_REMOTE;
    V.ticker = 0;

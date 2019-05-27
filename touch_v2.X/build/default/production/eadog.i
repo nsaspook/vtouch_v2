@@ -27784,7 +27784,7 @@ void init_display(void)
  ringBufS_init(spi_link.tx1a);
  ringBufS_init(spi_link.tx1b);
 
- LATEbits.LATE2 = 1;
+
  do { LATCbits.LATC2 = 1; } while(0);
  wdtdelay(350000);
  send_lcd_cmd(0x39);
@@ -27810,7 +27810,7 @@ void init_display(void)
  DMA1SSA = (uint32_t) & ring_buf1;
  DMA1CON0bits.DGO = 0;
  SPI1INTFbits.SPI1TXUIF = 1;
- LATEbits.LATE2 = 0;
+
 }
 
 
@@ -27911,7 +27911,7 @@ void eaDogM_ClearRow(uint8_t r)
 
 void eaDogM_WriteString(char *strPtr)
 {
- do { LATEbits.LATE1 = 1; } while(0);
+
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27932,7 +27932,7 @@ void eaDogM_WriteString(char *strPtr)
 
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
- do { LATEbits.LATE1 = 1; } while(0);
+
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27952,7 +27952,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 
 void send_lcd_data_dma(uint8_t strPtr)
 {
- do { LATEbits.LATE1 = 1; } while(0);
+
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);

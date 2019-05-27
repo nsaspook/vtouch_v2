@@ -253,7 +253,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
-				DEBUG2_Toggle();
+				DEBUG1_SetHigh();
+				DEBUG2_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
 			}
@@ -319,6 +320,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 					if (rxData_l > (r_block.length + 2)) { // end of total data stream
 						if (V.r_checksum == H10[1].checksum) {
 							*r_link = LINK_STATE_ACK;
+							DEBUG1_SetHigh();
+							DEBUG2_SetLow();
 						} else { // bad checksum
 							while (UART1_is_rx_ready()) // dump receive buffer of bad data
 								rxData = UART1_Read();
@@ -925,12 +928,23 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 		break;
 	case 6:
 		switch (function) {
-		case 11: // S6F12
-		case 13: // S6F14
+		case 11: // S6F12			
+			block.header = (uint8_t*) & H13[0];
+			block.length = sizeof(header13);
+			H13[0].block.block.systemb = V.systemb;
+			H13[0].block.block.function = 12;
+			break;
+		case 13: // S6F14			
+			block.header = (uint8_t*) & H13[0];
+			block.length = sizeof(header13);
+			H13[0].block.block.systemb = V.systemb;
+			H13[0].block.block.function = 14;
+			break;
 		case 25: // S6F26
 			block.header = (uint8_t*) & H13[0];
 			block.length = sizeof(header13);
 			H13[0].block.block.systemb = V.systemb;
+			H13[0].block.block.function = 26;
 			break;
 		default: // S6F0 abort
 			H10[2].block.block.stream = stream;

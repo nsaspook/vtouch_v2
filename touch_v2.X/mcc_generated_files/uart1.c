@@ -50,6 +50,7 @@
 #include <xc.h>
 #include "uart1.h"
 #include "interrupt_manager.h"
+#include "pin_manager.h"
 
 /**
   Section: Macro Declarations
@@ -192,6 +193,8 @@ void UART1_Write(uint8_t txData)
 		uart1TxBufferRemaining--;
 	}
 	PIE3bits.U1TXIE = 1;
+	DEBUG1_SetLow();
+	
 }
 
 void __interrupt(irq(U1TX), base(8)) UART1_tx_vect_isr()

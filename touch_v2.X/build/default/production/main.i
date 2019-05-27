@@ -28618,7 +28618,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 23 2019", *build_time = "22:37:44";
+const char *build_date = "May 26 2019", *build_time = "16:27:18";
 
 V_help T[] = {
  {
@@ -29165,7 +29165,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
 {
  static D_CODES last_info;
 
- LATEbits.LATE2 = 1;
+
  wait_lcd_done();
  if (V.response.info == DIS_STR) {
   eaDogM_WriteStringAtPos(r, c, strPtr);
@@ -29264,7 +29264,7 @@ static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
  }
 
  last_info = V.response.info;
- LATEbits.LATE2 = 0;
+
 }
 
 
@@ -29333,7 +29333,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.29G");
+   sprintf(V.buf, " Version %s", "1.30G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    if (V.seq_test) {
     sprintf(V.buf, "Sequence Testing");
@@ -29436,7 +29436,7 @@ void main(void)
 
     if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
      if (TimerDone(TMR_HBIO)) {
-      StartTimer(TMR_HBIO, 20000);
+      StartTimer(TMR_HBIO, 30000);
 
       if (V.stack) {
        hb_message();

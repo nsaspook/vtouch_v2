@@ -87,21 +87,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./gemsecs.h: 138:  typedef struct gem_message_type {
 [s S2249 `S2245 1 `S2248 1 ]
 [n S2249 gem_message_type message block ]
-"46188 /opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h
-[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46188:     struct {
-[s S2086 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2086 . LATE0 LATE1 LATE2 ]
-"46193
-[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46193:     struct {
-[s S2087 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2087 . LE0 LE1 LE2 ]
-"46187
-[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46187: typedef union {
-[u S2085 `S2086 1 `S2087 1 ]
-[n S2085 . . . ]
-"46199
-[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f57k42.h: 46199: extern volatile LATEbits_t LATEbits __attribute__((address(0x3FBE)));
-[v _LATEbits `VS2085 ~T0 @X0 0 e@16318 ]
 "41 ./eadog.h
 [; ;./eadog.h: 41:  void wait_lcd_done(void);
 [v _wait_lcd_done `(v ~T0 @X0 0 ef ]
@@ -2489,7 +2474,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./mcc_generated_files/uart1.h: 407:  void (*UART1_TxInterruptHandler)(void);
 [v _UART1_TxInterruptHandler `*F16906 ~T0 @X0 1 e ]
 "62 main.c
-[; ;main.c: 62: const char *build_date = "May 23 2019", *build_time = "22:37:44";
+[; ;main.c: 62: const char *build_date = "May 26 2019", *build_time = "16:27:18";
 [v _build_date `*Cuc ~T0 @X0 1 e ]
 [i _build_date
 :s 1C
@@ -3830,9 +3815,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "646
 [; ;main.c: 646:  static D_CODES last_info;
 [v F17328 `E16976 ~T0 @X0 1 s last_info ]
-"648
-[; ;main.c: 648:  LATEbits.LATE2 = 1;
-[e = . . _LATEbits 0 2 -> -> 1 `i `uc ]
 "649
 [; ;main.c: 649:  wait_lcd_done();
 [e ( _wait_lcd_done ..  ]
@@ -4132,9 +4114,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "746
 [; ;main.c: 746:  last_info = V.response.info;
 [e = F17328 . . _V 39 6 ]
-"747
-[; ;main.c: 747:  LATEbits.LATE2 = 0;
-[e = . . _LATEbits 0 2 -> -> 0 `i `uc ]
 "748
 [; ;main.c: 748: }
 [e :UE 2250 ]
@@ -4298,7 +4277,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 815:    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 [e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U . _V 7 ]
 "816
-[; ;main.c: 816:    sprintf(V.buf, " Version %s", "1.29G");
+[; ;main.c: 816:    sprintf(V.buf, " Version %s", "1.30G");
 [e ( _sprintf (1 , (. , &U . _V 7 :s 22C :s 23C ]
 "817
 [; ;main.c: 817:    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
@@ -4605,8 +4584,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! != -> ( _TimerDone (1 -> . `E17143 6 `uc `i -> 0 `i 2315  ]
 {
 "919
-[; ;main.c: 919:       StartTimer(TMR_HBIO, 20000);
-[e ( _StartTimer (2 , -> . `E17143 6 `uc -> -> 20000 `i `us ]
+[; ;main.c: 919:       StartTimer(TMR_HBIO, 30000);
+[e ( _StartTimer (2 , -> . `E17143 6 `uc -> -> 30000 `i `us ]
 "921
 [; ;main.c: 921:       if (V.stack) {
 [e $ ! != -> . _V 37 `i -> 0 `i 2316  ]
@@ -5109,9 +5088,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 30C 32 79 75 81 37 100 0 ]
 [a 31C 32 79 75 32 37 100 0 ]
 [a 21C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 23C 49 46 50 57 71 0 ]
-[a 1C 77 97 121 32 50 51 32 50 48 49 57 0 ]
-[a 2C 50 50 58 51 55 58 52 53 0 ]
+[a 23C 49 46 51 48 71 0 ]
+[a 2C 49 54 58 50 55 58 49 57 0 ]
+[a 1C 77 97 121 32 50 54 32 50 48 49 57 0 ]
 [a 32C 69 37 100 32 65 37 100 32 84 37 100 32 71 37 100 32 35 0 ]
 [a 27C 72 79 83 84 58 32 37 108 100 32 71 37 100 32 32 32 32 32 32 35 0 ]
 [a 34C 72 79 83 84 58 32 37 108 100 32 71 37 100 32 32 32 32 32 32 35 0 ]
