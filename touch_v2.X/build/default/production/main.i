@@ -27391,7 +27391,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 632 "./mcc_generated_files/pin_manager.h"
+# 672 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "./mcc_generated_files/mcc.h" 2
 
@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28104,6 +28104,25 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
+# 62 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28131,25 +28150,6 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
-# 62 "./mcc_generated_files/mcc.h" 2
-
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
 # 63 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -28284,7 +28284,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 77 "./vconfig.h"
+# 78 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28619,7 +28619,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 26 2019", *build_time = "20:35:28";
+const char *build_date = "May 27 2019", *build_time = "18:04:08";
 
 V_help T[] = {
  {
@@ -29335,7 +29335,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.31G");
+   sprintf(V.buf, " Version %s", "1.32G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    if (V.seq_test) {
     sprintf(V.buf, "Sequence Testing");
@@ -29442,14 +29442,15 @@ void main(void)
 
     if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
      if (TimerDone(TMR_HBIO)) {
-      StartTimer(TMR_HBIO, 30000);
 
       if (V.stack) {
        hb_message();
        V.msg_error = MSG_ERROR_NONE;
        V.ping_count = 0;
       } else {
+       StartTimer(TMR_HBIO, 30000);
        if (V.ping_count++ > 4) {
+        V.response.info = DIS_STR;
         hb_message();
         sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
         V.buf[16] = 0;
@@ -29549,10 +29550,11 @@ void main(void)
     do { LATFbits.LATF7 = 0; } while(0);
    }
   }
-  sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
-  V.buf[16] = 0;
+
   if (mode != UI_STATE_LOG)
    if (TimerDone(TMR_DISPLAY)) {
+    sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+    V.buf[16] = 0;
     MyeaDogM_WriteStringAtPos(1, 0, V.buf);
     StartTimer(TMR_DISPLAY, 300);
    }

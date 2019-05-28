@@ -11,8 +11,8 @@ mcc_generated_files/tmr5.h  \
 mcc_generated_files/tmr6.h  \
 mcc_generated_files/pwm8.h  \
 mcc_generated_files/tmr2.h  \
-mcc_generated_files/ext_int.h  \
 mcc_generated_files/memory.h  \
+mcc_generated_files/ext_int.h  \
 mcc_generated_files/clc1.h  \
 mcc_generated_files/uart2.h  \
 mcc_generated_files/uart1.h  \

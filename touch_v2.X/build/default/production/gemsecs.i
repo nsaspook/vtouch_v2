@@ -35,8 +35,6 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27436,7 +27434,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27469,6 +27467,8 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
+
+typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -27563,7 +27563,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 19 "./vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 632 "./mcc_generated_files/pin_manager.h"
+# 672 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 20 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
@@ -27588,7 +27588,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 77 "./vconfig.h"
+# 78 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28285,6 +28285,25 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
+# 62 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28312,25 +28331,6 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
-# 62 "./mcc_generated_files/mcc.h" 2
-
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
 # 63 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -29155,7 +29155,7 @@ _Bool sequence_messages(uint8_t sid)
   return 0;
   break;
  }
- StartTimer(TMR_HBIO, 30000);
+ StartTimer(TMR_HBIO, 20000);
  return 1;
 }
 
@@ -29164,7 +29164,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.31G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.32G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29363,6 +29363,7 @@ P_CODES s6f11_opcmd(void)
 
 _Bool gem_messages(response_type *block, uint8_t sid)
 {
+ StartTimer(TMR_HBIO, 20000);
  if (!V.stack)
   return 0;
 
@@ -29394,9 +29395,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
  V.queue = 0;
  block.respond = 0;
 
- if (V.stack) {
-  gem_messages(&block, V.sid);
-  return(block);
+ if (TimerDone(TMR_HBIO)) {
+  if (V.stack) {
+   gem_messages(&block, V.sid);
+   return(block);
+  }
  }
 
  switch (stream) {
@@ -29693,6 +29696,8 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
      V.response.info = DIS_SEQUENCE;
     } else {
      V.msg_ret = 0;
+     V.msg_error = MSG_ERROR_NONE;
+     V.response.info = DIS_STR;
     }
    }
    break;
@@ -29735,7 +29740,8 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 
   case 2:
    if (block != GEM_STATE_REMOTE)
-    StartTimer(TMR_HBIO, 30000);
+    if (TimerDone(TMR_HBIO))
+     StartTimer(TMR_HBIO, 30000);
 
    block = GEM_STATE_REMOTE;
    V.ticker = 0;

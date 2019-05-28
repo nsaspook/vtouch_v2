@@ -798,6 +798,7 @@ P_CODES s6f11_opcmd(void)
  */
 bool gem_messages(response_type *block, uint8_t sid)
 {
+	StartTimer(TMR_HBIO, HBT);
 	if (!V.stack)
 		return false;
 
@@ -829,9 +830,11 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 	V.queue = false;
 	block.respond = false;
 
-	if (V.stack) {
-		gem_messages(&block, V.sid);
-		return(block);
+	if (TimerDone(TMR_HBIO)) { // hold sequences during equipment messages
+		if (V.stack) {
+			gem_messages(&block, V.sid);
+			return(block);
+		}
 	}
 
 	switch (stream) { // from equipment
@@ -1128,6 +1131,8 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 					V.response.info = DIS_SEQUENCE; // show error message
 				} else {
 					V.msg_ret = 0;
+					V.msg_error = MSG_ERROR_NONE;
+					V.response.info = DIS_STR;
 				}
 			}
 			break;
@@ -1170,7 +1175,8 @@ GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
 #endif
 		case 2:
 			if (block != GEM_STATE_REMOTE)
-				StartTimer(TMR_HBIO, HBT); // restart the heartbeat
+				if (TimerDone(TMR_HBIO))
+					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
 
 			block = GEM_STATE_REMOTE;
 			V.ticker = 0;

@@ -921,14 +921,15 @@ void main(void)
 				 */
 				if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
 					if (TimerDone(TMR_HBIO)) {
-						StartTimer(TMR_HBIO, HBT);
 						// send ping or sequence message
 						if (V.stack) {
 							hb_message(); // prime the TX state machine
 							V.msg_error = MSG_ERROR_NONE;
 							V.ping_count = 0;
 						} else {
+							StartTimer(TMR_HBIO, HBTL);
 							if (V.ping_count++ > 4) {
+								V.response.info = DIS_STR;
 								hb_message();
 								sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
 								V.buf[16] = 0; // string size limit
@@ -1028,10 +1029,11 @@ void main(void)
 				BILED4_2_SetLow();
 			}
 		}
-		sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
-		V.buf[16] = 0; // string size limit
+
 		if (mode != UI_STATE_LOG)
 			if (TimerDone(TMR_DISPLAY)) { // limit update rate
+				sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+				V.buf[16] = 0; // string size limit
 				MyeaDogM_WriteStringAtPos(1, 0, V.buf);
 				StartTimer(TMR_DISPLAY, DDELAY);
 			}

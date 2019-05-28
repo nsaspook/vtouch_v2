@@ -39,8 +39,6 @@ extern double __fpnormalize(double);
 typedef long int wchar_t;
 # 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
@@ -27244,7 +27242,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27309,7 +27307,7 @@ void INTERRUPT_Initialize (void);
 # 52 "mcc_generated_files/uart1.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 632 "mcc_generated_files/pin_manager.h"
+# 672 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 53 "mcc_generated_files/uart1.c" 2
 # 65 "mcc_generated_files/uart1.c"
