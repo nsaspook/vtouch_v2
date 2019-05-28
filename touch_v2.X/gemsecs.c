@@ -257,6 +257,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
+				if (TimerDone(TMR_HBIO))
+					StartTimer(TMR_HBIO, HBTS); // add short idle time
 			}
 		}
 		break;
@@ -575,12 +577,12 @@ bool sequence_messages(uint8_t sid)
 		S[4].message.data[0] = 0x02;
 		S[5].message.data[0] = 0x03;
 
-		S[0].delay = 5000; // set delay between commands
-		S[1].delay = 5000;
-		S[2].delay = 5000;
-		S[3].delay = 5000;
-		S[4].delay = 5000;
-		S[5].delay = 5000;
+		S[0].delay = 7000; // set delay between commands
+		S[1].delay = 7000;
+		S[2].delay = 7000;
+		S[3].delay = 7000;
+		S[4].delay = 7000;
+		S[5].delay = 7000;
 
 		S[0].block.header = (uint8_t*) & S[0].message; // S6F41
 		S[0].block.length = sizeof(header33);
@@ -847,6 +849,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			gem_messages(&block, V.sid);
 			return(block);
 		}
+		StartTimer(TMR_HBIO, HBTS); // add short idle time
 	}
 
 	switch (stream) { // from equipment
