@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27434,7 +27436,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27467,8 +27469,6 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
-
-typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -27588,7 +27588,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 78 "./vconfig.h"
+# 77 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28561,6 +28561,7 @@ void WaitMs(uint16_t numMilliseconds);
  typedef struct gem_message_type {
   header33 message;
   response_type block;
+  uint16_t delay;
  } gem_message_type;
 
  uint16_t block_checksum(uint8_t *, uint16_t);
@@ -28818,6 +28819,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
+    do { LATBbits.LATB4 = 1; } while(0);
     do { LATEbits.LATE1 = 1; } while(0);
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
@@ -28924,6 +28926,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_DONE:
   V.failed_receive = 0;
+  do { LATBbits.LATB4 = 0; } while(0);
  default:
   *r_link = LINK_STATE_IDLE;
 
@@ -28941,6 +28944,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
+  do { LATBbits.LATB5 = 1; } while(0);
   V.error = LINK_ERROR_NONE;
   retry = 3;
   UART1_Write(0x05);
@@ -29034,6 +29038,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_DONE:
   V.failed_send = 0;
+  do { LATBbits.LATB5 = 0; } while(0);
   break;
  default:
   *t_link = LINK_STATE_IDLE;
@@ -29136,6 +29141,13 @@ _Bool sequence_messages(uint8_t sid)
   S[4].message.data[0] = 0x02;
   S[5].message.data[0] = 0x03;
 
+  S[0].delay = 5000;
+  S[1].delay = 5000;
+  S[2].delay = 5000;
+  S[3].delay = 5000;
+  S[4].delay = 5000;
+  S[5].delay = 5000;
+
   S[0].block.header = (uint8_t*) & S[0].message;
   S[0].block.length = sizeof(header33);
   S[1].block.header = (uint8_t*) & S[1].message;
@@ -29155,7 +29167,7 @@ _Bool sequence_messages(uint8_t sid)
   return 0;
   break;
  }
- StartTimer(TMR_HBIO, 20000);
+ StartTimer(TMR_HBIO, S[V.stack - 1].delay);
  return 1;
 }
 
@@ -29164,7 +29176,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.32G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.33G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29363,9 +29375,10 @@ P_CODES s6f11_opcmd(void)
 
 _Bool gem_messages(response_type *block, uint8_t sid)
 {
- StartTimer(TMR_HBIO, 20000);
  if (!V.stack)
   return 0;
+
+ StartTimer(TMR_HBIO, S[V.stack - 1].delay);
 
  switch (sid) {
  case 1:

@@ -253,6 +253,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
+				IO_RB4_SetHigh();
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
@@ -359,6 +360,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break;
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
 		V.failed_receive = false;
+		IO_RB4_SetLow();
 	default:
 		*r_link = LINK_STATE_IDLE;
 
@@ -376,6 +378,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
+		IO_RB5_SetHigh();
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
 		UART1_Write(ENQ);
@@ -469,6 +472,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_DONE: // stay in state until external state change trigger to idle
 		V.failed_send = false;
+		IO_RB5_SetLow();
 		break;
 	default:
 		*t_link = LINK_STATE_IDLE;
@@ -571,6 +575,13 @@ bool sequence_messages(uint8_t sid)
 		S[4].message.data[0] = 0x02;
 		S[5].message.data[0] = 0x03;
 
+		S[0].delay = 5000; // set delay between commands
+		S[1].delay = 5000;
+		S[2].delay = 5000;
+		S[3].delay = 5000;
+		S[4].delay = 5000;
+		S[5].delay = 5000;
+
 		S[0].block.header = (uint8_t*) & S[0].message; // S6F41
 		S[0].block.length = sizeof(header33);
 		S[1].block.header = (uint8_t*) & S[1].message;
@@ -590,7 +601,7 @@ bool sequence_messages(uint8_t sid)
 		return false;
 		break;
 	}
-	StartTimer(TMR_HBIO, HBT); // restart sequence timer
+	StartTimer(TMR_HBIO, S[V.stack - 1].delay); // restart sequence timer
 	return true;
 }
 
@@ -798,9 +809,10 @@ P_CODES s6f11_opcmd(void)
  */
 bool gem_messages(response_type *block, uint8_t sid)
 {
-	StartTimer(TMR_HBIO, HBT);
 	if (!V.stack)
 		return false;
+
+	StartTimer(TMR_HBIO, S[V.stack - 1].delay);
 
 	switch (sid) {
 	case 1: // close doors sequence

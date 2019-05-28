@@ -138,6 +138,7 @@ extern "C" {
 	typedef struct gem_message_type {
 		header33 message;
 		response_type block;
+		uint16_t delay;
 	} gem_message_type;
 
 	uint16_t block_checksum(uint8_t *, uint16_t);
