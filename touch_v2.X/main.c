@@ -96,7 +96,6 @@ V_data V = {
 	.response.log_seq = 0,
 	.queue = false,
 	.stack = false, // 0 no messages, 1-10 messages in queue
-	.seq_test = SEQ_TEST,
 	.sid = 1,
 	.help_id = 0,
 	.ping_count = 0,
@@ -816,11 +815,7 @@ void main(void)
 			MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " Version %s", VER);
 			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-			if (V.seq_test) {
-				sprintf(V.buf, "Sequence Testing");
-			} else {
-				sprintf(V.buf, " FGB@MCHP FAB4  ");
-			}
+			sprintf(V.buf, " FGB@MCHP FAB4  ");
 			MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -1049,11 +1044,6 @@ void main(void)
 			StartTimer(TMR_HELPDIS, TDELAY);
 			StartTimer(TMR_INFO, TDELAY);
 			mode_lamp_bright(); // mode switch indicator lamp 'button' level
-			if (V.seq_test) {
-				sequence_messages(1); // only close doors during testing
-				secs_II_message(2, 41);
-				V.response.info = DIS_SEQUENCE;
-			}
 		} else {
 			if (TimerDone(TMR_HELPDIS)) {
 				V.help = false;

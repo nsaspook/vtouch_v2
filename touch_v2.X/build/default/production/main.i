@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28413,7 +28413,7 @@ void PMD_Initialize(void);
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
+  uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
@@ -28620,7 +28620,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 28 2019", *build_time = "14:45:00";
+const char *build_date = "May 28 2019", *build_time = "21:46:29";
 
 V_help T[] = {
  {
@@ -28657,7 +28657,6 @@ V_data V = {
  .response.log_seq = 0,
  .queue = 0,
  .stack = 0,
- .seq_test = 0,
  .sid = 1,
  .help_id = 0,
  .ping_count = 0,
@@ -28889,7 +28888,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 352 "main.c"
+# 351 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28908,7 +28907,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 390 "main.c"
+# 389 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29336,16 +29335,12 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.34G");
+   sprintf(V.buf, " Version %s", "1.35G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-   if (V.seq_test) {
-    sprintf(V.buf, "Sequence Testing");
-   } else {
-    sprintf(V.buf, " FGB@MCHP FAB4  ");
-   }
+   sprintf(V.buf, " FGB@MCHP FAB4  ");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
    WaitMs(3000);
-   StartTimer(TMR_DISPLAY, 300);
+   StartTimer(TMR_DISPLAY, 200);
    break;
   case UI_STATE_HOST:
    switch (V.s_state) {
@@ -29557,7 +29552,7 @@ void main(void)
     sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
     V.buf[16] = 0;
     MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-    StartTimer(TMR_DISPLAY, 300);
+    StartTimer(TMR_DISPLAY, 200);
    }
 
 
@@ -29571,11 +29566,6 @@ void main(void)
    StartTimer(TMR_HELPDIS, 3000);
    StartTimer(TMR_INFO, 3000);
    mode_lamp_bright();
-   if (V.seq_test) {
-    sequence_messages(1);
-    secs_II_message(2, 41);
-    V.response.info = DIS_SEQUENCE;
-   }
   } else {
    if (TimerDone(TMR_HELPDIS)) {
     V.help = 0;

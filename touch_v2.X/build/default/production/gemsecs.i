@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27434,7 +27436,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27467,8 +27469,6 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
-
-typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -27717,7 +27717,7 @@ void PIN_MANAGER_Initialize (void);
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, seq_test : 1,
+  uint8_t rbit : 1, wbit : 1, ebit : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
@@ -28928,6 +28928,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_DONE:
   V.failed_receive = 0;
+  V.abort = LINK_ERROR_NONE;
   do { LATBbits.LATB4 = 0; } while(0);
  default:
   *r_link = LINK_STATE_IDLE;
@@ -29040,6 +29041,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_DONE:
   V.failed_send = 0;
+  V.abort = LINK_ERROR_NONE;
   do { LATBbits.LATB5 = 0; } while(0);
   break;
  default:
@@ -29178,7 +29180,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.34G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.35G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29390,9 +29392,6 @@ _Bool gem_messages(response_type *block, uint8_t sid)
   V.llid = S[V.stack - 1].message.data[0];
   break;
  }
-
- if (V.seq_test && sid == 1)
-  secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, 0, 1);
 
  V.stack--;
  return 1;
@@ -29707,14 +29706,14 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 
    ee_logger(stream, function, dtime, msg_data);
    if (function == 42) {
-    if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
-     V.msg_error = MSG_ERROR_DATA;
-     V.response.info = DIS_SEQUENCE;
-    } else {
-     V.msg_ret = 0;
-     V.msg_error = MSG_ERROR_NONE;
-     V.response.info = DIS_STR;
-    }
+
+
+
+
+    V.msg_ret = 0;
+    V.msg_error = MSG_ERROR_NONE;
+    V.response.info = DIS_STR;
+
    }
    break;
   default:

@@ -362,6 +362,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break;
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
 		V.failed_receive = false;
+		V.abort = LINK_ERROR_NONE;
 		IO_RB4_SetLow();
 	default:
 		*r_link = LINK_STATE_IDLE;
@@ -474,6 +475,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_DONE: // stay in state until external state change trigger to idle
 		V.failed_send = false;
+		V.abort = LINK_ERROR_NONE;
 		IO_RB5_SetLow();
 		break;
 	default:
@@ -825,9 +827,6 @@ bool gem_messages(response_type *block, uint8_t sid)
 		break;
 	}
 
-	if (V.seq_test && sid == 1) // force rs-232 transmission for testing only
-		secs_send(S[V.stack - 1].block.header, S[V.stack - 1].block.length, false, 1);
-
 	V.stack--;
 	return true;
 }
@@ -1141,14 +1140,14 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 			/* always store this message */
 			ee_logger(stream, function, dtime, msg_data);
 			if (function == 42) { // check for failed command
-				if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
-					V.msg_error = MSG_ERROR_DATA;
-					V.response.info = DIS_SEQUENCE; // show error message
-				} else {
-					V.msg_ret = 0;
-					V.msg_error = MSG_ERROR_NONE;
-					V.response.info = DIS_STR;
-				}
+				//				if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
+				//					V.msg_error = MSG_ERROR_DATA;
+				//					V.response.info = DIS_SEQUENCE; // show error message
+				//				} else {
+				V.msg_ret = 0;
+				V.msg_error = MSG_ERROR_NONE;
+				V.response.info = DIS_STR;
+				//				}
 			}
 			break;
 		default:
