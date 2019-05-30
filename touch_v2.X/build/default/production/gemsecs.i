@@ -28939,7 +28939,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0);
  default:
   *r_link = LINK_STATE_IDLE;
-
   break;
  }
 
@@ -29055,7 +29054,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  default:
   *t_link = LINK_STATE_IDLE;
-
   break;
  }
 

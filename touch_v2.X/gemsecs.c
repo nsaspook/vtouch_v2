@@ -373,7 +373,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		IO_RB4_Toggle(); // indicate DONE state execution
 	default:
 		*r_link = LINK_STATE_IDLE;
-
 		break;
 	}
 
@@ -489,7 +488,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	default:
 		*t_link = LINK_STATE_IDLE;
-
 		break;
 	}
 

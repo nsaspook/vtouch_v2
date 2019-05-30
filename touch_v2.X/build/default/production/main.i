@@ -28620,7 +28620,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 30 2019", *build_time = "07:30:20";
+const char *build_date = "May 30 2019", *build_time = "09:31:50";
 
 V_help T[] = {
  {
@@ -29499,8 +29499,6 @@ void main(void)
     MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
     break;
    case SEQ_STATE_DONE:
-    V.s_state = SEQ_STATE_INIT;
-    break;
    case SEQ_STATE_ERROR:
    default:
     V.s_state = SEQ_STATE_INIT;

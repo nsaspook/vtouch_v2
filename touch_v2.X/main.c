@@ -977,8 +977,6 @@ void main(void)
 				MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
 				break;
 			case SEQ_STATE_DONE:
-				V.s_state = SEQ_STATE_INIT;
-				break;
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;

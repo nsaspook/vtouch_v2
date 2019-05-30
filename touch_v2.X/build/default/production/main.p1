@@ -2468,7 +2468,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./mcc_generated_files/uart1.h: 407:  void (*UART1_TxInterruptHandler)(void);
 [v _UART1_TxInterruptHandler `*F16906 ~T0 @X0 1 e ]
 "62 main.c
-[; ;main.c: 62: const char *build_date = "May 30 2019", *build_time = "07:30:20";
+[; ;main.c: 62: const char *build_date = "May 30 2019", *build_time = "09:31:50";
 [v _build_date `*Cuc ~T0 @X0 1 e ]
 [i _build_date
 :s 1C
@@ -4740,25 +4740,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 979:    case SEQ_STATE_DONE:
 [e :U 2329 ]
 "980
-[; ;main.c: 980:     V.s_state = SEQ_STATE_INIT;
-[e = . _V 0 . `E16999 0 ]
-"981
-[; ;main.c: 981:     break;
-[e $U 2320  ]
-"982
-[; ;main.c: 982:    case SEQ_STATE_ERROR:
+[; ;main.c: 980:    case SEQ_STATE_ERROR:
 [e :U 2330 ]
-"983
-[; ;main.c: 983:    default:
+"981
+[; ;main.c: 981:    default:
 [e :U 2331 ]
-"984
-[; ;main.c: 984:     V.s_state = SEQ_STATE_INIT;
+"982
+[; ;main.c: 982:     V.s_state = SEQ_STATE_INIT;
 [e = . _V 0 . `E16999 0 ]
-"985
-[; ;main.c: 985:     break;
+"983
+[; ;main.c: 983:     break;
 [e $U 2320  ]
-"986
-[; ;main.c: 986:    }
+"984
+[; ;main.c: 984:    }
 }
 [e $U 2320  ]
 [e :U 2321 ]
@@ -4769,43 +4763,43 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E16999 6 `ui 2330
  2331 ]
 [e :U 2320 ]
-"987
-[; ;main.c: 987:    if (V.debug)
+"985
+[; ;main.c: 985:    if (V.debug)
 [e $ ! != -> . _V 34 `i -> 0 `i 2332  ]
-"988
-[; ;main.c: 988:     sprintf(V.buf, "Equip type %d       ", V.e_types);
+"986
+[; ;main.c: 986:     sprintf(V.buf, "Equip type %d       ", V.e_types);
 [e ( _sprintf (1 , (. , &U . _V 7 :s 39C -> . _V 3 `ui ]
 [e $U 2333  ]
-"989
-[; ;main.c: 989:    else
+"987
+[; ;main.c: 987:    else
 [e :U 2332 ]
-"990
-[; ;main.c: 990:     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+"988
+[; ;main.c: 988:     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 [e ( _sprintf (1 , , , , (. , &U . _V 7 :s 40C -> . _V 39 `i -> . _V 2 `ui -> . _V 24 `ui -> . _V 23 `ui ]
 [e :U 2333 ]
-"991
-[; ;main.c: 991:    V.buf[16] = 0;
+"989
+[; ;main.c: 989:    V.buf[16] = 0;
 [e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
-"992
-[; ;main.c: 992:    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+"990
+[; ;main.c: 990:    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 [e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U . _V 7 ]
-"993
-[; ;main.c: 993:    break;
+"991
+[; ;main.c: 991:    break;
 [e $U 2283  ]
-"994
-[; ;main.c: 994:   case UI_STATE_ERROR:
+"992
+[; ;main.c: 992:   case UI_STATE_ERROR:
 [e :U 2334 ]
-"995
-[; ;main.c: 995:   default:
+"993
+[; ;main.c: 993:   default:
 [e :U 2335 ]
-"996
-[; ;main.c: 996:    V.ui_state = UI_STATE_INIT;
+"994
+[; ;main.c: 994:    V.ui_state = UI_STATE_INIT;
 [e = . _V 1 . `E17008 0 ]
-"997
-[; ;main.c: 997:    break;
+"995
+[; ;main.c: 995:    break;
 [e $U 2283  ]
-"998
-[; ;main.c: 998:   }
+"996
+[; ;main.c: 996:   }
 }
 [e $U 2283  ]
 [e :U 2284 ]
@@ -4815,254 +4809,254 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E17008 4 `ui 2334
  2335 ]
 [e :U 2283 ]
-"999
-[; ;main.c: 999:   if (V.ticks) {
+"997
+[; ;main.c: 997:   if (V.ticks) {
 [e $ ! != . _V 10 -> -> -> 0 `i `l `ul 2336  ]
 {
-"1000
-[; ;main.c: 1000:    if (V.failed_receive) {
+"998
+[; ;main.c: 998:    if (V.failed_receive) {
 [e $ ! != -> . _V 32 `i -> 0 `i 2337  ]
 {
-"1001
-[; ;main.c: 1001:     do { LATDbits.LATD4 = 0; } while(0);
+"999
+[; ;main.c: 999:     do { LATDbits.LATD4 = 0; } while(0);
 [e :U 2340 ]
 {
 [e = . . _LATDbits 0 4 -> -> 0 `i `uc ]
 }
 [e :U 2339 ]
-"1002
-[; ;main.c: 1002:     do { LATDbits.LATD5 = 1; } while(0);
+"1000
+[; ;main.c: 1000:     do { LATDbits.LATD5 = 1; } while(0);
 [e :U 2343 ]
 {
 [e = . . _LATDbits 0 5 -> -> 1 `i `uc ]
 }
 [e :U 2342 ]
-"1003
-[; ;main.c: 1003:     if (V.error == LINK_ERROR_CHECKSUM) {
+"1001
+[; ;main.c: 1001:     if (V.error == LINK_ERROR_CHECKSUM) {
 [e $ ! == -> . _V 15 `i -> . `E17038 5 `i 2344  ]
 {
-"1004
-[; ;main.c: 1004:      do { LATFbits.LATF4 = 0; } while(0);
+"1002
+[; ;main.c: 1002:      do { LATFbits.LATF4 = 0; } while(0);
 [e :U 2347 ]
 {
 [e = . . _LATFbits 0 4 -> -> 0 `i `uc ]
 }
 [e :U 2346 ]
-"1005
-[; ;main.c: 1005:      do { LATFbits.LATF5 = 1; } while(0);
+"1003
+[; ;main.c: 1003:      do { LATFbits.LATF5 = 1; } while(0);
 [e :U 2350 ]
 {
 [e = . . _LATFbits 0 5 -> -> 1 `i `uc ]
 }
 [e :U 2349 ]
-"1006
-[; ;main.c: 1006:     }
+"1004
+[; ;main.c: 1004:     }
 }
 [e :U 2344 ]
-"1007
-[; ;main.c: 1007:    } else {
+"1005
+[; ;main.c: 1005:    } else {
 }
 [e $U 2351  ]
 [e :U 2337 ]
 {
-"1008
-[; ;main.c: 1008:     do { LATDbits.LATD4 = 1; } while(0);
+"1006
+[; ;main.c: 1006:     do { LATDbits.LATD4 = 1; } while(0);
 [e :U 2354 ]
 {
 [e = . . _LATDbits 0 4 -> -> 1 `i `uc ]
 }
 [e :U 2353 ]
-"1009
-[; ;main.c: 1009:     do { LATDbits.LATD5 = 0; } while(0);
+"1007
+[; ;main.c: 1007:     do { LATDbits.LATD5 = 0; } while(0);
 [e :U 2357 ]
 {
 [e = . . _LATDbits 0 5 -> -> 0 `i `uc ]
 }
 [e :U 2356 ]
-"1010
-[; ;main.c: 1010:     do { LATFbits.LATF4 = 1; } while(0);
+"1008
+[; ;main.c: 1008:     do { LATFbits.LATF4 = 1; } while(0);
 [e :U 2360 ]
 {
 [e = . . _LATFbits 0 4 -> -> 1 `i `uc ]
 }
 [e :U 2359 ]
-"1011
-[; ;main.c: 1011:     do { LATFbits.LATF5 = 0; } while(0);
+"1009
+[; ;main.c: 1009:     do { LATFbits.LATF5 = 0; } while(0);
 [e :U 2363 ]
 {
 [e = . . _LATFbits 0 5 -> -> 0 `i `uc ]
 }
 [e :U 2362 ]
-"1012
-[; ;main.c: 1012:    }
+"1010
+[; ;main.c: 1010:    }
 }
 [e :U 2351 ]
-"1013
-[; ;main.c: 1013:    if (V.failed_send) {
+"1011
+[; ;main.c: 1011:    if (V.failed_send) {
 [e $ ! != -> . _V 31 `i -> 0 `i 2364  ]
 {
-"1014
-[; ;main.c: 1014:     do { LATDbits.LATD6 = 0; } while(0);
+"1012
+[; ;main.c: 1012:     do { LATDbits.LATD6 = 0; } while(0);
 [e :U 2367 ]
 {
 [e = . . _LATDbits 0 6 -> -> 0 `i `uc ]
 }
 [e :U 2366 ]
-"1015
-[; ;main.c: 1015:     do { LATDbits.LATD7 = 1; } while(0);
+"1013
+[; ;main.c: 1013:     do { LATDbits.LATD7 = 1; } while(0);
 [e :U 2370 ]
 {
 [e = . . _LATDbits 0 7 -> -> 1 `i `uc ]
 }
 [e :U 2369 ]
-"1016
-[; ;main.c: 1016:     if (V.error == LINK_ERROR_CHECKSUM) {
+"1014
+[; ;main.c: 1014:     if (V.error == LINK_ERROR_CHECKSUM) {
 [e $ ! == -> . _V 15 `i -> . `E17038 5 `i 2371  ]
 {
-"1017
-[; ;main.c: 1017:      do { LATFbits.LATF6 = 0; } while(0);
+"1015
+[; ;main.c: 1015:      do { LATFbits.LATF6 = 0; } while(0);
 [e :U 2374 ]
 {
 [e = . . _LATFbits 0 6 -> -> 0 `i `uc ]
 }
 [e :U 2373 ]
-"1018
-[; ;main.c: 1018:      do { LATFbits.LATF7 = 1; } while(0);
+"1016
+[; ;main.c: 1016:      do { LATFbits.LATF7 = 1; } while(0);
 [e :U 2377 ]
 {
 [e = . . _LATFbits 0 7 -> -> 1 `i `uc ]
 }
 [e :U 2376 ]
-"1019
-[; ;main.c: 1019:     }
+"1017
+[; ;main.c: 1017:     }
 }
 [e :U 2371 ]
-"1020
-[; ;main.c: 1020:    } else {
+"1018
+[; ;main.c: 1018:    } else {
 }
 [e $U 2378  ]
 [e :U 2364 ]
 {
-"1021
-[; ;main.c: 1021:     do { LATDbits.LATD6 = 1; } while(0);
+"1019
+[; ;main.c: 1019:     do { LATDbits.LATD6 = 1; } while(0);
 [e :U 2381 ]
 {
 [e = . . _LATDbits 0 6 -> -> 1 `i `uc ]
 }
 [e :U 2380 ]
-"1022
-[; ;main.c: 1022:     do { LATDbits.LATD7 = 0; } while(0);
+"1020
+[; ;main.c: 1020:     do { LATDbits.LATD7 = 0; } while(0);
 [e :U 2384 ]
 {
 [e = . . _LATDbits 0 7 -> -> 0 `i `uc ]
 }
 [e :U 2383 ]
-"1023
-[; ;main.c: 1023:     do { LATFbits.LATF6 = 1; } while(0);
+"1021
+[; ;main.c: 1021:     do { LATFbits.LATF6 = 1; } while(0);
 [e :U 2387 ]
 {
 [e = . . _LATFbits 0 6 -> -> 1 `i `uc ]
 }
 [e :U 2386 ]
-"1024
-[; ;main.c: 1024:     do { LATFbits.LATF7 = 0; } while(0);
+"1022
+[; ;main.c: 1022:     do { LATFbits.LATF7 = 0; } while(0);
 [e :U 2390 ]
 {
 [e = . . _LATFbits 0 7 -> -> 0 `i `uc ]
 }
 [e :U 2389 ]
-"1025
-[; ;main.c: 1025:    }
+"1023
+[; ;main.c: 1023:    }
 }
 [e :U 2378 ]
-"1026
-[; ;main.c: 1026:   }
+"1024
+[; ;main.c: 1024:   }
 }
 [e :U 2336 ]
-"1028
-[; ;main.c: 1028:   if (mode != UI_STATE_LOG)
+"1026
+[; ;main.c: 1026:   if (mode != UI_STATE_LOG)
 [e $ ! != -> _mode `ui -> . `E17008 3 `ui 2391  ]
-"1029
-[; ;main.c: 1029:    if (TimerDone(TMR_DISPLAY)) {
+"1027
+[; ;main.c: 1027:    if (TimerDone(TMR_DISPLAY)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17142 10 `uc `i -> 0 `i 2392  ]
 {
-"1030
-[; ;main.c: 1030:     sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+"1028
+[; ;main.c: 1028:     sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 [e ( _sprintf (1 , , , , , , (. , &U . _V 7 :s 41C -> . _V 5 `ui -> . _V 32 `i -> . _V 6 `ui -> . _V 31 `i -> . _V 23 `ui -> . _V 36 `i ]
-"1031
-[; ;main.c: 1031:     V.buf[16] = 0;
+"1029
+[; ;main.c: 1029:     V.buf[16] = 0;
 [e = *U + &U . _V 7 * -> -> -> 16 `i `ui `ux -> -> # *U &U . _V 7 `ui `ux -> -> 0 `i `uc ]
-"1032
-[; ;main.c: 1032:     MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+"1030
+[; ;main.c: 1030:     MyeaDogM_WriteStringAtPos(1, 0, V.buf);
 [e ( _MyeaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U . _V 7 ]
-"1033
-[; ;main.c: 1033:     StartTimer(TMR_DISPLAY, 200);
+"1031
+[; ;main.c: 1031:     StartTimer(TMR_DISPLAY, 200);
 [e ( _StartTimer (2 , -> . `E17142 10 `uc -> -> 200 `i `us ]
-"1034
-[; ;main.c: 1034:    }
+"1032
+[; ;main.c: 1032:    }
 }
 [e :U 2392 ]
 [e :U 2391 ]
-"1039
-[; ;main.c: 1039:   if (help_button() && V.response.info != DIS_HELP) {
+"1037
+[; ;main.c: 1037:   if (help_button() && V.response.info != DIS_HELP) {
 [e $ ! && != -> ( _help_button ..  `i -> 0 `i != -> . . _V 38 6 `ui -> . `E16976 6 `ui 2393  ]
 {
-"1040
-[; ;main.c: 1040:    V.response.help_temp = V.response.info;
+"1038
+[; ;main.c: 1038:    V.response.help_temp = V.response.info;
 [e = . . _V 38 7 . . _V 38 6 ]
-"1041
-[; ;main.c: 1041:    V.response.info = DIS_HELP;
+"1039
+[; ;main.c: 1039:    V.response.info = DIS_HELP;
 [e = . . _V 38 6 . `E16976 6 ]
-"1042
-[; ;main.c: 1042:    sprintf(V.info, "%s              ", T[V.help_id].message);
+"1040
+[; ;main.c: 1040:    sprintf(V.info, "%s              ", T[V.help_id].message);
 [e ( _sprintf (1 , (. , &U . _V 9 :s 42C &U . *U + &U _T * -> . _V 37 `ux -> -> # *U &U _T `ui `ux 0 ]
-"1043
-[; ;main.c: 1043:    V.help_id++;
+"1041
+[; ;main.c: 1041:    V.help_id++;
 [e ++ . _V 37 -> -> 1 `i `uc ]
-"1044
-[; ;main.c: 1044:    StartTimer(TMR_HELPDIS, 3000);
+"1042
+[; ;main.c: 1042:    StartTimer(TMR_HELPDIS, 3000);
 [e ( _StartTimer (2 , -> . `E17142 9 `uc -> -> 3000 `i `us ]
-"1045
-[; ;main.c: 1045:    StartTimer(TMR_INFO, 3000);
+"1043
+[; ;main.c: 1043:    StartTimer(TMR_INFO, 3000);
 [e ( _StartTimer (2 , -> . `E17142 7 `uc -> -> 3000 `i `us ]
-"1046
-[; ;main.c: 1046:    mode_lamp_bright();
+"1044
+[; ;main.c: 1044:    mode_lamp_bright();
 [e ( _mode_lamp_bright ..  ]
-"1047
-[; ;main.c: 1047:   } else {
+"1045
+[; ;main.c: 1045:   } else {
 }
 [e $U 2394  ]
 [e :U 2393 ]
 {
-"1048
-[; ;main.c: 1048:    if (TimerDone(TMR_HELPDIS)) {
+"1046
+[; ;main.c: 1046:    if (TimerDone(TMR_HELPDIS)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17142 9 `uc `i -> 0 `i 2395  ]
 {
-"1049
-[; ;main.c: 1049:     V.help = 0;
+"1047
+[; ;main.c: 1047:     V.help = 0;
 [e = . _V 35 -> -> 0 `i `uc ]
-"1050
-[; ;main.c: 1050:     V.response.info = V.response.help_temp;
+"1048
+[; ;main.c: 1048:     V.response.info = V.response.help_temp;
 [e = . . _V 38 6 . . _V 38 7 ]
-"1051
-[; ;main.c: 1051:     mode_lamp_dim(V.mode_pwm);
+"1049
+[; ;main.c: 1049:     mode_lamp_dim(V.mode_pwm);
 [e ( _mode_lamp_dim (1 . _V 26 ]
-"1052
-[; ;main.c: 1052:    }
+"1050
+[; ;main.c: 1050:    }
 }
 [e :U 2395 ]
-"1054
-[; ;main.c: 1054:   }
+"1052
+[; ;main.c: 1052:   }
 }
 [e :U 2394 ]
-"1055
-[; ;main.c: 1055:  }
+"1053
+[; ;main.c: 1053:  }
 }
 [e :U 2280 ]
 [e $U 2281  ]
 [e :U 2282 ]
-"1056
-[; ;main.c: 1056: }
+"1054
+[; ;main.c: 1054: }
 [e :UE 2269 ]
 }
 [p f _sprintf 9175184 ]
@@ -5073,7 +5067,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 21C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
 [a 23C 49 46 51 55 71 0 ]
 [a 1C 77 97 121 32 51 48 32 50 48 49 57 0 ]
-[a 2C 48 55 58 51 48 58 50 49 0 ]
+[a 2C 48 57 58 51 49 58 53 48 0 ]
 [a 31C 69 37 100 32 65 37 100 32 84 37 100 32 71 37 100 32 35 0 ]
 [a 26C 72 79 83 84 58 32 37 108 100 32 71 37 100 32 32 32 32 32 32 35 0 ]
 [a 33C 72 79 83 84 58 32 37 108 100 32 71 37 100 32 32 32 32 32 32 35 0 ]
