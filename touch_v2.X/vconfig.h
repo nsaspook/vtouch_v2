@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.35G"
+#define VER	"1.37G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -57,8 +57,8 @@ extern "C" {
 #define HBTS	5000 // short ping delay
 #define HBTL	30000 // ping delay
 #define	RTY	3
-#define ERROR_CHECKSUM	30000
-#define ERROR_COMM	31000
+#define ERROR_CHECKSUM	31500
+#define ERROR_COMM	31500
 
 #define DEFAULT_TID	1
 #define TDELAY	3000

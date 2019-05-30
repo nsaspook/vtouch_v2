@@ -28620,7 +28620,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 28 2019", *build_time = "21:46:29";
+const char *build_date = "May 30 2019", *build_time = "07:30:20";
 
 V_help T[] = {
  {
@@ -29335,7 +29335,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.35G");
+   sprintf(V.buf, " Version %s", "1.37G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4  ");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);

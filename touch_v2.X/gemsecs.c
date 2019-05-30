@@ -61,6 +61,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
+				IO_RB4_SetHigh();
 				V.uart = 1;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
@@ -70,6 +71,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		if (UART2_is_rx_ready()) {
 			rxData = UART2_Read();
 			if (rxData == ENQ) {
+				IO_RB5_SetHigh();
 				V.uart = 2;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
@@ -219,8 +221,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		V.failed_receive = false;
 		secs_II_monitor_message(V.stream, V.function, LDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
-
 		*m_link = LINK_STATE_DONE;
+		IO_RB4_SetLow();
+		IO_RB5_SetLow();
 		break;
 	case LINK_STATE_NAK:
 		*m_link = LINK_STATE_ERROR;
@@ -233,8 +236,10 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_ERROR:
 		break;
-	case LINK_STATE_DONE: // auto move to idle to receive data from link
+	case LINK_STATE_DONE: // normally we don't execute this code state
 		V.failed_receive = false;
+		IO_RB4_Toggle();
+		IO_RB5_Toggle();
 	default:
 		*m_link = LINK_STATE_IDLE;
 		break;
@@ -349,7 +354,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.g_state = secs_gem_state(V.stream, V.function);
 		V.failed_receive = false;
 		*r_link = LINK_STATE_DONE;
-		break;
+		V.abort = LINK_ERROR_NONE;
+		IO_RB4_SetLow();
+		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
 		UART1_Write(NAK);
 		*r_link = LINK_STATE_ERROR;
@@ -363,7 +370,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
 		V.failed_receive = false;
 		V.abort = LINK_ERROR_NONE;
-		IO_RB4_SetLow();
+		IO_RB4_Toggle(); // indicate DONE state execution
 	default:
 		*r_link = LINK_STATE_IDLE;
 
@@ -461,6 +468,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 				if (rxData == ACK) {
 					V.failed_send = false;
 					*t_link = LINK_STATE_DONE;
+					V.abort = LINK_ERROR_NONE;
+					IO_RB5_SetLow();
 				}
 			}
 		}
@@ -473,10 +482,10 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_ERROR:
 		break;
-	case LINK_STATE_DONE: // stay in state until external state change trigger to idle
+	case LINK_STATE_DONE: // normally we don't execute this code
 		V.failed_send = false;
 		V.abort = LINK_ERROR_NONE;
-		IO_RB5_SetLow();
+		IO_RB5_Toggle(); // indicate DONE state execution
 		break;
 	default:
 		*t_link = LINK_STATE_IDLE;
@@ -1100,6 +1109,8 @@ static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t 
 	V.response.info = DIS_LOG;
 	V.response.log_num++;
 	V.response.log_seq++;
+	if (V.response.log_seq >= 3) // limit saving to first three positions, last position is for program settings
+		V.response.log_seq = 0;
 }
 
 /*

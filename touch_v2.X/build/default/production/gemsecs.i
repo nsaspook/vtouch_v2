@@ -28642,6 +28642,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
+    do { LATBbits.LATB4 = 1; } while(0);
     V.uart = 1;
     StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
@@ -28651,6 +28652,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   if (UART2_is_rx_ready()) {
    rxData = UART2_Read();
    if (rxData == 0x05) {
+    do { LATBbits.LATB5 = 1; } while(0);
     V.uart = 2;
     StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
@@ -28666,7 +28668,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 104 "gemsecs.c"
+# 106 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -28785,8 +28787,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   V.failed_receive = 0;
   secs_II_monitor_message(V.stream, V.function, 1000);
   V.g_state = secs_gem_state(V.stream, V.function);
-
   *m_link = LINK_STATE_DONE;
+  do { LATBbits.LATB4 = 0; } while(0);
+  do { LATBbits.LATB5 = 0; } while(0);
   break;
  case LINK_STATE_NAK:
   *m_link = LINK_STATE_ERROR;
@@ -28801,6 +28804,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_DONE:
   V.failed_receive = 0;
+  do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0);
+  do { LATBbits.LATB5 = ~LATBbits.LATB5; } while(0);
  default:
   *m_link = LINK_STATE_IDLE;
   break;
@@ -28915,6 +28920,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.g_state = secs_gem_state(V.stream, V.function);
   V.failed_receive = 0;
   *r_link = LINK_STATE_DONE;
+  V.abort = LINK_ERROR_NONE;
+  do { LATBbits.LATB4 = 0; } while(0);
   break;
  case LINK_STATE_NAK:
   UART1_Write(0x15);
@@ -28929,7 +28936,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
  case LINK_STATE_DONE:
   V.failed_receive = 0;
   V.abort = LINK_ERROR_NONE;
-  do { LATBbits.LATB4 = 0; } while(0);
+  do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0);
  default:
   *r_link = LINK_STATE_IDLE;
 
@@ -29027,6 +29034,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
     if (rxData == 0x06) {
      V.failed_send = 0;
      *t_link = LINK_STATE_DONE;
+     V.abort = LINK_ERROR_NONE;
+     do { LATBbits.LATB5 = 0; } while(0);
     }
    }
   }
@@ -29042,7 +29051,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  case LINK_STATE_DONE:
   V.failed_send = 0;
   V.abort = LINK_ERROR_NONE;
-  do { LATBbits.LATB5 = 0; } while(0);
+  do { LATBbits.LATB5 = ~LATBbits.LATB5; } while(0);
   break;
  default:
   *t_link = LINK_STATE_IDLE;
@@ -29180,7 +29189,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.35G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.37G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29666,6 +29675,8 @@ static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t 
  V.response.info = DIS_LOG;
  V.response.log_num++;
  V.response.log_seq++;
+ if (V.response.log_seq >= 3)
+  V.response.log_seq = 0;
 }
 
 
