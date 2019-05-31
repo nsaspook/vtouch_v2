@@ -88,7 +88,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			*m_link = LINK_STATE_NAK;
 		} else {
 #ifdef DB2
-			WaitMs(50);
+			WaitMs(1);
 			if (V.uart == 1)
 #ifdef RERROR
 				if (rand() < ERROR_COMM)
@@ -210,7 +210,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_ACK:
 #ifdef DB1
-		WaitMs(50);
+		WaitMs(1);
 #endif
 		V.stream = H10[1].block.block.stream;
 		V.function = H10[1].block.block.function;
@@ -275,7 +275,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
 #ifdef DB2
-		WaitMs(5);
+		WaitMs(1);
 		//H27[0].block.block.systemb = V.ticks; // make distinct, testing S1F13
 		//secs_send((uint8_t*) & H27[0], sizeof(header27), true, 1);
 		H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
@@ -394,7 +394,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		StartTimer(TMR_T2, T2);
 		*t_link = LINK_STATE_ENQ;
 #ifdef DB3
-		WaitMs(5);
+		WaitMs(1);
 		UART1_put_buffer(EOT);
 #endif
 		break;
@@ -448,7 +448,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			}
 		}
 #ifdef DB4
-		WaitMs(5);
+		WaitMs(1);
 #ifdef RERROR
 		if (rand() < ERROR_COMM)
 #endif
