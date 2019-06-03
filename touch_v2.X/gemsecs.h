@@ -23,6 +23,7 @@ extern "C" {
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/uart1.h"
 #include "timers.h"
+#include "mydisplay.h"
 
 	typedef struct block10_type {
 		uint32_t systemb;

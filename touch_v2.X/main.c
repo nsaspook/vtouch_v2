@@ -57,9 +57,9 @@ typedef signed long long int24_t;
 #include "gemsecs.h"
 #include "timers.h"
 #include "mconfig.h"
+#include "mydisplay.h"
 
 extern struct spi_link_type spi_link;
-const char *build_date = __DATE__, *build_time = __TIME__;
 
 V_help T[] = {
 	{
@@ -641,112 +641,6 @@ header10 r_block;
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 
-static void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
-{
-	static D_CODES last_info;
-
-	//	DLED = true;
-	wait_lcd_done();
-	if (V.response.info == DIS_STR) {
-		eaDogM_WriteStringAtPos(r, c, strPtr);
-	} else {
-		switch (V.response.info) {
-		case DIS_LOG:
-			sprintf(V.buf, " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " Stored #%d        ", V.response.log_num);
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		case DIS_LOAD:
-			sprintf(V.buf, " Ready LL        ");
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		case DIS_PUMP:
-			sprintf(V.buf, " Pump LL         ");
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		case DIS_UNLOAD:
-			sprintf(V.buf, " Open LL         ");
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		case DIS_HELP:
-			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(V.buf, "HELP %s           ", build_date);
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, "DISPLAY %s        ", build_time);
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		case DIS_SEQUENCE:
-			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(V.buf, " Load-lock%d R%d      ", V.llid, V.msg_error);
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " SEQUENCE         ");
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		case DIS_TERM:
-			sprintf(V.buf, " Terminal %d             ", V.response.TID);
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		default:
-			sprintf(V.buf, "                  ");
-			V.buf[16] = 0;
-			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, "                  ");
-			V.buf[16] = 0;
-			wait_lcd_done();
-			eaDogM_WriteStringAtPos(1, 0, V.buf);
-			break;
-		}
-		sprintf(V.buf, "%s", V.info);
-		V.buf[16] = 0;
-		wait_lcd_done();
-		eaDogM_WriteStringAtPos(2, 0, V.buf);
-		if (TimerDone(TMR_INFO))
-			V.response.info = DIS_STR;
-	}
-	/*
-	 * this is for possible message flipping with the HELP button
-	 */
-	if (last_info == DIS_HELP && V.response.info != DIS_HELP) {
-		// show some stuff, maybe
-		sprintf(V.buf, "%s              ", T[V.help_id].display);
-		V.buf[16] = 0;
-		eaDogM_WriteStringAtPos(0, 0, V.buf);
-	}
-
-	last_info = V.response.info;
-	//	DLED = false;
-}
-
 /*
  * mode button help mode select
  */
@@ -917,7 +811,7 @@ void main(void)
 				if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
 					if ((V.r_l_state == LINK_STATE_IDLE) && (V.t_l_state == LINK_STATE_IDLE)) {
 						if (TimerDone(TMR_HBIO)) {
-							V.response.info = DIS_STR; // reset display configuration
+							set_display_info(DIS_STR); // reset display configuration
 							// send ping or sequence message
 							if (V.stack) {
 								hb_message(); // prime the TX state machine
@@ -926,16 +820,15 @@ void main(void)
 							} else {
 								StartTimer(TMR_HBIO, HBTL);
 								if (V.ping_count++ > 4) {
-									V.response.info = DIS_STR;
+									set_display_info(DIS_STR);
 									hb_message();
 									sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
 									V.buf[16] = 0; // string size limit
 									MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 									WaitMs(250);
 									V.ping_count = 0;
-								} else {
-									V.response.info = DIS_STR;
 								}
+								set_display_info(DIS_STR);
 							}
 						}
 					}
@@ -1037,9 +930,9 @@ void main(void)
 		/*
 		 * show help display
 		 */
-		if (help_button() && V.response.info != DIS_HELP) {
-			V.response.help_temp = V.response.info;
-			V.response.info = DIS_HELP;
+		if (help_button() && display_info() != DIS_HELP) {
+			set_temp_display_help(display_info());
+			set_display_info(DIS_HELP);
 			sprintf(V.info, "%s              ", T[V.help_id].message);
 			V.help_id++; // cycle help text messages to LCD
 			StartTimer(TMR_HELPDIS, TDELAY);
@@ -1048,7 +941,7 @@ void main(void)
 		} else {
 			if (TimerDone(TMR_HELPDIS)) {
 				V.help = false;
-				V.response.info = V.response.help_temp;
+				set_display_info(display_help());
 				mode_lamp_dim(V.mode_pwm);
 			}
 

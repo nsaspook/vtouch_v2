@@ -1013,7 +1013,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.ticks;
 			StartTimer(TMR_INFO, TDELAY);
-			V.response.info = DIS_TERM;
+			set_display_info(DIS_TERM);
 
 			switch (s10f1_opcmd()) {
 			case CODE_TM:
@@ -1028,26 +1028,26 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				block.reply = (uint8_t*) & H33[0]; // S6F41 send load lock ready command
 				block.reply_length = sizeof(header33);
 				V.queue = true;
-				V.response.info = DIS_LOAD;
+				set_display_info(DIS_LOAD);
 				break;
 			case CODE_UNLOAD:
 				block.respond = true;
 				block.reply = (uint8_t*) & H33[0]; // S6F41 send load lock unload  command
 				block.reply_length = sizeof(header33);
 				V.queue = true;
-				V.response.info = DIS_UNLOAD;
+				set_display_info(DIS_UNLOAD);
 				break;
 			case CODE_PUMP:
 				block.respond = true;
 				block.reply = (uint8_t*) & H33[0]; // S6F41 send load lock pump command
 				block.reply_length = sizeof(header33);
 				V.queue = true;
-				V.response.info = DIS_PUMP;
+				set_display_info(DIS_PUMP);
 				break;
 			case CODE_SEQUENCE:
 				parse_sid();
 				sequence_messages(V.sid);
-				V.response.info = DIS_SEQUENCE;
+				set_display_info(DIS_SEQUENCE);
 				break;
 			case CODE_TS:
 				block.respond = true;
@@ -1063,14 +1063,14 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				} while (++i <= 1023); // overwrite EEPROM data
 				V.response.log_num = 0;
 				V.response.log_seq = 0;
-				V.response.info = DIS_LOG;
+				set_display_info(DIS_LOG);
 				break;
 			case CODE_DEBUG:
 				V.debug = !V.debug;
 			default:
 				break;
 			}
-			V.response.help_temp = V.response.info;
+			set_temp_display_help(display_info());
 			break;
 		default: // S10F0 abort
 			H10[2].block.block.stream = stream;

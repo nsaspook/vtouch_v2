@@ -24,4 +24,5 @@ vconfig.h  \
 ringbufs.h  \
 gemsecs.h  \
 timers.h  \
+mydisplay.h  \
 mconfig.h 
