@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28594,12 +28594,11 @@ void WaitMs(uint16_t numMilliseconds);
   uint16_t delay;
  } gem_message_type;
 
- uint16_t block_checksum(uint8_t *, uint16_t);
- uint16_t run_checksum(uint8_t, _Bool);
+ uint16_t block_checksum(uint8_t *, const uint16_t);
+ uint16_t run_checksum(const uint8_t, const _Bool);
  LINK_STATES m_protocol(LINK_STATES *);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
- _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
  P_CODES s10f1_opcmd(void);
@@ -28620,7 +28619,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "May 30 2019", *build_time = "20:58:59";
+const char *build_date = "Jun  2 2019", *build_time = "17:12:01";
 
 V_help T[] = {
  {
@@ -29163,7 +29162,7 @@ header10 r_block;
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 
-static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
+static void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
  static D_CODES last_info;
 
@@ -29335,7 +29334,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.37G");
+   sprintf(V.buf, " Version %s", "1.39G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4  ");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -29437,24 +29436,27 @@ void main(void)
 
 
     if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
-     if (TimerDone(TMR_HBIO)) {
+     if ((V.r_l_state == LINK_STATE_IDLE) && (V.t_l_state == LINK_STATE_IDLE)) {
+      if (TimerDone(TMR_HBIO)) {
+       V.response.info = DIS_STR;
 
-      if (V.stack) {
-       hb_message();
-       V.msg_error = MSG_ERROR_NONE;
-       V.ping_count = 0;
-      } else {
-       StartTimer(TMR_HBIO, 30000);
-       if (V.ping_count++ > 4) {
-        V.response.info = DIS_STR;
+       if (V.stack) {
         hb_message();
-        sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
-        V.buf[16] = 0;
-        MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-        WaitMs(250);
+        V.msg_error = MSG_ERROR_NONE;
         V.ping_count = 0;
        } else {
-        V.response.info = DIS_STR;
+        StartTimer(TMR_HBIO, 30000);
+        if (V.ping_count++ > 4) {
+         V.response.info = DIS_STR;
+         hb_message();
+         sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
+         V.buf[16] = 0;
+         MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+         WaitMs(250);
+         V.ping_count = 0;
+        } else {
+         V.response.info = DIS_STR;
+        }
        }
       }
      }

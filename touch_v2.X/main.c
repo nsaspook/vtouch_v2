@@ -641,7 +641,7 @@ header10 r_block;
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 
-static void MyeaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
+static void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
 	static D_CODES last_info;
 
@@ -915,24 +915,27 @@ void main(void)
 				 * HeartBeat ping or sequence during idle times
 				 */
 				if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
-					if (TimerDone(TMR_HBIO)) {
-						// send ping or sequence message
-						if (V.stack) {
-							hb_message(); // prime the TX state machine
-							V.msg_error = MSG_ERROR_NONE;
-							V.ping_count = 0;
-						} else {
-							StartTimer(TMR_HBIO, HBTL);
-							if (V.ping_count++ > 4) {
-								V.response.info = DIS_STR;
-								hb_message();
-								sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
-								V.buf[16] = 0; // string size limit
-								MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-								WaitMs(250);
+					if ((V.r_l_state == LINK_STATE_IDLE) && (V.t_l_state == LINK_STATE_IDLE)) {
+						if (TimerDone(TMR_HBIO)) {
+							V.response.info = DIS_STR; // reset display configuration
+							// send ping or sequence message
+							if (V.stack) {
+								hb_message(); // prime the TX state machine
+								V.msg_error = MSG_ERROR_NONE;
 								V.ping_count = 0;
 							} else {
-								V.response.info = DIS_STR;
+								StartTimer(TMR_HBIO, HBTL);
+								if (V.ping_count++ > 4) {
+									V.response.info = DIS_STR;
+									hb_message();
+									sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
+									V.buf[16] = 0; // string size limit
+									MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+									WaitMs(250);
+									V.ping_count = 0;
+								} else {
+									V.response.info = DIS_STR;
+								}
 							}
 						}
 					}

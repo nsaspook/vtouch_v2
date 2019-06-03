@@ -17,10 +17,12 @@ extern struct header53 H53[];
 extern header254 H254[];
 extern gem_message_type S[4];
 
+static bool secs_send(uint8_t *, const uint8_t, const bool, const uint8_t);
+
 /*
  * Checksum for message and header block after length byte
  */
-uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
+uint16_t block_checksum(uint8_t *byte_block, const uint16_t byte_count)
 {
 	uint16_t sum = 0, i;
 
@@ -37,7 +39,7 @@ uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
 /*
  * Checksum for data stream
  */
-uint16_t run_checksum(uint8_t byte_block, bool clear)
+uint16_t run_checksum(const uint8_t byte_block, const bool clear)
 {
 	static uint16_t sum = 0;
 
@@ -495,7 +497,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 }
 
 /* send the whole sequence including length and checksum bytes with the variable length */
-bool secs_send(uint8_t *byte_block, uint8_t length, bool fake, uint8_t s_uart)
+static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake, const uint8_t s_uart)
 {
 	uint8_t i, *k;
 	uint16_t checksum;
@@ -567,7 +569,7 @@ void hb_message()
 	}
 }
 
-bool sequence_messages(uint8_t sid)
+bool sequence_messages(const uint8_t sid)
 {
 	V.msg_error = MSG_ERROR_NONE;
 	switch (sid) {
@@ -818,7 +820,7 @@ P_CODES s6f11_opcmd(void)
 /*
  * load block structure with the correct sequence message to send
  */
-bool gem_messages(response_type *block, uint8_t sid)
+bool gem_messages(response_type *block, const uint8_t sid)
 {
 	if (!V.stack)
 		return false;
@@ -841,7 +843,7 @@ bool gem_messages(response_type *block, uint8_t sid)
 /*
  * parse stream and response codes into a message pointer and length to send message in response
  */
-response_type secs_II_message(uint8_t stream, uint8_t function)
+response_type secs_II_message(const uint8_t stream, const uint8_t function)
 {
 	static response_type block;
 	uint16_t i = 0;
@@ -977,7 +979,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 			break;
 		}
 		break;
-	case 9:
+	case 9://	bool secs_send(uint8_t *, const uint8_t, const bool, const uint8_t);
 		switch (function) {
 		case 1:
 			break;
@@ -1094,7 +1096,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 /*
  * logger helper
  */
-static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t *msg_data)
+static void ee_logger(const uint8_t stream, const uint8_t function, const uint16_t dtime, uint8_t *msg_data)
 {
 	uint16_t i = 0;
 
@@ -1114,7 +1116,7 @@ static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t 
 /*
  * parse stream and response codes for log function to EEPROM
  */
-void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
+void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const uint16_t dtime)
 {
 	uint8_t * msg_data = (uint8_t*) & H254[0];
 	static uint8_t store1_1 = true, store1_13 = true, store6_11 = true;
@@ -1185,7 +1187,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
  * parse received stream and response codes for host operational state and
  * equipment model types
  */
-GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
+GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 {
 	static GEM_STATES block = GEM_STATE_DISABLE;
 	static GEM_EQUIP equipment = GEM_GENERIC;

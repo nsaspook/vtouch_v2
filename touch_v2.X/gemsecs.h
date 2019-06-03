@@ -141,12 +141,11 @@ extern "C" {
 		uint16_t delay;
 	} gem_message_type;
 
-	uint16_t block_checksum(uint8_t *, uint16_t);
-	uint16_t run_checksum(uint8_t, bool);
+	uint16_t block_checksum(uint8_t *, const uint16_t);
+	uint16_t run_checksum(const uint8_t, const bool);
 	LINK_STATES m_protocol(LINK_STATES *);
 	LINK_STATES r_protocol(LINK_STATES *);
 	LINK_STATES t_protocol(LINK_STATES *);
-	bool secs_send(uint8_t *, uint8_t, bool, uint8_t);
 	void hb_message(void);
 	uint8_t terminal_format(uint8_t *, uint8_t);
 	P_CODES s10f1_opcmd(void);

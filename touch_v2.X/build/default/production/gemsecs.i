@@ -35,8 +35,6 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27436,7 +27434,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27469,6 +27467,8 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
+
+typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -28564,12 +28564,11 @@ void WaitMs(uint16_t numMilliseconds);
   uint16_t delay;
  } gem_message_type;
 
- uint16_t block_checksum(uint8_t *, uint16_t);
- uint16_t run_checksum(uint8_t, _Bool);
+ uint16_t block_checksum(uint8_t *, const uint16_t);
+ uint16_t run_checksum(const uint8_t, const _Bool);
  LINK_STATES m_protocol(LINK_STATES *);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
- _Bool secs_send(uint8_t *, uint8_t, _Bool, uint8_t);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
  P_CODES s10f1_opcmd(void);
@@ -28598,10 +28597,12 @@ extern struct header53 H53[];
 extern header254 H254[];
 extern gem_message_type S[4];
 
+static _Bool secs_send(uint8_t *, const uint8_t, const _Bool, const uint8_t);
 
 
 
-uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
+
+uint16_t block_checksum(uint8_t *byte_block, const uint16_t byte_count)
 {
  uint16_t sum = 0, i;
 
@@ -28618,7 +28619,7 @@ uint16_t block_checksum(uint8_t *byte_block, uint16_t byte_count)
 
 
 
-uint16_t run_checksum(uint8_t byte_block, _Bool clear)
+uint16_t run_checksum(const uint8_t byte_block, const _Bool clear)
 {
  static uint16_t sum = 0;
 
@@ -28668,7 +28669,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 106 "gemsecs.c"
+# 108 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -29061,7 +29062,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 }
 
 
-_Bool secs_send(uint8_t *byte_block, uint8_t length, _Bool fake, uint8_t s_uart)
+static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fake, const uint8_t s_uart)
 {
  uint8_t i, *k;
  uint16_t checksum;
@@ -29133,7 +29134,7 @@ void hb_message()
  }
 }
 
-_Bool sequence_messages(uint8_t sid)
+_Bool sequence_messages(const uint8_t sid)
 {
  V.msg_error = MSG_ERROR_NONE;
  switch (sid) {
@@ -29187,7 +29188,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.37G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.39G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29384,7 +29385,7 @@ P_CODES s6f11_opcmd(void)
 
 
 
-_Bool gem_messages(response_type *block, uint8_t sid)
+_Bool gem_messages(response_type *block, const uint8_t sid)
 {
  if (!V.stack)
   return 0;
@@ -29407,7 +29408,7 @@ _Bool gem_messages(response_type *block, uint8_t sid)
 
 
 
-response_type secs_II_message(uint8_t stream, uint8_t function)
+response_type secs_II_message(const uint8_t stream, const uint8_t function)
 {
  static response_type block;
  uint16_t i = 0;
@@ -29660,7 +29661,7 @@ response_type secs_II_message(uint8_t stream, uint8_t function)
 
 
 
-static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t *msg_data)
+static void ee_logger(const uint8_t stream, const uint8_t function, const uint16_t dtime, uint8_t *msg_data)
 {
  uint16_t i = 0;
 
@@ -29680,7 +29681,7 @@ static void ee_logger(uint8_t stream, uint8_t function, uint16_t dtime, uint8_t 
 
 
 
-void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
+void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const uint16_t dtime)
 {
  uint8_t * msg_data = (uint8_t*) & H254[0];
  static uint8_t store1_1 = 1, store1_13 = 1, store6_11 = 1;
@@ -29751,7 +29752,7 @@ void secs_II_monitor_message(uint8_t stream, uint8_t function, uint16_t dtime)
 
 
 
-GEM_STATES secs_gem_state(uint8_t stream, uint8_t function)
+GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 {
  static GEM_STATES block = GEM_STATE_DISABLE;
  static GEM_EQUIP equipment = GEM_GENERIC;

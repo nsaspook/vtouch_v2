@@ -18,7 +18,7 @@ static void send_lcd_cmd_long(uint8_t); // for display init only
 static void send_lcd_data(uint8_t);
 static void send_lcd_cmd(uint8_t);
 
-void wdtdelay(uint32_t delay)
+void wdtdelay(const uint32_t delay)
 {
 	static uint32_t dcount;
 
@@ -71,7 +71,7 @@ void init_display(void)
 /*
  * add short spi delay (default)
  */
-static void send_lcd_data(uint8_t data)
+static void send_lcd_data(const uint8_t data)
 {
 	RS_SetHigh();
 	CSB_SetLow();
@@ -82,7 +82,7 @@ static void send_lcd_data(uint8_t data)
 /*
  * add inst spi delay
  */
-static void send_lcd_cmd(uint8_t cmd)
+static void send_lcd_cmd(const uint8_t cmd)
 {
 	RS_SetLow();
 	CSB_SetLow();
@@ -94,7 +94,7 @@ static void send_lcd_cmd(uint8_t cmd)
 /*
  * add clear/home spi delay
  */
-static void send_lcd_cmd_long(uint8_t cmd)
+static void send_lcd_cmd_long(const uint8_t cmd)
 {
 	RS_SetLow();
 	CSB_SetLow();
@@ -127,7 +127,7 @@ void wait_lcd_done(void)
 	wdtdelay(50);
 }
 
-void eaDogM_WriteChr(int8_t value)
+void eaDogM_WriteChr(const int8_t value)
 {
 	send_lcd_data_dma((uint8_t) value);
 }
@@ -140,19 +140,19 @@ void putch(char c)
 	ringBufS_put_dma(spi_link.tx1a, c);
 }
 
-void eaDogM_WriteCommand(uint8_t cmd)
+void eaDogM_WriteCommand(const uint8_t cmd)
 {
 	send_lcd_cmd_dma(cmd);
 }
 
-void eaDogM_SetPos(uint8_t r, uint8_t c)
+void eaDogM_SetPos(const uint8_t r, const uint8_t c)
 {
 	uint8_t cmdPos;
 	cmdPos = (uint8_t) EADOGM_CMD_DDRAM_ADDR + (uint8_t) ((uint8_t) r * (uint8_t) EADOGM_COLSPAN) + (uint8_t) c;
 	eaDogM_WriteCommand(cmdPos);
 }
 
-void eaDogM_ClearRow(uint8_t r)
+void eaDogM_ClearRow(const uint8_t r)
 {
 	uint8_t i;
 	eaDogM_SetPos(r, 0);
@@ -220,7 +220,7 @@ void send_lcd_data_dma(uint8_t strPtr)
 	start_lcd();
 }
 
-void eaDogM_WriteStringAtPos(uint8_t r, uint8_t c, char *strPtr)
+void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
 	send_lcd_cmd_dma((EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c));
 	eaDogM_WriteString(strPtr);

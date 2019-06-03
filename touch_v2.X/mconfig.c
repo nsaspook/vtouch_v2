@@ -3,7 +3,7 @@
 /*
  * hardware specific routines
  */
-void mode_lamp_dim(uint16_t level)
+void mode_lamp_dim(const uint16_t level)
 {
 	PWM8_LoadDutyValue(level);
 }
