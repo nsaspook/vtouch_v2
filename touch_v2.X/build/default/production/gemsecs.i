@@ -28285,25 +28285,6 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 62 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28331,6 +28312,25 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
+# 62 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
 # 63 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -28446,6 +28446,38 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 26 "./gemsecs.h" 2
+# 1 "./mydisplay.h" 1
+# 39 "./mydisplay.h"
+# 1 "./eadog.h" 1
+# 33 "./eadog.h"
+ void wdtdelay(uint32_t);
+
+ void init_display(void);
+ void send_lcd_data_dma(uint8_t);
+ void send_lcd_cmd_dma(uint8_t);
+ void start_lcd(void);
+ void wait_lcd_set(void);
+ _Bool wait_lcd_check(void);
+ void wait_lcd_done(void);
+ void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteCommand(uint8_t);
+ void eaDogM_SetPos(uint8_t, uint8_t);
+ void eaDogM_ClearRow(uint8_t);
+ void eaDogM_WriteString(char *);
+ void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+ void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
+ void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
+# 40 "./mydisplay.h" 2
+
+
+void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
+__attribute__((inline)) D_CODES display_info(void);
+__attribute__((inline)) D_CODES display_help(void);
+_Bool help_button(void);
+void check_help(void);
+D_CODES set_display_info(const D_CODES);
+D_CODES set_temp_display_help(const D_CODES);
+# 27 "./gemsecs.h" 2
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -29188,7 +29220,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.39G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.40G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29578,7 +29610,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    H13[1].block.block.systemb = V.systemb;
    H53[0].block.block.systemb = V.ticks;
    StartTimer(TMR_INFO, 3000);
-   V.response.info = DIS_TERM;
+   set_display_info(DIS_TERM);
 
    switch (s10f1_opcmd()) {
    case CODE_TM:
@@ -29593,26 +29625,26 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
     block.reply = (uint8_t*) & H33[0];
     block.reply_length = sizeof(header33);
     V.queue = 1;
-    V.response.info = DIS_LOAD;
+    set_display_info(DIS_LOAD);
     break;
    case CODE_UNLOAD:
     block.respond = 1;
     block.reply = (uint8_t*) & H33[0];
     block.reply_length = sizeof(header33);
     V.queue = 1;
-    V.response.info = DIS_UNLOAD;
+    set_display_info(DIS_UNLOAD);
     break;
    case CODE_PUMP:
     block.respond = 1;
     block.reply = (uint8_t*) & H33[0];
     block.reply_length = sizeof(header33);
     V.queue = 1;
-    V.response.info = DIS_PUMP;
+    set_display_info(DIS_PUMP);
     break;
    case CODE_SEQUENCE:
     parse_sid();
     sequence_messages(V.sid);
-    V.response.info = DIS_SEQUENCE;
+    set_display_info(DIS_SEQUENCE);
     break;
    case CODE_TS:
     block.respond = 1;
@@ -29628,14 +29660,14 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
     } while (++i <= 1023);
     V.response.log_num = 0;
     V.response.log_seq = 0;
-    V.response.info = DIS_LOG;
+    set_display_info(DIS_LOG);
     break;
    case CODE_DEBUG:
     V.debug = !V.debug;
    default:
     break;
    }
-   V.response.help_temp = V.response.info;
+   set_temp_display_help(display_info());
    break;
   default:
    H10[2].block.block.stream = stream;

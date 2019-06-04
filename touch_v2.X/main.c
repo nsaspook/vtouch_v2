@@ -61,25 +61,6 @@ typedef signed long long int24_t;
 
 extern struct spi_link_type spi_link;
 
-V_help T[] = {
-	{
-		.message = "commands 1",
-		.display = "displays 1",
-	},
-	{
-		.message = "commands 2",
-		.display = "displays 2",
-	},
-	{
-		.message = "commands 3",
-		.display = "displays 3",
-	},
-	{
-		.message = "commands 4",
-		.display = "displays 4",
-	},
-};
-
 V_data V = {
 	.error = LINK_ERROR_NONE,
 	.abort = LINK_ERROR_NONE,
@@ -642,24 +623,6 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 
 /*
- * mode button help mode select
- */
-static bool help_button()
-{
-	if (!RB0_GetValue()) { // debounce and delay for button press
-		V.help = true;
-		if (TimerDone(TMR_HELP))
-			return true;
-
-	}
-
-	if (!V.help)
-		StartTimer(TMR_HELP, BDELAY);
-
-	return false;
-}
-
-/*
  * Main application
  */
 void main(void)
@@ -928,24 +891,9 @@ void main(void)
 			}
 
 		/*
-		 * show help display
+		 * show help display if button pressed
 		 */
-		if (help_button() && display_info() != DIS_HELP) {
-			set_temp_display_help(display_info());
-			set_display_info(DIS_HELP);
-			sprintf(V.info, "%s              ", T[V.help_id].message);
-			V.help_id++; // cycle help text messages to LCD
-			StartTimer(TMR_HELPDIS, TDELAY);
-			StartTimer(TMR_INFO, TDELAY);
-			mode_lamp_bright(); // mode switch indicator lamp 'button' level
-		} else {
-			if (TimerDone(TMR_HELPDIS)) {
-				V.help = false;
-				set_display_info(display_help());
-				mode_lamp_dim(V.mode_pwm);
-			}
-
-		}
+		check_help();
 	}
 }
 /**

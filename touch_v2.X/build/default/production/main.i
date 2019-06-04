@@ -28104,25 +28104,6 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 62 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28150,6 +28131,25 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
+# 62 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
 # 63 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -28476,6 +28476,16 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 26 "./gemsecs.h" 2
+# 1 "./mydisplay.h" 1
+# 42 "./mydisplay.h"
+void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
+__attribute__((inline)) D_CODES display_info(void);
+__attribute__((inline)) D_CODES display_help(void);
+_Bool help_button(void);
+void check_help(void);
+D_CODES set_display_info(const D_CODES);
+D_CODES set_temp_display_help(const D_CODES);
+# 27 "./gemsecs.h" 2
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -28618,27 +28628,8 @@ void mode_lamp_bright(void);
 # 59 "main.c" 2
 
 
-extern struct spi_link_type spi_link;
-const char *build_date = "Jun  2 2019", *build_time = "17:12:01";
 
-V_help T[] = {
- {
-  .message = "commands 1",
-  .display = "displays 1",
- },
- {
-  .message = "commands 2",
-  .display = "displays 2",
- },
- {
-  .message = "commands 3",
-  .display = "displays 3",
- },
- {
-  .message = "commands 4",
-  .display = "displays 4",
- },
-};
+extern struct spi_link_type spi_link;
 
 V_data V = {
  .error = LINK_ERROR_NONE,
@@ -28887,7 +28878,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 351 "main.c"
+# 332 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28906,7 +28897,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 389 "main.c"
+# 370 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29162,130 +29153,6 @@ header10 r_block;
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 
-static void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
-{
- static D_CODES last_info;
-
-
- wait_lcd_done();
- if (V.response.info == DIS_STR) {
-  eaDogM_WriteStringAtPos(r, c, strPtr);
- } else {
-  switch (V.response.info) {
-  case DIS_LOG:
-   sprintf(V.buf, " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Stored #%d        ", V.response.log_num);
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  case DIS_LOAD:
-   sprintf(V.buf, " Ready LL        ");
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  case DIS_PUMP:
-   sprintf(V.buf, " Pump LL         ");
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  case DIS_UNLOAD:
-   sprintf(V.buf, " Open LL         ");
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " S2F41 #%c         ", V.response.mcode);
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  case DIS_HELP:
-   wdtdelay(9000);
-   sprintf(V.buf, "HELP %s           ", build_date);
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, "DISPLAY %s        ", build_time);
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  case DIS_SEQUENCE:
-   wdtdelay(9000);
-   sprintf(V.buf, " Load-lock%d R%d      ", V.llid, V.msg_error);
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " SEQUENCE         ");
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  case DIS_TERM:
-   sprintf(V.buf, " Terminal %d             ", V.response.TID);
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  default:
-   sprintf(V.buf, "                  ");
-   V.buf[16] = 0;
-   eaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, "                  ");
-   V.buf[16] = 0;
-   wait_lcd_done();
-   eaDogM_WriteStringAtPos(1, 0, V.buf);
-   break;
-  }
-  sprintf(V.buf, "%s", V.info);
-  V.buf[16] = 0;
-  wait_lcd_done();
-  eaDogM_WriteStringAtPos(2, 0, V.buf);
-  if (TimerDone(TMR_INFO))
-   V.response.info = DIS_STR;
- }
-
-
-
- if (last_info == DIS_HELP && V.response.info != DIS_HELP) {
-
-  sprintf(V.buf, "%s              ", T[V.help_id].display);
-  V.buf[16] = 0;
-  eaDogM_WriteStringAtPos(0, 0, V.buf);
- }
-
- last_info = V.response.info;
-
-}
-
-
-
-
-static _Bool help_button()
-{
- if (!PORTBbits.RB0) {
-  V.help = 1;
-  if (TimerDone(TMR_HELP))
-   return 1;
-
- }
-
- if (!V.help)
-  StartTimer(TMR_HELP, 300);
-
- return 0;
-}
-
 
 
 
@@ -29334,7 +29201,7 @@ void main(void)
    srand(1957);
    sprintf(V.buf, " RVI HOST TESTER");
    MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-   sprintf(V.buf, " Version %s", "1.39G");
+   sprintf(V.buf, " Version %s", "1.40G");
    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
    sprintf(V.buf, " FGB@MCHP FAB4  ");
    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
@@ -29438,7 +29305,7 @@ void main(void)
     if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
      if ((V.r_l_state == LINK_STATE_IDLE) && (V.t_l_state == LINK_STATE_IDLE)) {
       if (TimerDone(TMR_HBIO)) {
-       V.response.info = DIS_STR;
+       set_display_info(DIS_STR);
 
        if (V.stack) {
         hb_message();
@@ -29447,16 +29314,15 @@ void main(void)
        } else {
         StartTimer(TMR_HBIO, 30000);
         if (V.ping_count++ > 4) {
-         V.response.info = DIS_STR;
+         set_display_info(DIS_STR);
          hb_message();
          sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
          V.buf[16] = 0;
          MyeaDogM_WriteStringAtPos(0, 0, V.buf);
          WaitMs(250);
          V.ping_count = 0;
-        } else {
-         V.response.info = DIS_STR;
         }
+        set_display_info(DIS_STR);
        }
       }
      }
@@ -29558,21 +29424,6 @@ void main(void)
 
 
 
-  if (help_button() && V.response.info != DIS_HELP) {
-   V.response.help_temp = V.response.info;
-   V.response.info = DIS_HELP;
-   sprintf(V.info, "%s              ", T[V.help_id].message);
-   V.help_id++;
-   StartTimer(TMR_HELPDIS, 3000);
-   StartTimer(TMR_INFO, 3000);
-   mode_lamp_bright();
-  } else {
-   if (TimerDone(TMR_HELPDIS)) {
-    V.help = 0;
-    V.response.info = V.response.help_temp;
-    mode_lamp_dim(V.mode_pwm);
-   }
-
-  }
+  check_help();
  }
 }

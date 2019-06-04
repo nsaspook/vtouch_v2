@@ -2,7 +2,25 @@
 #include "mydisplay.h"
 
 extern V_data V;
-extern V_help T[];
+
+V_help T[] = {
+	{
+		.message = "commands 1",
+		.display = "displays 1",
+	},
+	{
+		.message = "commands 2",
+		.display = "displays 2",
+	},
+	{
+		.message = "commands 3",
+		.display = "displays 3",
+	},
+	{
+		.message = "commands 4",
+		.display = "displays 4",
+	},
+};
 
 const char *build_date = __DATE__, *build_time = __TIME__;
 
@@ -17,6 +35,46 @@ void mode_lamp_dim(const uint16_t level)
 void mode_lamp_bright(void)
 {
 	PWM8_LoadDutyValue(300);
+}
+
+/*
+ * mode button help mode select
+ */
+bool help_button(void)
+{
+	if (!RB0_GetValue()) { // debounce and delay for button press
+		V.help = true;
+		if (TimerDone(TMR_HELP))
+			return true;
+	}
+
+	if (!V.help)
+		StartTimer(TMR_HELP, BDELAY);
+
+	return false;
+}
+
+void check_help(void)
+{
+	/*
+	 * show help display
+	 */
+	if (help_button() && display_info() != DIS_HELP) {
+		set_temp_display_help(display_info());
+		set_display_info(DIS_HELP);
+		sprintf(V.info, "%s              ", T[V.help_id].message);
+		V.help_id++; // cycle help text messages to LCD
+		StartTimer(TMR_HELPDIS, TDELAY);
+		StartTimer(TMR_INFO, TDELAY);
+		mode_lamp_bright(); // mode switch indicator lamp 'button' level
+	} else {
+		if (TimerDone(TMR_HELPDIS)) {
+			V.help = false;
+			set_display_info(display_help());
+			mode_lamp_dim(V.mode_pwm);
+		}
+
+	}
 }
 
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
@@ -139,8 +197,8 @@ inline D_CODES display_help(void)
 D_CODES set_display_info(const D_CODES new_response_info)
 {
 	static D_CODES old_info;
-	
-	old_info=V.response.info;
+
+	old_info = V.response.info;
 	V.response.info = new_response_info;
 	return old_info;
 }
@@ -148,8 +206,8 @@ D_CODES set_display_info(const D_CODES new_response_info)
 D_CODES set_temp_display_help(const D_CODES new_response_info)
 {
 	static D_CODES old_info;
-		
-	old_info=V.response.help_temp;
+
+	old_info = V.response.help_temp;
 	V.response.help_temp = new_response_info;
 	return old_info;
 }

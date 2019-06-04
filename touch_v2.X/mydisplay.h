@@ -42,6 +42,8 @@
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 inline D_CODES display_info(void);
 inline D_CODES display_help(void);
+bool help_button(void);
+void check_help(void);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 
