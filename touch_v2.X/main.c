@@ -80,6 +80,7 @@ V_data V = {
 	.sid = 1,
 	.help_id = 0,
 	.ping_count = 0,
+	.sequences = 0,
 };
 
 header10 H10[] = {
@@ -668,6 +669,7 @@ void main(void)
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
+			update_lcd(0);
 			sprintf(V.buf, " RVI HOST TESTER");
 			MyeaDogM_WriteStringAtPos(0, 0, V.buf);
 			sprintf(V.buf, " Version %s", VER);
@@ -780,6 +782,8 @@ void main(void)
 								hb_message(); // prime the TX state machine
 								V.msg_error = MSG_ERROR_NONE;
 								V.ping_count = 0;
+								V.error = LINK_ERROR_NONE;
+								V.abort = LINK_ERROR_NONE;
 							} else {
 								StartTimer(TMR_HBIO, HBTL);
 								if (V.ping_count++ > 4) {
@@ -884,6 +888,9 @@ void main(void)
 
 		if (mode != UI_STATE_LOG)
 			if (TimerDone(TMR_DISPLAY)) { // limit update rate
+				if (TimerDone(TMR_HELPDIS)) {
+					set_display_info(DIS_STR);
+				}
 				sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				V.buf[16] = 0; // string size limit
 				MyeaDogM_WriteStringAtPos(1, 0, V.buf);

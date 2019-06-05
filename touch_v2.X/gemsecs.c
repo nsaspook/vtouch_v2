@@ -588,12 +588,12 @@ bool sequence_messages(const uint8_t sid)
 		S[4].message.data[0] = 0x02;
 		S[5].message.data[0] = 0x03;
 
-		S[0].delay = 7000; // set delay between commands
-		S[1].delay = 7000;
-		S[2].delay = 7000;
-		S[3].delay = 7000;
-		S[4].delay = 7000;
-		S[5].delay = 7000;
+		S[0].delay = 10000; // set delay between commands
+		S[1].delay = 10000;
+		S[2].delay = 10000;
+		S[3].delay = 1000;
+		S[4].delay = 1000;
+		S[5].delay = 1000;
 
 		S[0].block.header = (uint8_t*) & S[0].message; // S6F41
 		S[0].block.length = sizeof(header33);
@@ -1048,6 +1048,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				parse_sid();
 				sequence_messages(V.sid);
 				set_display_info(DIS_SEQUENCE);
+				V.sequences++;
 				break;
 			case CODE_TS:
 				block.respond = true;

@@ -77,6 +77,14 @@ void check_help(void)
 	}
 }
 
+void update_lcd(uint8_t vterm)
+{
+	vterm = vterm & 0x01;
+	eaDogM_WriteStringAtPos(0, 0, V.lcd[vterm][0]);
+	eaDogM_WriteStringAtPos(1, 0, V.lcd[vterm][1]);
+	eaDogM_WriteStringAtPos(2, 0, V.lcd[vterm][2]);
+}
+
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
 	static D_CODES last_info;
@@ -138,7 +146,7 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 			sprintf(V.buf, " Load-lock%d R%d      ", V.llid, V.msg_error);
 			V.buf[16] = 0;
 			eaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " SEQUENCE         ");
+			sprintf(V.buf, " SEQUENCE %d        ", V.sequences);
 			V.buf[16] = 0;
 			wait_lcd_done();
 			eaDogM_WriteStringAtPos(1, 0, V.buf);

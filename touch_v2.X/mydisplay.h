@@ -40,6 +40,7 @@
 #include "timers.h"
 
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
+void update_lcd(uint8_t);
 inline D_CODES display_info(void);
 inline D_CODES display_help(void);
 bool help_button(void);
