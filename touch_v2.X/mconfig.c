@@ -86,8 +86,11 @@ uint8_t update_lcd(void)
 	V.lcd[V.vterm][1][MAX_LINE] = 0;
 	V.lcd[V.vterm][2][MAX_LINE] = 0;
 	eaDogM_WriteStringAtPos(0, 0, V.lcd[V.vterm][0]);
+	WaitMs(1);
 	eaDogM_WriteStringAtPos(1, 0, V.lcd[V.vterm][1]);
+	WaitMs(1);
 	eaDogM_WriteStringAtPos(2, 0, V.lcd[V.vterm][2]);
+	WaitMs(1);
 	return V.vterm;
 }
 

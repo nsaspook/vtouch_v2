@@ -669,7 +669,7 @@ void main(void)
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
-			set_vterm(0);
+			set_vterm(0); // set to buffer 0
 			sprintf(get_vterm_ptr(0), " RVI HOST TESTER");
 			sprintf(get_vterm_ptr(1), " Version %s", VER);
 			sprintf(get_vterm_ptr(2), " FGB@MCHP FAB4  ");

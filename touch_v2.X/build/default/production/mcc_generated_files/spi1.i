@@ -27296,7 +27296,7 @@ void SPI1_Initialize(void)
 
   SPI1CON2 = 0x03;
 
-  SPI1BAUD = 0x3F;
+  SPI1BAUD = 0x4F;
 
   SPI1CLK = 0x00;
 
