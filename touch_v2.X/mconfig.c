@@ -77,12 +77,35 @@ void check_help(void)
 	}
 }
 
-void update_lcd(uint8_t vterm)
+/*
+ * write character data to vterm
+ */
+uint8_t update_lcd(void)
 {
-	vterm = vterm & 0x01;
-	eaDogM_WriteStringAtPos(0, 0, V.lcd[vterm][0]);
-	eaDogM_WriteStringAtPos(1, 0, V.lcd[vterm][1]);
-	eaDogM_WriteStringAtPos(2, 0, V.lcd[vterm][2]);
+	V.lcd[V.vterm][0][MAX_LINE] = 0;
+	V.lcd[V.vterm][1][MAX_LINE] = 0;
+	V.lcd[V.vterm][2][MAX_LINE] = 0;
+	eaDogM_WriteStringAtPos(0, 0, V.lcd[V.vterm][0]);
+	eaDogM_WriteStringAtPos(1, 0, V.lcd[V.vterm][1]);
+	eaDogM_WriteStringAtPos(2, 0, V.lcd[V.vterm][2]);
+	return V.vterm;
+}
+
+/*
+ * set terminal window to 0 or 1
+ */
+uint8_t set_vterm(uint8_t vterm)
+{
+	V.vterm = vterm;
+	return V.vterm;
+}
+
+/*
+ * return pointer to vterm line buffer
+ */
+char * get_vterm_ptr(uint8_t line)
+{
+	return V.lcd[V.vterm][line & 0x03];
 }
 
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)

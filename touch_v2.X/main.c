@@ -669,13 +669,11 @@ void main(void)
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
-			update_lcd(0);
-			sprintf(V.buf, " RVI HOST TESTER");
-			MyeaDogM_WriteStringAtPos(0, 0, V.buf);
-			sprintf(V.buf, " Version %s", VER);
-			MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-			sprintf(V.buf, " FGB@MCHP FAB4  ");
-			MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+			set_vterm(0);
+			sprintf(get_vterm_ptr(0), " RVI HOST TESTER");
+			sprintf(get_vterm_ptr(1), " Version %s", VER);
+			sprintf(get_vterm_ptr(2), " FGB@MCHP FAB4  ");
+			update_lcd();
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			break;
