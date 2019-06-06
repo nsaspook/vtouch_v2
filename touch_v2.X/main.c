@@ -629,6 +629,7 @@ volatile uint8_t mode_sw = false;
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
+	char * s;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -685,11 +686,9 @@ void main(void)
 				V.s_state = SEQ_STATE_RX;
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 					if (V.debug)
-						sprintf(V.buf, "H254 %d, T%ld  ", sizeof(header254), V.testing);
+						sprintf(get_vterm_ptr(2), "H254 %d, T%ld  ", sizeof(header254), V.testing);
 					else
-						sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
-					V.buf[16] = 0; // string size limit
-					MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+						sprintf(get_vterm_ptr(2), "HOST: %ld G%d      #", V.ticks, V.g_state);
 				}
 #ifdef DB1
 				WaitMs(50);
@@ -701,15 +700,17 @@ void main(void)
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+					set_display_info(DIS_STR);
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
-						sprintf(V.buf, " S%dF%d Err    ", V.stream, V.function);
+						sprintf(get_vterm_ptr(0), " S%dF%d Err         ", V.stream, V.function);
 					} else {
 						V.msg_error = MSG_ERROR_NONE;
-						sprintf(V.buf, " S%dF%d #      ", V.stream, V.function);
+						sprintf(get_vterm_ptr(0), " S%dF%d #           ", V.stream, V.function);
 					}
-					V.buf[11] = 0; // string size limit
-					MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+					s = get_vterm_ptr(0);
+					s[16] = 0;
+					MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0));
 #ifdef DB1
 					WaitMs(5);
 #endif
@@ -739,12 +740,14 @@ void main(void)
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
-					sprintf(V.buf, " OKQ%d", V.e_types);
+					sprintf(get_vterm_ptr(0), " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
 				} else {
 					V.s_state = SEQ_STATE_DONE;
-					sprintf(V.buf, " OK %d", V.e_types);
+					sprintf(get_vterm_ptr(0), " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
 				}
-				MyeaDogM_WriteStringAtPos(0, 11, V.buf);
+				s = get_vterm_ptr(0);
+				s[16] = 0;
+				MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0));
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
@@ -752,21 +755,18 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(V.buf, "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
-				V.buf[16] = 0; // string size limit
-				MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+				sprintf(get_vterm_ptr(2), "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
+				update_lcd();
 				WaitMs(2000);
 				break;
 			}
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (TimerDone(TMR_DISPLAY)) { // limit update rate
 					if (V.debug)
-						sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+						sprintf(get_vterm_ptr(2), "H254 %d, T%ld       ", sizeof(header254), V.testing);
 					else
-						sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+						sprintf(get_vterm_ptr(2), "HOST: %ld G%d      #", V.ticks, V.g_state);
 
-					V.buf[16] = 0; // string size limit
-					MyeaDogM_WriteStringAtPos(2, 0, V.buf);
 				}
 				/*
 				 * HeartBeat ping or sequence during idle times
@@ -787,9 +787,8 @@ void main(void)
 								if (V.ping_count++ > 4) {
 									set_display_info(DIS_STR);
 									hb_message();
-									sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
-									V.buf[16] = 0; // string size limit
-									MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+									sprintf(get_vterm_ptr(0), "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
+									update_lcd();
 									WaitMs(250);
 									V.ping_count = 0;
 								}
@@ -806,11 +805,10 @@ void main(void)
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				if (V.debug)
-					sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+					sprintf(get_vterm_ptr(2), "H254 %d, T%ld       ", sizeof(header254), V.testing);
 				else
-					sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-				V.buf[16] = 0; // string size limit
-				MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+					sprintf(get_vterm_ptr(2), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+
 #ifdef DB1
 				if (SLED) {
 					UART2_put_buffer(ENQ);
@@ -844,11 +842,9 @@ void main(void)
 				break;
 			}
 			if (V.debug)
-				sprintf(V.buf, "Equip type %d       ", V.e_types);
+				sprintf(get_vterm_ptr(2), "Equip type %d       ", V.e_types);
 			else
-				sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-			V.buf[16] = 0; // string size limit
-			MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+				sprintf(get_vterm_ptr(2), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			break;
 		case UI_STATE_ERROR:
 		default:
@@ -889,15 +885,15 @@ void main(void)
 				if (TimerDone(TMR_HELPDIS)) {
 					set_display_info(DIS_STR);
 				}
-				sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
-				V.buf[16] = 0; // string size limit
-				MyeaDogM_WriteStringAtPos(1, 0, V.buf);
+				sprintf(get_vterm_ptr(1), "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				StartTimer(TMR_DISPLAY, DDELAY);
+				update_lcd();
 			}
 
 		/*
 		 * show help display if button pressed
 		 */
+		//		update_lcd();
 		check_help();
 	}
 }

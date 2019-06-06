@@ -35,8 +35,6 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
-# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27436,7 +27434,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -27469,6 +27467,8 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
+
+typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -27711,7 +27711,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[64], terminal[160], info[64], lcd[2][4][32];
+  char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -27721,7 +27721,7 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count, vterm : 1;
+  uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
  } V_data;
 
@@ -28470,6 +28470,11 @@ void WaitMs(uint16_t numMilliseconds);
 # 40 "./mydisplay.h" 2
 
 
+ typedef struct D_data {
+  char lcd[2][4][32];
+  uint8_t vterm : 1;
+ } D_data;
+
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 uint8_t update_lcd(void);
 uint8_t set_vterm(uint8_t);
@@ -29191,9 +29196,9 @@ _Bool sequence_messages(const uint8_t sid)
   S[0].delay = 10000;
   S[1].delay = 10000;
   S[2].delay = 10000;
-  S[3].delay = 1000;
-  S[4].delay = 1000;
-  S[5].delay = 1000;
+  S[3].delay = 10000;
+  S[4].delay = 10000;
+  S[5].delay = 10000;
 
   S[0].block.header = (uint8_t*) & S[0].message;
   S[0].block.length = sizeof(header33);

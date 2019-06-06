@@ -39,6 +39,11 @@
 #include "eadog.h"
 #include "timers.h"
 
+	typedef struct D_data { // control data structure 
+		char lcd[2][4][32];
+		uint8_t vterm : 1;
+	} D_data;
+
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 uint8_t update_lcd(void);
 uint8_t set_vterm(uint8_t);

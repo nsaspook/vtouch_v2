@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-typedef int24_t int_least24_t;
+
 
 typedef int32_t int_least32_t;
 
@@ -28407,7 +28407,7 @@ void PMD_Initialize(void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[64], terminal[160], info[64], lcd[2][4][32];
+  char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -28417,7 +28417,7 @@ void PMD_Initialize(void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count, vterm : 1;
+  uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
  } V_data;
 
@@ -28478,6 +28478,11 @@ void WaitMs(uint16_t numMilliseconds);
 # 26 "./gemsecs.h" 2
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
+ typedef struct D_data {
+  char lcd[2][4][32];
+  uint8_t vterm : 1;
+ } D_data;
+
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 uint8_t update_lcd(void);
 uint8_t set_vterm(uint8_t);
@@ -29163,6 +29168,7 @@ volatile uint8_t mode_sw = 0;
 void main(void)
 {
  UI_STATES mode;
+ char * s;
 
 
  SYSTEM_Initialize();
@@ -29209,7 +29215,7 @@ void main(void)
    sprintf(get_vterm_ptr(2), " FGB@MCHP FAB4  ");
    update_lcd();
    WaitMs(3000);
-   StartTimer(TMR_DISPLAY, 200);
+   StartTimer(TMR_DISPLAY, 100);
    break;
   case UI_STATE_HOST:
    switch (V.s_state) {
@@ -29219,11 +29225,9 @@ void main(void)
     V.s_state = SEQ_STATE_RX;
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
      if (V.debug)
-      sprintf(V.buf, "H254 %d, T%ld  ", sizeof(header254), V.testing);
+      sprintf(get_vterm_ptr(2), "H254 %d, T%ld  ", sizeof(header254), V.testing);
      else
-      sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
-     V.buf[16] = 0;
-     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+      sprintf(get_vterm_ptr(2), "HOST: %ld G%d      #", V.ticks, V.g_state);
     }
 
 
@@ -29235,15 +29239,17 @@ void main(void)
 
 
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+     set_display_info(DIS_STR);
      if (V.stream == 9) {
       V.msg_error = V.function;
-      sprintf(V.buf, " S%dF%d Err    ", V.stream, V.function);
+      sprintf(get_vterm_ptr(0), " S%dF%d Err         ", V.stream, V.function);
      } else {
       V.msg_error = MSG_ERROR_NONE;
-      sprintf(V.buf, " S%dF%d #      ", V.stream, V.function);
+      sprintf(get_vterm_ptr(0), " S%dF%d #           ", V.stream, V.function);
      }
-     V.buf[11] = 0;
-     MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+     s = get_vterm_ptr(0);
+     s[16] = 0;
+     MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0));
 
 
 
@@ -29273,12 +29279,14 @@ void main(void)
      V.r_l_state = LINK_STATE_IDLE;
      V.t_l_state = LINK_STATE_IDLE;
      V.s_state = SEQ_STATE_TX;
-     sprintf(V.buf, " OKQ%d", V.e_types);
+     sprintf(get_vterm_ptr(0), " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
     } else {
      V.s_state = SEQ_STATE_DONE;
-     sprintf(V.buf, " OK %d", V.e_types);
+     sprintf(get_vterm_ptr(0), " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
     }
-    MyeaDogM_WriteStringAtPos(0, 11, V.buf);
+    s = get_vterm_ptr(0);
+    s[16] = 0;
+    MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0));
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
@@ -29286,21 +29294,18 @@ void main(void)
    case SEQ_STATE_ERROR:
    default:
     V.s_state = SEQ_STATE_INIT;
-    sprintf(V.buf, "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
-    V.buf[16] = 0;
-    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+    sprintf(get_vterm_ptr(2), "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
+    update_lcd();
     WaitMs(2000);
     break;
    }
    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
     if (TimerDone(TMR_DISPLAY)) {
      if (V.debug)
-      sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+      sprintf(get_vterm_ptr(2), "H254 %d, T%ld       ", sizeof(header254), V.testing);
      else
-      sprintf(V.buf, "HOST: %ld G%d      #", V.ticks, V.g_state);
+      sprintf(get_vterm_ptr(2), "HOST: %ld G%d      #", V.ticks, V.g_state);
 
-     V.buf[16] = 0;
-     MyeaDogM_WriteStringAtPos(2, 0, V.buf);
     }
 
 
@@ -29321,9 +29326,8 @@ void main(void)
         if (V.ping_count++ > 4) {
          set_display_info(DIS_STR);
          hb_message();
-         sprintf(V.buf, "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
-         V.buf[16] = 0;
-         MyeaDogM_WriteStringAtPos(0, 0, V.buf);
+         sprintf(get_vterm_ptr(0), "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
+         update_lcd();
          WaitMs(250);
          V.ping_count = 0;
         }
@@ -29340,18 +29344,10 @@ void main(void)
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
     if (V.debug)
-     sprintf(V.buf, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+     sprintf(get_vterm_ptr(2), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
-     sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-    V.buf[16] = 0;
-    MyeaDogM_WriteStringAtPos(2, 0, V.buf);
-
-
-
-
-
-
-
+     sprintf(get_vterm_ptr(2), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+# 819 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29378,11 +29374,9 @@ void main(void)
     break;
    }
    if (V.debug)
-    sprintf(V.buf, "Equip type %d       ", V.e_types);
+    sprintf(get_vterm_ptr(2), "Equip type %d       ", V.e_types);
    else
-    sprintf(V.buf, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-   V.buf[16] = 0;
-   MyeaDogM_WriteStringAtPos(2, 0, V.buf);
+    sprintf(get_vterm_ptr(2), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
    break;
   case UI_STATE_ERROR:
   default:
@@ -29423,11 +29417,11 @@ void main(void)
     if (TimerDone(TMR_HELPDIS)) {
      set_display_info(DIS_STR);
     }
-    sprintf(V.buf, "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
-    V.buf[16] = 0;
-    MyeaDogM_WriteStringAtPos(1, 0, V.buf);
-    StartTimer(TMR_DISPLAY, 200);
+    sprintf(get_vterm_ptr(1), "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+    StartTimer(TMR_DISPLAY, 100);
+    update_lcd();
    }
+
 
 
 

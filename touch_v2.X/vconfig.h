@@ -65,7 +65,7 @@ extern "C" {
 #define LDELAY	1000
 #define SDELAY	500
 #define BDELAY	300
-#define DDELAY	200 // display update spacing
+#define DDELAY	100 // display update spacing
 
 #define Y2KTIME
 
@@ -199,7 +199,7 @@ extern "C" {
 		LINK_STATES m_l_state;
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
-		char buf[64], terminal[160], info[64], lcd[2][4][32];
+		char buf[64], terminal[160], info[64];
 		uint32_t ticks, systemb;
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -209,7 +209,7 @@ extern "C" {
 		failed_send : 4, failed_receive : 4,
 		queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
 		terminal_type response;
-		uint8_t uart, llid, sid, ping_count, vterm : 1;
+		uint8_t uart, llid, sid, ping_count;
 		volatile uint8_t ticker;
 	} V_data;
 

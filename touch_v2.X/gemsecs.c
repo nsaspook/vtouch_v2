@@ -591,9 +591,9 @@ bool sequence_messages(const uint8_t sid)
 		S[0].delay = 10000; // set delay between commands
 		S[1].delay = 10000;
 		S[2].delay = 10000;
-		S[3].delay = 1000;
-		S[4].delay = 1000;
-		S[5].delay = 1000;
+		S[3].delay = 10000;
+		S[4].delay = 10000;
+		S[5].delay = 10000;
 
 		S[0].block.header = (uint8_t*) & S[0].message; // S6F41
 		S[0].block.length = sizeof(header33);
