@@ -60,7 +60,15 @@ typedef signed char int8_t;
 
 
 typedef short int16_t;
-# 181 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+
+
+
+
+typedef __int24 int24_t;
+
+
+
+
 typedef long int32_t;
 
 
@@ -109,7 +117,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -1028,7 +1036,54 @@ static int stoa(FILE *fp, char *s)
 
     return l;
 }
-# 670 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+# 623 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+static int xtoa(FILE *fp, unsigned long long d, char x)
+{
+    int c, i, p, w;
+    unsigned long long n;
+
+
+    if (!(prec < 0)) {
+        flags &= ~(1 << 1);
+    }
+    p = (0 < prec) ? prec : 1;
+    w = width;
+    if (flags & (1 << 4)) {
+        w -= 2;
+    }
+
+
+    n = d;
+    i = sizeof(dbuf) - 1;
+    dbuf[i] = '\0';
+    while (!(i < 2) && (n || (0 < p) || ((0 < w) && (flags & (1 << 1))))) {
+        --i;
+        c = n & 0x0f;
+        c = (c < 10) ? '0' + c : 'a' + (c - 10);
+        if ((0 ? isupper((int)x) : ((unsigned)((int)x)-'A') < 26) && (0 ? isalpha(c) : (((unsigned)(c)|32)-'a') < 26)) {
+            c = toupper(c);
+        }
+        dbuf[i] = (char)c;
+        --p;
+        --w;
+        n = n >> 4;
+    }
+
+
+    if (flags & (1 << 4)) {
+        --i;
+        dbuf[i] = x;
+        --i;
+        dbuf[i] = '0';
+    }
+
+
+    return pad(fp, &dbuf[i], w);
+}
+
+
+
+
 static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 {
     char c, *cp, ct[3];
@@ -1076,6 +1131,27 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
             cp = (*(char * *)__va_arg(*(char * **)ap, (char *)0));
 
             return stoa(fp, cp);
+        }
+# 1274 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
+        if ((*fmt[0] == 'x') || (*fmt[0] == 'X')) {
+
+            c = (*fmt)[0];
+            ++*fmt;
+            llu = (unsigned long long)(*(unsigned int *)__va_arg(*(unsigned int **)ap, (unsigned int)0));
+
+            return xtoa(fp, llu, c);
+        }
+
+
+
+        if (!strncmp(*fmt, "lx", ((sizeof("lx")/sizeof("lx"[0]))-1)) || !strncmp(*fmt, "lX", ((sizeof("lX")/sizeof("lX"[0]))-1))) {
+
+
+            c = (*fmt)[1];
+            *fmt += ((sizeof("lx")/sizeof("lx"[0]))-1);
+            llu = (unsigned long long)(*(unsigned long *)__va_arg(*(unsigned long **)ap, (unsigned long)0));
+
+            return xtoa(fp, llu, c);
         }
 # 1350 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if ((*fmt)[0] == '%') {

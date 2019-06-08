@@ -2,7 +2,7 @@
 #include "mydisplay.h"
 
 extern V_data V;
-static D_data D;
+static D_data D = {0};
 
 V_help T[] = {
 	{
@@ -61,16 +61,20 @@ void check_help(void)
 	 * show help display
 	 */
 	if (help_button() && display_info() != DIS_HELP) {
+		if (V.debug)
+			vterm_dump();
+
 		set_vterm(1);
 		set_temp_display_help(display_info());
 		set_display_info(DIS_HELP);
-		sprintf(get_vterm_ptr(2), "%s              ", T[V.help_id].message);
-		MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(2));
+		sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_date);
+		sprintf(get_vterm_ptr(1, 1), "%s       ", T[V.help_id].display);
+		sprintf(get_vterm_ptr(2, 1), "%s       ", T[V.help_id].message);
 		V.help_id++; // cycle help text messages to LCD
 		StartTimer(TMR_HELPDIS, TDELAY);
 		StartTimer(TMR_INFO, TDELAY);
 		mode_lamp_bright(); // mode switch indicator lamp 'button' level
-		update_lcd();
+		update_lcd(1);
 	} else {
 		if (TimerDone(TMR_HELPDIS)) {
 			set_vterm(0);
@@ -85,17 +89,22 @@ void check_help(void)
 /*
  * write character data to vterm
  */
-uint8_t update_lcd(void)
+uint8_t update_lcd(uint8_t vterm)
 {
-	D.lcd[D.vterm][0][MAX_LINE] = 0;
-	D.lcd[D.vterm][1][MAX_LINE] = 0;
-	D.lcd[D.vterm][2][MAX_LINE] = 0;
+	vterm = vterm & 0x01;
+
+	if (D.vterm == 1 && vterm == 0)
+		return D.vterm;
+
+	D.lcd[vterm][0][MAX_LINE] = 0;
+	D.lcd[vterm][1][MAX_LINE] = 0;
+	D.lcd[vterm][2][MAX_LINE] = 0;
 	wait_lcd_done();
-	eaDogM_WriteStringAtPos(0, 0, D.lcd[D.vterm][0]);
+	eaDogM_WriteStringAtPos(0, 0, D.lcd[vterm][0]);
 	wait_lcd_done();
-	eaDogM_WriteStringAtPos(1, 0, D.lcd[D.vterm][1]);
+	eaDogM_WriteStringAtPos(1, 0, D.lcd[vterm][1]);
 	wait_lcd_done();
-	eaDogM_WriteStringAtPos(2, 0, D.lcd[D.vterm][2]);
+	eaDogM_WriteStringAtPos(2, 0, D.lcd[vterm][2]);
 	return D.vterm;
 }
 
@@ -104,21 +113,37 @@ uint8_t update_lcd(void)
  */
 uint8_t set_vterm(uint8_t vterm)
 {
-	D.vterm = vterm;
+	D.vterm = vterm & 0x01;
 	return D.vterm;
 }
 
 /*
  * return pointer to vterm line buffer
  */
-char * get_vterm_ptr(uint8_t line)
+char * get_vterm_ptr(uint8_t line, uint8_t vterm)
 {
-	return D.lcd[D.vterm][line & 0x03];
+	return D.lcd[vterm & 0x01][line & 0x03];
 }
 
+void vterm_dump(void)
+{
+	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(0, 0), get_vterm_ptr(0, 1));
+	wait_lcd_done();
+	eaDogM_WriteStringAtPos(0, 0, V.buf);
+	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(1, 0), get_vterm_ptr(1, 1));
+	wait_lcd_done();
+	eaDogM_WriteStringAtPos(1, 0, V.buf);
+	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(2, 0), get_vterm_ptr(2, 1));
+	wait_lcd_done();
+	eaDogM_WriteStringAtPos(2, 0, V.buf);
+	WaitMs(3000);
+}
+
+/*
+ * update possible command messages
+ */
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
-	static D_CODES last_info;
 
 	//	DLED = true;
 	wait_lcd_done();
@@ -127,42 +152,47 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 	} else {
 		switch (V.response.info) {
 		case DIS_LOG:
-			sprintf(get_vterm_ptr(0), " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
-			sprintf(get_vterm_ptr(1), " Stored #%d        ", V.response.log_num);
+			sprintf(get_vterm_ptr(0, 0), " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
+			sprintf(get_vterm_ptr(1, 0), " Stored #%d        ", V.response.log_num);
 			break;
 		case DIS_LOAD:
-			sprintf(get_vterm_ptr(0), " Ready LL        ");
-			sprintf(get_vterm_ptr(1), " S2F41 #%c         ", V.response.mcode);
+			sprintf(get_vterm_ptr(0, 0), " Ready LL        ");
+			sprintf(get_vterm_ptr(1, 0), " S2F41 #%c         ", V.response.mcode);
 			break;
 		case DIS_PUMP:
-			sprintf(get_vterm_ptr(0), " Pump LL         ");
-			sprintf(get_vterm_ptr(1), " S2F41 #%c         ", V.response.mcode);
+			sprintf(get_vterm_ptr(0, 0), " Pump LL         ");
+			sprintf(get_vterm_ptr(1, 0), " S2F41 #%c         ", V.response.mcode);
 			break;
 		case DIS_UNLOAD:
-			sprintf(get_vterm_ptr(0), " Open LL         ");
-			sprintf(get_vterm_ptr(1), " S2F41 #%c         ", V.response.mcode);
+			sprintf(get_vterm_ptr(0, 0), " Open LL         ");
+			sprintf(get_vterm_ptr(1, 0), " S2F41 #%c         ", V.response.mcode);
 			break;
 		case DIS_HELP:
-			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(get_vterm_ptr(0), "HELP %s           ", build_date);
-			sprintf(get_vterm_ptr(1), "DISPLAY %s        ", build_time);
+			sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_date);
+			sprintf(get_vterm_ptr(1, 1), "DISPLAY %s        ", build_time);
 			break;
 		case DIS_SEQUENCE:
-			wdtdelay(9000); // slowdown updates for SPI transfers
-			sprintf(get_vterm_ptr(0), " Load-lock%d R%d      ", V.llid, V.msg_error);
-			sprintf(get_vterm_ptr(1), " SEQUENCE %d        ", V.sequences);
+			sprintf(get_vterm_ptr(0, 0), " Load-lock%d R%d      ", V.llid, V.msg_error);
+			sprintf(get_vterm_ptr(1, 0), " SEQUENCE %d        ", V.sequences);
 			break;
 		case DIS_TERM:
-			sprintf(get_vterm_ptr(0), " Terminal %d             ", V.response.TID);
-			sprintf(get_vterm_ptr(1), " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+			sprintf(get_vterm_ptr(0, 0), " Terminal %d             ", V.response.TID);
+			sprintf(get_vterm_ptr(1, 0), " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
 			break;
 		default:
-			sprintf(get_vterm_ptr(0), "                  ");
-			sprintf(get_vterm_ptr(1), "                  ");
+			sprintf(get_vterm_ptr(0, 0), "                  ");
+			sprintf(get_vterm_ptr(1, 0), "                  ");
 			break;
 		}
-		sprintf(get_vterm_ptr(2), "%s", V.info);
-		update_lcd();
+
+		if (V.response.info == DIS_HELP) {
+			sprintf(get_vterm_ptr(2, 1), "%s", V.info);
+			update_lcd(1);
+		} else {
+			sprintf(get_vterm_ptr(2, 0), "%s", V.info);
+			update_lcd(0);
+		}
+
 		if (TimerDone(TMR_INFO))
 			V.response.info = DIS_STR;
 	}
@@ -170,13 +200,11 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 	/*
 	 * this is for possible message flipping with the HELP button
 	 */
-	if (last_info == DIS_HELP && V.response.info != DIS_HELP) {
+	if (D.last_info == DIS_HELP && V.response.info != DIS_HELP) {
 		// show some stuff, maybe
-		sprintf(get_vterm_ptr(0), "%s              ", T[V.help_id].display);
-		update_lcd();
 	}
 
-	last_info = V.response.info;
+	D.last_info = V.response.info;
 	//	DLED = false;
 }
 

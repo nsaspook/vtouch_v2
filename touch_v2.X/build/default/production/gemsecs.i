@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27434,7 +27436,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27467,8 +27469,6 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
-
-typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -28470,15 +28470,17 @@ void WaitMs(uint16_t numMilliseconds);
 # 40 "./mydisplay.h" 2
 
 
- typedef struct D_data {
-  char lcd[2][4][32];
-  uint8_t vterm : 1;
- } D_data;
+typedef struct D_data {
+ char lcd[2][4][32];
+ uint8_t vterm : 1;
+ D_CODES last_info;
+} D_data;
 
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
-uint8_t update_lcd(void);
+uint8_t update_lcd(uint8_t);
 uint8_t set_vterm(uint8_t);
-char * get_vterm_ptr(uint8_t);
+char * get_vterm_ptr(uint8_t, uint8_t);
+void vterm_dump(void);
 __attribute__((inline)) D_CODES display_info(void);
 __attribute__((inline)) D_CODES display_help(void);
 _Bool help_button(void);
