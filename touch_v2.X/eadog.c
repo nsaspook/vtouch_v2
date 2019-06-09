@@ -11,6 +11,7 @@
 struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
 struct ringBufS_t ring_buf2;
+uint8_t port_data[16] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
 
 extern struct V_data V;
 
@@ -31,6 +32,7 @@ void wdtdelay(const uint32_t delay)
 
 /*
  * Init the EA DOGM163 in 8-bit serial mode
+ * channel 1 DMA
  */
 void init_display(void)
 {
@@ -66,6 +68,20 @@ void init_display(void)
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
 	DLED = false;
+}
+
+/*
+ * channel 2 DMA
+ */
+void init_port(void)
+{
+	DMA2CON1bits.DMODE = 0;
+	DMA2CON1bits.DSTP = 0;
+	DMA2CON1bits.SMODE = 1;
+	DMA2CON1bits.SMR = 0;
+	DMA2CON1bits.SSTP = 0;
+	DMA2SSA = (uint32_t) port_data;
+	DMA2CON0bits.DGO = 0;
 }
 
 /*
@@ -218,6 +234,18 @@ void send_lcd_data_dma(uint8_t strPtr)
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
 	start_lcd();
+}
+
+/*
+ * uses DMA channel 2 for transfers
+ */
+void send_port_data_dma(void)
+{
+	DMA2CON0bits.EN = 0; /* disable DMA to change source count */
+	DMA2SSZ = 16;
+	DMA2DSZ = 16;
+	DMA2CON0bits.EN = 1; /* enable DMA */
+	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
 }
 
 void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)

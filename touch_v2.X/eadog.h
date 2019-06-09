@@ -33,6 +33,8 @@ extern "C" {
 	void wdtdelay(uint32_t);
 
 	void init_display(void);
+	void init_port(void);
+	void send_port_data_dma(void);
 	void send_lcd_data_dma(uint8_t);
 	void send_lcd_cmd_dma(uint8_t);
 	void start_lcd(void);

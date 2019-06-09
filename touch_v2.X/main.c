@@ -664,6 +664,12 @@ void main(void)
 	while (true) {
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
+			/*
+			 * DMA I/O testing
+			 */
+//			init_port();
+//			send_port_data_dma();
+			
 			init_display();
 			eaDogM_CursorOff();
 

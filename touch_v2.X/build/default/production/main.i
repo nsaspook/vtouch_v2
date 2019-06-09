@@ -28104,25 +28104,6 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 62 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 562 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28150,6 +28131,25 @@ void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT2_InterruptHandler)(void);
 # 851 "./mcc_generated_files/ext_int.h"
 void INT2_DefaultInterruptHandler(void);
+# 62 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
 # 63 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clc1.h" 1
@@ -28228,6 +28228,11 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 void DMA1_Initialize(void);
 # 67 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/dma2.h" 1
+# 114 "./mcc_generated_files/dma2.h"
+void DMA2_Initialize(void);
+# 68 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
@@ -28243,17 +28248,17 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 68 "./mcc_generated_files/mcc.h" 2
+# 69 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clkref.h" 1
 # 92 "./mcc_generated_files/clkref.h"
 void CLKREF_Initialize(void);
-# 69 "./mcc_generated_files/mcc.h" 2
-# 84 "./mcc_generated_files/mcc.h"
+# 70 "./mcc_generated_files/mcc.h" 2
+# 85 "./mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 97 "./mcc_generated_files/mcc.h"
+# 98 "./mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 110 "./mcc_generated_files/mcc.h"
+# 111 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 54 "main.c" 2
 
@@ -28434,6 +28439,8 @@ void PMD_Initialize(void);
  void wdtdelay(uint32_t);
 
  void init_display(void);
+ void init_port(void);
+ void send_port_data_dma(void);
  void send_lcd_data_dma(uint8_t);
  void send_lcd_cmd_dma(uint8_t);
  void start_lcd(void);
@@ -29205,6 +29212,12 @@ void main(void)
  while (1) {
   switch (V.ui_state) {
   case UI_STATE_INIT:
+
+
+
+
+
+
    init_display();
    eaDogM_WriteCommand(0b00001100);
 
@@ -29349,7 +29362,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 819 "main.c"
+# 825 "main.c"
     break;
    case SEQ_STATE_RX:
 
