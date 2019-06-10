@@ -80,6 +80,7 @@ void init_port(void)
 	DMA2CON1bits.SMODE = 1;
 	DMA2CON1bits.SMR = 0;
 	DMA2CON1bits.SSTP = 0;
+	DMA2DSA = 0x3FBB; // LATB
 	DMA2SSA = (uint32_t) port_data;
 	DMA2CON0bits.DGO = 0;
 }
