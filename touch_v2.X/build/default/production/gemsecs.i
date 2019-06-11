@@ -29237,7 +29237,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.45G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.46G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29462,6 +29462,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
  static response_type block;
  uint16_t i = 0;
 
+ do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0);
  V.abort = LINK_ERROR_NONE;
  V.queue = 0;
  block.respond = 0;
