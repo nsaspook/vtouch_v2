@@ -26994,29 +26994,35 @@ void PMD_Initialize(void);
 
 
 
+
+
 void main(void)
 {
+ uint8_t x, y;
 
-    SYSTEM_Initialize();
-
-
-
-
-
-
-    (INTCON0bits.GIEH = 1);
-
-
-    (INTCON0bits.GIEL = 1);
+ SYSTEM_Initialize();
 
 
 
 
 
 
+ (INTCON0bits.GIEH = 1);
 
-    while (1)
-    {
 
-    }
+ (INTCON0bits.GIEL = 1);
+
+
+
+
+
+
+
+ while (1) {
+  if (UART1_is_tx_ready())
+   UART1_Write(x++);
+  if (UART2_is_tx_ready())
+   UART2_Write(y++);
+
+ }
 }

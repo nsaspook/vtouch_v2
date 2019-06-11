@@ -22,6 +22,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46183
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46183: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2085 ~T0 @X0 0 e@16338 ]
+"214 ./mcc_generated_files/uart1.h
+[; ;./mcc_generated_files/uart1.h: 214: uint8_t UART1_is_tx_ready(void);
+[v _UART1_is_tx_ready `(uc ~T0 @X0 0 ef ]
+"383
+[; ;./mcc_generated_files/uart1.h: 383: void UART1_Write(uint8_t txData);
+[v _UART1_Write `(v ~T0 @X0 0 ef1`uc ]
+"214 ./mcc_generated_files/uart2.h
+[; ;./mcc_generated_files/uart2.h: 214: uint8_t UART2_is_tx_ready(void);
+[v _UART2_is_tx_ready `(uc ~T0 @X0 0 ef ]
+"383
+[; ;./mcc_generated_files/uart2.h: 383: void UART2_Write(uint8_t txData);
+[v _UART2_Write `(v ~T0 @X0 0 ef1`uc ]
 "44 main.c
 [p n 520 ]
 "45
@@ -2238,36 +2250,52 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./mcc_generated_files/uart1.h: 538: void (*UART1_TxInterruptHandler)(void);
 [v _UART1_TxInterruptHandler `*F15924 ~T0 @X0 1 e ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"52 main.c
-[; ;main.c: 52: void main(void)
+"54 main.c
+[; ;main.c: 54: void main(void)
 [v _main `(v ~T0 @X0 1 ef ]
-"53
-[; ;main.c: 53: {
+"55
+[; ;main.c: 55: {
 {
 [e :U _main ]
 [f ]
-"55
-[; ;main.c: 55:     SYSTEM_Initialize();
+"56
+[; ;main.c: 56:  uint8_t x, y;
+[v _x `uc ~T0 @X0 1 a ]
+[v _y `uc ~T0 @X0 1 a ]
+"58
+[; ;main.c: 58:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"62
-[; ;main.c: 62:     (INTCON0bits.GIEH = 1);
-[e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
 "65
-[; ;main.c: 65:     (INTCON0bits.GIEL = 1);
+[; ;main.c: 65:  (INTCON0bits.GIEH = 1);
+[e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
+"68
+[; ;main.c: 68:  (INTCON0bits.GIEL = 1);
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-"73
-[; ;main.c: 73:     while (1)
-[e :U 2199 ]
-"74
-[; ;main.c: 74:     {
-{
 "76
-[; ;main.c: 76:     }
+[; ;main.c: 76:  while (1) {
+[e :U 2199 ]
+{
+"77
+[; ;main.c: 77:   if (UART1_is_tx_ready())
+[e $ ! != -> ( _UART1_is_tx_ready ..  `i -> 0 `i 2201  ]
+"78
+[; ;main.c: 78:    UART1_Write(x++);
+[e ( _UART1_Write (1 ++ _x -> -> 1 `i `uc ]
+[e :U 2201 ]
+"79
+[; ;main.c: 79:   if (UART2_is_tx_ready())
+[e $ ! != -> ( _UART2_is_tx_ready ..  `i -> 0 `i 2202  ]
+"80
+[; ;main.c: 80:    UART2_Write(y++);
+[e ( _UART2_Write (1 ++ _y -> -> 1 `i `uc ]
+[e :U 2202 ]
+"82
+[; ;main.c: 82:  }
 }
 [e :U 2198 ]
 [e $U 2199  ]
 [e :U 2200 ]
-"77
-[; ;main.c: 77: }
+"83
+[; ;main.c: 83: }
 [e :UE 2197 ]
 }

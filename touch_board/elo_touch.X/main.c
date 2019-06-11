@@ -13,10 +13,10 @@
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.76
-        Device            :  PIC18F47K42
-        Driver Version    :  2.00
-*/
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.76
+	Device            :  PIC18F47K42
+	Driver Version    :  2.00
+ */
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -39,42 +39,48 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
-*/
+ */
 
 #pragma warning disable 520
 #pragma warning disable 1498 
 
 #include "mcc_generated_files/mcc.h"
+#include "mcc_generated_files/uart1.h"
+#include "mcc_generated_files/uart2.h"
 
 /*
-                         Main application
+			 Main application
  */
 void main(void)
 {
-    // Initialize the device
-    SYSTEM_Initialize();
+	uint8_t x, y;
+	// Initialize the device
+	SYSTEM_Initialize();
 
-    // If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
-    // If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global Interrupts
-    // Use the following macros to:
+	// If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
+	// If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global Interrupts
+	// Use the following macros to:
 
-    // Enable high priority global interrupts
-    INTERRUPT_GlobalInterruptHighEnable();
+	// Enable high priority global interrupts
+	INTERRUPT_GlobalInterruptHighEnable();
 
-    // Enable low priority global interrupts.
-    INTERRUPT_GlobalInterruptLowEnable();
+	// Enable low priority global interrupts.
+	INTERRUPT_GlobalInterruptLowEnable();
 
-    // Disable high priority global interrupts
-    //INTERRUPT_GlobalInterruptHighDisable();
+	// Disable high priority global interrupts
+	//INTERRUPT_GlobalInterruptHighDisable();
 
-    // Disable low priority global interrupts.
-    //INTERRUPT_GlobalInterruptLowDisable();
+	// Disable low priority global interrupts.
+	//INTERRUPT_GlobalInterruptLowDisable();
 
-    while (1)
-    {
-        // Add your application code
-    }
+	while (1) {
+		if (UART1_is_tx_ready())
+			UART1_Write(x++);
+		if (UART2_is_tx_ready())
+			UART2_Write(y++);
+		// Add your application code
+	}
 }
 /**
  End of File
-*/
+ */

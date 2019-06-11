@@ -15211,7 +15211,7 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 <part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
-<part name="X3" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2021" device="" package3d_urn="urn:adsk.eagle:package:8078633/1" value="POWER"/>
+<part name="POWER" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2021" device="" package3d_urn="urn:adsk.eagle:package:8078633/1" value="POWER"/>
 <part name="VSS13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="C8" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="0.1"/>
 <part name="C9" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="10uf"/>
@@ -15241,7 +15241,7 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <part name="SV7" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA05-2" device="" package3d_urn="urn:adsk.eagle:package:8329/1" value="IO1"/>
 <part name="VSS19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VDD12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
-<part name="X4" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2021" device="" package3d_urn="urn:adsk.eagle:package:8078633/1" value="GLORY"/>
+<part name="GLORY" library="con-molex" library_urn="urn:adsk.eagle:library:165" deviceset="22-23-2021" device="" package3d_urn="urn:adsk.eagle:package:8078633/1" value="GLORY"/>
 <part name="VSS20" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="K1" library="relay" library_urn="urn:adsk.eagle:library:339" deviceset="G6K" device="-2P" package3d_urn="urn:adsk.eagle:package:24346/1"/>
 <part name="VSS21" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
@@ -15455,11 +15455,11 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <instance part="P+3" gate="VCC" x="-7.62" y="-25.4" smashed="yes">
 <attribute name="VALUE" x="-10.16" y="-27.94" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="X3" gate="-1" x="116.84" y="-43.18" smashed="yes">
+<instance part="POWER" gate="-1" x="116.84" y="-43.18" smashed="yes">
 <attribute name="NAME" x="119.38" y="-43.942" size="1.524" layer="95"/>
 <attribute name="VALUE" x="116.078" y="-41.783" size="1.778" layer="96"/>
 </instance>
-<instance part="X3" gate="-2" x="116.84" y="-45.72" smashed="yes">
+<instance part="POWER" gate="-2" x="116.84" y="-45.72" smashed="yes">
 <attribute name="NAME" x="119.38" y="-46.482" size="1.524" layer="95"/>
 </instance>
 <instance part="VSS13" gate="G$1" x="114.3" y="-48.26" smashed="yes">
@@ -15560,11 +15560,11 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <instance part="VDD12" gate="G$1" x="45.72" y="17.78" smashed="yes">
 <attribute name="VALUE" x="43.18" y="15.24" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="X4" gate="-1" x="99.06" y="-53.34" smashed="yes">
+<instance part="GLORY" gate="-1" x="99.06" y="-53.34" smashed="yes">
 <attribute name="NAME" x="101.6" y="-54.102" size="1.524" layer="95"/>
 <attribute name="VALUE" x="98.298" y="-51.943" size="1.778" layer="96"/>
 </instance>
-<instance part="X4" gate="-2" x="99.06" y="-55.88" smashed="yes">
+<instance part="GLORY" gate="-2" x="99.06" y="-55.88" smashed="yes">
 <attribute name="NAME" x="101.6" y="-56.642" size="1.524" layer="95"/>
 </instance>
 <instance part="VSS20" gate="G$1" x="96.52" y="-58.42" smashed="yes">
@@ -15782,7 +15782,7 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <junction x="137.16" y="-38.1"/>
 </segment>
 <segment>
-<pinref part="X3" gate="-2" pin="S"/>
+<pinref part="POWER" gate="-2" pin="S"/>
 <pinref part="VSS13" gate="G$1" pin="VSS"/>
 <junction x="114.3" y="-45.72"/>
 </segment>
@@ -15823,7 +15823,7 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <junction x="30.48" y="15.24"/>
 </segment>
 <segment>
-<pinref part="X4" gate="-2" pin="S"/>
+<pinref part="GLORY" gate="-2" pin="S"/>
 <pinref part="VSS20" gate="G$1" pin="VSS"/>
 <junction x="96.52" y="-55.88"/>
 </segment>
@@ -16099,17 +16099,16 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="73.66" y1="-2.54" x2="73.66" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="-12.7" x2="60.96" y2="-12.7" width="0.1524" layer="91"/>
 <junction x="73.66" y="-2.54"/>
-<pinref part="S1" gate="G$1" pin="6"/>
-<wire x1="60.96" y1="-15.24" x2="60.96" y2="-40.64" width="0.1524" layer="91"/>
-<wire x1="60.96" y1="-40.64" x2="45.72" y2="-40.64" width="0.1524" layer="91"/>
-<junction x="45.72" y="-40.64"/>
+<wire x1="60.96" y1="-12.7" x2="60.96" y2="-38.1" width="0.1524" layer="91"/>
 <pinref part="SV7" gate="G$1" pin="8"/>
 <wire x1="30.48" y1="12.7" x2="2.54" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="12.7" x2="2.54" y2="-12.7" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="-12.7" x2="60.96" y2="-12.7" width="0.1524" layer="91"/>
-<wire x1="60.96" y1="-12.7" x2="60.96" y2="-15.24" width="0.1524" layer="91"/>
 <junction x="60.96" y="-12.7"/>
 <junction x="30.48" y="12.7"/>
+<pinref part="S1" gate="G$1" pin="5"/>
+<wire x1="60.96" y1="-38.1" x2="45.72" y2="-38.1" width="0.1524" layer="91"/>
+<junction x="45.72" y="-38.1"/>
 </segment>
 </net>
 <net name="N$7" class="0">
@@ -16119,11 +16118,7 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="71.12" y1="-10.16" x2="55.88" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="71.12" y="-2.54"/>
 <wire x1="55.88" y1="-10.16" x2="55.88" y2="-48.26" width="0.1524" layer="91"/>
-<wire x1="55.88" y1="-48.26" x2="20.32" y2="-48.26" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="-48.26" x2="20.32" y2="-40.64" width="0.1524" layer="91"/>
-<wire x1="20.32" y1="-40.64" x2="25.4" y2="-40.64" width="0.1524" layer="91"/>
-<pinref part="S1" gate="G$1" pin="3"/>
-<junction x="25.4" y="-40.64"/>
+<wire x1="55.88" y1="-48.26" x2="15.24" y2="-48.26" width="0.1524" layer="91"/>
 <pinref part="SV7" gate="G$1" pin="7"/>
 <wire x1="45.72" y1="12.7" x2="55.88" y2="12.7" width="0.1524" layer="91"/>
 <wire x1="55.88" y1="12.7" x2="55.88" y2="20.32" width="0.1524" layer="91"/>
@@ -16132,6 +16127,10 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="17.78" y1="-10.16" x2="55.88" y2="-10.16" width="0.1524" layer="91"/>
 <junction x="45.72" y="12.7"/>
 <junction x="55.88" y="-10.16"/>
+<pinref part="S1" gate="G$1" pin="2"/>
+<wire x1="15.24" y1="-38.1" x2="25.4" y2="-38.1" width="0.1524" layer="91"/>
+<junction x="25.4" y="-38.1"/>
+<wire x1="15.24" y1="-48.26" x2="15.24" y2="-38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$4" class="0">
@@ -16357,30 +16356,16 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="22.86" y1="-30.48" x2="45.72" y2="-30.48" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$24" class="0">
-<segment>
-<pinref part="S1" gate="G$1" pin="2"/>
-<wire x1="17.78" y1="-38.1" x2="25.4" y2="-38.1" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="-50.8" x2="17.78" y2="-38.1" width="0.1524" layer="91"/>
-<pinref part="SV1" gate="1" pin="5"/>
-<junction x="73.66" y="-40.64"/>
-<wire x1="73.66" y1="-38.1" x2="73.66" y2="-40.64" width="0.1524" layer="91"/>
-<wire x1="63.5" y1="-38.1" x2="73.66" y2="-38.1" width="0.1524" layer="91"/>
-<wire x1="63.5" y1="-38.1" x2="63.5" y2="-50.8" width="0.1524" layer="91"/>
-<wire x1="63.5" y1="-50.8" x2="17.78" y2="-50.8" width="0.1524" layer="91"/>
-<junction x="25.4" y="-38.1"/>
-</segment>
-</net>
 <net name="N$23" class="0">
 <segment>
-<pinref part="S1" gate="G$1" pin="5"/>
 <pinref part="SV1" gate="1" pin="4"/>
 <junction x="76.2" y="-40.64"/>
 <wire x1="76.2" y1="-35.56" x2="76.2" y2="-40.64" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="-35.56" x2="76.2" y2="-35.56" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="-35.56" x2="58.42" y2="-38.1" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="-38.1" x2="45.72" y2="-38.1" width="0.1524" layer="91"/>
-<junction x="45.72" y="-38.1"/>
+<wire x1="58.42" y1="-35.56" x2="58.42" y2="-40.64" width="0.1524" layer="91"/>
+<pinref part="S1" gate="G$1" pin="6"/>
+<wire x1="58.42" y1="-40.64" x2="45.72" y2="-40.64" width="0.1524" layer="91"/>
+<junction x="45.72" y="-40.64"/>
 </segment>
 </net>
 <net name="N$25" class="0">
@@ -16866,9 +16851,9 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <wire x1="127" y1="-58.42" x2="127" y2="-55.88" width="0.1524" layer="91"/>
 <wire x1="127" y1="-55.88" x2="127" y2="-50.8" width="0.1524" layer="91"/>
 <wire x1="127" y1="-50.8" x2="109.22" y2="-50.8" width="0.1524" layer="91"/>
-<pinref part="X4" gate="-1" pin="S"/>
+<pinref part="GLORY" gate="-1" pin="S"/>
 <wire x1="96.52" y1="-53.34" x2="96.52" y2="-43.18" width="0.1524" layer="91"/>
-<pinref part="X3" gate="-1" pin="S"/>
+<pinref part="POWER" gate="-1" pin="S"/>
 <wire x1="96.52" y1="-43.18" x2="109.22" y2="-43.18" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="-43.18" x2="114.3" y2="-43.18" width="0.1524" layer="91"/>
 <wire x1="109.22" y1="-50.8" x2="109.22" y2="-43.18" width="0.1524" layer="91"/>
@@ -16987,6 +16972,20 @@ Source: http://www.hirose.co.jp/cataloge_hp/e24000019.pdf</description>
 <junction x="177.8" y="-22.86"/>
 <pinref part="X6" gate="G$1" pin="4"/>
 <junction x="182.88" y="-22.86"/>
+</segment>
+</net>
+<net name="N$65" class="0">
+<segment>
+<wire x1="20.32" y1="-40.64" x2="25.4" y2="-40.64" width="0.1524" layer="91"/>
+<pinref part="S1" gate="G$1" pin="3"/>
+<junction x="25.4" y="-40.64"/>
+<pinref part="SV1" gate="1" pin="5"/>
+<junction x="73.66" y="-40.64"/>
+<wire x1="73.66" y1="-38.1" x2="73.66" y2="-40.64" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-38.1" x2="73.66" y2="-38.1" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-38.1" x2="63.5" y2="-50.8" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-50.8" x2="20.32" y2="-50.8" width="0.1524" layer="91"/>
+<wire x1="20.32" y1="-40.64" x2="20.32" y2="-50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
