@@ -29226,7 +29226,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s", "1.45G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s", "1.46G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    update_lcd(0);
    WaitMs(3000);
