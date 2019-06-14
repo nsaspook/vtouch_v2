@@ -143,7 +143,6 @@ void vterm_dump(void)
  */
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
-
 	//	DLED = true;
 	IO_RB5_Toggle();
 	wait_lcd_done();
@@ -220,10 +219,12 @@ inline D_CODES display_help(void)
 
 D_CODES set_display_info(const D_CODES new_response_info)
 {
-	static D_CODES old_info;
+	static D_CODES old_info = DIS_STR;
 
-	old_info = V.response.info;
-	V.response.info = new_response_info;
+	if (TimerDone(TMR_INFO)) {
+		old_info = V.response.info;
+		V.response.info = new_response_info;
+	}
 	return old_info;
 }
 

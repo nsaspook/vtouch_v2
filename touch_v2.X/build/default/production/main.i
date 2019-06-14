@@ -29226,7 +29226,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s", "1.46G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s", "1.47G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    update_lcd(0);
    WaitMs(3000);
@@ -29255,16 +29255,16 @@ void main(void)
 
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
      set_display_info(DIS_STR);
+     s = get_vterm_ptr(0, 0);
      if (V.stream == 9) {
       V.msg_error = V.function;
-      sprintf(get_vterm_ptr(0, 0), " S%dF%d Err         ", V.stream, V.function);
+      sprintf(s, " S%dF%d Err         ", V.stream, V.function);
      } else {
       V.msg_error = MSG_ERROR_NONE;
-      sprintf(get_vterm_ptr(0, 0), " S%dF%d #           ", V.stream, V.function);
+      sprintf(s, " S%dF%d #           ", V.stream, V.function);
      }
-     s = get_vterm_ptr(0, 0);
      s[16] = 0;
-     MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
+     MyeaDogM_WriteStringAtPos(0, 0, s);
 
 
 
@@ -29290,18 +29290,20 @@ void main(void)
      V.s_state = SEQ_STATE_ERROR;
     break;
    case SEQ_STATE_TRIGGER:
+    set_display_info(DIS_STR);
+    s = get_vterm_ptr(0, 0);
     if (V.queue) {
      V.r_l_state = LINK_STATE_IDLE;
      V.t_l_state = LINK_STATE_IDLE;
      V.s_state = SEQ_STATE_TX;
-     sprintf(get_vterm_ptr(0, 0), " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
+     sprintf(s, " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
     } else {
      V.s_state = SEQ_STATE_DONE;
-     sprintf(get_vterm_ptr(0, 0), " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
+     sprintf(s, " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
     }
-    s = get_vterm_ptr(0, 0);
+
     s[16] = 0;
-    MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
+    MyeaDogM_WriteStringAtPos(0, 0, s);
     break;
    case SEQ_STATE_DONE:
     V.s_state = SEQ_STATE_INIT;
@@ -29362,7 +29364,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 825 "main.c"
+# 827 "main.c"
     break;
    case SEQ_STATE_RX:
 

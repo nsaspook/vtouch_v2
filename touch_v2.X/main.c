@@ -667,9 +667,9 @@ void main(void)
 			/*
 			 * DMA I/O testing
 			 */
-//			init_port();
-//			send_port_data_dma();
-			
+			//			init_port();
+			//			send_port_data_dma();
+
 			init_display();
 			eaDogM_CursorOff();
 
@@ -707,16 +707,16 @@ void main(void)
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
 					set_display_info(DIS_STR);
+					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
-						sprintf(get_vterm_ptr(0, 0), " S%dF%d Err         ", V.stream, V.function);
+						sprintf(s, " S%dF%d Err         ", V.stream, V.function);
 					} else {
 						V.msg_error = MSG_ERROR_NONE;
-						sprintf(get_vterm_ptr(0, 0), " S%dF%d #           ", V.stream, V.function);
+						sprintf(s, " S%dF%d #           ", V.stream, V.function);
 					}
-					s = get_vterm_ptr(0, 0);
 					s[16] = 0;
-					MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
+					MyeaDogM_WriteStringAtPos(0, 0, s);
 #ifdef DB1
 					WaitMs(5);
 #endif
@@ -742,18 +742,20 @@ void main(void)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TRIGGER:
+				set_display_info(DIS_STR);
+				s = get_vterm_ptr(0, 0);
 				if (V.queue) {
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
-					sprintf(get_vterm_ptr(0, 0), " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
 				} else {
 					V.s_state = SEQ_STATE_DONE;
-					sprintf(get_vterm_ptr(0, 0), " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
 				}
-				s = get_vterm_ptr(0, 0);
+
 				s[16] = 0;
-				MyeaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
+				MyeaDogM_WriteStringAtPos(0, 0, s);
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
