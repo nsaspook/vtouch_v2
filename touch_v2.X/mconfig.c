@@ -192,7 +192,7 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 			update_lcd(0);
 		}
 
-		if (TimerDone(TMR_INFO))
+		if ((V.response.info != DIS_STR) && TimerDone(TMR_INFO))
 			V.response.info = DIS_STR;
 	}
 

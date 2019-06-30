@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27434,7 +27436,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27467,8 +27469,6 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
-
-typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -27588,7 +27588,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 80 "./vconfig.h"
+# 81 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28441,6 +28441,7 @@ enum APP_TIMERS {
  TMR_HELP,
  TMR_HELPDIS,
  TMR_DISPLAY,
+ TMR_SEQ,
 
 
 
@@ -28687,7 +28688,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  switch (*m_link) {
  case LINK_STATE_IDLE:
 
-
+  WaitMs(50);
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
@@ -28718,24 +28719,22 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 108 "gemsecs.c"
-   if (V.uart == 2 && UART1_is_rx_ready()) {
-    rxData = UART1_Read();
-    if (rxData == 0x04) {
-     StartTimer(TMR_T2, 3000);
-     V.error = LINK_ERROR_NONE;
-     *m_link = LINK_STATE_EOT;
-    }
-   }
-   if (V.uart == 1 && UART2_is_rx_ready()) {
-    rxData = UART2_Read();
-    if (rxData == 0x04) {
-     StartTimer(TMR_T2, 3000);
-     V.error = LINK_ERROR_NONE;
-     *m_link = LINK_STATE_EOT;
-    }
-   }
 
+   WaitMs(1);
+   if (V.uart == 1)
+
+
+
+     secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
+   if (V.uart == 2)
+
+
+
+     secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
+   V.error = LINK_ERROR_NONE;
+   *m_link = LINK_STATE_EOT;
+   StartTimer(TMR_T2, 3000);
+# 125 "gemsecs.c"
   }
   break;
  case LINK_STATE_EOT:
@@ -28826,7 +28825,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ACK:
 
-
+  WaitMs(1);
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -28891,11 +28890,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
 
+  WaitMs(1);
 
 
-
-
-
+  H10[3].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 1, 1);
 
   break;
  case LINK_STATE_EOT:
@@ -29010,8 +29009,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 3000);
   *t_link = LINK_STATE_ENQ;
 
-
-
+  WaitMs(1);
+  UART1_put_buffer(0x04);
 
   break;
  case LINK_STATE_ENQ:
@@ -29064,11 +29063,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
+  WaitMs(1);
 
 
 
-
-
+   UART1_put_buffer(0x06);
 
   break;
  case LINK_STATE_ACK:
@@ -29237,7 +29236,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.47G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.48G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29720,7 +29719,7 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
   DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
  } while (++i <= 255);
 
- sprintf(V.info, "Saved S%dF%d      ", stream, function);
+ sprintf(V.info, "Saved S%dF%d %d     ", stream, function, V.response.log_num);
  StartTimer(TMR_INFO, dtime);
  V.response.info = DIS_LOG;
  V.response.log_num++;
@@ -29812,7 +29811,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-
+  case 1:
 
   case 2:
    if (block != GEM_STATE_REMOTE)
@@ -29858,14 +29857,14 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    V.ticker = 15;
    break;
 
-
+  case 15:
 
   case 16:
    block = GEM_STATE_OFFLINE;
    V.ticker = 0;
    break;
 
-
+  case 17:
 
   case 18:
    block = GEM_STATE_ONLINE;

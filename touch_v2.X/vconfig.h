@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.47G"
+#define VER	"1.48G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -28,11 +28,12 @@ extern "C" {
 	//#define TESTING
 	//#define DISPLAY_SLOW
 
-	//#define DB1
-	//#define DB2
-	//#define DB3
-	//#define DB4
+#define DB1
+#define DB2
+#define DB3
+#define DB4
 	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
+#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
 
 #define SLED	LED0_LAT

@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28289,7 +28289,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 80 "./vconfig.h"
+# 81 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28473,6 +28473,7 @@ enum APP_TIMERS {
  TMR_HELP,
  TMR_HELPDIS,
  TMR_DISPLAY,
+ TMR_SEQ,
 
 
 
@@ -28915,7 +28916,26 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 371 "main.c"
+
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
 header33 H33[] = {
  {
   .length = 33,
@@ -29226,11 +29246,12 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s", "1.47G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s", "1.48G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    update_lcd(0);
    WaitMs(3000);
    StartTimer(TMR_DISPLAY, 100);
+   StartTimer(TMR_SEQ, 30000);
    break;
   case UI_STATE_HOST:
    switch (V.s_state) {
@@ -29245,8 +29266,8 @@ void main(void)
       sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
     }
 
-
-
+    WaitMs(50);
+    UART1_put_buffer(0x05);
 
     break;
    case SEQ_STATE_RX:
@@ -29266,7 +29287,7 @@ void main(void)
      s[16] = 0;
      MyeaDogM_WriteStringAtPos(0, 0, s);
 
-
+     WaitMs(5);
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -29364,7 +29385,14 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 827 "main.c"
+
+
+    if (LATEbits.LATE0) {
+     UART2_put_buffer(0x05);
+    } else {
+     UART1_put_buffer(0x05);
+    }
+
     break;
    case SEQ_STATE_RX:
 
@@ -29443,5 +29471,15 @@ void main(void)
 
 
   check_help();
+
+
+  if (TimerDone(TMR_SEQ)) {
+   StartTimer(TMR_SEQ, 30000);
+   StartTimer(TMR_INFO, 3000);
+   V.queue = 1;
+   set_display_info(DIS_LOAD);
+   update_lcd(0);
+  }
  }
+
 }

@@ -20,6 +20,7 @@ enum APP_TIMERS {
 	TMR_HELP,
 	TMR_HELPDIS,
 	TMR_DISPLAY,
+	TMR_SEQ,
 	//
 	//(Add timers here as needed)
 	//

@@ -683,6 +683,7 @@ void main(void)
 			update_lcd(0);
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
+			StartTimer(TMR_SEQ, 30000);
 			break;
 		case UI_STATE_HOST: //slave
 			switch (V.s_state) {
@@ -902,7 +903,17 @@ void main(void)
 		 * show help display if button pressed
 		 */
 		check_help();
+
+#ifdef DISP_TRIG
+		if (TimerDone(TMR_SEQ)) {
+			StartTimer(TMR_SEQ, 30000);
+			StartTimer(TMR_INFO, TDELAY);
+			V.queue = true;
+			set_display_info(DIS_LOAD);
+			update_lcd(0);
+		}
 	}
+#endif
 }
 /**
  End of File
