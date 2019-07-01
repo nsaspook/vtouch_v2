@@ -912,8 +912,8 @@ void main(void)
 			set_display_info(DIS_LOAD);
 			update_lcd(0);
 		}
-	}
 #endif
+	}
 }
 /**
  End of File
