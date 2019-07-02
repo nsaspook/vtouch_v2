@@ -90,9 +90,9 @@ void check_help(void)
  */
 uint8_t update_lcd(uint8_t vterm)
 {
-	vterm = vterm & 0x01;
+	vterm = vterm & 0x03;
 
-	if (D.vterm == 1 && vterm == 0)
+	if (D.vterm >= 1 && vterm == 0)
 		return D.vterm;
 
 	D.lcd[vterm][0][MAX_LINE] = 0;
@@ -108,11 +108,11 @@ uint8_t update_lcd(uint8_t vterm)
 }
 
 /*
- * set terminal window to 0 or 1
+ * set terminal window to 0..3
  */
 uint8_t set_vterm(uint8_t vterm)
 {
-	D.vterm = vterm & 0x01;
+	D.vterm = vterm & 0x03;
 	return D.vterm;
 }
 
@@ -121,7 +121,7 @@ uint8_t set_vterm(uint8_t vterm)
  */
 char * get_vterm_ptr(uint8_t line, uint8_t vterm)
 {
-	return D.lcd[vterm & 0x01][line & 0x03];
+	return D.lcd[vterm & 0x03][line & 0x03];
 }
 
 void vterm_dump(void)
@@ -151,36 +151,39 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 	} else {
 		switch (V.response.info) {
 		case DIS_LOG:
-			sprintf(get_vterm_ptr(0, 0), " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
-			sprintf(get_vterm_ptr(1, 0), " Stored #%d        ", V.response.log_num);
+			sprintf(get_vterm_ptr(0, 2), " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
+			sprintf(get_vterm_ptr(1, 2), " Stored #%d        ", V.response.log_num);
 			break;
 		case DIS_LOAD:
-			sprintf(get_vterm_ptr(0, 0), " Ready LL        ");
-			sprintf(get_vterm_ptr(1, 0), " S2F41 #%c         ", V.response.mcode);
+			sprintf(get_vterm_ptr(0, 2), " Ready LL        ");
+			sprintf(get_vterm_ptr(1, 2), " S2F41 #%c         ", V.response.mcode);
 			break;
 		case DIS_PUMP:
-			sprintf(get_vterm_ptr(0, 0), " Pump LL         ");
-			sprintf(get_vterm_ptr(1, 0), " S2F41 #%c         ", V.response.mcode);
+			sprintf(get_vterm_ptr(0, 2), " Pump LL         ");
+			sprintf(get_vterm_ptr(1, 2), " S2F41 #%c         ", V.response.mcode);
 			break;
 		case DIS_UNLOAD:
-			sprintf(get_vterm_ptr(0, 0), " Open LL         ");
-			sprintf(get_vterm_ptr(1, 0), " S2F41 #%c         ", V.response.mcode);
+			sprintf(get_vterm_ptr(0, 2), " Open LL         ");
+			sprintf(get_vterm_ptr(1, 2), " S2F41 #%c         ", V.response.mcode);
 			break;
 		case DIS_HELP:
 			sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_date);
 			sprintf(get_vterm_ptr(1, 1), "DISPLAY %s        ", build_time);
 			break;
 		case DIS_SEQUENCE:
-			sprintf(get_vterm_ptr(0, 0), " Load-lock%d R%d      ", V.llid, V.msg_error);
-			sprintf(get_vterm_ptr(1, 0), " SEQUENCE %d        ", V.sequences);
+			sprintf(get_vterm_ptr(0, 2), " Load-lock%d R%d      ", V.llid, V.msg_error);
+			sprintf(get_vterm_ptr(1, 2), " SEQUENCE %d        ", V.sequences);
 			break;
 		case DIS_TERM:
-			sprintf(get_vterm_ptr(0, 0), " Terminal %d             ", V.response.TID);
-			sprintf(get_vterm_ptr(1, 0), " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+			sprintf(get_vterm_ptr(0, 2), " Terminal %d             ", V.response.TID);
+			sprintf(get_vterm_ptr(1, 2), " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
 			break;
+		case DIS_CLEAR:
 		default:
 			sprintf(get_vterm_ptr(0, 0), "                  ");
 			sprintf(get_vterm_ptr(1, 0), "                  ");
+			sprintf(get_vterm_ptr(0, 2), "                  ");
+			sprintf(get_vterm_ptr(1, 2), "                  ");
 			break;
 		}
 

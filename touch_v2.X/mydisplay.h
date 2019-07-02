@@ -40,9 +40,9 @@
 #include "timers.h"
 
 typedef struct D_data { // control data structure 
-	char lcd[2][4][32];
-	uint8_t vterm : 1;
-	D_CODES last_info;
+    char lcd[4][4][32];
+    uint8_t vterm : 1;
+    D_CODES last_info;
 } D_data;
 
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
@@ -62,8 +62,8 @@ D_CODES set_temp_display_help(const D_CODES);
 extern "C" {
 #endif /* __cplusplus */
 
-	// TODO If C++ is being used, regular C code needs function names to have C 
-	// linkage so the functions can be used by the c code. 
+    // TODO If C++ is being used, regular C code needs function names to have C 
+    // linkage so the functions can be used by the c code. 
 
 #ifdef	__cplusplus
 }
