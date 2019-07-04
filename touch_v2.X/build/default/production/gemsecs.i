@@ -27589,146 +27589,146 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
 # 81 "./vconfig.h"
-    struct spi_link_type {
-        uint8_t SPI_LCD : 1;
-        uint8_t SPI_AUX : 1;
-        uint8_t LCD_TIMER : 1;
-        volatile uint8_t LCD_DATA : 1;
-        uint16_t delay;
-        uint8_t config;
-        struct ringBufS_t *tx1b, *tx1a;
-        volatile int32_t int_count;
-    };
+ struct spi_link_type {
+  uint8_t SPI_LCD : 1;
+  uint8_t SPI_AUX : 1;
+  uint8_t LCD_TIMER : 1;
+  volatile uint8_t LCD_DATA : 1;
+  uint16_t delay;
+  uint8_t config;
+  struct ringBufS_t *tx1b, *tx1a;
+  volatile int32_t int_count;
+ };
 
-    typedef enum {
-        CODE_TS = 0,
-        CODE_TM = 1,
-        CODE_ONLOCAL = 2,
-        CODE_ONREMOTE = 3,
-        CODE_OFFLINE = 4,
-        CODE_DEBUG,
-        CODE_LOG,
-        CODE_LOAD,
-        CODE_UNLOAD,
-        CODE_PUMP,
-        CODE_HELP,
-        CODE_SEQUENCE,
-        CODE_ERR,
-    } P_CODES;
+ typedef enum {
+  CODE_TS = 0,
+  CODE_TM = 1,
+  CODE_ONLOCAL = 2,
+  CODE_ONREMOTE = 3,
+  CODE_OFFLINE = 4,
+  CODE_DEBUG,
+  CODE_LOG,
+  CODE_LOAD,
+  CODE_UNLOAD,
+  CODE_PUMP,
+  CODE_HELP,
+  CODE_SEQUENCE,
+  CODE_ERR,
+ } P_CODES;
 
-    typedef enum {
-        DIS_STR = 0,
-        DIS_TERM,
-        DIS_LOG,
-        DIS_LOAD,
-        DIS_UNLOAD,
-        DIS_PUMP,
-        DIS_HELP,
-        DIS_SEQUENCE,
-        DIS_ERR,
-        DIS_CLEAR,
-    } D_CODES;
+ typedef enum {
+  DIS_STR = 0,
+  DIS_TERM,
+  DIS_LOG,
+  DIS_LOAD,
+  DIS_UNLOAD,
+  DIS_PUMP,
+  DIS_HELP,
+  DIS_SEQUENCE,
+  DIS_ERR,
+  DIS_CLEAR,
+ } D_CODES;
 
-    typedef struct terminal_type {
-        uint8_t ack[32];
-        uint8_t TID, mcode, mparm, cmdlen, log_seq;
-        D_CODES info, help_temp;
-        int32_t ceid;
-        uint16_t log_num;
-    } terminal_type;
+ typedef struct terminal_type {
+  uint8_t ack[32];
+  uint8_t TID, mcode, mparm, cmdlen, log_seq;
+  D_CODES info, help_temp;
+  int32_t ceid;
+  uint16_t log_num;
+ } terminal_type;
 
-    typedef enum {
-        SEQ_STATE_INIT = 0,
-        SEQ_STATE_RX,
-        SEQ_STATE_TX,
-        SEQ_STATE_TRIGGER,
-        SEQ_STATE_QUEUE,
-        SEQ_STATE_DONE,
-        SEQ_STATE_ERROR
-    } SEQ_STATES;
+ typedef enum {
+  SEQ_STATE_INIT = 0,
+  SEQ_STATE_RX,
+  SEQ_STATE_TX,
+  SEQ_STATE_TRIGGER,
+  SEQ_STATE_QUEUE,
+  SEQ_STATE_DONE,
+  SEQ_STATE_ERROR
+ } SEQ_STATES;
 
-    typedef enum {
-        UI_STATE_INIT = 0,
-        UI_STATE_HOST,
-        UI_STATE_DEBUG,
-        UI_STATE_LOG,
-        UI_STATE_ERROR
-    } UI_STATES;
+ typedef enum {
+  UI_STATE_INIT = 0,
+  UI_STATE_HOST,
+  UI_STATE_DEBUG,
+  UI_STATE_LOG,
+  UI_STATE_ERROR
+ } UI_STATES;
 
-    typedef enum {
-        GEM_STATE_DISABLE = 0,
-        GEM_STATE_COMM,
-        GEM_STATE_OFFLINE,
-        GEM_STATE_ONLINE,
-        GEM_STATE_REMOTE,
-        GEM_STATE_ERROR
-    } GEM_STATES;
+ typedef enum {
+  GEM_STATE_DISABLE = 0,
+  GEM_STATE_COMM,
+  GEM_STATE_OFFLINE,
+  GEM_STATE_ONLINE,
+  GEM_STATE_REMOTE,
+  GEM_STATE_ERROR
+ } GEM_STATES;
 
-    typedef enum {
-        GEM_GENERIC = 0,
-        GEM_VII80,
-        GEM_E220,
-        GEM_ERROR
-    } GEM_EQUIP;
+ typedef enum {
+  GEM_GENERIC = 0,
+  GEM_VII80,
+  GEM_E220,
+  GEM_ERROR
+ } GEM_EQUIP;
 
-    typedef enum {
-        LINK_STATE_IDLE = 0,
-        LINK_STATE_ENQ,
-        LINK_STATE_EOT,
-        LINK_STATE_ACK,
-        LINK_STATE_DONE,
-        LINK_STATE_NAK,
-        LINK_STATE_ERROR
-    } LINK_STATES;
+ typedef enum {
+  LINK_STATE_IDLE = 0,
+  LINK_STATE_ENQ,
+  LINK_STATE_EOT,
+  LINK_STATE_ACK,
+  LINK_STATE_DONE,
+  LINK_STATE_NAK,
+  LINK_STATE_ERROR
+ } LINK_STATES;
 
-    typedef enum {
-        LINK_ERROR_NONE = 10,
-        LINK_ERROR_T1,
-        LINK_ERROR_T2,
-        LINK_ERROR_T3,
-        LINK_ERROR_T4,
-        LINK_ERROR_CHECKSUM,
-        LINK_ERROR_NAK,
-        LINK_ERROR_ABORT,
-        LINK_ERROR_SEND
-    } LINK_ERRORS;
+ typedef enum {
+  LINK_ERROR_NONE = 10,
+  LINK_ERROR_T1,
+  LINK_ERROR_T2,
+  LINK_ERROR_T3,
+  LINK_ERROR_T4,
+  LINK_ERROR_CHECKSUM,
+  LINK_ERROR_NAK,
+  LINK_ERROR_ABORT,
+  LINK_ERROR_SEND
+ } LINK_ERRORS;
 
-    typedef enum {
-        MSG_ERROR_NONE = 0,
-        MSG_ERROR_ID = 1,
-        MSG_ERROR_STREAM = 3,
-        MSG_ERROR_FUNCTION = 5,
-        MSG_ERROR_DATA = 7,
-        MSG_ERROR_TIMEOUT = 9,
-        MSG_ERROR_DATASIZE = 11,
-        MSG_ERROR_RESET = 20
-    } MSG_ERRORS;
+ typedef enum {
+  MSG_ERROR_NONE = 0,
+  MSG_ERROR_ID = 1,
+  MSG_ERROR_STREAM = 3,
+  MSG_ERROR_FUNCTION = 5,
+  MSG_ERROR_DATA = 7,
+  MSG_ERROR_TIMEOUT = 9,
+  MSG_ERROR_DATASIZE = 11,
+  MSG_ERROR_RESET = 20
+ } MSG_ERRORS;
 
-    typedef struct V_data {
-        SEQ_STATES s_state;
-        UI_STATES ui_state;
-        GEM_STATES g_state;
-        GEM_EQUIP e_types;
-        LINK_STATES m_l_state;
-        LINK_STATES r_l_state;
-        LINK_STATES t_l_state;
-        char buf[64], terminal[160], info[64];
-        uint32_t ticks, systemb;
-        int32_t testing;
-        uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
-        UI_STATES ui_sw;
-        uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences;
-        uint8_t rbit : 1, wbit : 1, ebit : 1,
-        failed_send : 4, failed_receive : 4,
-        queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
-        terminal_type response;
-        uint8_t uart, llid, sid, ping_count;
-        volatile uint8_t ticker;
-    } V_data;
+ typedef struct V_data {
+  SEQ_STATES s_state;
+  UI_STATES ui_state;
+  GEM_STATES g_state;
+  GEM_EQUIP e_types;
+  LINK_STATES m_l_state;
+  LINK_STATES r_l_state;
+  LINK_STATES t_l_state;
+  char buf[64], terminal[160], info[64];
+  uint32_t ticks, systemb;
+  int32_t testing;
+  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
+  UI_STATES ui_sw;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
+  failed_send : 4, failed_receive : 4,
+  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+  terminal_type response;
+  uint8_t uart, llid, sid, ping_count;
+  volatile uint8_t ticker;
+ } V_data;
 
-    typedef struct V_help {
-        const char message[32], display[32];
-    } V_help;
+ typedef struct V_help {
+  const char message[32], display[32];
+ } V_help;
 # 23 "./gemsecs.h" 2
 # 1 "./mcc_generated_files/mcc.h" 1
 # 50 "./mcc_generated_files/mcc.h"
@@ -28490,6 +28490,7 @@ uint8_t update_lcd(uint8_t);
 uint8_t set_vterm(uint8_t);
 char * get_vterm_ptr(uint8_t, uint8_t);
 void vterm_dump(void);
+void vterm_sequence(void);
 __attribute__((inline)) D_CODES display_info(void);
 __attribute__((inline)) D_CODES display_help(void);
 _Bool help_button(void);
@@ -29239,7 +29240,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.48G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.50G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29623,13 +29624,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
   }
   break;
  case 10:
+  V.set_sequ = 1;
   switch (function) {
   case 1:
    block.header = (uint8_t*) & H13[1];
    block.length = sizeof(header13);
    H13[1].block.block.systemb = V.systemb;
    H53[0].block.block.systemb = V.ticks;
-   StartTimer(TMR_INFO, 3000);
    set_display_info(DIS_TERM);
 
    switch (s10f1_opcmd()) {
@@ -29689,6 +29690,8 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
     break;
    }
    set_temp_display_help(display_info());
+   vterm_sequence();
+   StartTimer(TMR_INFO, 3000);
    break;
   default:
    H10[2].block.block.stream = stream;

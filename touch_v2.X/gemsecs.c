@@ -1007,13 +1007,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		}
 		break;
 	case 10:
+		V.set_sequ = true;
 		switch (function) {
 		case 1: // S10F2 Terminal Request Acknowledge
 			block.header = (uint8_t*) & H13[1];
 			block.length = sizeof(header13);
 			H13[1].block.block.systemb = V.systemb;
 			H53[0].block.block.systemb = V.ticks;
-			StartTimer(TMR_INFO, TDELAY);
 			set_display_info(DIS_TERM);
 
 			switch (s10f1_opcmd()) {
@@ -1073,6 +1073,8 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				break;
 			}
 			set_temp_display_help(display_info());
+			vterm_sequence();
+			StartTimer(TMR_INFO, TDELAY);
 			break;
 		default: // S10F0 abort
 			H10[2].block.block.stream = stream;

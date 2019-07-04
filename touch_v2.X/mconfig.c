@@ -138,6 +138,47 @@ void vterm_dump(void)
 	WaitMs(3000);
 }
 
+void vterm_sequence(void)
+{
+	switch (V.response.info) {
+	case DIS_LOG:
+		sprintf(get_vterm_ptr(0, 2), " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
+		sprintf(get_vterm_ptr(1, 2), " Stored #%d        ", V.response.log_num);
+		break;
+	case DIS_LOAD:
+		sprintf(get_vterm_ptr(0, 2), " Ready LL        ");
+		sprintf(get_vterm_ptr(1, 2), " S2F41 #%c         ", V.response.mcode);
+		break;
+	case DIS_PUMP:
+		sprintf(get_vterm_ptr(0, 2), " Pump LL         ");
+		sprintf(get_vterm_ptr(1, 2), " S2F41 #%c         ", V.response.mcode);
+		break;
+	case DIS_UNLOAD:
+		sprintf(get_vterm_ptr(0, 2), " Open LL         ");
+		sprintf(get_vterm_ptr(1, 2), " S2F41 #%c         ", V.response.mcode);
+		break;
+	case DIS_HELP:
+		sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_date);
+		sprintf(get_vterm_ptr(1, 1), "DISPLAY %s        ", build_time);
+		break;
+	case DIS_SEQUENCE:
+		sprintf(get_vterm_ptr(0, 2), " Load-lock%d R%d      ", V.llid, V.msg_error);
+		sprintf(get_vterm_ptr(1, 2), " SEQUENCE %d        ", V.sequences);
+		break;
+	case DIS_TERM:
+		sprintf(get_vterm_ptr(0, 2), " Terminal %d             ", V.response.TID);
+		sprintf(get_vterm_ptr(1, 2), " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+		break;
+	case DIS_CLEAR:
+	default:
+		sprintf(get_vterm_ptr(0, 0), "                  ");
+		sprintf(get_vterm_ptr(1, 0), "                  ");
+		sprintf(get_vterm_ptr(0, 2), "                  ");
+		sprintf(get_vterm_ptr(1, 2), "                  ");
+		break;
+	}
+}
+
 /*
  * update possible command messages
  */
@@ -149,6 +190,7 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 	if (V.response.info == DIS_STR) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);
 	} else {
+		/*
 		switch (V.response.info) {
 		case DIS_LOG:
 			sprintf(get_vterm_ptr(0, 2), " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
@@ -186,13 +228,18 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 			sprintf(get_vterm_ptr(1, 2), "                  ");
 			break;
 		}
+		 */
 
 		if (V.response.info == DIS_HELP) {
 			sprintf(get_vterm_ptr(2, 1), "%s", V.info);
 			update_lcd(1);
 		} else {
-			sprintf(get_vterm_ptr(2, 0), "%s", V.info);
-			update_lcd(0);
+			if ((V.response.info != DIS_STR)) {
+				update_lcd(2);
+			} else {
+				sprintf(get_vterm_ptr(2, 0), "%s", V.info);
+				update_lcd(0);
+			}
 		}
 
 		if ((V.response.info != DIS_STR) && TimerDone(TMR_INFO))

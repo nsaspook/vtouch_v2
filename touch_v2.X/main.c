@@ -678,12 +678,16 @@ void main(void)
 			srand(1957);
 			set_vterm(0); // set to buffer 0
 			sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-			sprintf(get_vterm_ptr(1, 0), " Version %s", VER);
+			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
+			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
+			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
+			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
 			update_lcd(0);
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
-			StartTimer(TMR_SEQ, 30000);
+			StartTimer(TMR_SEQ, 10000);
+			StartTimer(TMR_INFO, TDELAY);
 			break;
 		case UI_STATE_HOST: //slave
 			switch (V.s_state) {
@@ -904,13 +908,22 @@ void main(void)
 		 */
 		check_help();
 
+		if (V.set_sequ) {
+			if (TimerDone(TMR_INFO)) {
+				V.set_sequ = false;
+				set_vterm(0);
+				update_lcd(0);
+			} else {
+				set_vterm(2);
+				update_lcd(2);
+			}
+		}
+
 #ifdef DISP_TRIG
 		if (TimerDone(TMR_SEQ)) {
-			StartTimer(TMR_SEQ, 30000);
+			StartTimer(TMR_SEQ, 10000);
 			StartTimer(TMR_INFO, TDELAY);
-			V.queue = true;
-			set_display_info(DIS_LOAD);
-			update_lcd(0);
+			V.set_sequ = true;
 		}
 #endif
 	}

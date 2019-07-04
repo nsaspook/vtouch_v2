@@ -50,6 +50,7 @@ uint8_t update_lcd(uint8_t);
 uint8_t set_vterm(uint8_t);
 char * get_vterm_ptr(uint8_t, uint8_t);
 void vterm_dump(void);
+void vterm_sequence(void);
 inline D_CODES display_info(void);
 inline D_CODES display_help(void);
 bool help_button(void);
