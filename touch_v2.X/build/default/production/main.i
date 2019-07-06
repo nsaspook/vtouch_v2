@@ -28622,6 +28622,7 @@ D_CODES set_temp_display_help(const D_CODES);
   header33 message;
   response_type block;
   uint16_t delay;
+  uint8_t stack;
  } gem_message_type;
 
  uint16_t block_checksum(uint8_t *, const uint16_t);
@@ -28671,6 +28672,7 @@ V_data V = {
  .help_id = 0,
  .ping_count = 0,
  .sequences = 0,
+ .set_sequ = 0,
 };
 
 header10 H10[] = {
@@ -28899,7 +28901,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 333 "main.c"
+# 334 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28918,7 +28920,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 371 "main.c"
+# 372 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29229,10 +29231,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.50G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.52G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.50G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.52G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -29372,7 +29374,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 832 "main.c"
+# 833 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29452,6 +29454,9 @@ void main(void)
 
   check_help();
 
+
+
+
   if (V.set_sequ) {
    if (TimerDone(TMR_INFO)) {
     V.set_sequ = 0;
@@ -29462,6 +29467,6 @@ void main(void)
     update_lcd(2);
    }
   }
-# 929 "main.c"
+# 933 "main.c"
  }
 }

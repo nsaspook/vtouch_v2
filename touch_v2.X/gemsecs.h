@@ -140,6 +140,7 @@ extern "C" {
 		header33 message;
 		response_type block;
 		uint16_t delay;
+		uint8_t stack;
 	} gem_message_type;
 
 	uint16_t block_checksum(uint8_t *, const uint16_t);

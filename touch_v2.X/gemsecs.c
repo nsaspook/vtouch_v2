@@ -15,7 +15,7 @@ extern struct header33 H33[];
 extern const header33 HC33[];
 extern struct header53 H53[];
 extern header254 H254[];
-extern gem_message_type S[4];
+extern gem_message_type S[10];
 
 static bool secs_send(uint8_t *, const uint8_t, const bool, const uint8_t);
 
@@ -574,6 +574,7 @@ bool sequence_messages(const uint8_t sid)
 	V.msg_error = MSG_ERROR_NONE;
 	switch (sid) {
 	case 1:
+		S[0].stack=6; // number of commands
 		S[0].message = HC33[1]; // open doors
 		S[1].message = HC33[1];
 		S[2].message = HC33[1];
@@ -607,7 +608,7 @@ bool sequence_messages(const uint8_t sid)
 		S[4].block.length = sizeof(header33);
 		S[5].block.header = (uint8_t*) & S[5].message;
 		S[5].block.length = sizeof(header33);
-		V.stack = 6; // queue up 10 messages, pop off the top of stack
+		V.stack = S[0].stack; // queue up 10 messages, pop off the top of stack
 		break;
 	default:
 		V.stack = false;
@@ -856,6 +857,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 	if (TimerDone(TMR_HBIO)) { // hold sequences during equipment messages
 		if (V.stack) {
 			gem_messages(&block, V.sid);
+			set_display_info(DIS_SEQUENCE);
+			vterm_sequence();
+			V.set_sequ = true;
 			return(block);
 		}
 		StartTimer(TMR_HBIO, HBTS); // add short idle time
@@ -1062,7 +1066,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			case CODE_LOG:
 				do {
 					DATAEE_WriteByte(i, 0xff);
-				} while (++i <= 1023); // overwrite EEPROM data
+				} while (++i <= 764); // overwrite EEPROM data but leave program data intact in the top 256 bytes
 				V.response.log_num = 0;
 				V.response.log_seq = 0;
 				set_display_info(DIS_LOG);

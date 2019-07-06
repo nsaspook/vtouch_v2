@@ -81,6 +81,7 @@ V_data V = {
 	.help_id = 0,
 	.ping_count = 0,
 	.sequences = 0,
+	.set_sequ = false,
 };
 
 header10 H10[] = {
@@ -908,6 +909,9 @@ void main(void)
 		 */
 		check_help();
 
+		/*
+		 * show command messages if flag is set for timer duration
+		 */
 		if (V.set_sequ) {
 			if (TimerDone(TMR_INFO)) {
 				V.set_sequ = false;

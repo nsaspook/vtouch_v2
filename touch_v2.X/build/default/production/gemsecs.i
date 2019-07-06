@@ -28614,6 +28614,7 @@ D_CODES set_temp_display_help(const D_CODES);
   header33 message;
   response_type block;
   uint16_t delay;
+  uint8_t stack;
  } gem_message_type;
 
  uint16_t block_checksum(uint8_t *, const uint16_t);
@@ -28647,7 +28648,7 @@ extern struct header33 H33[];
 extern const header33 HC33[];
 extern struct header53 H53[];
 extern header254 H254[];
-extern gem_message_type S[4];
+extern gem_message_type S[10];
 
 static _Bool secs_send(uint8_t *, const uint8_t, const _Bool, const uint8_t);
 
@@ -29191,6 +29192,7 @@ _Bool sequence_messages(const uint8_t sid)
  V.msg_error = MSG_ERROR_NONE;
  switch (sid) {
  case 1:
+  S[0].stack=6;
   S[0].message = HC33[1];
   S[1].message = HC33[1];
   S[2].message = HC33[1];
@@ -29224,7 +29226,7 @@ _Bool sequence_messages(const uint8_t sid)
   S[4].block.length = sizeof(header33);
   S[5].block.header = (uint8_t*) & S[5].message;
   S[5].block.length = sizeof(header33);
-  V.stack = 6;
+  V.stack = S[0].stack;
   break;
  default:
   V.stack = 0;
@@ -29240,7 +29242,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.50G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.52G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29473,6 +29475,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
  if (TimerDone(TMR_HBIO)) {
   if (V.stack) {
    gem_messages(&block, V.sid);
+   set_display_info(DIS_SEQUENCE);
+   vterm_sequence();
+   V.set_sequ = 1;
    return(block);
   }
   StartTimer(TMR_HBIO, 5000);
@@ -29679,7 +29684,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    case CODE_LOG:
     do {
      DATAEE_WriteByte(i, 0xff);
-    } while (++i <= 1023);
+    } while (++i <= 764);
     V.response.log_num = 0;
     V.response.log_seq = 0;
     set_display_info(DIS_LOG);
