@@ -29242,7 +29242,7 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
  uint8_t j;
 
  sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.52G");
+  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.53G");
 
  for (j = 0; j < 34; j++) {
   data[i--] = V.terminal[j];
@@ -29477,6 +29477,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    gem_messages(&block, V.sid);
    set_display_info(DIS_SEQUENCE);
    vterm_sequence();
+   StartTimer(TMR_INFO, 3000);
    V.set_sequ = 1;
    return(block);
   }

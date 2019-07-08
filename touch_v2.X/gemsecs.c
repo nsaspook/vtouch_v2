@@ -859,6 +859,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			gem_messages(&block, V.sid);
 			set_display_info(DIS_SEQUENCE);
 			vterm_sequence();
+			StartTimer(TMR_INFO, TDELAY);
 			V.set_sequ = true;
 			return(block);
 		}
