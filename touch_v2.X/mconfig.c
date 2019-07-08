@@ -140,6 +140,7 @@ void vterm_dump(void)
 
 void vterm_sequence(void)
 {
+	sprintf(get_vterm_ptr(2, 2), " Mesg %d Stack %d      ", V.msg_error, V.stack);
 	switch (V.response.info) {
 	case DIS_LOG:
 		sprintf(get_vterm_ptr(0, 2), " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
@@ -162,7 +163,7 @@ void vterm_sequence(void)
 		sprintf(get_vterm_ptr(1, 1), "DISPLAY %s        ", build_time);
 		break;
 	case DIS_SEQUENCE:
-		sprintf(get_vterm_ptr(0, 2), " Load-lock%d R%d      ", V.llid, V.msg_error);
+		sprintf(get_vterm_ptr(0, 2), " Load-lock num %d      ", V.llid);
 		sprintf(get_vterm_ptr(1, 2), " SEQUENCE %d        ", V.sequences);
 		break;
 	case DIS_TERM:
