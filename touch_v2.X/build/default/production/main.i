@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -29054,8 +29054,8 @@ header53 H53[] = {
   .data[39] = 0x01,
   .data[38] = 1,
   .data[37] = 0x41,
-  .data[36] = 0x01,
-  .data[35] = 35,
+  .data[36] = 36,
+  .data[35] = ' ',
   .data[34] = 'F',
   .data[33] = 'R',
   .data[32] = 'E',
@@ -29231,10 +29231,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.54G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.55G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.54G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.55G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

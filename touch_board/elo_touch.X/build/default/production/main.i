@@ -26998,7 +26998,7 @@ void PMD_Initialize(void);
 
 void main(void)
 {
- uint8_t x, y;
+ uint8_t x = 0, y = 0;
 
  SYSTEM_Initialize();
 

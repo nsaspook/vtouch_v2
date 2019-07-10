@@ -53,7 +53,7 @@
  */
 void main(void)
 {
-	uint8_t x, y;
+	uint8_t x = 0, y = 0;
 	// Initialize the device
 	SYSTEM_Initialize();
 
