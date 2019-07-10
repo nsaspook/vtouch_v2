@@ -27588,7 +27588,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 81 "./vconfig.h"
+# 89 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27632,8 +27632,9 @@ void PIN_MANAGER_Initialize (void);
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen, log_seq;
+  uint8_t host_display_ack : 1;
   D_CODES info, help_temp;
-  int32_t ceid;
+  uint16_t ceid;
   uint16_t log_num;
  } terminal_type;
 
@@ -28617,6 +28618,13 @@ D_CODES set_temp_display_help(const D_CODES);
   uint8_t stack;
  } gem_message_type;
 
+ typedef struct gem_display_type {
+  header53 message;
+  response_type block;
+  uint16_t delay;
+  uint8_t stack;
+ } gem_display_type;
+
  uint16_t block_checksum(uint8_t *, const uint16_t);
  uint16_t run_checksum(const uint8_t, const _Bool);
  LINK_STATES m_protocol(LINK_STATES *);
@@ -28625,7 +28633,7 @@ D_CODES set_temp_display_help(const D_CODES);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
  P_CODES s10f1_opcmd(void);
- P_CODES s6f11_opcmd(void);
+ uint16_t s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  _Bool sequence_messages(uint8_t);
  _Bool gem_messages(response_type *, uint8_t);
@@ -28649,6 +28657,7 @@ extern const header33 HC33[];
 extern struct header53 H53[];
 extern header254 H254[];
 extern gem_message_type S[10];
+extern gem_display_type D[2];
 
 static _Bool secs_send(uint8_t *, const uint8_t, const _Bool, const uint8_t);
 
@@ -28722,7 +28731,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 108 "gemsecs.c"
+# 109 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -29192,7 +29201,7 @@ _Bool sequence_messages(const uint8_t sid)
  V.msg_error = MSG_ERROR_NONE;
  switch (sid) {
  case 1:
-  S[0].stack=6;
+  S[0].stack = 6;
   S[0].message = HC33[1];
   S[1].message = HC33[1];
   S[2].message = HC33[1];
@@ -29227,13 +29236,23 @@ _Bool sequence_messages(const uint8_t sid)
   S[5].block.header = (uint8_t*) & S[5].message;
   S[5].block.length = sizeof(header33);
   V.stack = S[0].stack;
+  StartTimer(TMR_HBIO, S[V.stack - 1].delay);
+  break;
+ case 10:
+  D[0].stack = 1;
+  D[0].message.data[0] = 0x01;
+  D[0].delay = 10000;
+  D[0].block.header = (uint8_t*) & D[0].message;
+  D[0].block.length = sizeof(header53);
+  V.stack = D[0].stack;
+  StartTimer(TMR_HBIO, D[V.stack - 1].delay);
   break;
  default:
   V.stack = 0;
   return 0;
   break;
  }
- StartTimer(TMR_HBIO, S[V.stack - 1].delay);
+
  return 1;
 }
 
@@ -29248,6 +29267,19 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
   data[i--] = V.terminal[j];
  }
  return(strlen(V.terminal));
+}
+
+
+
+
+uint8_t format_display_text(const char *data)
+{
+ int8_t j;
+
+ for (j = 36; j > 0; j--) {
+  H53[0].data[j] = data[j];
+ }
+ return(strlen(data));
 }
 
 
@@ -29426,14 +29458,14 @@ P_CODES s10f1_opcmd(void)
 
 
 
-P_CODES s6f11_opcmd(void)
+uint16_t s6f11_opcmd(void)
 {
  V.response.ceid = V.response.ack[9];
  V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9];
 
  V.testing = (sizeof(H254[0].data) - 1) - 9;
 
- return(P_CODES) V.response.ceid;
+ return V.response.ceid;
 }
 
 
@@ -29444,11 +29476,20 @@ _Bool gem_messages(response_type *block, const uint8_t sid)
  if (!V.stack)
   return 0;
 
- StartTimer(TMR_HBIO, S[V.stack - 1].delay);
-
  switch (sid) {
  case 1:
+  StartTimer(TMR_HBIO, S[V.stack - 1].delay);
+  *block = S[V.stack - 1].block;
+  S[V.stack - 1].message.block.block.systemb = V.ticks;
+  V.llid = S[V.stack - 1].message.data[0];
+  break;
+ case 10:
+  StartTimer(TMR_HBIO, D[V.stack - 1].delay);
+  *block = D[V.stack - 1].block;
+  D[V.stack - 1].message.block.block.systemb = V.ticks;
+  break;
  default:
+  StartTimer(TMR_HBIO, S[V.stack - 1].delay);
   *block = S[V.stack - 1].block;
   S[V.stack - 1].message.block.block.systemb = V.ticks;
   V.llid = S[V.stack - 1].message.data[0];
@@ -29576,7 +29617,28 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
   break;
  case 6:
   switch (function) {
+   uint32_t ceid = 0;
   case 11:
+   ceid = s6f11_opcmd();
+   switch (V.e_types) {
+   case GEM_VII80:
+    if (ceid == 93 || ceid == 94) {
+     V.response.host_display_ack = 1;
+     V.sid = 10;
+    }
+    break;
+   case GEM_E220:
+    if (ceid == 81) {
+     V.response.host_display_ack = 1;
+     V.sid = 10;
+    }
+    break;
+   default:
+    break;
+   }
+   if (ceid == 93 || ceid == 94) {
+    V.response.host_display_ack = 1;
+   }
    block.header = (uint8_t*) & H13[0];
    block.length = sizeof(header13);
    H13[0].block.block.systemb = V.systemb;
@@ -29826,9 +29888,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
 
   case 2:
-   if (block != GEM_STATE_REMOTE)
+   if (block != GEM_STATE_REMOTE) {
     if (TimerDone(TMR_HBIO))
      StartTimer(TMR_HBIO, 30000);
+    sequence_messages(10);
+   }
 
    block = GEM_STATE_REMOTE;
    V.ticker = 0;
@@ -29860,6 +29924,10 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    default:
     equipment = GEM_GENERIC;
     break;
+   }
+
+   if (block != GEM_STATE_REMOTE) {
+    sequence_messages(10);
    }
    block = GEM_STATE_REMOTE;
    V.ticker = 0;

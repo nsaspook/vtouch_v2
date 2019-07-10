@@ -143,6 +143,13 @@ extern "C" {
 		uint8_t stack;
 	} gem_message_type;
 
+	typedef struct gem_display_type {
+		header53 message;
+		response_type block;
+		uint16_t delay;
+		uint8_t stack;
+	} gem_display_type;
+
 	uint16_t block_checksum(uint8_t *, const uint16_t);
 	uint16_t run_checksum(const uint8_t, const bool);
 	LINK_STATES m_protocol(LINK_STATES *);
@@ -151,7 +158,7 @@ extern "C" {
 	void hb_message(void);
 	uint8_t terminal_format(uint8_t *, uint8_t);
 	P_CODES s10f1_opcmd(void);
-	P_CODES s6f11_opcmd(void);
+	uint16_t s6f11_opcmd(void);
 	response_type secs_II_message(uint8_t, uint8_t);
 	bool sequence_messages(uint8_t);
 	bool gem_messages(response_type *, uint8_t);

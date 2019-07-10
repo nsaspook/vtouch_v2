@@ -75,6 +75,7 @@ V_data V = {
 	.response.info = DIS_STR,
 	.response.log_num = 0,
 	.response.log_seq = 0,
+	.response.host_display_ack = false,
 	.queue = false,
 	.stack = false, // 0 no messages, 1-10 messages in queue
 	.sid = 1,
@@ -560,8 +561,8 @@ header53 H53[] = {
 		.data[37] = 0x01,
 		.data[36] = 0x02,
 		.data[35] = 0x41,
-		.data[34] = 0x01,
-		.data[33] = 7,
+		.data[34] = 9,
+		.data[33] = '*',
 		.data[32] = 'F',
 		.data[31] = 'R',
 		.data[30] = 'E',
@@ -569,10 +570,10 @@ header53 H53[] = {
 		.data[28] = '1',
 		.data[27] = '2',
 		.data[26] = '3',
-		.data[25] = 0,
+		.data[25] = '4',
 		.data[24] = 0x41,
-		.data[23] = 0x01,
-		.data[22] = 24,
+		.data[23] = 23,
+		.data[22] = '*',
 		.data[21] = 'B',
 		.data[20] = 'R',
 		.data[19] = 'K',
@@ -593,8 +594,8 @@ header53 H53[] = {
 		.data[4] = 'O',
 		.data[3] = 'O',
 		.data[2] = 'K',
-		.data[1] = 'O',
-		.data[0] = 0,
+		.data[1] = 'S',
+		.data[0] = 'o',
 	},
 };
 
@@ -618,6 +619,7 @@ header254 H254[] = {
 };
 
 gem_message_type S[10]; // a queue message stack
+gem_display_type D[2]; // equipment display message stack
 
 header10 r_block;
 

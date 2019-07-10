@@ -33,7 +33,7 @@ extern "C" {
 	//#define DB3
 	//#define DB4
 	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
-//#define DISP_TRIG
+	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
 
 #define SLED	LED0_LAT
@@ -75,6 +75,14 @@ extern "C" {
 	 */
 
 #define TX_RESERVE	59
+
+	/*
+	 * Host message ACK CEIDs
+	 */
+#define V_OSCREEN	93
+#define V_SSCREEN	94
+#define E_OSCREEN	81
+#define E_OSCREEN	81
 
 #define MAX_LINE	16
 
@@ -121,8 +129,9 @@ extern "C" {
 	typedef struct terminal_type {
 		uint8_t ack[32];
 		uint8_t TID, mcode, mparm, cmdlen, log_seq;
+		uint8_t host_display_ack : 1;
 		D_CODES info, help_temp;
-		int32_t ceid;
+		uint16_t ceid;
 		uint16_t log_num;
 	} terminal_type;
 

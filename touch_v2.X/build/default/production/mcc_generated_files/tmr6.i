@@ -27267,10 +27267,9 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 54 "mcc_generated_files/tmr6.h" 2
-
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
 # 55 "mcc_generated_files/tmr6.h" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 56 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27643,7 +27642,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 81 "./vconfig.h"
+# 89 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27687,8 +27686,9 @@ void PIN_MANAGER_Initialize (void);
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen, log_seq;
+  uint8_t host_display_ack : 1;
   D_CODES info, help_temp;
-  int32_t ceid;
+  uint16_t ceid;
   uint16_t log_num;
  } terminal_type;
 

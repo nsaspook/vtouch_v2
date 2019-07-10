@@ -28289,7 +28289,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 81 "./vconfig.h"
+# 89 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28333,8 +28333,9 @@ void PMD_Initialize(void);
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen, log_seq;
+  uint8_t host_display_ack : 1;
   D_CODES info, help_temp;
-  int32_t ceid;
+  uint16_t ceid;
   uint16_t log_num;
  } terminal_type;
 
@@ -28625,6 +28626,13 @@ D_CODES set_temp_display_help(const D_CODES);
   uint8_t stack;
  } gem_message_type;
 
+ typedef struct gem_display_type {
+  header53 message;
+  response_type block;
+  uint16_t delay;
+  uint8_t stack;
+ } gem_display_type;
+
  uint16_t block_checksum(uint8_t *, const uint16_t);
  uint16_t run_checksum(const uint8_t, const _Bool);
  LINK_STATES m_protocol(LINK_STATES *);
@@ -28633,7 +28641,7 @@ D_CODES set_temp_display_help(const D_CODES);
  void hb_message(void);
  uint8_t terminal_format(uint8_t *, uint8_t);
  P_CODES s10f1_opcmd(void);
- P_CODES s6f11_opcmd(void);
+ uint16_t s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
  _Bool sequence_messages(uint8_t);
  _Bool gem_messages(response_type *, uint8_t);
@@ -28666,6 +28674,7 @@ V_data V = {
  .response.info = DIS_STR,
  .response.log_num = 0,
  .response.log_seq = 0,
+ .response.host_display_ack = 0,
  .queue = 0,
  .stack = 0,
  .sid = 1,
@@ -28901,7 +28910,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 334 "main.c"
+# 335 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28920,7 +28929,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 372 "main.c"
+# 373 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29112,8 +29121,8 @@ header53 H53[] = {
   .data[37] = 0x01,
   .data[36] = 0x02,
   .data[35] = 0x41,
-  .data[34] = 0x01,
-  .data[33] = 7,
+  .data[34] = 9,
+  .data[33] = '*',
   .data[32] = 'F',
   .data[31] = 'R',
   .data[30] = 'E',
@@ -29121,10 +29130,10 @@ header53 H53[] = {
   .data[28] = '1',
   .data[27] = '2',
   .data[26] = '3',
-  .data[25] = 0,
+  .data[25] = '4',
   .data[24] = 0x41,
-  .data[23] = 0x01,
-  .data[22] = 24,
+  .data[23] = 23,
+  .data[22] = '*',
   .data[21] = 'B',
   .data[20] = 'R',
   .data[19] = 'K',
@@ -29145,8 +29154,8 @@ header53 H53[] = {
   .data[4] = 'O',
   .data[3] = 'O',
   .data[2] = 'K',
-  .data[1] = 'O',
-  .data[0] = 0,
+  .data[1] = 'S',
+  .data[0] = 'o',
  },
 };
 
@@ -29170,6 +29179,7 @@ header254 H254[] = {
 };
 
 gem_message_type S[10];
+gem_display_type D[2];
 
 header10 r_block;
 
@@ -29374,7 +29384,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 833 "main.c"
+# 835 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29467,6 +29477,6 @@ void main(void)
     update_lcd(2);
    }
   }
-# 933 "main.c"
+# 935 "main.c"
  }
 }

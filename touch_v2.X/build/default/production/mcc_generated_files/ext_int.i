@@ -27431,7 +27431,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 81 "./vconfig.h"
+# 89 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27475,8 +27475,9 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  typedef struct terminal_type {
   uint8_t ack[32];
   uint8_t TID, mcode, mparm, cmdlen, log_seq;
+  uint8_t host_display_ack : 1;
   D_CODES info, help_temp;
-  int32_t ceid;
+  uint16_t ceid;
   uint16_t log_num;
  } terminal_type;
 

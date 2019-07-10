@@ -16,6 +16,7 @@ extern const header33 HC33[];
 extern struct header53 H53[];
 extern header254 H254[];
 extern gem_message_type S[10];
+extern gem_display_type D[2];
 
 static bool secs_send(uint8_t *, const uint8_t, const bool, const uint8_t);
 
@@ -574,7 +575,7 @@ bool sequence_messages(const uint8_t sid)
 	V.msg_error = MSG_ERROR_NONE;
 	switch (sid) {
 	case 1:
-		S[0].stack=6; // number of commands
+		S[0].stack = 6; // number of commands
 		S[0].message = HC33[1]; // open doors
 		S[1].message = HC33[1];
 		S[2].message = HC33[1];
@@ -609,13 +610,23 @@ bool sequence_messages(const uint8_t sid)
 		S[5].block.header = (uint8_t*) & S[5].message;
 		S[5].block.length = sizeof(header33);
 		V.stack = S[0].stack; // queue up 10 messages, pop off the top of stack
+		StartTimer(TMR_HBIO, S[V.stack - 1].delay); // restart sequence timer
+		break;
+	case 10: // write to equipment display sequence
+		D[0].stack = 1; // number of commands
+		D[0].message.data[0] = 0x01;
+		D[0].delay = 10000; // set delay between commands
+		D[0].block.header = (uint8_t*) & D[0].message; // S10F3
+		D[0].block.length = sizeof(header53);
+		V.stack = D[0].stack; // queue up 2 displays, pop off the top of stack
+		StartTimer(TMR_HBIO, D[V.stack - 1].delay); // restart sequence timer
 		break;
 	default:
 		V.stack = false;
 		return false;
 		break;
 	}
-	StartTimer(TMR_HBIO, S[V.stack - 1].delay); // restart sequence timer
+
 	return true;
 }
 
@@ -630,6 +641,19 @@ uint8_t terminal_format(uint8_t *data, uint8_t i)
 		data[i--] = V.terminal[j];
 	}
 	return(strlen(V.terminal));
+}
+
+/*
+ * format S10F3 Terminal Display, Single in H53[0]
+ */
+uint8_t format_display_text(const char *data)
+{
+	int8_t j;
+
+	for (j = 36; j > 0; j--) {
+		H53[0].data[j] = data[j];
+	}
+	return(strlen(data));
 }
 
 /*
@@ -661,7 +685,7 @@ static void parse_ll(void)
 }
 
 /*
- * parse sequence command for sequence number
+ * parse sequence command for sequence number from operator screen text
  */
 static void parse_sid(void)
 {
@@ -808,14 +832,14 @@ P_CODES s10f1_opcmd(void)
 /*
  * decode offline, online ceid codes
  */
-P_CODES s6f11_opcmd(void)
+uint16_t s6f11_opcmd(void)
 {
 	V.response.ceid = V.response.ack[9]; // CEID
 	V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9]; // get CEID using full message block buffer
 
 	V.testing = (sizeof(H254[0].data) - 1) - 9;
 
-	return(P_CODES) V.response.ceid;
+	return V.response.ceid;
 }
 
 /*
@@ -826,11 +850,20 @@ bool gem_messages(response_type *block, const uint8_t sid)
 	if (!V.stack)
 		return false;
 
-	StartTimer(TMR_HBIO, S[V.stack - 1].delay);
-
 	switch (sid) {
 	case 1: // close doors sequence
+		StartTimer(TMR_HBIO, S[V.stack - 1].delay);
+		*block = S[V.stack - 1].block; // shallow contents copy
+		S[V.stack - 1].message.block.block.systemb = V.ticks;
+		V.llid = S[V.stack - 1].message.data[0];
+		break;
+	case 10: // equipment display sequence
+		StartTimer(TMR_HBIO, D[V.stack - 1].delay);
+		*block = D[V.stack - 1].block; // shallow contents copy
+		D[V.stack - 1].message.block.block.systemb = V.ticks;
+		break;
 	default:
+		StartTimer(TMR_HBIO, S[V.stack - 1].delay);
 		*block = S[V.stack - 1].block; // shallow contents copy
 		S[V.stack - 1].message.block.block.systemb = V.ticks;
 		V.llid = S[V.stack - 1].message.data[0];
@@ -958,7 +991,28 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		break;
 	case 6:
 		switch (function) {
-		case 11: // S6F12			
+			uint32_t ceid = 0;
+		case 11: // S6F12
+			ceid = s6f11_opcmd(); // look for event codes for equipment types
+			switch (V.e_types) {
+			case GEM_VII80:
+				if (ceid == V_OSCREEN || ceid == V_SSCREEN) {
+					V.response.host_display_ack = true;
+					V.sid = 10;
+				}
+				break;
+			case GEM_E220:
+				if (ceid == E_OSCREEN) {
+					V.response.host_display_ack = true;
+					V.sid = 10;
+				}
+				break;
+			default:
+				break;
+			}
+			if (ceid == V_OSCREEN || ceid == V_SSCREEN) {
+				V.response.host_display_ack = true;
+			}
 			block.header = (uint8_t*) & H13[0];
 			block.length = sizeof(header13);
 			H13[0].block.block.systemb = V.systemb;
@@ -985,7 +1039,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			break;
 		}
 		break;
-	case 9://	bool secs_send(uint8_t *, const uint8_t, const bool, const uint8_t);
+	case 9:
 		switch (function) {
 		case 1:
 			break;
@@ -1208,9 +1262,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		case 1:
 #endif
 		case 2:
-			if (block != GEM_STATE_REMOTE)
+			if (block != GEM_STATE_REMOTE) {
 				if (TimerDone(TMR_HBIO))
 					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
+				sequence_messages(10); // send a hello text message
+			}
 
 			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
@@ -1242,6 +1298,10 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			default:
 				equipment = GEM_GENERIC;
 				break;
+			}
+
+			if (block != GEM_STATE_REMOTE) {
+				sequence_messages(10); // send hello text message to equipment screen
 			}
 			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
