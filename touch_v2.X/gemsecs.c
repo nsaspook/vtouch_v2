@@ -13,7 +13,7 @@ extern struct header26 H26[];
 extern struct header27 H27[];
 extern struct header33 H33[];
 extern const header33 HC33[];
-extern struct header53 H53[];
+extern struct header153 H153[];
 extern header254 H254[];
 extern gem_message_type S[10];
 extern gem_display_type D[2];
@@ -617,7 +617,7 @@ bool sequence_messages(const uint8_t sid)
 		D[0].message.data[0] = 0x01;
 		D[0].delay = 10000; // set delay between commands
 		D[0].block.header = (uint8_t*) & D[0].message; // S10F3
-		D[0].block.length = sizeof(header53);
+		D[0].block.length = sizeof(header153);
 		V.stack = D[0].stack; // queue up 2 displays, pop off the top of stack
 		StartTimer(TMR_HBIO, D[V.stack - 1].delay); // restart sequence timer
 		break;
@@ -630,30 +630,52 @@ bool sequence_messages(const uint8_t sid)
 	return true;
 }
 
-uint8_t terminal_format(uint8_t *data, uint8_t i)
+/*
+ * standard text to the V.terminal string buffer
+ */
+void terminal_format(uint8_t t_format)
 {
-	uint8_t j;
-
-	sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-		V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
-
-	for (j = 0; j < 34; j++) {
-		data[i--] = V.terminal[j];
+	switch (t_format) {
+	case 0:
+		sprintf(V.terminal, "MESSAGE R%d %d, T%d %d C%d  FGB@MCHP %s",
+			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+		break;
+	case 1:
+		sprintf(V.terminal, "ONLINE R%d %d, T%d %d C%d  FGB@MCHP %s",
+			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+		break;
+	default:
+		sprintf(V.terminal, "UNKNOWN TEXT FORMAT R%d %d, T%d %d C%d  FGB@MCHP %s",
+			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+		break;
 	}
-	return(strlen(V.terminal));
+
 }
 
 /*
- * format S10F3 Terminal Display, Single in H53[0]
+ * format S10F3 Terminal Display, Single in H153[0]
  */
-uint8_t format_display_text(const char *data)
+uint16_t format_display_text(const char *data)
 {
-	int8_t j;
+	int16_t j, i = 0, k, z = 0;
 
-	for (j = 36; j > 0; j--) {
-		H53[0].data[j] = data[j];
+	k = strlen(data);
+
+	if (!k) // check for null string
+		return k;
+
+	/*
+	 * shift string into Terminal text array
+	 */
+	for (j = S10F3_STR_POS; j >= z; j--) {
+		if (i < k) {
+			H153[0].data[j] = data[i++];
+		} else {
+			H153[0].data[j] = ' ';
+		}
+
 	}
-	return(strlen(data));
+	return k;
 }
 
 /*
@@ -1072,15 +1094,15 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.header = (uint8_t*) & H13[1];
 			block.length = sizeof(header13);
 			H13[1].block.block.systemb = V.systemb;
-			H53[0].block.block.systemb = V.ticks;
+			H153[0].block.block.systemb = V.ticks;
 			set_display_info(DIS_TERM);
 
 			switch (s10f1_opcmd()) {
 			case CODE_TM:
 				block.respond = true;
-				block.reply = (uint8_t*) & H53[1]; // S10F5 send Terminal Display, Multi-line, queue
-				block.reply_length = sizeof(header53);
-				H53[1].data[38] = V.response.TID;
+				block.reply = (uint8_t*) & H153[1]; // S10F5 send Terminal Display, Multi-line, queue
+				block.reply_length = sizeof(header153);
+				H153[1].data[S10F3_TID_POS] = V.response.TID;
 				V.queue = true;
 				break;
 			case CODE_LOAD:
@@ -1112,10 +1134,11 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				break;
 			case CODE_TS:
 				block.respond = true;
-				block.reply = (uint8_t*) & H53[0]; // S10F3 send Terminal Display, Single, queue
-				block.reply_length = sizeof(header53);
-				H53[0].data[38] = V.response.TID;
-				//			terminal_format(H53[0].data, 34);
+				block.reply = (uint8_t*) & H153[0]; // S10F3 send Terminal Display, Single, queue
+				block.reply_length = sizeof(header153);
+				H153[0].data[S10F3_TID_POS] = V.response.TID;
+				terminal_format(0);
+				format_display_text(V.terminal);
 				V.queue = true;
 				break;
 			case CODE_LOG:
@@ -1263,8 +1286,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 #endif
 		case 2:
 			if (block != GEM_STATE_REMOTE) {
-				if (TimerDone(TMR_HBIO))
+				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
+				}
+				terminal_format(1);
+				format_display_text(V.terminal);
 				sequence_messages(10); // send a hello text message
 			}
 
@@ -1301,6 +1327,8 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			}
 
 			if (block != GEM_STATE_REMOTE) {
+				terminal_format(1);
+				format_display_text(V.terminal);
 				sequence_messages(10); // send hello text message to equipment screen
 			}
 			block = GEM_STATE_REMOTE;

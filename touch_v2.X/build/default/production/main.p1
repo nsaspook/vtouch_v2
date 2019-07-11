@@ -17,12 +17,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E17032 . LINK_STATE_IDLE LINK_STATE_ENQ LINK_STATE_EOT LINK_STATE_ACK LINK_STATE_DONE LINK_STATE_NAK LINK_STATE_ERROR  ]
 [c E16977 0 1 2 3 4 5 6 7 8 9 .. ]
 [n E16977 . DIS_STR DIS_TERM DIS_LOG DIS_LOAD DIS_UNLOAD DIS_PUMP DIS_HELP DIS_SEQUENCE DIS_ERR DIS_CLEAR  ]
-"129 ./vconfig.h
-[; ;./vconfig.h: 129:  typedef struct terminal_type {
+"132 ./vconfig.h
+[; ;./vconfig.h: 132:  typedef struct terminal_type {
 [s S2231 `uc -> 32 `i `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16977 1 `E16977 1 `us 1 `us 1 ]
 [n S2231 terminal_type ack TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"205
-[; ;./vconfig.h: 205:  typedef struct V_data {
+"208
+[; ;./vconfig.h: 208:  typedef struct V_data {
 [s S2232 `E17002 1 `E17011 1 `E17018 1 `E17026 1 `E17032 1 `E17032 1 `E17032 1 `uc -> 64 `i `uc -> 160 `i `uc -> 64 `i `ul 1 `ul 1 `l 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E17011 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :4 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 `S2231 1 `uc 1 `uc 1 `uc 1 `uc 1 `Vuc 1 ]
 [n S2232 V_data s_state ui_state g_state e_types m_l_state r_l_state t_l_state buf terminal info ticks systemb testing stream function error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error timer_error ping mode_pwm equip_timeout sequences rbit wbit ebit set_sequ failed_send failed_receive queue debug help stack help_id response uart llid sid ping_count ticker ]
 "64 main.c
@@ -68,9 +68,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [s S2246 `us 1 `uc -> 23 `i `S2236 1 `uc 1 ]
 [n S2246 header33 checksum data block length ]
 "117
-[; ;./gemsecs.h: 117:  typedef struct header53 {
-[s S2247 `us 1 `uc -> 43 `i `S2236 1 `uc 1 ]
-[n S2247 header53 checksum data block length ]
+[; ;./gemsecs.h: 117:  typedef struct header153 {
+[s S2247 `us 1 `uc -> 143 `i `S2236 1 `uc 1 ]
+[n S2247 header153 checksum data block length ]
 "124
 [; ;./gemsecs.h: 124:  typedef struct header254 {
 [s S2248 `us 1 `uc -> 244 `i `S2236 1 `uc 1 ]
@@ -3477,9 +3477,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ]
 "487
-[; ;main.c: 487: header53 H53[] = {
-[v _H53 `S2247 ~T0 @X0 -> 2 `i e ]
-[i _H53
+[; ;main.c: 487: header153 H153[] = {
+[v _H153 `S2247 ~T0 @X0 -> 2 `i e ]
+[i _H153
 :U ..
 :U ..
 -> -> 0 `i `us
@@ -3793,7 +3793,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 683:    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 1C ]
 "684
-[; ;main.c: 684:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.55G");
+[; ;main.c: 684:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.56G");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 2C :s 3C ]
 "685
 [; ;main.c: 685:    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
@@ -3802,7 +3802,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 686:    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 2 `i `uc :s 5C ]
 "687
-[; ;main.c: 687:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.55G");
+[; ;main.c: 687:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.56G");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 2 `i `uc :s 6C :s 7C ]
 "688
 [; ;main.c: 688:    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
@@ -4588,8 +4588,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [p f _sprintf 8650896 ]
 [a 1C 32 82 86 73 32 72 79 83 84 32 84 69 83 84 69 82 0 ]
-[a 3C 49 46 53 53 71 0 ]
-[a 7C 49 46 53 53 71 0 ]
+[a 3C 49 46 53 54 71 0 ]
+[a 7C 49 46 53 54 71 0 ]
 [a 15C 69 37 100 32 65 37 100 32 84 37 100 32 71 37 100 32 35 0 ]
 [a 10C 72 79 83 84 58 32 37 108 100 32 71 37 100 32 32 32 32 32 32 35 0 ]
 [a 17C 72 79 83 84 58 32 37 108 100 32 71 37 100 32 32 32 32 32 32 35 0 ]

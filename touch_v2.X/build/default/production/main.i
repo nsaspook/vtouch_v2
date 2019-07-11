@@ -28289,7 +28289,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 89 "./vconfig.h"
+# 92 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28597,12 +28597,12 @@ D_CODES set_temp_display_help(const D_CODES);
   uint8_t length;
  } header33;
 
- typedef struct header53 {
+ typedef struct header153 {
   uint16_t checksum;
-  uint8_t data[43];
+  uint8_t data[143];
   block10 block;
   uint8_t length;
- } header53;
+ } header153;
 
  typedef struct header254 {
   uint16_t checksum;
@@ -28627,7 +28627,7 @@ D_CODES set_temp_display_help(const D_CODES);
  } gem_message_type;
 
  typedef struct gem_display_type {
-  header53 message;
+  header153 message;
   response_type block;
   uint16_t delay;
   uint8_t stack;
@@ -28639,7 +28639,8 @@ D_CODES set_temp_display_help(const D_CODES);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  void hb_message(void);
- uint8_t terminal_format(uint8_t *, uint8_t);
+ void terminal_format(uint8_t);
+ uint16_t format_display_text(const char *);
  P_CODES s10f1_opcmd(void);
  uint16_t s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
@@ -29044,7 +29045,7 @@ const header33 HC33[] = {
  },
 };
 
-header53 H53[] = {
+header153 H153[] = {
  {
   .length = 53,
   .block.block.rbit = 0,
@@ -29241,10 +29242,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.55G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.56G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.55G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.56G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

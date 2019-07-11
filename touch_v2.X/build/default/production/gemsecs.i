@@ -27588,7 +27588,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 89 "./vconfig.h"
+# 92 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28589,12 +28589,12 @@ D_CODES set_temp_display_help(const D_CODES);
   uint8_t length;
  } header33;
 
- typedef struct header53 {
+ typedef struct header153 {
   uint16_t checksum;
-  uint8_t data[43];
+  uint8_t data[143];
   block10 block;
   uint8_t length;
- } header53;
+ } header153;
 
  typedef struct header254 {
   uint16_t checksum;
@@ -28619,7 +28619,7 @@ D_CODES set_temp_display_help(const D_CODES);
  } gem_message_type;
 
  typedef struct gem_display_type {
-  header53 message;
+  header153 message;
   response_type block;
   uint16_t delay;
   uint8_t stack;
@@ -28631,7 +28631,8 @@ D_CODES set_temp_display_help(const D_CODES);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  void hb_message(void);
- uint8_t terminal_format(uint8_t *, uint8_t);
+ void terminal_format(uint8_t);
+ uint16_t format_display_text(const char *);
  P_CODES s10f1_opcmd(void);
  uint16_t s6f11_opcmd(void);
  response_type secs_II_message(uint8_t, uint8_t);
@@ -28654,7 +28655,7 @@ extern struct header26 H26[];
 extern struct header27 H27[];
 extern struct header33 H33[];
 extern const header33 HC33[];
-extern struct header53 H53[];
+extern struct header153 H153[];
 extern header254 H254[];
 extern gem_message_type S[10];
 extern gem_display_type D[2];
@@ -29243,7 +29244,7 @@ _Bool sequence_messages(const uint8_t sid)
   D[0].message.data[0] = 0x01;
   D[0].delay = 10000;
   D[0].block.header = (uint8_t*) & D[0].message;
-  D[0].block.length = sizeof(header53);
+  D[0].block.length = sizeof(header153);
   V.stack = D[0].stack;
   StartTimer(TMR_HBIO, D[V.stack - 1].delay);
   break;
@@ -29256,30 +29257,52 @@ _Bool sequence_messages(const uint8_t sid)
  return 1;
 }
 
-uint8_t terminal_format(uint8_t *data, uint8_t i)
+
+
+
+void terminal_format(uint8_t t_format)
 {
- uint8_t j;
-
- sprintf(V.terminal, "R%d %d, T%d %d C%d  FGB@MCHP %s                                                           ",
-  V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.55G");
-
- for (j = 0; j < 34; j++) {
-  data[i--] = V.terminal[j];
+ switch (t_format) {
+ case 0:
+  sprintf(V.terminal, "MESSAGE R%d %d, T%d %d C%d  FGB@MCHP %s",
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.56G");
+  break;
+ case 1:
+  sprintf(V.terminal, "ONLINE R%d %d, T%d %d C%d  FGB@MCHP %s",
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.56G");
+  break;
+ default:
+  sprintf(V.terminal, "UNKNOWN TEXT FORMAT R%d %d, T%d %d C%d  FGB@MCHP %s",
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.56G");
+  break;
  }
- return(strlen(V.terminal));
+
 }
 
 
 
 
-uint8_t format_display_text(const char *data)
+uint16_t format_display_text(const char *data)
 {
- int8_t j;
+ int16_t j, i = 0, k, z = 0;
 
- for (j = 36; j > 0; j--) {
-  H53[0].data[j] = data[j];
+ k = strlen(data);
+
+ if (!k)
+  return k;
+
+
+
+
+ for (j = 135; j >= z; j--) {
+  if (i < k) {
+   H153[0].data[j] = data[i++];
+  } else {
+   H153[0].data[j] = ' ';
+  }
+
  }
- return(strlen(data));
+ return k;
 }
 
 
@@ -29698,15 +29721,15 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.header = (uint8_t*) & H13[1];
    block.length = sizeof(header13);
    H13[1].block.block.systemb = V.systemb;
-   H53[0].block.block.systemb = V.ticks;
+   H153[0].block.block.systemb = V.ticks;
    set_display_info(DIS_TERM);
 
    switch (s10f1_opcmd()) {
    case CODE_TM:
     block.respond = 1;
-    block.reply = (uint8_t*) & H53[1];
-    block.reply_length = sizeof(header53);
-    H53[1].data[38] = V.response.TID;
+    block.reply = (uint8_t*) & H153[1];
+    block.reply_length = sizeof(header153);
+    H153[1].data[138] = V.response.TID;
     V.queue = 1;
     break;
    case CODE_LOAD:
@@ -29738,10 +29761,11 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
     break;
    case CODE_TS:
     block.respond = 1;
-    block.reply = (uint8_t*) & H53[0];
-    block.reply_length = sizeof(header53);
-    H53[0].data[38] = V.response.TID;
-
+    block.reply = (uint8_t*) & H153[0];
+    block.reply_length = sizeof(header153);
+    H153[0].data[138] = V.response.TID;
+    terminal_format(0);
+    format_display_text(V.terminal);
     V.queue = 1;
     break;
    case CODE_LOG:
@@ -29889,8 +29913,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
   case 2:
    if (block != GEM_STATE_REMOTE) {
-    if (TimerDone(TMR_HBIO))
+    if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 30000);
+    }
+    terminal_format(1);
+    format_display_text(V.terminal);
     sequence_messages(10);
    }
 
@@ -29927,6 +29954,8 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    }
 
    if (block != GEM_STATE_REMOTE) {
+    terminal_format(1);
+    format_display_text(V.terminal);
     sequence_messages(10);
    }
    block = GEM_STATE_REMOTE;

@@ -484,7 +484,7 @@ const header33 HC33[] = {//template for vii80 stack commands
 	},
 };
 
-header53 H53[] = {
+header153 H153[] = {
 	{ // S10F3 send 'terminal text display ' command from host to equipment
 		.length = 53,
 		.block.block.rbit = 0,
