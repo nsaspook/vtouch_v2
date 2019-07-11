@@ -29047,7 +29047,7 @@ const header33 HC33[] = {
 
 header153 H153[] = {
  {
-  .length = 53,
+  .length = 153,
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
@@ -29058,13 +29058,13 @@ header153 H153[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data[42] = 0x01,
-  .data[41] = 0x02,
-  .data[40] = 0x21,
-  .data[39] = 0x01,
-  .data[38] = 1,
-  .data[37] = 0x41,
-  .data[36] = 36,
+  .data[142] = 0x01,
+  .data[141] = 0x02,
+  .data[140] = 0x21,
+  .data[139] = 0x01,
+  .data[138] = 1,
+  .data[137] = 0x41,
+  .data[136] = 36,
   .data[35] = ' ',
   .data[34] = 'F',
   .data[33] = 'R',
@@ -29103,7 +29103,7 @@ header153 H153[] = {
   .data[0] = 'K',
  },
  {
-  .length = 53,
+  .length = 153,
   .block.block.rbit = 0,
   .block.block.didh = 0,
   .block.block.didl = 0,
@@ -29114,15 +29114,15 @@ header153 H153[] = {
   .block.block.bidh = 0,
   .block.block.bidl = 1,
   .block.block.systemb = 1,
-  .data[42] = 0x01,
-  .data[41] = 0x02,
-  .data[40] = 0x21,
-  .data[39] = 0x01,
-  .data[38] = 1,
-  .data[37] = 0x01,
-  .data[36] = 0x02,
-  .data[35] = 0x41,
-  .data[34] = 9,
+  .data[142] = 0x01,
+  .data[141] = 0x02,
+  .data[140] = 0x21,
+  .data[139] = 0x01,
+  .data[138] = 1,
+  .data[137] = 0x01,
+  .data[136] = 0x02,
+  .data[135] = 0x41,
+  .data[134] = 9,
   .data[33] = '*',
   .data[32] = 'F',
   .data[31] = 'R',
@@ -29242,10 +29242,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.56G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.57G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.56G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.57G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

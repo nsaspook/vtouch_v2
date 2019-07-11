@@ -29265,15 +29265,15 @@ void terminal_format(uint8_t t_format)
  switch (t_format) {
  case 0:
   sprintf(V.terminal, "MESSAGE R%d %d, T%d %d C%d  FGB@MCHP %s",
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.56G");
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.57G");
   break;
  case 1:
   sprintf(V.terminal, "ONLINE R%d %d, T%d %d C%d  FGB@MCHP %s",
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.56G");
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.57G");
   break;
  default:
   sprintf(V.terminal, "UNKNOWN TEXT FORMAT R%d %d, T%d %d C%d  FGB@MCHP %s",
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.56G");
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.57G");
   break;
  }
 
