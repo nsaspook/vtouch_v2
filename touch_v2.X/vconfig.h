@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.57G"
+#define VER	"1.59G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -125,12 +125,13 @@ extern "C" {
 		DIS_PUMP,
 		DIS_HELP,
 		DIS_SEQUENCE,
+		DIS_SEQUENCE_M,
 		DIS_ERR,
 		DIS_CLEAR,
 	} D_CODES;
 
 	typedef struct terminal_type {
-		uint8_t ack[32];
+		uint8_t ack[32], mesgid;
 		uint8_t TID, mcode, mparm, cmdlen, log_seq;
 		uint8_t host_display_ack : 1;
 		D_CODES info, help_temp;

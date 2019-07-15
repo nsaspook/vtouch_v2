@@ -166,6 +166,10 @@ void vterm_sequence(void)
 		sprintf(get_vterm_ptr(0, 2), " Load-lock num %d      ", V.llid);
 		sprintf(get_vterm_ptr(1, 2), " SEQUENCE %d        ", V.sequences);
 		break;
+	case DIS_SEQUENCE_M:
+		sprintf(get_vterm_ptr(0, 2), " Display num %d      ", V.response.mesgid);
+		sprintf(get_vterm_ptr(1, 2), " SEQUENCE %d        ", V.sequences);
+		break;
 	case DIS_TERM:
 		sprintf(get_vterm_ptr(0, 2), " Terminal %d             ", V.response.TID);
 		sprintf(get_vterm_ptr(1, 2), " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);

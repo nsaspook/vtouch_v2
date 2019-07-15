@@ -614,7 +614,7 @@ bool sequence_messages(const uint8_t sid)
 		break;
 	case 10: // write to equipment display sequence
 		D[0].stack = 1; // number of commands
-		D[0].message.data[0] = 0x01;
+		D[0].message = H153[0]; // send a host display command
 		D[0].delay = 10000; // set delay between commands
 		D[0].block.header = (uint8_t*) & D[0].message; // S10F3
 		D[0].block.length = sizeof(header153);
@@ -912,7 +912,11 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 	if (TimerDone(TMR_HBIO)) { // hold sequences during equipment messages
 		if (V.stack) {
 			gem_messages(&block, V.sid);
-			set_display_info(DIS_SEQUENCE);
+			if (V.sid >= 10) {
+				set_display_info(DIS_SEQUENCE_M);
+			} else {
+				set_display_info(DIS_SEQUENCE);
+			}
 			vterm_sequence();
 			StartTimer(TMR_INFO, TDELAY);
 			V.set_sequ = true;
@@ -1291,7 +1295,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				}
 				terminal_format(1);
 				format_display_text(V.terminal);
-				sequence_messages(10); // send a hello text message
+				V.response.mesgid = 1;
+				V.sequences++;
+				V.sid = 10;
+				sequence_messages(V.sid); // send a hello text message
+				set_display_info(DIS_SEQUENCE_M);
 			}
 
 			block = GEM_STATE_REMOTE;
@@ -1329,7 +1337,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			if (block != GEM_STATE_REMOTE) {
 				terminal_format(1);
 				format_display_text(V.terminal);
-				sequence_messages(10); // send hello text message to equipment screen
+				V.response.mesgid = 1;
+				V.sequences++;
+				V.sid = 10;
+				sequence_messages(V.sid); // send hello text message to equipment screen
+				set_display_info(DIS_SEQUENCE_M);
 			}
 			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
