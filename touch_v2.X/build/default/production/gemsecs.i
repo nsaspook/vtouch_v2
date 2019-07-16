@@ -35,6 +35,8 @@ typedef void * __isoc_va_list[1];
 typedef unsigned size_t;
 # 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
+# 176 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
 # 212 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
 # 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
@@ -27434,7 +27436,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -27467,8 +27469,6 @@ typedef uint32_t uint_fast32_t;
 # 56 "./mcc_generated_files/adcc.h" 2
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
-
-typedef signed long int int24_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
@@ -28500,6 +28500,17 @@ void check_help(void);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 # 27 "./gemsecs.h" 2
+# 1 "./msg_text.h" 1
+# 15 "./msg_text.h"
+ typedef enum {
+  display_message = 0,
+  display_online,
+ } DISPLAY_TYPES;
+
+ const char msg0[] = "MESSAGE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg1[] = "ONLINE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg99[] = "UNKNOWN TEXT FORMAT Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+# 28 "./gemsecs.h" 2
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -28632,7 +28643,7 @@ D_CODES set_temp_display_help(const D_CODES);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  void hb_message(void);
- void terminal_format(uint8_t);
+ void terminal_format(DISPLAY_TYPES);
  uint16_t format_display_text(const char *);
  P_CODES s10f1_opcmd(void);
  uint16_t s6f11_opcmd(void);
@@ -29243,7 +29254,7 @@ _Bool sequence_messages(const uint8_t sid)
  case 10:
   D[0].stack = 1;
   D[0].message = H153[0];
-  D[0].delay = 10000;
+  D[0].delay = 1000;
   D[0].block.header = (uint8_t*) & D[0].message;
   D[0].block.length = sizeof(header153);
   V.stack = D[0].stack;
@@ -29261,20 +29272,20 @@ _Bool sequence_messages(const uint8_t sid)
 
 
 
-void terminal_format(uint8_t t_format)
+void terminal_format(DISPLAY_TYPES t_format)
 {
  switch (t_format) {
- case 0:
-  sprintf(V.terminal, "MESSAGE R%d %d, T%d %d C%d  FGB@MCHP %s",
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.59G");
+ case display_message:
+  sprintf(V.terminal, msg0,
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.60G");
   break;
- case 1:
-  sprintf(V.terminal, "ONLINE R%d %d, T%d %d C%d  FGB@MCHP %s",
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.59G");
+ case display_online:
+  sprintf(V.terminal, msg1,
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.60G");
   break;
  default:
-  sprintf(V.terminal, "UNKNOWN TEXT FORMAT R%d %d, T%d %d C%d  FGB@MCHP %s",
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.59G");
+  sprintf(V.terminal, msg99,
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.60G");
   break;
  }
 
@@ -29769,7 +29780,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
     block.reply = (uint8_t*) & H153[0];
     block.reply_length = sizeof(header153);
     H153[0].data[138] = V.response.TID;
-    terminal_format(0);
+    terminal_format(display_message);
     format_display_text(V.terminal);
     V.queue = 1;
     break;
@@ -29921,7 +29932,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 30000);
     }
-    terminal_format(1);
+    terminal_format(display_online);
     format_display_text(V.terminal);
     V.response.mesgid = 1;
     V.sequences++;
@@ -29963,7 +29974,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    }
 
    if (block != GEM_STATE_REMOTE) {
-    terminal_format(1);
+    terminal_format(display_online);
     format_display_text(V.terminal);
     V.response.mesgid = 1;
     V.sequences++;
@@ -29975,7 +29986,8 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    V.ticker = 0;
    break;
   case 14:
-   block = GEM_STATE_COMM;
+   if (block != GEM_STATE_REMOTE)
+    block = GEM_STATE_COMM;
    V.ticker = 15;
    break;
 

@@ -25,4 +25,5 @@ mcc_generated_files/dma2.h  \
 mcc_generated_files/clkref.h  \
 timers.h  \
 mydisplay.h  \
-eadog.h 
+eadog.h  \
+msg_text.h 

@@ -24,6 +24,7 @@ extern "C" {
 #include "mcc_generated_files/uart1.h"
 #include "timers.h"
 #include "mydisplay.h"
+#include "msg_text.h"
 
 	typedef struct block10_type {
 		uint32_t systemb;
@@ -156,7 +157,7 @@ extern "C" {
 	LINK_STATES r_protocol(LINK_STATES *);
 	LINK_STATES t_protocol(LINK_STATES *);
 	void hb_message(void);
-	void terminal_format(uint8_t);
+	void terminal_format(DISPLAY_TYPES);
 	uint16_t format_display_text(const char *);
 	P_CODES s10f1_opcmd(void);
 	uint16_t s6f11_opcmd(void);

@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28508,6 +28508,17 @@ void check_help(void);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 # 27 "./gemsecs.h" 2
+# 1 "./msg_text.h" 1
+# 15 "./msg_text.h"
+ typedef enum {
+  display_message = 0,
+  display_online,
+ } DISPLAY_TYPES;
+
+ const char msg0[] = "MESSAGE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg1[] = "ONLINE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg99[] = "UNKNOWN TEXT FORMAT Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+# 28 "./gemsecs.h" 2
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -28640,7 +28651,7 @@ D_CODES set_temp_display_help(const D_CODES);
  LINK_STATES r_protocol(LINK_STATES *);
  LINK_STATES t_protocol(LINK_STATES *);
  void hb_message(void);
- void terminal_format(uint8_t);
+ void terminal_format(DISPLAY_TYPES);
  uint16_t format_display_text(const char *);
  P_CODES s10f1_opcmd(void);
  uint16_t s6f11_opcmd(void);
@@ -29065,7 +29076,7 @@ header153 H153[] = {
   .data[139] = 0x01,
   .data[138] = 1,
   .data[137] = 0x41,
-  .data[136] = 36,
+  .data[136] = 44,
   .data[35] = ' ',
   .data[34] = 'F',
   .data[33] = 'R',
@@ -29243,10 +29254,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.59G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.60G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.59G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.60G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

@@ -26,4 +26,5 @@ ringbufs.h  \
 gemsecs.h  \
 timers.h  \
 mydisplay.h  \
+msg_text.h  \
 mconfig.h 

@@ -615,7 +615,7 @@ bool sequence_messages(const uint8_t sid)
 	case 10: // write to equipment display sequence
 		D[0].stack = 1; // number of commands
 		D[0].message = H153[0]; // send a host display command
-		D[0].delay = 10000; // set delay between commands
+		D[0].delay = 1000; // set delay between commands
 		D[0].block.header = (uint8_t*) & D[0].message; // S10F3
 		D[0].block.length = sizeof(header153);
 		V.stack = D[0].stack; // queue up 2 displays, pop off the top of stack
@@ -633,19 +633,19 @@ bool sequence_messages(const uint8_t sid)
 /*
  * standard text to the V.terminal string buffer
  */
-void terminal_format(uint8_t t_format)
+void terminal_format(DISPLAY_TYPES t_format)
 {
 	switch (t_format) {
-	case 0:
-		sprintf(V.terminal, "MESSAGE R%d %d, T%d %d C%d  FGB@MCHP %s",
+	case display_message:
+		sprintf(V.terminal, msg0,
 			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
-	case 1:
-		sprintf(V.terminal, "ONLINE R%d %d, T%d %d C%d  FGB@MCHP %s",
+	case display_online:
+		sprintf(V.terminal, msg1,
 			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	default:
-		sprintf(V.terminal, "UNKNOWN TEXT FORMAT R%d %d, T%d %d C%d  FGB@MCHP %s",
+		sprintf(V.terminal, msg99,
 			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	}
@@ -1141,7 +1141,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				block.reply = (uint8_t*) & H153[0]; // S10F3 send Terminal Display, Single, queue
 				block.reply_length = sizeof(header153);
 				H153[0].data[S10F3_TID_POS] = V.response.TID;
-				terminal_format(0);
+				terminal_format(display_message);
 				format_display_text(V.terminal);
 				V.queue = true;
 				break;
@@ -1293,7 +1293,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
 				}
-				terminal_format(1);
+				terminal_format(display_online);
 				format_display_text(V.terminal);
 				V.response.mesgid = 1;
 				V.sequences++;
@@ -1335,7 +1335,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			}
 
 			if (block != GEM_STATE_REMOTE) {
-				terminal_format(1);
+				terminal_format(display_online);
 				format_display_text(V.terminal);
 				V.response.mesgid = 1;
 				V.sequences++;
@@ -1347,7 +1347,8 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			V.ticker = 0;
 			break;
 		case 14:
-			block = GEM_STATE_COMM;
+			if (block != GEM_STATE_REMOTE)
+				block = GEM_STATE_COMM;
 			V.ticker = 15;
 			break;
 #ifdef DB2
