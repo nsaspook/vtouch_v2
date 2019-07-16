@@ -28513,10 +28513,12 @@ D_CODES set_temp_display_help(const D_CODES);
  typedef enum {
   display_message = 0,
   display_online,
+  display_comm,
  } DISPLAY_TYPES;
 
  const char msg0[] = "MESSAGE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg1[] = "ONLINE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg2[] = "COMM Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg99[] = "UNKNOWN TEXT FORMAT Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
 # 28 "./gemsecs.h" 2
 
@@ -29254,10 +29256,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.60G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.61G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.60G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.61G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

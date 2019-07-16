@@ -613,9 +613,10 @@ bool sequence_messages(const uint8_t sid)
 		StartTimer(TMR_HBIO, S[V.stack - 1].delay); // restart sequence timer
 		break;
 	case 10: // write to equipment display sequence
+	case 11:
 		D[0].stack = 1; // number of commands
 		D[0].message = H153[0]; // send a host display command
-		D[0].delay = 1000; // set delay between commands
+		D[0].delay = 5000; // set delay between commands
 		D[0].block.header = (uint8_t*) & D[0].message; // S10F3
 		D[0].block.length = sizeof(header153);
 		V.stack = D[0].stack; // queue up 2 displays, pop off the top of stack
@@ -642,6 +643,10 @@ void terminal_format(DISPLAY_TYPES t_format)
 		break;
 	case display_online:
 		sprintf(V.terminal, msg1,
+			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+		break;
+	case display_comm:
+		sprintf(V.terminal, msg2,
 			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	default:
@@ -1339,11 +1344,13 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				format_display_text(V.terminal);
 				V.response.mesgid = 1;
 				V.sequences++;
-				V.sid = 10;
+				V.sid = 11;
 				sequence_messages(V.sid); // send hello text message to equipment screen
 				set_display_info(DIS_SEQUENCE_M);
 			}
-			block = GEM_STATE_REMOTE;
+			if (block != GEM_STATE_REMOTE)
+				block = GEM_STATE_COMM;
+			//			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
 			break;
 		case 14:

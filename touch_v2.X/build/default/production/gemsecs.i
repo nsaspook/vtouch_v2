@@ -28505,10 +28505,12 @@ D_CODES set_temp_display_help(const D_CODES);
  typedef enum {
   display_message = 0,
   display_online,
+  display_comm,
  } DISPLAY_TYPES;
 
  const char msg0[] = "MESSAGE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg1[] = "ONLINE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg2[] = "COMM Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg99[] = "UNKNOWN TEXT FORMAT Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
 # 28 "./gemsecs.h" 2
 
@@ -29252,9 +29254,10 @@ _Bool sequence_messages(const uint8_t sid)
   StartTimer(TMR_HBIO, S[V.stack - 1].delay);
   break;
  case 10:
+ case 11:
   D[0].stack = 1;
   D[0].message = H153[0];
-  D[0].delay = 1000;
+  D[0].delay = 5000;
   D[0].block.header = (uint8_t*) & D[0].message;
   D[0].block.length = sizeof(header153);
   V.stack = D[0].stack;
@@ -29277,15 +29280,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   sprintf(V.terminal, msg0,
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.60G");
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
   break;
  case display_online:
   sprintf(V.terminal, msg1,
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.60G");
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
+  break;
+ case display_comm:
+  sprintf(V.terminal, msg2,
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
   break;
  default:
   sprintf(V.terminal, msg99,
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.60G");
+   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
   break;
  }
 
@@ -29978,11 +29985,13 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
     format_display_text(V.terminal);
     V.response.mesgid = 1;
     V.sequences++;
-    V.sid = 10;
+    V.sid = 11;
     sequence_messages(V.sid);
     set_display_info(DIS_SEQUENCE_M);
    }
-   block = GEM_STATE_REMOTE;
+   if (block != GEM_STATE_REMOTE)
+    block = GEM_STATE_COMM;
+
    V.ticker = 0;
    break;
   case 14:
