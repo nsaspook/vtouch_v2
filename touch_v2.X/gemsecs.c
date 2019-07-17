@@ -1304,6 +1304,7 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 /*
  * parse received stream and response codes for host operational state and
  * equipment model types
+ * Be permissive, almost any stream command make us online/remote
  */
 GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 {
@@ -1371,9 +1372,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				sequence_messages(V.sid); // send hello text message to equipment screen
 				set_display_info(DIS_SEQUENCE_M);
 			}
-			if (block != GEM_STATE_REMOTE)
-				block = GEM_STATE_COMM;
-			//			block = GEM_STATE_REMOTE;
+			block = GEM_STATE_REMOTE;
 			V.ticker = 0;
 			break;
 		case 14:

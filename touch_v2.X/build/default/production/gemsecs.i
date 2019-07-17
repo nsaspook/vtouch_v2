@@ -29949,6 +29949,7 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 
 
 
+
 GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 {
  static GEM_STATES block = GEM_STATE_DISABLE;
@@ -30015,9 +30016,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
     sequence_messages(V.sid);
     set_display_info(DIS_SEQUENCE_M);
    }
-   if (block != GEM_STATE_REMOTE)
-    block = GEM_STATE_COMM;
-
+   block = GEM_STATE_REMOTE;
    V.ticker = 0;
    break;
   case 14:
