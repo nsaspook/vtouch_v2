@@ -27267,9 +27267,10 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/tmr6.h" 2
+# 54 "mcc_generated_files/tmr6.h" 2
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 56 "mcc_generated_files/tmr6.h" 2
+# 55 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27773,7 +27774,7 @@ void PIN_MANAGER_Initialize (void);
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;

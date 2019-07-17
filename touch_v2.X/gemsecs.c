@@ -86,6 +86,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		rxData_l = 0;
 		if (TimerDone(TMR_T2)) {
 			V.error = LINK_ERROR_T2;
+			V.all_errors++;
 			V.timer_error++;
 			V.failed_receive = 2;
 			*m_link = LINK_STATE_NAK;
@@ -129,6 +130,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		if (TimerDone(TMR_T2)) {
 			V.error = LINK_ERROR_T2;
 			V.timer_error++;
+			V.all_errors++;
 			V.failed_receive = 2;
 			*m_link = LINK_STATE_NAK;
 		} else {
@@ -164,6 +166,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
+							V.all_errors++;
 							V.failed_receive = 3;
 							*m_link = LINK_STATE_NAK;
 						}
@@ -203,6 +206,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
+							V.all_errors++;
 							V.failed_receive = 4;
 							*m_link = LINK_STATE_NAK;
 						}
@@ -230,6 +234,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_NAK:
 		*m_link = LINK_STATE_ERROR;
+		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
 		}
@@ -288,9 +293,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 	case LINK_STATE_EOT:
 		if (TimerDone(TMR_T2)) {
 			V.timer_error++;
+			V.all_errors++;
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
 				V.failed_receive = 1;
+				V.all_errors++;
 				*r_link = LINK_STATE_NAK;
 			} else {
 				*r_link = LINK_STATE_IDLE; // retry
@@ -337,6 +344,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
+							V.all_errors++;
 							V.failed_receive = 2;
 							*r_link = LINK_STATE_NAK;
 						}
@@ -363,6 +371,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 	case LINK_STATE_NAK:
 		UART1_Write(NAK);
 		*r_link = LINK_STATE_ERROR;
+		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
 		}
@@ -404,8 +413,10 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	case LINK_STATE_ENQ:
 		if (TimerDone(TMR_T2)) {
 			V.timer_error++;
+			V.all_errors++;
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
+				V.all_errors++;
 				V.failed_send = 1;
 				*t_link = LINK_STATE_NAK;
 			} else {
@@ -433,6 +444,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			secs_send((uint8_t*) block.header, block.length, false, 1);
 			V.failed_send = 2;
 			*t_link = LINK_STATE_ERROR;
+			V.all_errors++;
 		} else {
 			if (!requeue) {
 				secs_send((uint8_t*) block.header, block.length, false, 1);
@@ -448,6 +460,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			} else {
 				V.failed_send = 3;
 				*t_link = LINK_STATE_ERROR;
+				V.all_errors++;
 			}
 		}
 #ifdef DB4
@@ -462,6 +475,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		if (TimerDone(TMR_T3)) {
 			V.timer_error++;
 			V.error = LINK_ERROR_T3;
+			V.all_errors++;
 			V.failed_send = 4;
 			*t_link = LINK_STATE_NAK;
 		} else {
@@ -478,6 +492,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_NAK: // send failure
 		*t_link = LINK_STATE_ERROR;
+		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
 		}
@@ -509,6 +524,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
 		V.error = LINK_ERROR_SEND;
+		V.all_errors++;
 		V.failed_send = true;
 		return false; // don't send and return mismatch error
 	}
@@ -639,19 +655,19 @@ void terminal_format(DISPLAY_TYPES t_format)
 	switch (t_format) {
 	case display_message:
 		sprintf(V.terminal, msg0,
-			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	case display_online:
 		sprintf(V.terminal, msg1,
-			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	case display_comm:
 		sprintf(V.terminal, msg2,
-			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	default:
 		sprintf(V.terminal, msg99,
-			V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	}
 
@@ -974,6 +990,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
+			V.all_errors++;
 			break;
 		}
 		break;
@@ -1001,6 +1018,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
+			V.all_errors++;
 			break;
 		}
 		break;
@@ -1017,6 +1035,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
+			V.all_errors++;
 			break;
 		}
 		break;
@@ -1067,6 +1086,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
+			V.all_errors++;
 			break;
 		}
 		break;
@@ -1093,6 +1113,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
+			V.all_errors++;
 			break;
 		}
 		break;
@@ -1173,6 +1194,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
+			V.all_errors++;
 			break;
 		}
 		break;
@@ -1182,6 +1204,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		block.length = sizeof(header10);
 		H10[2].block.block.systemb = V.systemb;
 		V.abort = LINK_ERROR_ABORT;
+		V.all_errors++;
 		break;
 	}
 

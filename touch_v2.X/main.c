@@ -70,6 +70,7 @@ V_data V = {
 	.e_types = GEM_GENERIC,
 	.ticker = 45,
 	.checksum_error = 0,
+	.all_errors=0,
 	.timer_error = 0,
 	.debug = false,
 	.response.info = DIS_STR,

@@ -27719,7 +27719,7 @@ void PIN_MANAGER_Initialize (void);
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
@@ -28508,10 +28508,13 @@ D_CODES set_temp_display_help(const D_CODES);
   display_comm,
  } DISPLAY_TYPES;
 
- const char msg0[] = "MESSAGE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg1[] = "ONLINE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg2[] = "COMM Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg99[] = "UNKNOWN TEXT FORMAT Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+
+
+
+ const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
 # 28 "./gemsecs.h" 2
 
  typedef struct block10_type {
@@ -28742,11 +28745,12 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   rxData_l = 0;
   if (TimerDone(TMR_T2)) {
    V.error = LINK_ERROR_T2;
+   V.all_errors++;
    V.timer_error++;
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 109 "gemsecs.c"
+# 110 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -28770,6 +28774,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   if (TimerDone(TMR_T2)) {
    V.error = LINK_ERROR_T2;
    V.timer_error++;
+   V.all_errors++;
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
@@ -28805,6 +28810,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
        WaitMs(1500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
+       V.all_errors++;
        V.failed_receive = 3;
        *m_link = LINK_STATE_NAK;
       }
@@ -28844,6 +28850,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
        WaitMs(1500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
+       V.all_errors++;
        V.failed_receive = 4;
        *m_link = LINK_STATE_NAK;
       }
@@ -28871,6 +28878,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_NAK:
   *m_link = LINK_STATE_ERROR;
+  V.all_errors++;
   while ((uart1RxCount)) {
    UART1_Read();
   }
@@ -28929,9 +28937,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
    V.timer_error++;
+   V.all_errors++;
    if (!retry--) {
     V.error = LINK_ERROR_T2;
     V.failed_receive = 1;
+    V.all_errors++;
     *r_link = LINK_STATE_NAK;
    } else {
     *r_link = LINK_STATE_IDLE;
@@ -28978,6 +28988,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
        WaitMs(1500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
+       V.all_errors++;
        V.failed_receive = 2;
        *r_link = LINK_STATE_NAK;
       }
@@ -29004,6 +29015,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
  case LINK_STATE_NAK:
   UART1_Write(0x15);
   *r_link = LINK_STATE_ERROR;
+  V.all_errors++;
   while ((uart1RxCount)) {
    UART1_Read();
   }
@@ -29045,8 +29057,10 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  case LINK_STATE_ENQ:
   if (TimerDone(TMR_T2)) {
    V.timer_error++;
+   V.all_errors++;
    if (!retry--) {
     V.error = LINK_ERROR_T2;
+    V.all_errors++;
     V.failed_send = 1;
     *t_link = LINK_STATE_NAK;
    } else {
@@ -29074,6 +29088,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    secs_send((uint8_t*) block.header, block.length, 0, 1);
    V.failed_send = 2;
    *t_link = LINK_STATE_ERROR;
+   V.all_errors++;
   } else {
    if (!requeue) {
     secs_send((uint8_t*) block.header, block.length, 0, 1);
@@ -29089,6 +29104,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    } else {
     V.failed_send = 3;
     *t_link = LINK_STATE_ERROR;
+    V.all_errors++;
    }
   }
 
@@ -29103,6 +29119,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   if (TimerDone(TMR_T3)) {
    V.timer_error++;
    V.error = LINK_ERROR_T3;
+   V.all_errors++;
    V.failed_send = 4;
    *t_link = LINK_STATE_NAK;
   } else {
@@ -29119,6 +29136,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_NAK:
   *t_link = LINK_STATE_ERROR;
+  V.all_errors++;
   while ((uart1RxCount)) {
    UART1_Read();
   }
@@ -29150,6 +29168,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
  V.error = LINK_ERROR_NONE;
  if ((length - 3) != k[length - 1]) {
   V.error = LINK_ERROR_SEND;
+  V.all_errors++;
   V.failed_send = 1;
   return 0;
  }
@@ -29280,19 +29299,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   sprintf(V.terminal, msg0,
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
   break;
  case display_online:
   sprintf(V.terminal, msg1,
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
   break;
  case display_comm:
   sprintf(V.terminal, msg2,
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
   break;
  default:
   sprintf(V.terminal, msg99,
-   V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.61G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
   break;
  }
 
@@ -29615,6 +29634,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
+   V.all_errors++;
    break;
   }
   break;
@@ -29642,6 +29662,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
+   V.all_errors++;
    break;
   }
   break;
@@ -29658,6 +29679,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
+   V.all_errors++;
    break;
   }
   break;
@@ -29708,6 +29730,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
+   V.all_errors++;
    break;
   }
   break;
@@ -29734,6 +29757,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
+   V.all_errors++;
    break;
   }
   break;
@@ -29814,6 +29838,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.length = sizeof(header10);
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
+   V.all_errors++;
    break;
   }
   break;
@@ -29823,6 +29848,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
   block.length = sizeof(header10);
   H10[2].block.block.systemb = V.systemb;
   V.abort = LINK_ERROR_ABORT;
+  V.all_errors++;
   break;
  }
 

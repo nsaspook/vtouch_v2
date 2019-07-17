@@ -18,10 +18,13 @@ extern "C" {
 		display_comm,
 	} DISPLAY_TYPES;
 
-	const char msg0[] = "MESSAGE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
-	const char msg1[] = "ONLINE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
-	const char msg2[] = "COMM Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
-	const char msg99[] = "UNKNOWN TEXT FORMAT Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+	/*
+	 * *****************|*********|**********|**********|*********|***|
+	 */
+	const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+	const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+	const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+	const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
 
 #ifdef	__cplusplus
 }

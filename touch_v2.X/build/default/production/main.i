@@ -28420,7 +28420,7 @@ void PMD_Initialize(void);
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences;
+  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
@@ -28516,10 +28516,13 @@ D_CODES set_temp_display_help(const D_CODES);
   display_comm,
  } DISPLAY_TYPES;
 
- const char msg0[] = "MESSAGE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg1[] = "ONLINE Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg2[] = "COMM Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg99[] = "UNKNOWN TEXT FORMAT Read state %d Failed %d, Transmit state %d Failed %d, Checksum error %d  FGB@MCHP %s";
+
+
+
+ const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
+ const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
 # 28 "./gemsecs.h" 2
 
  typedef struct block10_type {
@@ -28684,6 +28687,7 @@ V_data V = {
  .e_types = GEM_GENERIC,
  .ticker = 45,
  .checksum_error = 0,
+ .all_errors=0,
  .timer_error = 0,
  .debug = 0,
  .response.info = DIS_STR,
@@ -28925,7 +28929,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 335 "main.c"
+# 336 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28944,7 +28948,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 373 "main.c"
+# 374 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29256,10 +29260,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.61G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.62G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.61G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.62G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -29399,7 +29403,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 835 "main.c"
+# 836 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29492,6 +29496,6 @@ void main(void)
     update_lcd(2);
    }
   }
-# 935 "main.c"
+# 936 "main.c"
  }
 }
