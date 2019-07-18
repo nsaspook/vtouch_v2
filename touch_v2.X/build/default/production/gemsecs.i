@@ -30015,8 +30015,8 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
     V.sid = 11;
     sequence_messages(V.sid);
     set_display_info(DIS_SEQUENCE_M);
+    block = GEM_STATE_COMM;
    }
-   block = GEM_STATE_REMOTE;
    V.ticker = 0;
    break;
   case 14:
