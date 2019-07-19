@@ -21,6 +21,7 @@ enum APP_TIMERS {
 	TMR_HELPDIS,
 	TMR_DISPLAY,
 	TMR_SEQ,
+	TMR_FLIPPER,
 	//
 	//(Add timers here as needed)
 	//

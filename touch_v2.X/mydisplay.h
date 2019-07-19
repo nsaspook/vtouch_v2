@@ -54,7 +54,7 @@ void vterm_sequence(void);
 inline D_CODES display_info(void);
 inline D_CODES display_help(void);
 bool help_button(void);
-void check_help(void);
+void check_help(bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 

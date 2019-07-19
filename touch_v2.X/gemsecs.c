@@ -485,7 +485,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 					V.failed_send = false;
 					*t_link = LINK_STATE_DONE;
 					V.abort = LINK_ERROR_NONE;
-					//					IO_RB5_SetLow();
 				}
 			}
 		}
@@ -502,7 +501,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	case LINK_STATE_DONE: // normally we don't execute this code
 		V.failed_send = false;
 		V.abort = LINK_ERROR_NONE;
-		//		IO_RB5_Toggle(); // indicate DONE state execution
 		break;
 	default:
 		*t_link = LINK_STATE_IDLE;

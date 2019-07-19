@@ -27588,7 +27588,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 92 "./vconfig.h"
+# 93 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27726,6 +27726,7 @@ void PIN_MANAGER_Initialize (void);
   terminal_type response;
   uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
+  _Bool flipper;
  } V_data;
 
  typedef struct V_help {
@@ -28445,6 +28446,7 @@ enum APP_TIMERS {
  TMR_HELPDIS,
  TMR_DISPLAY,
  TMR_SEQ,
+ TMR_FLIPPER,
 
 
 
@@ -28496,12 +28498,19 @@ void vterm_sequence(void);
 __attribute__((inline)) D_CODES display_info(void);
 __attribute__((inline)) D_CODES display_help(void);
 _Bool help_button(void);
-void check_help(void);
+void check_help(_Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 # 27 "./gemsecs.h" 2
 # 1 "./msg_text.h" 1
-# 15 "./msg_text.h"
+# 14 "./msg_text.h"
+# 1 "./mconfig.h" 1
+# 38 "./mconfig.h"
+void mode_lamp_dim(uint16_t);
+void mode_lamp_bright(void);
+# 15 "./msg_text.h" 2
+
+
  typedef enum {
   display_message = 0,
   display_online,
@@ -28515,6 +28524,25 @@ D_CODES set_temp_display_help(const D_CODES);
  const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
+
+ V_help T[] = {
+  {
+   .message = "commands 1",
+   .display = "displays 1",
+  },
+  {
+   .message = "commands 2",
+   .display = "displays 2",
+  },
+  {
+   .message = "commands 3",
+   .display = "displays 3",
+  },
+  {
+   .message = "commands 4",
+   .display = "displays 4",
+  },
+ };
 # 28 "./gemsecs.h" 2
 
  typedef struct block10_type {
@@ -28807,7 +28835,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
       } else {
        while (UART1_is_rx_ready())
         rxData = UART1_Read();
-       WaitMs(1500);
+       WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.all_errors++;
@@ -28847,7 +28875,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
       } else {
        while (UART2_is_rx_ready())
         rxData = UART2_Read();
-       WaitMs(1500);
+       WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.all_errors++;
@@ -28985,7 +29013,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
       } else {
        while (UART1_is_rx_ready())
         rxData = UART1_Read();
-       WaitMs(1500);
+       WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.all_errors++;
@@ -29129,7 +29157,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
      V.failed_send = 0;
      *t_link = LINK_STATE_DONE;
      V.abort = LINK_ERROR_NONE;
-
     }
    }
   }
@@ -29146,7 +29173,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  case LINK_STATE_DONE:
   V.failed_send = 0;
   V.abort = LINK_ERROR_NONE;
-
   break;
  default:
   *t_link = LINK_STATE_IDLE;
@@ -29299,19 +29325,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   sprintf(V.terminal, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.63G");
   break;
  case display_online:
   sprintf(V.terminal, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.63G");
   break;
  case display_comm:
   sprintf(V.terminal, msg2,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.63G");
   break;
  default:
   sprintf(V.terminal, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.62G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.63G");
   break;
  }
 

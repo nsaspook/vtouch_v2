@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.62G"
+#define VER	"1.63G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -51,7 +51,7 @@ extern "C" {
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
 
-#define T1	1500
+#define T1	500
 #define T2	3000
 #define T3	5000
 #define T4	5000
@@ -67,6 +67,7 @@ extern "C" {
 #define SDELAY	500
 #define BDELAY	300
 #define DDELAY	100 // display update spacing
+#define DFLIP	1500 // display info flipping spacing
 
 #define Y2KTIME
 
@@ -226,6 +227,7 @@ extern "C" {
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count;
 		volatile uint8_t ticker;
+		bool flipper;
 	} V_data;
 
 	typedef struct V_help {

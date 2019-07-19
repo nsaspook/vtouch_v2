@@ -1,29 +1,11 @@
 #include "mconfig.h"
 #include "mydisplay.h"
+#include "msg_text.h"
 
 extern V_data V;
 static D_data D = {0};
 
-V_help T[] = {
-	{
-		.message = "commands 1",
-		.display = "displays 1",
-	},
-	{
-		.message = "commands 2",
-		.display = "displays 2",
-	},
-	{
-		.message = "commands 3",
-		.display = "displays 3",
-	},
-	{
-		.message = "commands 4",
-		.display = "displays 4",
-	},
-};
-
-const char *build_date = __DATE__, *build_time = __TIME__;
+static const char *build_date = __DATE__, *build_time = __TIME__;
 
 /*
  * hardware specific routines
@@ -55,19 +37,24 @@ bool help_button(void)
 	return false;
 }
 
-void check_help(void)
+void check_help(bool flipper)
 {
 	/*
 	 * show help display
 	 */
 	if (help_button() && display_info() != DIS_HELP) {
+		StartTimer(TMR_FLIPPER, DFLIP);
 		if (V.debug)
 			vterm_dump();
 
 		set_vterm(1);
 		set_temp_display_help(display_info());
 		set_display_info(DIS_HELP);
-		sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_date);
+		if (flipper) {
+			sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_date);
+		} else {
+			sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_time);
+		}
 		sprintf(get_vterm_ptr(1, 1), "%s       ", T[V.help_id].display);
 		sprintf(get_vterm_ptr(2, 1), "%s       ", T[V.help_id].message);
 		V.help_id++; // cycle help text messages to LCD
@@ -81,6 +68,10 @@ void check_help(void)
 			V.help = false;
 			set_display_info(display_help());
 			mode_lamp_dim(V.mode_pwm);
+			if (TimerDone(TMR_FLIPPER)) {
+				V.flipper = !V.flipper;
+				StartTimer(TMR_FLIPPER, DFLIP);
+			}
 		}
 	}
 }

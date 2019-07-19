@@ -26,4 +26,5 @@ mcc_generated_files/clkref.h  \
 timers.h  \
 mydisplay.h  \
 eadog.h  \
-msg_text.h 
+msg_text.h  \
+mconfig.h 

@@ -27450,7 +27450,7 @@ typedef int64_t int_fast64_t;
 typedef int8_t int_least8_t;
 typedef int16_t int_least16_t;
 
-
+typedef int24_t int_least24_t;
 
 typedef int32_t int_least32_t;
 
@@ -28289,7 +28289,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 92 "./vconfig.h"
+# 93 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28427,6 +28427,7 @@ void PMD_Initialize(void);
   terminal_type response;
   uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
+  _Bool flipper;
  } V_data;
 
  typedef struct V_help {
@@ -28477,6 +28478,7 @@ enum APP_TIMERS {
  TMR_HELPDIS,
  TMR_DISPLAY,
  TMR_SEQ,
+ TMR_FLIPPER,
 
 
 
@@ -28504,12 +28506,19 @@ void vterm_sequence(void);
 __attribute__((inline)) D_CODES display_info(void);
 __attribute__((inline)) D_CODES display_help(void);
 _Bool help_button(void);
-void check_help(void);
+void check_help(_Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 # 27 "./gemsecs.h" 2
 # 1 "./msg_text.h" 1
-# 15 "./msg_text.h"
+# 14 "./msg_text.h"
+# 1 "./mconfig.h" 1
+# 38 "./mconfig.h"
+void mode_lamp_dim(uint16_t);
+void mode_lamp_bright(void);
+# 15 "./msg_text.h" 2
+
+
  typedef enum {
   display_message = 0,
   display_online,
@@ -28523,6 +28532,25 @@ D_CODES set_temp_display_help(const D_CODES);
  const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
  const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
+
+ V_help T[] = {
+  {
+   .message = "commands 1",
+   .display = "displays 1",
+  },
+  {
+   .message = "commands 2",
+   .display = "displays 2",
+  },
+  {
+   .message = "commands 3",
+   .display = "displays 3",
+  },
+  {
+   .message = "commands 4",
+   .display = "displays 4",
+  },
+ };
 # 28 "./gemsecs.h" 2
 
  typedef struct block10_type {
@@ -28668,11 +28696,6 @@ D_CODES set_temp_display_help(const D_CODES);
 # 57 "main.c" 2
 
 
-# 1 "./mconfig.h" 1
-# 38 "./mconfig.h"
-void mode_lamp_dim(uint16_t);
-void mode_lamp_bright(void);
-# 59 "main.c" 2
 
 
 
@@ -28687,7 +28710,7 @@ V_data V = {
  .e_types = GEM_GENERIC,
  .ticker = 45,
  .checksum_error = 0,
- .all_errors=0,
+ .all_errors = 0,
  .timer_error = 0,
  .debug = 0,
  .response.info = DIS_STR,
@@ -29260,16 +29283,18 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.62G");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.63G");
    sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.62G");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.63G");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
    StartTimer(TMR_DISPLAY, 100);
    StartTimer(TMR_SEQ, 10000);
    StartTimer(TMR_INFO, 3000);
+   StartTimer(TMR_FLIPPER, 1500);
+   StartTimer(TMR_HELPDIS, 3000);
    break;
   case UI_STATE_HOST:
    switch (V.s_state) {
@@ -29403,7 +29428,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 836 "main.c"
+# 838 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29481,7 +29506,7 @@ void main(void)
 
 
 
-  check_help();
+  check_help(V.flipper);
 
 
 
@@ -29496,6 +29521,6 @@ void main(void)
     update_lcd(2);
    }
   }
-# 936 "main.c"
+# 938 "main.c"
  }
 }
