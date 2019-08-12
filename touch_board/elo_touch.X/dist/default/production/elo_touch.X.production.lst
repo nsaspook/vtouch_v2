@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.05 build -831301201 
-                                                                                               Tue Jul  9 17:42:31 2019
+                                                                                               Mon Aug 12 17:16:15 2019
 
 Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1 
      1                           	processor	18F47K42
@@ -468,31 +468,31 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    444                           
    445                           ;main.c: 68:  (INTCON0bits.GIEL = 1);
    446  0004AC  8CD2               	bsf	16338,6,c	;volatile
-   447  0004AE                     l1915:
+   447  0004AE                     l1923:
    448                           
    449                           ;main.c: 77:   if (UART1_is_tx_ready())
    450  0004AE  ECCD  F003         	call	_UART1_is_tx_ready	;wreg free
    451  0004B2  0900               	iorlw	0
    452  0004B4  B4D8               	btfsc	status,2,c
-   453  0004B6  D004               	goto	l1921
+   453  0004B6  D004               	goto	l1929
    454                           
    455                           ;main.c: 78:    UART1_Write(x++);
    456  0004B8  5058               	movf	main@x,w,c
    457  0004BA  EC31  F002         	call	_UART1_Write
    458  0004BE  2A58               	incf	main@x,f,c
-   459  0004C0                     l1921:
+   459  0004C0                     l1929:
    460                           
    461                           ;main.c: 79:   if (UART2_is_tx_ready())
    462  0004C0  ECCB  F003         	call	_UART2_is_tx_ready	;wreg free
    463  0004C4  0900               	iorlw	0
    464  0004C6  B4D8               	btfsc	status,2,c
-   465  0004C8  D7F2               	goto	l1915
+   465  0004C8  D7F2               	goto	l1923
    466                           
    467                           ;main.c: 80:    UART2_Write(y++);
    468  0004CA  5059               	movf	main@y,w,c
    469  0004CC  EC13  F002         	call	_UART2_Write
    470  0004D0  2A59               	incf	main@y,f,c
-   471  0004D2  D7ED               	goto	l1915
+   471  0004D2  D7ED               	goto	l1923
    472  0004D4                     __end_of_main:
    473                           	opt callstack 0
    474                           
@@ -606,7 +606,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
       +                          uart2.c: 194: {;mcc_generated_files/uart2.c: 195:     while(0 == uart2TxBufferRemaining)
    562  000428  504B               	movf	_uart2TxBufferRemaining,w,c	;volatile
    563  00042A  B4D8               	btfsc	status,2,c
-   564  00042C  D7FD               	goto	l1557
+   564  00042C  D7FD               	goto	l1563
    565                           
    566                           ;mcc_generated_files/uart2.c: 199:     if(0 == PIE6bits.U2TXIE)
    567  00042E  0139               	movlb	57	; () banked
@@ -619,7 +619,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    573  000434  0060  F157  FDD2   	movff	UART2_Write@txData,15826	;volatile
    574                           
    575                           ;mcc_generated_files/uart2.c: 202:     }
-   576  00043A  D011               	goto	l1573
+   576  00043A  D011               	goto	l1579
    577  00043C                     l472:
    578                           
    579                           ; BSR set to: 57
@@ -644,19 +644,19 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    597                           ;mcc_generated_files/uart2.c: 207:         if(sizeof(uart2TxBuffer) <= uart2TxHead)
    598  000452  0E07               	movlw	7
    599  000454  644D               	cpfsgt	_uart2TxHead,c	;volatile
-   600  000456  D002               	goto	l1571
+   600  000456  D002               	goto	l1577
    601                           
    602                           ; BSR set to: 57
    603                           ;mcc_generated_files/uart2.c: 208:         {;mcc_generated_files/uart2.c: 209:          
       +                             uart2TxHead = 0;
    604  000458  0E00               	movlw	0
    605  00045A  6E4D               	movwf	_uart2TxHead,c	;volatile
-   606  00045C                     l1571:
+   606  00045C                     l1577:
    607                           
    608                           ; BSR set to: 57
    609                           ;mcc_generated_files/uart2.c: 211:         uart2TxBufferRemaining--;
    610  00045C  064B               	decf	_uart2TxBufferRemaining,f,c	;volatile
-   611  00045E                     l1573:
+   611  00045E                     l1579:
    612                           
    613                           ; BSR set to: 57
    614                           ;mcc_generated_files/uart2.c: 213:     PIE6bits.U2TXIE = 1;
@@ -778,7 +778,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
       +                          uart1.c: 203: {;mcc_generated_files/uart1.c: 204:     while(0 == uart1TxBufferRemaining)
    710  000464  5052               	movf	_uart1TxBufferRemaining,w,c	;volatile
    711  000466  B4D8               	btfsc	status,2,c
-   712  000468  D7FD               	goto	l1503
+   712  000468  D7FD               	goto	l1509
    713                           
    714                           ;mcc_generated_files/uart1.c: 208:     if(0 == PIE3bits.U1TXIE)
    715  00046A  0139               	movlb	57	; () banked
@@ -791,7 +791,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    721  000470  0060  F157  FDEA   	movff	UART1_Write@txData,15850	;volatile
    722                           
    723                           ;mcc_generated_files/uart1.c: 211:     }
-   724  000476  D011               	goto	l1519
+   724  000476  D011               	goto	l1525
    725  000478                     l304:
    726                           
    727                           ; BSR set to: 57
@@ -816,19 +816,19 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    745                           ;mcc_generated_files/uart1.c: 216:         if(sizeof(uart1TxBuffer) <= uart1TxHead)
    746  00048E  0E07               	movlw	7
    747  000490  6454               	cpfsgt	_uart1TxHead,c	;volatile
-   748  000492  D002               	goto	l1517
+   748  000492  D002               	goto	l1523
    749                           
    750                           ; BSR set to: 57
    751                           ;mcc_generated_files/uart1.c: 217:         {;mcc_generated_files/uart1.c: 218:          
       +                             uart1TxHead = 0;
    752  000494  0E00               	movlw	0
    753  000496  6E54               	movwf	_uart1TxHead,c	;volatile
-   754  000498                     l1517:
+   754  000498                     l1523:
    755                           
    756                           ; BSR set to: 57
    757                           ;mcc_generated_files/uart1.c: 220:         uart1TxBufferRemaining--;
    758  000498  0652               	decf	_uart1TxBufferRemaining,f,c	;volatile
-   759  00049A                     l1519:
+   759  00049A                     l1525:
    760                           
    761                           ; BSR set to: 57
    762                           ;mcc_generated_files/uart1.c: 222:     PIE3bits.U1TXIE = 1;
@@ -907,11 +907,11 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    825                           ;mcc_generated_files/mcc.c: 55:     OSCILLATOR_Initialize();
    826  00058A  EC47  F003         	call	_OSCILLATOR_Initialize	;wreg free
    827                           
-   828                           ;mcc_generated_files/mcc.c: 56:     TMR2_Initialize();
-   829  00058E  EC38  F003         	call	_TMR2_Initialize	;wreg free
+   828                           ;mcc_generated_files/mcc.c: 56:     PWM8_Initialize();
+   829  00058E  EC55  F003         	call	_PWM8_Initialize	;wreg free
    830                           
-   831                           ;mcc_generated_files/mcc.c: 57:     PWM8_Initialize();
-   832  000592  EC55  F003         	call	_PWM8_Initialize	;wreg free
+   831                           ;mcc_generated_files/mcc.c: 57:     TMR2_Initialize();
+   832  000592  EC38  F003         	call	_TMR2_Initialize	;wreg free
    833                           
    834                           ;mcc_generated_files/mcc.c: 58:     UART2_Initialize();
    835  000596  ECB5  F000         	call	_UART2_Initialize	;wreg free
@@ -1032,13 +1032,13 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
    940  0001AA  6FDC               	movwf	220,b	;volatile
    941                           
    942                           ; BSR set to: 61
-   943                           ;mcc_generated_files/uart2.c: 116:     U2BRGL = 0x82;
-   944  0001AC  0E82               	movlw	130
+   943                           ;mcc_generated_files/uart2.c: 116:     U2BRGL = 0x40;
+   944  0001AC  0E40               	movlw	64
    945  0001AE  6FDD               	movwf	221,b	;volatile
    946                           
    947                           ; BSR set to: 61
-   948                           ;mcc_generated_files/uart2.c: 119:     U2BRGH = 0x06;
-   949  0001B0  0E06               	movlw	6
+   948                           ;mcc_generated_files/uart2.c: 119:     U2BRGH = 0x03;
+   949  0001B0  0E03               	movlw	3
    950  0001B2  6FDE               	movwf	222,b	;volatile
    951                           
    952                           ; BSR set to: 61
@@ -1538,13 +1538,13 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   1384  0000FE  6FF4               	movwf	244,b	;volatile
   1385                           
   1386                           ; BSR set to: 61
-  1387                           ;mcc_generated_files/uart1.c: 125:     U1BRGL = 0x82;
-  1388  000100  0E82               	movlw	130
+  1387                           ;mcc_generated_files/uart1.c: 125:     U1BRGL = 0x40;
+  1388  000100  0E40               	movlw	64
   1389  000102  6FF5               	movwf	245,b	;volatile
   1390                           
   1391                           ; BSR set to: 61
-  1392                           ;mcc_generated_files/uart1.c: 128:     U1BRGH = 0x06;
-  1393  000104  0E06               	movlw	6
+  1392                           ;mcc_generated_files/uart1.c: 128:     U1BRGH = 0x03;
+  1393  000104  0E03               	movlw	3
   1394  000106  6FF6               	movwf	246,b	;volatile
   1395                           
   1396                           ; BSR set to: 61
@@ -2784,14 +2784,14 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   2485                           ;mcc_generated_files/uart1.c: 249:        if(sizeof(uart1TxBuffer) <= uart1TxTail)
   2486  0004EE  0E07               	movlw	7
   2487  0004F0  6453               	cpfsgt	_uart1TxTail,c	;volatile
-  2488  0004F2  D002               	goto	i2l1531
+  2488  0004F2  D002               	goto	i2l1537
   2489                           
   2490                           ; BSR set to: 61
   2491                           ;mcc_generated_files/uart1.c: 250:         {;mcc_generated_files/uart1.c: 251:          
       +                             uart1TxTail = 0;
   2492  0004F4  0E00               	movlw	0
   2493  0004F6  6E53               	movwf	_uart1TxTail,c	;volatile
-  2494  0004F8                     i2l1531:
+  2494  0004F8                     i2l1537:
   2495                           
   2496                           ; BSR set to: 61
   2497                           ;mcc_generated_files/uart1.c: 253:         uart1TxBufferRemaining++;
@@ -3019,7 +3019,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   2697  000324  22DA               	addwfc	fsr2h,f,c
   2698  000326  50DF               	movf	indf2,w,c
   2699  000328  B4D8               	btfsc	status,2,c
-  2700  00032A  D00C               	goto	i2l1551
+  2700  00032A  D00C               	goto	i2l1557
   2701                           
   2702                           ;mcc_generated_files/uart1.c: 279:         UART1_ErrorHandler();
   2703  00032C  D801               	call	i2u15_48
@@ -3035,7 +3035,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   2713  00033E  6EFF               	movwf	tosu,c
   2714  000340  50FA               	movf	pclath,w,c
   2715  000342  0012               	return		;indir
-  2716  000344                     i2l1551:
+  2716  000344                     i2l1557:
   2717                           
   2718                           ;mcc_generated_files/uart1.c: 281:         UART1_RxDataHandler();
   2719  000344  ECF3  F002         	call	_UART1_RxDataHandler	;wreg free
@@ -3261,13 +3261,13 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   2899                           ;mcc_generated_files/uart1.c: 290:     if(sizeof(uart1RxBuffer) <= uart1RxHead)
   2900  0005FA  0E07               	movlw	7
   2901  0005FC  6451               	cpfsgt	_uart1RxHead,c	;volatile
-  2902  0005FE  D002               	goto	i2l1333
+  2902  0005FE  D002               	goto	i2l1339
   2903                           
   2904                           ;mcc_generated_files/uart1.c: 291:     {;mcc_generated_files/uart1.c: 292:         uart1
       +                          RxHead = 0;
   2905  000600  0E00               	movlw	0
   2906  000602  6E51               	movwf	_uart1RxHead,c	;volatile
-  2907  000604                     i2l1333:
+  2907  000604                     i2l1339:
   2908                           
   2909                           ;mcc_generated_files/uart1.c: 294:     uart1RxCount++;
   2910  000604  2A4F               	incf	_uart1RxCount,f,c	;volatile
@@ -3422,14 +3422,14 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   3036                           ;mcc_generated_files/uart2.c: 240:        if(sizeof(uart2TxBuffer) <= uart2TxTail)
   3037  00051C  0E07               	movlw	7
   3038  00051E  644C               	cpfsgt	_uart2TxTail,c	;volatile
-  3039  000520  D002               	goto	i2l1585
+  3039  000520  D002               	goto	i2l1591
   3040                           
   3041                           ; BSR set to: 61
   3042                           ;mcc_generated_files/uart2.c: 241:         {;mcc_generated_files/uart2.c: 242:          
       +                             uart2TxTail = 0;
   3043  000522  0E00               	movlw	0
   3044  000524  6E4C               	movwf	_uart2TxTail,c	;volatile
-  3045  000526                     i2l1585:
+  3045  000526                     i2l1591:
   3046                           
   3047                           ; BSR set to: 61
   3048                           ;mcc_generated_files/uart2.c: 244:         uart2TxBufferRemaining++;
@@ -3657,7 +3657,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   3248  0003BC  22DA               	addwfc	fsr2h,f,c
   3249  0003BE  50DF               	movf	indf2,w,c
   3250  0003C0  B4D8               	btfsc	status,2,c
-  3251  0003C2  D00C               	goto	i2l1881
+  3251  0003C2  D00C               	goto	i2l1889
   3252                           
   3253                           ;mcc_generated_files/uart2.c: 270:         UART2_ErrorHandler();
   3254  0003C4  D801               	call	i2u50_48
@@ -3673,7 +3673,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   3264  0003D6  6EFF               	movwf	tosu,c
   3265  0003D8  50FA               	movf	pclath,w,c
   3266  0003DA  0012               	return		;indir
-  3267  0003DC                     i2l1881:
+  3267  0003DC                     i2l1889:
   3268                           
   3269                           ;mcc_generated_files/uart2.c: 272:         UART2_RxDataHandler();
   3270  0003DC  EC27  F003         	call	_UART2_RxDataHandler	;wreg free
@@ -3899,13 +3899,13 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og1
   3450                           ;mcc_generated_files/uart2.c: 281:     if(sizeof(uart2RxBuffer) <= uart2RxHead)
   3451  000662  0E07               	movlw	7
   3452  000664  644A               	cpfsgt	_uart2RxHead,c	;volatile
-  3453  000666  D002               	goto	i2l1763
+  3453  000666  D002               	goto	i2l1771
   3454                           
   3455                           ;mcc_generated_files/uart2.c: 282:     {;mcc_generated_files/uart2.c: 283:         uart2
       +                          RxHead = 0;
   3456  000668  0E00               	movlw	0
   3457  00066A  6E4A               	movwf	_uart2RxHead,c	;volatile
-  3458  00066C                     i2l1763:
+  3458  00066C                     i2l1771:
   3459                           
   3460                           ;mcc_generated_files/uart2.c: 285:     uart2RxCount++;
   3461  00066C  2A48               	incf	_uart2RxCount,f,c	;volatile
@@ -5452,7 +5452,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.05 build -831301201 
-Symbol Table                                                                                   Tue Jul  9 17:42:31 2019
+Symbol Table                                                                                   Mon Aug 12 17:16:15 2019
 
                                  __CFG_CP$OFF 000000                                            l58 06A4  
                    __end_of_UART2_is_tx_ready 079A                                            u35 0418  
@@ -5462,11 +5462,11 @@ Symbol Table                                                                    
                      __size_of_PMD_Initialize 0024                               _TMR2_Initialize 0670  
                                          tosl 003FFD                                           wreg 003FE8  
                           _UART1_Transmit_ISR 04D4                                 __CFG_BBEN$OFF 000000  
-                                __CFG_ZCD$OFF 000000                                          l1503 0464  
-                                        l1517 0498                                          l1519 049A  
-                                        l1571 045C                                          l1573 045E  
-                                        l1557 0428                                          l1921 04C0  
-                                        l1915 04AE                                          _LATA 003FBA  
+                                __CFG_ZCD$OFF 000000                                          l1523 0498  
+                                        l1525 049A                                          l1509 0464  
+                                        l1563 0428                                          l1577 045C  
+                                        l1579 045E                                          l1923 04AE  
+                                        l1929 04C0                                          _LATA 003FBA  
                                         _LATB 003FBB                                          _LATC 003FBC  
                                         _LATD 003FBD                                          _LATE 003FBE  
                                         _T2PR 003FAB                                          _PMD0 0039C0  
@@ -5538,10 +5538,10 @@ Symbol Table                                                                    
                                       _RB6PPS 003A0E                                        _ODCONA 003A42  
                                       _ODCONB 003A52                                        _ODCONC 003A62  
                                       _RC6PPS 003A16                                        _ODCOND 003A72  
-                                      _ODCONE 003A82                                        i2l1333 0604  
-                              __CFG_WDTCCS$SC 000000                                        i2l1531 04F8  
-                                      i2l1551 0344                                        i2l1585 0526  
-                                      i2l1763 066C                                        i2l1881 03DC  
+                                      _ODCONE 003A82                                __CFG_WDTCCS$SC 000000  
+                                      i2l1339 0604                                        i2l1537 04F8  
+                                      i2l1557 0344                                        i2l1591 0526  
+                                      i2l1771 066C                                        i2l1889 03DC  
                                       _IVTADH 00389E                                        _IVTADL 00389D  
                                       _IVTADU 00389F                                        _OSCFRQ 0039DF  
                          ?_UART2_Transmit_ISR 0055                         _UART1_SetErrorHandler 0776  

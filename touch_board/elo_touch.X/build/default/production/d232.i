@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/mcc.c"
+# 1 "d232.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,10 +6,9 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/mcc.c" 2
-# 47 "mcc_generated_files/mcc.c"
-# 1 "mcc_generated_files/mcc.h" 1
-# 49 "mcc_generated_files/mcc.h"
+# 1 "d232.c" 2
+# 1 "./d232.h" 1
+# 38 "./d232.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -26526,16 +26525,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 49 "mcc_generated_files/mcc.h" 2
-
-# 1 "mcc_generated_files/device_config.h" 1
-# 50 "mcc_generated_files/mcc.h" 2
-
-# 1 "mcc_generated_files/pin_manager.h" 1
-# 158 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 51 "mcc_generated_files/mcc.h" 2
-
+# 39 "./d232.h" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
@@ -26618,424 +26608,40 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 52 "mcc_generated_files/mcc.h" 2
-
+# 40 "./d232.h" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 53 "mcc_generated_files/mcc.h" 2
+# 41 "./d232.h" 2
 
-# 1 "mcc_generated_files/interrupt_manager.h" 1
-# 109 "mcc_generated_files/interrupt_manager.h"
-void INTERRUPT_Initialize (void);
-# 54 "mcc_generated_files/mcc.h" 2
 
-# 1 "mcc_generated_files/pwm8.h" 1
-# 102 "mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 55 "mcc_generated_files/mcc.h" 2
 
-# 1 "mcc_generated_files/tmr2.h" 1
-# 79 "mcc_generated_files/tmr2.h"
-typedef enum
-{
-# 89 "mcc_generated_files/tmr2.h"
-   TMR2_ROP_STARTS_TMRON,
 
 
 
+typedef enum {
+ D232_IDLE,
+ D232_INIT,
+ D232_OUT,
+ D232_IN,
+ D232_SRQ,
+ D232_UPDATE
+} D232_STATE;
 
-   TMR2_ROP_STARTS_TMRON_ERSHIGH,
+typedef struct A_data {
+ uint8_t inbytes[5];
+ uint8_t outbytes[5];
+} A_data;
 
+void Digital232_init(void);
+_Bool Digital232_RW(void);
+# 2 "d232.c" 2
 
-
-
-   TMR2_ROP_STARTS_TMRON_ERSLOW,
-
-
-
-
-   TMR2_ROP_RESETS_ERSBOTHEDGE,
-
-
-
-
-   TMR2_ROP_RESETS_ERSRISINGEDGE,
-
-
-
-
-   TMR2_ROP_RESETS_ERSFALLINGEDGE,
-
-
-
-
-   TMR2_ROP_RESETS_ERSLOW,
-
-
-
-
-   TMR2_ROP_RESETS_ERSHIGH,
-# 135 "mcc_generated_files/tmr2.h"
-   TMR2_OS_STARTS_TMRON,
-
-
-
-
-   TMR2_OS_STARTS_ERSRISINGEDGE ,
-
-
-
-
-   TMR2_OS_STARTS_ERSFALLINGEDGE ,
-
-
-
-
-   TMR2_OS_STARTS_ERSBOTHEDGE,
-
-
-
-
-
-   TMR2_OS_STARTS_ERSFIRSTRISINGEDGE,
-
-
-
-
-
-   TMR2_OS_STARTS_ERSFIRSTFALLINGEDGE,
-
-
-
-
-
-   TMR2_OS_STARTS_ERSRISINGEDGEDETECT,
-
-
-
-
-   TMR2_OS_STARTS_ERSFALLINGEDGEDETECT,
-
-
-
-
-   TMR2_OS_STARTS_TMRON_ERSHIGH = 0x16,
-
-
-
-
-   TMR2_OS_STARTS_TMRON_ERSLOW = 0x17,
-# 192 "mcc_generated_files/tmr2.h"
-   TMR2_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-
-
-
-
-   TMR2_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-
-
-
-
-
-   TMR2_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-
-} TMR2_HLT_MODE;
-# 220 "mcc_generated_files/tmr2.h"
-typedef enum
+void Digital232_init(void)
 {
 
-
-    TMR2_T2INPPS,
-
-
-
-    TMR2_RESERVED,
-
-
-
-    TMR2_T4POSTSCALED,
-
-
-
-    TMR2_T6POSTSCALED,
-
-
-
-    TMR2_CCP1_OUT,
-
-
-
-    TMR2_CCP2_OUT,
-
-
-
-    TMR2_CCP3_OUT,
-
-
-
-    TMR2_CCP4_OUT,
-
-
-
-    TMR2_PWM5_OUT,
-
-
-
-    TMR2_PWM6_OUT,
-
-
-
-    TMR2_PWM7_OUT,
-
-
-
-    TMR2_PWM8_OUT,
-
-
-
-    TMR2_RESERVED_2,
-
-
-
-    TMR2_RESERVED_3,
-
-
-
-    TMR2_C1_OUT_SYNC,
-
-
-
-    TMR2_C2_OUT_SYNC,
-
-
-
-    TMR2_ZCD_OUTPUT,
-
-
-
-    TMR2_CLC1_OUT,
-
-
-
-    TMR2_CLC2_OUT,
-
-
-
-    TMR2_CLC3_OUT,
-
-
-
-    TMR2_CLC4_OUT,
-
-
-
-    TMR2_UART1_RX_EDGE,
-
-
-
-    TMR2_UART1_TX_EDGE,
-
-
-
-    TMR2_UART2_RX_EDGE,
-
-
-
-    TMR2_UART2_TX_EDGE
-
-} TMR2_HLT_EXT_RESET_SOURCE;
-# 364 "mcc_generated_files/tmr2.h"
-void TMR2_Initialize(void);
-# 400 "mcc_generated_files/tmr2.h"
-void TMR2_ModeSet(TMR2_HLT_MODE mode);
-# 435 "mcc_generated_files/tmr2.h"
-void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset);
-# 464 "mcc_generated_files/tmr2.h"
-void TMR2_Start(void);
-# 493 "mcc_generated_files/tmr2.h"
-void TMR2_StartTimer(void);
-# 525 "mcc_generated_files/tmr2.h"
-void TMR2_Stop(void);
-# 557 "mcc_generated_files/tmr2.h"
-void TMR2_StopTimer(void);
-# 592 "mcc_generated_files/tmr2.h"
-uint8_t TMR2_Counter8BitGet(void);
-# 627 "mcc_generated_files/tmr2.h"
-uint8_t TMR2_ReadTimer(void);
-# 666 "mcc_generated_files/tmr2.h"
-void TMR2_Counter8BitSet(uint8_t timerVal);
-# 705 "mcc_generated_files/tmr2.h"
-void TMR2_WriteTimer(uint8_t timerVal);
-# 757 "mcc_generated_files/tmr2.h"
-void TMR2_Period8BitSet(uint8_t periodVal);
-# 809 "mcc_generated_files/tmr2.h"
-void TMR2_LoadPeriodRegister(uint8_t periodVal);
-# 847 "mcc_generated_files/tmr2.h"
-_Bool TMR2_HasOverflowOccured(void);
-# 56 "mcc_generated_files/mcc.h" 2
-
-# 1 "mcc_generated_files/uart2.h" 1
-# 74 "mcc_generated_files/uart2.h"
-typedef union {
-    struct {
-        unsigned perr : 1;
-        unsigned ferr : 1;
-        unsigned oerr : 1;
-        unsigned reserved : 5;
-    };
-    uint8_t status;
-}uart2_status_t;
-
-
-
-
-extern volatile uint8_t uart2TxBufferRemaining;
-extern volatile uint8_t uart2RxCount;
-# 115 "mcc_generated_files/uart2.h"
-void UART2_Initialize(void);
-# 164 "mcc_generated_files/uart2.h"
-uint8_t UART2_is_rx_ready(void);
-# 214 "mcc_generated_files/uart2.h"
-uint8_t UART2_is_tx_ready(void);
-# 261 "mcc_generated_files/uart2.h"
-_Bool UART2_is_tx_done(void);
-# 309 "mcc_generated_files/uart2.h"
-uart2_status_t UART2_get_last_status(void);
-# 358 "mcc_generated_files/uart2.h"
-uint8_t UART2_Read(void);
-# 383 "mcc_generated_files/uart2.h"
-void UART2_Write(uint8_t txData);
-# 404 "mcc_generated_files/uart2.h"
-void UART2_Transmit_ISR(void);
-# 425 "mcc_generated_files/uart2.h"
-void UART2_Receive_ISR(void);
-# 446 "mcc_generated_files/uart2.h"
-void UART2_RxDataHandler(void);
-# 464 "mcc_generated_files/uart2.h"
-void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 482 "mcc_generated_files/uart2.h"
-void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 500 "mcc_generated_files/uart2.h"
-void UART2_SetErrorHandler(void (* interruptHandler)(void));
-# 520 "mcc_generated_files/uart2.h"
-void (*UART2_RxInterruptHandler)(void);
-# 538 "mcc_generated_files/uart2.h"
-void (*UART2_TxInterruptHandler)(void);
-# 558 "mcc_generated_files/uart2.h"
-void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 576 "mcc_generated_files/uart2.h"
-void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 57 "mcc_generated_files/mcc.h" 2
-
-# 1 "mcc_generated_files/uart1.h" 1
-# 74 "mcc_generated_files/uart1.h"
-typedef union {
-    struct {
-        unsigned perr : 1;
-        unsigned ferr : 1;
-        unsigned oerr : 1;
-        unsigned reserved : 5;
-    };
-    uint8_t status;
-}uart1_status_t;
-
-
-
-
-extern volatile uint8_t uart1TxBufferRemaining;
-extern volatile uint8_t uart1RxCount;
-# 115 "mcc_generated_files/uart1.h"
-void UART1_Initialize(void);
-# 164 "mcc_generated_files/uart1.h"
-uint8_t UART1_is_rx_ready(void);
-# 214 "mcc_generated_files/uart1.h"
-uint8_t UART1_is_tx_ready(void);
-# 261 "mcc_generated_files/uart1.h"
-_Bool UART1_is_tx_done(void);
-# 309 "mcc_generated_files/uart1.h"
-uart1_status_t UART1_get_last_status(void);
-# 358 "mcc_generated_files/uart1.h"
-uint8_t UART1_Read(void);
-# 383 "mcc_generated_files/uart1.h"
-void UART1_Write(uint8_t txData);
-# 404 "mcc_generated_files/uart1.h"
-void UART1_Transmit_ISR(void);
-# 425 "mcc_generated_files/uart1.h"
-void UART1_Receive_ISR(void);
-# 446 "mcc_generated_files/uart1.h"
-void UART1_RxDataHandler(void);
-# 464 "mcc_generated_files/uart1.h"
-void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 482 "mcc_generated_files/uart1.h"
-void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 500 "mcc_generated_files/uart1.h"
-void UART1_SetErrorHandler(void (* interruptHandler)(void));
-# 520 "mcc_generated_files/uart1.h"
-void (*UART1_RxInterruptHandler)(void);
-# 538 "mcc_generated_files/uart1.h"
-void (*UART1_TxInterruptHandler)(void);
-# 558 "mcc_generated_files/uart1.h"
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 576 "mcc_generated_files/uart1.h"
-void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 58 "mcc_generated_files/mcc.h" 2
-# 73 "mcc_generated_files/mcc.h"
-void SYSTEM_Initialize(void);
-# 86 "mcc_generated_files/mcc.h"
-void OSCILLATOR_Initialize(void);
-# 99 "mcc_generated_files/mcc.h"
-void PMD_Initialize(void);
-# 47 "mcc_generated_files/mcc.c" 2
-
-
-
-void SYSTEM_Initialize(void)
-{
-    INTERRUPT_Initialize();
-    PMD_Initialize();
-    PIN_MANAGER_Initialize();
-    OSCILLATOR_Initialize();
-    PWM8_Initialize();
-    TMR2_Initialize();
-    UART2_Initialize();
-    UART1_Initialize();
 }
 
-void OSCILLATOR_Initialize(void)
+_Bool Digital232_RW(void)
 {
 
-    OSCCON1 = 0x20;
-
-    OSCCON3 = 0x00;
-
-    OSCEN = 0x00;
-
-    OSCFRQ = 0x08;
-
-    OSCTUNE = 0x00;
-
-    while(PLLR == 0)
-    {
-    }
-}
-
-void PMD_Initialize(void)
-{
-
-    PMD0 = 0x00;
-
-    PMD1 = 0x00;
-
-    PMD2 = 0x00;
-
-    PMD3 = 0x00;
-
-    PMD4 = 0x00;
-
-    PMD5 = 0x00;
-
-    PMD6 = 0x00;
-
-    PMD7 = 0x00;
+return 1;
 }
