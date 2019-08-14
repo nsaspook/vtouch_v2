@@ -109,8 +109,8 @@ void UART2_Initialize(void)
     // RXBIMD Set RXBKIF on rising RX input; BRKOVR disabled; WUE disabled; SENDB disabled; ON enabled; 
     U2CON1 = 0x80;
 
-    // TXPOL inverted; FLO off; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
-    U2CON2 = 0x04;
+    // TXPOL not inverted; FLO off; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
+    U2CON2 = 0x00;
 
     // BRGL 64; 
     U2BRGL = 0x40;
@@ -211,6 +211,16 @@ void UART2_Write(uint8_t txData)
         uart2TxBufferRemaining--;
     }
     PIE6bits.U2TXIE = 1;
+}
+
+char getch(void)
+{
+    return UART2_Read();
+}
+
+void putch(char txData)
+{
+    UART2_Write(txData);
 }
 
 void __interrupt(irq(U2TX),base(8)) UART2_tx_vect_isr()

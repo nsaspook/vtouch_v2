@@ -52,6 +52,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "interrupt_manager.h"
+#include "tmr5.h"
+#include "tmr6.h"
 #include "pwm8.h"
 #include "tmr2.h"
 #include "uart2.h"

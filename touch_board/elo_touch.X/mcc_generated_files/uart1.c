@@ -112,8 +112,8 @@ void UART1_Initialize(void)
     // P3H 0; 
     U1P3H = 0x00;
 
-    // BRGS high speed; MODE Asynchronous 8-bit mode; RXEN enabled; TXEN enabled; ABDEN disabled; 
-    U1CON0 = 0xB0;
+    // BRGS high speed; MODE Asynchronous 8-bit mode; RXEN enabled; TXEN disabled; ABDEN disabled; 
+    U1CON0 = 0x90;
 
     // RXBIMD Set RXBKIF on rising RX input; BRKOVR disabled; WUE disabled; SENDB disabled; ON enabled; 
     U1CON1 = 0x80;

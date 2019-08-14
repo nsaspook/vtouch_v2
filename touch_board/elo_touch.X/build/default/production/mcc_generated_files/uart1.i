@@ -26723,7 +26723,7 @@ void UART1_Initialize(void)
     U1P3H = 0x00;
 
 
-    U1CON0 = 0xB0;
+    U1CON0 = 0x90;
 
 
     U1CON1 = 0x80;

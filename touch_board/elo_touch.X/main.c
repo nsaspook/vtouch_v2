@@ -47,7 +47,10 @@
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/uart1.h"
 #include "mcc_generated_files/uart2.h"
+#include "timers.h"
 
+
+volatile uint16_t tickCount[TMR_COUNT] = {0};
 /*
 			 Main application
  */

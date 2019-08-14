@@ -1,4 +1,4 @@
-# 1 "d232.c"
+# 1 "mcc_generated_files/tmr5.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,9 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "d232.c" 2
-# 1 "./d232.h" 1
-# 38 "./d232.h"
+# 1 "mcc_generated_files/tmr5.c" 2
+# 51 "mcc_generated_files/tmr5.c"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -26525,7 +26524,13 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 39 "./d232.h" 2
+# 51 "mcc_generated_files/tmr5.c" 2
+
+# 1 "mcc_generated_files/tmr5.h" 1
+# 54 "mcc_generated_files/tmr5.h"
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
+# 54 "mcc_generated_files/tmr5.h" 2
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
@@ -26608,13 +26613,44 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 40 "./d232.h" 2
-# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 41 "./d232.h" 2
+# 55 "mcc_generated_files/tmr5.h" 2
+# 101 "mcc_generated_files/tmr5.h"
+void TMR5_Initialize(void);
+# 130 "mcc_generated_files/tmr5.h"
+void TMR5_StartTimer(void);
+# 162 "mcc_generated_files/tmr5.h"
+void TMR5_StopTimer(void);
+# 197 "mcc_generated_files/tmr5.h"
+uint16_t TMR5_ReadTimer(void);
+# 236 "mcc_generated_files/tmr5.h"
+void TMR5_WriteTimer(uint16_t timerVal);
+# 272 "mcc_generated_files/tmr5.h"
+void TMR5_Reload(void);
+# 311 "mcc_generated_files/tmr5.h"
+void TMR5_StartSinglePulseAcquisition(void);
+# 350 "mcc_generated_files/tmr5.h"
+uint8_t TMR5_CheckGateValueStatus(void);
+# 368 "mcc_generated_files/tmr5.h"
+void TMR5_CallBack(void);
+# 386 "mcc_generated_files/tmr5.h"
+ void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
+# 404 "mcc_generated_files/tmr5.h"
+extern void (*TMR5_InterruptHandler)(void);
+# 422 "mcc_generated_files/tmr5.h"
+void TMR5_DefaultInterruptHandler(void);
+# 52 "mcc_generated_files/tmr5.c" 2
+
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 53 "mcc_generated_files/tmr5.c" 2
+
+# 1 "mcc_generated_files/../d232.h" 1
+# 41 "mcc_generated_files/../d232.h"
 # 1 "./mcc_generated_files/pin_manager.h" 1
 # 158 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
-# 42 "./d232.h" 2
+# 42 "mcc_generated_files/../d232.h" 2
 
 
 
@@ -26639,15 +26675,153 @@ typedef struct A_data {
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
-# 2 "d232.c" 2
+# 54 "mcc_generated_files/tmr5.c" 2
 
-void Digital232_init(void)
+
+
+
+
+volatile uint16_t timer5ReloadVal;
+void (*TMR5_InterruptHandler)(void);
+
+
+
+
+
+void TMR5_Initialize(void)
 {
 
+
+
+    T5GCON = 0x00;
+
+
+    T5GATE = 0x00;
+
+
+    T5CLK = 0x01;
+
+
+    TMR5H = 0x63;
+
+
+    TMR5L = 0xC0;
+
+
+    timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
+
+
+    PIR8bits.TMR5IF = 0;
+
+
+    PIE8bits.TMR5IE = 1;
+
+
+    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
+
+
+    T5CON = 0x31;
 }
 
-_Bool Digital232_RW(void)
+void TMR5_StartTimer(void)
 {
 
-return 1;
+    T5CONbits.TMR5ON = 1;
+}
+
+void TMR5_StopTimer(void)
+{
+
+    T5CONbits.TMR5ON = 0;
+}
+
+uint16_t TMR5_ReadTimer(void)
+{
+    uint16_t readVal;
+    uint8_t readValHigh;
+    uint8_t readValLow;
+
+    T5CONbits.T5RD16 = 1;
+
+    readValLow = TMR5L;
+    readValHigh = TMR5H;
+
+    readVal = ((uint16_t)readValHigh << 8) | readValLow;
+
+    return readVal;
+}
+
+void TMR5_WriteTimer(uint16_t timerVal)
+{
+    if (T5CONbits.NOT_SYNC == 1)
+    {
+
+        T5CONbits.TMR5ON = 0;
+
+
+        TMR5H = (timerVal >> 8);
+        TMR5L = timerVal;
+
+
+        T5CONbits.TMR5ON =1;
+    }
+    else
+    {
+
+        TMR5H = (timerVal >> 8);
+        TMR5L = timerVal;
+    }
+}
+
+void TMR5_Reload(void)
+{
+    TMR5_WriteTimer(timer5ReloadVal);
+}
+
+void TMR5_StartSinglePulseAcquisition(void)
+{
+    T5GCONbits.T5GGO = 1;
+}
+
+uint8_t TMR5_CheckGateValueStatus(void)
+{
+    return (T5GCONbits.T5GVAL);
+}
+
+void __attribute__((picinterrupt(("irq(TMR5),base(8)")))) TMR5_ISR()
+{
+    static volatile unsigned int CountCallBack = 0;
+
+
+    PIR8bits.TMR5IF = 0;
+    TMR5_WriteTimer(timer5ReloadVal);
+
+
+    if (++CountCallBack >= 50)
+    {
+
+        TMR5_CallBack();
+
+
+        CountCallBack = 0;
+    }
+}
+
+void TMR5_CallBack(void)
+{
+
+    if(TMR5_InterruptHandler)
+    {
+        TMR5_InterruptHandler();
+    }
+}
+
+void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
+    TMR5_InterruptHandler = InterruptHandler;
+}
+
+void TMR5_DefaultInterruptHandler(void){
+
+
+  LATEbits.LATE0 = (uint8_t) ~LATEbits.LATE0;
 }

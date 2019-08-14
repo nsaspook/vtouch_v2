@@ -38,11 +38,14 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <stdint.h>
 #include <stdbool.h>
+#include "mcc_generated_files/pin_manager.h"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
 #define FMT	"F4\r"
 #define SRQ	"M4\r"
+
+#define SLED	LED_RSET_LAT
 
 typedef enum {
 	D232_IDLE,

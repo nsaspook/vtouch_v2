@@ -1,4 +1,4 @@
-# 1 "d232.c"
+# 1 "mcc_generated_files/tmr6.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,9 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "d232.c" 2
-# 1 "./d232.h" 1
-# 38 "./d232.h"
+# 1 "mcc_generated_files/tmr6.c" 2
+# 51 "mcc_generated_files/tmr6.c"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -26525,7 +26524,10 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.05/pic/include/xc.h" 2 3
-# 39 "./d232.h" 2
+# 51 "mcc_generated_files/tmr6.c" 2
+
+# 1 "mcc_generated_files/tmr6.h" 1
+# 54 "mcc_generated_files/tmr6.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
 # 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
@@ -26608,46 +26610,423 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 40 "./d232.h" 2
+# 54 "mcc_generated_files/tmr6.h" 2
+
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 41 "./d232.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 158 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 42 "./d232.h" 2
+# 55 "mcc_generated_files/tmr6.h" 2
+# 79 "mcc_generated_files/tmr6.h"
+typedef enum
+{
+# 89 "mcc_generated_files/tmr6.h"
+   TMR6_ROP_STARTS_TMRON,
+
+
+
+
+   TMR6_ROP_STARTS_TMRON_ERSHIGH,
+
+
+
+
+   TMR6_ROP_STARTS_TMRON_ERSLOW,
+
+
+
+
+   TMR6_ROP_RESETS_ERSBOTHEDGE,
+
+
+
+
+   TMR6_ROP_RESETS_ERSRISINGEDGE,
+
+
+
+
+   TMR6_ROP_RESETS_ERSFALLINGEDGE,
+
+
+
+
+   TMR6_ROP_RESETS_ERSLOW,
+
+
+
+
+   TMR6_ROP_RESETS_ERSHIGH,
+# 135 "mcc_generated_files/tmr6.h"
+   TMR6_OS_STARTS_TMRON,
+
+
+
+
+   TMR6_OS_STARTS_ERSRISINGEDGE ,
+
+
+
+
+   TMR6_OS_STARTS_ERSFALLINGEDGE ,
+
+
+
+
+   TMR6_OS_STARTS_ERSBOTHEDGE,
 
 
 
 
 
+   TMR6_OS_STARTS_ERSFIRSTRISINGEDGE,
 
 
 
-typedef enum {
- D232_IDLE,
- D232_INIT,
- D232_OUT,
- D232_IN,
- D232_SRQ,
- D232_UPDATE
-} D232_STATE;
 
-typedef struct A_data {
- uint8_t inbytes[5];
- uint8_t outbytes[5];
-} A_data;
 
-void Digital232_init(void);
-_Bool Digital232_RW(void);
-# 2 "d232.c" 2
+   TMR6_OS_STARTS_ERSFIRSTFALLINGEDGE,
 
-void Digital232_init(void)
+
+
+
+
+   TMR6_OS_STARTS_ERSRISINGEDGEDETECT,
+
+
+
+
+   TMR6_OS_STARTS_ERSFALLINGEDGEDETECT,
+
+
+
+
+   TMR6_OS_STARTS_TMRON_ERSHIGH = 0x16,
+
+
+
+
+   TMR6_OS_STARTS_TMRON_ERSLOW = 0x17,
+# 192 "mcc_generated_files/tmr6.h"
+   TMR6_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
+
+
+
+
+   TMR6_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
+
+
+
+
+
+   TMR6_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
+
+} TMR6_HLT_MODE;
+# 220 "mcc_generated_files/tmr6.h"
+typedef enum
 {
 
+
+    TMR6_T6INPPS,
+
+
+
+    TMR6_T2POSTSCALED,
+
+
+
+    TMR6_T4POSTSCALED,
+
+
+
+    TMR6_RESERVED,
+
+
+
+    TMR6_CCP1_OUT,
+
+
+
+    TMR6_CCP2_OUT,
+
+
+
+    TMR6_CCP3_OUT,
+
+
+
+    TMR6_CCP4_OUT,
+
+
+
+    TMR6_PWM5_OUT,
+
+
+
+    TMR6_PWM6_OUT,
+
+
+
+    TMR6_PWM7_OUT,
+
+
+
+    TMR6_PWM8_OUT,
+
+
+
+    TMR6_RESERVED_2,
+
+
+
+    TMR6_RESERVED_3,
+
+
+
+    TMR6_C1_OUT_SYNC,
+
+
+
+    TMR6_C2_OUT_SYNC,
+
+
+
+    TMR6_ZCD_OUTPUT,
+
+
+
+    TMR6_CLC1_OUT,
+
+
+
+    TMR6_CLC2_OUT,
+
+
+
+    TMR6_CLC3_OUT,
+
+
+
+    TMR6_CLC4_OUT,
+
+
+
+    TMR6_UART1_RX_EDGE,
+
+
+
+    TMR6_UART1_TX_EDGE,
+
+
+
+    TMR6_UART2_RX_EDGE,
+
+
+
+    TMR6_UART2_TX_EDGE
+
+} TMR6_HLT_EXT_RESET_SOURCE;
+# 364 "mcc_generated_files/tmr6.h"
+void TMR6_Initialize(void);
+# 400 "mcc_generated_files/tmr6.h"
+void TMR6_ModeSet(TMR6_HLT_MODE mode);
+# 435 "mcc_generated_files/tmr6.h"
+void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset);
+# 464 "mcc_generated_files/tmr6.h"
+void TMR6_Start(void);
+# 493 "mcc_generated_files/tmr6.h"
+void TMR6_StartTimer(void);
+# 525 "mcc_generated_files/tmr6.h"
+void TMR6_Stop(void);
+# 557 "mcc_generated_files/tmr6.h"
+void TMR6_StopTimer(void);
+# 592 "mcc_generated_files/tmr6.h"
+uint8_t TMR6_Counter8BitGet(void);
+# 627 "mcc_generated_files/tmr6.h"
+uint8_t TMR6_ReadTimer(void);
+# 666 "mcc_generated_files/tmr6.h"
+void TMR6_Counter8BitSet(uint8_t timerVal);
+# 705 "mcc_generated_files/tmr6.h"
+void TMR6_WriteTimer(uint8_t timerVal);
+# 757 "mcc_generated_files/tmr6.h"
+void TMR6_Period8BitSet(uint8_t periodVal);
+# 809 "mcc_generated_files/tmr6.h"
+void TMR6_LoadPeriodRegister(uint8_t periodVal);
+# 828 "mcc_generated_files/tmr6.h"
+ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
+# 846 "mcc_generated_files/tmr6.h"
+extern void (*TMR6_InterruptHandler)(void);
+# 864 "mcc_generated_files/tmr6.h"
+void TMR6_DefaultInterruptHandler(void);
+# 52 "mcc_generated_files/tmr6.c" 2
+
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 53 "mcc_generated_files/tmr6.c" 2
+
+# 1 "mcc_generated_files/../timers.h" 1
+# 11 "mcc_generated_files/../timers.h"
+enum APP_TIMERS {
+ TMR_INTERNAL = 0,
+ TMR_T1,
+ TMR_T2,
+ TMR_T3,
+ TMR_T4,
+ TMR_MC_TX,
+ TMR_HBIO,
+ TMR_INFO,
+ TMR_HELP,
+ TMR_HELPDIS,
+ TMR_DISPLAY,
+ TMR_SEQ,
+ TMR_FLIPPER,
+
+
+
+ TMR_COUNT
+};
+
+__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+__attribute__((inline)) _Bool TimerDone(uint8_t timer);
+void WaitMs(uint16_t numMilliseconds);
+# 54 "mcc_generated_files/tmr6.c" 2
+
+
+extern volatile uint16_t tickCount[TMR_COUNT];
+
+
+
+
+void (*TMR6_InterruptHandler)(void);
+
+
+
+
+
+void TMR6_Initialize(void)
+{
+
+
+
+ T6CLKCON = 0x01;
+
+
+ T6HLT = 0x00;
+
+
+ T6RST = 0x00;
+
+
+ T6PR = 0x03;
+
+
+ T6TMR = 0x00;
+
+
+ PIR9bits.TMR6IF = 0;
+
+
+ PIE9bits.TMR6IE = 1;
+
+
+ TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
+
+
+ T6CON = 0xFF;
 }
 
-_Bool Digital232_RW(void)
+void TMR6_ModeSet(TMR6_HLT_MODE mode)
 {
 
-return 1;
+ T6HLTbits.MODE = mode;
+}
+
+void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset)
+{
+
+ T6RSTbits.RSEL = reset;
+}
+
+void TMR6_Start(void)
+{
+
+ T6CONbits.TMR6ON = 1;
+}
+
+void TMR6_StartTimer(void)
+{
+ TMR6_Start();
+}
+
+void TMR6_Stop(void)
+{
+
+ T6CONbits.TMR6ON = 0;
+}
+
+void TMR6_StopTimer(void)
+{
+ TMR6_Stop();
+}
+
+uint8_t TMR6_Counter8BitGet(void)
+{
+ uint8_t readVal;
+
+ readVal = TMR6;
+
+ return readVal;
+}
+
+uint8_t TMR6_ReadTimer(void)
+{
+ return TMR6_Counter8BitGet();
+}
+
+void TMR6_Counter8BitSet(uint8_t timerVal)
+{
+
+ TMR6 = timerVal;
+}
+
+void TMR6_WriteTimer(uint8_t timerVal)
+{
+ TMR6_Counter8BitSet(timerVal);
+}
+
+void TMR6_Period8BitSet(uint8_t periodVal)
+{
+ PR6 = periodVal;
+}
+
+void TMR6_LoadPeriodRegister(uint8_t periodVal)
+{
+ TMR6_Period8BitSet(periodVal);
+}
+
+void __attribute__((picinterrupt(("irq(TMR6), base(8)")))) TMR6_ISR()
+{
+
+
+ PIR9bits.TMR6IF = 0;
+
+ if (TMR6_InterruptHandler) {
+  TMR6_InterruptHandler();
+ }
+}
+
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
+{
+ TMR6_InterruptHandler = InterruptHandler;
+}
+
+void TMR6_DefaultInterruptHandler(void)
+{
+ uint8_t i;
+
+
+
+ for (i = 0; i < TMR_COUNT; i++) {
+  if (tickCount[i] != 0) {
+   tickCount[i]--;
+  }
+ }
 }
