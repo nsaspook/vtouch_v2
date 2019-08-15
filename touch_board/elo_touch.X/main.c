@@ -48,9 +48,18 @@
 #include "mcc_generated_files/uart1.h"
 #include "mcc_generated_files/uart2.h"
 #include "timers.h"
+#include "d232.h"
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
+
+void work_sw(void)
+{
+	if (TimerDone(TMR_INIT)) {
+		StartTimer(TMR_INIT, 1000);
+	}
+}
+
 /*
 			 Main application
  */
@@ -76,12 +85,16 @@ void main(void)
 	// Disable low priority global interrupts.
 	//INTERRUPT_GlobalInterruptLowDisable();
 
+	StartTimer(TMR_INIT, 1000);
+	Digital232_init();
+
 	while (1) {
 		if (UART1_is_tx_ready())
 			UART1_Write(x++);
-		if (UART2_is_tx_ready())
-			UART2_Write(y++);
 		// Add your application code
+		work_sw();
+		Digital232_RW();
+
 	}
 }
 /**

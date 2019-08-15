@@ -26613,8 +26613,8 @@ typedef uint32_t uint_fast32_t;
 # 11 "./timers.h"
 enum APP_TIMERS {
  TMR_INTERNAL = 0,
- TMR_T1,
- TMR_T2,
+ TMR_INIT,
+ TMR_RXTO,
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,

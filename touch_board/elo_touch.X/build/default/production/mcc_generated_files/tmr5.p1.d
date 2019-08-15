@@ -3,4 +3,6 @@ mcc_generated_files/tmr5.c  \
 mcc_generated_files/tmr5.h  \
 mcc_generated_files/interrupt_manager.h  \
 mcc_generated_files/../d232.h  \
-mcc_generated_files/pin_manager.h 
+mcc_generated_files/pin_manager.h  \
+mcc_generated_files/uart2.h  \
+timers.h 

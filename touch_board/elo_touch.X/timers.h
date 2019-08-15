@@ -10,8 +10,8 @@
 
 enum APP_TIMERS {
 	TMR_INTERNAL = 0, //Used in timers.c - do not remove or use elsewhere
-	TMR_T1,
-	TMR_T2,
+	TMR_INIT,
+	TMR_RXTO,
 	TMR_T3,
 	TMR_T4,
 	TMR_MC_TX,

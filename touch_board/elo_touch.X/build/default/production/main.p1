@@ -3,6 +3,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F16291 `(v ~T0 @X0 0 tf ]
 [v F16335 `(v ~T0 @X0 0 tf ]
 [v F16337 `(v ~T0 @X0 0 tf ]
+[v F16369 `(a ~T0 @X0 1 tf1`uc ]
+"32 ./timers.h
+[; ;./timers.h: 32: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
+[v _TimerDone `TF16369 ~T0 @X0 0 e ]
+"58 main.c
+[; ;main.c: 58:  if (TimerDone(TMR_INIT)) {
+[c E16349 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
+[n E16349 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_SEQ TMR_FLIPPER TMR_COUNT  ]
+[v F16365 `(v ~T0 @X0 1 tf2`uc`us ]
+"31 ./timers.h
+[; ;./timers.h: 31: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+[v _StartTimer `TF16365 ~T0 @X0 0 e ]
 [p mainexit ]
 "75 ./mcc_generated_files/mcc.h
 [; ;./mcc_generated_files/mcc.h: 75: void SYSTEM_Initialize(void);
@@ -22,18 +34,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46183
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46183: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2085 ~T0 @X0 0 e@16338 ]
+"69 ./d232.h
+[; ;./d232.h: 69: void Digital232_init(void);
+[v _Digital232_init `(v ~T0 @X0 0 ef ]
 "214 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 214: uint8_t UART1_is_tx_ready(void);
 [v _UART1_is_tx_ready `(uc ~T0 @X0 0 ef ]
 "383
 [; ;./mcc_generated_files/uart1.h: 383: void UART1_Write(uint8_t txData);
 [v _UART1_Write `(v ~T0 @X0 0 ef1`uc ]
-"215 ./mcc_generated_files/uart2.h
-[; ;./mcc_generated_files/uart2.h: 215: uint8_t UART2_is_tx_ready(void);
-[v _UART2_is_tx_ready `(uc ~T0 @X0 0 ef ]
-"384
-[; ;./mcc_generated_files/uart2.h: 384: void UART2_Write(uint8_t txData);
-[v _UART2_Write `(v ~T0 @X0 0 ef1`uc ]
+"70 ./d232.h
+[; ;./d232.h: 70: _Bool Digital232_RW(void);
+[v _Digital232_RW `(a ~T0 @X0 0 ef ]
 "44 main.c
 [p n 520 ]
 "45
@@ -2249,63 +2261,91 @@ Version 4.0 HI-TECH Software Intermediate Code
 "538
 [; ;./mcc_generated_files/uart1.h: 538: void (*UART1_TxInterruptHandler)(void);
 [v _UART1_TxInterruptHandler `*F16337 ~T0 @X0 1 e ]
-"53 main.c
-[; ;main.c: 53: volatile uint16_t tickCount[TMR_COUNT] = {0};
+"54 main.c
+[; ;main.c: 54: volatile uint16_t tickCount[TMR_COUNT] = {0};
 [v _tickCount `Vus ~T0 @X0 -> 13 `i e ]
 [i _tickCount
 :U ..
 -> -> 0 `i `us
 ..
 ]
-[v $root$_main `(v ~T0 @X0 0 e ]
+"56
+[; ;main.c: 56: void work_sw(void)
+[v _work_sw `(v ~T0 @X0 1 ef ]
 "57
-[; ;main.c: 57: void main(void)
-[v _main `(v ~T0 @X0 1 ef ]
+[; ;main.c: 57: {
+{
+[e :U _work_sw ]
+[f ]
 "58
-[; ;main.c: 58: {
+[; ;main.c: 58:  if (TimerDone(TMR_INIT)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16349 1 `uc `i -> 0 `i 2201  ]
+{
+"59
+[; ;main.c: 59:   StartTimer(TMR_INIT, 1000);
+[e ( _StartTimer (2 , -> . `E16349 1 `uc -> -> 1000 `i `us ]
+"60
+[; ;main.c: 60:  }
+}
+[e :U 2201 ]
+"61
+[; ;main.c: 61: }
+[e :UE 2200 ]
+}
+[v $root$_main `(v ~T0 @X0 0 e ]
+"66
+[; ;main.c: 66: void main(void)
+[v _main `(v ~T0 @X0 1 ef ]
+"67
+[; ;main.c: 67: {
 {
 [e :U _main ]
 [f ]
-"59
-[; ;main.c: 59:  uint8_t x = 0, y = 0;
+"68
+[; ;main.c: 68:  uint8_t x = 0, y = 0;
 [v _x `uc ~T0 @X0 1 a ]
 [e = _x -> -> 0 `i `uc ]
 [v _y `uc ~T0 @X0 1 a ]
 [e = _y -> -> 0 `i `uc ]
-"61
-[; ;main.c: 61:  SYSTEM_Initialize();
+"70
+[; ;main.c: 70:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"68
-[; ;main.c: 68:  (INTCON0bits.GIEH = 1);
+"77
+[; ;main.c: 77:  (INTCON0bits.GIEH = 1);
 [e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-"71
-[; ;main.c: 71:  (INTCON0bits.GIEL = 1);
-[e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-"79
-[; ;main.c: 79:  while (1) {
-[e :U 2201 ]
-{
 "80
-[; ;main.c: 80:   if (UART1_is_tx_ready())
-[e $ ! != -> ( _UART1_is_tx_ready ..  `i -> 0 `i 2203  ]
-"81
-[; ;main.c: 81:    UART1_Write(x++);
-[e ( _UART1_Write (1 ++ _x -> -> 1 `i `uc ]
-[e :U 2203 ]
-"82
-[; ;main.c: 82:   if (UART2_is_tx_ready())
-[e $ ! != -> ( _UART2_is_tx_ready ..  `i -> 0 `i 2204  ]
-"83
-[; ;main.c: 83:    UART2_Write(y++);
-[e ( _UART2_Write (1 ++ _y -> -> 1 `i `uc ]
+[; ;main.c: 80:  (INTCON0bits.GIEL = 1);
+[e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
+"88
+[; ;main.c: 88:  StartTimer(TMR_INIT, 1000);
+[e ( _StartTimer (2 , -> . `E16349 1 `uc -> -> 1000 `i `us ]
+"89
+[; ;main.c: 89:  Digital232_init();
+[e ( _Digital232_init ..  ]
+"91
+[; ;main.c: 91:  while (1) {
 [e :U 2204 ]
-"85
-[; ;main.c: 85:  }
+{
+"92
+[; ;main.c: 92:   if (UART1_is_tx_ready())
+[e $ ! != -> ( _UART1_is_tx_ready ..  `i -> 0 `i 2206  ]
+"93
+[; ;main.c: 93:    UART1_Write(x++);
+[e ( _UART1_Write (1 ++ _x -> -> 1 `i `uc ]
+[e :U 2206 ]
+"95
+[; ;main.c: 95:   work_sw();
+[e ( _work_sw ..  ]
+"96
+[; ;main.c: 96:   Digital232_RW();
+[e ( _Digital232_RW ..  ]
+"98
+[; ;main.c: 98:  }
 }
-[e :U 2200 ]
-[e $U 2201  ]
-[e :U 2202 ]
-"86
-[; ;main.c: 86: }
-[e :UE 2199 ]
+[e :U 2203 ]
+[e $U 2204  ]
+[e :U 2205 ]
+"99
+[; ;main.c: 99: }
+[e :UE 2202 ]
 }

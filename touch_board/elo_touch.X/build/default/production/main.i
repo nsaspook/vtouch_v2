@@ -27407,8 +27407,8 @@ void PMD_Initialize(void);
 # 11 "./timers.h"
 enum APP_TIMERS {
  TMR_INTERNAL = 0,
- TMR_T1,
- TMR_T2,
+ TMR_INIT,
+ TMR_RXTO,
  TMR_T3,
  TMR_T4,
  TMR_MC_TX,
@@ -27430,9 +27430,37 @@ __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
+# 1 "./d232.h" 1
+# 55 "./d232.h"
+typedef enum {
+ D232_IDLE,
+ D232_INIT,
+ D232_OUT,
+ D232_IN,
+ D232_SRQ,
+ D232_UPDATE
+} D232_STATE;
+
+typedef struct A_data {
+ uint8_t inbytes[5];
+ uint8_t outbytes[5];
+} A_data;
+
+void Digital232_init(void);
+_Bool Digital232_RW(void);
+# 51 "main.c" 2
+
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
+
+void work_sw(void)
+{
+ if (TimerDone(TMR_INIT)) {
+  StartTimer(TMR_INIT, 1000);
+ }
+}
+
 
 
 
@@ -27458,11 +27486,15 @@ void main(void)
 
 
 
+ StartTimer(TMR_INIT, 1000);
+ Digital232_init();
+
  while (1) {
   if (UART1_is_tx_ready())
    UART1_Write(x++);
-  if (UART2_is_tx_ready())
-   UART2_Write(y++);
+
+  work_sw();
+  Digital232_RW();
 
  }
 }

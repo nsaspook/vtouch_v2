@@ -38,12 +38,17 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include "mcc_generated_files/pin_manager.h"
+#include "mcc_generated_files/uart2.h"
+#include "timers.h"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
 #define FMT	"F4\r"
 #define SRQ	"M4\r"
+#define DRD	"R0\r"
+#define DTEST	"T2\r"
 
 #define SLED	LED_RSET_LAT
 
