@@ -1,36 +1,45 @@
 Version 4.0 HI-TECH Software Intermediate Code
 [v F16122 `(v ~T0 @X0 0 tf ]
 [v F16124 `(v ~T0 @X0 0 tf ]
-"64 ./d232.h
-[; ;./d232.h: 64: typedef struct A_data {
-[s S2197 `uc -> 5 `i `uc -> 5 `i ]
-[n S2197 A_data inbytes outbytes ]
 "113 /opt/microchip/xc8/v2.05/pic/include/c99/stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
 "33 ./timers.h
 [; ;./timers.h: 33: void WaitMs(uint16_t numMilliseconds);
 [v _WaitMs `(v ~T0 @X0 0 ef1`us ]
-"384 ./mcc_generated_files/uart2.h
-[; ;./mcc_generated_files/uart2.h: 384: void UART2_Write(uint8_t txData);
-[v _UART2_Write `(v ~T0 @X0 0 ef1`uc ]
-[v F16149 `(v ~T0 @X0 1 tf2`uc`us ]
-"31 ./timers.h
-[; ;./timers.h: 31: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF16149 ~T0 @X0 0 e ]
-"39 d232.c
-[; ;d232.c: 39:  StartTimer(TMR_RXTO, 1000);
-[c E16133 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
-[n E16133 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_SEQ TMR_FLIPPER TMR_COUNT  ]
-[v F16153 `(a ~T0 @X0 1 tf1`uc ]
-"32 ./timers.h
-[; ;./timers.h: 32: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF16153 ~T0 @X0 0 e ]
+"17 d232.c
+[; ;d232.c: 17:  IO.d232 = D232_INIT;
+[c E16164 0 1 2 3 4 5 .. ]
+[n E16164 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE  ]
+[c E16157 0 1 2 3 4 .. ]
+[n E16157 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
+"74 ./d232.h
+[; ;./d232.h: 74: typedef struct A_data {
+[s S2197 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16164 1 `E16157 1 ]
+[n S2197 A_data inbytes outbytes input_ok output_ok io d232 ]
+"3 d232.c
+[; ;d232.c: 3: extern volatile A_data IO;
+[v _IO `VS2197 ~T0 @X0 0 e ]
 "165 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 165: uint8_t UART2_is_rx_ready(void);
 [v _UART2_is_rx_ready `(uc ~T0 @X0 0 ef ]
 "359
 [; ;./mcc_generated_files/uart2.h: 359: uint8_t UART2_Read(void);
 [v _UART2_Read `(uc ~T0 @X0 0 ef ]
+"384
+[; ;./mcc_generated_files/uart2.h: 384: void UART2_Write(uint8_t txData);
+[v _UART2_Write `(v ~T0 @X0 0 ef1`uc ]
+[v F16149 `(v ~T0 @X0 1 tf2`uc`us ]
+"31 ./timers.h
+[; ;./timers.h: 31: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+[v _StartTimer `TF16149 ~T0 @X0 0 e ]
+"55 d232.c
+[; ;d232.c: 55:  StartTimer(TMR_RXTO, 250);
+[c E16133 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
+[n E16133 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_SEQ TMR_FLIPPER TMR_COUNT  ]
+[v F16153 `(a ~T0 @X0 1 tf1`uc ]
+"32 ./timers.h
+[; ;./timers.h: 32: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
+[v _TimerDone `TF16153 ~T0 @X0 0 e ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2236,10 +2245,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "539
 [; ;./mcc_generated_files/uart2.h: 539: void (*UART2_TxInterruptHandler)(void);
 [v _UART2_TxInterruptHandler `*F16124 ~T0 @X0 1 e ]
-"3 d232.c
-[; ;d232.c: 3: A_data IO;
-[v _IO `S2197 ~T0 @X0 1 e ]
-"5
+"5 d232.c
 [; ;d232.c: 5: void Digital232_init(void)
 [v _Digital232_init `(v ~T0 @X0 1 ef ]
 "6
@@ -2278,120 +2284,170 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;d232.c: 16:  WaitMs(5);
 [e ( _WaitMs (1 -> -> 5 `i `us ]
 "17
-[; ;d232.c: 17: }
+[; ;d232.c: 17:  IO.d232 = D232_INIT;
+[e = . _IO 5 . `E16157 1 ]
+"21
+[; ;d232.c: 21:  if (UART2_is_rx_ready())
+[e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2199  ]
+"22
+[; ;d232.c: 22:   UART2_Read();
+[e ( _UART2_Read ..  ]
+[e :U 2199 ]
+"23
+[; ;d232.c: 23:  IO.io = IO_INIT;
+[e = . _IO 4 . `E16164 1 ]
+"24
+[; ;d232.c: 24: }
 [e :UE 2198 ]
 }
-"19
-[; ;d232.c: 19: _Bool Digital232_RW(void)
+"26
+[; ;d232.c: 26: _Bool Digital232_RW(void)
 [v _Digital232_RW `(a ~T0 @X0 1 ef ]
-"20
-[; ;d232.c: 20: {
+"27
+[; ;d232.c: 27: {
 {
 [e :U _Digital232_RW ]
 [f ]
-"21
-[; ;d232.c: 21:  WaitMs(10);
-[e ( _WaitMs (1 -> -> 10 `i `us ]
-"22
-[; ;d232.c: 22:  IO.outbytes[0]++;
-[e ++ *U + &U . _IO 1 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 1 `i `uc ]
-"23
-[; ;d232.c: 23:  IO.outbytes[1] = 0;
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 0 `i `uc ]
-"24
-[; ;d232.c: 24:  IO.outbytes[2] = 1;
-[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 1 `i `uc ]
-"25
-[; ;d232.c: 25:  IO.outbytes[3] = 0;
-[e = *U + &U . _IO 1 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 0 `i `uc ]
-"26
-[; ;d232.c: 26:  IO.outbytes[4]--;
-[e -- *U + &U . _IO 1 * -> -> -> 4 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 1 `i `uc ]
-"27
-[; ;d232.c: 27:  UART2_Write('D');
-[e ( _UART2_Write (1 -> -> 68 `ui `uc ]
 "28
-[; ;d232.c: 28:  UART2_Write(IO.outbytes[0]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
-"29
-[; ;d232.c: 29:  UART2_Write(IO.outbytes[1]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
-"30
-[; ;d232.c: 30:  UART2_Write(IO.outbytes[2]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
-"31
-[; ;d232.c: 31:  UART2_Write(IO.outbytes[3]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+[; ;d232.c: 28:  uint8_t i = 0;
+[v _i `uc ~T0 @X0 1 a ]
+[e = _i -> -> 0 `i `uc ]
 "32
-[; ;d232.c: 32:  UART2_Write(IO.outbytes[4]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 4 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+[; ;d232.c: 32:  if (UART2_is_rx_ready())
+[e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2201  ]
 "33
-[; ;d232.c: 33:  UART2_Write('\r');
-[e ( _UART2_Write (1 -> -> 13 `ui `uc ]
-"34
-[; ;d232.c: 34:  WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
-"35
-[; ;d232.c: 35:  printf("%s", "R0\r");
-[e ( _printf , (. :s 11C :s 12C ]
-"39
-[; ;d232.c: 39:  StartTimer(TMR_RXTO, 1000);
-[e ( _StartTimer (2 , -> . `E16133 2 `uc -> -> 1000 `i `us ]
-"40
-[; ;d232.c: 40:  while (!TimerDone(TMR_RXTO) && !UART2_is_rx_ready()) {
-[e $U 2200  ]
-[e :U 2201 ]
-{
-"41
-[; ;d232.c: 41:  }
-}
-[e :U 2200 ]
-"40
-[; ;d232.c: 40:  while (!TimerDone(TMR_RXTO) && !UART2_is_rx_ready()) {
-[e $ && ! != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2201  ]
-[e :U 2202 ]
-"42
-[; ;d232.c: 42:  if (TimerDone(TMR_RXTO))
-[e $ ! != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i 2203  ]
-"43
-[; ;d232.c: 43:   return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2199  ]
-[e :U 2203 ]
-"48
-[; ;d232.c: 48:  StartTimer(TMR_RXTO, 1000);
-[e ( _StartTimer (2 , -> . `E16133 2 `uc -> -> 1000 `i `us ]
-"49
-[; ;d232.c: 49:  while (!TimerDone(TMR_RXTO) && UART2_is_rx_ready()) {
-[e $U 2204  ]
-[e :U 2205 ]
-{
-"50
-[; ;d232.c: 50:   UART2_Read();
+[; ;d232.c: 33:   UART2_Read();
 [e ( _UART2_Read ..  ]
-"51
-[; ;d232.c: 51:  }
-}
-[e :U 2204 ]
+[e :U 2201 ]
+"35
+[; ;d232.c: 35:  WaitMs(10);
+[e ( _WaitMs (1 -> -> 10 `i `us ]
+"36
+[; ;d232.c: 36:  IO.outbytes[0] = 0;
+[e = *U + &U . _IO 1 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 0 `i `uc ]
+"37
+[; ;d232.c: 37:  IO.outbytes[1]++;
+[e ++ *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 1 `i `uc ]
+"38
+[; ;d232.c: 38:  IO.outbytes[2] = 255;
+[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 255 `i `uc ]
+"39
+[; ;d232.c: 39:  IO.outbytes[3] = 0;
+[e = *U + &U . _IO 1 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 0 `i `uc ]
+"40
+[; ;d232.c: 40:  IO.outbytes[4]--;
+[e -- *U + &U . _IO 1 * -> -> -> 4 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 1 `i `uc ]
+"41
+[; ;d232.c: 41:  UART2_Write('D');
+[e ( _UART2_Write (1 -> -> 68 `ui `uc ]
+"42
+[; ;d232.c: 42:  UART2_Write(IO.outbytes[0]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+"43
+[; ;d232.c: 43:  UART2_Write(IO.outbytes[1]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+"44
+[; ;d232.c: 44:  UART2_Write(IO.outbytes[2]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+"45
+[; ;d232.c: 45:  UART2_Write(IO.outbytes[3]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+"46
+[; ;d232.c: 46:  UART2_Write(IO.outbytes[4]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 4 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+"47
+[; ;d232.c: 47:  UART2_Write('\r');
+[e ( _UART2_Write (1 -> -> 13 `ui `uc ]
+"48
+[; ;d232.c: 48:  WaitMs(5);
+[e ( _WaitMs (1 -> -> 5 `i `us ]
 "49
-[; ;d232.c: 49:  while (!TimerDone(TMR_RXTO) && UART2_is_rx_ready()) {
-[e $ && ! != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2205  ]
-[e :U 2206 ]
-"52
-[; ;d232.c: 52:  if (TimerDone(TMR_RXTO))
-[e $ ! != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i 2207  ]
-"53
-[; ;d232.c: 53:   return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2199  ]
-[e :U 2207 ]
+[; ;d232.c: 49:  printf("%s", "R0\r");
+[e ( _printf , (. :s 11C :s 12C ]
+"50
+[; ;d232.c: 50:  IO.output_ok = 1;
+[e = . _IO 3 -> -> 1 `i `a ]
+"51
+[; ;d232.c: 51:  IO.io = IO_OUT;
+[e = . _IO 4 . `E16164 2 ]
 "55
-[; ;d232.c: 55:  return 1;
-[e ) -> -> 1 `i `a ]
-[e $UE 2199  ]
+[; ;d232.c: 55:  StartTimer(TMR_RXTO, 250);
+[e ( _StartTimer (2 , -> . `E16133 2 `uc -> -> 250 `i `us ]
 "56
-[; ;d232.c: 56: }
-[e :UE 2199 ]
+[; ;d232.c: 56:  while (!TimerDone(TMR_RXTO) && !UART2_is_rx_ready()) {
+[e $U 2202  ]
+[e :U 2203 ]
+{
+"57
+[; ;d232.c: 57:  }
+}
+[e :U 2202 ]
+"56
+[; ;d232.c: 56:  while (!TimerDone(TMR_RXTO) && !UART2_is_rx_ready()) {
+[e $ && ! != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2203  ]
+[e :U 2204 ]
+"58
+[; ;d232.c: 58:  if (TimerDone(TMR_RXTO))
+[e $ ! != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i 2205  ]
+"59
+[; ;d232.c: 59:   return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2200  ]
+[e :U 2205 ]
+"64
+[; ;d232.c: 64:  StartTimer(TMR_RXTO, 250);
+[e ( _StartTimer (2 , -> . `E16133 2 `uc -> -> 250 `i `us ]
+"65
+[; ;d232.c: 65:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
+[e $U 2206  ]
+[e :U 2207 ]
+{
+"66
+[; ;d232.c: 66:   if (UART2_is_rx_ready()) {
+[e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2209  ]
+{
+"67
+[; ;d232.c: 67:    IO.inbytes[i] = UART2_Read();
+[e = *U + &U . _IO 0 * -> _i `ux -> -> # *U &U . _IO 0 `ui `ux ( _UART2_Read ..  ]
+"68
+[; ;d232.c: 68:    i++;
+[e ++ _i -> -> 1 `i `uc ]
+"69
+[; ;d232.c: 69:   }
+}
+[e :U 2209 ]
+"70
+[; ;d232.c: 70:  }
+}
+[e :U 2206 ]
+"65
+[; ;d232.c: 65:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
+[e $ && ! != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i < -> _i `i -> 6 `i 2207  ]
+[e :U 2208 ]
+"71
+[; ;d232.c: 71:  if (TimerDone(TMR_RXTO) || i < 6)
+[e $ ! || != -> ( _TimerDone (1 -> . `E16133 2 `uc `i -> 0 `i < -> _i `i -> 6 `i 2210  ]
+"72
+[; ;d232.c: 72:   return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2200  ]
+[e :U 2210 ]
+"73
+[; ;d232.c: 73:  IO.input_ok = 1;
+[e = . _IO 2 -> -> 1 `i `a ]
+"74
+[; ;d232.c: 74:  IO.io = IO_IN;
+[e = . _IO 4 . `E16164 3 ]
+"75
+[; ;d232.c: 75:  IO.d232 = D232_OUT_IN;
+[e = . _IO 5 . `E16157 2 ]
+"77
+[; ;d232.c: 77:  return 1;
+[e ) -> -> 1 `i `a ]
+[e $UE 2200  ]
+"78
+[; ;d232.c: 78: }
+[e :UE 2200 ]
 }
 [p f _printf 8650752 ]
 [a 1C 37 115 0 ]

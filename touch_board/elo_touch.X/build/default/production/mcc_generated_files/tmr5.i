@@ -26866,19 +26866,31 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 45 "mcc_generated_files/../d232.h" 2
-# 55 "mcc_generated_files/../d232.h"
+# 57 "mcc_generated_files/../d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
- D232_OUT,
- D232_IN,
+ D232_OUT_IN,
  D232_SRQ,
  D232_UPDATE
 } D232_STATE;
 
+typedef enum {
+ IO_IDLE,
+ IO_INIT,
+ IO_OUT,
+ IO_IN,
+ IO_SRQ,
+ IO_UPDATE
+} IO_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
+ _Bool input_ok;
+ _Bool output_ok;
+ IO_STATE io;
+ D232_STATE d232;
 } A_data;
 
 void Digital232_init(void);

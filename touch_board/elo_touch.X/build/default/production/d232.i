@@ -26830,26 +26830,38 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 45 "./d232.h" 2
-# 55 "./d232.h"
+# 57 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
- D232_OUT,
- D232_IN,
+ D232_OUT_IN,
  D232_SRQ,
  D232_UPDATE
 } D232_STATE;
 
+typedef enum {
+ IO_IDLE,
+ IO_INIT,
+ IO_OUT,
+ IO_IN,
+ IO_SRQ,
+ IO_UPDATE
+} IO_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
+ _Bool input_ok;
+ _Bool output_ok;
+ IO_STATE io;
+ D232_STATE d232;
 } A_data;
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 # 2 "d232.c" 2
 
-A_data IO;
+extern volatile A_data IO;
 
 void Digital232_init(void)
 {
@@ -26863,14 +26875,28 @@ void Digital232_init(void)
  WaitMs(5);
  printf("%s", "M4\r");
  WaitMs(5);
+ IO.d232 = D232_INIT;
+
+
+
+ if (UART2_is_rx_ready())
+  UART2_Read();
+ IO.io = IO_INIT;
 }
 
 _Bool Digital232_RW(void)
 {
+ uint8_t i = 0;
+
+
+
+ if (UART2_is_rx_ready())
+  UART2_Read();
+
  WaitMs(10);
- IO.outbytes[0]++;
- IO.outbytes[1] = 0;
- IO.outbytes[2] = 1;
+ IO.outbytes[0] = 0;
+ IO.outbytes[1]++;
+ IO.outbytes[2] = 255;
  IO.outbytes[3] = 0;
  IO.outbytes[4]--;
  UART2_Write('D');
@@ -26882,10 +26908,12 @@ _Bool Digital232_RW(void)
  UART2_Write('\r');
  WaitMs(5);
  printf("%s", "R0\r");
+ IO.output_ok = 1;
+ IO.io = IO_OUT;
 
 
 
- StartTimer(TMR_RXTO, 1000);
+ StartTimer(TMR_RXTO, 250);
  while (!TimerDone(TMR_RXTO) && !UART2_is_rx_ready()) {
  }
  if (TimerDone(TMR_RXTO))
@@ -26894,12 +26922,18 @@ _Bool Digital232_RW(void)
 
 
 
- StartTimer(TMR_RXTO, 1000);
- while (!TimerDone(TMR_RXTO) && UART2_is_rx_ready()) {
-  UART2_Read();
+ StartTimer(TMR_RXTO, 250);
+ while (!TimerDone(TMR_RXTO) && (i < 6)) {
+  if (UART2_is_rx_ready()) {
+   IO.inbytes[i] = UART2_Read();
+   i++;
+  }
  }
- if (TimerDone(TMR_RXTO))
+ if (TimerDone(TMR_RXTO) || i < 6)
   return 0;
+ IO.input_ok = 1;
+ IO.io = IO_IN;
+ IO.d232 = D232_OUT_IN;
 
  return 1;
 }

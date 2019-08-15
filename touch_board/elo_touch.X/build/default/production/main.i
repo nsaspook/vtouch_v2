@@ -27431,19 +27431,31 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 55 "./d232.h"
+# 57 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
- D232_OUT,
- D232_IN,
+ D232_OUT_IN,
  D232_SRQ,
  D232_UPDATE
 } D232_STATE;
 
+typedef enum {
+ IO_IDLE,
+ IO_INIT,
+ IO_OUT,
+ IO_IN,
+ IO_SRQ,
+ IO_UPDATE
+} IO_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
+ _Bool input_ok;
+ _Bool output_ok;
+ IO_STATE io;
+ D232_STATE d232;
 } A_data;
 
 void Digital232_init(void);
@@ -27453,6 +27465,7 @@ _Bool Digital232_RW(void);
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
+volatile A_data IO;
 
 void work_sw(void)
 {
@@ -27485,6 +27498,11 @@ void main(void)
 
 
 
+
+ IO.input_ok = 0;
+ IO.output_ok = 0;
+ IO.d232 = D232_IDLE;
+ IO.io = IO_IDLE;
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();

@@ -43,6 +43,8 @@
 #include "mcc_generated_files/uart2.h"
 #include "timers.h"
 
+#define sw_version "0.15"
+
 #define RST	"XQ\r"
 #define CNF	"C4\r"
 #define FMT	"F4\r"
@@ -55,15 +57,27 @@
 typedef enum {
 	D232_IDLE,
 	D232_INIT,
-	D232_OUT,
-	D232_IN,
+	D232_OUT_IN,
 	D232_SRQ,
 	D232_UPDATE
 } D232_STATE;
 
+typedef enum {
+	IO_IDLE,
+	IO_INIT,
+	IO_OUT,
+	IO_IN,
+	IO_SRQ,
+	IO_UPDATE
+} IO_STATE;
+
 typedef struct A_data {
 	uint8_t inbytes[5]; // input from Digital232 buffer
 	uint8_t outbytes[5]; // output from Digital232 buffer
+	bool	input_ok;
+	bool	output_ok;
+	IO_STATE	io;
+	D232_STATE	d232;
 } A_data;
 
 void Digital232_init(void);

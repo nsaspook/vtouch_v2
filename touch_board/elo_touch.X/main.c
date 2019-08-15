@@ -52,6 +52,7 @@
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
+volatile A_data IO;
 
 void work_sw(void)
 {
@@ -84,6 +85,11 @@ void main(void)
 
 	// Disable low priority global interrupts.
 	//INTERRUPT_GlobalInterruptLowDisable();
+
+	IO.input_ok = false;
+	IO.output_ok = false;
+	IO.d232 = D232_IDLE;
+	IO.io = IO_IDLE;
 
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
