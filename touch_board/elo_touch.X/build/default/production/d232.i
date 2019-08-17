@@ -26749,7 +26749,7 @@ char *ctermid(char *);
 char *tempnam(const char *, const char *);
 # 42 "./d232.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 158 "./mcc_generated_files/pin_manager.h"
+# 238 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 43 "./d232.h" 2
 # 1 "./mcc_generated_files/uart2.h" 1
@@ -26804,6 +26804,79 @@ void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 577 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 44 "./d232.h" 2
+# 1 "./mcc_generated_files/adcc.h" 1
+# 72 "./mcc_generated_files/adcc.h"
+typedef uint16_t adc_result_t;
+
+typedef __uint24 uint24_t;
+# 89 "./mcc_generated_files/adcc.h"
+typedef enum
+{
+    channel_ANA0 = 0x0,
+    channel_ANA1 = 0x1,
+    channel_ANA2 = 0x2,
+    channel_ANA3 = 0x3,
+    channel_VSS = 0x3B,
+    channel_Temp = 0x3C,
+    channel_DAC1 = 0x3D,
+    channel_FVR_Buffer1 = 0x3E,
+    channel_FVR_Buffer2 = 0x3F
+} adcc_channel_t;
+# 134 "./mcc_generated_files/adcc.h"
+void ADCC_Initialize(void);
+# 163 "./mcc_generated_files/adcc.h"
+void ADCC_StartConversion(adcc_channel_t channel);
+# 193 "./mcc_generated_files/adcc.h"
+_Bool ADCC_IsConversionDone(void);
+# 225 "./mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetConversionResult(void);
+# 256 "./mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+# 281 "./mcc_generated_files/adcc.h"
+void ADCC_StopConversion(void);
+# 308 "./mcc_generated_files/adcc.h"
+void ADCC_SetStopOnInterrupt(void);
+# 333 "./mcc_generated_files/adcc.h"
+void ADCC_DischargeSampleCapacitor(void);
+# 359 "./mcc_generated_files/adcc.h"
+void ADCC_LoadAcquisitionRegister(uint16_t);
+# 385 "./mcc_generated_files/adcc.h"
+void ADCC_SetPrechargeTime(uint16_t);
+# 410 "./mcc_generated_files/adcc.h"
+void ADCC_SetRepeatCount(uint8_t);
+# 438 "./mcc_generated_files/adcc.h"
+uint8_t ADCC_GetCurrentCountofConversions(void);
+# 462 "./mcc_generated_files/adcc.h"
+void ADCC_ClearAccumulator(void);
+# 487 "./mcc_generated_files/adcc.h"
+uint24_t ADCC_GetAccumulatorValue(void);
+# 515 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasAccumulatorOverflowed(void);
+# 540 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetFilterValue(void);
+# 568 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetPreviousResult(void);
+# 594 "./mcc_generated_files/adcc.h"
+void ADCC_DefineSetPoint(uint16_t);
+# 620 "./mcc_generated_files/adcc.h"
+void ADCC_SetUpperThreshold(uint16_t);
+# 646 "./mcc_generated_files/adcc.h"
+void ADCC_SetLowerThreshold(uint16_t);
+# 673 "./mcc_generated_files/adcc.h"
+uint16_t ADCC_GetErrorCalculation(void);
+# 700 "./mcc_generated_files/adcc.h"
+void ADCC_EnableDoubleSampling(void);
+# 724 "./mcc_generated_files/adcc.h"
+void ADCC_EnableContinuousConversion(void);
+# 748 "./mcc_generated_files/adcc.h"
+void ADCC_DisableContinuousConversion(void);
+# 776 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedUpperThreshold(void);
+# 804 "./mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedLowerThreshold(void);
+# 831 "./mcc_generated_files/adcc.h"
+uint8_t ADCC_GetConversionStageStatus(void);
+# 45 "./d232.h" 2
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 enum APP_TIMERS {
@@ -26829,8 +26902,8 @@ enum APP_TIMERS {
 __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
-# 45 "./d232.h" 2
-# 57 "./d232.h"
+# 46 "./d232.h" 2
+# 58 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -26848,6 +26921,15 @@ typedef enum {
  IO_UPDATE
 } IO_STATE;
 
+typedef enum {
+ S_IDLE,
+ S_S,
+ S_R,
+ S_Q,
+ S_NUM,
+ S_UPDATE
+} SRQ_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
@@ -26855,6 +26937,9 @@ typedef struct A_data {
  _Bool output_ok;
  IO_STATE io;
  D232_STATE d232;
+ SRQ_STATE srq;
+ uint8_t srq_value;
+ adc_result_t button_value;
 } A_data;
 
 void Digital232_init(void);
@@ -26882,16 +26967,49 @@ void Digital232_init(void)
  if (UART2_is_rx_ready())
   UART2_Read();
  IO.io = IO_INIT;
+ IO.srq = S_IDLE;
+ IO.srq_value = 0;
+ IO.button_value = 0;
+ ADCC_StartConversion(channel_ANA0);
 }
 
 _Bool Digital232_RW(void)
 {
- uint8_t i = 0;
+ uint8_t i = 0, j = 0;
 
 
 
- if (UART2_is_rx_ready())
-  UART2_Read();
+ IO.srq = S_IDLE;
+ if (UART2_is_rx_ready()) {
+  j = UART2_Read();
+
+
+
+  switch (IO.srq) {
+  case S_IDLE:
+   if (j == 'S')
+    IO.srq = S_S;
+   break;
+  case S_S:
+   if (j == 'R')
+    IO.srq = S_R;
+   break;
+  case S_R:
+   if (j == 'Q')
+    IO.srq = S_Q;
+   break;
+  case S_Q:
+   if (j == ' ')
+    IO.srq = S_NUM;
+   break;
+  case S_NUM:
+   IO.srq_value = j;
+   IO.srq = S_UPDATE;
+   break;
+  default:
+   IO.srq = S_IDLE;
+  }
+ }
 
  WaitMs(10);
  IO.outbytes[0] = 0;
@@ -26935,5 +27053,8 @@ _Bool Digital232_RW(void)
  IO.io = IO_IN;
  IO.d232 = D232_OUT_IN;
 
+ ADCC_StartConversion(channel_ANA0);
+ while (!ADCC_IsConversionDone());
+ IO.button_value = ADCC_GetConversionResult();
  return 1;
 }

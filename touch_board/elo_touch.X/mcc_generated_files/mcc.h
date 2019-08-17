@@ -56,6 +56,7 @@
 #include "tmr6.h"
 #include "pwm8.h"
 #include "tmr2.h"
+#include "adcc.h"
 #include "uart2.h"
 #include "uart1.h"
 

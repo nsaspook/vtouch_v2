@@ -21,16 +21,49 @@ void Digital232_init(void)
 	if (UART2_is_rx_ready())
 		UART2_Read();
 	IO.io = IO_INIT;
+	IO.srq = S_IDLE;
+	IO.srq_value = 0;
+	IO.button_value = 0;
+	ADCC_StartConversion(channel_ANA0);
 }
 
 bool Digital232_RW(void)
 {
-	uint8_t i = 0;
+	uint8_t i = 0, j = 0;
 	/*
 	 * empty receiver buffer
 	 */
-	if (UART2_is_rx_ready())
-		UART2_Read();
+	IO.srq = S_IDLE;
+	if (UART2_is_rx_ready()) {
+		j = UART2_Read();
+		/*
+		 * looks for 'SRQ n' embedded in the data
+		 */
+		switch (IO.srq) {
+		case S_IDLE:
+			if (j == 'S')
+				IO.srq = S_S;
+			break;
+		case S_S:
+			if (j == 'R')
+				IO.srq = S_R;
+			break;
+		case S_R:
+			if (j == 'Q')
+				IO.srq = S_Q;
+			break;
+		case S_Q:
+			if (j == ' ')
+				IO.srq = S_NUM;
+			break;
+		case S_NUM:
+			IO.srq_value = j;
+			IO.srq = S_UPDATE;
+			break;
+		default:
+			IO.srq = S_IDLE;
+		}
+	}
 
 	WaitMs(10);
 	IO.outbytes[0] = 0;
@@ -74,5 +107,8 @@ bool Digital232_RW(void)
 	IO.io = IO_IN;
 	IO.d232 = D232_OUT_IN;
 
+	ADCC_StartConversion(channel_ANA0);
+	while (!ADCC_IsConversionDone());
+	IO.button_value = ADCC_GetConversionResult();
 	return true;
 }

@@ -41,9 +41,10 @@
 #include <stdio.h>
 #include "mcc_generated_files/pin_manager.h"
 #include "mcc_generated_files/uart2.h"
+#include "mcc_generated_files/adcc.h"
 #include "timers.h"
 
-#define sw_version "0.15"
+#define sw_version "0.16"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
@@ -71,6 +72,15 @@ typedef enum {
 	IO_UPDATE
 } IO_STATE;
 
+typedef enum {
+	S_IDLE,
+	S_S,
+	S_R,
+	S_Q,
+	S_NUM,
+	S_UPDATE
+} SRQ_STATE;
+
 typedef struct A_data {
 	uint8_t inbytes[5]; // input from Digital232 buffer
 	uint8_t outbytes[5]; // output from Digital232 buffer
@@ -78,6 +88,9 @@ typedef struct A_data {
 	bool	output_ok;
 	IO_STATE	io;
 	D232_STATE	d232;
+	SRQ_STATE	srq;
+	uint8_t		srq_value;
+	adc_result_t	button_value;
 } A_data;
 
 void Digital232_init(void);

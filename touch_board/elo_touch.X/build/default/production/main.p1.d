@@ -8,6 +8,7 @@ mcc_generated_files/tmr5.h  \
 mcc_generated_files/tmr6.h  \
 mcc_generated_files/pwm8.h  \
 mcc_generated_files/tmr2.h  \
+mcc_generated_files/adcc.h  \
 mcc_generated_files/uart2.h  \
 mcc_generated_files/uart1.h  \
 timers.h  \

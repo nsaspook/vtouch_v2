@@ -26532,7 +26532,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 158 "mcc_generated_files/pin_manager.h"
+# 238 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "mcc_generated_files/mcc.h" 2
 
@@ -27146,6 +27146,80 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 58 "mcc_generated_files/mcc.h" 2
 
+# 1 "mcc_generated_files/adcc.h" 1
+# 72 "mcc_generated_files/adcc.h"
+typedef uint16_t adc_result_t;
+
+typedef __uint24 uint24_t;
+# 89 "mcc_generated_files/adcc.h"
+typedef enum
+{
+    channel_ANA0 = 0x0,
+    channel_ANA1 = 0x1,
+    channel_ANA2 = 0x2,
+    channel_ANA3 = 0x3,
+    channel_VSS = 0x3B,
+    channel_Temp = 0x3C,
+    channel_DAC1 = 0x3D,
+    channel_FVR_Buffer1 = 0x3E,
+    channel_FVR_Buffer2 = 0x3F
+} adcc_channel_t;
+# 134 "mcc_generated_files/adcc.h"
+void ADCC_Initialize(void);
+# 163 "mcc_generated_files/adcc.h"
+void ADCC_StartConversion(adcc_channel_t channel);
+# 193 "mcc_generated_files/adcc.h"
+_Bool ADCC_IsConversionDone(void);
+# 225 "mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetConversionResult(void);
+# 256 "mcc_generated_files/adcc.h"
+adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
+# 281 "mcc_generated_files/adcc.h"
+void ADCC_StopConversion(void);
+# 308 "mcc_generated_files/adcc.h"
+void ADCC_SetStopOnInterrupt(void);
+# 333 "mcc_generated_files/adcc.h"
+void ADCC_DischargeSampleCapacitor(void);
+# 359 "mcc_generated_files/adcc.h"
+void ADCC_LoadAcquisitionRegister(uint16_t);
+# 385 "mcc_generated_files/adcc.h"
+void ADCC_SetPrechargeTime(uint16_t);
+# 410 "mcc_generated_files/adcc.h"
+void ADCC_SetRepeatCount(uint8_t);
+# 438 "mcc_generated_files/adcc.h"
+uint8_t ADCC_GetCurrentCountofConversions(void);
+# 462 "mcc_generated_files/adcc.h"
+void ADCC_ClearAccumulator(void);
+# 487 "mcc_generated_files/adcc.h"
+uint24_t ADCC_GetAccumulatorValue(void);
+# 515 "mcc_generated_files/adcc.h"
+_Bool ADCC_HasAccumulatorOverflowed(void);
+# 540 "mcc_generated_files/adcc.h"
+uint16_t ADCC_GetFilterValue(void);
+# 568 "mcc_generated_files/adcc.h"
+uint16_t ADCC_GetPreviousResult(void);
+# 594 "mcc_generated_files/adcc.h"
+void ADCC_DefineSetPoint(uint16_t);
+# 620 "mcc_generated_files/adcc.h"
+void ADCC_SetUpperThreshold(uint16_t);
+# 646 "mcc_generated_files/adcc.h"
+void ADCC_SetLowerThreshold(uint16_t);
+# 673 "mcc_generated_files/adcc.h"
+uint16_t ADCC_GetErrorCalculation(void);
+# 700 "mcc_generated_files/adcc.h"
+void ADCC_EnableDoubleSampling(void);
+# 724 "mcc_generated_files/adcc.h"
+void ADCC_EnableContinuousConversion(void);
+# 748 "mcc_generated_files/adcc.h"
+void ADCC_DisableContinuousConversion(void);
+# 776 "mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedUpperThreshold(void);
+# 804 "mcc_generated_files/adcc.h"
+_Bool ADCC_HasErrorCrossedLowerThreshold(void);
+# 831 "mcc_generated_files/adcc.h"
+uint8_t ADCC_GetConversionStageStatus(void);
+# 59 "mcc_generated_files/mcc.h" 2
+
 # 1 "mcc_generated_files/uart2.h" 1
 # 57 "mcc_generated_files/uart2.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 1 3
@@ -27335,7 +27409,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 577 "mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 59 "mcc_generated_files/mcc.h" 2
+# 60 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/uart1.h" 1
 # 74 "mcc_generated_files/uart1.h"
@@ -27388,12 +27462,12 @@ void (*UART1_TxInterruptHandler)(void);
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 576 "mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 60 "mcc_generated_files/mcc.h" 2
-# 75 "mcc_generated_files/mcc.h"
+# 61 "mcc_generated_files/mcc.h" 2
+# 76 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 88 "mcc_generated_files/mcc.h"
+# 89 "mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 101 "mcc_generated_files/mcc.h"
+# 102 "mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 47 "mcc_generated_files/mcc.c" 2
 
@@ -27406,9 +27480,10 @@ void SYSTEM_Initialize(void)
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
     TMR6_Initialize();
+    ADCC_Initialize();
     TMR5_Initialize();
-    TMR2_Initialize();
     PWM8_Initialize();
+    TMR2_Initialize();
     UART2_Initialize();
     UART1_Initialize();
 }

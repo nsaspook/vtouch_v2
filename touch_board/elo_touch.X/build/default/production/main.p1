@@ -1,33 +1,35 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F16289 `(v ~T0 @X0 0 tf ]
-[v F16291 `(v ~T0 @X0 0 tf ]
-[v F16335 `(v ~T0 @X0 0 tf ]
 [v F16337 `(v ~T0 @X0 0 tf ]
+[v F16339 `(v ~T0 @X0 0 tf ]
+[v F16383 `(v ~T0 @X0 0 tf ]
+[v F16385 `(v ~T0 @X0 0 tf ]
 "55 main.c
 [; ;main.c: 55: volatile A_data IO;
-[c E16380 0 1 2 3 4 5 .. ]
-[n E16380 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE  ]
-[c E16373 0 1 2 3 4 .. ]
-[n E16373 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
-"74 ./d232.h
-[; ;./d232.h: 74: typedef struct A_data {
-[s S2199 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16380 1 `E16373 1 ]
-[n S2199 A_data inbytes outbytes input_ok output_ok io d232 ]
-[v F16369 `(a ~T0 @X0 1 tf1`uc ]
+[c E16428 0 1 2 3 4 5 .. ]
+[n E16428 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE  ]
+[c E16421 0 1 2 3 4 .. ]
+[n E16421 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
+[c E16436 0 1 2 3 4 5 .. ]
+[n E16436 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
+"84 ./d232.h
+[; ;./d232.h: 84: typedef struct A_data {
+[s S2199 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16428 1 `E16421 1 `E16436 1 `uc 1 `us 1 ]
+[n S2199 A_data inbytes outbytes input_ok output_ok io d232 srq srq_value button_value ]
+[v F16417 `(a ~T0 @X0 1 tf1`uc ]
 "32 ./timers.h
 [; ;./timers.h: 32: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF16369 ~T0 @X0 0 e ]
+[v _TimerDone `TF16417 ~T0 @X0 0 e ]
 "59 main.c
 [; ;main.c: 59:  if (TimerDone(TMR_INIT)) {
-[c E16349 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
-[n E16349 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_SEQ TMR_FLIPPER TMR_COUNT  ]
-[v F16365 `(v ~T0 @X0 1 tf2`uc`us ]
+[c E16397 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
+[n E16397 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_SEQ TMR_FLIPPER TMR_COUNT  ]
+[v F16413 `(v ~T0 @X0 1 tf2`uc`us ]
 "31 ./timers.h
 [; ;./timers.h: 31: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF16365 ~T0 @X0 0 e ]
+[v _StartTimer `TF16413 ~T0 @X0 0 e ]
 [p mainexit ]
-"75 ./mcc_generated_files/mcc.h
-[; ;./mcc_generated_files/mcc.h: 75: void SYSTEM_Initialize(void);
+"76 ./mcc_generated_files/mcc.h
+[; ;./mcc_generated_files/mcc.h: 76: void SYSTEM_Initialize(void);
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
 "46169 /opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46169:     struct {
@@ -44,8 +46,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46183
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46183: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2085 ~T0 @X0 0 e@16338 ]
-"83 ./d232.h
-[; ;./d232.h: 83: void Digital232_init(void);
+"96 ./d232.h
+[; ;./d232.h: 96: void Digital232_init(void);
 [v _Digital232_init `(v ~T0 @X0 0 ef ]
 "214 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 214: uint8_t UART1_is_tx_ready(void);
@@ -53,8 +55,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "383
 [; ;./mcc_generated_files/uart1.h: 383: void UART1_Write(uint8_t txData);
 [v _UART1_Write `(v ~T0 @X0 0 ef1`uc ]
-"84 ./d232.h
-[; ;./d232.h: 84: _Bool Digital232_RW(void);
+"97 ./d232.h
+[; ;./d232.h: 97: _Bool Digital232_RW(void);
 [v _Digital232_RW `(a ~T0 @X0 0 ef ]
 "44 main.c
 [p n 520 ]
@@ -2261,16 +2263,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "521 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 521: void (*UART2_RxInterruptHandler)(void);
-[v _UART2_RxInterruptHandler `*F16289 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F16337 ~T0 @X0 1 e ]
 "539
 [; ;./mcc_generated_files/uart2.h: 539: void (*UART2_TxInterruptHandler)(void);
-[v _UART2_TxInterruptHandler `*F16291 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F16339 ~T0 @X0 1 e ]
 "520 ./mcc_generated_files/uart1.h
 [; ;./mcc_generated_files/uart1.h: 520: void (*UART1_RxInterruptHandler)(void);
-[v _UART1_RxInterruptHandler `*F16335 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F16383 ~T0 @X0 1 e ]
 "538
 [; ;./mcc_generated_files/uart1.h: 538: void (*UART1_TxInterruptHandler)(void);
-[v _UART1_TxInterruptHandler `*F16337 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F16385 ~T0 @X0 1 e ]
 "54 main.c
 [; ;main.c: 54: volatile uint16_t tickCount[TMR_COUNT] = {0};
 [v _tickCount `Vus ~T0 @X0 -> 13 `i e ]
@@ -2292,11 +2294,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "59
 [; ;main.c: 59:  if (TimerDone(TMR_INIT)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16349 1 `uc `i -> 0 `i 2201  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E16397 1 `uc `i -> 0 `i 2201  ]
 {
 "60
 [; ;main.c: 60:   StartTimer(TMR_INIT, 1000);
-[e ( _StartTimer (2 , -> . `E16349 1 `uc -> -> 1000 `i `us ]
+[e ( _StartTimer (2 , -> . `E16397 1 `uc -> -> 1000 `i `us ]
 "61
 [; ;main.c: 61:  }
 }
@@ -2337,13 +2339,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _IO 3 -> -> 0 `i `a ]
 "91
 [; ;main.c: 91:  IO.d232 = D232_IDLE;
-[e = . _IO 5 . `E16373 0 ]
+[e = . _IO 5 . `E16421 0 ]
 "92
 [; ;main.c: 92:  IO.io = IO_IDLE;
-[e = . _IO 4 . `E16380 0 ]
+[e = . _IO 4 . `E16428 0 ]
 "94
 [; ;main.c: 94:  StartTimer(TMR_INIT, 1000);
-[e ( _StartTimer (2 , -> . `E16349 1 `uc -> -> 1000 `i `us ]
+[e ( _StartTimer (2 , -> . `E16397 1 `uc -> -> 1000 `i `us ]
 "95
 [; ;main.c: 95:  Digital232_init();
 [e ( _Digital232_init ..  ]
