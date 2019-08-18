@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.05 build -831301201 
-                                                                                               Sat Aug 17 03:25:04 2019
+                                                                                               Sun Aug 18 15:34:18 2019
 
 Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9 
      1                           	processor	18F47K42
@@ -593,9 +593,9 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
    579  000005                     
    580                           ; 1 bytes @ 0x4
    581  000005                     	ds	1
-   582  000006                     ?_ADCC_GetConversionResult:
+   582  000006                     ?_strlen:
    583                           	opt callstack 0
-   584  000006                     ?_strlen:
+   584  000006                     ?_ADCC_GetConversionResult:
    585                           	opt callstack 0
    586  000006                     INTERRUPT_Initialize@state:
    587                           	opt callstack 0
@@ -3796,7 +3796,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   3470                           ;d232.c: 57:     IO.srq = S_NUM;
   3471  00206A  0E04               	movlw	4
   3472  00206C  D006               	goto	L5
-  3473  00206E                     l878:
+  3473  00206E                     l1038:
   3474                           
   3475                           ; BSR set to: 1
   3476                           ;d232.c: 60:    IO.srq_value = j;
@@ -3861,7 +3861,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   3534  0020AA  D7DB               	goto	l3839
   3535  0020AC  0A07               	xorlw	7	; case 4
   3536  0020AE  B4D8               	btfsc	status,2,c
-  3537  0020B0  D7DE               	goto	l878
+  3537  0020B0  D7DE               	goto	l1038
   3538  0020B2  D7E2               	goto	l3845
   3539  0020B4                     l3849:
   3540                           
@@ -5234,8 +5234,8 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   4787  002CC4  EC2E  F016         	call	_StartTimer
   4788                           
   4789                           ;timers.c: 34:  while (!TimerDone(TMR_INTERNAL)) {
-  4790  002CC8  D005               	goto	l3739
-  4791  002CCA                     l913:
+  4790  002CC8  D005               	goto	l3753
+  4791  002CCA                     l1073:
   4792                           
   4793                           ;timers.c: 35:   __nop();
   4794  002CCA  F000               	nop	
@@ -5249,7 +5249,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   4802                           ;timers.c: 38:   __nop();
   4803  002CD0  F000               	nop	
   4804  002CD2  0004               	clrwdt		;# 
-  4805  002CD4                     l3739:
+  4805  002CD4                     l3753:
   4806                           
   4807                           ;timers.c: 34:  while (!TimerDone(TMR_INTERNAL)) {
   4808  002CD4  0E00               	movlw	0
@@ -5257,7 +5257,7 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   4810  002CDA  0900               	iorlw	0
   4811  002CDC  A4D8               	btfss	status,2,c
   4812  002CDE  0012               	return	
-  4813  002CE0  D7F4               	goto	l913
+  4813  002CE0  D7F4               	goto	l1073
   4814  002CE2                     __end_of_WaitMs:
   4815                           	opt callstack 0
   4816                           
@@ -5692,10 +5692,10 @@ Microchip MPLAB XC8 C Compiler v2.05 (Free license) build 20181220022703 Og9
   5181                           ;incstack = 0
   5182  00306E  013E               	movlb	62	; () banked
   5183  003070  B1F8               	btfsc	248,0,b	;volatile
-  5184  003072  D002               	goto	u2020
+  5184  003072  D002               	goto	u2010
   5185  003074  0E01               	movlw	1
   5186  003076  0012               	return	
-  5187  003078                     u2020:
+  5187  003078                     u2010:
   5188  003078  0E00               	movlw	0
   5189                           
   5190                           ; BSR set to: 62
@@ -7948,7 +7948,7 @@ Pointer List with Targets:
     printf@ap	PTR void [1] size(1) Largest target is 2
 		 -> ?_printf(COMRAM[2]), 
 
-    S2803_IO_FILE$buffer	PTR unsigned char  size(2) Largest target is 0
+    S2796_IO_FILE$buffer	PTR unsigned char  size(2) Largest target is 0
 
     fputc@fp.buffer	PTR unsigned char  size(2) Largest target is 0
 
@@ -9659,18 +9659,18 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.05 build -831301201 
-Symbol Table                                                                                   Sat Aug 17 03:25:04 2019
+Symbol Table                                                                                   Sun Aug 18 15:34:18 2019
 
             __end_of_TMR5_SetInterruptHandler 304A                     __end_of_UART2_is_rx_ready 30A2  
                                  __CFG_CP$OFF 000000                                            l64 2F06  
                                           _IO 009A                             ??_TMR5_WriteTimer 0006  
                                  __CFG_LVP$ON 000000                                           l314 2B36  
-                                         l482 2B6E                                           l913 2CCA  
-                                         l878 206E                                           _GIE 01FE97  
+                                         l482 2B6E                                           _GIE 01FE97  
                      __size_of_PMD_Initialize 0022                               _TMR2_Initialize 2E7A  
                                          tosl 003FFD                                           wreg 003FE8  
                           _UART1_Transmit_ISR 2CE2                                 __CFG_BBEN$OFF 000000  
                                 __CFG_ZCD$OFF 000000                                          l1114 2262  
+                                        l1038 206E                                          l1073 2CCA  
                                         l3405 2A00                                          l3421 2216  
                                         l3407 2A04                                          l3431 2280  
                                         l3435 229C                                          l3453 233A  
@@ -9682,8 +9682,8 @@ Symbol Table                                                                    
                                         l3473 2408                                          l3395 2894  
                                         l3483 2450                                          l3539 2956  
                                         l3901 218E                                          l3479 2446  
-                                        l3831 204A                                          l3489 2462  
-                                        l3913 21CC                                          l3739 2CD4  
+                                        l3831 204A                                          l3753 2CD4  
+                                        l3489 2462                                          l3913 21CC  
                                         l3835 2056                                          l3827 203E  
                                         l3909 21B8                                          l3845 2078  
                                         l3839 2062                                          l3847 2080  
@@ -9695,7 +9695,7 @@ Symbol Table                                                                    
                                         STR_3 2019                                          STR_4 2005  
                                         STR_5 2019                                          STR_6 2009  
                                         STR_7 2019                                          STR_8 200D  
-                                        STR_9 2019                                          u2020 3078  
+                                        STR_9 2019                                          u2010 3078  
                                         _LATA 003FBA                                          u2150 2150  
                                         _LATB 003FBB                                          _LATC 003FBC  
                                         _LATD 003FBD                                          _LATE 003FBE  
