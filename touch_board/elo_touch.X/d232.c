@@ -108,7 +108,7 @@ bool Digital232_RW(void)
 	IO.d232 = D232_OUT_IN;
 
 	ADCC_StartConversion(channel_ANA0);
-	while (!ADCC_IsConversionDone());
+//	while (!ADCC_IsConversionDone());
 	IO.button_value = ADCC_GetConversionResult();
 	return true;
 }
