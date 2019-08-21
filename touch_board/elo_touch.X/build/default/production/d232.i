@@ -27053,8 +27053,9 @@ _Bool Digital232_RW(void)
  IO.io = IO_IN;
  IO.d232 = D232_OUT_IN;
 
- ADCC_StartConversion(channel_ANA0);
+
 
  IO.button_value = ADCC_GetConversionResult();
+ do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0);
  return 1;
 }

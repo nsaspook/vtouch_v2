@@ -52,6 +52,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 "225 ./mcc_generated_files/adcc.h
 [; ;./mcc_generated_files/adcc.h: 225: adc_result_t ADCC_GetConversionResult(void);
 [v _ADCC_GetConversionResult `(us ~T0 @X0 0 ef ]
+"45366 /opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 45366:     struct {
+[s S2054 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2054 . LATD0 LATD1 LATD2 LATD3 LATD4 LATD5 LATD6 LATD7 ]
+"45376
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 45376:     struct {
+[s S2055 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2055 . LD0 LD1 LD2 LD3 LD4 LD5 LD6 LD7 ]
+"45365
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 45365: typedef union {
+[u S2053 `S2054 1 `S2055 1 ]
+[n S2053 . . . ]
+"45387
+[; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 45387: extern volatile LATDbits_t LATDbits __attribute__((address(0x3FBD)));
+[v _LATDbits `VS2053 ~T0 @X0 0 e@16317 ]
 "250 /opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2560,18 +2575,22 @@ Version 4.0 HI-TECH Software Intermediate Code
 "108
 [; ;d232.c: 108:  IO.d232 = D232_OUT_IN;
 [e = . _IO 5 . `E16205 2 ]
-"110
-[; ;d232.c: 110:  ADCC_StartConversion(channel_ANA0);
-[e ( _ADCC_StartConversion (1 . `E16135 0 ]
 "112
 [; ;d232.c: 112:  IO.button_value = ADCC_GetConversionResult();
 [e = . _IO 8 ( _ADCC_GetConversionResult ..  ]
 "113
-[; ;d232.c: 113:  return 1;
+[; ;d232.c: 113:  do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0);
+[e :U 2225 ]
+{
+[e = . . _LATDbits 0 1 -> ~ -> . . _LATDbits 0 1 `i `uc ]
+}
+[e :U 2224 ]
+"114
+[; ;d232.c: 114:  return 1;
 [e ) -> -> 1 `i `a ]
 [e $UE 2200  ]
-"114
-[; ;d232.c: 114: }
+"115
+[; ;d232.c: 115: }
 [e :UE 2200 ]
 }
 [p f _printf 8650752 ]
