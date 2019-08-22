@@ -27505,7 +27505,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 58 "./d232.h"
+# 59 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27546,6 +27546,7 @@ typedef struct A_data {
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
+void led_lightshow(uint8_t, uint32_t);
 # 51 "main.c" 2
 
 
@@ -27594,11 +27595,10 @@ void main(void)
  Digital232_init();
 
  while (1) {
-  if (UART1_is_tx_ready())
-   UART1_Write(x++);
 
   work_sw();
   Digital232_RW();
+  led_lightshow(0, 1);
 
  }
 }

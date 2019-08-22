@@ -42,6 +42,7 @@
 #include "mcc_generated_files/pin_manager.h"
 #include "mcc_generated_files/uart2.h"
 #include "mcc_generated_files/adcc.h"
+#include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
 #define sw_version "0.16"
@@ -95,6 +96,7 @@ typedef struct A_data {
 
 void Digital232_init(void);
 bool Digital232_RW(void);
+void led_lightshow(uint8_t, uint32_t);
 
 #ifdef	__cplusplus
 extern "C" {

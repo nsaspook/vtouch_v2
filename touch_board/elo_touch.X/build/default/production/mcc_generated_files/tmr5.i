@@ -26913,6 +26913,12 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 831 "./mcc_generated_files/adcc.h"
 uint8_t ADCC_GetConversionStageStatus(void);
 # 45 "mcc_generated_files/../d232.h" 2
+# 1 "./mcc_generated_files/pwm8.h" 1
+# 102 "./mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "./mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
+# 46 "mcc_generated_files/../d232.h" 2
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 enum APP_TIMERS {
@@ -26938,8 +26944,8 @@ enum APP_TIMERS {
 __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
-# 46 "mcc_generated_files/../d232.h" 2
-# 58 "mcc_generated_files/../d232.h"
+# 47 "mcc_generated_files/../d232.h" 2
+# 59 "mcc_generated_files/../d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -26980,6 +26986,7 @@ typedef struct A_data {
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
+void led_lightshow(uint8_t, uint32_t);
 # 54 "mcc_generated_files/tmr5.c" 2
 
 

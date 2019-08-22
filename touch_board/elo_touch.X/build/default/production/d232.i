@@ -26877,6 +26877,12 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 # 831 "./mcc_generated_files/adcc.h"
 uint8_t ADCC_GetConversionStageStatus(void);
 # 45 "./d232.h" 2
+# 1 "./mcc_generated_files/pwm8.h" 1
+# 102 "./mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "./mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
+# 46 "./d232.h" 2
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 enum APP_TIMERS {
@@ -26902,8 +26908,8 @@ enum APP_TIMERS {
 __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
-# 46 "./d232.h" 2
-# 58 "./d232.h"
+# 47 "./d232.h" 2
+# 59 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -26944,6 +26950,7 @@ typedef struct A_data {
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
+void led_lightshow(uint8_t, uint32_t);
 # 2 "d232.c" 2
 
 extern volatile A_data IO;
@@ -27012,11 +27019,6 @@ _Bool Digital232_RW(void)
  }
 
  WaitMs(10);
- IO.outbytes[0] = 0;
- IO.outbytes[1]++;
- IO.outbytes[2] = 255;
- IO.outbytes[3] = 0;
- IO.outbytes[4]--;
  UART2_Write('D');
  UART2_Write(IO.outbytes[0]);
  UART2_Write(IO.outbytes[1]);
@@ -27032,10 +27034,12 @@ _Bool Digital232_RW(void)
 
 
  StartTimer(TMR_RXTO, 250);
- while (!TimerDone(TMR_RXTO) && !UART2_is_rx_ready()) {
+ while (!UART2_is_rx_ready()) {
+  if (TimerDone(TMR_RXTO)) {
+   PWM8_LoadDutyValue(0);
+   return 0;
+  }
  }
- if (TimerDone(TMR_RXTO))
-  return 0;
 
 
 
@@ -27047,8 +27051,11 @@ _Bool Digital232_RW(void)
    i++;
   }
  }
- if (TimerDone(TMR_RXTO) || i < 6)
+ if (TimerDone(TMR_RXTO) || i < 6) {
+  PWM8_LoadDutyValue(10);
   return 0;
+ }
+
  IO.input_ok = 1;
  IO.io = IO_IN;
  IO.d232 = D232_OUT_IN;
@@ -27056,6 +27063,40 @@ _Bool Digital232_RW(void)
 
 
  IO.button_value = ADCC_GetConversionResult();
- do { LATDbits.LATD1 = ~LATDbits.LATD1; } while(0);
+ PWM8_LoadDutyValue(199);
  return 1;
+}
+
+void led_lightshow(uint8_t seq, uint32_t speed)
+{
+ static uint32_t j = 0;
+ static uint8_t cylon = 0xff;
+ static int32_t alive_led = 0;
+ static _Bool LED_UP = 1;
+
+ if (j++ >= speed) {
+  if (0) {
+   IO.outbytes[1] = ~cylon;
+  } else {
+   IO.outbytes[1] = cylon;
+  }
+
+  if (LED_UP && (alive_led != 0)) {
+   alive_led = alive_led * 2;
+   cylon = cylon << 1;
+  } else {
+   if (alive_led != 0) alive_led = alive_led / 2;
+   cylon = cylon >> 1;
+  }
+  if (alive_led < 2) {
+   alive_led = 2;
+   LED_UP = 1;
+  } else {
+   if (alive_led > 128) {
+    alive_led = 128;
+    LED_UP = 0;
+   }
+  }
+  j = 0;
+ }
 }

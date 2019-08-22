@@ -11,8 +11,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16421 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
 [c E16436 0 1 2 3 4 5 .. ]
 [n E16436 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
-"84 ./d232.h
-[; ;./d232.h: 84: typedef struct A_data {
+"85 ./d232.h
+[; ;./d232.h: 85: typedef struct A_data {
 [s S2199 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16428 1 `E16421 1 `E16436 1 `uc 1 `us 1 ]
 [n S2199 A_data inbytes outbytes input_ok output_ok io d232 srq srq_value button_value ]
 [v F16417 `(a ~T0 @X0 1 tf1`uc ]
@@ -46,18 +46,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46183
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46183: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2085 ~T0 @X0 0 e@16338 ]
-"96 ./d232.h
-[; ;./d232.h: 96: void Digital232_init(void);
-[v _Digital232_init `(v ~T0 @X0 0 ef ]
-"214 ./mcc_generated_files/uart1.h
-[; ;./mcc_generated_files/uart1.h: 214: uint8_t UART1_is_tx_ready(void);
-[v _UART1_is_tx_ready `(uc ~T0 @X0 0 ef ]
-"383
-[; ;./mcc_generated_files/uart1.h: 383: void UART1_Write(uint8_t txData);
-[v _UART1_Write `(v ~T0 @X0 0 ef1`uc ]
 "97 ./d232.h
-[; ;./d232.h: 97: _Bool Digital232_RW(void);
+[; ;./d232.h: 97: void Digital232_init(void);
+[v _Digital232_init `(v ~T0 @X0 0 ef ]
+"98
+[; ;./d232.h: 98: _Bool Digital232_RW(void);
 [v _Digital232_RW `(a ~T0 @X0 0 ef ]
+"99
+[; ;./d232.h: 99: void led_lightshow(uint8_t, uint32_t);
+[v _led_lightshow `(v ~T0 @X0 0 ef2`uc`ul ]
 "44 main.c
 [p n 520 ]
 "45
@@ -2353,26 +2350,22 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 97:  while (1) {
 [e :U 2204 ]
 {
-"98
-[; ;main.c: 98:   if (UART1_is_tx_ready())
-[e $ ! != -> ( _UART1_is_tx_ready ..  `i -> 0 `i 2206  ]
 "99
-[; ;main.c: 99:    UART1_Write(x++);
-[e ( _UART1_Write (1 ++ _x -> -> 1 `i `uc ]
-[e :U 2206 ]
-"101
-[; ;main.c: 101:   work_sw();
+[; ;main.c: 99:   work_sw();
 [e ( _work_sw ..  ]
-"102
-[; ;main.c: 102:   Digital232_RW();
+"100
+[; ;main.c: 100:   Digital232_RW();
 [e ( _Digital232_RW ..  ]
-"104
-[; ;main.c: 104:  }
+"101
+[; ;main.c: 101:   led_lightshow(0, 1);
+[e ( _led_lightshow (2 , -> -> 0 `i `uc -> -> -> 1 `i `l `ul ]
+"103
+[; ;main.c: 103:  }
 }
 [e :U 2203 ]
 [e $U 2204  ]
 [e :U 2205 ]
-"105
-[; ;main.c: 105: }
+"104
+[; ;main.c: 104: }
 [e :UE 2202 ]
 }

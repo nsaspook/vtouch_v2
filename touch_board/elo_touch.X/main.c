@@ -95,11 +95,10 @@ void main(void)
 	Digital232_init();
 
 	while (1) {
-		if (UART1_is_tx_ready())
-			UART1_Write(x++);
 		// Add your application code
 		work_sw();
 		Digital232_RW();
+		led_lightshow(0, 1);
 
 	}
 }

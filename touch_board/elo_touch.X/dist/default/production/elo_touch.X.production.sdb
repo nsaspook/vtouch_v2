@@ -178,7 +178,7 @@ TMR_FLIPPER 12
 TMR_COUNT 13
 ]
 "17 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
-[e E16212 . `uc
+[e E16215 . `uc
 IO_IDLE 0
 IO_INIT 1
 IO_OUT 2
@@ -186,14 +186,14 @@ IO_IN 3
 IO_SRQ 4
 IO_UPDATE 5
 ]
-[e E16205 . `uc
+[e E16208 . `uc
 D232_IDLE 0
 D232_INIT 1
 D232_OUT_IN 2
 D232_SRQ 3
 D232_UPDATE 4
 ]
-[e E16220 . `uc
+[e E16223 . `uc
 S_IDLE 0
 S_S 1
 S_R 2
@@ -213,8 +213,8 @@ channel_DAC1 61
 channel_FVR_Buffer1 62
 channel_FVR_Buffer2 63
 ]
-"88
-[e E16181 APP_TIMERS `uc
+"83
+[e E16184 APP_TIMERS `uc
 TMR_INTERNAL 0
 TMR_INIT 1
 TMR_RXTO 2
@@ -247,6 +247,8 @@ TMR_SEQ 11
 TMR_FLIPPER 12
 TMR_COUNT 13
 ]
+"7 /opt/microchip/xc8/v2.05/pic/sources/c99/common/aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
 "546 /opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c
 [v _stoa stoa `(i  1 s 2 stoa ]
 "670
@@ -289,6 +291,8 @@ TMR_COUNT 13
 [v _Digital232_init Digital232_init `(v  1 e 1 0 ]
 "30
 [v _Digital232_RW Digital232_RW `(a  1 e 1 0 ]
+"117
+[v _led_lightshow led_lightshow `(v  1 e 1 0 ]
 "57 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
 [v _work_sw work_sw `(v  1 e 1 0 ]
 "67
@@ -313,6 +317,8 @@ TMR_COUNT 13
 [v _PIN_MANAGER_Initialize PIN_MANAGER_Initialize `(v  1 e 1 0 ]
 "58 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/pwm8.c
 [v _PWM8_Initialize PWM8_Initialize `(v  1 e 1 0 ]
+"74
+[v _PWM8_LoadDutyValue PWM8_LoadDutyValue `(v  1 e 1 0 ]
 "62 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/tmr2.c
 [v _TMR2_Initialize TMR2_Initialize `(v  1 e 1 0 ]
 "100
@@ -357,10 +363,6 @@ TMR_COUNT 13
 [v _TMR6_DefaultInterruptHandler TMR6_DefaultInterruptHandler `(v  1 e 1 0 ]
 "87 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/uart1.c
 [v _UART1_Initialize UART1_Initialize `(v  1 e 1 0 ]
-"166
-[v _UART1_is_tx_ready UART1_is_tx_ready `(uc  1 e 1 0 ]
-"202
-[v _UART1_Write UART1_Write `(v  1 e 1 0 ]
 "225
 [v _UART1_tx_vect_isr UART1_tx_vect_isr `IIH(v  1 e 1 0 ]
 "233
@@ -925,30 +927,6 @@ TMR_COUNT 13
 [v _LATC LATC `VEuc  1 e 1 @16316 ]
 "45360
 [v _LATD LATD `VEuc  1 e 1 @16317 ]
-[s S2242 . 1 `uc 1 LATD0 1 0 :1:0 
-`uc 1 LATD1 1 0 :1:1 
-`uc 1 LATD2 1 0 :1:2 
-`uc 1 LATD3 1 0 :1:3 
-`uc 1 LATD4 1 0 :1:4 
-`uc 1 LATD5 1 0 :1:5 
-`uc 1 LATD6 1 0 :1:6 
-`uc 1 LATD7 1 0 :1:7 
-]
-"45387
-[s S2251 . 1 `uc 1 LD0 1 0 :1:0 
-`uc 1 LD1 1 0 :1:1 
-`uc 1 LD2 1 0 :1:2 
-`uc 1 LD3 1 0 :1:3 
-`uc 1 LD4 1 0 :1:4 
-`uc 1 LD5 1 0 :1:5 
-`uc 1 LD6 1 0 :1:6 
-`uc 1 LD7 1 0 :1:7 
-]
-"45387
-[u S2260 . 1 `S2242 1 . 1 0 `S2251 1 . 1 0 ]
-"45387
-"45387
-[v _LATDbits LATDbits `VES2260  1 e 1 @16317 ]
 "45472
 [v _LATE LATE `VEuc  1 e 1 @16318 ]
 [s S1571 . 1 `uc 1 LATE0 1 0 :1:0 
@@ -1084,26 +1062,40 @@ TMR_COUNT 13
 [v _main main `(v  1 e 1 0 ]
 {
 "69
-[v main@x x `uc  1 a 1 5 ]
-"105
+[v main@y y `uc  1 a 1 5 ]
+"104
 } 0
 "57
 [v _work_sw work_sw `(v  1 e 1 0 ]
 {
 "62
 } 0
-"166 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/uart1.c
-[v _UART1_is_tx_ready UART1_is_tx_ready `(uc  1 e 1 0 ]
+"117 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+[v _led_lightshow led_lightshow `(v  1 e 1 0 ]
 {
-"169
+[v led_lightshow@speed speed `ul  1 p 4 19 ]
+"119
+[v led_lightshow@j j `ul  1 s 4 j ]
+"120
+[v led_lightshow@cylon cylon `uc  1 s 1 cylon ]
+"121
+[v led_lightshow@alive_led alive_led `l  1 s 4 alive_led ]
+"122
+[v led_lightshow@LED_UP LED_UP `a  1 s 1 LED_UP ]
+"149
 } 0
-"202
-[v _UART1_Write UART1_Write `(v  1 e 1 0 ]
+"7 /opt/microchip/xc8/v2.05/pic/sources/c99/common/aldiv.c
+[v ___aldiv __aldiv `(l  1 e 4 0 ]
 {
-[v UART1_Write@txData txData `uc  1 a 1 wreg ]
-[v UART1_Write@txData txData `uc  1 a 1 wreg ]
-[v UART1_Write@txData txData `uc  1 a 1 5 ]
-"223
+"10
+[v ___aldiv@quotient quotient `l  1 a 4 15 ]
+"11
+[v ___aldiv@sign sign `uc  1 a 1 14 ]
+[v ___aldiv@counter counter `uc  1 a 1 13 ]
+"7
+[v ___aldiv@dividend dividend `l  1 p 4 5 ]
+[v ___aldiv@divisor divisor `l  1 p 4 9 ]
+"41
 } 0
 "50 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
@@ -1275,9 +1267,9 @@ TMR_COUNT 13
 {
 "1371
 [v vfprintf@cfmt cfmt `*.31uc  1 a 1 48 ]
-[s S2340 _IO_FILE 0 ]
+[s S2303 _IO_FILE 0 ]
 "1368
-[v vfprintf@fp fp `*.2S2340  1 p 2 44 ]
+[v vfprintf@fp fp `*.2S2303  1 p 2 44 ]
 [v vfprintf@fmt fmt `*.31Cuc  1 p 1 46 ]
 [v vfprintf@ap ap `*.30*.30v  1 p 1 47 ]
 "1382
@@ -1287,9 +1279,9 @@ TMR_COUNT 13
 {
 "672
 [v vfpfcnvrt@cp cp `*.34uc  1 a 2 42 ]
-[s S2340 _IO_FILE 0 ]
+[s S2303 _IO_FILE 0 ]
 "670
-[v vfpfcnvrt@fp fp `*.2S2340  1 p 2 38 ]
+[v vfpfcnvrt@fp fp `*.2S2303  1 p 2 38 ]
 [v vfpfcnvrt@fmt fmt `*.30*.31uc  1 p 1 40 ]
 [v vfpfcnvrt@ap ap `*.30*.30v  1 p 1 41 ]
 "1365
@@ -1307,9 +1299,9 @@ TMR_COUNT 13
 "549
 [v stoa@w w `i  1 a 2 30 ]
 [v stoa@i i `i  1 a 2 28 ]
-[s S2340 _IO_FILE 0 ]
+[s S2303 _IO_FILE 0 ]
 "546
-[v stoa@fp fp `*.2S2340  1 p 2 16 ]
+[v stoa@fp fp `*.2S2303  1 p 2 16 ]
 [v stoa@s s `*.34uc  1 p 2 18 ]
 "548
 [v stoa@F1131 F1131 `[7]uc  1 s 7 F1131 ]
@@ -1328,8 +1320,8 @@ TMR_COUNT 13
 [v _fputc fputc `(i  1 e 2 0 ]
 {
 [v fputc@c c `i  1 p 2 7 ]
-[s S2842 _IO_FILE 6 `*.2uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
-[v fputc@fp fp `*.2S2842  1 p 2 9 ]
+[s S2805 _IO_FILE 6 `*.2uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[v fputc@fp fp `*.2S2805  1 p 2 9 ]
 "21
 } 0
 "221 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/uart2.c
@@ -1385,6 +1377,12 @@ TMR_COUNT 13
 "173
 [v UART2_Read@readValue readValue `uc  1 a 1 5 ]
 "191
+} 0
+"74 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/pwm8.c
+[v _PWM8_LoadDutyValue PWM8_LoadDutyValue `(v  1 e 1 0 ]
+{
+[v PWM8_LoadDutyValue@dutyValue dutyValue `us  1 p 2 5 ]
+"81
 } 0
 "131 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/adcc.c
 [v _ADCC_GetConversionResult ADCC_GetConversionResult `(us  1 e 2 0 ]

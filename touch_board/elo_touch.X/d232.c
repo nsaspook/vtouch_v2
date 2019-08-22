@@ -66,11 +66,6 @@ bool Digital232_RW(void)
 	}
 
 	WaitMs(10);
-	IO.outbytes[0] = 0;
-	IO.outbytes[1]++;
-	IO.outbytes[2] = 255;
-	IO.outbytes[3] = 0;
-	IO.outbytes[4]--;
 	UART2_Write('D');
 	UART2_Write(IO.outbytes[0]);
 	UART2_Write(IO.outbytes[1]);
@@ -86,10 +81,12 @@ bool Digital232_RW(void)
 	 * wait for data
 	 */
 	StartTimer(TMR_RXTO, 250);
-	while (!TimerDone(TMR_RXTO) && !UART2_is_rx_ready()) {
+	while (!UART2_is_rx_ready()) {
+		if (TimerDone(TMR_RXTO)) {
+			PWM8_LoadDutyValue(0);
+			return false;
+		}
 	}
-	if (TimerDone(TMR_RXTO))
-		return false;
 
 	/*
 	 * read data
@@ -101,15 +98,52 @@ bool Digital232_RW(void)
 			i++;
 		}
 	}
-	if (TimerDone(TMR_RXTO) || i < 6)
+	if (TimerDone(TMR_RXTO) || i < 6) {
+		PWM8_LoadDutyValue(10);
 		return false;
+	}
+
 	IO.input_ok = true;
 	IO.io = IO_IN;
 	IO.d232 = D232_OUT_IN;
 
-//	ADCC_StartConversion(channel_ANA0);
-//	while (!ADCC_IsConversionDone());
+	//	ADCC_StartConversion(channel_ANA0);
+	//	while (!ADCC_IsConversionDone());
 	IO.button_value = ADCC_GetConversionResult();
-	RD1_Toggle();
+	PWM8_LoadDutyValue(199);
 	return true;
+}
+
+void led_lightshow(uint8_t seq, uint32_t speed)
+{
+	static uint32_t j = 0;
+	static uint8_t cylon = 0xff;
+	static int32_t alive_led = 0;
+	static bool LED_UP = true;
+
+	if (j++ >= speed) { // delay a bit ok
+		if (0) { // screen status feedback
+			IO.outbytes[1] = ~cylon; // roll leds cylon style
+		} else {
+			IO.outbytes[1] = cylon; // roll leds cylon style (inverted)
+		}
+
+		if (LED_UP && (alive_led != 0)) {
+			alive_led = alive_led * 2;
+			cylon = cylon << 1;
+		} else {
+			if (alive_led != 0) alive_led = alive_led / 2;
+			cylon = cylon >> 1;
+		}
+		if (alive_led < 2) {
+			alive_led = 2;
+			LED_UP = true;
+		} else {
+			if (alive_led > 128) {
+				alive_led = 128;
+				LED_UP = false;
+			}
+		}
+		j = 0;
+	}
 }
