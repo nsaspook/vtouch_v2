@@ -30,10 +30,12 @@ void Digital232_init(void)
 bool Digital232_RW(void)
 {
 	uint8_t i = 0, j = 0;
+	static uint8_t x = 0;
 	/*
 	 * empty receiver buffer
 	 */
 	IO.srq = S_IDLE;
+
 	if (UART2_is_rx_ready()) {
 		j = UART2_Read();
 		/*
@@ -83,7 +85,9 @@ bool Digital232_RW(void)
 	StartTimer(TMR_RXTO, 250);
 	while (!UART2_is_rx_ready()) {
 		if (TimerDone(TMR_RXTO)) {
-			PWM8_LoadDutyValue(0);
+			PWM8_LoadDutyValue(x++);
+			if (x > 3)
+				x = 0;
 			return false;
 		}
 	}
@@ -99,7 +103,9 @@ bool Digital232_RW(void)
 		}
 	}
 	if (TimerDone(TMR_RXTO) || i < 6) {
-		PWM8_LoadDutyValue(10);
+		PWM8_LoadDutyValue(x++);
+		if (x > 16)
+			x = 0;
 		return false;
 	}
 

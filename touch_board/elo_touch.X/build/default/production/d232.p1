@@ -41,8 +41,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "31 ./timers.h
 [; ;./timers.h: 31: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 [v _StartTimer `TF16200 ~T0 @X0 0 e ]
-"83 d232.c
-[; ;d232.c: 83:  StartTimer(TMR_RXTO, 250);
+"85 d232.c
+[; ;d232.c: 85:  StartTimer(TMR_RXTO, 250);
 [c E16184 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
 [n E16184 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_SEQ TMR_FLIPPER TMR_COUNT  ]
 [v F16204 `(a ~T0 @X0 1 tf1`uc ]
@@ -2341,92 +2341,98 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _i -> -> 0 `i `uc ]
 [v _j `uc ~T0 @X0 1 a ]
 [e = _j -> -> 0 `i `uc ]
-"36
-[; ;d232.c: 36:  IO.srq = S_IDLE;
-[e = . _IO 6 . `E16223 0 ]
+"33
+[; ;d232.c: 33:  static uint8_t x = 0;
+[v F16252 `uc ~T0 @X0 1 s x ]
+[i F16252
+-> -> 0 `i `uc
+]
 "37
-[; ;d232.c: 37:  if (UART2_is_rx_ready()) {
+[; ;d232.c: 37:  IO.srq = S_IDLE;
+[e = . _IO 6 . `E16223 0 ]
+"39
+[; ;d232.c: 39:  if (UART2_is_rx_ready()) {
 [e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2201  ]
 {
-"38
-[; ;d232.c: 38:   j = UART2_Read();
+"40
+[; ;d232.c: 40:   j = UART2_Read();
 [e = _j ( _UART2_Read ..  ]
-"42
-[; ;d232.c: 42:   switch (IO.srq) {
+"44
+[; ;d232.c: 44:   switch (IO.srq) {
 [e $U 2203  ]
 {
-"43
-[; ;d232.c: 43:   case S_IDLE:
-[e :U 2204 ]
-"44
-[; ;d232.c: 44:    if (j == 'S')
-[e $ ! == -> _j `ui -> 83 `ui 2205  ]
 "45
-[; ;d232.c: 45:     IO.srq = S_S;
+[; ;d232.c: 45:   case S_IDLE:
+[e :U 2204 ]
+"46
+[; ;d232.c: 46:    if (j == 'S')
+[e $ ! == -> _j `ui -> 83 `ui 2205  ]
+"47
+[; ;d232.c: 47:     IO.srq = S_S;
 [e = . _IO 6 . `E16223 1 ]
 [e :U 2205 ]
-"46
-[; ;d232.c: 46:    break;
-[e $U 2202  ]
-"47
-[; ;d232.c: 47:   case S_S:
-[e :U 2206 ]
 "48
-[; ;d232.c: 48:    if (j == 'R')
-[e $ ! == -> _j `ui -> 82 `ui 2207  ]
+[; ;d232.c: 48:    break;
+[e $U 2202  ]
 "49
-[; ;d232.c: 49:     IO.srq = S_R;
+[; ;d232.c: 49:   case S_S:
+[e :U 2206 ]
+"50
+[; ;d232.c: 50:    if (j == 'R')
+[e $ ! == -> _j `ui -> 82 `ui 2207  ]
+"51
+[; ;d232.c: 51:     IO.srq = S_R;
 [e = . _IO 6 . `E16223 2 ]
 [e :U 2207 ]
-"50
-[; ;d232.c: 50:    break;
-[e $U 2202  ]
-"51
-[; ;d232.c: 51:   case S_R:
-[e :U 2208 ]
 "52
-[; ;d232.c: 52:    if (j == 'Q')
-[e $ ! == -> _j `ui -> 81 `ui 2209  ]
+[; ;d232.c: 52:    break;
+[e $U 2202  ]
 "53
-[; ;d232.c: 53:     IO.srq = S_Q;
+[; ;d232.c: 53:   case S_R:
+[e :U 2208 ]
+"54
+[; ;d232.c: 54:    if (j == 'Q')
+[e $ ! == -> _j `ui -> 81 `ui 2209  ]
+"55
+[; ;d232.c: 55:     IO.srq = S_Q;
 [e = . _IO 6 . `E16223 3 ]
 [e :U 2209 ]
-"54
-[; ;d232.c: 54:    break;
-[e $U 2202  ]
-"55
-[; ;d232.c: 55:   case S_Q:
-[e :U 2210 ]
 "56
-[; ;d232.c: 56:    if (j == ' ')
-[e $ ! == -> _j `ui -> 32 `ui 2211  ]
+[; ;d232.c: 56:    break;
+[e $U 2202  ]
 "57
-[; ;d232.c: 57:     IO.srq = S_NUM;
+[; ;d232.c: 57:   case S_Q:
+[e :U 2210 ]
+"58
+[; ;d232.c: 58:    if (j == ' ')
+[e $ ! == -> _j `ui -> 32 `ui 2211  ]
+"59
+[; ;d232.c: 59:     IO.srq = S_NUM;
 [e = . _IO 6 . `E16223 4 ]
 [e :U 2211 ]
-"58
-[; ;d232.c: 58:    break;
-[e $U 2202  ]
-"59
-[; ;d232.c: 59:   case S_NUM:
-[e :U 2212 ]
 "60
-[; ;d232.c: 60:    IO.srq_value = j;
-[e = . _IO 7 _j ]
-"61
-[; ;d232.c: 61:    IO.srq = S_UPDATE;
-[e = . _IO 6 . `E16223 5 ]
-"62
-[; ;d232.c: 62:    break;
+[; ;d232.c: 60:    break;
 [e $U 2202  ]
+"61
+[; ;d232.c: 61:   case S_NUM:
+[e :U 2212 ]
+"62
+[; ;d232.c: 62:    IO.srq_value = j;
+[e = . _IO 7 _j ]
 "63
-[; ;d232.c: 63:   default:
-[e :U 2213 ]
+[; ;d232.c: 63:    IO.srq = S_UPDATE;
+[e = . _IO 6 . `E16223 5 ]
 "64
-[; ;d232.c: 64:    IO.srq = S_IDLE;
-[e = . _IO 6 . `E16223 0 ]
+[; ;d232.c: 64:    break;
+[e $U 2202  ]
 "65
-[; ;d232.c: 65:   }
+[; ;d232.c: 65:   default:
+[e :U 2213 ]
+"66
+[; ;d232.c: 66:    IO.srq = S_IDLE;
+[e = . _IO 6 . `E16223 0 ]
+"67
+[; ;d232.c: 67:   }
 }
 [e $U 2202  ]
 [e :U 2203 ]
@@ -2437,279 +2443,293 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E16223 4 `ui 2212
  2213 ]
 [e :U 2202 ]
-"66
-[; ;d232.c: 66:  }
+"68
+[; ;d232.c: 68:  }
 }
 [e :U 2201 ]
-"68
-[; ;d232.c: 68:  WaitMs(10);
-[e ( _WaitMs (1 -> -> 10 `i `us ]
-"69
-[; ;d232.c: 69:  UART2_Write('D');
-[e ( _UART2_Write (1 -> -> 68 `ui `uc ]
 "70
-[; ;d232.c: 70:  UART2_Write(IO.outbytes[0]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+[; ;d232.c: 70:  WaitMs(10);
+[e ( _WaitMs (1 -> -> 10 `i `us ]
 "71
-[; ;d232.c: 71:  UART2_Write(IO.outbytes[1]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+[; ;d232.c: 71:  UART2_Write('D');
+[e ( _UART2_Write (1 -> -> 68 `ui `uc ]
 "72
-[; ;d232.c: 72:  UART2_Write(IO.outbytes[2]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+[; ;d232.c: 72:  UART2_Write(IO.outbytes[0]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
 "73
-[; ;d232.c: 73:  UART2_Write(IO.outbytes[3]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+[; ;d232.c: 73:  UART2_Write(IO.outbytes[1]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
 "74
-[; ;d232.c: 74:  UART2_Write(IO.outbytes[4]);
-[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 4 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
+[; ;d232.c: 74:  UART2_Write(IO.outbytes[2]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
 "75
-[; ;d232.c: 75:  UART2_Write('\r');
-[e ( _UART2_Write (1 -> -> 13 `ui `uc ]
+[; ;d232.c: 75:  UART2_Write(IO.outbytes[3]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 3 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
 "76
-[; ;d232.c: 76:  WaitMs(5);
-[e ( _WaitMs (1 -> -> 5 `i `us ]
+[; ;d232.c: 76:  UART2_Write(IO.outbytes[4]);
+[e ( _UART2_Write (1 *U + &U . _IO 1 * -> -> -> 4 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux ]
 "77
-[; ;d232.c: 77:  printf("%s", "R0\r");
-[e ( _printf , (. :s 11C :s 12C ]
+[; ;d232.c: 77:  UART2_Write('\r');
+[e ( _UART2_Write (1 -> -> 13 `ui `uc ]
 "78
-[; ;d232.c: 78:  IO.output_ok = 1;
-[e = . _IO 3 -> -> 1 `i `a ]
+[; ;d232.c: 78:  WaitMs(5);
+[e ( _WaitMs (1 -> -> 5 `i `us ]
 "79
-[; ;d232.c: 79:  IO.io = IO_OUT;
+[; ;d232.c: 79:  printf("%s", "R0\r");
+[e ( _printf , (. :s 11C :s 12C ]
+"80
+[; ;d232.c: 80:  IO.output_ok = 1;
+[e = . _IO 3 -> -> 1 `i `a ]
+"81
+[; ;d232.c: 81:  IO.io = IO_OUT;
 [e = . _IO 4 . `E16215 2 ]
-"83
-[; ;d232.c: 83:  StartTimer(TMR_RXTO, 250);
+"85
+[; ;d232.c: 85:  StartTimer(TMR_RXTO, 250);
 [e ( _StartTimer (2 , -> . `E16184 2 `uc -> -> 250 `i `us ]
-"84
-[; ;d232.c: 84:  while (!UART2_is_rx_ready()) {
+"86
+[; ;d232.c: 86:  while (!UART2_is_rx_ready()) {
 [e $U 2214  ]
 [e :U 2215 ]
 {
-"85
-[; ;d232.c: 85:   if (TimerDone(TMR_RXTO)) {
+"87
+[; ;d232.c: 87:   if (TimerDone(TMR_RXTO)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E16184 2 `uc `i -> 0 `i 2217  ]
 {
-"86
-[; ;d232.c: 86:    PWM8_LoadDutyValue(0);
-[e ( _PWM8_LoadDutyValue (1 -> -> 0 `i `us ]
-"87
-[; ;d232.c: 87:    return 0;
+"88
+[; ;d232.c: 88:    PWM8_LoadDutyValue(x++);
+[e ( _PWM8_LoadDutyValue (1 -> ++ F16252 -> -> 1 `i `uc `us ]
+"89
+[; ;d232.c: 89:    if (x > 3)
+[e $ ! > -> F16252 `i -> 3 `i 2218  ]
+"90
+[; ;d232.c: 90:     x = 0;
+[e = F16252 -> -> 0 `i `uc ]
+[e :U 2218 ]
+"91
+[; ;d232.c: 91:    return 0;
 [e ) -> -> 0 `i `a ]
 [e $UE 2200  ]
-"88
-[; ;d232.c: 88:   }
+"92
+[; ;d232.c: 92:   }
 }
 [e :U 2217 ]
-"89
-[; ;d232.c: 89:  }
+"93
+[; ;d232.c: 93:  }
 }
 [e :U 2214 ]
-"84
-[; ;d232.c: 84:  while (!UART2_is_rx_ready()) {
+"86
+[; ;d232.c: 86:  while (!UART2_is_rx_ready()) {
 [e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2215  ]
 [e :U 2216 ]
-"94
-[; ;d232.c: 94:  StartTimer(TMR_RXTO, 250);
-[e ( _StartTimer (2 , -> . `E16184 2 `uc -> -> 250 `i `us ]
-"95
-[; ;d232.c: 95:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
-[e $U 2218  ]
-[e :U 2219 ]
-{
-"96
-[; ;d232.c: 96:   if (UART2_is_rx_ready()) {
-[e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2221  ]
-{
-"97
-[; ;d232.c: 97:    IO.inbytes[i] = UART2_Read();
-[e = *U + &U . _IO 0 * -> _i `ux -> -> # *U &U . _IO 0 `ui `ux ( _UART2_Read ..  ]
 "98
-[; ;d232.c: 98:    i++;
-[e ++ _i -> -> 1 `i `uc ]
+[; ;d232.c: 98:  StartTimer(TMR_RXTO, 250);
+[e ( _StartTimer (2 , -> . `E16184 2 `uc -> -> 250 `i `us ]
 "99
-[; ;d232.c: 99:   }
-}
-[e :U 2221 ]
-"100
-[; ;d232.c: 100:  }
-}
-[e :U 2218 ]
-"95
-[; ;d232.c: 95:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
-[e $ && ! != -> ( _TimerDone (1 -> . `E16184 2 `uc `i -> 0 `i < -> _i `i -> 6 `i 2219  ]
+[; ;d232.c: 99:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
+[e $U 2219  ]
 [e :U 2220 ]
-"101
-[; ;d232.c: 101:  if (TimerDone(TMR_RXTO) || i < 6) {
-[e $ ! || != -> ( _TimerDone (1 -> . `E16184 2 `uc `i -> 0 `i < -> _i `i -> 6 `i 2222  ]
 {
+"100
+[; ;d232.c: 100:   if (UART2_is_rx_ready()) {
+[e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2222  ]
+{
+"101
+[; ;d232.c: 101:    IO.inbytes[i] = UART2_Read();
+[e = *U + &U . _IO 0 * -> _i `ux -> -> # *U &U . _IO 0 `ui `ux ( _UART2_Read ..  ]
 "102
-[; ;d232.c: 102:   PWM8_LoadDutyValue(10);
-[e ( _PWM8_LoadDutyValue (1 -> -> 10 `i `us ]
+[; ;d232.c: 102:    i++;
+[e ++ _i -> -> 1 `i `uc ]
 "103
-[; ;d232.c: 103:   return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2200  ]
+[; ;d232.c: 103:   }
+}
+[e :U 2222 ]
 "104
 [; ;d232.c: 104:  }
 }
-[e :U 2222 ]
+[e :U 2219 ]
+"99
+[; ;d232.c: 99:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
+[e $ && ! != -> ( _TimerDone (1 -> . `E16184 2 `uc `i -> 0 `i < -> _i `i -> 6 `i 2220  ]
+[e :U 2221 ]
+"105
+[; ;d232.c: 105:  if (TimerDone(TMR_RXTO) || i < 6) {
+[e $ ! || != -> ( _TimerDone (1 -> . `E16184 2 `uc `i -> 0 `i < -> _i `i -> 6 `i 2223  ]
+{
 "106
-[; ;d232.c: 106:  IO.input_ok = 1;
-[e = . _IO 2 -> -> 1 `i `a ]
+[; ;d232.c: 106:   PWM8_LoadDutyValue(x++);
+[e ( _PWM8_LoadDutyValue (1 -> ++ F16252 -> -> 1 `i `uc `us ]
 "107
-[; ;d232.c: 107:  IO.io = IO_IN;
-[e = . _IO 4 . `E16215 3 ]
+[; ;d232.c: 107:   if (x > 16)
+[e $ ! > -> F16252 `i -> 16 `i 2224  ]
 "108
-[; ;d232.c: 108:  IO.d232 = D232_OUT_IN;
-[e = . _IO 5 . `E16208 2 ]
+[; ;d232.c: 108:    x = 0;
+[e = F16252 -> -> 0 `i `uc ]
+[e :U 2224 ]
+"109
+[; ;d232.c: 109:   return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2200  ]
+"110
+[; ;d232.c: 110:  }
+}
+[e :U 2223 ]
 "112
-[; ;d232.c: 112:  IO.button_value = ADCC_GetConversionResult();
-[e = . _IO 8 ( _ADCC_GetConversionResult ..  ]
+[; ;d232.c: 112:  IO.input_ok = 1;
+[e = . _IO 2 -> -> 1 `i `a ]
 "113
-[; ;d232.c: 113:  PWM8_LoadDutyValue(199);
-[e ( _PWM8_LoadDutyValue (1 -> -> 199 `i `us ]
+[; ;d232.c: 113:  IO.io = IO_IN;
+[e = . _IO 4 . `E16215 3 ]
 "114
-[; ;d232.c: 114:  return 1;
+[; ;d232.c: 114:  IO.d232 = D232_OUT_IN;
+[e = . _IO 5 . `E16208 2 ]
+"118
+[; ;d232.c: 118:  IO.button_value = ADCC_GetConversionResult();
+[e = . _IO 8 ( _ADCC_GetConversionResult ..  ]
+"119
+[; ;d232.c: 119:  PWM8_LoadDutyValue(199);
+[e ( _PWM8_LoadDutyValue (1 -> -> 199 `i `us ]
+"120
+[; ;d232.c: 120:  return 1;
 [e ) -> -> 1 `i `a ]
 [e $UE 2200  ]
-"115
-[; ;d232.c: 115: }
+"121
+[; ;d232.c: 121: }
 [e :UE 2200 ]
 }
-"117
-[; ;d232.c: 117: void led_lightshow(uint8_t seq, uint32_t speed)
+"123
+[; ;d232.c: 123: void led_lightshow(uint8_t seq, uint32_t speed)
 [v _led_lightshow `(v ~T0 @X0 1 ef2`uc`ul ]
-"118
-[; ;d232.c: 118: {
+"124
+[; ;d232.c: 124: {
 {
 [e :U _led_lightshow ]
-"117
-[; ;d232.c: 117: void led_lightshow(uint8_t seq, uint32_t speed)
+"123
+[; ;d232.c: 123: void led_lightshow(uint8_t seq, uint32_t speed)
 [v _seq `uc ~T0 @X0 1 r1 ]
 [v _speed `ul ~T0 @X0 1 r2 ]
-"118
-[; ;d232.c: 118: {
+"124
+[; ;d232.c: 124: {
 [f ]
-"119
-[; ;d232.c: 119:  static uint32_t j = 0;
-[v F16255 `ul ~T0 @X0 1 s j ]
-[i F16255
+"125
+[; ;d232.c: 125:  static uint32_t j = 0;
+[v F16256 `ul ~T0 @X0 1 s j ]
+[i F16256
 -> -> -> 0 `i `l `ul
 ]
-"120
-[; ;d232.c: 120:  static uint8_t cylon = 0xff;
-[v F16256 `uc ~T0 @X0 1 s cylon ]
-[i F16256
+"126
+[; ;d232.c: 126:  static uint8_t cylon = 0xff;
+[v F16257 `uc ~T0 @X0 1 s cylon ]
+[i F16257
 -> -> 255 `i `uc
 ]
-"121
-[; ;d232.c: 121:  static int32_t alive_led = 0;
-[v F16257 `l ~T0 @X0 1 s alive_led ]
-[i F16257
+"127
+[; ;d232.c: 127:  static int32_t alive_led = 0;
+[v F16258 `l ~T0 @X0 1 s alive_led ]
+[i F16258
 -> -> 0 `i `l
 ]
-"122
-[; ;d232.c: 122:  static _Bool LED_UP = 1;
-[v F16258 `a ~T0 @X0 1 s LED_UP ]
-[i F16258
+"128
+[; ;d232.c: 128:  static _Bool LED_UP = 1;
+[v F16259 `a ~T0 @X0 1 s LED_UP ]
+[i F16259
 -> -> 1 `i `a
 ]
-"124
-[; ;d232.c: 124:  if (j++ >= speed) {
-[e $ ! >= ++ F16255 -> -> -> 1 `i `l `ul _speed 2224  ]
+"130
+[; ;d232.c: 130:  if (j++ >= speed) {
+[e $ ! >= ++ F16256 -> -> -> 1 `i `l `ul _speed 2226  ]
 {
-"125
-[; ;d232.c: 125:   if (0) {
-[e $ ! != -> 0 `i -> 0 `i 2225  ]
-{
-"126
-[; ;d232.c: 126:    IO.outbytes[1] = ~cylon;
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> ~ -> F16256 `i `uc ]
-"127
-[; ;d232.c: 127:   } else {
-}
-[e $U 2226  ]
-[e :U 2225 ]
-{
-"128
-[; ;d232.c: 128:    IO.outbytes[1] = cylon;
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux F16256 ]
-"129
-[; ;d232.c: 129:   }
-}
-[e :U 2226 ]
 "131
-[; ;d232.c: 131:   if (LED_UP && (alive_led != 0)) {
-[e $ ! && != -> F16258 `i -> 0 `i != F16257 -> -> 0 `i `l 2227  ]
+[; ;d232.c: 131:   if (0) {
+[e $ ! != -> 0 `i -> 0 `i 2227  ]
 {
 "132
-[; ;d232.c: 132:    alive_led = alive_led * 2;
-[e = F16257 * F16257 -> -> 2 `i `l ]
+[; ;d232.c: 132:    IO.outbytes[1] = ~cylon;
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> ~ -> F16257 `i `uc ]
 "133
-[; ;d232.c: 133:    cylon = cylon << 1;
-[e = F16256 -> << -> F16256 `i -> 1 `i `uc ]
-"134
-[; ;d232.c: 134:   } else {
+[; ;d232.c: 133:   } else {
 }
 [e $U 2228  ]
 [e :U 2227 ]
 {
+"134
+[; ;d232.c: 134:    IO.outbytes[1] = cylon;
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux F16257 ]
 "135
-[; ;d232.c: 135:    if (alive_led != 0) alive_led = alive_led / 2;
-[e $ ! != F16257 -> -> 0 `i `l 2229  ]
-[e = F16257 / F16257 -> -> 2 `i `l ]
-[e :U 2229 ]
-"136
-[; ;d232.c: 136:    cylon = cylon >> 1;
-[e = F16256 -> >> -> F16256 `i -> 1 `i `uc ]
-"137
-[; ;d232.c: 137:   }
+[; ;d232.c: 135:   }
 }
 [e :U 2228 ]
+"137
+[; ;d232.c: 137:   if (LED_UP && (alive_led != 0)) {
+[e $ ! && != -> F16259 `i -> 0 `i != F16258 -> -> 0 `i `l 2229  ]
+{
 "138
-[; ;d232.c: 138:   if (alive_led < 2) {
-[e $ ! < F16257 -> -> 2 `i `l 2230  ]
-{
+[; ;d232.c: 138:    alive_led = alive_led * 2;
+[e = F16258 * F16258 -> -> 2 `i `l ]
 "139
-[; ;d232.c: 139:    alive_led = 2;
-[e = F16257 -> -> 2 `i `l ]
+[; ;d232.c: 139:    cylon = cylon << 1;
+[e = F16257 -> << -> F16257 `i -> 1 `i `uc ]
 "140
-[; ;d232.c: 140:    LED_UP = 1;
-[e = F16258 -> -> 1 `i `a ]
+[; ;d232.c: 140:   } else {
+}
+[e $U 2230  ]
+[e :U 2229 ]
+{
 "141
-[; ;d232.c: 141:   } else {
-}
-[e $U 2231  ]
-[e :U 2230 ]
-{
-"142
-[; ;d232.c: 142:    if (alive_led > 128) {
-[e $ ! > F16257 -> -> 128 `i `l 2232  ]
-{
-"143
-[; ;d232.c: 143:     alive_led = 128;
-[e = F16257 -> -> 128 `i `l ]
-"144
-[; ;d232.c: 144:     LED_UP = 0;
-[e = F16258 -> -> 0 `i `a ]
-"145
-[; ;d232.c: 145:    }
-}
-[e :U 2232 ]
-"146
-[; ;d232.c: 146:   }
-}
+[; ;d232.c: 141:    if (alive_led != 0) alive_led = alive_led / 2;
+[e $ ! != F16258 -> -> 0 `i `l 2231  ]
+[e = F16258 / F16258 -> -> 2 `i `l ]
 [e :U 2231 ]
-"147
-[; ;d232.c: 147:   j = 0;
-[e = F16255 -> -> -> 0 `i `l `ul ]
-"148
-[; ;d232.c: 148:  }
+"142
+[; ;d232.c: 142:    cylon = cylon >> 1;
+[e = F16257 -> >> -> F16257 `i -> 1 `i `uc ]
+"143
+[; ;d232.c: 143:   }
 }
-[e :U 2224 ]
+[e :U 2230 ]
+"144
+[; ;d232.c: 144:   if (alive_led < 2) {
+[e $ ! < F16258 -> -> 2 `i `l 2232  ]
+{
+"145
+[; ;d232.c: 145:    alive_led = 2;
+[e = F16258 -> -> 2 `i `l ]
+"146
+[; ;d232.c: 146:    LED_UP = 1;
+[e = F16259 -> -> 1 `i `a ]
+"147
+[; ;d232.c: 147:   } else {
+}
+[e $U 2233  ]
+[e :U 2232 ]
+{
+"148
+[; ;d232.c: 148:    if (alive_led > 128) {
+[e $ ! > F16258 -> -> 128 `i `l 2234  ]
+{
 "149
-[; ;d232.c: 149: }
-[e :UE 2223 ]
+[; ;d232.c: 149:     alive_led = 128;
+[e = F16258 -> -> 128 `i `l ]
+"150
+[; ;d232.c: 150:     LED_UP = 0;
+[e = F16259 -> -> 0 `i `a ]
+"151
+[; ;d232.c: 151:    }
+}
+[e :U 2234 ]
+"152
+[; ;d232.c: 152:   }
+}
+[e :U 2233 ]
+"153
+[; ;d232.c: 153:   j = 0;
+[e = F16256 -> -> -> 0 `i `l `ul ]
+"154
+[; ;d232.c: 154:  }
+}
+[e :U 2226 ]
+"155
+[; ;d232.c: 155: }
+[e :UE 2225 ]
 }
 [p f _printf 8650752 ]
 [a 1C 37 115 0 ]
