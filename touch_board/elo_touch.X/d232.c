@@ -1,4 +1,8 @@
 #include "d232.h"
+/*
+ * EDAC 500-201 connector
+ * pin 1 = 1A, pin 2 = 1B, PIN 3 = 2A ... PIN 50 = 25B
+ */
 
 extern volatile A_data IO;
 
