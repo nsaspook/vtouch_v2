@@ -26959,7 +26959,8 @@ typedef enum {
  IO_OUT,
  IO_IN,
  IO_SRQ,
- IO_UPDATE
+ IO_UPDATE,
+ IO_FAIL,
 } IO_STATE;
 
 typedef enum {
@@ -26968,7 +26969,7 @@ typedef enum {
  S_R,
  S_Q,
  S_NUM,
- S_UPDATE
+ S_UPDATE,
 } SRQ_STATE;
 
 typedef struct A_data {
@@ -26982,6 +26983,14 @@ typedef struct A_data {
  uint8_t srq_value;
  adc_result_t button_value;
 } A_data;
+
+typedef struct IN_data {
+ uint8_t b0 : 1;
+ uint8_t detonator : 1;
+ uint8_t b2 : 1;
+ uint8_t b3 : 1;
+ uint8_t b4 : 1;
+} IN_data;
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
@@ -27025,8 +27034,11 @@ _Bool Digital232_RW(void)
  uint8_t i = 0, j = 0;
  static uint8_t x = 0;
 
- if (!TimerDone(TMR_SPS))
+
+ if (!TimerDone(TMR_SPS)) {
+  IO.io = IO_IDLE;
   return 0;
+ }
 
  StartTimer(TMR_SPS, 10);
 
@@ -27085,6 +27097,7 @@ _Bool Digital232_RW(void)
    PWM8_LoadDutyValue(x++);
    if (x > 3)
     x = 0;
+   IO.io = IO_FAIL;
    return 0;
   }
  }
@@ -27092,10 +27105,11 @@ _Bool Digital232_RW(void)
 
 
 
+ i = 0;
  StartTimer(TMR_RXTO, 250);
  while (!TimerDone(TMR_RXTO) && (i < 6)) {
   if (UART2_is_rx_ready()) {
-   IO.inbytes[5 - i] = UART2_Read();
+   IO.inbytes[4 - i] = UART2_Read();
    i++;
   }
  }
@@ -27103,8 +27117,12 @@ _Bool Digital232_RW(void)
   PWM8_LoadDutyValue(x++);
   if (x > 16)
    x = 0;
+  IO.io = IO_FAIL;
   return 0;
  }
+
+ if (UART2_is_rx_ready())
+  UART2_Read();
 
  IO.input_ok = 1;
  IO.io = IO_IN;
@@ -27114,6 +27132,7 @@ _Bool Digital232_RW(void)
 
  IO.button_value = ADCC_GetConversionResult();
  PWM8_LoadDutyValue(199);
+ IO.io = IO_UPDATE;
  return 1;
 }
 
@@ -27123,6 +27142,11 @@ void led_lightshow(uint8_t seq, uint16_t speed)
  static uint8_t cylon = 0xff;
  static int16_t alive_led = 0;
  static _Bool LED_UP = 1;
+
+ if (seq == 1) {
+  IO.outbytes[2] = IO.inbytes[0];
+  return;
+ }
 
  if (j++ >= speed) {
   if (0) {

@@ -135,6 +135,7 @@ IO_OUT 2
 IO_IN 3
 IO_SRQ 4
 IO_UPDATE 5
+IO_FAIL 6
 ]
 [e E16441 . `uc
 D232_IDLE 0
@@ -143,7 +144,7 @@ D232_OUT_IN 2
 D232_SRQ 3
 D232_UPDATE 4
 ]
-[e E16456 . `uc
+[e E16457 . `uc
 S_IDLE 0
 S_S 1
 S_R 2
@@ -151,7 +152,7 @@ S_Q 3
 S_NUM 4
 S_UPDATE 5
 ]
-"59
+"60
 [e E16426 APP_TIMERS `uc
 TMR_INTERNAL 0
 TMR_INIT 1
@@ -167,6 +168,7 @@ IO_OUT 2
 IO_IN 3
 IO_SRQ 4
 IO_UPDATE 5
+IO_FAIL 6
 ]
 [e E16228 . `uc
 D232_IDLE 0
@@ -175,7 +177,7 @@ D232_OUT_IN 2
 D232_SRQ 3
 D232_UPDATE 4
 ]
-[e E16243 . `uc
+[e E16244 . `uc
 S_IDLE 0
 S_S 1
 S_R 2
@@ -255,11 +257,11 @@ TMR_COUNT 4
 [v _Digital232_init Digital232_init `(v  1 e 1 0 ]
 "35
 [v _Digital232_RW Digital232_RW `(a  1 e 1 0 ]
-"132
+"142
 [v _led_lightshow led_lightshow `(v  1 e 1 0 ]
-"57 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
+"58 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
 [v _work_sw work_sw `(v  1 e 1 0 ]
-"67
+"68
 [v _main main `(v  1 e 1 0 ]
 "62 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
@@ -955,9 +957,9 @@ TMR_COUNT 4
 [v _nout nout `i  1 s 2 nout ]
 "54 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
 [v _tickCount tickCount `VE[4]us  1 e 8 0 ]
-[s S2063 A_data 18 `[5]uc 1 inbytes 5 0 `[5]uc 1 outbytes 5 5 `a 1 input_ok 1 10 `a 1 output_ok 1 11 `E16448 1 io 1 12 `E16441 1 d232 1 13 `E16456 1 srq 1 14 `uc 1 srq_value 1 15 `us 1 button_value 2 16 ]
+[s S2064 A_data 18 `[5]uc 1 inbytes 5 0 `[5]uc 1 outbytes 5 5 `a 1 input_ok 1 10 `a 1 output_ok 1 11 `E16448 1 io 1 12 `E16441 1 d232 1 13 `E16457 1 srq 1 14 `uc 1 srq_value 1 15 `us 1 button_value 2 16 ]
 "55
-[v _IO IO `VES2063  1 e 18 0 ]
+[v _IO IO `VES2064  1 e 18 0 ]
 "59 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/tmr5.c
 [v _timer5ReloadVal timer5ReloadVal `VEus  1 e 2 0 ]
 "60
@@ -1022,31 +1024,35 @@ TMR_COUNT 4
 [v _UART2_OverrunErrorHandler UART2_OverrunErrorHandler `*.38(v  1 e 3 0 ]
 "81
 [v _UART2_ErrorHandler UART2_ErrorHandler `*.38(v  1 e 3 0 ]
-"67 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
+"68 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"69
+"70
 [v main@y y `uc  1 a 1 5 ]
-"104
+"105
 } 0
-"57
+"58
 [v _work_sw work_sw `(v  1 e 1 0 ]
 {
-"62
+"63
 } 0
-"132 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+"142 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
 [v _led_lightshow led_lightshow `(v  1 e 1 0 ]
 {
+[v led_lightshow@seq seq `uc  1 a 1 wreg ]
+[v led_lightshow@seq seq `uc  1 a 1 wreg ]
 [v led_lightshow@speed speed `us  1 p 2 13 ]
-"134
+"144
 [v led_lightshow@j j `us  1 s 2 j ]
-"135
+"145
 [v led_lightshow@cylon cylon `uc  1 s 1 cylon ]
-"136
+"146
 [v led_lightshow@alive_led alive_led `s  1 s 2 alive_led ]
-"137
+"147
 [v led_lightshow@LED_UP LED_UP `a  1 s 1 LED_UP ]
-"164
+"149
+[v led_lightshow@seq seq `uc  1 a 1 17 ]
+"179
 } 0
 "7 /opt/microchip/xc8/v2.10/pic/sources/c99/common/awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
@@ -1223,7 +1229,7 @@ TMR_COUNT 4
 [v Digital232_RW@i i `uc  1 a 1 2 ]
 "38
 [v Digital232_RW@x x `uc  1 s 1 x ]
-"130
+"140
 } 0
 "5 /opt/microchip/xc8/v2.10/pic/sources/c99/common/printf.c
 [v _printf printf `(i  1 e 2 0 ]
@@ -1239,9 +1245,9 @@ TMR_COUNT 4
 {
 "1371
 [v vfprintf@cfmt cfmt `*.31uc  1 a 1 48 ]
-[s S2268 _IO_FILE 0 ]
+[s S2282 _IO_FILE 0 ]
 "1368
-[v vfprintf@fp fp `*.2S2268  1 p 2 44 ]
+[v vfprintf@fp fp `*.2S2282  1 p 2 44 ]
 [v vfprintf@fmt fmt `*.31Cuc  1 p 1 46 ]
 [v vfprintf@ap ap `*.30*.30v  1 p 1 47 ]
 "1382
@@ -1251,9 +1257,9 @@ TMR_COUNT 4
 {
 "672
 [v vfpfcnvrt@cp cp `*.34uc  1 a 2 42 ]
-[s S2268 _IO_FILE 0 ]
+[s S2282 _IO_FILE 0 ]
 "670
-[v vfpfcnvrt@fp fp `*.2S2268  1 p 2 38 ]
+[v vfpfcnvrt@fp fp `*.2S2282  1 p 2 38 ]
 [v vfpfcnvrt@fmt fmt `*.30*.31uc  1 p 1 40 ]
 [v vfpfcnvrt@ap ap `*.30*.30v  1 p 1 41 ]
 "1365
@@ -1271,9 +1277,9 @@ TMR_COUNT 4
 "549
 [v stoa@w w `i  1 a 2 30 ]
 [v stoa@i i `i  1 a 2 28 ]
-[s S2268 _IO_FILE 0 ]
+[s S2282 _IO_FILE 0 ]
 "546
-[v stoa@fp fp `*.2S2268  1 p 2 16 ]
+[v stoa@fp fp `*.2S2282  1 p 2 16 ]
 [v stoa@s s `*.34uc  1 p 2 18 ]
 "548
 [v stoa@F1131 F1131 `[7]uc  1 s 7 F1131 ]
@@ -1292,8 +1298,8 @@ TMR_COUNT 4
 [v _fputc fputc `(i  1 e 2 0 ]
 {
 [v fputc@c c `i  1 p 2 7 ]
-[s S2770 _IO_FILE 6 `*.2uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
-[v fputc@fp fp `*.2S2770  1 p 2 9 ]
+[s S2784 _IO_FILE 6 `*.2uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[v fputc@fp fp `*.2S2784  1 p 2 9 ]
 "21
 } 0
 "221 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/uart2.c

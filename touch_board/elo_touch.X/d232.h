@@ -70,7 +70,8 @@ typedef enum {
 	IO_OUT,
 	IO_IN,
 	IO_SRQ,
-	IO_UPDATE
+	IO_UPDATE,
+	IO_FAIL,
 } IO_STATE;
 
 typedef enum {
@@ -79,20 +80,28 @@ typedef enum {
 	S_R,
 	S_Q,
 	S_NUM,
-	S_UPDATE
+	S_UPDATE,
 } SRQ_STATE;
 
 typedef struct A_data {
 	uint8_t inbytes[5]; // input from Digital232 buffer
 	uint8_t outbytes[5]; // output from Digital232 buffer
-	bool	input_ok;
-	bool	output_ok;
-	IO_STATE	io;
-	D232_STATE	d232;
-	SRQ_STATE	srq;
-	uint8_t		srq_value;
-	adc_result_t	button_value;
+	bool input_ok;
+	bool output_ok;
+	IO_STATE io;
+	D232_STATE d232;
+	SRQ_STATE srq;
+	uint8_t srq_value;
+	adc_result_t button_value;
 } A_data;
+
+typedef struct IN_data {
+	uint8_t b0 : 1;
+	uint8_t detonator : 1;
+	uint8_t b2 : 1;
+	uint8_t b3 : 1;
+	uint8_t b4 : 1;
+} IN_data;
 
 void Digital232_init(void);
 bool Digital232_RW(void);

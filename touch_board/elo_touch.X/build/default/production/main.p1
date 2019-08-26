@@ -5,22 +5,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F16414 `(v ~T0 @X0 0 tf ]
 "55 main.c
 [; ;main.c: 55: volatile A_data IO;
-[c E16448 0 1 2 3 4 5 .. ]
-[n E16448 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE  ]
+[c E16448 0 1 2 3 4 5 6 .. ]
+[n E16448 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE IO_FAIL  ]
 [c E16441 0 1 2 3 4 .. ]
 [n E16441 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
-[c E16456 0 1 2 3 4 5 .. ]
-[n E16456 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
-"85 ./d232.h
-[; ;./d232.h: 85: typedef struct A_data {
-[s S2203 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16448 1 `E16441 1 `E16456 1 `uc 1 `us 1 ]
+[c E16457 0 1 2 3 4 5 .. ]
+[n E16457 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
+"86 ./d232.h
+[; ;./d232.h: 86: typedef struct A_data {
+[s S2203 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16448 1 `E16441 1 `E16457 1 `uc 1 `us 1 ]
 [n S2203 A_data inbytes outbytes input_ok output_ok io d232 srq srq_value button_value ]
+"98
+[; ;./d232.h: 98: typedef struct IN_data {
+[s S2204 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2204 IN_data b0 detonator b2 b3 b4 ]
 [v F16437 `(a ~T0 @X0 1 tf1`uc ]
 "23 ./timers.h
 [; ;./timers.h: 23: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 [v _TimerDone `TF16437 ~T0 @X0 0 e ]
-"59 main.c
-[; ;main.c: 59:  if (TimerDone(TMR_INIT)) {
+"60 main.c
+[; ;main.c: 60:  if (TimerDone(TMR_INIT)) {
 [c E16426 0 1 2 3 4 .. ]
 [n E16426 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_COUNT  ]
 [v F16433 `(v ~T0 @X0 1 tf2`uc`us ]
@@ -46,14 +50,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46269
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f47k42.h: 46269: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2089 ~T0 @X0 0 e@16338 ]
-"97 ./d232.h
-[; ;./d232.h: 97: void Digital232_init(void);
+"106 ./d232.h
+[; ;./d232.h: 106: void Digital232_init(void);
 [v _Digital232_init `(v ~T0 @X0 0 ef ]
-"98
-[; ;./d232.h: 98: _Bool Digital232_RW(void);
+"107
+[; ;./d232.h: 107: _Bool Digital232_RW(void);
 [v _Digital232_RW `(a ~T0 @X0 0 ef ]
-"99
-[; ;./d232.h: 99: void led_lightshow(uint8_t, uint16_t);
+"108
+[; ;./d232.h: 108: void led_lightshow(uint8_t, uint16_t);
 [v _led_lightshow `(v ~T0 @X0 0 ef2`uc`us ]
 "44 main.c
 [p n 520 ]
@@ -2281,92 +2285,98 @@ Version 4.0 HI-TECH Software Intermediate Code
 "55
 [; ;main.c: 55: volatile A_data IO;
 [v _IO `VS2203 ~T0 @X0 1 e ]
-"57
-[; ;main.c: 57: void work_sw(void)
-[v _work_sw `(v ~T0 @X0 1 ef ]
+"56
+[; ;main.c: 56: IN_data *switches = (void *) & IO.inbytes[0];
+[v _switches `*S2204 ~T0 @X0 1 e ]
+[i _switches
+-> -> &U *U + &U . _IO 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 0 `ui `ux `*v `*S2204
+]
 "58
-[; ;main.c: 58: {
+[; ;main.c: 58: void work_sw(void)
+[v _work_sw `(v ~T0 @X0 1 ef ]
+"59
+[; ;main.c: 59: {
 {
 [e :U _work_sw ]
 [f ]
-"59
-[; ;main.c: 59:  if (TimerDone(TMR_INIT)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16426 1 `uc `i -> 0 `i 2205  ]
-{
 "60
-[; ;main.c: 60:   StartTimer(TMR_INIT, 1000);
-[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
+[; ;main.c: 60:  if (TimerDone(TMR_INIT)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16426 1 `uc `i -> 0 `i 2206  ]
+{
 "61
-[; ;main.c: 61:  }
-}
-[e :U 2205 ]
+[; ;main.c: 61:   StartTimer(TMR_INIT, 1000);
+[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
 "62
-[; ;main.c: 62: }
-[e :UE 2204 ]
+[; ;main.c: 62:  }
+}
+[e :U 2206 ]
+"63
+[; ;main.c: 63: }
+[e :UE 2205 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"67
-[; ;main.c: 67: void main(void)
-[v _main `(v ~T0 @X0 1 ef ]
 "68
-[; ;main.c: 68: {
+[; ;main.c: 68: void main(void)
+[v _main `(v ~T0 @X0 1 ef ]
+"69
+[; ;main.c: 69: {
 {
 [e :U _main ]
 [f ]
-"69
-[; ;main.c: 69:  uint8_t x = 0, y = 0;
+"70
+[; ;main.c: 70:  uint8_t x = 0, y = 0;
 [v _x `uc ~T0 @X0 1 a ]
 [e = _x -> -> 0 `i `uc ]
 [v _y `uc ~T0 @X0 1 a ]
 [e = _y -> -> 0 `i `uc ]
-"71
-[; ;main.c: 71:  SYSTEM_Initialize();
+"72
+[; ;main.c: 72:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"78
-[; ;main.c: 78:  (INTCON0bits.GIEH = 1);
+"79
+[; ;main.c: 79:  (INTCON0bits.GIEH = 1);
 [e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-"81
-[; ;main.c: 81:  (INTCON0bits.GIEL = 1);
+"82
+[; ;main.c: 82:  (INTCON0bits.GIEL = 1);
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-"89
-[; ;main.c: 89:  IO.input_ok = 0;
-[e = . _IO 2 -> -> 0 `i `a ]
 "90
-[; ;main.c: 90:  IO.output_ok = 0;
-[e = . _IO 3 -> -> 0 `i `a ]
+[; ;main.c: 90:  IO.input_ok = 0;
+[e = . _IO 2 -> -> 0 `i `a ]
 "91
-[; ;main.c: 91:  IO.d232 = D232_IDLE;
-[e = . _IO 5 . `E16441 0 ]
+[; ;main.c: 91:  IO.output_ok = 0;
+[e = . _IO 3 -> -> 0 `i `a ]
 "92
-[; ;main.c: 92:  IO.io = IO_IDLE;
+[; ;main.c: 92:  IO.d232 = D232_IDLE;
+[e = . _IO 5 . `E16441 0 ]
+"93
+[; ;main.c: 93:  IO.io = IO_IDLE;
 [e = . _IO 4 . `E16448 0 ]
-"94
-[; ;main.c: 94:  StartTimer(TMR_INIT, 1000);
-[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
 "95
-[; ;main.c: 95:  Digital232_init();
+[; ;main.c: 95:  StartTimer(TMR_INIT, 1000);
+[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
+"96
+[; ;main.c: 96:  Digital232_init();
 [e ( _Digital232_init ..  ]
-"97
-[; ;main.c: 97:  while (1) {
-[e :U 2208 ]
-{
-"99
-[; ;main.c: 99:   work_sw();
-[e ( _work_sw ..  ]
-"100
-[; ;main.c: 100:   if (Digital232_RW())
-[e $ ! != -> ( _Digital232_RW ..  `i -> 0 `i 2210  ]
-"101
-[; ;main.c: 101:    led_lightshow(0, 1);
-[e ( _led_lightshow (2 , -> -> 0 `i `uc -> -> 1 `i `us ]
-[e :U 2210 ]
-"103
-[; ;main.c: 103:  }
-}
-[e :U 2207 ]
-[e $U 2208  ]
+"98
+[; ;main.c: 98:  while (1) {
 [e :U 2209 ]
+{
+"100
+[; ;main.c: 100:   work_sw();
+[e ( _work_sw ..  ]
+"101
+[; ;main.c: 101:   if (Digital232_RW() && switches->detonator)
+[e $ ! && != -> ( _Digital232_RW ..  `i -> 0 `i != -> . *U _switches 1 `i -> 0 `i 2211  ]
+"102
+[; ;main.c: 102:    led_lightshow(0, 1);
+[e ( _led_lightshow (2 , -> -> 0 `i `uc -> -> 1 `i `us ]
+[e :U 2211 ]
 "104
-[; ;main.c: 104: }
-[e :UE 2206 ]
+[; ;main.c: 104:  }
+}
+[e :U 2208 ]
+[e $U 2209  ]
+[e :U 2210 ]
+"105
+[; ;main.c: 105: }
+[e :UE 2207 ]
 }

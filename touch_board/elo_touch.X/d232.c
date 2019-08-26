@@ -37,9 +37,12 @@ bool Digital232_RW(void)
 	uint8_t i = 0, j = 0;
 	static uint8_t x = 0;
 
-	if (!TimerDone(TMR_SPS))
+
+	if (!TimerDone(TMR_SPS)) {
+		IO.io = IO_IDLE;
 		return false;
-	
+	}
+
 	StartTimer(TMR_SPS, 10); // samples per second timer 10ms spacing at least
 
 	/*
@@ -97,6 +100,7 @@ bool Digital232_RW(void)
 			PWM8_LoadDutyValue(x++);
 			if (x > 3)
 				x = 0;
+			IO.io = IO_FAIL;
 			return false;
 		}
 	}
@@ -104,10 +108,11 @@ bool Digital232_RW(void)
 	/*
 	 * read data
 	 */
+	i = 0;
 	StartTimer(TMR_RXTO, 250);
 	while (!TimerDone(TMR_RXTO) && (i < 6)) {
 		if (UART2_is_rx_ready()) {
-			IO.inbytes[5 - i] = UART2_Read(); // port 5 first so count down
+			IO.inbytes[4 - i] = UART2_Read(); // port 5 first so count down
 			i++;
 		}
 	}
@@ -115,8 +120,12 @@ bool Digital232_RW(void)
 		PWM8_LoadDutyValue(x++);
 		if (x > 16)
 			x = 0;
+		IO.io = IO_FAIL;
 		return false;
 	}
+
+	if (UART2_is_rx_ready())
+		UART2_Read(); // eat data term char
 
 	IO.input_ok = true;
 	IO.io = IO_IN;
@@ -126,6 +135,7 @@ bool Digital232_RW(void)
 	//	while (!ADCC_IsConversionDone());
 	IO.button_value = ADCC_GetConversionResult();
 	PWM8_LoadDutyValue(199);
+	IO.io = IO_UPDATE;
 	return true;
 }
 
@@ -135,6 +145,11 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 	static uint8_t cylon = 0xff;
 	static int16_t alive_led = 0;
 	static bool LED_UP = true;
+
+	if (seq == 1) {
+		IO.outbytes[2] = IO.inbytes[0];
+		return;
+	}
 
 	if (j++ >= speed) { // delay a bit ok
 		if (0) { // screen status feedback

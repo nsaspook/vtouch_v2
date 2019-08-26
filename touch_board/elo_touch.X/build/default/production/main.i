@@ -27555,7 +27555,8 @@ typedef enum {
  IO_OUT,
  IO_IN,
  IO_SRQ,
- IO_UPDATE
+ IO_UPDATE,
+ IO_FAIL,
 } IO_STATE;
 
 typedef enum {
@@ -27564,7 +27565,7 @@ typedef enum {
  S_R,
  S_Q,
  S_NUM,
- S_UPDATE
+ S_UPDATE,
 } SRQ_STATE;
 
 typedef struct A_data {
@@ -27579,6 +27580,14 @@ typedef struct A_data {
  adc_result_t button_value;
 } A_data;
 
+typedef struct IN_data {
+ uint8_t b0 : 1;
+ uint8_t detonator : 1;
+ uint8_t b2 : 1;
+ uint8_t b3 : 1;
+ uint8_t b4 : 1;
+} IN_data;
+
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
@@ -27588,6 +27597,7 @@ void led_lightshow(uint8_t, uint16_t);
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile A_data IO;
+IN_data *switches = (void *) & IO.inbytes[0];
 
 void work_sw(void)
 {
@@ -27632,7 +27642,7 @@ void main(void)
  while (1) {
 
   work_sw();
-  if (Digital232_RW())
+  if (Digital232_RW() && switches->detonator)
    led_lightshow(0, 1);
 
  }

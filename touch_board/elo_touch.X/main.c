@@ -53,6 +53,7 @@
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile A_data IO;
+IN_data *switches = (void *) & IO.inbytes[0];
 
 void work_sw(void)
 {
@@ -97,7 +98,7 @@ void main(void)
 	while (1) {
 		// Add your application code
 		work_sw();
-		if (Digital232_RW())
+		if (Digital232_RW() && switches->detonator)
 			led_lightshow(0, 1);
 
 	}
