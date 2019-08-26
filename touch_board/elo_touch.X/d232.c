@@ -29,12 +29,19 @@ void Digital232_init(void)
 	IO.srq_value = 0;
 	IO.button_value = 0;
 	ADCC_StartConversion(channel_ANA0);
+	StartTimer(TMR_SPS, 10);
 }
 
 bool Digital232_RW(void)
 {
 	uint8_t i = 0, j = 0;
 	static uint8_t x = 0;
+
+	if (!TimerDone(TMR_SPS))
+		return false;
+	
+	StartTimer(TMR_SPS, 10); // samples per second timer 10ms spacing at least
+
 	/*
 	 * empty receiver buffer
 	 */
@@ -71,15 +78,13 @@ bool Digital232_RW(void)
 		}
 	}
 
-	WaitMs(10);
 	UART2_Write('D');
-	UART2_Write(IO.outbytes[0]);
-	UART2_Write(IO.outbytes[1]);
-	UART2_Write(IO.outbytes[2]);
+	UART2_Write(IO.outbytes[4]); // port 5 first
 	UART2_Write(IO.outbytes[3]);
-	UART2_Write(IO.outbytes[4]);
+	UART2_Write(IO.outbytes[2]);
+	UART2_Write(IO.outbytes[1]);
+	UART2_Write(IO.outbytes[0]);
 	UART2_Write('\r');
-	WaitMs(5);
 	printf("%s", DRD);
 	IO.output_ok = true;
 	IO.io = IO_OUT;
@@ -102,7 +107,7 @@ bool Digital232_RW(void)
 	StartTimer(TMR_RXTO, 250);
 	while (!TimerDone(TMR_RXTO) && (i < 6)) {
 		if (UART2_is_rx_ready()) {
-			IO.inbytes[i] = UART2_Read();
+			IO.inbytes[5 - i] = UART2_Read(); // port 5 first so count down
 			i++;
 		}
 	}
@@ -124,18 +129,18 @@ bool Digital232_RW(void)
 	return true;
 }
 
-void led_lightshow(uint8_t seq, uint32_t speed)
+void led_lightshow(uint8_t seq, uint16_t speed)
 {
-	static uint32_t j = 0;
+	static uint16_t j = 0;
 	static uint8_t cylon = 0xff;
-	static int32_t alive_led = 0;
+	static int16_t alive_led = 0;
 	static bool LED_UP = true;
 
 	if (j++ >= speed) { // delay a bit ok
 		if (0) { // screen status feedback
-			IO.outbytes[1] = ~cylon; // roll leds cylon style
+			IO.outbytes[2] = ~cylon; // roll leds cylon style
 		} else {
-			IO.outbytes[1] = cylon; // roll leds cylon style (inverted)
+			IO.outbytes[2] = cylon; // roll leds cylon style (inverted)
 		}
 
 		if (LED_UP && (alive_led != 0)) {

@@ -96,7 +96,7 @@ typedef struct A_data {
 
 void Digital232_init(void);
 bool Digital232_RW(void);
-void led_lightshow(uint8_t, uint32_t);
+void led_lightshow(uint8_t, uint16_t);
 
 #ifdef	__cplusplus
 extern "C" {

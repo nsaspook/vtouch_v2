@@ -97,8 +97,8 @@ void main(void)
 	while (1) {
 		// Add your application code
 		work_sw();
-		Digital232_RW();
-		led_lightshow(0, 1);
+		if (Digital232_RW())
+			led_lightshow(0, 1);
 
 	}
 }
