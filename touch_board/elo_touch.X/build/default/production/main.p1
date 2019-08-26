@@ -19,12 +19,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./d232.h: 98: typedef struct IN_data {
 [s S2204 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2204 IN_data b0 detonator b2 b3 b4 ]
+"109
+[; ;./d232.h: 109: typedef struct OUT_data {
+[s S2205 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2205 OUT_data sound1 sound2 sound3 misc1 misc2 filler1 led1 led2 led3 led4 led5 led6 led7 led8 ]
 [v F16437 `(a ~T0 @X0 1 tf1`uc ]
 "23 ./timers.h
 [; ;./timers.h: 23: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 [v _TimerDone `TF16437 ~T0 @X0 0 e ]
-"60 main.c
-[; ;main.c: 60:  if (TimerDone(TMR_INIT)) {
+"61 main.c
+[; ;main.c: 61:  if (TimerDone(TMR_INIT)) {
 [c E16426 0 1 2 3 4 .. ]
 [n E16426 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_COUNT  ]
 [v F16433 `(v ~T0 @X0 1 tf2`uc`us ]
@@ -50,14 +54,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46269
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f47k42.h: 46269: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2089 ~T0 @X0 0 e@16338 ]
-"106 ./d232.h
-[; ;./d232.h: 106: void Digital232_init(void);
+"134 ./d232.h
+[; ;./d232.h: 134: void Digital232_init(void);
 [v _Digital232_init `(v ~T0 @X0 0 ef ]
-"107
-[; ;./d232.h: 107: _Bool Digital232_RW(void);
+"135
+[; ;./d232.h: 135: _Bool Digital232_RW(void);
 [v _Digital232_RW `(a ~T0 @X0 0 ef ]
-"108
-[; ;./d232.h: 108: void led_lightshow(uint8_t, uint16_t);
+"136
+[; ;./d232.h: 136: void led_lightshow(uint8_t, uint16_t);
 [v _led_lightshow `(v ~T0 @X0 0 ef2`uc`us ]
 "44 main.c
 [p n 520 ]
@@ -2291,92 +2295,124 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _switches
 -> -> &U *U + &U . _IO 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 0 `ui `ux `*v `*S2204
 ]
-"58
-[; ;main.c: 58: void work_sw(void)
-[v _work_sw `(v ~T0 @X0 1 ef ]
+"57
+[; ;main.c: 57: OUT_data *lamps_sounds = (void*) &IO.outbytes[1];
+[v _lamps_sounds `*S2205 ~T0 @X0 1 e ]
+[i _lamps_sounds
+-> -> &U *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `*v `*S2205
+]
 "59
-[; ;main.c: 59: {
+[; ;main.c: 59: void work_sw(void)
+[v _work_sw `(v ~T0 @X0 1 ef ]
+"60
+[; ;main.c: 60: {
 {
 [e :U _work_sw ]
 [f ]
-"60
-[; ;main.c: 60:  if (TimerDone(TMR_INIT)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16426 1 `uc `i -> 0 `i 2206  ]
-{
 "61
-[; ;main.c: 61:   StartTimer(TMR_INIT, 1000);
-[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
+[; ;main.c: 61:  if (TimerDone(TMR_INIT)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16426 1 `uc `i -> 0 `i 2207  ]
+{
 "62
-[; ;main.c: 62:  }
-}
-[e :U 2206 ]
+[; ;main.c: 62:   StartTimer(TMR_INIT, 1000);
+[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
 "63
-[; ;main.c: 63: }
-[e :UE 2205 ]
+[; ;main.c: 63:  }
+}
+[e :U 2207 ]
+"64
+[; ;main.c: 64: }
+[e :UE 2206 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"68
-[; ;main.c: 68: void main(void)
-[v _main `(v ~T0 @X0 1 ef ]
 "69
-[; ;main.c: 69: {
+[; ;main.c: 69: void main(void)
+[v _main `(v ~T0 @X0 1 ef ]
+"70
+[; ;main.c: 70: {
 {
 [e :U _main ]
 [f ]
-"70
-[; ;main.c: 70:  uint8_t x = 0, y = 0;
+"71
+[; ;main.c: 71:  uint8_t x = 0, y = 0;
 [v _x `uc ~T0 @X0 1 a ]
 [e = _x -> -> 0 `i `uc ]
 [v _y `uc ~T0 @X0 1 a ]
 [e = _y -> -> 0 `i `uc ]
-"72
-[; ;main.c: 72:  SYSTEM_Initialize();
+"73
+[; ;main.c: 73:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"79
-[; ;main.c: 79:  (INTCON0bits.GIEH = 1);
+"80
+[; ;main.c: 80:  (INTCON0bits.GIEH = 1);
 [e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-"82
-[; ;main.c: 82:  (INTCON0bits.GIEL = 1);
+"83
+[; ;main.c: 83:  (INTCON0bits.GIEL = 1);
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-"90
-[; ;main.c: 90:  IO.input_ok = 0;
-[e = . _IO 2 -> -> 0 `i `a ]
 "91
-[; ;main.c: 91:  IO.output_ok = 0;
-[e = . _IO 3 -> -> 0 `i `a ]
+[; ;main.c: 91:  IO.input_ok = 0;
+[e = . _IO 2 -> -> 0 `i `a ]
 "92
-[; ;main.c: 92:  IO.d232 = D232_IDLE;
-[e = . _IO 5 . `E16441 0 ]
+[; ;main.c: 92:  IO.output_ok = 0;
+[e = . _IO 3 -> -> 0 `i `a ]
 "93
-[; ;main.c: 93:  IO.io = IO_IDLE;
+[; ;main.c: 93:  IO.d232 = D232_IDLE;
+[e = . _IO 5 . `E16441 0 ]
+"94
+[; ;main.c: 94:  IO.io = IO_IDLE;
 [e = . _IO 4 . `E16448 0 ]
-"95
-[; ;main.c: 95:  StartTimer(TMR_INIT, 1000);
-[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
 "96
-[; ;main.c: 96:  Digital232_init();
+[; ;main.c: 96:  StartTimer(TMR_INIT, 1000);
+[e ( _StartTimer (2 , -> . `E16426 1 `uc -> -> 1000 `i `us ]
+"97
+[; ;main.c: 97:  Digital232_init();
 [e ( _Digital232_init ..  ]
-"98
-[; ;main.c: 98:  while (1) {
-[e :U 2209 ]
-{
-"100
-[; ;main.c: 100:   work_sw();
-[e ( _work_sw ..  ]
-"101
-[; ;main.c: 101:   if (Digital232_RW() && switches->detonator)
-[e $ ! && != -> ( _Digital232_RW ..  `i -> 0 `i != -> . *U _switches 1 `i -> 0 `i 2211  ]
-"102
-[; ;main.c: 102:    led_lightshow(0, 1);
-[e ( _led_lightshow (2 , -> -> 0 `i `uc -> -> 1 `i `us ]
-[e :U 2211 ]
-"104
-[; ;main.c: 104:  }
-}
-[e :U 2208 ]
-[e $U 2209  ]
+"99
+[; ;main.c: 99:  while (1) {
 [e :U 2210 ]
+{
+"101
+[; ;main.c: 101:   work_sw();
+[e ( _work_sw ..  ]
+"102
+[; ;main.c: 102:   if (Digital232_RW() && switches->detonator)
+[e $ ! && != -> ( _Digital232_RW ..  `i -> 0 `i != -> . *U _switches 1 `i -> 0 `i 2212  ]
+"103
+[; ;main.c: 103:    led_lightshow(0, 1);
+[e ( _led_lightshow (2 , -> -> 0 `i `uc -> -> 1 `i `us ]
+[e :U 2212 ]
 "105
-[; ;main.c: 105: }
-[e :UE 2207 ]
+[; ;main.c: 105:   if (!switches->detonator) {
+[e $ ! ! != -> . *U _switches 1 `i -> 0 `i 2213  ]
+{
+"106
+[; ;main.c: 106:    lamps_sounds->sound1 = 1;
+[e = . *U _lamps_sounds 0 -> -> 1 `i `uc ]
+"107
+[; ;main.c: 107:    IO.outbytes[1] = 0xff;
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 255 `i `uc ]
+"108
+[; ;main.c: 108:   } else {
+}
+[e $U 2214  ]
+[e :U 2213 ]
+{
+"109
+[; ;main.c: 109:    lamps_sounds->sound1 = 0;
+[e = . *U _lamps_sounds 0 -> -> 0 `i `uc ]
+"110
+[; ;main.c: 110:    IO.outbytes[1] = 0x00;
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 0 `i `uc ]
+"111
+[; ;main.c: 111:   }
+}
+[e :U 2214 ]
+"113
+[; ;main.c: 113:  }
+}
+[e :U 2209 ]
+[e $U 2210  ]
+[e :U 2211 ]
+"114
+[; ;main.c: 114: }
+[e :UE 2208 ]
 }

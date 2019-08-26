@@ -54,6 +54,7 @@
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile A_data IO;
 IN_data *switches = (void *) & IO.inbytes[0];
+OUT_data *lamps_sounds = (void*) &IO.outbytes[1];
 
 void work_sw(void)
 {
@@ -100,6 +101,14 @@ void main(void)
 		work_sw();
 		if (Digital232_RW() && switches->detonator)
 			led_lightshow(0, 1);
+
+		if (!switches->detonator) {
+			lamps_sounds->sound1 = true;
+			IO.outbytes[1] = 0xff;
+		} else {
+			lamps_sounds->sound1 = false;
+			IO.outbytes[1] = 0x00;
+		}
 
 	}
 }

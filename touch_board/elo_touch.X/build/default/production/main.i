@@ -27581,12 +27581,40 @@ typedef struct A_data {
 } A_data;
 
 typedef struct IN_data {
+
+
+
  uint8_t b0 : 1;
  uint8_t detonator : 1;
  uint8_t b2 : 1;
  uint8_t b3 : 1;
  uint8_t b4 : 1;
 } IN_data;
+
+typedef struct OUT_data {
+
+
+
+ uint8_t sound1 : 1;
+ uint8_t sound2 : 1;
+ uint8_t sound3 : 1;
+ uint8_t misc1 : 1;
+ uint8_t misc2 : 1;
+ uint8_t filler1 : 3;
+
+
+
+ uint8_t led1 : 1;
+ uint8_t led2 : 1;
+ uint8_t led3 : 1;
+ uint8_t led4 : 1;
+ uint8_t led5 : 1;
+ uint8_t led6 : 1;
+ uint8_t led7 : 1;
+ uint8_t led8 : 1;
+} OUT_data;
+
+
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
@@ -27598,6 +27626,7 @@ void led_lightshow(uint8_t, uint16_t);
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile A_data IO;
 IN_data *switches = (void *) & IO.inbytes[0];
+OUT_data *lamps_sounds = (void*) &IO.outbytes[1];
 
 void work_sw(void)
 {
@@ -27644,6 +27673,14 @@ void main(void)
   work_sw();
   if (Digital232_RW() && switches->detonator)
    led_lightshow(0, 1);
+
+  if (!switches->detonator) {
+   lamps_sounds->sound1 = 1;
+   IO.outbytes[1] = 0xff;
+  } else {
+   lamps_sounds->sound1 = 0;
+   IO.outbytes[1] = 0x00;
+  }
 
  }
 }
