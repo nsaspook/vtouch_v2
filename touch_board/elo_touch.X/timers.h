@@ -13,15 +13,6 @@ enum APP_TIMERS {
 	TMR_INIT,
 	TMR_RXTO,
 	TMR_SPS,
-	TMR_T4,
-	TMR_MC_TX,
-	TMR_HBIO,
-	TMR_INFO,
-	TMR_HELP,
-	TMR_HELPDIS,
-	TMR_DISPLAY,
-	TMR_SEQ,
-	TMR_FLIPPER,
 	//
 	//(Add timers here as needed)
 	//

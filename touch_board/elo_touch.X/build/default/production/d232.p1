@@ -3,20 +3,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F16153 `(v ~T0 @X0 0 tf ]
 "111 /opt/microchip/xc8/v2.10/pic/include/c99/stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"33 ./timers.h
-[; ;./timers.h: 33: void WaitMs(uint16_t numMilliseconds);
+"24 ./timers.h
+[; ;./timers.h: 24: void WaitMs(uint16_t numMilliseconds);
 [v _WaitMs `(v ~T0 @X0 0 ef1`us ]
 "21 d232.c
 [; ;d232.c: 21:  IO.d232 = D232_INIT;
-[c E16244 0 1 2 3 4 5 .. ]
-[n E16244 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE  ]
-[c E16237 0 1 2 3 4 .. ]
-[n E16237 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
-[c E16252 0 1 2 3 4 5 .. ]
-[n E16252 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
+[c E16235 0 1 2 3 4 5 .. ]
+[n E16235 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE  ]
+[c E16228 0 1 2 3 4 .. ]
+[n E16228 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
+[c E16243 0 1 2 3 4 5 .. ]
+[n E16243 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
 "85 ./d232.h
 [; ;./d232.h: 85: typedef struct A_data {
-[s S2201 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16244 1 `E16237 1 `E16252 1 `uc 1 `us 1 ]
+[s S2201 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16235 1 `E16228 1 `E16243 1 `uc 1 `us 1 ]
 [n S2201 A_data inbytes outbytes input_ok output_ok io d232 srq srq_value button_value ]
 "7 d232.c
 [; ;d232.c: 7: extern volatile A_data IO;
@@ -34,18 +34,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 "163 ./mcc_generated_files/adcc.h
 [; ;./mcc_generated_files/adcc.h: 163: void ADCC_StartConversion(adcc_channel_t channel);
 [v _ADCC_StartConversion `(v ~T0 @X0 0 ef1`E16164 ]
-[v F16229 `(v ~T0 @X0 1 tf2`uc`us ]
-"31 ./timers.h
-[; ;./timers.h: 31: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF16229 ~T0 @X0 0 e ]
+[v F16220 `(v ~T0 @X0 1 tf2`uc`us ]
+"22 ./timers.h
+[; ;./timers.h: 22: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+[v _StartTimer `TF16220 ~T0 @X0 0 e ]
 "32 d232.c
 [; ;d232.c: 32:  StartTimer(TMR_SPS, 10);
-[c E16213 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
-[n E16213 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_SEQ TMR_FLIPPER TMR_COUNT  ]
-[v F16233 `(a ~T0 @X0 1 tf1`uc ]
-"32 ./timers.h
-[; ;./timers.h: 32: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF16233 ~T0 @X0 0 e ]
+[c E16213 0 1 2 3 4 .. ]
+[n E16213 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_COUNT  ]
+[v F16224 `(a ~T0 @X0 1 tf1`uc ]
+"23 ./timers.h
+[; ;./timers.h: 23: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
+[v _TimerDone `TF16224 ~T0 @X0 0 e ]
 "384 ./mcc_generated_files/uart2.h
 [; ;./mcc_generated_files/uart2.h: 384: void UART2_Write(uint8_t txData);
 [v _UART2_Write `(v ~T0 @X0 0 ef1`uc ]
@@ -2300,7 +2300,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _WaitMs (1 -> -> 5 `i `us ]
 "21
 [; ;d232.c: 21:  IO.d232 = D232_INIT;
-[e = . _IO 5 . `E16237 1 ]
+[e = . _IO 5 . `E16228 1 ]
 "25
 [; ;d232.c: 25:  if (UART2_is_rx_ready())
 [e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2203  ]
@@ -2310,10 +2310,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2203 ]
 "27
 [; ;d232.c: 27:  IO.io = IO_INIT;
-[e = . _IO 4 . `E16244 1 ]
+[e = . _IO 4 . `E16235 1 ]
 "28
 [; ;d232.c: 28:  IO.srq = S_IDLE;
-[e = . _IO 6 . `E16252 0 ]
+[e = . _IO 6 . `E16243 0 ]
 "29
 [; ;d232.c: 29:  IO.srq_value = 0;
 [e = . _IO 7 -> -> 0 `i `uc ]
@@ -2346,8 +2346,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _j -> -> 0 `i `uc ]
 "38
 [; ;d232.c: 38:  static uint8_t x = 0;
-[v F16281 `uc ~T0 @X0 1 s x ]
-[i F16281
+[v F16272 `uc ~T0 @X0 1 s x ]
+[i F16272
 -> -> 0 `i `uc
 ]
 "40
@@ -2363,7 +2363,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _StartTimer (2 , -> . `E16213 3 `uc -> -> 10 `i `us ]
 "48
 [; ;d232.c: 48:  IO.srq = S_IDLE;
-[e = . _IO 6 . `E16252 0 ]
+[e = . _IO 6 . `E16243 0 ]
 "50
 [; ;d232.c: 50:  if (UART2_is_rx_ready()) {
 [e $ ! != -> ( _UART2_is_rx_ready ..  `i -> 0 `i 2206  ]
@@ -2383,7 +2383,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == -> _j `ui -> 83 `ui 2210  ]
 "58
 [; ;d232.c: 58:     IO.srq = S_S;
-[e = . _IO 6 . `E16252 1 ]
+[e = . _IO 6 . `E16243 1 ]
 [e :U 2210 ]
 "59
 [; ;d232.c: 59:    break;
@@ -2396,7 +2396,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == -> _j `ui -> 82 `ui 2212  ]
 "62
 [; ;d232.c: 62:     IO.srq = S_R;
-[e = . _IO 6 . `E16252 2 ]
+[e = . _IO 6 . `E16243 2 ]
 [e :U 2212 ]
 "63
 [; ;d232.c: 63:    break;
@@ -2409,7 +2409,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == -> _j `ui -> 81 `ui 2214  ]
 "66
 [; ;d232.c: 66:     IO.srq = S_Q;
-[e = . _IO 6 . `E16252 3 ]
+[e = . _IO 6 . `E16243 3 ]
 [e :U 2214 ]
 "67
 [; ;d232.c: 67:    break;
@@ -2422,7 +2422,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! == -> _j `ui -> 32 `ui 2216  ]
 "70
 [; ;d232.c: 70:     IO.srq = S_NUM;
-[e = . _IO 6 . `E16252 4 ]
+[e = . _IO 6 . `E16243 4 ]
 [e :U 2216 ]
 "71
 [; ;d232.c: 71:    break;
@@ -2435,7 +2435,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _IO 7 _j ]
 "74
 [; ;d232.c: 74:    IO.srq = S_UPDATE;
-[e = . _IO 6 . `E16252 5 ]
+[e = . _IO 6 . `E16243 5 ]
 "75
 [; ;d232.c: 75:    break;
 [e $U 2207  ]
@@ -2444,17 +2444,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2218 ]
 "77
 [; ;d232.c: 77:    IO.srq = S_IDLE;
-[e = . _IO 6 . `E16252 0 ]
+[e = . _IO 6 . `E16243 0 ]
 "78
 [; ;d232.c: 78:   }
 }
 [e $U 2207  ]
 [e :U 2208 ]
-[e [\ -> . _IO 6 `ui , $ -> . `E16252 0 `ui 2209
- , $ -> . `E16252 1 `ui 2211
- , $ -> . `E16252 2 `ui 2213
- , $ -> . `E16252 3 `ui 2215
- , $ -> . `E16252 4 `ui 2217
+[e [\ -> . _IO 6 `ui , $ -> . `E16243 0 `ui 2209
+ , $ -> . `E16243 1 `ui 2211
+ , $ -> . `E16243 2 `ui 2213
+ , $ -> . `E16243 3 `ui 2215
+ , $ -> . `E16243 4 `ui 2217
  2218 ]
 [e :U 2207 ]
 "79
@@ -2490,7 +2490,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _IO 3 -> -> 1 `i `a ]
 "90
 [; ;d232.c: 90:  IO.io = IO_OUT;
-[e = . _IO 4 . `E16244 2 ]
+[e = . _IO 4 . `E16235 2 ]
 "94
 [; ;d232.c: 94:  StartTimer(TMR_RXTO, 250);
 [e ( _StartTimer (2 , -> . `E16213 2 `uc -> -> 250 `i `us ]
@@ -2505,13 +2505,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "97
 [; ;d232.c: 97:    PWM8_LoadDutyValue(x++);
-[e ( _PWM8_LoadDutyValue (1 -> ++ F16281 -> -> 1 `i `uc `us ]
+[e ( _PWM8_LoadDutyValue (1 -> ++ F16272 -> -> 1 `i `uc `us ]
 "98
 [; ;d232.c: 98:    if (x > 3)
-[e $ ! > -> F16281 `i -> 3 `i 2223  ]
+[e $ ! > -> F16272 `i -> 3 `i 2223  ]
 "99
 [; ;d232.c: 99:     x = 0;
-[e = F16281 -> -> 0 `i `uc ]
+[e = F16272 -> -> 0 `i `uc ]
 [e :U 2223 ]
 "100
 [; ;d232.c: 100:    return 0;
@@ -2565,13 +2565,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "115
 [; ;d232.c: 115:   PWM8_LoadDutyValue(x++);
-[e ( _PWM8_LoadDutyValue (1 -> ++ F16281 -> -> 1 `i `uc `us ]
+[e ( _PWM8_LoadDutyValue (1 -> ++ F16272 -> -> 1 `i `uc `us ]
 "116
 [; ;d232.c: 116:   if (x > 16)
-[e $ ! > -> F16281 `i -> 16 `i 2229  ]
+[e $ ! > -> F16272 `i -> 16 `i 2229  ]
 "117
 [; ;d232.c: 117:    x = 0;
-[e = F16281 -> -> 0 `i `uc ]
+[e = F16272 -> -> 0 `i `uc ]
 [e :U 2229 ]
 "118
 [; ;d232.c: 118:   return 0;
@@ -2586,10 +2586,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _IO 2 -> -> 1 `i `a ]
 "122
 [; ;d232.c: 122:  IO.io = IO_IN;
-[e = . _IO 4 . `E16244 3 ]
+[e = . _IO 4 . `E16235 3 ]
 "123
 [; ;d232.c: 123:  IO.d232 = D232_OUT_IN;
-[e = . _IO 5 . `E16237 2 ]
+[e = . _IO 5 . `E16228 2 ]
 "127
 [; ;d232.c: 127:  IO.button_value = ADCC_GetConversionResult();
 [e = . _IO 8 ( _ADCC_GetConversionResult ..  ]
@@ -2620,31 +2620,31 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "134
 [; ;d232.c: 134:  static uint16_t j = 0;
-[v F16285 `us ~T0 @X0 1 s j ]
-[i F16285
+[v F16276 `us ~T0 @X0 1 s j ]
+[i F16276
 -> -> 0 `i `us
 ]
 "135
 [; ;d232.c: 135:  static uint8_t cylon = 0xff;
-[v F16286 `uc ~T0 @X0 1 s cylon ]
-[i F16286
+[v F16277 `uc ~T0 @X0 1 s cylon ]
+[i F16277
 -> -> 255 `i `uc
 ]
 "136
 [; ;d232.c: 136:  static int16_t alive_led = 0;
-[v F16287 `s ~T0 @X0 1 s alive_led ]
-[i F16287
+[v F16278 `s ~T0 @X0 1 s alive_led ]
+[i F16278
 -> -> 0 `i `s
 ]
 "137
 [; ;d232.c: 137:  static _Bool LED_UP = 1;
-[v F16288 `a ~T0 @X0 1 s LED_UP ]
-[i F16288
+[v F16279 `a ~T0 @X0 1 s LED_UP ]
+[i F16279
 -> -> 1 `i `a
 ]
 "139
 [; ;d232.c: 139:  if (j++ >= speed) {
-[e $ ! >= -> ++ F16285 -> -> 1 `i `us `ui -> _speed `ui 2231  ]
+[e $ ! >= -> ++ F16276 -> -> 1 `i `us `ui -> _speed `ui 2231  ]
 {
 "140
 [; ;d232.c: 140:   if (0) {
@@ -2652,7 +2652,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "141
 [; ;d232.c: 141:    IO.outbytes[2] = ~cylon;
-[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> ~ -> F16286 `i `uc ]
+[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> ~ -> F16277 `i `uc ]
 "142
 [; ;d232.c: 142:   } else {
 }
@@ -2661,21 +2661,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "143
 [; ;d232.c: 143:    IO.outbytes[2] = cylon;
-[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux F16286 ]
+[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux F16277 ]
 "144
 [; ;d232.c: 144:   }
 }
 [e :U 2233 ]
 "146
 [; ;d232.c: 146:   if (LED_UP && (alive_led != 0)) {
-[e $ ! && != -> F16288 `i -> 0 `i != -> F16287 `i -> 0 `i 2234  ]
+[e $ ! && != -> F16279 `i -> 0 `i != -> F16278 `i -> 0 `i 2234  ]
 {
 "147
 [; ;d232.c: 147:    alive_led = alive_led * 2;
-[e = F16287 -> * -> F16287 `i -> 2 `i `s ]
+[e = F16278 -> * -> F16278 `i -> 2 `i `s ]
 "148
 [; ;d232.c: 148:    cylon = cylon << 1;
-[e = F16286 -> << -> F16286 `i -> 1 `i `uc ]
+[e = F16277 -> << -> F16277 `i -> 1 `i `uc ]
 "149
 [; ;d232.c: 149:   } else {
 }
@@ -2684,26 +2684,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "150
 [; ;d232.c: 150:    if (alive_led != 0) alive_led = alive_led / 2;
-[e $ ! != -> F16287 `i -> 0 `i 2236  ]
-[e = F16287 -> / -> F16287 `i -> 2 `i `s ]
+[e $ ! != -> F16278 `i -> 0 `i 2236  ]
+[e = F16278 -> / -> F16278 `i -> 2 `i `s ]
 [e :U 2236 ]
 "151
 [; ;d232.c: 151:    cylon = cylon >> 1;
-[e = F16286 -> >> -> F16286 `i -> 1 `i `uc ]
+[e = F16277 -> >> -> F16277 `i -> 1 `i `uc ]
 "152
 [; ;d232.c: 152:   }
 }
 [e :U 2235 ]
 "153
 [; ;d232.c: 153:   if (alive_led < 2) {
-[e $ ! < -> F16287 `i -> 2 `i 2237  ]
+[e $ ! < -> F16278 `i -> 2 `i 2237  ]
 {
 "154
 [; ;d232.c: 154:    alive_led = 2;
-[e = F16287 -> -> 2 `i `s ]
+[e = F16278 -> -> 2 `i `s ]
 "155
 [; ;d232.c: 155:    LED_UP = 1;
-[e = F16288 -> -> 1 `i `a ]
+[e = F16279 -> -> 1 `i `a ]
 "156
 [; ;d232.c: 156:   } else {
 }
@@ -2712,14 +2712,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "157
 [; ;d232.c: 157:    if (alive_led > 128) {
-[e $ ! > -> F16287 `i -> 128 `i 2239  ]
+[e $ ! > -> F16278 `i -> 128 `i 2239  ]
 {
 "158
 [; ;d232.c: 158:     alive_led = 128;
-[e = F16287 -> -> 128 `i `s ]
+[e = F16278 -> -> 128 `i `s ]
 "159
 [; ;d232.c: 159:     LED_UP = 0;
-[e = F16288 -> -> 0 `i `a ]
+[e = F16279 -> -> 0 `i `a ]
 "160
 [; ;d232.c: 160:    }
 }
@@ -2730,7 +2730,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2238 ]
 "162
 [; ;d232.c: 162:   j = 0;
-[e = F16285 -> -> 0 `i `us ]
+[e = F16276 -> -> 0 `i `us ]
 "163
 [; ;d232.c: 163:  }
 }

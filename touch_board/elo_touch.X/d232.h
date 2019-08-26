@@ -45,7 +45,7 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "0.16"
+#define sw_version "0.17"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
