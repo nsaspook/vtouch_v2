@@ -56,6 +56,10 @@
 
 #define SLED	LED_RSET_LAT
 
+#define CHIRP	0x02
+#define WARP	0x04
+#define SIREN	0x01
+
 typedef enum {
 	D232_IDLE,
 	D232_INIT,
@@ -111,7 +115,7 @@ typedef struct OUT_data1 {
 	 * port1
 	 */
 	uint8_t sound1 : 1;
-	uint8_t sound2 : 1;
+	uint8_t chirp : 1;
 	uint8_t sound3 : 1;
 	uint8_t misc1 : 1;
 	uint8_t misc2 : 1;

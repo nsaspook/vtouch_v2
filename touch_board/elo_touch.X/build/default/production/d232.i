@@ -26944,7 +26944,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 59 "./d232.h"
+# 63 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27000,7 +27000,7 @@ typedef struct OUT_data1 {
 
 
  uint8_t sound1 : 1;
- uint8_t sound2 : 1;
+ uint8_t chirp : 1;
  uint8_t sound3 : 1;
  uint8_t misc1 : 1;
  uint8_t misc2 : 1;

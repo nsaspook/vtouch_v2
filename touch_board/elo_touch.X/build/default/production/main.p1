@@ -4,25 +4,25 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F16412 `(v ~T0 @X0 0 tf ]
 [v F16414 `(v ~T0 @X0 0 tf ]
 "55 main.c
-[; ;main.c: 55: volatile A_data IO;
+[; ;main.c: 55: volatile A_data IO = {0};
 [c E16448 0 1 2 3 4 5 6 .. ]
 [n E16448 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE IO_FAIL  ]
 [c E16441 0 1 2 3 4 .. ]
 [n E16441 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
 [c E16457 0 1 2 3 4 5 .. ]
 [n E16457 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
-"86 ./d232.h
-[; ;./d232.h: 86: typedef struct A_data {
+"90 ./d232.h
+[; ;./d232.h: 90: typedef struct A_data {
 [s S2203 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16448 1 `E16441 1 `E16457 1 `uc 1 `us 1 ]
 [n S2203 A_data inbytes outbytes input_ok output_ok io d232 srq srq_value button_value ]
-"98
-[; ;./d232.h: 98: typedef struct IN_data {
+"102
+[; ;./d232.h: 102: typedef struct IN_data {
 [s S2204 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2204 IN_data b0 detonator b2 b3 b4 ]
-"109
-[; ;./d232.h: 109: typedef struct OUT_data1 {
+"113
+[; ;./d232.h: 113: typedef struct OUT_data1 {
 [s S2205 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 ]
-[n S2205 OUT_data1 sound1 sound2 sound3 misc1 misc2 filler1 ]
+[n S2205 OUT_data1 sound1 chirp sound3 misc1 misc2 filler1 ]
 [v F16437 `(a ~T0 @X0 1 tf1`uc ]
 "23 ./timers.h
 [; ;./timers.h: 23: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
@@ -54,14 +54,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46269
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f47k42.h: 46269: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2089 ~T0 @X0 0 e@16338 ]
-"137 ./d232.h
-[; ;./d232.h: 137: void Digital232_init(void);
+"141 ./d232.h
+[; ;./d232.h: 141: void Digital232_init(void);
 [v _Digital232_init `(v ~T0 @X0 0 ef ]
-"138
-[; ;./d232.h: 138: _Bool Digital232_RW(void);
+"142
+[; ;./d232.h: 142: _Bool Digital232_RW(void);
 [v _Digital232_RW `(a ~T0 @X0 0 ef ]
-"139
-[; ;./d232.h: 139: void led_lightshow(uint8_t, uint16_t);
+"143
+[; ;./d232.h: 143: void led_lightshow(uint8_t, uint16_t);
 [v _led_lightshow `(v ~T0 @X0 0 ef2`uc`us ]
 "44 main.c
 [p n 520 ]
@@ -2287,8 +2287,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ]
 "55
-[; ;main.c: 55: volatile A_data IO;
+[; ;main.c: 55: volatile A_data IO = {0};
 [v _IO `VS2203 ~T0 @X0 1 e ]
+[i _IO
+:U ..
+:U ..
+:U ..
+-> -> 0 `i `uc
+..
+..
+..
+]
 "56
 [; ;main.c: 56: IN_data *switches = (IN_data *) & IO.inbytes[0];
 [v _switches `*S2204 ~T0 @X0 1 e ]
@@ -2384,29 +2393,29 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 105:   if (!switches->detonator) {
 [e $ ! ! != -> . *U _switches 1 `i -> 0 `i 2214  ]
 {
+"106
+[; ;main.c: 106:    IO.outbytes[1] = IO.outbytes[1] | 0x02;
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 2 `i `uc ]
 "107
-[; ;main.c: 107:    IO.outbytes[1] = 0x02;
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 2 `i `uc ]
-"109
-[; ;main.c: 109:   } else {
+[; ;main.c: 107:   } else {
 }
 [e $U 2215  ]
 [e :U 2214 ]
 {
-"110
-[; ;main.c: 110:    IO.outbytes[1] = 0x00;
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 0 `i `uc ]
-"111
-[; ;main.c: 111:   }
+"108
+[; ;main.c: 108:    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> & -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i ~ -> 2 `i `uc ]
+"109
+[; ;main.c: 109:   }
 }
 [e :U 2215 ]
-"113
-[; ;main.c: 113:  }
+"111
+[; ;main.c: 111:  }
 }
 [e :U 2210 ]
 [e $U 2211  ]
 [e :U 2212 ]
-"114
-[; ;main.c: 114: }
+"112
+[; ;main.c: 112: }
 [e :UE 2209 ]
 }

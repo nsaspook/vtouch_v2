@@ -52,7 +52,7 @@
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile A_data IO;
+volatile A_data IO = {0};
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
@@ -103,11 +103,9 @@ void main(void)
 			led_lightshow(0, 1);
 
 		if (!switches->detonator) {
-//			sounds->sound3 = 1;
-			IO.outbytes[1] = 0x02;
-			
+			IO.outbytes[1] = IO.outbytes[1] | CHIRP;
 		} else {
-			IO.outbytes[1] = 0x00;
+			IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
 		}
 
 	}

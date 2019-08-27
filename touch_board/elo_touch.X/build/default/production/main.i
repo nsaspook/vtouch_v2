@@ -27540,7 +27540,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 59 "./d232.h"
+# 63 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27596,7 +27596,7 @@ typedef struct OUT_data1 {
 
 
  uint8_t sound1 : 1;
- uint8_t sound2 : 1;
+ uint8_t chirp : 1;
  uint8_t sound3 : 1;
  uint8_t misc1 : 1;
  uint8_t misc2 : 1;
@@ -27627,7 +27627,7 @@ void led_lightshow(uint8_t, uint16_t);
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile A_data IO;
+volatile A_data IO = {0};
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
@@ -27678,11 +27678,9 @@ void main(void)
    led_lightshow(0, 1);
 
   if (!switches->detonator) {
-
-   IO.outbytes[1] = 0x02;
-
+   IO.outbytes[1] = IO.outbytes[1] | 0x02;
   } else {
-   IO.outbytes[1] = 0x00;
+   IO.outbytes[1] = IO.outbytes[1] & (~0x02);
   }
 
  }
