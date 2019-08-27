@@ -27031,7 +27031,7 @@ typedef struct IN_data {
  uint8_t b4 : 1;
 } IN_data;
 
-typedef struct OUT_data {
+typedef struct OUT_data1 {
 
 
 
@@ -27041,6 +27041,9 @@ typedef struct OUT_data {
  uint8_t misc1 : 1;
  uint8_t misc2 : 1;
  uint8_t filler1 : 3;
+} OUT_data1;
+
+typedef struct OUT_data2 {
 
 
 
@@ -27052,7 +27055,7 @@ typedef struct OUT_data {
  uint8_t led6 : 1;
  uint8_t led7 : 1;
  uint8_t led8 : 1;
-} OUT_data;
+} OUT_data2;
 
 
 

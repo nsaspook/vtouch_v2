@@ -27591,7 +27591,7 @@ typedef struct IN_data {
  uint8_t b4 : 1;
 } IN_data;
 
-typedef struct OUT_data {
+typedef struct OUT_data1 {
 
 
 
@@ -27601,6 +27601,9 @@ typedef struct OUT_data {
  uint8_t misc1 : 1;
  uint8_t misc2 : 1;
  uint8_t filler1 : 3;
+} OUT_data1;
+
+typedef struct OUT_data2 {
 
 
 
@@ -27612,7 +27615,7 @@ typedef struct OUT_data {
  uint8_t led6 : 1;
  uint8_t led7 : 1;
  uint8_t led8 : 1;
-} OUT_data;
+} OUT_data2;
 
 
 
@@ -27625,8 +27628,8 @@ void led_lightshow(uint8_t, uint16_t);
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile A_data IO;
-IN_data *switches = (void *) & IO.inbytes[0];
-OUT_data *lamps_sounds = (void*) &IO.outbytes[1];
+IN_data *switches = (IN_data *) & IO.inbytes[0];
+OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
 void work_sw(void)
 {
@@ -27675,7 +27678,9 @@ void main(void)
    led_lightshow(0, 1);
 
   if (!switches->detonator) {
-   lamps_sounds->sound3 = 1;
+
+   IO.outbytes[1] = 0x02;
+
   } else {
    IO.outbytes[1] = 0x00;
   }
