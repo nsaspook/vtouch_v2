@@ -103,10 +103,8 @@ void main(void)
 			led_lightshow(0, 1);
 
 		if (!switches->detonator) {
-			lamps_sounds->sound1 = true;
-			IO.outbytes[1] = 0xff;
+			lamps_sounds->sound3 = 1;
 		} else {
-			lamps_sounds->sound1 = false;
 			IO.outbytes[1] = 0x00;
 		}
 
