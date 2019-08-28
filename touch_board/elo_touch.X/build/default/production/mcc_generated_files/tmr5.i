@@ -26970,6 +26970,7 @@ enum APP_TIMERS {
  TMR_INIT,
  TMR_RXTO,
  TMR_SPS,
+ TMR_EXTRA,
 
 
 
@@ -27018,6 +27019,7 @@ typedef struct A_data {
  SRQ_STATE srq;
  uint8_t srq_value;
  adc_result_t button_value;
+ uint16_t speed;
 } A_data;
 
 typedef struct IN_data {

@@ -27528,6 +27528,7 @@ enum APP_TIMERS {
  TMR_INIT,
  TMR_RXTO,
  TMR_SPS,
+ TMR_EXTRA,
 
 
 
@@ -27578,6 +27579,7 @@ typedef struct A_data {
  SRQ_STATE srq;
  uint8_t srq_value;
  adc_result_t button_value;
+ uint16_t speed;
 } A_data;
 
 typedef struct IN_data {
@@ -27627,7 +27629,9 @@ void led_lightshow(uint8_t, uint16_t);
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile A_data IO = {0};
+A_data IO = {
+ .speed = 0,
+};
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
@@ -27679,8 +27683,22 @@ void main(void)
 
   if (!switches->detonator) {
    IO.outbytes[1] = IO.outbytes[1] | 0x02;
+   if (IO.outbytes[2] == 1) {
+    if (TimerDone(TMR_EXTRA)) {
+     IO.outbytes[1] = IO.outbytes[1] | 0x04;
+    }
+   }
+
+   if (IO.outbytes[2] == 128) {
+    if (TimerDone(TMR_EXTRA)) {
+     IO.outbytes[1] = IO.outbytes[1] | 0x01;
+    }
+   }
   } else {
+   StartTimer(TMR_EXTRA, 500);
    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+   IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+   IO.outbytes[1] = IO.outbytes[1] & (~0x01);
   }
 
  }

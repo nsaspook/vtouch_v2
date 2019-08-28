@@ -26934,6 +26934,7 @@ enum APP_TIMERS {
  TMR_INIT,
  TMR_RXTO,
  TMR_SPS,
+ TMR_EXTRA,
 
 
 
@@ -26982,6 +26983,7 @@ typedef struct A_data {
  SRQ_STATE srq;
  uint8_t srq_value;
  adc_result_t button_value;
+ uint16_t speed;
 } A_data;
 
 typedef struct IN_data {
@@ -27032,7 +27034,7 @@ void led_lightshow(uint8_t, uint16_t);
 
 
 
-extern volatile A_data IO;
+extern A_data IO;
 
 void Digital232_init(void)
 {
@@ -27071,7 +27073,7 @@ _Bool Digital232_RW(void)
   return 0;
  }
 
- StartTimer(TMR_SPS, 10);
+ StartTimer(TMR_SPS, 10 + IO.speed);
 
 
 

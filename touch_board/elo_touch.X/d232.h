@@ -45,7 +45,7 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "0.17"
+#define sw_version "0.18"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
@@ -97,6 +97,7 @@ typedef struct A_data {
 	SRQ_STATE srq;
 	uint8_t srq_value;
 	adc_result_t button_value;
+	uint16_t	speed;
 } A_data;
 
 typedef struct IN_data {

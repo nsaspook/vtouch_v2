@@ -52,7 +52,9 @@
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile A_data IO = {0};
+A_data IO = {
+	.speed = 0,
+};
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
@@ -104,8 +106,22 @@ void main(void)
 
 		if (!switches->detonator) {
 			IO.outbytes[1] = IO.outbytes[1] | CHIRP;
+			if (IO.outbytes[2] == 1) {
+				if (TimerDone(TMR_EXTRA)) {
+					IO.outbytes[1] = IO.outbytes[1] | WARP;
+				}
+			}
+
+			if (IO.outbytes[2] == 128) {
+				if (TimerDone(TMR_EXTRA)) {
+					IO.outbytes[1] = IO.outbytes[1] | SIREN;
+				}
+			}
 		} else {
+			StartTimer(TMR_EXTRA, 500);
 			IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
+			IO.outbytes[1] = IO.outbytes[1] & (~WARP);
+			IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
 		}
 
 	}

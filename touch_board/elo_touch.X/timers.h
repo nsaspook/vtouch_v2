@@ -13,6 +13,7 @@ enum APP_TIMERS {
 	TMR_INIT,
 	TMR_RXTO,
 	TMR_SPS,
+	TMR_EXTRA,
 	//
 	//(Add timers here as needed)
 	//
