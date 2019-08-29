@@ -43,7 +43,7 @@ bool Digital232_RW(void)
 		return false;
 	}
 
-	StartTimer(TMR_SPS, 10 + IO.speed); // samples per second timer 10ms spacing at least
+	StartTimer(TMR_SPS, 10 + IO.speed + IO.slower); // samples per second timer 10ms spacing at least
 
 	/*
 	 * empty receiver buffer

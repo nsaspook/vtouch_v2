@@ -26574,7 +26574,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 238 "mcc_generated_files/pin_manager.h"
+# 358 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "mcc_generated_files/mcc.h" 2
 
@@ -27526,8 +27526,8 @@ void SYSTEM_Initialize(void)
     TMR6_Initialize();
     ADCC_Initialize();
     TMR5_Initialize();
-    PWM8_Initialize();
     TMR2_Initialize();
+    PWM8_Initialize();
     UART2_Initialize();
     UART1_Initialize();
 }

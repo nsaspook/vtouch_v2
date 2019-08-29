@@ -58,6 +58,7 @@ A_data IO = {
 	.sequence_done = false,
 	.seq_value = DEFAULT_SEQ,
 	.misses = 0,
+	.slower = 0,
 };
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
@@ -117,6 +118,7 @@ void main(void)
 						IO.speed = 10;
 						IO.sequence_done = true;
 						IO.seq_value = WIN_SEQ;
+						IO.slower = 0;
 					}
 					IO.speed_update = false;
 					IO.misses = 0;
@@ -130,6 +132,7 @@ void main(void)
 						IO.speed = 10;
 						IO.sequence_done = true;
 						IO.seq_value = WIN_SEQ;
+						IO.slower = 0;
 					}
 					IO.speed_update = false;
 					IO.misses = 0;
@@ -137,9 +140,9 @@ void main(void)
 			}
 
 			if (IO.outbytes[2]&0b01111110) {
-				if (IO.speed_update && (IO.misses++ > 7)) {
+				if (IO.speed_update && (IO.misses++ > 6)) {
 					IO.misses = 0;
-					//IO.speed++;
+					IO.slower = 10;
 					IO.speed_update = false;
 				}
 			}

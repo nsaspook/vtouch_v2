@@ -26569,7 +26569,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 2 3
 # 54 "mcc_generated_files/pin_manager.h" 2
-# 238 "mcc_generated_files/pin_manager.h"
+# 358 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 49 "mcc_generated_files/pin_manager.c" 2
 
@@ -26595,14 +26595,14 @@ void PIN_MANAGER_Initialize(void)
     TRISE = 0x06;
     TRISA = 0xFF;
     TRISB = 0xBF;
-    TRISC = 0xBF;
+    TRISC = 0x80;
     TRISD = 0xFD;
 
 
 
 
     ANSELD = 0xFD;
-    ANSELC = 0x3F;
+    ANSELC = 0x00;
     ANSELB = 0x3F;
     ANSELE = 0x06;
     ANSELA = 0xFF;

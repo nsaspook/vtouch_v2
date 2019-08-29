@@ -26793,7 +26793,7 @@ char *ctermid(char *);
 char *tempnam(const char *, const char *);
 # 42 "./d232.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 238 "./mcc_generated_files/pin_manager.h"
+# 358 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 43 "./d232.h" 2
 # 1 "./mcc_generated_files/uart2.h" 1
@@ -26984,7 +26984,7 @@ typedef struct A_data {
  SRQ_STATE srq;
  uint8_t srq_value, seq_value, misses;
  adc_result_t button_value;
- uint16_t speed;
+ uint16_t speed, slower;
  _Bool speed_update, sequence_done;
 } A_data;
 
@@ -26994,7 +26994,7 @@ typedef struct IN_data {
 
  uint8_t b0 : 1;
  uint8_t detonator : 1;
- uint8_t b2 : 1;
+ uint8_t pir : 1;
  uint8_t b3 : 1;
  uint8_t b4 : 1;
 } IN_data;
@@ -27075,7 +27075,7 @@ _Bool Digital232_RW(void)
   return 0;
  }
 
- StartTimer(TMR_SPS, 10 + IO.speed);
+ StartTimer(TMR_SPS, 10 + IO.speed + IO.slower);
 
 
 

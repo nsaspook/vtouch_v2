@@ -101,7 +101,7 @@ typedef struct A_data {
 	SRQ_STATE srq;
 	uint8_t srq_value, seq_value, misses;
 	adc_result_t button_value;
-	uint16_t speed;
+	uint16_t speed, slower;
 	bool speed_update, sequence_done;
 } A_data;
 
@@ -111,7 +111,7 @@ typedef struct IN_data {
 	 */
 	uint8_t b0 : 1;
 	uint8_t detonator : 1;
-	uint8_t b2 : 1;
+	uint8_t pir : 1;
 	uint8_t b3 : 1;
 	uint8_t b4 : 1;
 } IN_data;
