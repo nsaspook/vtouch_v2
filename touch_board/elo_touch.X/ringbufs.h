@@ -11,8 +11,10 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-
-//#include "vconfig.h"
+	
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdio.h>
 
 #define RBUF_SIZE    64
 

@@ -1,10 +1,9 @@
-//#include "vconfig.h"
 #include "eadog.h"
 #include "ringbufs.h"
 #include <stdio.h>
 #include <string.h>
-
-
+#include "d232.h"
+#include "mcc_generated_files/spi1.h"
 
 #define max_strlen	64
 
@@ -27,12 +26,10 @@ void wdtdelay(const uint32_t delay)
 		Nop();
 		ClrWdt(); // reset the WDT timer
 	};
-
 }
 
 /*
  * Init the EA DOGM163 in 8-bit serial mode
- * channel 1 DMA
  */
 void init_display(void)
 {
@@ -41,7 +38,6 @@ void init_display(void)
 	ringBufS_init(spi_link.tx1a);
 	ringBufS_init(spi_link.tx1b);
 
-	DLED = true;
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
 	send_lcd_cmd(0x39);
@@ -58,31 +54,7 @@ void init_display(void)
 	SPI1CON2 = 0x02;
 	SPI1CON1 = 0x40;
 	SPI1CON0 = 0x83;
-	SPI1INTFbits.SPI1TXUIF = 0;
-	DMA1CON1bits.DMODE = 0;
-	DMA1CON1bits.DSTP = 0;
-	DMA1CON1bits.SMODE = 1;
-	DMA1CON1bits.SMR = 0;
-	DMA1CON1bits.SSTP = 1;
-	DMA1SSA = (uint32_t) & ring_buf1;
-	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
-	DLED = false;
-}
-
-/*
- * channel 2 DMA
- */
-void init_port(void)
-{
-	DMA2CON1bits.DMODE = 0;
-	DMA2CON1bits.DSTP = 0;
-	DMA2CON1bits.SMODE = 1;
-	DMA2CON1bits.SMR = 0;
-	DMA2CON1bits.SSTP = 0;
-	DMA2DSA = 0x3FBB; // LATB
-	DMA2SSA = (uint32_t) port_data;
-	DMA2CON0bits.DGO = 0;
 }
 
 /*
@@ -120,46 +92,30 @@ static void send_lcd_cmd_long(const uint8_t cmd)
 	RS_SetHigh();
 }
 
-/*
- * Trigger the SPI DMA transfer to the LCD display
- */
-void start_lcd(void)
-{
-	DMA1CON0bits.DMA1SIRQEN = 1; /* start DMA trigger */
-}
-
 void wait_lcd_set(void)
 {
-	spi_link.LCD_DATA = 1;
+
 }
 
 bool wait_lcd_check(void)
 {
-	return spi_link.LCD_DATA;
+	return true;
 }
 
 void wait_lcd_done(void)
 {
-	while (spi_link.LCD_DATA);
+
 	wdtdelay(50);
 }
 
 void eaDogM_WriteChr(const int8_t value)
 {
-	send_lcd_data_dma((uint8_t) value);
-}
-
-/*
- * STDOUT user handler function
- */
-void putch(char c)
-{
-	ringBufS_put_dma(spi_link.tx1a, c);
+	send_lcd_data((uint8_t) value);
 }
 
 void eaDogM_WriteCommand(const uint8_t cmd)
 {
-	send_lcd_cmd_dma(cmd);
+	send_lcd_cmd(cmd);
 }
 
 void eaDogM_SetPos(const uint8_t r, const uint8_t c)
@@ -178,80 +134,25 @@ void eaDogM_ClearRow(const uint8_t r)
 	}
 }
 
-/*
- * uses DMA channel 1 for transfers
- */
 void eaDogM_WriteString(char *strPtr)
 {
-	DEBUG2_SetHigh();
+	uint8_t i;
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
-	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-	DMA1SSZ = strlen(strPtr);
-	DMA1CON0bits.EN = 1; /* enable DMA */
-	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
-	start_lcd();
+	for (i = 0; i < strlen(strPtr); i++) {
+		eaDogM_WriteChr(strPtr[i]);
+	}
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
 #endif
 }
 
-/*
- * uses DMA channel 1 for transfers
- */
-void send_lcd_cmd_dma(uint8_t strPtr)
-{
-	DEBUG2_SetHigh();
-	wait_lcd_set();
-	/* reset buffer for DMA */
-	ringBufS_flush(spi_link.tx1a, false);
-	RS_SetLow();
-	CSB_SetLow(); /* SPI select display */
-	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-	DMA1SSZ = 1;
-	DMA1CON0bits.EN = 1; /* enable DMA */
-	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
-	start_lcd();
-	wait_lcd_done();
-	RS_SetHigh();
-}
-
-/*
- * uses DMA channel 1 for transfers
- */
-void send_lcd_data_dma(uint8_t strPtr)
-{
-	DEBUG2_SetHigh();
-	wait_lcd_set();
-	/* reset buffer for DMA */
-	ringBufS_flush(spi_link.tx1a, false);
-	RS_SetHigh();
-	CSB_SetLow(); /* SPI select display */
-	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-	DMA1SSZ = 1;
-	DMA1CON0bits.EN = 1; /* enable DMA */
-	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
-	start_lcd();
-}
-
-/*
- * uses DMA channel 2 for transfers
- */
-void send_port_data_dma(void)
-{
-	DMA2CON0bits.EN = 0; /* disable DMA to change source count */
-	DMA2SSZ = 16;
-	DMA2DSZ = 16;
-	DMA2CON0bits.EN = 1; /* enable DMA */
-	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
-}
-
 void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
-	send_lcd_cmd_dma((EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c));
+	send_lcd_cmd((EADOGM_CMD_DDRAM_ADDR + (r * EADOGM_COLSPAN) + c));
 	eaDogM_WriteString(strPtr);
 }
 

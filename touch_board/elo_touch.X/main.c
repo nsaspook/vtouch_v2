@@ -102,8 +102,12 @@ void main(void)
 	IO.d232 = D232_IDLE;
 	IO.io = IO_IDLE;
 
+	init_display();
+	eaDogM_CursorOff();
+
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
+	eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
 
 	while (1) {
 		// Add your application code
@@ -121,7 +125,7 @@ void main(void)
 						IO.sequence_done = true;
 						IO.seq_value = WIN_SEQ;
 						IO.slower = 0;
-						IO.stats=IO.score;
+						IO.stats = IO.score;
 					}
 					IO.speed_update = false;
 					IO.misses = 0;
@@ -136,7 +140,7 @@ void main(void)
 						IO.sequence_done = true;
 						IO.seq_value = WIN_SEQ;
 						IO.slower = 0;
-						IO.stats=IO.score;
+						IO.stats = IO.score;
 					}
 					IO.speed_update = false;
 					IO.misses = 0;

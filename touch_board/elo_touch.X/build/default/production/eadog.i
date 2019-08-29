@@ -1,4 +1,4 @@
-# 1 "d232.c"
+# 1 "eadog.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,7 +6,352 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "d232.c" 2
+# 1 "eadog.c" 2
+# 1 "./eadog.h" 1
+# 27 "./eadog.h"
+# 1 "./ringbufs.h" 1
+# 15 "./ringbufs.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 1 3
+
+
+
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/musl_xc8.h" 1 3
+# 5 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
+# 22 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 127 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uintptr_t;
+# 142 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long intptr_t;
+# 158 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef signed char int8_t;
+
+
+
+
+typedef short int16_t;
+
+
+
+
+typedef __int24 int24_t;
+
+
+
+
+typedef long int32_t;
+
+
+
+
+
+typedef long long int64_t;
+# 188 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long long intmax_t;
+
+
+
+
+
+typedef unsigned char uint8_t;
+
+
+
+
+typedef unsigned short uint16_t;
+
+
+
+
+typedef __uint24 uint24_t;
+
+
+
+
+typedef unsigned long uint32_t;
+
+
+
+
+
+typedef unsigned long long uint64_t;
+# 229 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long long uintmax_t;
+# 23 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
+
+typedef int8_t int_fast8_t;
+
+typedef int64_t int_fast64_t;
+
+
+typedef int8_t int_least8_t;
+typedef int16_t int_least16_t;
+
+typedef int24_t int_least24_t;
+
+typedef int32_t int_least32_t;
+
+typedef int64_t int_least64_t;
+
+
+typedef uint8_t uint_fast8_t;
+
+typedef uint64_t uint_fast64_t;
+
+
+typedef uint8_t uint_least8_t;
+typedef uint16_t uint_least16_t;
+
+typedef uint24_t uint_least24_t;
+
+typedef uint32_t uint_least32_t;
+
+typedef uint64_t uint_least64_t;
+# 139 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/stdint.h" 1 3
+typedef int32_t int_fast16_t;
+typedef int32_t int_fast32_t;
+typedef uint32_t uint_fast16_t;
+typedef uint32_t uint_fast32_t;
+# 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
+# 16 "./ringbufs.h" 2
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
+# 17 "./ringbufs.h" 2
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 1 3
+# 10 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/features.h" 1 3
+# 11 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 2 3
+# 24 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+
+
+
+
+
+typedef void * va_list[1];
+
+
+
+
+typedef void * __isoc_va_list[1];
+# 122 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned size_t;
+# 137 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long ssize_t;
+# 246 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long long off_t;
+# 399 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef struct _IO_FILE FILE;
+# 25 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 2 3
+# 52 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
+typedef union _G_fpos64_t {
+ char __opaque[16];
+ double __align;
+} fpos_t;
+
+extern FILE *const stdin;
+extern FILE *const stdout;
+extern FILE *const stderr;
+
+
+
+
+
+FILE *fopen(const char *restrict, const char *restrict);
+FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
+int fclose(FILE *);
+
+int remove(const char *);
+int rename(const char *, const char *);
+
+int feof(FILE *);
+int ferror(FILE *);
+int fflush(FILE *);
+void clearerr(FILE *);
+
+int fseek(FILE *, long, int);
+long ftell(FILE *);
+void rewind(FILE *);
+
+int fgetpos(FILE *restrict, fpos_t *restrict);
+int fsetpos(FILE *, const fpos_t *);
+
+size_t fread(void *restrict, size_t, size_t, FILE *restrict);
+size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
+
+int fgetc(FILE *);
+int getc(FILE *);
+int getchar(void);
+int ungetc(int, FILE *);
+
+int fputc(int, FILE *);
+int putc(int, FILE *);
+int putchar(int);
+
+char *fgets(char *restrict, int, FILE *restrict);
+
+char *gets(char *);
+
+
+int fputs(const char *restrict, FILE *restrict);
+int puts(const char *);
+
+#pragma printf_check(printf) const
+#pragma printf_check(vprintf) const
+#pragma printf_check(sprintf) const
+#pragma printf_check(snprintf) const
+#pragma printf_check(vsprintf) const
+#pragma printf_check(vsnprintf) const
+
+int printf(const char *restrict, ...);
+int fprintf(FILE *restrict, const char *restrict, ...);
+int sprintf(char *restrict, const char *restrict, ...);
+int snprintf(char *restrict, size_t, const char *restrict, ...);
+
+int vprintf(const char *restrict, __isoc_va_list);
+int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
+int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
+int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
+
+int scanf(const char *restrict, ...);
+int fscanf(FILE *restrict, const char *restrict, ...);
+int sscanf(const char *restrict, const char *restrict, ...);
+int vscanf(const char *restrict, __isoc_va_list);
+int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
+int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
+
+void perror(const char *);
+
+int setvbuf(FILE *restrict, char *restrict, int, size_t);
+void setbuf(FILE *restrict, char *restrict);
+
+char *tmpnam(char *);
+FILE *tmpfile(void);
+
+
+
+
+FILE *fmemopen(void *restrict, size_t, const char *restrict);
+FILE *open_memstream(char **, size_t *);
+FILE *fdopen(int, const char *);
+FILE *popen(const char *, const char *);
+int pclose(FILE *);
+int fileno(FILE *);
+int fseeko(FILE *, off_t, int);
+off_t ftello(FILE *);
+int dprintf(int, const char *restrict, ...);
+int vdprintf(int, const char *restrict, __isoc_va_list);
+void flockfile(FILE *);
+int ftrylockfile(FILE *);
+void funlockfile(FILE *);
+int getc_unlocked(FILE *);
+int getchar_unlocked(void);
+int putc_unlocked(int, FILE *);
+int putchar_unlocked(int);
+ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
+ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
+int renameat(int, const char *, int, const char *);
+char *ctermid(char *);
+
+
+
+
+
+
+
+char *tempnam(const char *, const char *);
+# 18 "./ringbufs.h" 2
+
+
+
+ typedef struct ringBufS_t {
+  uint8_t buf[64];
+  uint8_t head;
+  uint8_t tail;
+  uint8_t count;
+ } ringBufS_t;
+
+ void ringBufS_init(volatile ringBufS_t *_this);
+ int8_t ringBufS_empty(ringBufS_t *_this);
+ int8_t ringBufS_full(ringBufS_t *_this);
+ uint8_t ringBufS_get(ringBufS_t *_this);
+ void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+# 28 "./eadog.h" 2
+# 45 "./eadog.h"
+ void wdtdelay(uint32_t);
+
+ void init_display(void);
+ void wait_lcd_set(void);
+ _Bool wait_lcd_check(void);
+ void wait_lcd_done(void);
+ void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteCommand(uint8_t);
+ void eaDogM_SetPos(uint8_t, uint8_t);
+ void eaDogM_ClearRow(uint8_t);
+ void eaDogM_WriteString(char *);
+ void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+ void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
+ void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
+# 2 "eadog.c" 2
+
+
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
+# 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 411 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef struct __locale_struct * locale_t;
+# 26 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 2 3
+
+void *memcpy (void *restrict, const void *restrict, size_t);
+void *memmove (void *, const void *, size_t);
+void *memset (void *, int, size_t);
+int memcmp (const void *, const void *, size_t);
+void *memchr (const void *, int, size_t);
+
+char *strcpy (char *restrict, const char *restrict);
+char *strncpy (char *restrict, const char *restrict, size_t);
+
+char *strcat (char *restrict, const char *restrict);
+char *strncat (char *restrict, const char *restrict, size_t);
+
+int strcmp (const char *, const char *);
+int strncmp (const char *, const char *, size_t);
+
+int strcoll (const char *, const char *);
+size_t strxfrm (char *restrict, const char *restrict, size_t);
+
+char *strchr (const char *, int);
+char *strrchr (const char *, int);
+
+size_t strcspn (const char *, const char *);
+size_t strspn (const char *, const char *);
+char *strpbrk (const char *, const char *);
+char *strstr (const char *, const char *);
+char *strtok (char *restrict, const char *restrict);
+
+size_t strlen (const char *);
+
+char *strerror (int);
+# 65 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
+char *strtok_r (char *restrict, const char *restrict, char **restrict);
+int strerror_r (int, char *, size_t);
+char *stpcpy(char *restrict, const char *restrict);
+char *stpncpy(char *restrict, const char *restrict, size_t);
+size_t strnlen (const char *, size_t);
+char *strdup (const char *);
+char *strndup (const char *, size_t);
+char *strsignal(int);
+char *strerror_l (int, locale_t);
+int strcoll_l (const char *, const char *, locale_t);
+size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
+
+
+
+
+void *memccpy (void *restrict, const void *restrict, int, size_t);
+# 5 "eadog.c" 2
 # 1 "./d232.h" 1
 # 38 "./d232.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 1 3
@@ -22,28 +367,10 @@ extern double __fpnormalize(double);
 
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 1 3
-
-
-
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/musl_xc8.h" 1 3
-# 5 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 2 3
-
-
-
-
-
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/features.h" 1 3
-# 11 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 2 3
 # 21 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 3
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
 # 18 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
 typedef long int wchar_t;
-# 122 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef unsigned size_t;
-# 168 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef __int24 int24_t;
-# 204 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef __uint24 uint24_t;
 # 22 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 2 3
 
 int atoi (const char *);
@@ -26568,230 +26895,9 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 2 3
 # 39 "./d232.h" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 1 3
-# 22 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 127 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef unsigned long uintptr_t;
-# 142 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long intptr_t;
-# 158 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef signed char int8_t;
 
 
 
-
-typedef short int16_t;
-# 173 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long int32_t;
-
-
-
-
-
-typedef long long int64_t;
-# 188 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long long intmax_t;
-
-
-
-
-
-typedef unsigned char uint8_t;
-
-
-
-
-typedef unsigned short uint16_t;
-# 209 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef unsigned long uint32_t;
-
-
-
-
-
-typedef unsigned long long uint64_t;
-# 229 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef unsigned long long uintmax_t;
-# 23 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-
-typedef int8_t int_fast8_t;
-
-typedef int64_t int_fast64_t;
-
-
-typedef int8_t int_least8_t;
-typedef int16_t int_least16_t;
-
-typedef int24_t int_least24_t;
-
-typedef int32_t int_least32_t;
-
-typedef int64_t int_least64_t;
-
-
-typedef uint8_t uint_fast8_t;
-
-typedef uint64_t uint_fast64_t;
-
-
-typedef uint8_t uint_least8_t;
-typedef uint16_t uint_least16_t;
-
-typedef uint24_t uint_least24_t;
-
-typedef uint32_t uint_least32_t;
-
-typedef uint64_t uint_least64_t;
-# 139 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/stdint.h" 1 3
-typedef int32_t int_fast16_t;
-typedef int32_t int_fast32_t;
-typedef uint32_t uint_fast16_t;
-typedef uint32_t uint_fast32_t;
-# 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-# 40 "./d232.h" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
-# 41 "./d232.h" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 1 3
-# 24 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-
-
-
-
-
-typedef void * va_list[1];
-
-
-
-
-typedef void * __isoc_va_list[1];
-# 137 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long ssize_t;
-# 246 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long long off_t;
-# 399 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef struct _IO_FILE FILE;
-# 25 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 2 3
-# 52 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
-typedef union _G_fpos64_t {
- char __opaque[16];
- double __align;
-} fpos_t;
-
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
-
-
-
-
-
-FILE *fopen(const char *restrict, const char *restrict);
-FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
-int fclose(FILE *);
-
-int remove(const char *);
-int rename(const char *, const char *);
-
-int feof(FILE *);
-int ferror(FILE *);
-int fflush(FILE *);
-void clearerr(FILE *);
-
-int fseek(FILE *, long, int);
-long ftell(FILE *);
-void rewind(FILE *);
-
-int fgetpos(FILE *restrict, fpos_t *restrict);
-int fsetpos(FILE *, const fpos_t *);
-
-size_t fread(void *restrict, size_t, size_t, FILE *restrict);
-size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
-
-int fgetc(FILE *);
-int getc(FILE *);
-int getchar(void);
-int ungetc(int, FILE *);
-
-int fputc(int, FILE *);
-int putc(int, FILE *);
-int putchar(int);
-
-char *fgets(char *restrict, int, FILE *restrict);
-
-char *gets(char *);
-
-
-int fputs(const char *restrict, FILE *restrict);
-int puts(const char *);
-
-#pragma printf_check(printf) const
-#pragma printf_check(vprintf) const
-#pragma printf_check(sprintf) const
-#pragma printf_check(snprintf) const
-#pragma printf_check(vsprintf) const
-#pragma printf_check(vsnprintf) const
-
-int printf(const char *restrict, ...);
-int fprintf(FILE *restrict, const char *restrict, ...);
-int sprintf(char *restrict, const char *restrict, ...);
-int snprintf(char *restrict, size_t, const char *restrict, ...);
-
-int vprintf(const char *restrict, __isoc_va_list);
-int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
-int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
-int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
-
-int scanf(const char *restrict, ...);
-int fscanf(FILE *restrict, const char *restrict, ...);
-int sscanf(const char *restrict, const char *restrict, ...);
-int vscanf(const char *restrict, __isoc_va_list);
-int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
-int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
-
-void perror(const char *);
-
-int setvbuf(FILE *restrict, char *restrict, int, size_t);
-void setbuf(FILE *restrict, char *restrict);
-
-char *tmpnam(char *);
-FILE *tmpfile(void);
-
-
-
-
-FILE *fmemopen(void *restrict, size_t, const char *restrict);
-FILE *open_memstream(char **, size_t *);
-FILE *fdopen(int, const char *);
-FILE *popen(const char *, const char *);
-int pclose(FILE *);
-int fileno(FILE *);
-int fseeko(FILE *, off_t, int);
-off_t ftello(FILE *);
-int dprintf(int, const char *restrict, ...);
-int vdprintf(int, const char *restrict, __isoc_va_list);
-void flockfile(FILE *);
-int ftrylockfile(FILE *);
-void funlockfile(FILE *);
-int getc_unlocked(FILE *);
-int getchar_unlocked(void);
-int putc_unlocked(int, FILE *);
-int putchar_unlocked(int);
-ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
-ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
-int renameat(int, const char *, int, const char *);
-char *ctermid(char *);
-
-
-
-
-
-
-
-char *tempnam(const char *, const char *);
-# 42 "./d232.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
 # 314 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
@@ -27039,191 +27145,197 @@ struct spi_link_type {
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
-# 2 "d232.c" 2
+# 6 "eadog.c" 2
+# 1 "./mcc_generated_files/spi1.h" 1
+# 55 "./mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 132 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 2 3
+# 55 "./mcc_generated_files/spi1.h" 2
+# 117 "./mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 7 "eadog.c" 2
 
 
 
+struct spi_link_type spi_link;
+struct ringBufS_t ring_buf1;
+struct ringBufS_t ring_buf2;
+uint8_t port_data[16] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
 
+extern struct V_data V;
 
-extern A_data IO;
+static void send_lcd_cmd_long(uint8_t);
+static void send_lcd_data(uint8_t);
+static void send_lcd_cmd(uint8_t);
 
-void Digital232_init(void)
+void wdtdelay(const uint32_t delay)
 {
- printf("%s", "XQ\r");
- WaitMs(5);
- printf("%s", "T2\r");
- WaitMs(800);
- printf("%s", "C4\r");
- WaitMs(5);
- printf("%s", "F4\r");
- WaitMs(5);
- printf("%s", "M4\r");
- WaitMs(5);
- IO.d232 = D232_INIT;
+ static uint32_t dcount;
 
-
-
- if (UART2_is_rx_ready())
-  UART2_Read();
- IO.io = IO_INIT;
- IO.srq = S_IDLE;
- IO.srq_value = 0;
- IO.button_value = 0;
- ADCC_StartConversion(channel_ANA0);
- StartTimer(TMR_SPS, 10);
+ for (dcount = 0; dcount <= delay; dcount++) {
+  __nop();
+  __asm(" clrwdt");
+ };
 }
 
-_Bool Digital232_RW(void)
+
+
+
+void init_display(void)
 {
- uint8_t i = 0, j = 0;
- static uint8_t x = 0;
+ spi_link.tx1a = &ring_buf1;
+ spi_link.tx1b = &ring_buf2;
+ ringBufS_init(spi_link.tx1a);
+ ringBufS_init(spi_link.tx1b);
 
-
- if (!TimerDone(TMR_SPS)) {
-  IO.io = IO_IDLE;
-  return 0;
- }
-
- StartTimer(TMR_SPS, 10 + IO.speed + IO.slower);
-
-
-
-
- IO.srq = S_IDLE;
-
- if (UART2_is_rx_ready()) {
-  j = UART2_Read();
-
-
-
-  switch (IO.srq) {
-  case S_IDLE:
-   if (j == 'S')
-    IO.srq = S_S;
-   break;
-  case S_S:
-   if (j == 'R')
-    IO.srq = S_R;
-   break;
-  case S_R:
-   if (j == 'Q')
-    IO.srq = S_Q;
-   break;
-  case S_Q:
-   if (j == ' ')
-    IO.srq = S_NUM;
-   break;
-  case S_NUM:
-   IO.srq_value = j;
-   IO.srq = S_UPDATE;
-   break;
-  default:
-   IO.srq = S_IDLE;
-  }
- }
-
- UART2_Write('D');
- UART2_Write(IO.outbytes[4]);
- UART2_Write(IO.outbytes[3]);
- UART2_Write(IO.outbytes[2]);
- UART2_Write(IO.outbytes[1]);
- UART2_Write(IO.outbytes[0]);
- UART2_Write('\r');
- printf("%s", "R0\r");
- IO.output_ok = 1;
- IO.io = IO_OUT;
-
-
-
- StartTimer(TMR_RXTO, 250);
- while (!UART2_is_rx_ready()) {
-  if (TimerDone(TMR_RXTO)) {
-   PWM8_LoadDutyValue(x++);
-   if (x > 3)
-    x = 0;
-   IO.io = IO_FAIL;
-   return 0;
-  }
- }
+ do { LATCbits.LATC2 = 1; } while(0);
+ wdtdelay(350000);
+ send_lcd_cmd(0x39);
+ send_lcd_cmd(0x1d);
+ send_lcd_cmd(0x50);
+ send_lcd_cmd(0x6c);
+ send_lcd_cmd(0x76);
+ send_lcd_cmd_long(0x38);
+ send_lcd_cmd(0x0f);
+ send_lcd_cmd_long(0x01);
+ send_lcd_cmd(0x02);
+ send_lcd_cmd(0x06);
+ wdtdelay(30);
+ SPI1CON2 = 0x02;
+ SPI1CON1 = 0x40;
+ SPI1CON0 = 0x83;
+ SPI1INTFbits.SPI1TXUIF = 1;
+}
 
 
 
 
- i = 0;
- StartTimer(TMR_RXTO, 250);
- while (!TimerDone(TMR_RXTO) && (i < 6)) {
-  if (UART2_is_rx_ready()) {
-   IO.inbytes[4 - i] = UART2_Read();
-   i++;
-  }
- }
- if (TimerDone(TMR_RXTO) || i < 6) {
-  PWM8_LoadDutyValue(x++);
-  if (x > 16)
-   x = 0;
-  IO.io = IO_FAIL;
-  return 0;
- }
-
- if (UART2_is_rx_ready())
-  UART2_Read();
-
- IO.input_ok = 1;
- IO.io = IO_IN;
- IO.d232 = D232_OUT_IN;
+static void send_lcd_data(const uint8_t data)
+{
+ do { LATCbits.LATC1 = 1; } while(0);
+ do { LATCbits.LATC2 = 0; } while(0);
+ SPI1_Exchange8bit(data);
+ wdtdelay(8);
+}
 
 
 
- IO.button_value = ADCC_GetConversionResult();
- PWM8_LoadDutyValue(199);
- IO.io = IO_UPDATE;
+
+static void send_lcd_cmd(const uint8_t cmd)
+{
+ do { LATCbits.LATC1 = 0; } while(0);
+ do { LATCbits.LATC2 = 0; } while(0);
+ SPI1_Exchange8bit(cmd);
+ wdtdelay(30);
+ do { LATCbits.LATC1 = 1; } while(0);
+}
+
+
+
+
+static void send_lcd_cmd_long(const uint8_t cmd)
+{
+ do { LATCbits.LATC1 = 0; } while(0);
+ do { LATCbits.LATC2 = 0; } while(0);
+ SPI1_Exchange8bit(cmd);
+ wdtdelay(800);
+ do { LATCbits.LATC1 = 1; } while(0);
+}
+
+void wait_lcd_set(void)
+{
+
+}
+
+_Bool wait_lcd_check(void)
+{
  return 1;
 }
 
-void led_lightshow(uint8_t seq, uint16_t speed)
+void wait_lcd_done(void)
 {
- static uint16_t j = 0;
- static uint8_t cylon = 0xff;
- static int16_t alive_led = 0;
- static _Bool LED_UP = 1;
 
- if (seq == 1) {
-  IO.outbytes[2] = IO.inbytes[0];
-  return;
+ wdtdelay(50);
+}
+
+void eaDogM_WriteChr(const int8_t value)
+{
+ send_lcd_data((uint8_t) value);
+}
+
+void eaDogM_WriteCommand(const uint8_t cmd)
+{
+ send_lcd_cmd(cmd);
+}
+
+void eaDogM_SetPos(const uint8_t r, const uint8_t c)
+{
+ uint8_t cmdPos;
+ cmdPos = (uint8_t) 0b10000000 + (uint8_t) ((uint8_t) r * (uint8_t) 16) + (uint8_t) c;
+ eaDogM_WriteCommand(cmdPos);
+}
+
+void eaDogM_ClearRow(const uint8_t r)
+{
+ uint8_t i;
+ eaDogM_SetPos(r, 0);
+ for (i = 0; i < 16; i++) {
+  eaDogM_WriteChr(' ');
+ }
+}
+
+void eaDogM_WriteString(char *strPtr)
+{
+ uint8_t i;
+ wait_lcd_set();
+
+ ringBufS_flush(spi_link.tx1a, 0);
+ do { LATCbits.LATC2 = 0; } while(0);
+ if (strlen(strPtr) > 64) strPtr[64] = 0;
+ for (i = 0; i < strlen(strPtr); i++) {
+  eaDogM_WriteChr(strPtr[i]);
  }
 
- if (seq == 2) {
-  if (IO.sequence_done) {
-   IO.sequence_done = 0;
-   StartTimer(TMR_SEQ, 900);
-  }
-  IO.outbytes[2] = 0xff;
-  return;
- }
 
- if (j++ >= speed) {
-  if (0) {
-   IO.outbytes[2] = ~cylon;
-  } else {
-   IO.outbytes[2] = cylon;
-  }
 
-  if (LED_UP && (alive_led != 0)) {
-   alive_led = alive_led * 2;
-   cylon = cylon << 1;
-  } else {
-   if (alive_led != 0) alive_led = alive_led / 2;
-   cylon = cylon >> 1;
-  }
-  if (alive_led < 2) {
-   alive_led = 2;
-   LED_UP = 1;
-  } else {
-   if (alive_led > 128) {
-    alive_led = 128;
-    LED_UP = 0;
-   }
-  }
-  j = 0;
- }
+}
+
+void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
+{
+ send_lcd_cmd((0b10000000 + (r * 16) + c));
+ eaDogM_WriteString(strPtr);
+}
+
+void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
+{
+ eaDogM_WriteCommand((0b10000000 + (r * 16) + c));
+
+ eaDogM_WriteChr(i / 10 + '0');
+ eaDogM_WriteChr(i % 10 + '0');
+
+}
+
+
+
+
+void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
+{
+ uint8_t cmd;
+
+ cmd = ndx & 0b00111111;
+ cmd = cmd | 0b01000000;
+
+ eaDogM_WriteCommand(cmd);
+ eaDogM_WriteChr(data);
+
+
+ eaDogM_SetPos(0, 0);
 }

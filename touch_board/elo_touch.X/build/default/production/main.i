@@ -27539,7 +27539,7 @@ void PMD_Initialize(void);
 
 
 # 1 "./timers.h" 1
-# 11 "./timers.h"
+# 12 "./timers.h"
 enum APP_TIMERS {
  TMR_INTERNAL = 0,
  TMR_INIT,
@@ -27638,7 +27638,16 @@ typedef struct OUT_data2 {
  uint8_t led8 : 1;
 } OUT_data2;
 
-
+struct spi_link_type {
+ uint8_t SPI_LCD : 1;
+ uint8_t SPI_AUX : 1;
+ uint8_t LCD_TIMER : 1;
+ volatile uint8_t LCD_DATA : 1;
+ uint16_t delay;
+ uint8_t config;
+ struct ringBufS_t *tx1b, *tx1a;
+ volatile int32_t int_count;
+};
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
@@ -27648,7 +27657,7 @@ void led_lightshow(uint8_t, uint16_t);
 # 1 "./eadog.h" 1
 # 27 "./eadog.h"
 # 1 "./ringbufs.h" 1
-# 19 "./ringbufs.h"
+# 21 "./ringbufs.h"
  typedef struct ringBufS_t {
   uint8_t buf[64];
   uint8_t head;
@@ -27664,19 +27673,10 @@ void led_lightshow(uint8_t, uint16_t);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 28 "./eadog.h" 2
-
-
-
-
-
+# 45 "./eadog.h"
  void wdtdelay(uint32_t);
 
  void init_display(void);
- void init_port(void);
- void send_port_data_dma(void);
- void send_lcd_data_dma(uint8_t);
- void send_lcd_cmd_dma(uint8_t);
- void start_lcd(void);
  void wait_lcd_set(void);
  _Bool wait_lcd_check(void);
  void wait_lcd_done(void);
@@ -27742,8 +27742,12 @@ void main(void)
  IO.d232 = D232_IDLE;
  IO.io = IO_IDLE;
 
+ init_display();
+ eaDogM_WriteCommand(0b00001100);
+
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
+ eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
 
  while (1) {
 
@@ -27761,7 +27765,7 @@ void main(void)
       IO.sequence_done = 1;
       IO.seq_value = 2;
       IO.slower = 0;
-      IO.stats=IO.score;
+      IO.stats = IO.score;
      }
      IO.speed_update = 0;
      IO.misses = 0;
@@ -27776,7 +27780,7 @@ void main(void)
       IO.sequence_done = 1;
       IO.seq_value = 2;
       IO.slower = 0;
-      IO.stats=IO.score;
+      IO.stats = IO.score;
      }
      IO.speed_update = 0;
      IO.misses = 0;

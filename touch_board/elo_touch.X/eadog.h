@@ -23,21 +23,28 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-//#include "vconfig.h"
+
 #include "ringbufs.h"
 
 #define LCD_CMD_MASK	0x01
-#define LCD_CMD_SET		0x100
+#define LCD_CMD_SET	0x100
 #define LCD_CLEAR_HOME	0x04
+	
+#define EADOGM_CMD_CLR		1
+#define EADOGM_CMD_CURSOR_ON     0b00001111
+#define EADOGM_CMD_CURSOR_OFF    0b00001100
+#define EADOGM_CMD_DISPLAY_ON    0b00001100
+#define EADOGM_CMD_DISPLAY_OFF   0b00001000
+#define EADOGM_CMD_DDRAM_ADDR    0b10000000
+#define EADOGM_CMD_CGRAM_ADDR    0b01000000
+#define EADOGM_CMD_SELECT_R0     0b00011000
+#define EADOGM_CMD_SELECT_R1     0b00010000
+#define EADOGM_CMD_SET_TABLE2    0b00101010
+#define EADOGM_COLSPAN		16
 
 	void wdtdelay(uint32_t);
 
 	void init_display(void);
-	void init_port(void);
-	void send_port_data_dma(void);
-	void send_lcd_data_dma(uint8_t);
-	void send_lcd_cmd_dma(uint8_t);
-	void start_lcd(void);
 	void wait_lcd_set(void);
 	bool wait_lcd_check(void);
 	void wait_lcd_done(void);
