@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/tmr5.c"
+# 1 "mcc_generated_files/spi1.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/tmr5.c" 2
-# 51 "mcc_generated_files/tmr5.c"
+# 1 "mcc_generated_files/spi1.c" 2
+# 51 "mcc_generated_files/spi1.c"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -26566,12 +26566,20 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 2 3
-# 51 "mcc_generated_files/tmr5.c" 2
+# 51 "mcc_generated_files/spi1.c" 2
 
-# 1 "mcc_generated_files/tmr5.h" 1
-# 54 "mcc_generated_files/tmr5.h"
+# 1 "mcc_generated_files/spi1.h" 1
+# 54 "mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
-# 54 "mcc_generated_files/tmr5.h" 2
+# 54 "mcc_generated_files/spi1.h" 2
+
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 132 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 2 3
+# 55 "mcc_generated_files/spi1.h" 2
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 1 3
 # 22 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
@@ -26655,564 +26663,78 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/tmr5.h" 2
-# 101 "mcc_generated_files/tmr5.h"
-void TMR5_Initialize(void);
-# 130 "mcc_generated_files/tmr5.h"
-void TMR5_StartTimer(void);
-# 162 "mcc_generated_files/tmr5.h"
-void TMR5_StopTimer(void);
-# 197 "mcc_generated_files/tmr5.h"
-uint16_t TMR5_ReadTimer(void);
-# 236 "mcc_generated_files/tmr5.h"
-void TMR5_WriteTimer(uint16_t timerVal);
-# 272 "mcc_generated_files/tmr5.h"
-void TMR5_Reload(void);
-# 311 "mcc_generated_files/tmr5.h"
-void TMR5_StartSinglePulseAcquisition(void);
-# 350 "mcc_generated_files/tmr5.h"
-uint8_t TMR5_CheckGateValueStatus(void);
-# 368 "mcc_generated_files/tmr5.h"
-void TMR5_CallBack(void);
-# 386 "mcc_generated_files/tmr5.h"
- void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
-# 404 "mcc_generated_files/tmr5.h"
-extern void (*TMR5_InterruptHandler)(void);
-# 422 "mcc_generated_files/tmr5.h"
-void TMR5_DefaultInterruptHandler(void);
-# 52 "mcc_generated_files/tmr5.c" 2
-
-# 1 "mcc_generated_files/interrupt_manager.h" 1
-# 109 "mcc_generated_files/interrupt_manager.h"
-void INTERRUPT_Initialize (void);
-# 53 "mcc_generated_files/tmr5.c" 2
-
-# 1 "mcc_generated_files/../d232.h" 1
-# 41 "mcc_generated_files/../d232.h"
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 1 3
-# 24 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-
-
-
-
-
-typedef void * va_list[1];
-
-
-
-
-typedef void * __isoc_va_list[1];
-# 137 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long ssize_t;
-# 246 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long long off_t;
-# 399 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef struct _IO_FILE FILE;
-# 25 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 2 3
-# 52 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
-typedef union _G_fpos64_t {
- char __opaque[16];
- double __align;
-} fpos_t;
-
-extern FILE *const stdin;
-extern FILE *const stdout;
-extern FILE *const stderr;
-
-
-
-
-
-FILE *fopen(const char *restrict, const char *restrict);
-FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
-int fclose(FILE *);
-
-int remove(const char *);
-int rename(const char *, const char *);
-
-int feof(FILE *);
-int ferror(FILE *);
-int fflush(FILE *);
-void clearerr(FILE *);
-
-int fseek(FILE *, long, int);
-long ftell(FILE *);
-void rewind(FILE *);
-
-int fgetpos(FILE *restrict, fpos_t *restrict);
-int fsetpos(FILE *, const fpos_t *);
-
-size_t fread(void *restrict, size_t, size_t, FILE *restrict);
-size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
-
-int fgetc(FILE *);
-int getc(FILE *);
-int getchar(void);
-int ungetc(int, FILE *);
-
-int fputc(int, FILE *);
-int putc(int, FILE *);
-int putchar(int);
-
-char *fgets(char *restrict, int, FILE *restrict);
-
-char *gets(char *);
-
-
-int fputs(const char *restrict, FILE *restrict);
-int puts(const char *);
-
-#pragma printf_check(printf) const
-#pragma printf_check(vprintf) const
-#pragma printf_check(sprintf) const
-#pragma printf_check(snprintf) const
-#pragma printf_check(vsprintf) const
-#pragma printf_check(vsnprintf) const
-
-int printf(const char *restrict, ...);
-int fprintf(FILE *restrict, const char *restrict, ...);
-int sprintf(char *restrict, const char *restrict, ...);
-int snprintf(char *restrict, size_t, const char *restrict, ...);
-
-int vprintf(const char *restrict, __isoc_va_list);
-int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
-int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
-int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
-
-int scanf(const char *restrict, ...);
-int fscanf(FILE *restrict, const char *restrict, ...);
-int sscanf(const char *restrict, const char *restrict, ...);
-int vscanf(const char *restrict, __isoc_va_list);
-int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
-int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
-
-void perror(const char *);
-
-int setvbuf(FILE *restrict, char *restrict, int, size_t);
-void setbuf(FILE *restrict, char *restrict);
-
-char *tmpnam(char *);
-FILE *tmpfile(void);
-
-
-
-
-FILE *fmemopen(void *restrict, size_t, const char *restrict);
-FILE *open_memstream(char **, size_t *);
-FILE *fdopen(int, const char *);
-FILE *popen(const char *, const char *);
-int pclose(FILE *);
-int fileno(FILE *);
-int fseeko(FILE *, off_t, int);
-off_t ftello(FILE *);
-int dprintf(int, const char *restrict, ...);
-int vdprintf(int, const char *restrict, __isoc_va_list);
-void flockfile(FILE *);
-int ftrylockfile(FILE *);
-void funlockfile(FILE *);
-int getc_unlocked(FILE *);
-int getchar_unlocked(void);
-int putc_unlocked(int, FILE *);
-int putchar_unlocked(int);
-ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
-ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
-int renameat(int, const char *, int, const char *);
-char *ctermid(char *);
-
-
-
-
-
-
-
-char *tempnam(const char *, const char *);
-# 42 "mcc_generated_files/../d232.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 314 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 43 "mcc_generated_files/../d232.h" 2
-# 1 "./mcc_generated_files/uart2.h" 1
-# 75 "./mcc_generated_files/uart2.h"
-typedef union {
-    struct {
-        unsigned perr : 1;
-        unsigned ferr : 1;
-        unsigned oerr : 1;
-        unsigned reserved : 5;
-    };
-    uint8_t status;
-}uart2_status_t;
-
-
-
-
-extern volatile uint8_t uart2TxBufferRemaining;
-extern volatile uint8_t uart2RxCount;
-# 116 "./mcc_generated_files/uart2.h"
-void UART2_Initialize(void);
-# 165 "./mcc_generated_files/uart2.h"
-uint8_t UART2_is_rx_ready(void);
-# 215 "./mcc_generated_files/uart2.h"
-uint8_t UART2_is_tx_ready(void);
-# 262 "./mcc_generated_files/uart2.h"
-_Bool UART2_is_tx_done(void);
-# 310 "./mcc_generated_files/uart2.h"
-uart2_status_t UART2_get_last_status(void);
-# 359 "./mcc_generated_files/uart2.h"
-uint8_t UART2_Read(void);
-# 384 "./mcc_generated_files/uart2.h"
-void UART2_Write(uint8_t txData);
-# 405 "./mcc_generated_files/uart2.h"
-void UART2_Transmit_ISR(void);
-# 426 "./mcc_generated_files/uart2.h"
-void UART2_Receive_ISR(void);
-# 447 "./mcc_generated_files/uart2.h"
-void UART2_RxDataHandler(void);
-# 465 "./mcc_generated_files/uart2.h"
-void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 483 "./mcc_generated_files/uart2.h"
-void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 501 "./mcc_generated_files/uart2.h"
-void UART2_SetErrorHandler(void (* interruptHandler)(void));
-# 521 "./mcc_generated_files/uart2.h"
-void (*UART2_RxInterruptHandler)(void);
-# 539 "./mcc_generated_files/uart2.h"
-void (*UART2_TxInterruptHandler)(void);
-# 559 "./mcc_generated_files/uart2.h"
-void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 577 "./mcc_generated_files/uart2.h"
-void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 44 "mcc_generated_files/../d232.h" 2
-# 1 "./mcc_generated_files/adcc.h" 1
-# 72 "./mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
-
-typedef __uint24 uint24_t;
-# 89 "./mcc_generated_files/adcc.h"
-typedef enum
-{
-    channel_ANA0 = 0x0,
-    channel_ANA1 = 0x1,
-    channel_ANA2 = 0x2,
-    channel_ANA3 = 0x3,
-    channel_VSS = 0x3B,
-    channel_Temp = 0x3C,
-    channel_DAC1 = 0x3D,
-    channel_FVR_Buffer1 = 0x3E,
-    channel_FVR_Buffer2 = 0x3F
-} adcc_channel_t;
-# 134 "./mcc_generated_files/adcc.h"
-void ADCC_Initialize(void);
-# 163 "./mcc_generated_files/adcc.h"
-void ADCC_StartConversion(adcc_channel_t channel);
-# 193 "./mcc_generated_files/adcc.h"
-_Bool ADCC_IsConversionDone(void);
-# 225 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetConversionResult(void);
-# 256 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-# 281 "./mcc_generated_files/adcc.h"
-void ADCC_StopConversion(void);
-# 308 "./mcc_generated_files/adcc.h"
-void ADCC_SetStopOnInterrupt(void);
-# 333 "./mcc_generated_files/adcc.h"
-void ADCC_DischargeSampleCapacitor(void);
-# 359 "./mcc_generated_files/adcc.h"
-void ADCC_LoadAcquisitionRegister(uint16_t);
-# 385 "./mcc_generated_files/adcc.h"
-void ADCC_SetPrechargeTime(uint16_t);
-# 410 "./mcc_generated_files/adcc.h"
-void ADCC_SetRepeatCount(uint8_t);
-# 438 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetCurrentCountofConversions(void);
-# 462 "./mcc_generated_files/adcc.h"
-void ADCC_ClearAccumulator(void);
-# 487 "./mcc_generated_files/adcc.h"
-uint24_t ADCC_GetAccumulatorValue(void);
-# 515 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasAccumulatorOverflowed(void);
-# 540 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetFilterValue(void);
-# 568 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetPreviousResult(void);
-# 594 "./mcc_generated_files/adcc.h"
-void ADCC_DefineSetPoint(uint16_t);
-# 620 "./mcc_generated_files/adcc.h"
-void ADCC_SetUpperThreshold(uint16_t);
-# 646 "./mcc_generated_files/adcc.h"
-void ADCC_SetLowerThreshold(uint16_t);
-# 673 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetErrorCalculation(void);
-# 700 "./mcc_generated_files/adcc.h"
-void ADCC_EnableDoubleSampling(void);
-# 724 "./mcc_generated_files/adcc.h"
-void ADCC_EnableContinuousConversion(void);
-# 748 "./mcc_generated_files/adcc.h"
-void ADCC_DisableContinuousConversion(void);
-# 776 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedUpperThreshold(void);
-# 804 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedLowerThreshold(void);
-# 831 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetConversionStageStatus(void);
-# 45 "mcc_generated_files/../d232.h" 2
-# 1 "./mcc_generated_files/pwm8.h" 1
-# 102 "./mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "./mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 46 "mcc_generated_files/../d232.h" 2
-# 1 "./timers.h" 1
-# 11 "./timers.h"
-enum APP_TIMERS {
- TMR_INTERNAL = 0,
- TMR_INIT,
- TMR_RXTO,
- TMR_SPS,
- TMR_EXTRA,
- TMR_SEQ,
-
-
-
- TMR_COUNT
-};
-
-__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-__attribute__((inline)) _Bool TimerDone(uint8_t timer);
-void WaitMs(uint16_t numMilliseconds);
-# 47 "mcc_generated_files/../d232.h" 2
-# 67 "mcc_generated_files/../d232.h"
-typedef enum {
- D232_IDLE,
- D232_INIT,
- D232_OUT_IN,
- D232_SRQ,
- D232_UPDATE
-} D232_STATE;
-
-typedef enum {
- IO_IDLE,
- IO_INIT,
- IO_OUT,
- IO_IN,
- IO_SRQ,
- IO_UPDATE,
- IO_FAIL,
-} IO_STATE;
-
-typedef enum {
- S_IDLE,
- S_S,
- S_R,
- S_Q,
- S_NUM,
- S_UPDATE,
-} SRQ_STATE;
-
-typedef struct A_data {
- uint8_t inbytes[5];
- uint8_t outbytes[5];
- _Bool input_ok;
- _Bool output_ok;
- IO_STATE io;
- D232_STATE d232;
- SRQ_STATE srq;
- uint8_t srq_value, seq_value, misses, score, stats;
- adc_result_t button_value;
- uint16_t speed, slower;
- _Bool speed_update, sequence_done;
-} A_data;
-
-typedef struct IN_data {
-
-
-
- uint8_t b0 : 1;
- uint8_t detonator : 1;
- uint8_t pir : 1;
- uint8_t b3 : 1;
- uint8_t b4 : 1;
-} IN_data;
-
-typedef struct OUT_data1 {
-
-
-
- uint8_t sound1 : 1;
- uint8_t chirp : 1;
- uint8_t sound3 : 1;
- uint8_t misc1 : 1;
- uint8_t misc2 : 1;
- uint8_t filler1 : 3;
-} OUT_data1;
-
-typedef struct OUT_data2 {
-
-
-
- uint8_t led1 : 1;
- uint8_t led2 : 1;
- uint8_t led3 : 1;
- uint8_t led4 : 1;
- uint8_t led5 : 1;
- uint8_t led6 : 1;
- uint8_t led7 : 1;
- uint8_t led8 : 1;
-} OUT_data2;
-
-
-
-void Digital232_init(void);
-_Bool Digital232_RW(void);
-void led_lightshow(uint8_t, uint16_t);
-# 54 "mcc_generated_files/tmr5.c" 2
-
-
-
-
-
-volatile uint16_t timer5ReloadVal;
-void (*TMR5_InterruptHandler)(void);
-
-
-
-
-
-void TMR5_Initialize(void)
+# 56 "mcc_generated_files/spi1.h" 2
+# 117 "mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 52 "mcc_generated_files/spi1.c" 2
+# 64 "mcc_generated_files/spi1.c"
+void SPI1_Initialize(void)
 {
 
 
+  SPI1CON1 = 0x40;
 
-    T5GCON = 0x00;
+  SPI1CON2 = 0x03;
 
+  SPI1BAUD = 0x4F;
 
-    T5GATE = 0x00;
+  SPI1CLK = 0x00;
 
-
-    T5CLK = 0x01;
-
-
-    TMR5H = 0x63;
-
-
-    TMR5L = 0xC0;
-
-
-    timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
-
-
-    PIR8bits.TMR5IF = 0;
-
-
-    PIE8bits.TMR5IE = 1;
-
-
-    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
-
-
-    T5CON = 0x31;
+  SPI1CON0 = 0x82;
 }
 
-void TMR5_StartTimer(void)
+uint8_t SPI1_Exchange8bit(uint8_t data)
 {
 
-    T5CONbits.TMR5ON = 1;
-}
+    SPI1TCNTL = 1;
+    SPI1TXB = data;
 
-void TMR5_StopTimer(void)
-{
-
-    T5CONbits.TMR5ON = 0;
-}
-
-uint16_t TMR5_ReadTimer(void)
-{
-    uint16_t readVal;
-    uint8_t readValHigh;
-    uint8_t readValLow;
-
-    T5CONbits.T5RD16 = 1;
-
-    readValLow = TMR5L;
-    readValHigh = TMR5H;
-
-    readVal = ((uint16_t)readValHigh << 8) | readValLow;
-
-    return readVal;
-}
-
-void TMR5_WriteTimer(uint16_t timerVal)
-{
-    if (T5CONbits.NOT_SYNC == 1)
+    while(PIR2bits.SPI1RXIF == 0x0)
     {
-
-        T5CONbits.TMR5ON = 0;
-
-
-        TMR5H = (timerVal >> 8);
-        TMR5L = timerVal;
-
-
-        T5CONbits.TMR5ON =1;
     }
-    else
+
+    return (SPI1RXB);
+}
+
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut)
+{
+    uint8_t bytesWritten = 0;
+
+    if(bufLen != 0)
     {
+        if(dataIn != ((void*)0))
+        {
+            while(bytesWritten < bufLen)
+            {
+                if(dataOut == ((void*)0))
+                {
+                    SPI1_Exchange8bit(dataIn[bytesWritten]);
+                }
+                else
+                {
+                    dataOut[bytesWritten] = SPI1_Exchange8bit(dataIn[bytesWritten]);
+                }
 
-        TMR5H = (timerVal >> 8);
-        TMR5L = timerVal;
+                bytesWritten++;
+            }
+        }
+        else
+        {
+            if(dataOut != ((void*)0))
+            {
+                while(bytesWritten < bufLen )
+                {
+                    dataOut[bytesWritten] = SPI1_Exchange8bit(0x0);
+
+                    bytesWritten++;
+                }
+            }
+        }
     }
-}
 
-void TMR5_Reload(void)
-{
-    TMR5_WriteTimer(timer5ReloadVal);
-}
-
-void TMR5_StartSinglePulseAcquisition(void)
-{
-    T5GCONbits.T5GGO = 1;
-}
-
-uint8_t TMR5_CheckGateValueStatus(void)
-{
-    return (T5GCONbits.T5GVAL);
-}
-
-void __attribute__((picinterrupt(("irq(TMR5),base(8)")))) TMR5_ISR()
-{
-    static volatile unsigned int CountCallBack = 0;
-
-
-    PIR8bits.TMR5IF = 0;
-    TMR5_WriteTimer(timer5ReloadVal);
-
-
-    if (++CountCallBack >= 50)
-    {
-
-        TMR5_CallBack();
-
-
-        CountCallBack = 0;
-    }
-}
-
-void TMR5_CallBack(void)
-{
-
-    if(TMR5_InterruptHandler)
-    {
-        TMR5_InterruptHandler();
-    }
-}
-
-void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
-    TMR5_InterruptHandler = InterruptHandler;
-}
-
-void TMR5_DefaultInterruptHandler(void){
-
-
-  LATEbits.LATE0 = (uint8_t) ~LATEbits.LATE0;
+    return bytesWritten;
 }

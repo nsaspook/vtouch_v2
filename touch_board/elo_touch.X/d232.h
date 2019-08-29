@@ -99,7 +99,7 @@ typedef struct A_data {
 	IO_STATE io;
 	D232_STATE d232;
 	SRQ_STATE srq;
-	uint8_t srq_value, seq_value, misses;
+	uint8_t srq_value, seq_value, misses, score, stats;
 	adc_result_t button_value;
 	uint16_t speed, slower;
 	bool speed_update, sequence_done;
