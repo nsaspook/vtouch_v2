@@ -60,6 +60,10 @@
 #define WARP	0x04
 #define SIREN	0x01
 
+#define	DEFAULT_SEQ	0
+#define DEBUG_SEQ	1
+#define WIN_SEQ		2
+
 typedef enum {
 	D232_IDLE,
 	D232_INIT,
@@ -95,9 +99,10 @@ typedef struct A_data {
 	IO_STATE io;
 	D232_STATE d232;
 	SRQ_STATE srq;
-	uint8_t srq_value;
+	uint8_t srq_value, seq_value, misses;
 	adc_result_t button_value;
-	uint16_t	speed;
+	uint16_t speed;
+	bool speed_update, sequence_done;
 } A_data;
 
 typedef struct IN_data {

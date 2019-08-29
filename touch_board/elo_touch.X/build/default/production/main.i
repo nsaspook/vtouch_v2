@@ -27529,6 +27529,7 @@ enum APP_TIMERS {
  TMR_RXTO,
  TMR_SPS,
  TMR_EXTRA,
+ TMR_SEQ,
 
 
 
@@ -27541,7 +27542,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 63 "./d232.h"
+# 67 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27577,9 +27578,10 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
- uint8_t srq_value;
+ uint8_t srq_value, seq_value, misses;
  adc_result_t button_value;
  uint16_t speed;
+ _Bool speed_update, sequence_done;
 } A_data;
 
 typedef struct IN_data {
@@ -27630,7 +27632,11 @@ void led_lightshow(uint8_t, uint16_t);
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 A_data IO = {
- .speed = 0,
+ .speed = 10,
+ .speed_update = 1,
+ .sequence_done = 0,
+ .seq_value = 0,
+ .misses = 0,
 };
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
@@ -27679,19 +27685,41 @@ void main(void)
 
   work_sw();
   if (Digital232_RW() && switches->detonator)
-   led_lightshow(0, 1);
+   led_lightshow(IO.seq_value, 1);
 
   if (!switches->detonator) {
    IO.outbytes[1] = IO.outbytes[1] | 0x02;
-   if (IO.outbytes[2] == 1) {
+   if (IO.outbytes[2]&0b00000001) {
     if (TimerDone(TMR_EXTRA)) {
      IO.outbytes[1] = IO.outbytes[1] | 0x04;
+     if (IO.speed_update && IO.speed-- < 2) {
+      IO.speed = 10;
+      IO.sequence_done = 1;
+      IO.seq_value = 2;
+     }
+     IO.speed_update = 0;
+     IO.misses = 0;
     }
    }
 
-   if (IO.outbytes[2] == 128) {
+   if (IO.outbytes[2]&0b10000000) {
     if (TimerDone(TMR_EXTRA)) {
      IO.outbytes[1] = IO.outbytes[1] | 0x01;
+     if (IO.speed_update && IO.speed-- < 2) {
+      IO.speed = 10;
+      IO.sequence_done = 1;
+      IO.seq_value = 2;
+     }
+     IO.speed_update = 0;
+     IO.misses = 0;
+    }
+   }
+
+   if (IO.outbytes[2]&0b01111110) {
+    if (IO.speed_update && (IO.misses++ > 7)) {
+     IO.misses = 0;
+
+     IO.speed_update = 0;
     }
    }
   } else {
@@ -27699,6 +27727,9 @@ void main(void)
    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+   IO.speed_update = 1;
+   if (TimerDone(TMR_SEQ))
+    IO.seq_value = 0;
   }
 
  }

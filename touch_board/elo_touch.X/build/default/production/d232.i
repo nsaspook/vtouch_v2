@@ -26935,6 +26935,7 @@ enum APP_TIMERS {
  TMR_RXTO,
  TMR_SPS,
  TMR_EXTRA,
+ TMR_SEQ,
 
 
 
@@ -26945,7 +26946,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 63 "./d232.h"
+# 67 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -26981,9 +26982,10 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
- uint8_t srq_value;
+ uint8_t srq_value, seq_value, misses;
  adc_result_t button_value;
  uint16_t speed;
+ _Bool speed_update, sequence_done;
 } A_data;
 
 typedef struct IN_data {
@@ -27178,6 +27180,15 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 
  if (seq == 1) {
   IO.outbytes[2] = IO.inbytes[0];
+  return;
+ }
+
+ if (seq == 2) {
+  if (IO.sequence_done) {
+   IO.sequence_done = 0;
+   StartTimer(TMR_SEQ, 900);
+  }
+  IO.outbytes[2] = 0xff;
   return;
  }
 
