@@ -27209,10 +27209,10 @@ void init_display(void)
  send_lcd_cmd(0x02);
  send_lcd_cmd(0x06);
  wdtdelay(30);
- SPI1CON2 = 0x02;
- SPI1CON1 = 0x40;
- SPI1CON0 = 0x83;
- SPI1INTFbits.SPI1TXUIF = 1;
+
+
+
+
 }
 
 
