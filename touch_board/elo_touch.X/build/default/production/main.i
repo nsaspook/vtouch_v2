@@ -26578,7 +26578,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 238 "./mcc_generated_files/pin_manager.h"
+# 314 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "./mcc_generated_files/mcc.h" 2
 
@@ -27511,23 +27511,42 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 576 "./mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 61 "./mcc_generated_files/mcc.h" 2
-# 76 "./mcc_generated_files/mcc.h"
+
+# 1 "./mcc_generated_files/spi1.h" 1
+# 55 "./mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 132 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 2 3
+# 55 "./mcc_generated_files/spi1.h" 2
+# 117 "./mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 62 "./mcc_generated_files/mcc.h" 2
+# 77 "./mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 89 "./mcc_generated_files/mcc.h"
+# 90 "./mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 102 "./mcc_generated_files/mcc.h"
+# 103 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 47 "main.c" 2
 
 
 
 # 1 "./timers.h" 1
-# 11 "./timers.h"
+# 12 "./timers.h"
 enum APP_TIMERS {
  TMR_INTERNAL = 0,
  TMR_INIT,
  TMR_RXTO,
  TMR_SPS,
+ TMR_EXTRA,
+ TMR_SEQ,
 
 
 
@@ -27540,7 +27559,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 59 "./d232.h"
+# 67 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27576,28 +27595,112 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
- uint8_t srq_value;
+ uint8_t srq_value, seq_value, misses, score, stats;
  adc_result_t button_value;
+ uint16_t speed, slower;
+ _Bool speed_update, sequence_done;
 } A_data;
 
 typedef struct IN_data {
+
+
+
  uint8_t b0 : 1;
  uint8_t detonator : 1;
- uint8_t b2 : 1;
+ uint8_t pir : 1;
  uint8_t b3 : 1;
  uint8_t b4 : 1;
 } IN_data;
+
+typedef struct OUT_data1 {
+
+
+
+ uint8_t sound1 : 1;
+ uint8_t chirp : 1;
+ uint8_t sound3 : 1;
+ uint8_t misc1 : 1;
+ uint8_t misc2 : 1;
+ uint8_t filler1 : 3;
+} OUT_data1;
+
+typedef struct OUT_data2 {
+
+
+
+ uint8_t led1 : 1;
+ uint8_t led2 : 1;
+ uint8_t led3 : 1;
+ uint8_t led4 : 1;
+ uint8_t led5 : 1;
+ uint8_t led6 : 1;
+ uint8_t led7 : 1;
+ uint8_t led8 : 1;
+} OUT_data2;
+
+struct spi_link_type {
+ uint8_t SPI_LCD : 1;
+ uint8_t SPI_AUX : 1;
+ uint8_t LCD_TIMER : 1;
+ volatile uint8_t LCD_DATA : 1;
+ uint16_t delay;
+ uint8_t config;
+ struct ringBufS_t *tx1b, *tx1a;
+ volatile int32_t int_count;
+};
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 # 51 "main.c" 2
 
+# 1 "./eadog.h" 1
+# 27 "./eadog.h"
+# 1 "./ringbufs.h" 1
+# 21 "./ringbufs.h"
+ typedef struct ringBufS_t {
+  uint8_t buf[64];
+  uint8_t head;
+  uint8_t tail;
+  uint8_t count;
+ } ringBufS_t;
+
+ void ringBufS_init(volatile ringBufS_t *_this);
+ int8_t ringBufS_empty(ringBufS_t *_this);
+ int8_t ringBufS_full(ringBufS_t *_this);
+ uint8_t ringBufS_get(ringBufS_t *_this);
+ void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+# 28 "./eadog.h" 2
+# 45 "./eadog.h"
+ void wdtdelay(uint32_t);
+
+ void init_display(void);
+ void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteCommand(uint8_t);
+ void eaDogM_SetPos(uint8_t, uint8_t);
+ void eaDogM_ClearRow(uint8_t);
+ void eaDogM_WriteString(char *);
+ void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+ void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
+ void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
+# 52 "main.c" 2
+
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile A_data IO;
-IN_data *switches = (void *) & IO.inbytes[0];
+A_data IO = {
+ .speed = 10,
+ .speed_update = 1,
+ .sequence_done = 0,
+ .seq_value = 0,
+ .misses = 0,
+ .slower = 0,
+ .score = 50,
+};
+IN_data *switches = (IN_data *) & IO.inbytes[0];
+OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
 void work_sw(void)
 {
@@ -27636,14 +27739,69 @@ void main(void)
  IO.d232 = D232_IDLE;
  IO.io = IO_IDLE;
 
+ init_display();
+ eaDogM_WriteCommand(0b00001100);
+
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
+ eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
 
  while (1) {
 
   work_sw();
   if (Digital232_RW() && switches->detonator)
-   led_lightshow(0, 1);
+   led_lightshow(IO.seq_value, 1);
+
+  if (!switches->detonator) {
+   IO.outbytes[1] = IO.outbytes[1] | 0x02;
+   if (IO.outbytes[2]&0b00000001) {
+    if (TimerDone(TMR_EXTRA)) {
+     IO.outbytes[1] = IO.outbytes[1] | 0x04;
+     if (IO.speed_update && IO.speed-- < 2) {
+      IO.speed = 10;
+      IO.sequence_done = 1;
+      IO.seq_value = 2;
+      IO.slower = 0;
+      IO.stats = IO.score;
+     }
+     IO.speed_update = 0;
+     IO.misses = 0;
+    }
+   }
+
+   if (IO.outbytes[2]&0b10000000) {
+    if (TimerDone(TMR_EXTRA)) {
+     IO.outbytes[1] = IO.outbytes[1] | 0x01;
+     if (IO.speed_update && IO.speed-- < 2) {
+      IO.speed = 10;
+      IO.sequence_done = 1;
+      IO.seq_value = 2;
+      IO.slower = 0;
+      IO.stats = IO.score;
+     }
+     IO.speed_update = 0;
+     IO.misses = 0;
+    }
+   }
+
+   if (IO.outbytes[2]&0b01111110) {
+    if (IO.speed_update && (IO.misses++ > 6)) {
+     if (IO.score-- < 10)
+      IO.score = 10;
+     IO.misses = 0;
+     IO.slower = 10;
+     IO.speed_update = 0;
+    }
+   }
+  } else {
+   StartTimer(TMR_EXTRA, 500);
+   IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+   IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+   IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+   IO.speed_update = 1;
+   if (TimerDone(TMR_SEQ))
+    IO.seq_value = 0;
+  }
 
  }
 }

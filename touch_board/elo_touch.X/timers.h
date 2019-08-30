@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+
 //Software timers - use these to refer to timers rather than
 //integers.  Add more as needed.
 //NOTE: 32767 ms max delay
@@ -13,6 +14,8 @@ enum APP_TIMERS {
 	TMR_INIT,
 	TMR_RXTO,
 	TMR_SPS,
+	TMR_EXTRA,
+	TMR_SEQ,
 	//
 	//(Add timers here as needed)
 	//

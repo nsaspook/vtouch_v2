@@ -4,7 +4,7 @@
  * pin 1 = 1A, pin 2 = 1B, PIN 3 = 2A ... PIN 50 = 25B
  */
 
-extern volatile A_data IO;
+extern A_data IO;
 
 void Digital232_init(void)
 {
@@ -43,7 +43,7 @@ bool Digital232_RW(void)
 		return false;
 	}
 
-	StartTimer(TMR_SPS, 10); // samples per second timer 10ms spacing at least
+	StartTimer(TMR_SPS, 10 + IO.speed + IO.slower); // samples per second timer 10ms spacing at least
 
 	/*
 	 * empty receiver buffer
@@ -146,8 +146,17 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 	static int16_t alive_led = 0;
 	static bool LED_UP = true;
 
-	if (seq == 1) {
+	if (seq == DEBUG_SEQ) {
 		IO.outbytes[2] = IO.inbytes[0];
+		return;
+	}
+
+	if (seq == WIN_SEQ) {
+		if (IO.sequence_done) {
+			IO.sequence_done = false;
+			StartTimer(TMR_SEQ, 900);
+		}
+		IO.outbytes[2] = 0xff;
 		return;
 	}
 

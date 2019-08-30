@@ -26829,7 +26829,7 @@ char *ctermid(char *);
 char *tempnam(const char *, const char *);
 # 42 "mcc_generated_files/../d232.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 238 "./mcc_generated_files/pin_manager.h"
+# 314 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 43 "mcc_generated_files/../d232.h" 2
 # 1 "./mcc_generated_files/uart2.h" 1
@@ -26964,12 +26964,14 @@ uint8_t ADCC_GetConversionStageStatus(void);
  void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 46 "mcc_generated_files/../d232.h" 2
 # 1 "./timers.h" 1
-# 11 "./timers.h"
+# 12 "./timers.h"
 enum APP_TIMERS {
  TMR_INTERNAL = 0,
  TMR_INIT,
  TMR_RXTO,
  TMR_SPS,
+ TMR_EXTRA,
+ TMR_SEQ,
 
 
 
@@ -26980,7 +26982,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "mcc_generated_files/../d232.h" 2
-# 59 "mcc_generated_files/../d232.h"
+# 67 "mcc_generated_files/../d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27016,17 +27018,59 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
- uint8_t srq_value;
+ uint8_t srq_value, seq_value, misses, score, stats;
  adc_result_t button_value;
+ uint16_t speed, slower;
+ _Bool speed_update, sequence_done;
 } A_data;
 
 typedef struct IN_data {
+
+
+
  uint8_t b0 : 1;
  uint8_t detonator : 1;
- uint8_t b2 : 1;
+ uint8_t pir : 1;
  uint8_t b3 : 1;
  uint8_t b4 : 1;
 } IN_data;
+
+typedef struct OUT_data1 {
+
+
+
+ uint8_t sound1 : 1;
+ uint8_t chirp : 1;
+ uint8_t sound3 : 1;
+ uint8_t misc1 : 1;
+ uint8_t misc2 : 1;
+ uint8_t filler1 : 3;
+} OUT_data1;
+
+typedef struct OUT_data2 {
+
+
+
+ uint8_t led1 : 1;
+ uint8_t led2 : 1;
+ uint8_t led3 : 1;
+ uint8_t led4 : 1;
+ uint8_t led5 : 1;
+ uint8_t led6 : 1;
+ uint8_t led7 : 1;
+ uint8_t led8 : 1;
+} OUT_data2;
+
+struct spi_link_type {
+ uint8_t SPI_LCD : 1;
+ uint8_t SPI_AUX : 1;
+ uint8_t LCD_TIMER : 1;
+ volatile uint8_t LCD_DATA : 1;
+ uint16_t delay;
+ uint8_t config;
+ struct ringBufS_t *tx1b, *tx1a;
+ volatile int32_t int_count;
+};
 
 void Digital232_init(void);
 _Bool Digital232_RW(void);

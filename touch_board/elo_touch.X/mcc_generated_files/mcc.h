@@ -59,6 +59,7 @@
 #include "adcc.h"
 #include "uart2.h"
 #include "uart1.h"
+#include "spi1.h"
 
 
 

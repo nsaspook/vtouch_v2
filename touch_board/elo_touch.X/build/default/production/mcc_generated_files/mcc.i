@@ -26574,7 +26574,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 50 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 238 "mcc_generated_files/pin_manager.h"
+# 314 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "mcc_generated_files/mcc.h" 2
 
@@ -27507,11 +27507,28 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 576 "mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 61 "mcc_generated_files/mcc.h" 2
-# 76 "mcc_generated_files/mcc.h"
+
+# 1 "mcc_generated_files/spi1.h" 1
+# 55 "mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 132 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 2 3
+# 55 "mcc_generated_files/spi1.h" 2
+# 117 "mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 62 "mcc_generated_files/mcc.h" 2
+# 77 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 89 "mcc_generated_files/mcc.h"
+# 90 "mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 102 "mcc_generated_files/mcc.h"
+# 103 "mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 47 "mcc_generated_files/mcc.c" 2
 
@@ -27525,11 +27542,12 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     TMR6_Initialize();
     ADCC_Initialize();
+    TMR2_Initialize();
     TMR5_Initialize();
     PWM8_Initialize();
-    TMR2_Initialize();
     UART2_Initialize();
     UART1_Initialize();
+    SPI1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

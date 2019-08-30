@@ -45,7 +45,7 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "0.17"
+#define sw_version "0.19"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
@@ -55,6 +55,14 @@
 #define DTEST	"T2\r"
 
 #define SLED	LED_RSET_LAT
+
+#define CHIRP	0x02
+#define WARP	0x04
+#define SIREN	0x01
+
+#define	DEFAULT_SEQ	0
+#define DEBUG_SEQ	1
+#define WIN_SEQ		2
 
 typedef enum {
 	D232_IDLE,
@@ -91,17 +99,59 @@ typedef struct A_data {
 	IO_STATE io;
 	D232_STATE d232;
 	SRQ_STATE srq;
-	uint8_t srq_value;
+	uint8_t srq_value, seq_value, misses, score, stats;
 	adc_result_t button_value;
+	uint16_t speed, slower;
+	bool speed_update, sequence_done;
 } A_data;
 
 typedef struct IN_data {
+	/*
+	 * port 0
+	 */
 	uint8_t b0 : 1;
 	uint8_t detonator : 1;
-	uint8_t b2 : 1;
+	uint8_t pir : 1;
 	uint8_t b3 : 1;
 	uint8_t b4 : 1;
 } IN_data;
+
+typedef struct OUT_data1 {
+	/*
+	 * port1
+	 */
+	uint8_t sound1 : 1;
+	uint8_t chirp : 1;
+	uint8_t sound3 : 1;
+	uint8_t misc1 : 1;
+	uint8_t misc2 : 1;
+	uint8_t filler1 : 3;
+} OUT_data1;
+
+typedef struct OUT_data2 {
+	/*
+	 * port2
+	 */
+	uint8_t led1 : 1;
+	uint8_t led2 : 1;
+	uint8_t led3 : 1;
+	uint8_t led4 : 1;
+	uint8_t led5 : 1;
+	uint8_t led6 : 1;
+	uint8_t led7 : 1;
+	uint8_t led8 : 1;
+} OUT_data2;
+
+struct spi_link_type { // internal SPI state table
+	uint8_t SPI_LCD : 1;
+	uint8_t SPI_AUX : 1;
+	uint8_t LCD_TIMER : 1;
+	volatile uint8_t LCD_DATA : 1;
+	uint16_t delay;
+	uint8_t config;
+	struct ringBufS_t *tx1b, *tx1a;
+	volatile int32_t int_count;
+};
 
 void Digital232_init(void);
 bool Digital232_RW(void);

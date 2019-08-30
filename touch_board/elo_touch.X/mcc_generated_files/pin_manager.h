@@ -169,6 +169,82 @@
 #define RB7_SetAnalogMode()         do { ANSELBbits.ANSELB7 = 1; } while(0)
 #define RB7_SetDigitalMode()        do { ANSELBbits.ANSELB7 = 0; } while(0)
 
+// get/set RS aliases
+#define RS_TRIS                 TRISCbits.TRISC1
+#define RS_LAT                  LATCbits.LATC1
+#define RS_PORT                 PORTCbits.RC1
+#define RS_WPU                  WPUCbits.WPUC1
+#define RS_OD                   ODCONCbits.ODCC1
+#define RS_ANS                  ANSELCbits.ANSELC1
+#define RS_SetHigh()            do { LATCbits.LATC1 = 1; } while(0)
+#define RS_SetLow()             do { LATCbits.LATC1 = 0; } while(0)
+#define RS_Toggle()             do { LATCbits.LATC1 = ~LATCbits.LATC1; } while(0)
+#define RS_GetValue()           PORTCbits.RC1
+#define RS_SetDigitalInput()    do { TRISCbits.TRISC1 = 1; } while(0)
+#define RS_SetDigitalOutput()   do { TRISCbits.TRISC1 = 0; } while(0)
+#define RS_SetPullup()          do { WPUCbits.WPUC1 = 1; } while(0)
+#define RS_ResetPullup()        do { WPUCbits.WPUC1 = 0; } while(0)
+#define RS_SetPushPull()        do { ODCONCbits.ODCC1 = 0; } while(0)
+#define RS_SetOpenDrain()       do { ODCONCbits.ODCC1 = 1; } while(0)
+#define RS_SetAnalogMode()      do { ANSELCbits.ANSELC1 = 1; } while(0)
+#define RS_SetDigitalMode()     do { ANSELCbits.ANSELC1 = 0; } while(0)
+
+// get/set CSB aliases
+#define CSB_TRIS                 TRISCbits.TRISC2
+#define CSB_LAT                  LATCbits.LATC2
+#define CSB_PORT                 PORTCbits.RC2
+#define CSB_WPU                  WPUCbits.WPUC2
+#define CSB_OD                   ODCONCbits.ODCC2
+#define CSB_ANS                  ANSELCbits.ANSELC2
+#define CSB_SetHigh()            do { LATCbits.LATC2 = 1; } while(0)
+#define CSB_SetLow()             do { LATCbits.LATC2 = 0; } while(0)
+#define CSB_Toggle()             do { LATCbits.LATC2 = ~LATCbits.LATC2; } while(0)
+#define CSB_GetValue()           PORTCbits.RC2
+#define CSB_SetDigitalInput()    do { TRISCbits.TRISC2 = 1; } while(0)
+#define CSB_SetDigitalOutput()   do { TRISCbits.TRISC2 = 0; } while(0)
+#define CSB_SetPullup()          do { WPUCbits.WPUC2 = 1; } while(0)
+#define CSB_ResetPullup()        do { WPUCbits.WPUC2 = 0; } while(0)
+#define CSB_SetPushPull()        do { ODCONCbits.ODCC2 = 0; } while(0)
+#define CSB_SetOpenDrain()       do { ODCONCbits.ODCC2 = 1; } while(0)
+#define CSB_SetAnalogMode()      do { ANSELCbits.ANSELC2 = 1; } while(0)
+#define CSB_SetDigitalMode()     do { ANSELCbits.ANSELC2 = 0; } while(0)
+
+// get/set RC3 procedures
+#define RC3_SetHigh()            do { LATCbits.LATC3 = 1; } while(0)
+#define RC3_SetLow()             do { LATCbits.LATC3 = 0; } while(0)
+#define RC3_Toggle()             do { LATCbits.LATC3 = ~LATCbits.LATC3; } while(0)
+#define RC3_GetValue()              PORTCbits.RC3
+#define RC3_SetDigitalInput()    do { TRISCbits.TRISC3 = 1; } while(0)
+#define RC3_SetDigitalOutput()   do { TRISCbits.TRISC3 = 0; } while(0)
+#define RC3_SetPullup()             do { WPUCbits.WPUC3 = 1; } while(0)
+#define RC3_ResetPullup()           do { WPUCbits.WPUC3 = 0; } while(0)
+#define RC3_SetAnalogMode()         do { ANSELCbits.ANSELC3 = 1; } while(0)
+#define RC3_SetDigitalMode()        do { ANSELCbits.ANSELC3 = 0; } while(0)
+
+// get/set RC4 procedures
+#define RC4_SetHigh()            do { LATCbits.LATC4 = 1; } while(0)
+#define RC4_SetLow()             do { LATCbits.LATC4 = 0; } while(0)
+#define RC4_Toggle()             do { LATCbits.LATC4 = ~LATCbits.LATC4; } while(0)
+#define RC4_GetValue()              PORTCbits.RC4
+#define RC4_SetDigitalInput()    do { TRISCbits.TRISC4 = 1; } while(0)
+#define RC4_SetDigitalOutput()   do { TRISCbits.TRISC4 = 0; } while(0)
+#define RC4_SetPullup()             do { WPUCbits.WPUC4 = 1; } while(0)
+#define RC4_ResetPullup()           do { WPUCbits.WPUC4 = 0; } while(0)
+#define RC4_SetAnalogMode()         do { ANSELCbits.ANSELC4 = 1; } while(0)
+#define RC4_SetDigitalMode()        do { ANSELCbits.ANSELC4 = 0; } while(0)
+
+// get/set RC5 procedures
+#define RC5_SetHigh()            do { LATCbits.LATC5 = 1; } while(0)
+#define RC5_SetLow()             do { LATCbits.LATC5 = 0; } while(0)
+#define RC5_Toggle()             do { LATCbits.LATC5 = ~LATCbits.LATC5; } while(0)
+#define RC5_GetValue()              PORTCbits.RC5
+#define RC5_SetDigitalInput()    do { TRISCbits.TRISC5 = 1; } while(0)
+#define RC5_SetDigitalOutput()   do { TRISCbits.TRISC5 = 0; } while(0)
+#define RC5_SetPullup()             do { WPUCbits.WPUC5 = 1; } while(0)
+#define RC5_ResetPullup()           do { WPUCbits.WPUC5 = 0; } while(0)
+#define RC5_SetAnalogMode()         do { ANSELCbits.ANSELC5 = 1; } while(0)
+#define RC5_SetDigitalMode()        do { ANSELCbits.ANSELC5 = 0; } while(0)
+
 // get/set RC6 procedures
 #define RC6_SetHigh()            do { LATCbits.LATC6 = 1; } while(0)
 #define RC6_SetLow()             do { LATCbits.LATC6 = 0; } while(0)

@@ -26652,12 +26652,14 @@ typedef uint32_t uint_fast32_t;
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
 # 4 "timers.c" 2
 # 1 "./timers.h" 1
-# 11 "./timers.h"
+# 12 "./timers.h"
 enum APP_TIMERS {
  TMR_INTERNAL = 0,
  TMR_INIT,
  TMR_RXTO,
  TMR_SPS,
+ TMR_EXTRA,
+ TMR_SEQ,
 
 
 

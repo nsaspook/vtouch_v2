@@ -49,11 +49,21 @@
 #include "mcc_generated_files/uart2.h"
 #include "timers.h"
 #include "d232.h"
+#include "eadog.h"
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile A_data IO;
-IN_data *switches = (void *) & IO.inbytes[0];
+A_data IO = {
+	.speed = 10,
+	.speed_update = true,
+	.sequence_done = false,
+	.seq_value = DEFAULT_SEQ,
+	.misses = 0,
+	.slower = 0,
+	.score = 50,
+};
+IN_data *switches = (IN_data *) & IO.inbytes[0];
+OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
 void work_sw(void)
 {
@@ -92,14 +102,69 @@ void main(void)
 	IO.d232 = D232_IDLE;
 	IO.io = IO_IDLE;
 
+	init_display();
+	eaDogM_CursorOff();
+
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
+	eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
 
 	while (1) {
 		// Add your application code
 		work_sw();
 		if (Digital232_RW() && switches->detonator)
-			led_lightshow(0, 1);
+			led_lightshow(IO.seq_value, 1);
+
+		if (!switches->detonator) {
+			IO.outbytes[1] = IO.outbytes[1] | CHIRP;
+			if (IO.outbytes[2]&0b00000001) { // display byte patterns
+				if (TimerDone(TMR_EXTRA)) {
+					IO.outbytes[1] = IO.outbytes[1] | WARP;
+					if (IO.speed_update && IO.speed-- < 2) {
+						IO.speed = 10;
+						IO.sequence_done = true;
+						IO.seq_value = WIN_SEQ;
+						IO.slower = 0;
+						IO.stats = IO.score;
+					}
+					IO.speed_update = false;
+					IO.misses = 0;
+				}
+			}
+
+			if (IO.outbytes[2]&0b10000000) {
+				if (TimerDone(TMR_EXTRA)) {
+					IO.outbytes[1] = IO.outbytes[1] | SIREN;
+					if (IO.speed_update && IO.speed-- < 2) {
+						IO.speed = 10;
+						IO.sequence_done = true;
+						IO.seq_value = WIN_SEQ;
+						IO.slower = 0;
+						IO.stats = IO.score;
+					}
+					IO.speed_update = false;
+					IO.misses = 0;
+				}
+			}
+
+			if (IO.outbytes[2]&0b01111110) {
+				if (IO.speed_update && (IO.misses++ > 6)) {
+					if (IO.score-- < 10)
+						IO.score = 10;
+					IO.misses = 0;
+					IO.slower = 10;
+					IO.speed_update = false;
+				}
+			}
+		} else {
+			StartTimer(TMR_EXTRA, 500);
+			IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
+			IO.outbytes[1] = IO.outbytes[1] & (~WARP);
+			IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
+			IO.speed_update = true;
+			if (TimerDone(TMR_SEQ))
+				IO.seq_value = DEFAULT_SEQ;
+		}
 
 	}
 }
