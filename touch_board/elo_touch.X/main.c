@@ -103,11 +103,11 @@ void main(void)
 	IO.io = IO_IDLE;
 
 	init_display();
-//	eaDogM_CursorOff();
+	eaDogM_CursorOff();
 
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
-//	eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
+	eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
 
 	while (1) {
 		// Add your application code

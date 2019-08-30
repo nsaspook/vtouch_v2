@@ -283,9 +283,6 @@ char *tempnam(const char *, const char *);
  void wdtdelay(uint32_t);
 
  void init_display(void);
- void wait_lcd_set(void);
- _Bool wait_lcd_check(void);
- void wait_lcd_done(void);
  void eaDogM_WriteChr(int8_t);
  void eaDogM_WriteCommand(uint8_t);
  void eaDogM_SetPos(uint8_t, uint8_t);
@@ -27209,10 +27206,6 @@ void init_display(void)
  send_lcd_cmd(0x02);
  send_lcd_cmd(0x06);
  wdtdelay(30);
-
-
-
-
 }
 
 
@@ -27250,22 +27243,6 @@ static void send_lcd_cmd_long(const uint8_t cmd)
  do { LATCbits.LATC1 = 1; } while(0);
 }
 
-void wait_lcd_set(void)
-{
-
-}
-
-_Bool wait_lcd_check(void)
-{
- return 1;
-}
-
-void wait_lcd_done(void)
-{
-
- wdtdelay(50);
-}
-
 void eaDogM_WriteChr(const int8_t value)
 {
  send_lcd_data((uint8_t) value);
@@ -27295,7 +27272,6 @@ void eaDogM_ClearRow(const uint8_t r)
 void eaDogM_WriteString(char *strPtr)
 {
  uint8_t i;
- wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
  do { LATCbits.LATC2 = 0; } while(0);

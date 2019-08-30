@@ -45,9 +45,6 @@ extern "C" {
 	void wdtdelay(uint32_t);
 
 	void init_display(void);
-	void wait_lcd_set(void);
-	bool wait_lcd_check(void);
-	void wait_lcd_done(void);
 	void eaDogM_WriteChr(int8_t);
 	void eaDogM_WriteCommand(uint8_t);
 	void eaDogM_SetPos(uint8_t, uint8_t);

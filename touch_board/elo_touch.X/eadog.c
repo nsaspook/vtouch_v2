@@ -51,10 +51,6 @@ void init_display(void)
 	send_lcd_cmd(0x02);
 	send_lcd_cmd(0x06);
 	wdtdelay(30);
-//	SPI1CON2 = 0x02;
-//	SPI1CON1 = 0x40;
-//	SPI1CON0 = 0x83;
-//	SPI1INTFbits.SPI1TXUIF = 1;
 }
 
 /*
@@ -92,22 +88,6 @@ static void send_lcd_cmd_long(const uint8_t cmd)
 	RS_SetHigh();
 }
 
-void wait_lcd_set(void)
-{
-
-}
-
-bool wait_lcd_check(void)
-{
-	return true;
-}
-
-void wait_lcd_done(void)
-{
-
-	wdtdelay(50);
-}
-
 void eaDogM_WriteChr(const int8_t value)
 {
 	send_lcd_data((uint8_t) value);
@@ -137,7 +117,6 @@ void eaDogM_ClearRow(const uint8_t r)
 void eaDogM_WriteString(char *strPtr)
 {
 	uint8_t i;
-	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
