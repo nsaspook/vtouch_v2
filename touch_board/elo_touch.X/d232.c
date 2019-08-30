@@ -154,7 +154,7 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 	if (seq == WIN_SEQ) {
 		if (IO.sequence_done) {
 			IO.sequence_done = false;
-			StartTimer(TMR_SEQ, 900);
+			StartTimer(TMR_SEQ, 3000);
 		}
 		IO.outbytes[2] = 0xff;
 		return;

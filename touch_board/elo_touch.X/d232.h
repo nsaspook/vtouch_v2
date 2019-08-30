@@ -45,7 +45,7 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "0.20"
+#define sw_version "0.21"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
@@ -99,10 +99,10 @@ typedef struct A_data {
 	IO_STATE io;
 	D232_STATE d232;
 	SRQ_STATE srq;
-	uint8_t srq_value, seq_value, misses, score, stats;
+	uint8_t srq_value, seq_value, hits, misses, score, stats;
 	adc_result_t button_value;
-	uint16_t speed, slower;
-	bool speed_update, sequence_done;
+	uint16_t speed, slower, clock;
+	bool speed_update, sequence_done, win;
 } A_data;
 
 typedef struct IN_data {

@@ -6,7 +6,7 @@
  */
 
 /* Parts taken from:
- * Modified for C18 and PIC18F45K80 with SPI using ring buffers with interrupts
+ * This version for XC8 2.10 PIC18f47K42 polled
  * 
  *            file: EA-DOGM_MIO.c
  *         version: 2.03
@@ -31,6 +31,13 @@ extern "C" {
 #define LCD_CMD_MASK	0x01
 #define LCD_CMD_SET	0x100
 #define LCD_CLEAR_HOME	0x04
+	/*
+	 * for 2MHz SPI clock on PIC18f47K42 64MHz clock from PLL
+	 */
+#define IS_DELAYSHORT	9
+#define IS_DELAYMED	10
+#define IS_DELAYLONG	800
+#define IS_DELAYPOWERUP	350000
 
 #define EADOGM_CMD_CLR		1
 #define EADOGM_CMD_CURSOR_ON     0b00001111

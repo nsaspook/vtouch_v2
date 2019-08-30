@@ -27,7 +27,7 @@ void wdtdelay(const uint32_t delay)
 void init_display(void)
 {
 	CSB_SetHigh();
-	wdtdelay(350000); // > 400ms power up delay
+	wdtdelay(IS_DELAYPOWERUP); // > 400ms power up delay
 	send_lcd_cmd(0x39);
 	send_lcd_cmd(0x1d);
 	send_lcd_cmd(0x50);
@@ -38,7 +38,7 @@ void init_display(void)
 	send_lcd_cmd_long(0x01); // clear
 	send_lcd_cmd(0x02);
 	send_lcd_cmd(0x06);
-	wdtdelay(30);
+	wdtdelay(IS_DELAYLONG);
 }
 
 /*
@@ -49,7 +49,7 @@ static void send_lcd_data(const uint8_t data)
 	RS_SetHigh();
 	CSB_SetLow();
 	SPI1_Exchange8bit(data);
-	wdtdelay(8);
+	wdtdelay(IS_DELAYSHORT);
 }
 
 /*
@@ -60,7 +60,7 @@ static void send_lcd_cmd(const uint8_t cmd)
 	RS_SetLow();
 	CSB_SetLow();
 	SPI1_Exchange8bit(cmd);
-	wdtdelay(30);
+	wdtdelay(IS_DELAYMED); // 30
 	RS_SetHigh();
 }
 
@@ -72,7 +72,7 @@ static void send_lcd_cmd_long(const uint8_t cmd)
 	RS_SetLow();
 	CSB_SetLow();
 	SPI1_Exchange8bit(cmd);
-	wdtdelay(800);
+	wdtdelay(IS_DELAYLONG);
 	RS_SetHigh();
 }
 
@@ -104,16 +104,18 @@ void eaDogM_ClearRow(const uint8_t r)
 
 void eaDogM_WriteString(char *strPtr)
 {
-	uint8_t i;
-	/* reset buffer for DMA */
-	CSB_SetLow(); /* SPI select display */
-	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
-	for (i = 0; i < strlen(strPtr); i++) {
-		eaDogM_WriteChr(strPtr[i]);
+	uint8_t i = strlen(strPtr);
+	uint8_t bytesWritten = 0;
+
+	RS_SetHigh();
+	CSB_SetLow();
+	if (i > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
+
+	while (bytesWritten < i) {
+		wdtdelay(IS_DELAYSHORT); // inter-character spacing for LCD code execute delays
+		SPI1_Exchange8bit(strPtr[bytesWritten]);
+		bytesWritten++;
 	}
-#ifdef DISPLAY_SLOW
-	wdtdelay(9000);
-#endif
 }
 
 void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)

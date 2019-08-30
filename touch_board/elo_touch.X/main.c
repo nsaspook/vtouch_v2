@@ -58,16 +58,25 @@ A_data IO = {
 	.speed_update = true,
 	.sequence_done = false,
 	.seq_value = DEFAULT_SEQ,
+	.hits = 0,
 	.misses = 0,
 	.slower = 0,
 	.score = 50,
+	.clock = 0,
+	.win = false,
 };
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
 void work_sw(void)
 {
+	char buffer[64];
 	if (TimerDone(TMR_INIT)) {
+		IO.clock++;
+		sprintf(buffer, " H %i, M %i     ", IO.hits, IO.misses);
+		eaDogM_WriteStringAtPos(1, 0, buffer);
+		sprintf(buffer, " Score %i %i    ", IO.score, IO.clock);
+		eaDogM_WriteStringAtPos(2, 0, buffer);
 		StartTimer(TMR_INIT, 1000);
 	}
 }
@@ -120,12 +129,14 @@ void main(void)
 			if (IO.outbytes[2]&0b00000001) { // display byte patterns
 				if (TimerDone(TMR_EXTRA)) {
 					IO.outbytes[1] = IO.outbytes[1] | WARP;
+					IO.hits++;
 					if (IO.speed_update && IO.speed-- < 2) {
 						IO.speed = 10;
 						IO.sequence_done = true;
 						IO.seq_value = WIN_SEQ;
 						IO.slower = 0;
 						IO.stats = IO.score;
+						IO.win = true;
 					}
 					IO.speed_update = false;
 					IO.misses = 0;
@@ -135,12 +146,14 @@ void main(void)
 			if (IO.outbytes[2]&0b10000000) {
 				if (TimerDone(TMR_EXTRA)) {
 					IO.outbytes[1] = IO.outbytes[1] | SIREN;
+					IO.hits++;
 					if (IO.speed_update && IO.speed-- < 2) {
 						IO.speed = 10;
 						IO.sequence_done = true;
 						IO.seq_value = WIN_SEQ;
 						IO.slower = 0;
 						IO.stats = IO.score;
+						IO.win = true;
 					}
 					IO.speed_update = false;
 					IO.misses = 0;
@@ -162,8 +175,15 @@ void main(void)
 			IO.outbytes[1] = IO.outbytes[1] & (~WARP);
 			IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
 			IO.speed_update = true;
-			if (TimerDone(TMR_SEQ))
+			if (TimerDone(TMR_SEQ)) {
 				IO.seq_value = DEFAULT_SEQ;
+				if (IO.win) {
+					IO.win = false;
+					IO.hits = 0;
+					IO.misses = 0;
+					IO.clock = 0;
+				}
+			}
 		}
 
 	}
