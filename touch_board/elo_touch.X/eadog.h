@@ -24,12 +24,14 @@
 extern "C" {
 #endif
 
-#include "ringbufs.h"
+#include <stdint.h>
+#include <stdbool.h>
+#include <stdio.h>
 
 #define LCD_CMD_MASK	0x01
 #define LCD_CMD_SET	0x100
 #define LCD_CLEAR_HOME	0x04
-	
+
 #define EADOGM_CMD_CLR		1
 #define EADOGM_CMD_CURSOR_ON     0b00001111
 #define EADOGM_CMD_CURSOR_OFF    0b00001100
@@ -43,7 +45,6 @@ extern "C" {
 #define EADOGM_COLSPAN		16
 
 	void wdtdelay(uint32_t);
-
 	void init_display(void);
 	void eaDogM_WriteChr(int8_t);
 	void eaDogM_WriteCommand(uint8_t);

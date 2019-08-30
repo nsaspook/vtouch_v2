@@ -109,7 +109,7 @@ void main(void)
 	Digital232_init();
 	eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
 
-	while (1) {
+	while (true) {
 		// Add your application code
 		work_sw();
 		if (Digital232_RW() && switches->detonator)

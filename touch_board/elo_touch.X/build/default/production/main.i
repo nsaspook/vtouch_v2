@@ -27594,44 +27594,14 @@ typedef struct OUT_data2 {
  uint8_t led8 : 1;
 } OUT_data2;
 
-struct spi_link_type {
- uint8_t SPI_LCD : 1;
- uint8_t SPI_AUX : 1;
- uint8_t LCD_TIMER : 1;
- volatile uint8_t LCD_DATA : 1;
- uint16_t delay;
- uint8_t config;
- struct ringBufS_t *tx1b, *tx1a;
- volatile int32_t int_count;
-};
-
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 # 51 "main.c" 2
 
 # 1 "./eadog.h" 1
-# 27 "./eadog.h"
-# 1 "./ringbufs.h" 1
-# 21 "./ringbufs.h"
- typedef struct ringBufS_t {
-  uint8_t buf[64];
-  uint8_t head;
-  uint8_t tail;
-  uint8_t count;
- } ringBufS_t;
-
- void ringBufS_init(volatile ringBufS_t *_this);
- int8_t ringBufS_empty(ringBufS_t *_this);
- int8_t ringBufS_full(ringBufS_t *_this);
- uint8_t ringBufS_get(ringBufS_t *_this);
- void ringBufS_put(ringBufS_t *_this, const uint8_t c);
- void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
- void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 28 "./eadog.h" 2
-# 45 "./eadog.h"
+# 47 "./eadog.h"
  void wdtdelay(uint32_t);
-
  void init_display(void);
  void eaDogM_WriteChr(int8_t);
  void eaDogM_WriteCommand(uint8_t);

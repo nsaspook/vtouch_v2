@@ -7,13 +7,6 @@
 
 #define max_strlen	64
 
-struct spi_link_type spi_link;
-struct ringBufS_t ring_buf1;
-struct ringBufS_t ring_buf2;
-uint8_t port_data[16] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
-
-extern struct V_data V;
-
 static void send_lcd_cmd_long(uint8_t); // for display init only
 static void send_lcd_data(uint8_t);
 static void send_lcd_cmd(uint8_t);
@@ -33,11 +26,6 @@ void wdtdelay(const uint32_t delay)
  */
 void init_display(void)
 {
-	spi_link.tx1a = &ring_buf1;
-	spi_link.tx1b = &ring_buf2;
-	ringBufS_init(spi_link.tx1a);
-	ringBufS_init(spi_link.tx1b);
-
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
 	send_lcd_cmd(0x39);
@@ -118,7 +106,6 @@ void eaDogM_WriteString(char *strPtr)
 {
 	uint8_t i;
 	/* reset buffer for DMA */
-	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
 	for (i = 0; i < strlen(strPtr); i++) {

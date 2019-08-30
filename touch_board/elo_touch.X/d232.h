@@ -45,7 +45,7 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "0.19"
+#define sw_version "0.20"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
@@ -141,17 +141,6 @@ typedef struct OUT_data2 {
 	uint8_t led7 : 1;
 	uint8_t led8 : 1;
 } OUT_data2;
-
-struct spi_link_type { // internal SPI state table
-	uint8_t SPI_LCD : 1;
-	uint8_t SPI_AUX : 1;
-	uint8_t LCD_TIMER : 1;
-	volatile uint8_t LCD_DATA : 1;
-	uint16_t delay;
-	uint8_t config;
-	struct ringBufS_t *tx1b, *tx1a;
-	volatile int32_t int_count;
-};
 
 void Digital232_init(void);
 bool Digital232_RW(void);

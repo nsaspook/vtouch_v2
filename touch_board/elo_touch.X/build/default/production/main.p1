@@ -54,23 +54,23 @@ Version 4.0 HI-TECH Software Intermediate Code
 "46183
 [; ;/opt/microchip/xc8/v2.05/pic/include/pic18f47k42.h: 46183: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2085 ~T0 @X0 0 e@16338 ]
-"47 ./eadog.h
-[; ;./eadog.h: 47:  void init_display(void);
+"48 ./eadog.h
+[; ;./eadog.h: 48:  void init_display(void);
 [v _init_display `(v ~T0 @X0 0 ef ]
-"49
-[; ;./eadog.h: 49:  void eaDogM_WriteCommand(uint8_t);
+"50
+[; ;./eadog.h: 50:  void eaDogM_WriteCommand(uint8_t);
 [v _eaDogM_WriteCommand `(v ~T0 @X0 0 ef1`uc ]
-"156 ./d232.h
-[; ;./d232.h: 156: void Digital232_init(void);
+"145 ./d232.h
+[; ;./d232.h: 145: void Digital232_init(void);
 [v _Digital232_init `(v ~T0 @X0 0 ef ]
-"53 ./eadog.h
-[; ;./eadog.h: 53:  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+"54 ./eadog.h
+[; ;./eadog.h: 54:  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
 [v _eaDogM_WriteStringAtPos `(v ~T0 @X0 0 ef3`uc`uc`*uc ]
-"157 ./d232.h
-[; ;./d232.h: 157: _Bool Digital232_RW(void);
+"146 ./d232.h
+[; ;./d232.h: 146: _Bool Digital232_RW(void);
 [v _Digital232_RW `(a ~T0 @X0 0 ef ]
-"158
-[; ;./d232.h: 158: void led_lightshow(uint8_t, uint16_t);
+"147
+[; ;./d232.h: 147: void led_lightshow(uint8_t, uint16_t);
 [v _led_lightshow `(v ~T0 @X0 0 ef2`uc`us ]
 "44 main.c
 [p n 520 ]
@@ -2355,7 +2355,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "70
 [; ;main.c: 70:  if (TimerDone(TMR_INIT)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16405 1 `uc `i -> 0 `i 2208  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E16405 1 `uc `i -> 0 `i 2204  ]
 {
 "71
 [; ;main.c: 71:   StartTimer(TMR_INIT, 1000);
@@ -2363,10 +2363,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "72
 [; ;main.c: 72:  }
 }
-[e :U 2208 ]
+[e :U 2204 ]
 "73
 [; ;main.c: 73: }
-[e :UE 2207 ]
+[e :UE 2203 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
 "78
@@ -2421,39 +2421,39 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc :s 1C ]
 "112
 [; ;main.c: 112:  while (1) {
-[e :U 2211 ]
+[e :U 2207 ]
 {
 "114
 [; ;main.c: 114:   work_sw();
 [e ( _work_sw ..  ]
 "115
 [; ;main.c: 115:   if (Digital232_RW() && switches->detonator)
-[e $ ! && != -> ( _Digital232_RW ..  `i -> 0 `i != -> . *U _switches 1 `i -> 0 `i 2213  ]
+[e $ ! && != -> ( _Digital232_RW ..  `i -> 0 `i != -> . *U _switches 1 `i -> 0 `i 2209  ]
 "116
 [; ;main.c: 116:    led_lightshow(IO.seq_value, 1);
 [e ( _led_lightshow (2 , . _IO 8 -> -> 1 `i `us ]
-[e :U 2213 ]
+[e :U 2209 ]
 "118
 [; ;main.c: 118:   if (!switches->detonator) {
-[e $ ! ! != -> . *U _switches 1 `i -> 0 `i 2214  ]
+[e $ ! ! != -> . *U _switches 1 `i -> 0 `i 2210  ]
 {
 "119
 [; ;main.c: 119:    IO.outbytes[1] = IO.outbytes[1] | 0x02;
 [e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 2 `i `uc ]
 "120
 [; ;main.c: 120:    if (IO.outbytes[2]&0b00000001) {
-[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 1 `i -> 0 `i 2215  ]
+[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 1 `i -> 0 `i 2211  ]
 {
 "121
 [; ;main.c: 121:     if (TimerDone(TMR_EXTRA)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16405 4 `uc `i -> 0 `i 2216  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E16405 4 `uc `i -> 0 `i 2212  ]
 {
 "122
 [; ;main.c: 122:      IO.outbytes[1] = IO.outbytes[1] | 0x04;
 [e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 4 `i `uc ]
 "123
 [; ;main.c: 123:      if (IO.speed_update && IO.speed-- < 2) {
-[e $ ! && != -> . _IO 15 `i -> 0 `i < -> -- . _IO 13 -> -> 1 `i `us `ui -> -> 2 `i `ui 2217  ]
+[e $ ! && != -> . _IO 15 `i -> 0 `i < -> -- . _IO 13 -> -> 1 `i `us `ui -> -> 2 `i `ui 2213  ]
 {
 "124
 [; ;main.c: 124:       IO.speed = 10;
@@ -2473,7 +2473,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "129
 [; ;main.c: 129:      }
 }
-[e :U 2217 ]
+[e :U 2213 ]
 "130
 [; ;main.c: 130:      IO.speed_update = 0;
 [e = . _IO 15 -> -> 0 `i `a ]
@@ -2483,25 +2483,25 @@ Version 4.0 HI-TECH Software Intermediate Code
 "132
 [; ;main.c: 132:     }
 }
-[e :U 2216 ]
+[e :U 2212 ]
 "133
 [; ;main.c: 133:    }
 }
-[e :U 2215 ]
+[e :U 2211 ]
 "135
 [; ;main.c: 135:    if (IO.outbytes[2]&0b10000000) {
-[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 128 `i -> 0 `i 2218  ]
+[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 128 `i -> 0 `i 2214  ]
 {
 "136
 [; ;main.c: 136:     if (TimerDone(TMR_EXTRA)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16405 4 `uc `i -> 0 `i 2219  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E16405 4 `uc `i -> 0 `i 2215  ]
 {
 "137
 [; ;main.c: 137:      IO.outbytes[1] = IO.outbytes[1] | 0x01;
 [e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 1 `i `uc ]
 "138
 [; ;main.c: 138:      if (IO.speed_update && IO.speed-- < 2) {
-[e $ ! && != -> . _IO 15 `i -> 0 `i < -> -- . _IO 13 -> -> 1 `i `us `ui -> -> 2 `i `ui 2220  ]
+[e $ ! && != -> . _IO 15 `i -> 0 `i < -> -- . _IO 13 -> -> 1 `i `us `ui -> -> 2 `i `ui 2216  ]
 {
 "139
 [; ;main.c: 139:       IO.speed = 10;
@@ -2521,7 +2521,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "144
 [; ;main.c: 144:      }
 }
-[e :U 2220 ]
+[e :U 2216 ]
 "145
 [; ;main.c: 145:      IO.speed_update = 0;
 [e = . _IO 15 -> -> 0 `i `a ]
@@ -2531,26 +2531,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 "147
 [; ;main.c: 147:     }
 }
-[e :U 2219 ]
+[e :U 2215 ]
 "148
 [; ;main.c: 148:    }
 }
-[e :U 2218 ]
+[e :U 2214 ]
 "150
 [; ;main.c: 150:    if (IO.outbytes[2]&0b01111110) {
-[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 126 `i -> 0 `i 2221  ]
+[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 126 `i -> 0 `i 2217  ]
 {
 "151
 [; ;main.c: 151:     if (IO.speed_update && (IO.misses++ > 6)) {
-[e $ ! && != -> . _IO 15 `i -> 0 `i > -> ++ . _IO 9 -> -> 1 `i `uc `i -> 6 `i 2222  ]
+[e $ ! && != -> . _IO 15 `i -> 0 `i > -> ++ . _IO 9 -> -> 1 `i `uc `i -> 6 `i 2218  ]
 {
 "152
 [; ;main.c: 152:      if (IO.score-- < 10)
-[e $ ! < -> -- . _IO 10 -> -> 1 `i `uc `i -> 10 `i 2223  ]
+[e $ ! < -> -- . _IO 10 -> -> 1 `i `uc `i -> 10 `i 2219  ]
 "153
 [; ;main.c: 153:       IO.score = 10;
 [e = . _IO 10 -> -> 10 `i `uc ]
-[e :U 2223 ]
+[e :U 2219 ]
 "154
 [; ;main.c: 154:      IO.misses = 0;
 [e = . _IO 9 -> -> 0 `i `uc ]
@@ -2563,16 +2563,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 "157
 [; ;main.c: 157:     }
 }
-[e :U 2222 ]
+[e :U 2218 ]
 "158
 [; ;main.c: 158:    }
 }
-[e :U 2221 ]
+[e :U 2217 ]
 "159
 [; ;main.c: 159:   } else {
 }
-[e $U 2224  ]
-[e :U 2214 ]
+[e $U 2220  ]
+[e :U 2210 ]
 {
 "160
 [; ;main.c: 160:    StartTimer(TMR_EXTRA, 500);
@@ -2591,23 +2591,23 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _IO 15 -> -> 1 `i `a ]
 "165
 [; ;main.c: 165:    if (TimerDone(TMR_SEQ))
-[e $ ! != -> ( _TimerDone (1 -> . `E16405 5 `uc `i -> 0 `i 2225  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E16405 5 `uc `i -> 0 `i 2221  ]
 "166
 [; ;main.c: 166:     IO.seq_value = 0;
 [e = . _IO 8 -> -> 0 `i `uc ]
-[e :U 2225 ]
+[e :U 2221 ]
 "167
 [; ;main.c: 167:   }
 }
-[e :U 2224 ]
+[e :U 2220 ]
 "169
 [; ;main.c: 169:  }
 }
-[e :U 2210 ]
-[e $U 2211  ]
-[e :U 2212 ]
+[e :U 2206 ]
+[e $U 2207  ]
+[e :U 2208 ]
 "170
 [; ;main.c: 170: }
-[e :UE 2209 ]
+[e :UE 2205 ]
 }
 [a 1C 32 68 111 110 101 44 32 79 75 32 0 ]

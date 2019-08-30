@@ -9,8 +9,6 @@
 # 1 "eadog.c" 2
 # 1 "./eadog.h" 1
 # 27 "./eadog.h"
-# 1 "./ringbufs.h" 1
-# 15 "./ringbufs.h"
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
 
 
@@ -114,9 +112,9 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
-# 16 "./ringbufs.h" 2
+# 28 "./eadog.h" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdbool.h" 1 3
-# 17 "./ringbufs.h" 2
+# 29 "./eadog.h" 2
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 1 3
 # 10 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 3
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/features.h" 1 3
@@ -258,10 +256,21 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 18 "./ringbufs.h" 2
-
-
-
+# 30 "./eadog.h" 2
+# 47 "./eadog.h"
+ void wdtdelay(uint32_t);
+ void init_display(void);
+ void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteCommand(uint8_t);
+ void eaDogM_SetPos(uint8_t, uint8_t);
+ void eaDogM_ClearRow(uint8_t);
+ void eaDogM_WriteString(char *);
+ void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
+ void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
+ void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
+# 2 "eadog.c" 2
+# 1 "./ringbufs.h" 1
+# 21 "./ringbufs.h"
  typedef struct ringBufS_t {
   uint8_t buf[64];
   uint8_t head;
@@ -276,21 +285,7 @@ char *tempnam(const char *, const char *);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 28 "./eadog.h" 2
-# 45 "./eadog.h"
- void wdtdelay(uint32_t);
-
- void init_display(void);
- void eaDogM_WriteChr(int8_t);
- void eaDogM_WriteCommand(uint8_t);
- void eaDogM_SetPos(uint8_t, uint8_t);
- void eaDogM_ClearRow(uint8_t);
- void eaDogM_WriteString(char *);
- void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
- void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
- void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 2 "eadog.c" 2
-
+# 3 "eadog.c" 2
 
 # 1 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 3
@@ -27084,17 +27079,6 @@ typedef struct OUT_data2 {
  uint8_t led8 : 1;
 } OUT_data2;
 
-struct spi_link_type {
- uint8_t SPI_LCD : 1;
- uint8_t SPI_AUX : 1;
- uint8_t LCD_TIMER : 1;
- volatile uint8_t LCD_DATA : 1;
- uint16_t delay;
- uint8_t config;
- struct ringBufS_t *tx1b, *tx1a;
- volatile int32_t int_count;
-};
-
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
@@ -27118,13 +27102,6 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
 
 
 
-struct spi_link_type spi_link;
-struct ringBufS_t ring_buf1;
-struct ringBufS_t ring_buf2;
-uint8_t port_data[16] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
-
-extern struct V_data V;
-
 static void send_lcd_cmd_long(uint8_t);
 static void send_lcd_data(uint8_t);
 static void send_lcd_cmd(uint8_t);
@@ -27144,11 +27121,6 @@ void wdtdelay(const uint32_t delay)
 
 void init_display(void)
 {
- spi_link.tx1a = &ring_buf1;
- spi_link.tx1b = &ring_buf2;
- ringBufS_init(spi_link.tx1a);
- ringBufS_init(spi_link.tx1b);
-
  do { LATCbits.LATC2 = 1; } while(0);
  wdtdelay(350000);
  send_lcd_cmd(0x39);
@@ -27229,7 +27201,6 @@ void eaDogM_WriteString(char *strPtr)
 {
  uint8_t i;
 
- ringBufS_flush(spi_link.tx1a, 0);
  do { LATCbits.LATC2 = 0; } while(0);
  if (strlen(strPtr) > 64) strPtr[64] = 0;
  for (i = 0; i < strlen(strPtr); i++) {

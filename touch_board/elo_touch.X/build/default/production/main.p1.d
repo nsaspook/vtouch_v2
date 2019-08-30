@@ -14,5 +14,4 @@ mcc_generated_files/uart1.h  \
 mcc_generated_files/spi1.h  \
 timers.h  \
 d232.h  \
-eadog.h  \
-ringbufs.h 
+eadog.h 
