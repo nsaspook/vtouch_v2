@@ -2360,11 +2360,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2220 ]
 "51
-[; ;eadog.c: 51:  SPI1_Exchange8bit(data);
-[e ( _SPI1_Exchange8bit (1 _data ]
+[; ;eadog.c: 51:   wdtdelay(9);
+[e ( _wdtdelay (1 -> -> -> 9 `i `l `ul ]
 "52
-[; ;eadog.c: 52:  wdtdelay(10);
-[e ( _wdtdelay (1 -> -> -> 10 `i `l `ul ]
+[; ;eadog.c: 52:  SPI1_Exchange8bit(data);
+[e ( _SPI1_Exchange8bit (1 _data ]
 "53
 [; ;eadog.c: 53: }
 [e :UE 2215 ]
@@ -2397,326 +2397,329 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2227 ]
 "62
-[; ;eadog.c: 62:  SPI1_Exchange8bit(cmd);
-[e ( _SPI1_Exchange8bit (1 _cmd ]
+[; ;eadog.c: 62:  wdtdelay(10);
+[e ( _wdtdelay (1 -> -> -> 10 `i `l `ul ]
 "63
-[; ;eadog.c: 63:  wdtdelay(30);
-[e ( _wdtdelay (1 -> -> -> 30 `i `l `ul ]
+[; ;eadog.c: 63:  SPI1_Exchange8bit(cmd);
+[e ( _SPI1_Exchange8bit (1 _cmd ]
 "64
-[; ;eadog.c: 64:  do { LATCbits.LATC1 = 1; } while(0);
+[; ;eadog.c: 64:  wdtdelay(10);
+[e ( _wdtdelay (1 -> -> -> 10 `i `l `ul ]
+"65
+[; ;eadog.c: 65:  do { LATCbits.LATC1 = 1; } while(0);
 [e :U 2231 ]
 {
 [e = . . _LATCbits 0 1 -> -> 1 `i `uc ]
 }
 [e :U 2230 ]
-"65
-[; ;eadog.c: 65: }
+"66
+[; ;eadog.c: 66: }
 [e :UE 2222 ]
 }
-"70
-[; ;eadog.c: 70: static void send_lcd_cmd_long(const uint8_t cmd)
-[v _send_lcd_cmd_long `(v ~T0 @X0 1 sf1`uc ]
 "71
-[; ;eadog.c: 71: {
+[; ;eadog.c: 71: static void send_lcd_cmd_long(const uint8_t cmd)
+[v _send_lcd_cmd_long `(v ~T0 @X0 1 sf1`uc ]
+"72
+[; ;eadog.c: 72: {
 {
 [e :U _send_lcd_cmd_long ]
-"70
-[; ;eadog.c: 70: static void send_lcd_cmd_long(const uint8_t cmd)
-[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "71
-[; ;eadog.c: 71: {
-[f ]
+[; ;eadog.c: 71: static void send_lcd_cmd_long(const uint8_t cmd)
+[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "72
-[; ;eadog.c: 72:  do { LATCbits.LATC1 = 0; } while(0);
+[; ;eadog.c: 72: {
+[f ]
+"73
+[; ;eadog.c: 73:  do { LATCbits.LATC1 = 0; } while(0);
 [e :U 2235 ]
 {
 [e = . . _LATCbits 0 1 -> -> 0 `i `uc ]
 }
 [e :U 2234 ]
-"73
-[; ;eadog.c: 73:  do { LATCbits.LATC2 = 0; } while(0);
+"74
+[; ;eadog.c: 74:  do { LATCbits.LATC2 = 0; } while(0);
 [e :U 2238 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2237 ]
-"74
-[; ;eadog.c: 74:  SPI1_Exchange8bit(cmd);
-[e ( _SPI1_Exchange8bit (1 _cmd ]
 "75
-[; ;eadog.c: 75:  wdtdelay(800);
-[e ( _wdtdelay (1 -> -> -> 800 `i `l `ul ]
+[; ;eadog.c: 75:  SPI1_Exchange8bit(cmd);
+[e ( _SPI1_Exchange8bit (1 _cmd ]
 "76
-[; ;eadog.c: 76:  do { LATCbits.LATC1 = 1; } while(0);
+[; ;eadog.c: 76:  wdtdelay(800);
+[e ( _wdtdelay (1 -> -> -> 800 `i `l `ul ]
+"77
+[; ;eadog.c: 77:  do { LATCbits.LATC1 = 1; } while(0);
 [e :U 2241 ]
 {
 [e = . . _LATCbits 0 1 -> -> 1 `i `uc ]
 }
 [e :U 2240 ]
-"77
-[; ;eadog.c: 77: }
+"78
+[; ;eadog.c: 78: }
 [e :UE 2232 ]
 }
-"79
-[; ;eadog.c: 79: void eaDogM_WriteChr(const int8_t value)
-[v _eaDogM_WriteChr `(v ~T0 @X0 1 ef1`c ]
 "80
-[; ;eadog.c: 80: {
+[; ;eadog.c: 80: void eaDogM_WriteChr(const int8_t value)
+[v _eaDogM_WriteChr `(v ~T0 @X0 1 ef1`c ]
+"81
+[; ;eadog.c: 81: {
 {
 [e :U _eaDogM_WriteChr ]
-"79
-[; ;eadog.c: 79: void eaDogM_WriteChr(const int8_t value)
-[v _value `Cc ~T0 @X0 1 r1 ]
 "80
-[; ;eadog.c: 80: {
-[f ]
+[; ;eadog.c: 80: void eaDogM_WriteChr(const int8_t value)
+[v _value `Cc ~T0 @X0 1 r1 ]
 "81
-[; ;eadog.c: 81:  send_lcd_data((uint8_t) value);
-[e ( _send_lcd_data (1 -> _value `uc ]
+[; ;eadog.c: 81: {
+[f ]
 "82
-[; ;eadog.c: 82: }
+[; ;eadog.c: 82:  send_lcd_data((uint8_t) value);
+[e ( _send_lcd_data (1 -> _value `uc ]
+"83
+[; ;eadog.c: 83: }
 [e :UE 2242 ]
 }
-"84
-[; ;eadog.c: 84: void eaDogM_WriteCommand(const uint8_t cmd)
-[v _eaDogM_WriteCommand `(v ~T0 @X0 1 ef1`uc ]
 "85
-[; ;eadog.c: 85: {
+[; ;eadog.c: 85: void eaDogM_WriteCommand(const uint8_t cmd)
+[v _eaDogM_WriteCommand `(v ~T0 @X0 1 ef1`uc ]
+"86
+[; ;eadog.c: 86: {
 {
 [e :U _eaDogM_WriteCommand ]
-"84
-[; ;eadog.c: 84: void eaDogM_WriteCommand(const uint8_t cmd)
-[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "85
-[; ;eadog.c: 85: {
-[f ]
+[; ;eadog.c: 85: void eaDogM_WriteCommand(const uint8_t cmd)
+[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "86
-[; ;eadog.c: 86:  send_lcd_cmd(cmd);
-[e ( _send_lcd_cmd (1 _cmd ]
+[; ;eadog.c: 86: {
+[f ]
 "87
-[; ;eadog.c: 87: }
+[; ;eadog.c: 87:  send_lcd_cmd(cmd);
+[e ( _send_lcd_cmd (1 _cmd ]
+"88
+[; ;eadog.c: 88: }
 [e :UE 2243 ]
 }
-"89
-[; ;eadog.c: 89: void eaDogM_SetPos(const uint8_t r, const uint8_t c)
-[v _eaDogM_SetPos `(v ~T0 @X0 1 ef2`uc`uc ]
 "90
-[; ;eadog.c: 90: {
+[; ;eadog.c: 90: void eaDogM_SetPos(const uint8_t r, const uint8_t c)
+[v _eaDogM_SetPos `(v ~T0 @X0 1 ef2`uc`uc ]
+"91
+[; ;eadog.c: 91: {
 {
 [e :U _eaDogM_SetPos ]
-"89
-[; ;eadog.c: 89: void eaDogM_SetPos(const uint8_t r, const uint8_t c)
+"90
+[; ;eadog.c: 90: void eaDogM_SetPos(const uint8_t r, const uint8_t c)
 [v _r `Cuc ~T0 @X0 1 r1 ]
 [v _c `Cuc ~T0 @X0 1 r2 ]
-"90
-[; ;eadog.c: 90: {
-[f ]
 "91
-[; ;eadog.c: 91:  uint8_t cmdPos;
-[v _cmdPos `uc ~T0 @X0 1 a ]
+[; ;eadog.c: 91: {
+[f ]
 "92
-[; ;eadog.c: 92:  cmdPos = (uint8_t) 0b10000000 + (uint8_t) ((uint8_t) r * (uint8_t) 16) + (uint8_t) c;
-[e = _cmdPos -> + + -> -> -> 128 `i `uc `i -> -> * -> _r `i -> -> -> 16 `i `uc `i `uc `i -> _c `i `uc ]
+[; ;eadog.c: 92:  uint8_t cmdPos;
+[v _cmdPos `uc ~T0 @X0 1 a ]
 "93
-[; ;eadog.c: 93:  eaDogM_WriteCommand(cmdPos);
-[e ( _eaDogM_WriteCommand (1 _cmdPos ]
+[; ;eadog.c: 93:  cmdPos = (uint8_t) 0b10000000 + (uint8_t) ((uint8_t) r * (uint8_t) 16) + (uint8_t) c;
+[e = _cmdPos -> + + -> -> -> 128 `i `uc `i -> -> * -> _r `i -> -> -> 16 `i `uc `i `uc `i -> _c `i `uc ]
 "94
-[; ;eadog.c: 94: }
+[; ;eadog.c: 94:  eaDogM_WriteCommand(cmdPos);
+[e ( _eaDogM_WriteCommand (1 _cmdPos ]
+"95
+[; ;eadog.c: 95: }
 [e :UE 2244 ]
 }
-"96
-[; ;eadog.c: 96: void eaDogM_ClearRow(const uint8_t r)
-[v _eaDogM_ClearRow `(v ~T0 @X0 1 ef1`uc ]
 "97
-[; ;eadog.c: 97: {
+[; ;eadog.c: 97: void eaDogM_ClearRow(const uint8_t r)
+[v _eaDogM_ClearRow `(v ~T0 @X0 1 ef1`uc ]
+"98
+[; ;eadog.c: 98: {
 {
 [e :U _eaDogM_ClearRow ]
-"96
-[; ;eadog.c: 96: void eaDogM_ClearRow(const uint8_t r)
-[v _r `Cuc ~T0 @X0 1 r1 ]
 "97
-[; ;eadog.c: 97: {
-[f ]
+[; ;eadog.c: 97: void eaDogM_ClearRow(const uint8_t r)
+[v _r `Cuc ~T0 @X0 1 r1 ]
 "98
-[; ;eadog.c: 98:  uint8_t i;
-[v _i `uc ~T0 @X0 1 a ]
+[; ;eadog.c: 98: {
+[f ]
 "99
-[; ;eadog.c: 99:  eaDogM_SetPos(r, 0);
-[e ( _eaDogM_SetPos (2 , _r -> -> 0 `i `uc ]
+[; ;eadog.c: 99:  uint8_t i;
+[v _i `uc ~T0 @X0 1 a ]
 "100
-[; ;eadog.c: 100:  for (i = 0; i < 16; i++) {
+[; ;eadog.c: 100:  eaDogM_SetPos(r, 0);
+[e ( _eaDogM_SetPos (2 , _r -> -> 0 `i `uc ]
+"101
+[; ;eadog.c: 101:  for (i = 0; i < 16; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 16 `i 2246  ]
 [e $U 2247  ]
 [e :U 2246 ]
 {
-"101
-[; ;eadog.c: 101:   eaDogM_WriteChr(' ');
-[e ( _eaDogM_WriteChr (1 -> -> 32 `ui `c ]
 "102
-[; ;eadog.c: 102:  }
+[; ;eadog.c: 102:   eaDogM_WriteChr(' ');
+[e ( _eaDogM_WriteChr (1 -> -> 32 `ui `c ]
+"103
+[; ;eadog.c: 103:  }
 }
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 16 `i 2246  ]
 [e :U 2247 ]
 }
-"103
-[; ;eadog.c: 103: }
+"104
+[; ;eadog.c: 104: }
 [e :UE 2245 ]
 }
-"105
-[; ;eadog.c: 105: void eaDogM_WriteString(char *strPtr)
-[v _eaDogM_WriteString `(v ~T0 @X0 1 ef1`*uc ]
 "106
-[; ;eadog.c: 106: {
+[; ;eadog.c: 106: void eaDogM_WriteString(char *strPtr)
+[v _eaDogM_WriteString `(v ~T0 @X0 1 ef1`*uc ]
+"107
+[; ;eadog.c: 107: {
 {
 [e :U _eaDogM_WriteString ]
-"105
-[; ;eadog.c: 105: void eaDogM_WriteString(char *strPtr)
-[v _strPtr `*uc ~T0 @X0 1 r1 ]
 "106
-[; ;eadog.c: 106: {
-[f ]
+[; ;eadog.c: 106: void eaDogM_WriteString(char *strPtr)
+[v _strPtr `*uc ~T0 @X0 1 r1 ]
 "107
-[; ;eadog.c: 107:  uint8_t i = strlen(strPtr);
+[; ;eadog.c: 107: {
+[f ]
+"108
+[; ;eadog.c: 108:  uint8_t i = strlen(strPtr);
 [v _i `uc ~T0 @X0 1 a ]
 [e = _i -> ( _strlen (1 -> _strPtr `*Cuc `uc ]
-"108
-[; ;eadog.c: 108:  uint8_t bytesWritten = 0;
+"109
+[; ;eadog.c: 109:  uint8_t bytesWritten = 0;
 [v _bytesWritten `uc ~T0 @X0 1 a ]
 [e = _bytesWritten -> -> 0 `i `uc ]
-"110
-[; ;eadog.c: 110:  do { LATCbits.LATC1 = 1; } while(0);
+"111
+[; ;eadog.c: 111:  do { LATCbits.LATC1 = 1; } while(0);
 [e :U 2252 ]
 {
 [e = . . _LATCbits 0 1 -> -> 1 `i `uc ]
 }
 [e :U 2251 ]
-"111
-[; ;eadog.c: 111:  do { LATCbits.LATC2 = 0; } while(0);
+"112
+[; ;eadog.c: 112:  do { LATCbits.LATC2 = 0; } while(0);
 [e :U 2255 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2254 ]
-"112
-[; ;eadog.c: 112:  if (i > 64) strPtr[64] = 0;
+"113
+[; ;eadog.c: 113:  if (i > 64) strPtr[64] = 0;
 [e $ ! > -> _i `i -> 64 `i 2256  ]
 [e = *U + _strPtr * -> -> 64 `i `x -> -> # *U _strPtr `i `x -> -> 0 `i `uc ]
 [e :U 2256 ]
-"114
-[; ;eadog.c: 114:  while (bytesWritten < i) {
+"115
+[; ;eadog.c: 115:  while (bytesWritten < i) {
 [e $U 2257  ]
 [e :U 2258 ]
 {
-"115
-[; ;eadog.c: 115:   wdtdelay(10);
-[e ( _wdtdelay (1 -> -> -> 10 `i `l `ul ]
 "116
-[; ;eadog.c: 116:   SPI1_Exchange8bit(strPtr[bytesWritten]);
-[e ( _SPI1_Exchange8bit (1 -> *U + _strPtr * -> _bytesWritten `ux -> -> # *U _strPtr `ui `ux `uc ]
+[; ;eadog.c: 116:   wdtdelay(9);
+[e ( _wdtdelay (1 -> -> -> 9 `i `l `ul ]
 "117
-[; ;eadog.c: 117:   bytesWritten++;
-[e ++ _bytesWritten -> -> 1 `i `uc ]
+[; ;eadog.c: 117:   SPI1_Exchange8bit(strPtr[bytesWritten]);
+[e ( _SPI1_Exchange8bit (1 -> *U + _strPtr * -> _bytesWritten `ux -> -> # *U _strPtr `ui `ux `uc ]
 "118
-[; ;eadog.c: 118:  }
+[; ;eadog.c: 118:   bytesWritten++;
+[e ++ _bytesWritten -> -> 1 `i `uc ]
+"119
+[; ;eadog.c: 119:  }
 }
 [e :U 2257 ]
-"114
-[; ;eadog.c: 114:  while (bytesWritten < i) {
+"115
+[; ;eadog.c: 115:  while (bytesWritten < i) {
 [e $ < -> _bytesWritten `i -> _i `i 2258  ]
 [e :U 2259 ]
-"119
-[; ;eadog.c: 119: }
+"120
+[; ;eadog.c: 120: }
 [e :UE 2249 ]
 }
-"121
-[; ;eadog.c: 121: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
-[v _eaDogM_WriteStringAtPos `(v ~T0 @X0 1 ef3`uc`uc`*uc ]
 "122
-[; ;eadog.c: 122: {
+[; ;eadog.c: 122: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
+[v _eaDogM_WriteStringAtPos `(v ~T0 @X0 1 ef3`uc`uc`*uc ]
+"123
+[; ;eadog.c: 123: {
 {
 [e :U _eaDogM_WriteStringAtPos ]
-"121
-[; ;eadog.c: 121: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
+"122
+[; ;eadog.c: 122: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 [v _r `Cuc ~T0 @X0 1 r1 ]
 [v _c `Cuc ~T0 @X0 1 r2 ]
 [v _strPtr `*uc ~T0 @X0 1 r3 ]
-"122
-[; ;eadog.c: 122: {
-[f ]
 "123
-[; ;eadog.c: 123:  send_lcd_cmd((0b10000000 + (r * 16) + c));
-[e ( _send_lcd_cmd (1 -> + + -> 128 `i * -> _r `i -> 16 `i -> _c `i `uc ]
+[; ;eadog.c: 123: {
+[f ]
 "124
-[; ;eadog.c: 124:  eaDogM_WriteString(strPtr);
-[e ( _eaDogM_WriteString (1 _strPtr ]
+[; ;eadog.c: 124:  send_lcd_cmd((0b10000000 + (r * 16) + c));
+[e ( _send_lcd_cmd (1 -> + + -> 128 `i * -> _r `i -> 16 `i -> _c `i `uc ]
 "125
-[; ;eadog.c: 125: }
+[; ;eadog.c: 125:  eaDogM_WriteString(strPtr);
+[e ( _eaDogM_WriteString (1 _strPtr ]
+"126
+[; ;eadog.c: 126: }
 [e :UE 2260 ]
 }
-"127
-[; ;eadog.c: 127: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
-[v _eaDogM_WriteIntAtPos `(v ~T0 @X0 1 ef3`uc`uc`uc ]
 "128
-[; ;eadog.c: 128: {
+[; ;eadog.c: 128: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
+[v _eaDogM_WriteIntAtPos `(v ~T0 @X0 1 ef3`uc`uc`uc ]
+"129
+[; ;eadog.c: 129: {
 {
 [e :U _eaDogM_WriteIntAtPos ]
-"127
-[; ;eadog.c: 127: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
+"128
+[; ;eadog.c: 128: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
 [v _r `uc ~T0 @X0 1 r1 ]
 [v _c `uc ~T0 @X0 1 r2 ]
 [v _i `uc ~T0 @X0 1 r3 ]
-"128
-[; ;eadog.c: 128: {
-[f ]
 "129
-[; ;eadog.c: 129:  eaDogM_WriteCommand((0b10000000 + (r * 16) + c));
+[; ;eadog.c: 129: {
+[f ]
+"130
+[; ;eadog.c: 130:  eaDogM_WriteCommand((0b10000000 + (r * 16) + c));
 [e ( _eaDogM_WriteCommand (1 -> + + -> 128 `i * -> _r `i -> 16 `i -> _c `i `uc ]
-"131
-[; ;eadog.c: 131:  eaDogM_WriteChr(i / 10 + '0');
-[e ( _eaDogM_WriteChr (1 -> + -> / -> _i `i -> 10 `i `ui -> 48 `ui `c ]
 "132
-[; ;eadog.c: 132:  eaDogM_WriteChr(i % 10 + '0');
+[; ;eadog.c: 132:  eaDogM_WriteChr(i / 10 + '0');
+[e ( _eaDogM_WriteChr (1 -> + -> / -> _i `i -> 10 `i `ui -> 48 `ui `c ]
+"133
+[; ;eadog.c: 133:  eaDogM_WriteChr(i % 10 + '0');
 [e ( _eaDogM_WriteChr (1 -> + -> % -> _i `i -> 10 `i `ui -> 48 `ui `c ]
-"134
-[; ;eadog.c: 134: }
+"135
+[; ;eadog.c: 135: }
 [e :UE 2261 ]
 }
-"139
-[; ;eadog.c: 139: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
-[v _eaDogM_WriteByteToCGRAM `(v ~T0 @X0 1 ef2`uc`uc ]
 "140
-[; ;eadog.c: 140: {
+[; ;eadog.c: 140: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
+[v _eaDogM_WriteByteToCGRAM `(v ~T0 @X0 1 ef2`uc`uc ]
+"141
+[; ;eadog.c: 141: {
 {
 [e :U _eaDogM_WriteByteToCGRAM ]
-"139
-[; ;eadog.c: 139: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
+"140
+[; ;eadog.c: 140: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
 [v _ndx `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
-"140
-[; ;eadog.c: 140: {
-[f ]
 "141
-[; ;eadog.c: 141:  uint8_t cmd;
+[; ;eadog.c: 141: {
+[f ]
+"142
+[; ;eadog.c: 142:  uint8_t cmd;
 [v _cmd `uc ~T0 @X0 1 a ]
-"143
-[; ;eadog.c: 143:  cmd = ndx & 0b00111111;
-[e = _cmd -> & -> _ndx `i -> 63 `i `uc ]
 "144
-[; ;eadog.c: 144:  cmd = cmd | 0b01000000;
+[; ;eadog.c: 144:  cmd = ndx & 0b00111111;
+[e = _cmd -> & -> _ndx `i -> 63 `i `uc ]
+"145
+[; ;eadog.c: 145:  cmd = cmd | 0b01000000;
 [e = _cmd -> | -> _cmd `i -> 64 `i `uc ]
-"146
-[; ;eadog.c: 146:  eaDogM_WriteCommand(cmd);
-[e ( _eaDogM_WriteCommand (1 _cmd ]
 "147
-[; ;eadog.c: 147:  eaDogM_WriteChr(data);
+[; ;eadog.c: 147:  eaDogM_WriteCommand(cmd);
+[e ( _eaDogM_WriteCommand (1 _cmd ]
+"148
+[; ;eadog.c: 148:  eaDogM_WriteChr(data);
 [e ( _eaDogM_WriteChr (1 -> _data `c ]
-"150
-[; ;eadog.c: 150:  eaDogM_SetPos(0, 0);
-[e ( _eaDogM_SetPos (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
 "151
-[; ;eadog.c: 151: }
+[; ;eadog.c: 151:  eaDogM_SetPos(0, 0);
+[e ( _eaDogM_SetPos (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
+"152
+[; ;eadog.c: 152: }
 [e :UE 2262 ]
 }

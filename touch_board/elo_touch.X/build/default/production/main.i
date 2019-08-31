@@ -27559,7 +27559,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 67 "./d232.h"
+# 70 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27677,14 +27677,15 @@ OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
 void work_sw(void)
 {
- char buffer[64];
+ char buffer[2][64];
  if (TimerDone(TMR_INIT)) {
   IO.clock++;
-  sprintf(buffer, " H %i, M %i     ", IO.hits, IO.misses);
-  eaDogM_WriteStringAtPos(1, 0, buffer);
-  sprintf(buffer, " Score %i %i    ", IO.score, IO.clock);
-  eaDogM_WriteStringAtPos(2, 0, buffer);
-  StartTimer(TMR_INIT, 1000);
+  sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
+  sprintf(buffer[1], " Score %i %i    ", IO.score, IO.clock);
+  buffer[1][16] = 0;
+  eaDogM_WriteStringAtPos(1, 0, buffer[0]);
+  eaDogM_WriteStringAtPos(2, 0, buffer[1]);
+  StartTimer(TMR_INIT, 1);
  }
 }
 
