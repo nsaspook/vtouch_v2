@@ -34,8 +34,8 @@ extern "C" {
 	/*
 	 * for 2MHz SPI clock on PIC18f47K42 64MHz clock from PLL
 	 */
-#define IS_DELAYSHORT	11
-#define IS_DELAYMED	17
+#define IS_DELAYSHORT	10
+#define IS_DELAYMED	30
 #define IS_DELAYLONG	800
 #define IS_DELAYPOWERUP	350000
 
