@@ -27188,7 +27188,7 @@ static void send_lcd_data(const uint8_t data)
  do { LATCbits.LATC1 = 1; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
  SPI1_Exchange8bit(data);
- wdtdelay(9);
+ wdtdelay(11);
 }
 
 
@@ -27199,7 +27199,7 @@ static void send_lcd_cmd(const uint8_t cmd)
  do { LATCbits.LATC1 = 0; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
  SPI1_Exchange8bit(cmd);
- wdtdelay(10);
+ wdtdelay(17);
  do { LATCbits.LATC1 = 1; } while(0);
 }
 
@@ -27251,7 +27251,7 @@ void eaDogM_WriteString(char *strPtr)
  if (i > 64) strPtr[64] = 0;
 
  while (bytesWritten < i) {
-  wdtdelay(9);
+  wdtdelay(11);
   SPI1_Exchange8bit(strPtr[bytesWritten]);
   bytesWritten++;
  }
