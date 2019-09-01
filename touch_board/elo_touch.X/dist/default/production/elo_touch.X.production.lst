@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Sat Aug 31 18:42:20 2019
+                                                                                               Sun Sep  1 14:08:07 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F47K42
@@ -1736,10 +1736,10 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1702  00351A  0E02               	movlw	2
   1703  00351C  EC5E  F01E         	call	_eaDogM_WriteStringAtPos
   1704                           
-  1705                           ;main.c: 81:   StartTimer(TMR_INIT, 1);
-  1706  003520  0E00               	movlw	0
+  1705                           ;main.c: 81:   StartTimer(TMR_INIT, 1000);
+  1706  003520  0E03               	movlw	3
   1707  003522  6E07               	movwf	(StartTimer@count+1)^0,c
-  1708  003524  0E01               	movlw	1
+  1708  003524  0EE8               	movlw	232
   1709  003526  6E06               	movwf	StartTimer@count^0,c
   1710  003528  0E01               	movlw	1
   1711  00352A  EC1A  F01D         	call	_StartTimer
@@ -6072,10 +6072,10 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5617  002418  6FA9               	movwf	(_IO+12)& (0+255),b
   5618                           
   5619                           ; BSR set to: 1
-  5620                           ;d232.c: 97:  StartTimer(TMR_RXTO, 2);
+  5620                           ;d232.c: 97:  StartTimer(TMR_RXTO, 250);
   5621  00241A  0E00               	movlw	0
   5622  00241C  6E07               	movwf	(StartTimer@count+1)^0,c
-  5623  00241E  0E02               	movlw	2
+  5623  00241E  0EFA               	movlw	250
   5624  002420  6E06               	movwf	StartTimer@count^0,c
   5625  002422  0E02               	movlw	2
   5626  002424  EC1A  F01D         	call	_StartTimer
@@ -6129,10 +6129,10 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5674  002460  6F6C               	movwf	Digital232_RW@i& (0+255),b
   5675                           
   5676                           ; BSR set to: 0
-  5677                           ;d232.c: 112:  StartTimer(TMR_RXTO, 2);
+  5677                           ;d232.c: 112:  StartTimer(TMR_RXTO, 250);
   5678  002462  0E00               	movlw	0
   5679  002464  6E07               	movwf	(StartTimer@count+1)^0,c
-  5680  002466  0E02               	movlw	2
+  5680  002466  0EFA               	movlw	250
   5681  002468  6E06               	movwf	StartTimer@count^0,c
   5682  00246A  0E02               	movlw	2
   5683  00246C  EC1A  F01D         	call	_StartTimer
@@ -13240,7 +13240,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Sat Aug 31 18:42:20 2019
+Symbol Table                                                                                   Sun Sep  1 14:08:07 2019
 
                            _SPI1_Exchange8bit 3D78              __end_of_TMR5_SetInterruptHandler 3EE2  
                    __end_of_UART2_is_rx_ready 3F0C                            ?_SPI1_Exchange8bit 0001  

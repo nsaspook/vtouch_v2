@@ -64,8 +64,8 @@
 #define DEBUG_SEQ	1
 #define WIN_SEQ		2
 
-#define DISPLAY_UPDATE	1	// 1000
-#define RXTO_DELAY	2	// 250
+#define DISPLAY_UPDATE	1000	// 1000
+#define RXTO_DELAY	250	// 250
 
 typedef enum {
 	D232_IDLE,

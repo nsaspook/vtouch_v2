@@ -27685,7 +27685,7 @@ void work_sw(void)
   buffer[1][16] = 0;
   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
-  StartTimer(TMR_INIT, 1);
+  StartTimer(TMR_INIT, 1000);
  }
 }
 
