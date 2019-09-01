@@ -186,3 +186,14 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 		j = 0;
 	}
 }
+
+bool once(bool *once_flag)
+{
+	if (*once_flag) {
+		*once_flag = false;
+		return true;
+
+	} else {
+		return false;
+	}
+}

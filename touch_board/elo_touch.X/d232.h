@@ -64,7 +64,7 @@
 #define DEBUG_SEQ	1
 #define WIN_SEQ		2
 
-#define DISPLAY_UPDATE	1000	// 1000
+#define DISPLAY_UPDATE	500	// 1000
 #define RXTO_DELAY	250	// 250
 
 typedef enum {
@@ -105,7 +105,7 @@ typedef struct A_data {
 	uint8_t srq_value, seq_value, hits, misses, score, stats;
 	adc_result_t button_value;
 	uint16_t speed, slower, clock;
-	bool speed_update, sequence_done, win;
+	bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
 
 typedef struct IN_data {
@@ -148,6 +148,7 @@ typedef struct OUT_data2 {
 void Digital232_init(void);
 bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
+bool once(bool*);
 
 #ifdef	__cplusplus
 extern "C" {

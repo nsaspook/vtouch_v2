@@ -27546,6 +27546,7 @@ enum APP_TIMERS {
  TMR_RXTO,
  TMR_SPS,
  TMR_EXTRA,
+ TMR_EXTRA_MISS,
  TMR_SEQ,
 
 
@@ -27598,7 +27599,7 @@ typedef struct A_data {
  uint8_t srq_value, seq_value, hits, misses, score, stats;
  adc_result_t button_value;
  uint16_t speed, slower, clock;
- _Bool speed_update, sequence_done, win;
+ _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
 
 typedef struct IN_data {
@@ -27641,6 +27642,7 @@ typedef struct OUT_data2 {
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
+_Bool once(_Bool*);
 # 51 "main.c" 2
 
 # 1 "./eadog.h" 1
@@ -27671,6 +27673,9 @@ A_data IO = {
  .score = 50,
  .clock = 0,
  .win = 0,
+ .f1 = 1,
+ .f2 = 1,
+ .f3 = 1,
 };
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
@@ -27685,7 +27690,7 @@ void work_sw(void)
   buffer[1][16] = 0;
   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
-  StartTimer(TMR_INIT, 1000);
+  StartTimer(TMR_INIT, 500);
  }
 }
 
@@ -27737,7 +27742,8 @@ void main(void)
    if (IO.outbytes[2]&0b00000001) {
     if (TimerDone(TMR_EXTRA)) {
      IO.outbytes[1] = IO.outbytes[1] | 0x04;
-     IO.hits++;
+     if (once(&IO.f1))
+      IO.hits++;
      if (IO.speed_update && IO.speed-- < 2) {
       IO.speed = 10;
       IO.sequence_done = 1;
@@ -27747,14 +27753,15 @@ void main(void)
       IO.win = 1;
      }
      IO.speed_update = 0;
-     IO.misses = 0;
+
     }
    }
 
    if (IO.outbytes[2]&0b10000000) {
     if (TimerDone(TMR_EXTRA)) {
      IO.outbytes[1] = IO.outbytes[1] | 0x01;
-     IO.hits++;
+     if (once(&IO.f2))
+      IO.hits++;
      if (IO.speed_update && IO.speed-- < 2) {
       IO.speed = 10;
       IO.sequence_done = 1;
@@ -27764,25 +27771,34 @@ void main(void)
       IO.win = 1;
      }
      IO.speed_update = 0;
-     IO.misses = 0;
+
     }
    }
 
    if (IO.outbytes[2]&0b01111110) {
-    if (IO.speed_update && (IO.misses++ > 6)) {
-     if (IO.score-- < 10)
-      IO.score = 10;
-     IO.misses = 0;
-     IO.slower = 10;
-     IO.speed_update = 0;
+    if (TimerDone(TMR_EXTRA_MISS)) {
+     if (once(&IO.f3)) {
+      IO.misses++;
+      if (IO.speed_update && (IO.misses++ > 20)) {
+       if (IO.score-- < 10)
+        IO.score = 10;
+
+       IO.slower = 10;
+       IO.speed_update = 0;
+      }
+     }
     }
    }
   } else {
    StartTimer(TMR_EXTRA, 500);
+   StartTimer(TMR_EXTRA_MISS, 25);
    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
    IO.speed_update = 1;
+   IO.f1 = 1;
+   IO.f2 = 1;
+   IO.f3 = 1;
    if (TimerDone(TMR_SEQ)) {
     IO.seq_value = 0;
     if (IO.win) {
@@ -27790,6 +27806,7 @@ void main(void)
      IO.hits = 0;
      IO.misses = 0;
      IO.clock = 0;
+     IO.score = 50;
     }
    }
   }
