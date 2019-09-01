@@ -91,6 +91,7 @@ void work_sw(void)
 void main(void)
 {
 	uint8_t x = 0, y = 0;
+	char buffer[24];
 	// Initialize the device
 	SYSTEM_Initialize();
 
@@ -120,7 +121,8 @@ void main(void)
 
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
-	eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
+	sprintf(buffer, "SW %s Play!", sw_version);
+	eaDogM_WriteStringAtPos(0, 0, buffer);
 
 	while (true) {
 		// Add your application code
