@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Sun Sep  1 19:28:37 2019
+                                                                                               Mon Sep  2 14:34:37 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F47K42
@@ -453,7 +453,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
    439  00202F  30                 	db	48	;'0'
    440  002030  2E                 	db	46
    441  002031  32                 	db	50	;'2'
-   442  002032  32                 	db	50	;'2'
+   442  002032  33                 	db	51	;'3'
    443  002033  00                 	db	0
    444  002034                     STR_16:
    445                           
@@ -1301,7 +1301,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1277                           ;main.c: 123:  Digital232_init();
   1278  002334  EC46  F017         	call	_Digital232_init	;wreg free
   1279                           
-  1280                           ;main.c: 124:  sprintf(buffer, "SW %s Play!", "0.22");
+  1280                           ;main.c: 124:  sprintf(buffer, "SW %s Play!", "0.23");
   1281  002338  0E76               	movlw	low main@buffer
   1282  00233A  0100               	movlb	0	; () banked
   1283  00233C  6F64               	movwf	sprintf@s& (0+255),b
@@ -2316,18 +2316,18 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2226  002DC2  6FBB               	movwf	(_IO+30)& (0+255),b
   2227                           
   2228                           ; BSR set to: 1
-  2229                           ;d232.c: 157:    StartTimer(TMR_SEQ, 3000);
-  2230  002DC4  0E0B               	movlw	11
+  2229                           ;d232.c: 157:    StartTimer(TMR_SEQ, 30000);
+  2230  002DC4  0E75               	movlw	117
   2231  002DC6  6E07               	movwf	(StartTimer@count+1)^0,c
-  2232  002DC8  0EB8               	movlw	184
+  2232  002DC8  0E30               	movlw	48
   2233  002DCA  6E06               	movwf	StartTimer@count^0,c
   2234  002DCC  0E06               	movlw	6
   2235  002DCE  EC58  F01D         	call	_StartTimer
   2236  002DD2                     l5389:
   2237                           
-  2238                           ;d232.c: 159:   IO.outbytes[2] = 0xff;
+  2238                           ;d232.c: 159:   IO.outbytes[2]++;
   2239  002DD2  0101               	movlb	1	; () banked
-  2240  002DD4  69A4               	setf	(_IO+7)& (0+255),b
+  2240  002DD4  2BA4               	incf	(_IO+7)& (0+255),f,b
   2241  002DD6  0012               	return	
   2242  002DD8                     l5393:
   2243                           
@@ -13458,7 +13458,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Sun Sep  1 19:28:37 2019
+Symbol Table                                                                                   Mon Sep  2 14:34:37 2019
 
                            _SPI1_Exchange8bit 3E20              __end_of_TMR5_SetInterruptHandler 3F8A  
                    __end_of_UART2_is_rx_ready 3FB4                            ?_SPI1_Exchange8bit 0001  

@@ -27730,7 +27730,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "0.22");
+ sprintf(buffer, "SW %s Play!", "0.23");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  while (1) {

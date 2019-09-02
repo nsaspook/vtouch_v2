@@ -2694,15 +2694,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;d232.c: 156:    IO.sequence_done = 0;
 [e = . _IO 18 -> -> 0 `i `a ]
 "157
-[; ;d232.c: 157:    StartTimer(TMR_SEQ, 3000);
-[e ( _StartTimer (2 , -> . `E16213 6 `uc -> -> 3000 `i `us ]
+[; ;d232.c: 157:    StartTimer(TMR_SEQ, 30000);
+[e ( _StartTimer (2 , -> . `E16213 6 `uc -> -> 30000 `i `us ]
 "158
 [; ;d232.c: 158:   }
 }
 [e :U 2237 ]
 "159
-[; ;d232.c: 159:   IO.outbytes[2] = 0xff;
-[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 255 `i `uc ]
+[; ;d232.c: 159:   IO.outbytes[2]++;
+[e ++ *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> -> 1 `i `uc ]
 "160
 [; ;d232.c: 160:   return;
 [e $UE 2234  ]

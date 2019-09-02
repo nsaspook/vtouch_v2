@@ -27186,9 +27186,9 @@ void led_lightshow(uint8_t seq, uint16_t speed)
  if (seq == 2) {
   if (IO.sequence_done) {
    IO.sequence_done = 0;
-   StartTimer(TMR_SEQ, 3000);
+   StartTimer(TMR_SEQ, 30000);
   }
-  IO.outbytes[2] = 0xff;
+  IO.outbytes[2]++;
   return;
  }
 
