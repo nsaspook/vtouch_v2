@@ -27781,7 +27781,7 @@ void main(void)
     if (TimerDone(TMR_EXTRA_MISS)) {
      if (once(&IO.f3)) {
       IO.misses++;
-      if (IO.speed_update && (IO.misses++ > 20)) {
+      if (IO.speed_update && (IO.misses++ > 26)) {
        if (IO.score-- < 10)
         IO.score = 10;
 
