@@ -27044,7 +27044,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 67 "./d232.h"
+# 70 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27187,8 +27187,8 @@ static void send_lcd_data(const uint8_t data)
 {
  do { LATCbits.LATC1 = 1; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
+  wdtdelay(9);
  SPI1_Exchange8bit(data);
- wdtdelay(9);
 }
 
 
@@ -27198,6 +27198,7 @@ static void send_lcd_cmd(const uint8_t cmd)
 {
  do { LATCbits.LATC1 = 0; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
+ wdtdelay(10);
  SPI1_Exchange8bit(cmd);
  wdtdelay(10);
  do { LATCbits.LATC1 = 1; } while(0);

@@ -26946,7 +26946,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 67 "./d232.h"
+# 70 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27124,7 +27124,7 @@ _Bool Digital232_RW(void)
 
 
 
- StartTimer(TMR_RXTO, 250);
+ StartTimer(TMR_RXTO, 2);
  while (!UART2_is_rx_ready()) {
   if (TimerDone(TMR_RXTO)) {
    PWM8_LoadDutyValue(x++);
@@ -27139,7 +27139,7 @@ _Bool Digital232_RW(void)
 
 
  i = 0;
- StartTimer(TMR_RXTO, 250);
+ StartTimer(TMR_RXTO, 2);
  while (!TimerDone(TMR_RXTO) && (i < 6)) {
   if (UART2_is_rx_ready()) {
    IO.inbytes[4 - i] = UART2_Read();

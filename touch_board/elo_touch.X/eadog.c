@@ -48,8 +48,8 @@ static void send_lcd_data(const uint8_t data)
 {
 	RS_SetHigh();
 	CSB_SetLow();
+		wdtdelay(IS_DELAYSHORT);
 	SPI1_Exchange8bit(data);
-	wdtdelay(IS_DELAYSHORT);
 }
 
 /*
@@ -59,8 +59,9 @@ static void send_lcd_cmd(const uint8_t cmd)
 {
 	RS_SetLow();
 	CSB_SetLow();
+	wdtdelay(IS_DELAYMED);
 	SPI1_Exchange8bit(cmd);
-	wdtdelay(IS_DELAYMED); // 30
+	wdtdelay(IS_DELAYMED);
 	RS_SetHigh();
 }
 

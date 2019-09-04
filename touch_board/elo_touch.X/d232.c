@@ -94,7 +94,7 @@ bool Digital232_RW(void)
 	/*
 	 * wait for data
 	 */
-	StartTimer(TMR_RXTO, 250);
+	StartTimer(TMR_RXTO, RXTO_DELAY); // 250
 	while (!UART2_is_rx_ready()) {
 		if (TimerDone(TMR_RXTO)) {
 			PWM8_LoadDutyValue(x++);
@@ -109,7 +109,7 @@ bool Digital232_RW(void)
 	 * read data
 	 */
 	i = 0;
-	StartTimer(TMR_RXTO, 250);
+	StartTimer(TMR_RXTO, RXTO_DELAY);
 	while (!TimerDone(TMR_RXTO) && (i < 6)) {
 		if (UART2_is_rx_ready()) {
 			IO.inbytes[4 - i] = UART2_Read(); // port 5 first so count down
