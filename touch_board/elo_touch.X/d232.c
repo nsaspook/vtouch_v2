@@ -154,9 +154,9 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 	if (seq == WIN_SEQ) {
 		if (IO.sequence_done) {
 			IO.sequence_done = false;
-			StartTimer(TMR_SEQ, 3000);
+			StartTimer(TMR_SEQ, 30000);
 		}
-		IO.outbytes[2] = 0xff;
+		IO.outbytes[2]++;
 		return;
 	}
 
@@ -184,5 +184,16 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 			}
 		}
 		j = 0;
+	}
+}
+
+bool once(bool *once_flag)
+{
+	if (*once_flag) {
+		*once_flag = false;
+		return true;
+
+	} else {
+		return false;
 	}
 }

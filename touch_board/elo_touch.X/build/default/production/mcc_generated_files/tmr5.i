@@ -26971,6 +26971,7 @@ enum APP_TIMERS {
  TMR_RXTO,
  TMR_SPS,
  TMR_EXTRA,
+ TMR_EXTRA_MISS,
  TMR_SEQ,
 
 
@@ -27021,7 +27022,7 @@ typedef struct A_data {
  uint8_t srq_value, seq_value, hits, misses, score, stats;
  adc_result_t button_value;
  uint16_t speed, slower, clock;
- _Bool speed_update, sequence_done, win;
+ _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
 
 typedef struct IN_data {
@@ -27064,6 +27065,7 @@ typedef struct OUT_data2 {
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
+_Bool once(_Bool*);
 # 54 "mcc_generated_files/tmr5.c" 2
 
 

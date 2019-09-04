@@ -64,6 +64,9 @@ A_data IO = {
 	.score = 50,
 	.clock = 0,
 	.win = false,
+	.f1 = true,
+	.f2 = true,
+	.f3 = true,
 };
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
@@ -88,6 +91,7 @@ void work_sw(void)
 void main(void)
 {
 	uint8_t x = 0, y = 0;
+	char buffer[24];
 	// Initialize the device
 	SYSTEM_Initialize();
 
@@ -117,7 +121,8 @@ void main(void)
 
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
-	eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
+	sprintf(buffer, "SW %s Play!", sw_version);
+	eaDogM_WriteStringAtPos(0, 0, buffer);
 
 	while (true) {
 		// Add your application code
@@ -130,7 +135,8 @@ void main(void)
 			if (IO.outbytes[2]&0b00000001) { // display byte patterns
 				if (TimerDone(TMR_EXTRA)) {
 					IO.outbytes[1] = IO.outbytes[1] | WARP;
-					IO.hits++;
+					if (once(&IO.f1))
+						IO.hits++;
 					if (IO.speed_update && IO.speed-- < 2) {
 						IO.speed = 10;
 						IO.sequence_done = true;
@@ -140,14 +146,15 @@ void main(void)
 						IO.win = true;
 					}
 					IO.speed_update = false;
-					IO.misses = 0;
+					//					IO.misses = 0;
 				}
 			}
 
 			if (IO.outbytes[2]&0b10000000) {
 				if (TimerDone(TMR_EXTRA)) {
 					IO.outbytes[1] = IO.outbytes[1] | SIREN;
-					IO.hits++;
+					if (once(&IO.f2))
+						IO.hits++;
 					if (IO.speed_update && IO.speed-- < 2) {
 						IO.speed = 10;
 						IO.sequence_done = true;
@@ -157,25 +164,34 @@ void main(void)
 						IO.win = true;
 					}
 					IO.speed_update = false;
-					IO.misses = 0;
+					//					IO.misses = 0;
 				}
 			}
 
 			if (IO.outbytes[2]&0b01111110) {
-				if (IO.speed_update && (IO.misses++ > 6)) {
-					if (IO.score-- < 10)
-						IO.score = 10;
-					IO.misses = 0;
-					IO.slower = 10;
-					IO.speed_update = false;
+				if (TimerDone(TMR_EXTRA_MISS)) {
+					if (once(&IO.f3)) {
+						IO.misses++;
+						if (IO.speed_update && (IO.misses++ > 26)) {
+							if (IO.score-- < 10)
+								IO.score = 10;
+							//					IO.misses = 0;
+							IO.slower = 10;
+							IO.speed_update = false;
+						}
+					}
 				}
 			}
 		} else {
 			StartTimer(TMR_EXTRA, 500);
+			StartTimer(TMR_EXTRA_MISS, 25);
 			IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
 			IO.outbytes[1] = IO.outbytes[1] & (~WARP);
 			IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
 			IO.speed_update = true;
+			IO.f1 = true;
+			IO.f2 = true;
+			IO.f3 = true;
 			if (TimerDone(TMR_SEQ)) {
 				IO.seq_value = DEFAULT_SEQ;
 				if (IO.win) {
@@ -183,6 +199,7 @@ void main(void)
 					IO.hits = 0;
 					IO.misses = 0;
 					IO.clock = 0;
+					IO.score = 50;
 				}
 			}
 		}

@@ -5,16 +5,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F16414 `(v ~T0 @X0 0 tf ]
 "56 main.c
 [; ;main.c: 56: A_data IO = {
-[c E16458 0 1 2 3 4 5 6 .. ]
-[n E16458 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE IO_FAIL  ]
-[c E16451 0 1 2 3 4 .. ]
-[n E16451 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
-[c E16467 0 1 2 3 4 5 .. ]
-[n E16467 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
+[c E16459 0 1 2 3 4 5 6 .. ]
+[n E16459 . IO_IDLE IO_INIT IO_OUT IO_IN IO_SRQ IO_UPDATE IO_FAIL  ]
+[c E16452 0 1 2 3 4 .. ]
+[n E16452 . D232_IDLE D232_INIT D232_OUT_IN D232_SRQ D232_UPDATE  ]
+[c E16468 0 1 2 3 4 5 .. ]
+[n E16468 . S_IDLE S_S S_R S_Q S_NUM S_UPDATE  ]
 "97 ./d232.h
 [; ;./d232.h: 97: typedef struct A_data {
-[s S2203 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16458 1 `E16451 1 `E16467 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 `us 1 `us 1 `a 1 `a 1 `a 1 ]
-[n S2203 A_data inbytes outbytes input_ok output_ok io d232 srq srq_value seq_value hits misses score stats button_value speed slower clock speed_update sequence_done win ]
+[s S2203 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16459 1 `E16452 1 `E16468 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 `us 1 `us 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 ]
+[n S2203 A_data inbytes outbytes input_ok output_ok io d232 srq srq_value seq_value hits misses score stats button_value speed slower clock speed_update sequence_done win f1 f2 f3 f4 ]
 "111
 [; ;./d232.h: 111: typedef struct IN_data {
 [s S2204 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -23,23 +23,23 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./d232.h: 122: typedef struct OUT_data1 {
 [s S2205 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 ]
 [n S2205 OUT_data1 sound1 chirp sound3 misc1 misc2 filler1 ]
-[v F16447 `(a ~T0 @X0 1 tf1`uc ]
-"26 ./timers.h
-[; ;./timers.h: 26: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF16447 ~T0 @X0 0 e ]
-"74 main.c
-[; ;main.c: 74:  if (TimerDone(TMR_INIT)) {
-[c E16434 0 1 2 3 4 5 6 .. ]
-[n E16434 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_EXTRA TMR_SEQ TMR_COUNT  ]
+[v F16448 `(a ~T0 @X0 1 tf1`uc ]
+"27 ./timers.h
+[; ;./timers.h: 27: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
+[v _TimerDone `TF16448 ~T0 @X0 0 e ]
+"77 main.c
+[; ;main.c: 77:  if (TimerDone(TMR_INIT)) {
+[c E16434 0 1 2 3 4 5 6 7 .. ]
+[n E16434 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_EXTRA TMR_EXTRA_MISS TMR_SEQ TMR_COUNT  ]
 "113 /opt/microchip/xc8/v2.10/pic/include/c99/stdio.h
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
 "61 ./eadog.h
 [; ;./eadog.h: 61:  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
 [v _eaDogM_WriteStringAtPos `(v ~T0 @X0 0 ef3`uc`uc`*uc ]
-[v F16443 `(v ~T0 @X0 1 tf2`uc`us ]
-"25 ./timers.h
-[; ;./timers.h: 25: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF16443 ~T0 @X0 0 e ]
+[v F16444 `(v ~T0 @X0 1 tf2`uc`us ]
+"26 ./timers.h
+[; ;./timers.h: 26: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
+[v _StartTimer `TF16444 ~T0 @X0 0 e ]
 [p mainexit ]
 "77 ./mcc_generated_files/mcc.h
 [; ;./mcc_generated_files/mcc.h: 77: void SYSTEM_Initialize(void);
@@ -74,6 +74,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "150
 [; ;./d232.h: 150: void led_lightshow(uint8_t, uint16_t);
 [v _led_lightshow `(v ~T0 @X0 0 ef2`uc`us ]
+"151
+[; ;./d232.h: 151: _Bool once(_Bool*);
+[v _once `(a ~T0 @X0 0 ef1`*a ]
 "44 main.c
 [p n 520 ]
 "45
@@ -2291,7 +2294,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _UART1_TxInterruptHandler `*F16414 ~T0 @X0 1 e ]
 "55 main.c
 [; ;main.c: 55: volatile uint16_t tickCount[TMR_COUNT] = {0};
-[v _tickCount `Vus ~T0 @X0 -> 6 `i e ]
+[v _tickCount `Vus ~T0 @X0 -> 7 `i e ]
 [i _tickCount
 :U ..
 -> -> 0 `i `us
@@ -2319,9 +2322,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 -> -> 0 `i `a
 -> -> 0 `i `a
--> -> 0 `i `E16458
--> -> 0 `i `E16451
--> -> 0 `i `E16467
+-> -> 0 `i `E16459
+-> -> 0 `i `E16452
+-> -> 0 `i `E16468
 -> -> 0 `i `uc
 -> -> 0 `i `uc
 -> -> 0 `i `uc
@@ -2335,345 +2338,388 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 1 `i `a
 -> -> 0 `i `a
 -> -> 0 `i `a
+-> -> 1 `i `a
+-> -> 1 `i `a
+-> -> 1 `i `a
 ..
 ..
 ]
-"68
-[; ;main.c: 68: IN_data *switches = (IN_data *) & IO.inbytes[0];
+"71
+[; ;main.c: 71: IN_data *switches = (IN_data *) & IO.inbytes[0];
 [v _switches `*S2204 ~T0 @X0 1 e ]
 [i _switches
 -> &U *U + &U . _IO 0 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _IO 0 `ui `ux `*S2204
 ]
-"69
-[; ;main.c: 69: OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
+"72
+[; ;main.c: 72: OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 [v _sounds `*S2205 ~T0 @X0 1 e ]
 [i _sounds
 -> &U *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `*S2205
 ]
-"71
-[; ;main.c: 71: void work_sw(void)
+"74
+[; ;main.c: 74: void work_sw(void)
 [v _work_sw `(v ~T0 @X0 1 ef ]
-"72
-[; ;main.c: 72: {
+"75
+[; ;main.c: 75: {
 {
 [e :U _work_sw ]
 [f ]
-[v F16558 `uc ~T0 @X0 -> 64 `i t ]
-"73
-[; ;main.c: 73:  char buffer[2][64];
-[v _buffer `F16558 ~T0 @X0 -> 2 `i a ]
-"74
-[; ;main.c: 74:  if (TimerDone(TMR_INIT)) {
+[v F16565 `uc ~T0 @X0 -> 64 `i t ]
+"76
+[; ;main.c: 76:  char buffer[2][64];
+[v _buffer `F16565 ~T0 @X0 -> 2 `i a ]
+"77
+[; ;main.c: 77:  if (TimerDone(TMR_INIT)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E16434 1 `uc `i -> 0 `i 2208  ]
 {
-"75
-[; ;main.c: 75:   IO.clock++;
-[e ++ . _IO 16 -> -> 1 `i `us ]
-"76
-[; ;main.c: 76:   sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-[e ( _sprintf (1 , , (. , &U *U + &U _buffer * -> -> -> 0 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux :s 1C -> . _IO 9 `i -> . _IO 10 `i ]
-"77
-[; ;main.c: 77:   sprintf(buffer[1], " Score %i %i    ", IO.score, IO.clock);
-[e ( _sprintf (1 , , (. , &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux :s 2C -> . _IO 11 `i -> . _IO 16 `ui ]
 "78
-[; ;main.c: 78:   buffer[1][16] = 0;
-[e = *U + &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux * -> -> -> 16 `i `ui `ux -> -> # *U &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux `ui `ux -> -> 0 `i `uc ]
+[; ;main.c: 78:   IO.clock++;
+[e ++ . _IO 16 -> -> 1 `i `us ]
 "79
-[; ;main.c: 79:   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
-[e ( _eaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U *U + &U _buffer * -> -> -> 0 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux ]
+[; ;main.c: 79:   sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
+[e ( _sprintf (1 , , (. , &U *U + &U _buffer * -> -> -> 0 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux :s 1C -> . _IO 9 `i -> . _IO 10 `i ]
 "80
-[; ;main.c: 80:   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
-[e ( _eaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux ]
+[; ;main.c: 80:   sprintf(buffer[1], " Score %i %i    ", IO.score, IO.clock);
+[e ( _sprintf (1 , , (. , &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux :s 2C -> . _IO 11 `i -> . _IO 16 `ui ]
 "81
-[; ;main.c: 81:   StartTimer(TMR_INIT, 1);
-[e ( _StartTimer (2 , -> . `E16434 1 `uc -> -> 1 `i `us ]
+[; ;main.c: 81:   buffer[1][16] = 0;
+[e = *U + &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux * -> -> -> 16 `i `ui `ux -> -> # *U &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux `ui `ux -> -> 0 `i `uc ]
 "82
-[; ;main.c: 82:  }
+[; ;main.c: 82:   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
+[e ( _eaDogM_WriteStringAtPos (3 , , -> -> 1 `i `uc -> -> 0 `i `uc &U *U + &U _buffer * -> -> -> 0 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux ]
+"83
+[; ;main.c: 83:   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
+[e ( _eaDogM_WriteStringAtPos (3 , , -> -> 2 `i `uc -> -> 0 `i `uc &U *U + &U _buffer * -> -> -> 1 `i `ui `ux -> * -> # *U &U *U &U _buffer `ui -> -> 64 `i `ui `ux ]
+"84
+[; ;main.c: 84:   StartTimer(TMR_INIT, 500);
+[e ( _StartTimer (2 , -> . `E16434 1 `uc -> -> 500 `i `us ]
+"85
+[; ;main.c: 85:  }
 }
 [e :U 2208 ]
-"83
-[; ;main.c: 83: }
+"86
+[; ;main.c: 86: }
 [e :UE 2207 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"88
-[; ;main.c: 88: void main(void)
+"91
+[; ;main.c: 91: void main(void)
 [v _main `(v ~T0 @X0 1 ef ]
-"89
-[; ;main.c: 89: {
+"92
+[; ;main.c: 92: {
 {
 [e :U _main ]
 [f ]
-"90
-[; ;main.c: 90:  uint8_t x = 0, y = 0;
+"93
+[; ;main.c: 93:  uint8_t x = 0, y = 0;
 [v _x `uc ~T0 @X0 1 a ]
 [e = _x -> -> 0 `i `uc ]
 [v _y `uc ~T0 @X0 1 a ]
 [e = _y -> -> 0 `i `uc ]
-"92
-[; ;main.c: 92:  SYSTEM_Initialize();
+"94
+[; ;main.c: 94:  char buffer[24];
+[v _buffer `uc ~T0 @X0 -> 24 `i a ]
+"96
+[; ;main.c: 96:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
-"99
-[; ;main.c: 99:  (INTCON0bits.GIEH = 1);
+"103
+[; ;main.c: 103:  (INTCON0bits.GIEH = 1);
 [e = . . _INTCON0bits 1 1 -> -> 1 `i `uc ]
-"102
-[; ;main.c: 102:  (INTCON0bits.GIEL = 1);
+"106
+[; ;main.c: 106:  (INTCON0bits.GIEL = 1);
 [e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
-"110
-[; ;main.c: 110:  IO.input_ok = 0;
+"114
+[; ;main.c: 114:  IO.input_ok = 0;
 [e = . _IO 2 -> -> 0 `i `a ]
-"111
-[; ;main.c: 111:  IO.output_ok = 0;
-[e = . _IO 3 -> -> 0 `i `a ]
-"112
-[; ;main.c: 112:  IO.d232 = D232_IDLE;
-[e = . _IO 5 . `E16451 0 ]
-"113
-[; ;main.c: 113:  IO.io = IO_IDLE;
-[e = . _IO 4 . `E16458 0 ]
 "115
-[; ;main.c: 115:  init_display();
-[e ( _init_display ..  ]
+[; ;main.c: 115:  IO.output_ok = 0;
+[e = . _IO 3 -> -> 0 `i `a ]
 "116
-[; ;main.c: 116:  eaDogM_WriteCommand(0b00001100);
-[e ( _eaDogM_WriteCommand (1 -> -> 12 `i `uc ]
-"118
-[; ;main.c: 118:  StartTimer(TMR_INIT, 1000);
-[e ( _StartTimer (2 , -> . `E16434 1 `uc -> -> 1000 `i `us ]
+[; ;main.c: 116:  IO.d232 = D232_IDLE;
+[e = . _IO 5 . `E16452 0 ]
+"117
+[; ;main.c: 117:  IO.io = IO_IDLE;
+[e = . _IO 4 . `E16459 0 ]
 "119
-[; ;main.c: 119:  Digital232_init();
-[e ( _Digital232_init ..  ]
+[; ;main.c: 119:  init_display();
+[e ( _init_display ..  ]
 "120
-[; ;main.c: 120:  eaDogM_WriteStringAtPos(0, 0, " Done, OK ");
-[e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc :s 3C ]
+[; ;main.c: 120:  eaDogM_WriteCommand(0b00001100);
+[e ( _eaDogM_WriteCommand (1 -> -> 12 `i `uc ]
 "122
-[; ;main.c: 122:  while (1) {
+[; ;main.c: 122:  StartTimer(TMR_INIT, 1000);
+[e ( _StartTimer (2 , -> . `E16434 1 `uc -> -> 1000 `i `us ]
+"123
+[; ;main.c: 123:  Digital232_init();
+[e ( _Digital232_init ..  ]
+"124
+[; ;main.c: 124:  sprintf(buffer, "SW %s Play!", "0.23");
+[e ( _sprintf (1 , (. , &U _buffer :s 3C :s 4C ]
+"125
+[; ;main.c: 125:  eaDogM_WriteStringAtPos(0, 0, buffer);
+[e ( _eaDogM_WriteStringAtPos (3 , , -> -> 0 `i `uc -> -> 0 `i `uc &U _buffer ]
+"127
+[; ;main.c: 127:  while (1) {
 [e :U 2211 ]
 {
-"124
-[; ;main.c: 124:   work_sw();
+"129
+[; ;main.c: 129:   work_sw();
 [e ( _work_sw ..  ]
-"125
-[; ;main.c: 125:   if (Digital232_RW() && switches->detonator)
+"130
+[; ;main.c: 130:   if (Digital232_RW() && switches->detonator)
 [e $ ! && != -> ( _Digital232_RW ..  `i -> 0 `i != -> . *U _switches 1 `i -> 0 `i 2213  ]
-"126
-[; ;main.c: 126:    led_lightshow(IO.seq_value, 1);
+"131
+[; ;main.c: 131:    led_lightshow(IO.seq_value, 1);
 [e ( _led_lightshow (2 , . _IO 8 -> -> 1 `i `us ]
 [e :U 2213 ]
-"128
-[; ;main.c: 128:   if (!switches->detonator) {
+"133
+[; ;main.c: 133:   if (!switches->detonator) {
 [e $ ! ! != -> . *U _switches 1 `i -> 0 `i 2214  ]
 {
-"129
-[; ;main.c: 129:    IO.outbytes[1] = IO.outbytes[1] | 0x02;
+"134
+[; ;main.c: 134:    IO.outbytes[1] = IO.outbytes[1] | 0x02;
 [e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 2 `i `uc ]
-"130
-[; ;main.c: 130:    if (IO.outbytes[2]&0b00000001) {
+"135
+[; ;main.c: 135:    if (IO.outbytes[2]&0b00000001) {
 [e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 1 `i -> 0 `i 2215  ]
 {
-"131
-[; ;main.c: 131:     if (TimerDone(TMR_EXTRA)) {
+"136
+[; ;main.c: 136:     if (TimerDone(TMR_EXTRA)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E16434 4 `uc `i -> 0 `i 2216  ]
 {
-"132
-[; ;main.c: 132:      IO.outbytes[1] = IO.outbytes[1] | 0x04;
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 4 `i `uc ]
-"133
-[; ;main.c: 133:      IO.hits++;
-[e ++ . _IO 9 -> -> 1 `i `uc ]
-"134
-[; ;main.c: 134:      if (IO.speed_update && IO.speed-- < 2) {
-[e $ ! && != -> . _IO 17 `i -> 0 `i < -> -- . _IO 14 -> -> 1 `i `us `ui -> -> 2 `i `ui 2217  ]
-{
-"135
-[; ;main.c: 135:       IO.speed = 10;
-[e = . _IO 14 -> -> 10 `i `us ]
-"136
-[; ;main.c: 136:       IO.sequence_done = 1;
-[e = . _IO 18 -> -> 1 `i `a ]
 "137
-[; ;main.c: 137:       IO.seq_value = 2;
-[e = . _IO 8 -> -> 2 `i `uc ]
+[; ;main.c: 137:      IO.outbytes[1] = IO.outbytes[1] | 0x04;
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 4 `i `uc ]
 "138
-[; ;main.c: 138:       IO.slower = 0;
-[e = . _IO 15 -> -> 0 `i `us ]
+[; ;main.c: 138:      if (once(&IO.f1))
+[e $ ! != -> ( _once (1 &U . _IO 20 `i -> 0 `i 2217  ]
 "139
-[; ;main.c: 139:       IO.stats = IO.score;
-[e = . _IO 12 . _IO 11 ]
-"140
-[; ;main.c: 140:       IO.win = 1;
-[e = . _IO 19 -> -> 1 `i `a ]
-"141
-[; ;main.c: 141:      }
-}
-[e :U 2217 ]
-"142
-[; ;main.c: 142:      IO.speed_update = 0;
-[e = . _IO 17 -> -> 0 `i `a ]
-"143
-[; ;main.c: 143:      IO.misses = 0;
-[e = . _IO 10 -> -> 0 `i `uc ]
-"144
-[; ;main.c: 144:     }
-}
-[e :U 2216 ]
-"145
-[; ;main.c: 145:    }
-}
-[e :U 2215 ]
-"147
-[; ;main.c: 147:    if (IO.outbytes[2]&0b10000000) {
-[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 128 `i -> 0 `i 2218  ]
-{
-"148
-[; ;main.c: 148:     if (TimerDone(TMR_EXTRA)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16434 4 `uc `i -> 0 `i 2219  ]
-{
-"149
-[; ;main.c: 149:      IO.outbytes[1] = IO.outbytes[1] | 0x01;
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 1 `i `uc ]
-"150
-[; ;main.c: 150:      IO.hits++;
+[; ;main.c: 139:       IO.hits++;
 [e ++ . _IO 9 -> -> 1 `i `uc ]
-"151
-[; ;main.c: 151:      if (IO.speed_update && IO.speed-- < 2) {
-[e $ ! && != -> . _IO 17 `i -> 0 `i < -> -- . _IO 14 -> -> 1 `i `us `ui -> -> 2 `i `ui 2220  ]
+[e :U 2217 ]
+"140
+[; ;main.c: 140:      if (IO.speed_update && IO.speed-- < 2) {
+[e $ ! && != -> . _IO 17 `i -> 0 `i < -> -- . _IO 14 -> -> 1 `i `us `ui -> -> 2 `i `ui 2218  ]
 {
-"152
-[; ;main.c: 152:       IO.speed = 10;
+"141
+[; ;main.c: 141:       IO.speed = 10;
 [e = . _IO 14 -> -> 10 `i `us ]
-"153
-[; ;main.c: 153:       IO.sequence_done = 1;
+"142
+[; ;main.c: 142:       IO.sequence_done = 1;
 [e = . _IO 18 -> -> 1 `i `a ]
-"154
-[; ;main.c: 154:       IO.seq_value = 2;
+"143
+[; ;main.c: 143:       IO.seq_value = 2;
 [e = . _IO 8 -> -> 2 `i `uc ]
-"155
-[; ;main.c: 155:       IO.slower = 0;
+"144
+[; ;main.c: 144:       IO.slower = 0;
 [e = . _IO 15 -> -> 0 `i `us ]
-"156
-[; ;main.c: 156:       IO.stats = IO.score;
+"145
+[; ;main.c: 145:       IO.stats = IO.score;
 [e = . _IO 12 . _IO 11 ]
-"157
-[; ;main.c: 157:       IO.win = 1;
+"146
+[; ;main.c: 146:       IO.win = 1;
 [e = . _IO 19 -> -> 1 `i `a ]
-"158
-[; ;main.c: 158:      }
-}
-[e :U 2220 ]
-"159
-[; ;main.c: 159:      IO.speed_update = 0;
-[e = . _IO 17 -> -> 0 `i `a ]
-"160
-[; ;main.c: 160:      IO.misses = 0;
-[e = . _IO 10 -> -> 0 `i `uc ]
-"161
-[; ;main.c: 161:     }
-}
-[e :U 2219 ]
-"162
-[; ;main.c: 162:    }
+"147
+[; ;main.c: 147:      }
 }
 [e :U 2218 ]
-"164
-[; ;main.c: 164:    if (IO.outbytes[2]&0b01111110) {
-[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 126 `i -> 0 `i 2221  ]
-{
-"165
-[; ;main.c: 165:     if (IO.speed_update && (IO.misses++ > 6)) {
-[e $ ! && != -> . _IO 17 `i -> 0 `i > -> ++ . _IO 10 -> -> 1 `i `uc `i -> 6 `i 2222  ]
-{
-"166
-[; ;main.c: 166:      if (IO.score-- < 10)
-[e $ ! < -> -- . _IO 11 -> -> 1 `i `uc `i -> 10 `i 2223  ]
-"167
-[; ;main.c: 167:       IO.score = 10;
-[e = . _IO 11 -> -> 10 `i `uc ]
-[e :U 2223 ]
-"168
-[; ;main.c: 168:      IO.misses = 0;
-[e = . _IO 10 -> -> 0 `i `uc ]
-"169
-[; ;main.c: 169:      IO.slower = 10;
-[e = . _IO 15 -> -> 10 `i `us ]
-"170
-[; ;main.c: 170:      IO.speed_update = 0;
+"148
+[; ;main.c: 148:      IO.speed_update = 0;
 [e = . _IO 17 -> -> 0 `i `a ]
-"171
-[; ;main.c: 171:     }
+"150
+[; ;main.c: 150:     }
+}
+[e :U 2216 ]
+"151
+[; ;main.c: 151:    }
+}
+[e :U 2215 ]
+"153
+[; ;main.c: 153:    if (IO.outbytes[2]&0b10000000) {
+[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 128 `i -> 0 `i 2219  ]
+{
+"154
+[; ;main.c: 154:     if (TimerDone(TMR_EXTRA)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16434 4 `uc `i -> 0 `i 2220  ]
+{
+"155
+[; ;main.c: 155:      IO.outbytes[1] = IO.outbytes[1] | 0x01;
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> | -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 1 `i `uc ]
+"156
+[; ;main.c: 156:      if (once(&IO.f2))
+[e $ ! != -> ( _once (1 &U . _IO 21 `i -> 0 `i 2221  ]
+"157
+[; ;main.c: 157:       IO.hits++;
+[e ++ . _IO 9 -> -> 1 `i `uc ]
+[e :U 2221 ]
+"158
+[; ;main.c: 158:      if (IO.speed_update && IO.speed-- < 2) {
+[e $ ! && != -> . _IO 17 `i -> 0 `i < -> -- . _IO 14 -> -> 1 `i `us `ui -> -> 2 `i `ui 2222  ]
+{
+"159
+[; ;main.c: 159:       IO.speed = 10;
+[e = . _IO 14 -> -> 10 `i `us ]
+"160
+[; ;main.c: 160:       IO.sequence_done = 1;
+[e = . _IO 18 -> -> 1 `i `a ]
+"161
+[; ;main.c: 161:       IO.seq_value = 2;
+[e = . _IO 8 -> -> 2 `i `uc ]
+"162
+[; ;main.c: 162:       IO.slower = 0;
+[e = . _IO 15 -> -> 0 `i `us ]
+"163
+[; ;main.c: 163:       IO.stats = IO.score;
+[e = . _IO 12 . _IO 11 ]
+"164
+[; ;main.c: 164:       IO.win = 1;
+[e = . _IO 19 -> -> 1 `i `a ]
+"165
+[; ;main.c: 165:      }
 }
 [e :U 2222 ]
+"166
+[; ;main.c: 166:      IO.speed_update = 0;
+[e = . _IO 17 -> -> 0 `i `a ]
+"168
+[; ;main.c: 168:     }
+}
+[e :U 2220 ]
+"169
+[; ;main.c: 169:    }
+}
+[e :U 2219 ]
+"171
+[; ;main.c: 171:    if (IO.outbytes[2]&0b01111110) {
+[e $ ! != & -> *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i -> 126 `i -> 0 `i 2223  ]
+{
 "172
-[; ;main.c: 172:    }
-}
-[e :U 2221 ]
+[; ;main.c: 172:     if (TimerDone(TMR_EXTRA_MISS)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16434 5 `uc `i -> 0 `i 2224  ]
+{
 "173
-[; ;main.c: 173:   } else {
-}
-[e $U 2224  ]
-[e :U 2214 ]
+[; ;main.c: 173:      if (once(&IO.f3)) {
+[e $ ! != -> ( _once (1 &U . _IO 22 `i -> 0 `i 2225  ]
 {
 "174
-[; ;main.c: 174:    StartTimer(TMR_EXTRA, 500);
-[e ( _StartTimer (2 , -> . `E16434 4 `uc -> -> 500 `i `us ]
+[; ;main.c: 174:       IO.misses++;
+[e ++ . _IO 10 -> -> 1 `i `uc ]
 "175
-[; ;main.c: 175:    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> & -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i ~ -> 2 `i `uc ]
+[; ;main.c: 175:       if (IO.speed_update && (IO.misses++ > 26)) {
+[e $ ! && != -> . _IO 17 `i -> 0 `i > -> ++ . _IO 10 -> -> 1 `i `uc `i -> 26 `i 2226  ]
+{
 "176
-[; ;main.c: 176:    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> & -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i ~ -> 4 `i `uc ]
+[; ;main.c: 176:        if (IO.score-- < 10)
+[e $ ! < -> -- . _IO 11 -> -> 1 `i `uc `i -> 10 `i 2227  ]
 "177
-[; ;main.c: 177:    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
-[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> & -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i ~ -> 1 `i `uc ]
-"178
-[; ;main.c: 178:    IO.speed_update = 1;
-[e = . _IO 17 -> -> 1 `i `a ]
+[; ;main.c: 177:         IO.score = 10;
+[e = . _IO 11 -> -> 10 `i `uc ]
+[e :U 2227 ]
 "179
-[; ;main.c: 179:    if (TimerDone(TMR_SEQ)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E16434 5 `uc `i -> 0 `i 2225  ]
-{
+[; ;main.c: 179:        IO.slower = 10;
+[e = . _IO 15 -> -> 10 `i `us ]
 "180
-[; ;main.c: 180:     IO.seq_value = 0;
-[e = . _IO 8 -> -> 0 `i `uc ]
+[; ;main.c: 180:        IO.speed_update = 0;
+[e = . _IO 17 -> -> 0 `i `a ]
 "181
-[; ;main.c: 181:     if (IO.win) {
-[e $ ! != -> . _IO 19 `i -> 0 `i 2226  ]
-{
-"182
-[; ;main.c: 182:      IO.win = 0;
-[e = . _IO 19 -> -> 0 `i `a ]
-"183
-[; ;main.c: 183:      IO.hits = 0;
-[e = . _IO 9 -> -> 0 `i `uc ]
-"184
-[; ;main.c: 184:      IO.misses = 0;
-[e = . _IO 10 -> -> 0 `i `uc ]
-"185
-[; ;main.c: 185:      IO.clock = 0;
-[e = . _IO 16 -> -> 0 `i `us ]
-"186
-[; ;main.c: 186:     }
+[; ;main.c: 181:       }
 }
 [e :U 2226 ]
-"187
-[; ;main.c: 187:    }
+"182
+[; ;main.c: 182:      }
 }
 [e :U 2225 ]
-"188
-[; ;main.c: 188:   }
+"183
+[; ;main.c: 183:     }
 }
 [e :U 2224 ]
+"184
+[; ;main.c: 184:    }
+}
+[e :U 2223 ]
+"185
+[; ;main.c: 185:   } else {
+}
+[e $U 2228  ]
+[e :U 2214 ]
+{
+"186
+[; ;main.c: 186:    StartTimer(TMR_EXTRA, 500);
+[e ( _StartTimer (2 , -> . `E16434 4 `uc -> -> 500 `i `us ]
+"187
+[; ;main.c: 187:    StartTimer(TMR_EXTRA_MISS, 25);
+[e ( _StartTimer (2 , -> . `E16434 5 `uc -> -> 25 `i `us ]
+"188
+[; ;main.c: 188:    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> & -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i ~ -> 2 `i `uc ]
+"189
+[; ;main.c: 189:    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> & -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i ~ -> 4 `i `uc ]
 "190
-[; ;main.c: 190:  }
+[; ;main.c: 190:    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+[e = *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> & -> *U + &U . _IO 1 * -> -> -> 1 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux `i ~ -> 1 `i `uc ]
+"191
+[; ;main.c: 191:    IO.speed_update = 1;
+[e = . _IO 17 -> -> 1 `i `a ]
+"192
+[; ;main.c: 192:    IO.f1 = 1;
+[e = . _IO 20 -> -> 1 `i `a ]
+"193
+[; ;main.c: 193:    IO.f2 = 1;
+[e = . _IO 21 -> -> 1 `i `a ]
+"194
+[; ;main.c: 194:    IO.f3 = 1;
+[e = . _IO 22 -> -> 1 `i `a ]
+"195
+[; ;main.c: 195:    if (TimerDone(TMR_SEQ)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E16434 6 `uc `i -> 0 `i 2229  ]
+{
+"196
+[; ;main.c: 196:     IO.seq_value = 0;
+[e = . _IO 8 -> -> 0 `i `uc ]
+"197
+[; ;main.c: 197:     if (IO.win) {
+[e $ ! != -> . _IO 19 `i -> 0 `i 2230  ]
+{
+"198
+[; ;main.c: 198:      IO.win = 0;
+[e = . _IO 19 -> -> 0 `i `a ]
+"199
+[; ;main.c: 199:      IO.hits = 0;
+[e = . _IO 9 -> -> 0 `i `uc ]
+"200
+[; ;main.c: 200:      IO.misses = 0;
+[e = . _IO 10 -> -> 0 `i `uc ]
+"201
+[; ;main.c: 201:      IO.clock = 0;
+[e = . _IO 16 -> -> 0 `i `us ]
+"202
+[; ;main.c: 202:      IO.score = 50;
+[e = . _IO 11 -> -> 50 `i `uc ]
+"203
+[; ;main.c: 203:     }
+}
+[e :U 2230 ]
+"204
+[; ;main.c: 204:    }
+}
+[e :U 2229 ]
+"205
+[; ;main.c: 205:   }
+}
+[e :U 2228 ]
+"207
+[; ;main.c: 207:  }
 }
 [e :U 2210 ]
 [e $U 2211  ]
 [e :U 2212 ]
-"191
-[; ;main.c: 191: }
+"208
+[; ;main.c: 208: }
 [e :UE 2209 ]
 }
-[p f _sprintf 8388736 ]
-[a 3C 32 68 111 110 101 44 32 79 75 32 0 ]
+[p f _sprintf 8650880 ]
+[a 4C 48 46 50 51 0 ]
+[a 3C 83 87 32 37 115 32 80 108 97 121 33 0 ]
 [a 2C 32 83 99 111 114 101 32 37 105 32 37 105 32 32 32 32 0 ]
 [a 1C 32 72 32 37 105 44 32 77 32 37 105 32 32 32 32 32 0 ]

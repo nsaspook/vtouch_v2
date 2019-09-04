@@ -26935,6 +26935,7 @@ enum APP_TIMERS {
  TMR_RXTO,
  TMR_SPS,
  TMR_EXTRA,
+ TMR_EXTRA_MISS,
  TMR_SEQ,
 
 
@@ -26985,7 +26986,7 @@ typedef struct A_data {
  uint8_t srq_value, seq_value, hits, misses, score, stats;
  adc_result_t button_value;
  uint16_t speed, slower, clock;
- _Bool speed_update, sequence_done, win;
+ _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
 
 typedef struct IN_data {
@@ -27028,6 +27029,7 @@ typedef struct OUT_data2 {
 void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
+_Bool once(_Bool*);
 # 2 "d232.c" 2
 
 
@@ -27124,7 +27126,7 @@ _Bool Digital232_RW(void)
 
 
 
- StartTimer(TMR_RXTO, 2);
+ StartTimer(TMR_RXTO, 250);
  while (!UART2_is_rx_ready()) {
   if (TimerDone(TMR_RXTO)) {
    PWM8_LoadDutyValue(x++);
@@ -27139,7 +27141,7 @@ _Bool Digital232_RW(void)
 
 
  i = 0;
- StartTimer(TMR_RXTO, 2);
+ StartTimer(TMR_RXTO, 250);
  while (!TimerDone(TMR_RXTO) && (i < 6)) {
   if (UART2_is_rx_ready()) {
    IO.inbytes[4 - i] = UART2_Read();
@@ -27184,9 +27186,9 @@ void led_lightshow(uint8_t seq, uint16_t speed)
  if (seq == 2) {
   if (IO.sequence_done) {
    IO.sequence_done = 0;
-   StartTimer(TMR_SEQ, 3000);
+   StartTimer(TMR_SEQ, 30000);
   }
-  IO.outbytes[2] = 0xff;
+  IO.outbytes[2]++;
   return;
  }
 
@@ -27214,5 +27216,16 @@ void led_lightshow(uint8_t seq, uint16_t speed)
    }
   }
   j = 0;
+ }
+}
+
+_Bool once(_Bool *once_flag)
+{
+ if (*once_flag) {
+  *once_flag = 0;
+  return 1;
+
+ } else {
+  return 0;
  }
 }
