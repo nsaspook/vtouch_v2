@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/adcc.c"
+# 1 "mcc_generated_files/fvr.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -6,8 +6,8 @@
 # 1 "<built-in>" 2
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/adcc.c" 2
-# 51 "mcc_generated_files/adcc.c"
+# 1 "mcc_generated_files/fvr.c" 2
+# 51 "mcc_generated_files/fvr.c"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -26566,10 +26566,13 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 33 "/opt/microchip/xc8/v2.10/pic/include/xc.h" 2 3
-# 51 "mcc_generated_files/adcc.c" 2
+# 51 "mcc_generated_files/fvr.c" 2
 
-# 1 "mcc_generated_files/adcc.h" 1
-# 55 "mcc_generated_files/adcc.h"
+# 1 "mcc_generated_files/fvr.h" 1
+# 54 "mcc_generated_files/fvr.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
+# 54 "mcc_generated_files/fvr.h" 2
+
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 1 3
 # 22 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
@@ -26652,316 +26655,25 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/adcc.h" 2
+# 55 "mcc_generated_files/fvr.h" 2
+# 93 "mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
+# 52 "mcc_generated_files/fvr.c" 2
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
-# 56 "mcc_generated_files/adcc.h" 2
-# 72 "mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
 
-typedef __uint24 uint24_t;
-# 89 "mcc_generated_files/adcc.h"
-typedef enum
-{
-    channel_ANA0 = 0x0,
-    channel_ANA1 = 0x1,
-    channel_ANA2 = 0x2,
-    channel_ANA3 = 0x3,
-    channel_VSS = 0x3B,
-    channel_Temp = 0x3C,
-    channel_DAC1 = 0x3D,
-    channel_FVR_Buffer1 = 0x3E,
-    channel_FVR_Buffer2 = 0x3F
-} adcc_channel_t;
-# 134 "mcc_generated_files/adcc.h"
-void ADCC_Initialize(void);
-# 163 "mcc_generated_files/adcc.h"
-void ADCC_StartConversion(adcc_channel_t channel);
-# 193 "mcc_generated_files/adcc.h"
-_Bool ADCC_IsConversionDone(void);
-# 225 "mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetConversionResult(void);
-# 256 "mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-# 281 "mcc_generated_files/adcc.h"
-void ADCC_StopConversion(void);
-# 308 "mcc_generated_files/adcc.h"
-void ADCC_SetStopOnInterrupt(void);
-# 333 "mcc_generated_files/adcc.h"
-void ADCC_DischargeSampleCapacitor(void);
-# 359 "mcc_generated_files/adcc.h"
-void ADCC_LoadAcquisitionRegister(uint16_t);
-# 385 "mcc_generated_files/adcc.h"
-void ADCC_SetPrechargeTime(uint16_t);
-# 410 "mcc_generated_files/adcc.h"
-void ADCC_SetRepeatCount(uint8_t);
-# 438 "mcc_generated_files/adcc.h"
-uint8_t ADCC_GetCurrentCountofConversions(void);
-# 462 "mcc_generated_files/adcc.h"
-void ADCC_ClearAccumulator(void);
-# 487 "mcc_generated_files/adcc.h"
-uint24_t ADCC_GetAccumulatorValue(void);
-# 515 "mcc_generated_files/adcc.h"
-_Bool ADCC_HasAccumulatorOverflowed(void);
-# 540 "mcc_generated_files/adcc.h"
-uint16_t ADCC_GetFilterValue(void);
-# 568 "mcc_generated_files/adcc.h"
-uint16_t ADCC_GetPreviousResult(void);
-# 594 "mcc_generated_files/adcc.h"
-void ADCC_DefineSetPoint(uint16_t);
-# 620 "mcc_generated_files/adcc.h"
-void ADCC_SetUpperThreshold(uint16_t);
-# 646 "mcc_generated_files/adcc.h"
-void ADCC_SetLowerThreshold(uint16_t);
-# 673 "mcc_generated_files/adcc.h"
-uint16_t ADCC_GetErrorCalculation(void);
-# 700 "mcc_generated_files/adcc.h"
-void ADCC_EnableDoubleSampling(void);
-# 724 "mcc_generated_files/adcc.h"
-void ADCC_EnableContinuousConversion(void);
-# 748 "mcc_generated_files/adcc.h"
-void ADCC_DisableContinuousConversion(void);
-# 776 "mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedUpperThreshold(void);
-# 804 "mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedLowerThreshold(void);
-# 831 "mcc_generated_files/adcc.h"
-uint8_t ADCC_GetConversionStageStatus(void);
-# 52 "mcc_generated_files/adcc.c" 2
-# 62 "mcc_generated_files/adcc.c"
-void ADCC_Initialize(void)
+
+
+
+
+void FVR_Initialize(void)
 {
 
-
-    ADLTHL = 0x00;
-
-    ADLTHH = 0x00;
-
-    ADUTHL = 0x00;
-
-    ADUTHH = 0x00;
-
-    ADSTPTL = 0x00;
-
-    ADSTPTH = 0x00;
-
-    ADACCU = 0x00;
-
-    ADRPT = 0x00;
-
-    ADPCH = 0x00;
-
-    ADACQL = 0x00;
-
-    ADACQH = 0x00;
-
-    ADCAP = 0x00;
-
-    ADPREL = 0x00;
-
-    ADPREH = 0x00;
-
-    ADCON1 = 0x00;
-
-    ADCON2 = 0xF4;
-
-    ADCON3 = 0x20;
-
-    ADSTAT = 0x00;
-
-    ADREF = 0x00;
-
-    ADACT = 0x00;
-
-    ADCLK = 0x3F;
-
-    ADCON0 = 0x84;
-
-
+    FVRCON = 0xAD;
 }
 
-void ADCC_StartConversion(adcc_channel_t channel)
+_Bool FVR_IsOutputReady(void)
 {
-
-    ADPCH = channel;
-
-
-    ADCON0bits.ADON = 1;
-
-
-    ADCON0bits.ADGO = 1;
-}
-
-_Bool ADCC_IsConversionDone()
-{
-
-    return ((unsigned char)(!ADCON0bits.ADGO));
-}
-
-adc_result_t ADCC_GetConversionResult(void)
-{
-
-    return ((adc_result_t)((ADRESH << 8) + ADRESL));
-}
-
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
-{
-
-    ADPCH = channel;
-
-
-    ADCON0bits.ADON = 1;
-
-
-    ADCON0bits.ADCONT = 0;
-
-
-    ADCON0bits.ADGO = 1;
-
-
-
-    while (ADCON0bits.ADGO)
-    {
-    }
-
-
-
-    return ((adc_result_t)((ADRESH << 8) + ADRESL));
-}
-
-void ADCC_StopConversion(void)
-{
-
-    ADCON0bits.ADGO = 0;
-}
-
-void ADCC_SetStopOnInterrupt(void)
-{
-
-    ADCON3bits.ADSOI = 1;
-}
-
-void ADCC_DischargeSampleCapacitor(void)
-{
-
-    ADPCH = 0x3b;
-}
-
-void ADCC_LoadAcquisitionRegister(uint16_t acquisitionValue)
-{
-
-    ADACQH = acquisitionValue >> 8;
-    ADACQL = acquisitionValue;
-}
-
-void ADCC_SetPrechargeTime(uint16_t prechargeTime)
-{
-
-    ADPREH = prechargeTime >> 8;
-    ADPREL = prechargeTime;
-}
-
-void ADCC_SetRepeatCount(uint8_t repeatCount)
-{
-
-    ADRPT = repeatCount;
-}
-
-uint8_t ADCC_GetCurrentCountofConversions(void)
-{
-
-    return ADCNT;
-}
-
-void ADCC_ClearAccumulator(void)
-{
-
-    ADCON2bits.ADACLR = 1;
-}
-
-uint24_t ADCC_GetAccumulatorValue(void)
-{
-
-    return (((uint24_t)ADACCU << 16)+((uint24_t)ADACCH << 8) + ADACCL);
-}
-
-_Bool ADCC_HasAccumulatorOverflowed(void)
-{
-
-    return ADSTATbits.ADAOV;
-}
-
-uint16_t ADCC_GetFilterValue(void)
-{
-
-    return ((uint16_t)((ADFLTRH << 8) + ADFLTRL));
-}
-
-uint16_t ADCC_GetPreviousResult(void)
-{
-
-    return ((uint16_t)((ADPREVH << 8) + ADPREVL));
-}
-
-void ADCC_DefineSetPoint(uint16_t setPoint)
-{
-
-    ADSTPTH = setPoint >> 8;
-    ADSTPTL = setPoint;
-}
-
-void ADCC_SetUpperThreshold(uint16_t upperThreshold)
-{
-
-    ADUTHH = upperThreshold >> 8;
-    ADUTHL = upperThreshold;
-}
-
-void ADCC_SetLowerThreshold(uint16_t lowerThreshold)
-{
-
-    ADLTHH = lowerThreshold >> 8;
-    ADLTHL = lowerThreshold;
-}
-
-uint16_t ADCC_GetErrorCalculation(void)
-{
-
- return ((uint16_t)((ADERRH << 8) + ADERRL));
-}
-
-void ADCC_EnableDoubleSampling(void)
-{
-
-    ADCON1bits.ADDSEN = 1;
-}
-
-void ADCC_EnableContinuousConversion(void)
-{
-
-    ADCON0bits.ADCONT = 1;
-}
-
-void ADCC_DisableContinuousConversion(void)
-{
-
-    ADCON0bits.ADCONT = 0;
-}
-
-_Bool ADCC_HasErrorCrossedUpperThreshold(void)
-{
-
-    return ADSTATbits.ADUTHR;
-}
-
-_Bool ADCC_HasErrorCrossedLowerThreshold(void)
-{
-
-    return ADSTATbits.ADLTHR;
-}
-
-uint8_t ADCC_GetConversionStageStatus(void)
-{
-
-    return ADSTATbits.ADSTAT;
+    return (FVRCONbits.FVRRDY);
 }

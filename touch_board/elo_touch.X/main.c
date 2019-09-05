@@ -77,7 +77,7 @@ void work_sw(void)
 	if (TimerDone(TMR_INIT)) {
 		IO.clock++;
 		sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-		sprintf(buffer[1], " Score %i %i    ", IO.score, IO.clock);
+		sprintf(buffer[1], " Score %i %i %i    ", IO.score, IO.button_value,IO.clock);
 		buffer[1][16] = 0; // cut off line for LCD
 		eaDogM_WriteStringAtPos(1, 0, buffer[0]);
 		eaDogM_WriteStringAtPos(2, 0, buffer[1]);

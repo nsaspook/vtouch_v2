@@ -92,8 +92,8 @@ void ADCC_Initialize(void)
     ADPREH = 0x00;
     // ADDSEN disabled; ADGPOL digital_low; ADIPEN disabled; ADPPOL Vss; 
     ADCON1 = 0x00;
-    // ADCRS 0; ADMD Average_mode; ADACLR disabled; ADPSIS RES; 
-    ADCON2 = 0x02;
+    // ADCRS 7; ADMD Low_pass_filter_mode; ADACLR disabled; ADPSIS FLTR; 
+    ADCON2 = 0xF4;
     // ADCALC Actual result vs filtered value; ADTMD disabled; ADSOI ADGO not cleared; 
     ADCON3 = 0x20;
     // ADMATH registers not updated; 
@@ -104,8 +104,8 @@ void ADCC_Initialize(void)
     ADACT = 0x00;
     // ADCS FOSC/128; 
     ADCLK = 0x3F;
-    // ADGO stop; ADFM right; ADON enabled; ADCS FOSC/ADCLK; ADCONT enabled; 
-    ADCON0 = 0xC4;
+    // ADGO stop; ADFM right; ADON enabled; ADCS FOSC/ADCLK; ADCONT disabled; 
+    ADCON0 = 0x84;
     
 
 }
