@@ -27060,7 +27060,7 @@ void Digital232_init(void)
  IO.srq = S_IDLE;
  IO.srq_value = 0;
  IO.button_value = 0;
- ADCC_StartConversion(channel_ANA0);
+ ADCC_StartConversion(channel_VSS);
  StartTimer(TMR_SPS, 10);
 }
 
@@ -27076,6 +27076,10 @@ _Bool Digital232_RW(void)
  }
 
  StartTimer(TMR_SPS, 10 + IO.speed + IO.slower);
+
+ ADCC_StartConversion(channel_FVR_Buffer2);
+ while (!ADCC_IsConversionDone());
+ IO.button_value = ADCC_GetConversionResult();
 
 
 
@@ -27163,9 +27167,6 @@ _Bool Digital232_RW(void)
  IO.io = IO_IN;
  IO.d232 = D232_OUT_IN;
 
-
-
- IO.button_value = ADCC_GetConversionResult();
  PWM8_LoadDutyValue(199);
  IO.io = IO_UPDATE;
  return 1;

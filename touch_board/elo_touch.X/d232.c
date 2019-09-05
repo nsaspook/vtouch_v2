@@ -28,7 +28,7 @@ void Digital232_init(void)
 	IO.srq = S_IDLE;
 	IO.srq_value = 0;
 	IO.button_value = 0;
-	ADCC_StartConversion(channel_ANA0);
+	ADCC_StartConversion(channel_VSS);
 	StartTimer(TMR_SPS, 10);
 }
 
@@ -44,6 +44,10 @@ bool Digital232_RW(void)
 	}
 
 	StartTimer(TMR_SPS, 10 + IO.speed + IO.slower); // samples per second timer 10ms spacing at least
+
+	ADCC_StartConversion(channel_FVR_Buffer2);
+	while (!ADCC_IsConversionDone());
+	IO.button_value = ADCC_GetConversionResult();
 
 	/*
 	 * empty receiver buffer
@@ -131,9 +135,6 @@ bool Digital232_RW(void)
 	IO.io = IO_IN;
 	IO.d232 = D232_OUT_IN;
 
-	//	ADCC_StartConversion(channel_ANA0);
-	//	while (!ADCC_IsConversionDone());
-	IO.button_value = ADCC_GetConversionResult();
 	PWM8_LoadDutyValue(199);
 	IO.io = IO_UPDATE;
 	return true;

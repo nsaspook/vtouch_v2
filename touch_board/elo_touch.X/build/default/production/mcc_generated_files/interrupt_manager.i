@@ -27263,6 +27263,13 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 59 "mcc_generated_files/mcc.h" 2
 
+# 1 "mcc_generated_files/fvr.h" 1
+# 93 "mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
+# 60 "mcc_generated_files/mcc.h" 2
+
 # 1 "mcc_generated_files/uart2.h" 1
 # 57 "mcc_generated_files/uart2.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 1 3
@@ -27454,7 +27461,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 577 "mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 60 "mcc_generated_files/mcc.h" 2
+# 61 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/uart1.h" 1
 # 74 "mcc_generated_files/uart1.h"
@@ -27507,7 +27514,7 @@ void (*UART1_TxInterruptHandler)(void);
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 576 "mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 61 "mcc_generated_files/mcc.h" 2
+# 62 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/spi1.h" 1
 # 55 "mcc_generated_files/spi1.h"
@@ -27524,12 +27531,12 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 62 "mcc_generated_files/mcc.h" 2
-# 77 "mcc_generated_files/mcc.h"
+# 63 "mcc_generated_files/mcc.h" 2
+# 78 "mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 90 "mcc_generated_files/mcc.h"
+# 91 "mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 103 "mcc_generated_files/mcc.h"
+# 104 "mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 50 "mcc_generated_files/interrupt_manager.c" 2
 

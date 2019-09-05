@@ -27266,6 +27266,13 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 59 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/fvr.h" 1
+# 93 "./mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "./mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
+# 60 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/uart2.h" 1
 # 57 "./mcc_generated_files/uart2.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 1 3
@@ -27457,7 +27464,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 577 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 60 "./mcc_generated_files/mcc.h" 2
+# 61 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/uart1.h" 1
 # 74 "./mcc_generated_files/uart1.h"
@@ -27510,7 +27517,7 @@ void (*UART1_TxInterruptHandler)(void);
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 576 "./mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 61 "./mcc_generated_files/mcc.h" 2
+# 62 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
@@ -27527,12 +27534,12 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 62 "./mcc_generated_files/mcc.h" 2
-# 77 "./mcc_generated_files/mcc.h"
+# 63 "./mcc_generated_files/mcc.h" 2
+# 78 "./mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 90 "./mcc_generated_files/mcc.h"
+# 91 "./mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 103 "./mcc_generated_files/mcc.h"
+# 104 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
 # 47 "main.c" 2
 
@@ -27686,7 +27693,7 @@ void work_sw(void)
  if (TimerDone(TMR_INIT)) {
   IO.clock++;
   sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-  sprintf(buffer[1], " Score %i %i    ", IO.score, IO.clock);
+  sprintf(buffer[1], " Score %i %i %i    ", IO.score, IO.button_value,IO.clock);
   buffer[1][16] = 0;
   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
@@ -27730,7 +27737,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "0.23");
+ sprintf(buffer, "SW %s Play!", "0.24");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  while (1) {
