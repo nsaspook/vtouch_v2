@@ -155,7 +155,7 @@ S_Q 3
 S_NUM 4
 S_UPDATE 5
 ]
-"77
+"83
 [e E16436 APP_TIMERS `uc
 TMR_INTERNAL 0
 TMR_INIT 1
@@ -166,7 +166,7 @@ TMR_EXTRA_MISS 5
 TMR_SEQ 6
 TMR_COUNT 7
 ]
-"21 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+"22 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
 [e E16238 . `uc
 IO_IDLE 0
 IO_INIT 1
@@ -191,7 +191,7 @@ S_Q 3
 S_NUM 4
 S_UPDATE 5
 ]
-"31
+"32
 [e E16164 . `uc
 channel_ANA0 0
 channel_ANA1 1
@@ -203,7 +203,7 @@ channel_DAC1 61
 channel_FVR_Buffer1 62
 channel_FVR_Buffer2 63
 ]
-"32
+"33
 [e E16213 APP_TIMERS `uc
 TMR_INTERNAL 0
 TMR_INIT 1
@@ -247,6 +247,8 @@ TMR_COUNT 7
 [v ___fleq __fleq `(b  1 e 0 0 ]
 "62 /opt/microchip/xc8/v2.10/pic/sources/c99/common/float.c
 [v ___ftpack __ftpack `(f  1 e 4 0 ]
+"43 /opt/microchip/xc8/v2.10/pic/sources/c99/common/fltol.c
+[v ___fltol __fltol `(l  1 e 4 0 ]
 "86 /opt/microchip/xc8/v2.10/pic/sources/c99/common/ftadd.c
 [v ___ftadd __ftadd `(f  1 e 4 0 ]
 "54 /opt/microchip/xc8/v2.10/pic/sources/c99/common/ftdiv.c
@@ -281,13 +283,17 @@ TMR_COUNT 7
 [v ___lmul __lmul `(ul  1 e 4 0 ]
 "91 /opt/microchip/xc8/v2.10/pic/sources/c99/common/Umul64.c
 [v ___omul __omul `(uo  1 e 8 0 ]
-"9 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+"10 /opt/microchip/xc8/v2.10/pic/sources/c99/common/xxtofl.c
+[v ___xxtofl __xxtofl `(d  1 e 4 0 ]
+"10 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
 [v _Digital232_init Digital232_init `(v  1 e 1 0 ]
-"35
+"36
+[v _calc_pot calc_pot `(s  1 e 2 0 ]
+"43
 [v _Digital232_RW Digital232_RW `(a  1 e 1 0 ]
-"143
+"152
 [v _led_lightshow led_lightshow `(v  1 e 1 0 ]
-"191
+"200
 [v _once once `(a  1 e 1 0 ]
 "14 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/eadog.c
 [v _wdtdelay wdtdelay `(v  1 e 1 0 ]
@@ -309,9 +315,9 @@ TMR_COUNT 7
 [v _eaDogM_WriteString eaDogM_WriteString `(v  1 e 1 0 ]
 "122
 [v _eaDogM_WriteStringAtPos eaDogM_WriteStringAtPos `(v  1 e 1 0 ]
-"74 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
+"80 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
 [v _work_sw work_sw `(v  1 e 1 0 ]
-"91
+"97
 [v _main main `(v  1 e 1 0 ]
 "62 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/adcc.c
 [v _ADCC_Initialize ADCC_Initialize `(v  1 e 1 0 ]
@@ -990,7 +996,7 @@ TMR_COUNT 7
 [v _LATB LATB `VEuc  1 e 1 @16315 ]
 "45334
 [v _LATC LATC `VEuc  1 e 1 @16316 ]
-[s S2454 . 1 `uc 1 LATC0 1 0 :1:0 
+[s S2523 . 1 `uc 1 LATC0 1 0 :1:0 
 `uc 1 LATC1 1 0 :1:1 
 `uc 1 LATC2 1 0 :1:2 
 `uc 1 LATC3 1 0 :1:3 
@@ -1000,7 +1006,7 @@ TMR_COUNT 7
 `uc 1 LATC7 1 0 :1:7 
 ]
 "45361
-[s S2463 . 1 `uc 1 LC0 1 0 :1:0 
+[s S2532 . 1 `uc 1 LC0 1 0 :1:0 
 `uc 1 LC1 1 0 :1:1 
 `uc 1 LC2 1 0 :1:2 
 `uc 1 LC3 1 0 :1:3 
@@ -1010,10 +1016,10 @@ TMR_COUNT 7
 `uc 1 LC7 1 0 :1:7 
 ]
 "45361
-[u S2472 . 1 `S2454 1 . 1 0 `S2463 1 . 1 0 ]
+[u S2541 . 1 `S2523 1 . 1 0 `S2532 1 . 1 0 ]
 "45361
 "45361
-[v _LATCbits LATCbits `VES2472  1 e 1 @16316 ]
+[v _LATCbits LATCbits `VES2541  1 e 1 @16316 ]
 "45446
 [v _LATD LATD `VEuc  1 e 1 @16317 ]
 "45558
@@ -1082,9 +1088,12 @@ TMR_COUNT 7
 [v _nout nout `i  1 s 2 nout ]
 "55 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
 [v _tickCount tickCount `VE[7]us  1 e 14 0 ]
-[s S2133 A_data 36 `[5]uc 1 inbytes 5 0 `[5]uc 1 outbytes 5 5 `a 1 input_ok 1 10 `a 1 output_ok 1 11 `E16461 1 io 1 12 `E16454 1 d232 1 13 `E16470 1 srq 1 14 `uc 1 srq_value 1 15 `uc 1 seq_value 1 16 `uc 1 hits 1 17 `uc 1 misses 1 18 `uc 1 score 1 19 `uc 1 stats 1 20 `us 1 button_value 2 21 `us 1 speed 2 23 `us 1 slower 2 25 `us 1 clock 2 27 `a 1 speed_update 1 29 `a 1 sequence_done 1 30 `a 1 win 1 31 `a 1 f1 1 32 `a 1 f2 1 33 `a 1 f3 1 34 `a 1 f4 1 35 ]
+[s S2177 A_data 36 `[5]uc 1 inbytes 5 0 `[5]uc 1 outbytes 5 5 `a 1 input_ok 1 10 `a 1 output_ok 1 11 `E16461 1 io 1 12 `E16454 1 d232 1 13 `E16470 1 srq 1 14 `uc 1 srq_value 1 15 `uc 1 seq_value 1 16 `uc 1 hits 1 17 `uc 1 misses 1 18 `uc 1 score 1 19 `uc 1 stats 1 20 `us 1 button_value 2 21 `us 1 speed 2 23 `us 1 slower 2 25 `us 1 clock 2 27 `a 1 speed_update 1 29 `a 1 sequence_done 1 30 `a 1 win 1 31 `a 1 f1 1 32 `a 1 f2 1 33 `a 1 f3 1 34 `a 1 f4 1 35 ]
 "56
-[v _IO IO `S2133  1 e 36 0 ]
+[v _IO IO `S2177  1 e 36 0 ]
+[s S2202 BPOT_type 14 `s 1 offset 2 0 `s 1 span 2 2 `s 1 range 2 4 `f 1 scalar 4 6 `s 1 zero 2 10 `s 1 result 2 12 ]
+"72
+[v _otto_b1 otto_b1 `S2202  1 e 14 0 ]
 "59 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/tmr5.c
 [v _timer5ReloadVal timer5ReloadVal `VEus  1 e 2 0 ]
 "60
@@ -1149,28 +1158,28 @@ TMR_COUNT 7
 [v _UART2_OverrunErrorHandler UART2_OverrunErrorHandler `*.38(v  1 e 3 0 ]
 "81
 [v _UART2_ErrorHandler UART2_ErrorHandler `*.38(v  1 e 3 0 ]
-"91 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
+"97 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/main.c
 [v _main main `(v  1 e 1 0 ]
 {
-"94
+"100
 [v main@buffer buffer `[24]uc  1 a 24 24 ]
-"93
+"99
 [v main@y y `uc  1 a 1 49 ]
-"208
+"218
 } 0
-"74
+"80
 [v _work_sw work_sw `(v  1 e 1 0 ]
 {
-"76
+"82
 [v work_sw@buffer buffer `[2][64]uc  1 a 128 0 ]
-"86
+"92
 } 0
 "9 /opt/microchip/xc8/v2.10/pic/sources/c99/common/nf_sprintf.c
 [v _sprintf sprintf `(i  1 e 2 0 ]
 {
-[s S3121 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[s S3146 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
 "13
-[v sprintf@f f `S3121  1 a 6 16 ]
+[v sprintf@f f `S3146  1 a 6 16 ]
 "12
 [v sprintf@ap ap `[1]*.30v  1 a 1 15 ]
 "9
@@ -1200,29 +1209,29 @@ TMR_COUNT 7
 [v eaDogM_WriteString@strPtr strPtr `*.39uc  1 p 2 9 ]
 "120
 } 0
-"191 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+"200 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
 [v _once once `(a  1 e 1 0 ]
 {
 [v once@once_flag once_flag `*.39a  1 p 2 5 ]
-"200
+"209
 } 0
-"143
+"152
 [v _led_lightshow led_lightshow `(v  1 e 1 0 ]
 {
 [v led_lightshow@seq seq `uc  1 a 1 wreg ]
 [v led_lightshow@seq seq `uc  1 a 1 wreg ]
 [v led_lightshow@speed speed `us  1 p 2 13 ]
-"145
+"154
 [v led_lightshow@j j `us  1 s 2 j ]
-"146
+"155
 [v led_lightshow@cylon cylon `uc  1 s 1 cylon ]
-"147
+"156
 [v led_lightshow@alive_led alive_led `s  1 s 2 alive_led ]
-"148
+"157
 [v led_lightshow@LED_UP LED_UP `a  1 s 1 LED_UP ]
-"150
+"159
 [v led_lightshow@seq seq `uc  1 a 1 17 ]
-"189
+"198
 } 0
 "7 /opt/microchip/xc8/v2.10/pic/sources/c99/common/awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
@@ -1285,6 +1294,26 @@ TMR_COUNT 7
 "82
 [v SPI1_Exchange8bit@data data `uc  1 a 1 5 ]
 "90
+} 0
+"11 /opt/microchip/xc8/v2.10/pic/sources/c99/common/sprcdiv.c
+[v ___fldiv __fldiv `(d  1 e 4 0 ]
+{
+"21
+[v ___fldiv@grs grs `ul  1 a 4 38 ]
+"22
+[v ___fldiv@rem rem `ul  1 a 4 31 ]
+"20
+[v ___fldiv@new_exp new_exp `s  1 a 2 36 ]
+"19
+[v ___fldiv@aexp aexp `uc  1 a 1 43 ]
+"18
+[v ___fldiv@bexp bexp `uc  1 a 1 42 ]
+"16
+[v ___fldiv@sign sign `uc  1 a 1 35 ]
+"11
+[v ___fldiv@b b `d  1 p 4 19 ]
+[v ___fldiv@a a `d  1 p 4 23 ]
+"185
 } 0
 "50 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `(v  1 e 1 0 ]
@@ -1430,10 +1459,10 @@ TMR_COUNT 7
 {
 "111
 } 0
-"9 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+"10 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
 [v _Digital232_init Digital232_init `(v  1 e 1 0 ]
 {
-"33
+"34
 } 0
 "31 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/timers.c
 [v _WaitMs WaitMs `(v  1 e 1 0 ]
@@ -1441,15 +1470,15 @@ TMR_COUNT 7
 [v WaitMs@numMilliseconds numMilliseconds `Cus  1 p 2 10 ]
 "42
 } 0
-"35 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+"43 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
 [v _Digital232_RW Digital232_RW `(a  1 e 1 0 ]
 {
-"37
+"45
 [v Digital232_RW@j j `uc  1 a 1 13 ]
 [v Digital232_RW@i i `uc  1 a 1 12 ]
-"38
+"46
 [v Digital232_RW@x x `uc  1 s 1 x ]
-"141
+"150
 } 0
 "5 /opt/microchip/xc8/v2.10/pic/sources/c99/common/printf.c
 [v _printf printf `(i  1 e 2 0 ]
@@ -1465,9 +1494,9 @@ TMR_COUNT 7
 {
 "1371
 [v vfprintf@cfmt cfmt `*.31uc  1 a 1 84 ]
-[s S2606 _IO_FILE 0 ]
+[s S2631 _IO_FILE 0 ]
 "1368
-[v vfprintf@fp fp `*.39S2606  1 p 2 0 ]
+[v vfprintf@fp fp `*.39S2631  1 p 2 0 ]
 [v vfprintf@fmt fmt `*.31Cuc  1 p 1 2 ]
 [v vfprintf@ap ap `*.30*.30v  1 p 1 3 ]
 "1382
@@ -1479,9 +1508,9 @@ TMR_COUNT 7
 [v vfpfcnvrt@ll ll `o  1 a 8 74 ]
 "672
 [v vfpfcnvrt@cp cp `*.34uc  1 a 2 82 ]
-[s S2606 _IO_FILE 0 ]
+[s S2631 _IO_FILE 0 ]
 "670
-[v vfpfcnvrt@fp fp `*.39S2606  1 p 2 70 ]
+[v vfpfcnvrt@fp fp `*.39S2631  1 p 2 70 ]
 [v vfpfcnvrt@fmt fmt `*.30*.31uc  1 p 1 72 ]
 [v vfpfcnvrt@ap ap `*.30*.30v  1 p 1 73 ]
 "1365
@@ -1499,9 +1528,9 @@ TMR_COUNT 7
 "549
 [v stoa@w w `i  1 a 2 30 ]
 [v stoa@i i `i  1 a 2 28 ]
-[s S2606 _IO_FILE 0 ]
+[s S2631 _IO_FILE 0 ]
 "546
-[v stoa@fp fp `*.39S2606  1 p 2 16 ]
+[v stoa@fp fp `*.39S2631  1 p 2 16 ]
 [v stoa@s s `*.34uc  1 p 2 18 ]
 "548
 [v stoa@F1139 F1139 `[7]uc  1 s 7 F1139 ]
@@ -1517,9 +1546,9 @@ TMR_COUNT 7
 [v dtoa@s s `i  1 a 2 58 ]
 [v dtoa@w w `i  1 a 2 56 ]
 [v dtoa@p p `i  1 a 2 54 ]
-[s S2606 _IO_FILE 0 ]
+[s S2631 _IO_FILE 0 ]
 "274
-[v dtoa@fp fp `*.39S2606  1 p 2 34 ]
+[v dtoa@fp fp `*.39S2631  1 p 2 34 ]
 [v dtoa@d d `o  1 p 8 36 ]
 "315
 } 0
@@ -1529,9 +1558,9 @@ TMR_COUNT 7
 "74
 [v pad@w w `i  1 a 2 32 ]
 [v pad@i i `i  1 a 2 30 ]
-[s S2606 _IO_FILE 0 ]
+[s S2631 _IO_FILE 0 ]
 "72
-[v pad@fp fp `*.39S2606  1 p 2 23 ]
+[v pad@fp fp `*.39S2631  1 p 2 23 ]
 [v pad@buf buf `*.39uc  1 p 2 25 ]
 [v pad@p p `i  1 p 2 27 ]
 "95
@@ -1554,16 +1583,16 @@ TMR_COUNT 7
 [v fputs@c c `uc  1 a 1 20 ]
 "8
 [v fputs@s s `*.39Cuc  1 p 2 16 ]
-[s S3121 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
-[v fputs@fp fp `*.39S3121  1 p 2 18 ]
+[s S3146 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[v fputs@fp fp `*.39S3146  1 p 2 18 ]
 "19
 } 0
 "8 /opt/microchip/xc8/v2.10/pic/sources/c99/common/nf_fputc.c
 [v _fputc fputc `(i  1 e 2 0 ]
 {
 [v fputc@c c `i  1 p 2 7 ]
-[s S3121 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
-[v fputc@fp fp `*.39S3121  1 p 2 9 ]
+[s S3146 _IO_FILE 6 `*.39uc 1 buffer 2 0 `i 1 count 2 2 `i 1 limit 2 4 ]
+[v fputc@fp fp `*.39S3146  1 p 2 9 ]
 "21
 } 0
 "221 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/uart2.c
@@ -1612,6 +1641,62 @@ TMR_COUNT 7
 [v ___aodiv@dividend dividend `o  1 p 8 5 ]
 [v ___aodiv@divisor divisor `o  1 p 8 13 ]
 "43
+} 0
+"36 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/d232.c
+[v _calc_pot calc_pot `(s  1 e 2 0 ]
+{
+[v calc_pot@value value `us  1 p 2 54 ]
+"41
+} 0
+"10 /opt/microchip/xc8/v2.10/pic/sources/c99/common/xxtofl.c
+[v ___xxtofl __xxtofl `(d  1 e 4 0 ]
+{
+[v ___xxtofl@sign sign `uc  1 a 1 wreg ]
+"13
+[v ___xxtofl@arg arg `ul  1 a 4 15 ]
+"12
+[v ___xxtofl@exp exp `uc  1 a 1 14 ]
+"10
+[v ___xxtofl@sign sign `uc  1 a 1 wreg ]
+[v ___xxtofl@val val `l  1 p 4 5 ]
+"15
+[v ___xxtofl@sign sign `uc  1 a 1 13 ]
+"44
+} 0
+"43 /opt/microchip/xc8/v2.10/pic/sources/c99/common/fltol.c
+[v ___fltol __fltol `(l  1 e 4 0 ]
+{
+"45
+[v ___fltol@exp1 exp1 `uc  1 a 1 53 ]
+[v ___fltol@sign1 sign1 `uc  1 a 1 52 ]
+"43
+[v ___fltol@f1 f1 `d  1 p 4 44 ]
+"70
+} 0
+"8 /opt/microchip/xc8/v2.10/pic/sources/c99/common/sprcmul.c
+[v ___flmul __flmul `(d  1 e 4 0 ]
+{
+[s S3009 . 4 `uc 1 a 1 0 `uc 1 b 1 1 `uc 1 c 1 2 `uc 1 d 1 3 ]
+"13
+[s S3014 . 4 `s 1 wordA 2 0 `s 1 wordB 2 2 ]
+[u S3017 . 4 `l 1 i 4 0 `d 1 f 4 0 `S3009 1 fAsBytes 4 0 `S3014 1 fAsWords 4 0 ]
+[v ___flmul@prod prod `S3017  1 a 4 38 ]
+"12
+[v ___flmul@grs grs `ul  1 a 4 34 ]
+[s S3085 . 2 `uc 1 a 1 0 `uc 1 b 1 1 ]
+"14
+[u S3088 . 2 `s 1 i 2 0 `us 1 n 2 0 `S3085 1 nAsBytes 2 0 ]
+[v ___flmul@temp temp `S3088  1 a 2 42 ]
+"10
+[v ___flmul@bexp bexp `uc  1 a 1 33 ]
+"11
+[v ___flmul@aexp aexp `uc  1 a 1 32 ]
+"9
+[v ___flmul@sign sign `uc  1 a 1 31 ]
+"8
+[v ___flmul@b b `d  1 p 4 19 ]
+[v ___flmul@a a `d  1 p 4 23 ]
+"205
 } 0
 "152 /root/MPLABXProjects/vtouch_v2/touch_board/elo_touch.X/mcc_generated_files/uart2.c
 [v _UART2_is_rx_ready UART2_is_rx_ready `(uc  1 e 1 0 ]

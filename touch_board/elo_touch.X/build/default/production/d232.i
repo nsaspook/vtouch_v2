@@ -26947,7 +26947,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 70 "./d232.h"
+# 73 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -26988,6 +26988,17 @@ typedef struct A_data {
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
+
+typedef struct BPOT_type {
+
+
+
+ int16_t offset;
+ int16_t span, range;
+ float scalar;
+ int16_t zero;
+ int16_t result;
+} BPOT_type;
 
 typedef struct IN_data {
 
@@ -27030,6 +27041,7 @@ void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
+int16_t calc_pot(adc_result_t);
 # 2 "d232.c" 2
 
 
@@ -27037,6 +27049,7 @@ _Bool once(_Bool*);
 
 
 extern A_data IO;
+extern BPOT_type otto_b1;
 
 void Digital232_init(void)
 {
@@ -27064,6 +27077,13 @@ void Digital232_init(void)
  StartTimer(TMR_SPS, 10);
 }
 
+int16_t calc_pot(adc_result_t value)
+{
+ otto_b1.result = (adc_result_t) ((float) (value - otto_b1.offset) * otto_b1.scalar);
+ otto_b1.result = -127 + otto_b1.result;
+ return otto_b1.result;
+}
+
 _Bool Digital232_RW(void)
 {
  uint8_t i = 0, j = 0;
@@ -27080,6 +27100,7 @@ _Bool Digital232_RW(void)
  ADCC_StartConversion(channel_ANA0);
  while (!ADCC_IsConversionDone());
  IO.button_value = ADCC_GetConversionResult();
+ calc_pot(IO.button_value);
 
 
 

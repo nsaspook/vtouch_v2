@@ -27567,7 +27567,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 70 "./d232.h"
+# 73 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27608,6 +27608,17 @@ typedef struct A_data {
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
+
+typedef struct BPOT_type {
+
+
+
+ int16_t offset;
+ int16_t span, range;
+ float scalar;
+ int16_t zero;
+ int16_t result;
+} BPOT_type;
 
 typedef struct IN_data {
 
@@ -27650,6 +27661,7 @@ void Digital232_init(void);
 _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
+int16_t calc_pot(adc_result_t);
 # 51 "main.c" 2
 
 # 1 "./eadog.h" 1
@@ -27684,6 +27696,12 @@ A_data IO = {
  .f2 = 1,
  .f3 = 1,
 };
+
+BPOT_type otto_b1 = {
+ .offset = 400,
+ .span = 3680,
+};
+
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
@@ -27693,7 +27711,7 @@ void work_sw(void)
  if (TimerDone(TMR_INIT)) {
   IO.clock++;
   sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-  sprintf(buffer[1], " Score %i %i %i    ", IO.score, IO.button_value,IO.clock);
+  sprintf(buffer[1], " Score %i %i %i    ", IO.score, otto_b1.result, IO.clock);
   buffer[1][16] = 0;
   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
@@ -27739,6 +27757,10 @@ void main(void)
  Digital232_init();
  sprintf(buffer, "SW %s Play!", "0.24");
  eaDogM_WriteStringAtPos(0, 0, buffer);
+
+ otto_b1.range = otto_b1.span - otto_b1.offset;
+ otto_b1.scalar = 255.0 / (float) otto_b1.range;
+ otto_b1.zero = (int16_t) (255.0 / 0.50);
 
  while (1) {
 

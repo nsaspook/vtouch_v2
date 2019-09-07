@@ -67,6 +67,9 @@
 #define DISPLAY_UPDATE	500	// 1000
 #define RXTO_DELAY	250	// 250
 
+#define ADC_SCALE	255.0
+#define ADC_SCALE_ZERO	-127
+
 typedef enum {
 	D232_IDLE,
 	D232_INIT,
@@ -107,6 +110,17 @@ typedef struct A_data {
 	uint16_t speed, slower, clock;
 	bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
+
+typedef struct BPOT_type {
+	/*
+	 * ADC result norm
+	 */
+	int16_t offset;
+	int16_t span, range;
+	float scalar;
+	int16_t zero;
+	int16_t result;
+} BPOT_type;
 
 typedef struct IN_data {
 	/*
@@ -149,6 +163,7 @@ void Digital232_init(void);
 bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 bool once(bool*);
+int16_t calc_pot(adc_result_t);
 
 #ifdef	__cplusplus
 extern "C" {

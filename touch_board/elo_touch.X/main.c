@@ -68,6 +68,12 @@ A_data IO = {
 	.f2 = true,
 	.f3 = true,
 };
+
+BPOT_type otto_b1 = {
+	.offset = 400,
+	.span = 3680,
+};
+
 IN_data *switches = (IN_data *) & IO.inbytes[0];
 OUT_data1 *sounds = (OUT_data1 *) & IO.outbytes[1];
 
@@ -77,7 +83,7 @@ void work_sw(void)
 	if (TimerDone(TMR_INIT)) {
 		IO.clock++;
 		sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-		sprintf(buffer[1], " Score %i %i %i    ", IO.score, IO.button_value,IO.clock);
+		sprintf(buffer[1], " Score %i %i %i    ", IO.score, otto_b1.result, IO.clock);
 		buffer[1][16] = 0; // cut off line for LCD
 		eaDogM_WriteStringAtPos(1, 0, buffer[0]);
 		eaDogM_WriteStringAtPos(2, 0, buffer[1]);
@@ -123,6 +129,10 @@ void main(void)
 	Digital232_init();
 	sprintf(buffer, "SW %s Play!", sw_version);
 	eaDogM_WriteStringAtPos(0, 0, buffer);
+
+	otto_b1.range = otto_b1.span - otto_b1.offset;
+	otto_b1.scalar = ADC_SCALE / (float) otto_b1.range;
+	otto_b1.zero = (int16_t) (ADC_SCALE / 0.50);
 
 	while (true) {
 		// Add your application code

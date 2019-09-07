@@ -5,6 +5,7 @@
  */
 
 extern A_data IO;
+extern BPOT_type otto_b1;
 
 void Digital232_init(void)
 {
@@ -32,6 +33,13 @@ void Digital232_init(void)
 	StartTimer(TMR_SPS, 10);
 }
 
+int16_t calc_pot(adc_result_t value)
+{
+	otto_b1.result = (adc_result_t) ((float) (value - otto_b1.offset) * otto_b1.scalar);
+	otto_b1.result = ADC_SCALE_ZERO + otto_b1.result;
+	return otto_b1.result;
+}
+
 bool Digital232_RW(void)
 {
 	uint8_t i = 0, j = 0;
@@ -48,6 +56,7 @@ bool Digital232_RW(void)
 	ADCC_StartConversion(channel_ANA0);
 	while (!ADCC_IsConversionDone());
 	IO.button_value = ADCC_GetConversionResult();
+	calc_pot(IO.button_value);
 
 	/*
 	 * empty receiver buffer
