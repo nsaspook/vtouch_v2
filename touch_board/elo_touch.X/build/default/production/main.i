@@ -27699,7 +27699,7 @@ A_data IO = {
 
 BPOT_type otto_b1 = {
  .offset = 400,
- .span = 3680,
+ .span = 3700,
 };
 
 IN_data *switches = (IN_data *) & IO.inbytes[0];
