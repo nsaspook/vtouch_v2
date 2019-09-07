@@ -92,13 +92,33 @@ extern "C" {
 #define SYS_PORT_AD1PCFG        ~0xffdf
 #define SYS_PORT_CNPUE          0x98000
 #define SYS_PORT_CNEN           0x0
+#define SYS_PORT_A_TRIS         0xFFFF
+#define SYS_PORT_A_LAT          0x0000
+#define SYS_PORT_A_ODC          0x0000
+
 #define SYS_PORT_B_TRIS         0xFFDF
 #define SYS_PORT_B_LAT          0x0000
 #define SYS_PORT_B_ODC          0x0000
 
+#define SYS_PORT_C_TRIS         0xFFFF
+#define SYS_PORT_C_LAT          0x0000
+#define SYS_PORT_C_ODC          0x0000
+
 #define SYS_PORT_D_TRIS         0xFFF8
 #define SYS_PORT_D_LAT          0x0000
 #define SYS_PORT_D_ODC          0x0000
+
+#define SYS_PORT_E_TRIS         0xFFFF
+#define SYS_PORT_E_LAT          0x0000
+#define SYS_PORT_E_ODC          0x0000
+
+#define SYS_PORT_F_TRIS         0xFFFF
+#define SYS_PORT_F_LAT          0x0000
+#define SYS_PORT_F_ODC          0x0000
+
+#define SYS_PORT_G_TRIS         0xFFFF
+#define SYS_PORT_G_LAT          0x0000
+#define SYS_PORT_G_ODC          0x0000
 
 
 /*** Command Processor System Service Configuration ***/
@@ -116,6 +136,33 @@ extern "C" {
 #define SYS_CONSOLE_APPIO_RD_QUEUE_DEPTH    8
 #define SYS_CONSOLE_APPIO_WR_QUEUE_DEPTH    128
 #define SYS_CONSOLE_BUFFER_DMA_READY
+
+
+
+/*** File System Service Configuration ***/
+
+#define SYS_FS_MEDIA_NUMBER         	1
+
+#define SYS_FS_VOLUME_NUMBER		1
+
+#define SYS_FS_AUTOMOUNT_ENABLE		false
+#define SYS_FS_MAX_FILES	    	25
+#define SYS_FS_MAX_FILE_SYSTEM_TYPE 	1
+#define SYS_FS_MEDIA_MAX_BLOCK_SIZE  	512
+#define SYS_FS_MEDIA_MANAGER_BUFFER_SIZE 512
+#define SYS_FS_FILE_NAME_LEN 255
+#define SYS_FS_CWD_STRING_LEN 1024
+
+
+#define SYS_FS_MEDIA_TYPE_IDX0 				
+#define SYS_FS_TYPE_IDX0 					
+
+
+
+
+
+
+
 
 
 
@@ -143,25 +190,6 @@ extern "C" {
 // *****************************************************************************
 // *****************************************************************************
 
-/*** ENCX24J600 Driver Configuration ***/
-/*** Driver Compilation and static configuration options. ***/
-#define TCPIP_IF_ENCX24J600
-#define DRV_ENCX24J600_INSTANCES_NUMBER 1
-#define DRV_ENCX24J600_CLIENT_INSTANCES 1
-#define DRV_ENCX24J600_MAC_TX_DESCRIPTORS_IDX0 3
-#define DRV_ENCX24J600_MAC_RX_DESCRIPTORS_IDX0 3
-#define DRV_ENCX24J600_MAX_RX_BUFFER_IDX0 1536
-#define DRV_ENCX24J600_SPI_DRIVER_INDEX_IDX0 0
-#define DRV_ENCX24J600_SPI_BPS_IDX0 14000000
-#define DRV_ENCX24J600_SPI_SS_PORT_MODULE_IDX0 PORTS_ID_0
-#define DRV_ENCX24J600_SPI_SS_PORT_CHANNEL_IDX0 PORT_CHANNEL_D
-#define DRV_ENCX24J600_SPI_SS_PORT_PIN_IDX0 PORTS_BIT_POS_9
-#define DRV_ENCX24J600_RX_BUFFER_SIZE_IDX0 16384
-#define DRV_ENCX24J600_MAX_FRAME_SIZE_IDX0 1536
-#define DRV_ENCX24J600_ETHERNET_TYPE_IDX0 TCPIP_ETH_OPEN_AUTO
-#define DRV_ENCX24J600_DUPLEX_MODE_IDX0 TCPIP_ETH_OPEN_AUTO
-
-
 /*** MIIM Driver Configuration ***/
 #define DRV_MIIM_ETH_MODULE_ID              ETH_ID_0
 #define DRV_MIIM_INSTANCES_NUMBER           1
@@ -171,6 +199,23 @@ extern "C" {
 #define DRV_MIIM_COMMANDS   false
 #define DRV_MIIM_DRIVER_OBJECT              DRV_MIIM_OBJECT_BASE_Default
 #define DRV_MIIM_DRIVER_INDEX               DRV_MIIM_INDEX_0              
+
+/*** NVM Driver Configuration ***/
+#define DRV_NVM_INSTANCES_NUMBER     	1
+#define DRV_NVM_CLIENTS_NUMBER        	1
+#define DRV_NVM_BUFFER_OBJECT_NUMBER  	5
+#define DRV_NVM_INTERRUPT_MODE        	true
+#define DRV_NVM_INTERRUPT_SOURCE      	INT_SOURCE_FLASH_CONTROL
+
+#define DRV_NVM_MEDIA_SIZE              64
+#define DRV_NVM_MEDIA_START_ADDRESS     0x9D070000
+
+#define DRV_NVM_ERASE_WRITE_ENABLE
+
+
+#define DRV_NVM_SYS_FS_REGISTER
+
+
 
 /*** SPI Driver Configuration ***/
 #define DRV_SPI_NUMBER_OF_MODULES		4
@@ -249,9 +294,10 @@ extern "C" {
 #define NO_OLD_TLS
 #define NO_MD5
 #define NO_SHA
+#define NO_AES
 #define NO_ASN
-#define HAVE_LIBZ
 #define NO_RSA
+#define NO_HMAC
 
 /* MPLAB Harmony Net Presentation Layer Definitions*/
 #define NET_PRES_NUM_INSTANCE 1
@@ -346,6 +392,29 @@ extern "C" {
 
 
 
+/*** HTTP Configuration ***/
+#define TCPIP_STACK_USE_HTTP_SERVER
+#define TCPIP_HTTP_MAX_HEADER_LEN		    		15
+#define TCPIP_HTTP_CACHE_LEN		        		"600"
+#define TCPIP_HTTP_TIMEOUT		            		45
+#define TCPIP_HTTP_MAX_CONNECTIONS		    		4
+#define TCPIP_HTTP_DEFAULT_FILE		        		"index.htm"
+#define TCPIP_HTTPS_DEFAULT_FILE	        		"index.htm"
+#define TCPIP_HTTP_DEFAULT_LEN		        		10
+#define TCPIP_HTTP_MAX_DATA_LEN		        		100
+#define TCPIP_HTTP_MIN_CALLBACK_FREE				16
+#define TCPIP_HTTP_SKT_TX_BUFF_SIZE		    		0
+#define TCPIP_HTTP_SKT_RX_BUFF_SIZE		    		0
+#define TCPIP_HTTP_CONFIG_FLAGS		        		1
+#define TCPIP_HTTP_FILE_UPLOAD_ENABLE
+#define TCPIP_HTTP_FILE_UPLOAD_NAME				"mpfsupload"
+#define TCPIP_HTTP_USE_POST
+#define TCPIP_HTTP_USE_COOKIES
+#define TCPIP_HTTP_USE_BASE64_DECODE
+#define TCPIP_HTTP_USE_AUTHENTICATION
+#define TCPIP_HTTP_TASK_RATE					33
+#define TCPIP_HTTP_MALLOC_FUNC                     0
+#define TCPIP_HTTP_FREE_FUNC                        0
 
 
 
@@ -355,6 +424,21 @@ extern "C" {
 
 
 
+/*** SNTP Configuration ***/
+#define TCPIP_STACK_USE_SNTP_CLIENT
+#define TCPIP_NTP_DEFAULT_IF		        		"PIC32INT"
+#define TCPIP_NTP_VERSION             			    	4
+#define TCPIP_NTP_DEFAULT_CONNECTION_TYPE   			IP_ADDRESS_TYPE_IPV4
+#define TCPIP_NTP_EPOCH		                		2208988800ul
+#define TCPIP_NTP_REPLY_TIMEOUT		        		6
+#define TCPIP_NTP_MAX_STRATUM		        		15
+#define TCPIP_NTP_TIME_STAMP_TMO				660
+#define TCPIP_NTP_SERVER		        		"pool.ntp.org"
+#define TCPIP_NTP_SERVER_MAX_LENGTH				30
+#define TCPIP_NTP_QUERY_INTERVAL				600
+#define TCPIP_NTP_FAST_QUERY_INTERVAL	    			14
+#define TCPIP_NTP_TASK_TICK_RATE				1100
+#define TCPIP_NTP_RX_QUEUE_LIMIT				2
 
 
 
@@ -429,11 +513,12 @@ extern "C" {
 
 
 #define TCPIP_EMAC_PHY_CONFIG_FLAGS     			\
+                                                    DRV_ETHPHY_CFG_RMII | \
                                                     DRV_ETHPHY_CFG_AUTO | \
                                                     0                                                    
 
 #define TCPIP_EMAC_PHY_LINK_INIT_DELAY  			1000
-#define TCPIP_EMAC_PHY_ADDRESS		    			0
+#define TCPIP_EMAC_PHY_ADDRESS		    			1
 #define DRV_ETHPHY_INSTANCES_NUMBER				1
 #define DRV_ETHPHY_CLIENTS_NUMBER				1
 #define DRV_ETHPHY_INDEX		        		1
@@ -472,23 +557,33 @@ extern "C" {
 /*** IPv4 Configuration ***/
 
 /*** Network Configuration Index 0 ***/
-#define TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX0		"ENCX24J600"
-#define TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0				"MCHPBOARD_E"
+#define TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX0		"PIC32INT"
+#define TCPIP_IF_PIC32INT
+#define TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0				"SOLAR_E"
 #define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0				0
-#define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0			"192.168.100.120"
+#define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0			"10.1.1.100"
 #define TCPIP_NETWORK_DEFAULT_IP_MASK_IDX0				"255.255.255.0"
-#define TCPIP_NETWORK_DEFAULT_GATEWAY_IDX0				"192.168.100.1"
-#define TCPIP_NETWORK_DEFAULT_DNS_IDX0					"192.168.100.1"
+#define TCPIP_NETWORK_DEFAULT_GATEWAY_IDX0				"10.1.1.85"
+#define TCPIP_NETWORK_DEFAULT_DNS_IDX0					"10.1.1.85"
 #define TCPIP_NETWORK_DEFAULT_SECOND_DNS_IDX0			"0.0.0.0"
 #define TCPIP_NETWORK_DEFAULT_POWER_MODE_IDX0			"full"
 #define TCPIP_NETWORK_DEFAULT_INTERFACE_FLAGS_IDX0			\
 													TCPIP_NETWORK_CONFIG_DHCP_CLIENT_ON |\
 													TCPIP_NETWORK_CONFIG_DNS_CLIENT_ON |\
 													TCPIP_NETWORK_CONFIG_IP_STATIC
-#define TCPIP_NETWORK_DEFAULT_MAC_DRIVER_IDX0			DRV_ENCX24J600_MACObject
+#define TCPIP_NETWORK_DEFAULT_MAC_DRIVER_IDX0			DRV_ETHMAC_PIC32MACObject
 #define TCPIP_NETWORK_DEFAULT_IPV6_ADDRESS_IDX0			0
 #define TCPIP_NETWORK_DEFAULT_IPV6_PREFIX_LENGTH_IDX0	0
 #define TCPIP_NETWORK_DEFAULT_IPV6_GATEWAY_IDX0			0
+/*** TCPIP SYS FS Wrapper ***/
+#define SYS_FS_MAX_PATH						80
+#define LOCAL_WEBSITE_PATH_FS				"/mnt/mchpSite1"
+#define LOCAL_WEBSITE_PATH					"/mnt/mchpSite1/"
+#define SYS_FS_DRIVE						"FLASH"
+#define SYS_FS_NVM_VOL						"/dev/nvma1"
+#define SYS_FS_FATFS_STRING					"FATFS"
+#define SYS_FS_MPFS_STRING					"MPFS2"
+
 // *****************************************************************************
 /* BSP Configuration Options
 */

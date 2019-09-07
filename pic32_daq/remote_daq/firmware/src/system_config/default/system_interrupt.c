@@ -80,6 +80,12 @@ void __ISR(_SPI_1_VECTOR, ipl1AUTO) _IntHandlerSPIInstance0(void)
 {
     DRV_SPI_Tasks(sysObj.spiObjectIdx0);
 }
+void __ISR(_FCE_VECTOR, ipl3AUTO) _IntHandlerDrvNvm (void)
+{
+    DRV_NVM_Tasks(sysObj.drvNvm);
+
+}
+
 void __ISR(_ETH_VECTOR, ipl5AUTO) _IntHandler_ETHMAC(void)
 {
     DRV_ETHMAC_Tasks_ISR((SYS_MODULE_OBJ)0);
