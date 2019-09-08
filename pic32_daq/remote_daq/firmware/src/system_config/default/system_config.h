@@ -462,7 +462,7 @@ extern "C" {
 #define TCPIP_TCP_TASK_TICK_RATE		        	5
 #define TCPIP_TCP_MSL_TIMEOUT		        	    0
 #define TCPIP_TCP_QUIET_TIME		        	    0
-#define TCPIP_TCP_COMMANDS   false
+#define TCPIP_TCP_COMMANDS   true
 
 /*** announce Configuration ***/
 #define TCPIP_STACK_USE_ANNOUNCE
@@ -549,8 +549,16 @@ extern "C" {
 #define TCPIP_UDP_USE_POOL_BUFFERS   false
 #define TCPIP_UDP_USE_TX_CHECKSUM             			true
 #define TCPIP_UDP_USE_RX_CHECKSUM             			true
-#define TCPIP_UDP_COMMANDS   false
+#define TCPIP_UDP_COMMANDS   true
 
+/*** tcpip_cmd Configuration ***/
+#define TCPIP_STACK_COMMAND_ENABLE
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUESTS         4
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_DELAY    1000
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_TIMEOUT          5000
+#define TCPIP_STACK_COMMANDS_WIFI_ENABLE             	false
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_BUFF_SIZE    2000
+#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_DATA_SIZE    100
 
 
 
@@ -559,7 +567,7 @@ extern "C" {
 /*** Network Configuration Index 0 ***/
 #define TCPIP_NETWORK_DEFAULT_INTERFACE_NAME_IDX0		"PIC32INT"
 #define TCPIP_IF_PIC32INT
-#define TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0				"SOLAR_E"
+#define TCPIP_NETWORK_DEFAULT_HOST_NAME_IDX0				"mbmc2"
 #define TCPIP_NETWORK_DEFAULT_MAC_ADDR_IDX0				0
 #define TCPIP_NETWORK_DEFAULT_IP_ADDRESS_IDX0			"10.1.1.100"
 #define TCPIP_NETWORK_DEFAULT_IP_MASK_IDX0				"255.255.255.0"
