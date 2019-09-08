@@ -64,7 +64,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  */
 APP_DATA appData;
 
-char	net_message[256]="foo";
+char net_message[256] = "foo";
 
 BSP_LED_STATE LEDstate = BSP_LED_STATE_OFF;
 
@@ -206,7 +206,7 @@ void APP_Tasks(void)
 			startTick = SYS_TMR_TickCountGet();
 			LEDstate ^= BSP_LED_STATE_ON;
 			BSP_LEDStateSet(APP_LED_1, LEDstate);
-			sprintf(net_message, "%i,%i,%i,%i,X", (int) 1, (int) 1, 1, 1);
+			sprintf(net_message, "%i,%i,%i,%i,X", (int) 15, (int) 15, 15, 1);
 			bmc_client(net_message);
 		}
 
