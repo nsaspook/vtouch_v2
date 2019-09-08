@@ -363,6 +363,10 @@ extern "C" {
 #define TCPIP_ARP_TASK_PROCESS_RATE		        	2
 #define TCPIP_ARP_PRIMARY_CACHE_ONLY		        	true
 
+/*** Berkeley API Configuration ***/
+#define TCPIP_STACK_USE_BERKELEY_API
+#define MAX_BSD_SOCKETS 					4
+#define TCPIP_STACK_USE_BERKELEY_API
 /*** DHCP Configuration ***/
 #define TCPIP_STACK_USE_DHCP_CLIENT
 #define TCPIP_DHCP_TIMEOUT                          10

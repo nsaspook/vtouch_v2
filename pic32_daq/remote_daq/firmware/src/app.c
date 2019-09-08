@@ -40,6 +40,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // *****************************************************************************
 // *****************************************************************************
 #include "app.h"
+#include "bmcnet.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -62,6 +63,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
     Application strings and buffers are be defined outside this structure.
  */
 APP_DATA appData;
+
+char	net_message[256]="foo";
 
 BSP_LED_STATE LEDstate = BSP_LED_STATE_OFF;
 
@@ -203,6 +206,8 @@ void APP_Tasks(void)
 			startTick = SYS_TMR_TickCountGet();
 			LEDstate ^= BSP_LED_STATE_ON;
 			BSP_LEDStateSet(APP_LED_1, LEDstate);
+			sprintf(net_message, "%i,%i,%i,%i,X", (int) 1, (int) 1, 1, 1);
+			bmc_client(net_message);
 		}
 
 		// if the IP address of an interface has changed
