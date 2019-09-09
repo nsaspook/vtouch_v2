@@ -133,8 +133,10 @@ extern "C" {
 #define SYS_CONSOLE_OVERRIDE_STDIO
 #define SYS_CONSOLE_DEVICE_MAX_INSTANCES        2
 #define SYS_CONSOLE_INSTANCES_NUMBER            1
-#define SYS_CONSOLE_APPIO_RD_QUEUE_DEPTH    8
-#define SYS_CONSOLE_APPIO_WR_QUEUE_DEPTH    128
+#define SYS_CONSOLE_UART_IDX               DRV_USART_INDEX_0
+#define SYS_CONSOLE_UART_BAUD_RATE_IDX     DRV_USART_BAUD_RATE_IDX0
+#define SYS_CONSOLE_UART_RD_QUEUE_DEPTH    1
+#define SYS_CONSOLE_UART_WR_QUEUE_DEPTH    64
 #define SYS_CONSOLE_BUFFER_DMA_READY
 
 
@@ -277,7 +279,47 @@ extern "C" {
 #define DRV_TMR_POWER_STATE_IDX0            SYS_MODULE_POWER_RUN_FULL
 
 
- 
+ // *****************************************************************************
+/* USART Driver Configuration Options
+*/
+#define DRV_USART_INTERRUPT_MODE                    true
+
+#define DRV_USART_BYTE_MODEL_SUPPORT                false
+
+#define DRV_USART_READ_WRITE_MODEL_SUPPORT          true
+
+#define DRV_USART_BUFFER_QUEUE_SUPPORT              true
+
+#define DRV_USART_CLIENTS_NUMBER                    1
+#define DRV_USART_INSTANCES_NUMBER                  1
+
+#define DRV_USART_PERIPHERAL_ID_IDX0                USART_ID_1
+#define DRV_USART_OPER_MODE_IDX0                    DRV_USART_OPERATION_MODE_NORMAL
+#define DRV_USART_OPER_MODE_DATA_IDX0               
+#define DRV_USART_INIT_FLAG_WAKE_ON_START_IDX0      false
+#define DRV_USART_INIT_FLAG_AUTO_BAUD_IDX0          false
+#define DRV_USART_INIT_FLAG_STOP_IN_IDLE_IDX0       false
+#define DRV_USART_INIT_FLAGS_IDX0                   0
+#define DRV_USART_BRG_CLOCK_IDX0                    80000000
+#define DRV_USART_BAUD_RATE_IDX0                    9600
+#define DRV_USART_LINE_CNTRL_IDX0                   DRV_USART_LINE_CONTROL_8NONE1
+#define DRV_USART_HANDSHAKE_MODE_IDX0               DRV_USART_HANDSHAKE_NONE
+#define DRV_USART_LINES_ENABLE_IDX0                 USART_ENABLE_TX_RX_USED
+#define DRV_USART_XMIT_INT_SRC_IDX0                 INT_SOURCE_USART_1_TRANSMIT
+#define DRV_USART_RCV_INT_SRC_IDX0                  INT_SOURCE_USART_1_RECEIVE
+#define DRV_USART_ERR_INT_SRC_IDX0                  INT_SOURCE_USART_1_ERROR
+#define DRV_USART_INT_VECTOR_IDX0                   INT_VECTOR_UART1
+#define DRV_USART_INT_PRIORITY_IDX0                 INT_PRIORITY_LEVEL1
+#define DRV_USART_INT_SUB_PRIORITY_IDX0             INT_SUBPRIORITY_LEVEL0
+
+#define DRV_USART_XMIT_QUEUE_SIZE_IDX0              10
+#define DRV_USART_RCV_QUEUE_SIZE_IDX0               10
+
+
+#define DRV_USART_POWER_STATE_IDX0                  SYS_MODULE_POWER_RUN_FULL
+
+#define DRV_USART_QUEUE_DEPTH_COMBINED              20
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Middleware & Other Library Configuration
@@ -466,7 +508,7 @@ extern "C" {
 #define TCPIP_TCP_TASK_TICK_RATE		        	5
 #define TCPIP_TCP_MSL_TIMEOUT		        	    0
 #define TCPIP_TCP_QUIET_TIME		        	    0
-#define TCPIP_TCP_COMMANDS   true
+#define TCPIP_TCP_COMMANDS   false
 
 /*** announce Configuration ***/
 #define TCPIP_STACK_USE_ANNOUNCE
@@ -553,16 +595,8 @@ extern "C" {
 #define TCPIP_UDP_USE_POOL_BUFFERS   false
 #define TCPIP_UDP_USE_TX_CHECKSUM             			true
 #define TCPIP_UDP_USE_RX_CHECKSUM             			true
-#define TCPIP_UDP_COMMANDS   true
+#define TCPIP_UDP_COMMANDS   false
 
-/*** tcpip_cmd Configuration ***/
-#define TCPIP_STACK_COMMAND_ENABLE
-#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUESTS         4
-#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_DELAY    1000
-#define TCPIP_STACK_COMMANDS_ICMP_ECHO_TIMEOUT          5000
-#define TCPIP_STACK_COMMANDS_WIFI_ENABLE             	false
-#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_BUFF_SIZE    2000
-#define TCPIP_STACK_COMMANDS_ICMP_ECHO_REQUEST_DATA_SIZE    100
 
 
 
