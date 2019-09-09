@@ -133,7 +133,7 @@ void APP_Tasks(void)
 {
 	SYS_STATUS tcpipStat;
 	TCPIP_NET_HANDLE netH;
-	int nNets;
+	int nNets, s_ret;
 	static IPV4_ADDR dwLastIP[2] = {
 		{-1},
 		{-1}
@@ -206,8 +206,12 @@ void APP_Tasks(void)
 			startTick = SYS_TMR_TickCountGet();
 			LEDstate ^= BSP_LED_STATE_ON;
 			BSP_LEDStateSet(APP_LED_1, LEDstate);
-			sprintf(net_message, "%i,%i,%i,%i,X", (int) 15, (int) 15, 15, 1);
-			bmc_client(net_message);
+			sprintf(net_message, "%i,%i,%i,%i,X", (int) 15, (int) 15, (int) 15, 1);
+			s_ret = bmc_client(net_message);
+			if (s_ret == 2) {
+				LEDstate ^= BSP_LED_STATE_ON;
+				BSP_LEDStateSet(APP_LED_1, LEDstate);
+			};
 		}
 
 		// if the IP address of an interface has changed

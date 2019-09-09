@@ -5,12 +5,35 @@
 #include<stdio.h> //printf
 #include<string.h>    //strlen
 #include "tcpip/tcpip.h"
+#include "tcpip/tcpip_helpers.h"
 //#include "tcpip/berkeley_api.h"   //socket
 //#include<arpa/inet.h> //inet_addr
 #include "bmcnet.h"
 
 char hostip[32] = "10.1.1.41";
 int hostport = 9760;
+
+uint16_t htons(uint16_t x)
+{
+#if BYTE_ORDER == BIG_ENDIAN
+	return x;
+#elif BYTE_ORDER == LITTLE_ENDIAN
+	return __bswap_16(x);
+#else
+#error "What kind of system is this?"
+#endif
+}
+
+uint32_t htonl(uint32_t x)
+{
+#if BYTE_ORDER == BIG_ENDIAN
+	return x;
+#elif BYTE_ORDER == LITTLE_ENDIAN
+	return __bswap_32(x);
+#else
+#error "What kind of system is this?"
+#endif
+}
 
 int bmc_client(char * net_message)
 {
@@ -20,34 +43,37 @@ int bmc_client(char * net_message)
 	char MDB = 0; // debug stuff
 
 	//Create socket
-	sock = socket(AF_INET, SOCK_STREAM, 0);
+	sock = socket(AF_INET, SOCK_STREAM, IPPROTO_IP);
 	if (sock == -1) {
-		printf("Could not create socket");
+		perror("Could not create socket");
+		//		return 1;
 	}
 
-	//server.sin_addr.s_addr = inet_addr((char*) &hostip);
-	server.sin_addr.s_addr = 0x2901010A;
+	memset(&server, 0, sizeof(server));
+
+	server.sin_addr.s_addr = htonl((((((10 << 8) | 1) << 8) | 1) << 8) | 41);
 	server.sin_family = AF_INET;
-	//server.sin_port = htons(hostport);
-	server.sin_port = 0x2620;
+	server.sin_port = htons(hostport);
 
 	//Connect to remote server
 	if (connect(sock, (struct sockaddr *) &server, sizeof(server)) < 0) {
 		perror("connect failed. Error");
-		return 1;
+		close(sock);
+		return 2;
 	}
 
 	//Send some data
 	if (send(sock, net_message, strlen(net_message), 0) < 0) {
 		puts("Send failed");
-		return 1; // 
+		close(sock);
+		return 3; // 
 	}
 
 	//Receive a reply from the server
 	if ((n = recv(sock, server_reply, 2000, 0)) < 0) {
 		puts("recv failed");
 		close(sock);
-		return 1; // 1
+		return 3; // 1
 	}
 
 	server_reply[n] = 0;
