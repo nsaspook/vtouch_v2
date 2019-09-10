@@ -170,30 +170,40 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 		return;
 	}
 
-	if (j++ >= speed) { // delay a bit ok
-		if (0) { // screen status feedback
-			IO.outbytes[2] = ~cylon; // roll leds cylon style
-		} else {
-			IO.outbytes[2] = cylon; // roll leds cylon style (inverted)
-		}
-
-		if (LED_UP && (alive_led != 0)) {
-			alive_led = alive_led * 2;
-			cylon = cylon << 1;
-		} else {
-			if (alive_led != 0) alive_led = alive_led / 2;
-			cylon = cylon >> 1;
-		}
-		if (alive_led < 2) {
-			alive_led = 2;
-			LED_UP = true;
-		} else {
-			if (alive_led > 128) {
-				alive_led = 128;
-				LED_UP = false;
+	if (seq == CYLON) {
+		if (j++ >= speed) { // delay a bit ok
+			if (0) { // screen status feedback
+				IO.outbytes[2] = ~cylon; // roll leds cylon style
+			} else {
+				IO.outbytes[2] = cylon; // roll leds cylon style (inverted)
 			}
+
+			if (LED_UP && (alive_led != 0)) {
+				alive_led = alive_led * 2;
+				cylon = cylon << 1;
+			} else {
+				if (alive_led != 0) alive_led = alive_led / 2;
+				cylon = cylon >> 1;
+			}
+			if (alive_led < 2) {
+				alive_led = 2;
+				LED_UP = true;
+			} else {
+				if (alive_led > 128) {
+					alive_led = 128;
+					LED_UP = false;
+				}
+			}
+			j = 0;
 		}
-		j = 0;
+	}
+
+	if (seq == LED_BAL) {
+		if (otto_b1.result>-4 && otto_b1.result < 5) {
+			IO.outbytes[2] = 0b00000000;
+		} else {
+			IO.outbytes[2] = 0b10000001;
+		}
 	}
 }
 

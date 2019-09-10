@@ -1,24 +1,24 @@
-# 1 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 1 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
 
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/ctype.h" 1 3
-
-
-
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/ctype.h" 1 3
 
 
 
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/features.h" 1 3
-# 9 "/opt/microchip/xc8/v2.10/pic/include/c99/ctype.h" 2 3
+
+
+
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/features.h" 1 3
+# 9 "/opt/microchip/xc8/v2.05/pic/include/c99/ctype.h" 2 3
 
 int isalnum(int);
 int isalpha(int);
@@ -34,26 +34,26 @@ int isupper(int);
 int isxdigit(int);
 int tolower(int);
 int toupper(int);
-# 4 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 1 3
+# 4 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 1 3
 
 
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/musl_xc8.h" 1 3
-# 5 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 2 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/musl_xc8.h" 1 3
+# 5 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 2 3
 
 
 
 
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 1 3
-# 22 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 127 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 1 3
+# 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 135 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned long uintptr_t;
-# 142 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 150 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long intptr_t;
-# 158 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 166 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef signed char int8_t;
 
 
@@ -76,7 +76,7 @@ typedef long int32_t;
 
 
 typedef long long int64_t;
-# 188 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 196 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long long intmax_t;
 
 
@@ -105,9 +105,9 @@ typedef unsigned long uint32_t;
 
 
 typedef unsigned long long uint64_t;
-# 229 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 237 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned long long uintmax_t;
-# 23 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
+# 23 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
 
 typedef int8_t int_fast8_t;
 
@@ -137,41 +137,37 @@ typedef uint24_t uint_least24_t;
 typedef uint32_t uint_least32_t;
 
 typedef uint64_t uint_least64_t;
-# 139 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/stdint.h" 1 3
+# 155 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/stdint.h" 1 3
 typedef int32_t int_fast16_t;
 typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
-# 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-# 11 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 2 3
+# 156 "/opt/microchip/xc8/v2.05/pic/include/c99/stdint.h" 2 3
+# 11 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 2 3
 
 
 
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 33 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 37 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef float float_t;
 
 
 
 
 typedef double double_t;
-# 16 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 2 3
-# 42 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
+# 16 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 2 3
+# 46 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 3
 int __fpclassifyf(float);
-
-
-
-
-
-
-
+# 97 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 3
 int __signbitf(float);
-# 59 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
+# 149 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 3
 double acos(double);
 float acosf(float);
 long double acosl(long double);
+
+
 
 
 
@@ -181,9 +177,13 @@ long double acoshl(long double);
 
 
 
+
+
 double asin(double);
 float asinf(float);
 long double asinl(long double);
+
+
 
 
 
@@ -193,9 +193,13 @@ long double asinhl(long double);
 
 
 
+
+
 double atan(double);
 float atanf(float);
 long double atanl(long double);
+
+
 
 
 
@@ -205,9 +209,13 @@ long double atan2l(long double, long double);
 
 
 
+
+
 double atanh(double);
 float atanhf(float);
 long double atanhl(long double);
+
+
 
 
 
@@ -217,9 +225,13 @@ long double cbrtl(long double);
 
 
 
+
+
 double ceil(double);
 float ceilf(float);
 long double ceill(long double);
+
+
 
 
 
@@ -229,9 +241,13 @@ long double copysignl(long double, long double);
 
 
 
+
+
 double cos(double);
 float cosf(float);
 long double cosl(long double);
+
+
 
 
 
@@ -241,9 +257,13 @@ long double coshl(long double);
 
 
 
+
+
 double erf(double);
 float erff(float);
 long double erfl(long double);
+
+
 
 
 
@@ -253,9 +273,13 @@ long double erfcl(long double);
 
 
 
+
+
 double exp(double);
 float expf(float);
 long double expl(long double);
+
+
 
 
 
@@ -265,9 +289,13 @@ long double exp2l(long double);
 
 
 
+
+
 double expm1(double);
 float expm1f(float);
 long double expm1l(long double);
+
+
 
 
 
@@ -277,9 +305,13 @@ long double fabsl(long double);
 
 
 
+
+
 double fdim(double, double);
 float fdimf(float, float);
 long double fdiml(long double, long double);
+
+
 
 
 
@@ -289,9 +321,13 @@ long double floorl(long double);
 
 
 
+
+
 double fma(double, double, double);
 float fmaf(float, float, float);
 long double fmal(long double, long double, long double);
+
+
 
 
 
@@ -301,9 +337,13 @@ long double fmaxl(long double, long double);
 
 
 
+
+
 double fmin(double, double);
 float fminf(float, float);
 long double fminl(long double, long double);
+
+
 
 
 
@@ -313,9 +353,13 @@ long double fmodl(long double, long double);
 
 
 
+
+
 double frexp(double, int *);
 float frexpf(float, int *);
 long double frexpl(long double, int *);
+
+
 
 
 
@@ -325,9 +369,13 @@ long double hypotl(long double, long double);
 
 
 
+
+
 int ilogb(double);
 int ilogbf(float);
 int ilogbl(long double);
+
+
 
 
 
@@ -337,9 +385,13 @@ long double ldexpl(long double, int);
 
 
 
+
+
 double lgamma(double);
 float lgammaf(float);
 long double lgammal(long double);
+
+
 
 
 
@@ -349,9 +401,13 @@ long long llrintl(long double);
 
 
 
+
+
 long long llround(double);
 long long llroundf(float);
 long long llroundl(long double);
+
+
 
 
 
@@ -361,9 +417,13 @@ long double logl(long double);
 
 
 
+
+
 double log10(double);
 float log10f(float);
 long double log10l(long double);
+
+
 
 
 
@@ -373,9 +433,13 @@ long double log1pl(long double);
 
 
 
+
+
 double log2(double);
 float log2f(float);
 long double log2l(long double);
+
+
 
 
 
@@ -385,9 +449,13 @@ long double logbl(long double);
 
 
 
+
+
 long lrint(double);
 long lrintf(float);
 long lrintl(long double);
+
+
 
 
 
@@ -397,9 +465,13 @@ long lroundl(long double);
 
 
 
+
+
 double modf(double, double *);
 float modff(float, float *);
 long double modfl(long double, long double *);
+
+
 
 
 
@@ -409,9 +481,13 @@ long double nanl(const char *);
 
 
 
+
+
 double nearbyint(double);
 float nearbyintf(float);
 long double nearbyintl(long double);
+
+
 
 
 
@@ -421,16 +497,17 @@ long double nextafterl(long double, long double);
 
 
 
+
+
 double nexttoward(double, long double);
 float nexttowardf(float, long double);
 long double nexttowardl(long double, long double);
-
-
-
-
+# 498 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 3
 double pow(double, double);
 __attribute__((nonreentrant)) float powf(float, float);
 long double powl(long double, long double);
+
+
 
 
 
@@ -440,9 +517,13 @@ long double remainderl(long double, long double);
 
 
 
+
+
 double remquo(double, double, int *);
 float remquof(float, float, int *);
 long double remquol(long double, long double, int *);
+
+
 
 
 
@@ -452,9 +533,13 @@ long double rintl(long double);
 
 
 
+
+
 double round(double);
 float roundf(float);
 long double roundl(long double);
+
+
 
 
 
@@ -464,9 +549,13 @@ long double scalblnl(long double, long);
 
 
 
+
+
 double scalbn(double, int);
 float scalbnf(float, int);
 long double scalbnl(long double, int);
+
+
 
 
 
@@ -476,9 +565,13 @@ long double sinl(long double);
 
 
 
+
+
 double sinh(double);
 float sinhf(float);
 long double sinhl(long double);
+
+
 
 
 
@@ -488,9 +581,13 @@ long double sqrtl(long double);
 
 
 
+
+
 double tan(double);
 float tanf(float);
 long double tanl(long double);
+
+
 
 
 
@@ -500,16 +597,20 @@ long double tanhl(long double);
 
 
 
+
+
 double tgamma(double);
 float tgammaf(float);
 long double tgammal(long double);
 
 
 
+
+
 double trunc(double);
 float truncf(float);
 long double truncl(long double);
-# 423 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
+# 631 "/opt/microchip/xc8/v2.05/pic/include/c99/math.h" 3
 extern int signgam;
 
 double j0(double);
@@ -519,8 +620,8 @@ double jn(int, double);
 double y0(double);
 double y1(double);
 double yn(int, double);
-# 5 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdarg.h" 1 3
+# 5 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdarg.h" 1 3
 
 
 
@@ -528,46 +629,42 @@ double yn(int, double);
 
 
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-
-
-
-
-
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 10 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef void * va_list[1];
-# 9 "/opt/microchip/xc8/v2.10/pic/include/c99/stdarg.h" 2 3
+# 9 "/opt/microchip/xc8/v2.05/pic/include/c99/stdarg.h" 2 3
 
 #pragma intrinsic(__va_start)
 #pragma intrinsic(__va_arg)
 
 extern void * __va_start(void);
 extern void * __va_arg(void *, ...);
-# 6 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
-# 19 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 18 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 6 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 22 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long int wchar_t;
-# 122 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 127 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 132 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 140 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ptrdiff_t;
-# 20 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 2 3
-# 7 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
+# 20 "/opt/microchip/xc8/v2.05/pic/include/c99/stddef.h" 2 3
+# 7 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
 
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 1 3
-# 24 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 11 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 1 3
+# 24 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 15 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef void * __isoc_va_list[1];
-# 137 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 145 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long ssize_t;
-# 246 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 254 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef long long off_t;
-# 399 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 407 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef struct _IO_FILE FILE;
-# 25 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 2 3
-# 52 "/opt/microchip/xc8/v2.10/pic/include/c99/stdio.h" 3
+# 25 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 2 3
+# 52 "/opt/microchip/xc8/v2.05/pic/include/c99/stdio.h" 3
 typedef union _G_fpos64_t {
  char __opaque[16];
  double __align;
@@ -620,12 +717,14 @@ char *gets(char *);
 int fputs(const char *restrict, FILE *restrict);
 int puts(const char *);
 
+
 #pragma printf_check(printf) const
 #pragma printf_check(vprintf) const
 #pragma printf_check(sprintf) const
 #pragma printf_check(snprintf) const
 #pragma printf_check(vsprintf) const
 #pragma printf_check(vsnprintf) const
+
 
 int printf(const char *restrict, ...);
 int fprintf(FILE *restrict, const char *restrict, ...);
@@ -684,11 +783,11 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 9 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 1 3
-# 21 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 22 "/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h" 2 3
+# 9 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 1 3
+# 21 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 22 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 2 3
 
 int atoi (const char *);
 long atol (const char *);
@@ -701,6 +800,8 @@ long double strtold (const char *restrict, char **restrict);
 
 
 
+
+
 long strtol (const char *restrict, char **restrict, int);
 unsigned long strtoul (const char *restrict, char **restrict, int);
 long long strtoll (const char *restrict, char **restrict, int);
@@ -708,13 +809,17 @@ unsigned long long strtoull (const char *restrict, char **restrict, int);
 
 int rand (void);
 void srand (unsigned);
-
+# 52 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 3
           void abort (void);
 int atexit (void (*) (void));
           void exit (int);
           void _Exit (int);
-
+# 65 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 3
 void *bsearch (const void *, const void *, size_t, size_t, int (*)(const void *, const void *));
+
+
+
+
 
 __attribute__((nonreentrant)) void qsort (void *, size_t, size_t, int (*)(const void *, const void *));
 
@@ -730,23 +835,20 @@ div_t div (int, int);
 ldiv_t ldiv (long, long);
 lldiv_t lldiv (long long, long long);
 
+
 typedef struct { unsigned int quot, rem; } udiv_t;
 typedef struct { unsigned long quot, rem; } uldiv_t;
 udiv_t udiv (unsigned int, unsigned int);
 uldiv_t uldiv (unsigned long, unsigned long);
-
-
-
-
-
+# 104 "/opt/microchip/xc8/v2.05/pic/include/c99/stdlib.h" 3
 size_t __ctype_get_mb_cur_max(void);
-# 10 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
-# 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 411 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+# 10 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 1 3
+# 25 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 3
+# 1 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 1 3
+# 419 "/opt/microchip/xc8/v2.05/pic/include/c99/bits/alltypes.h" 3
 typedef struct __locale_struct * locale_t;
-# 26 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 2 3
+# 26 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 2 3
 
 void *memcpy (void *restrict, const void *restrict, size_t);
 void *memmove (void *, const void *, size_t);
@@ -778,7 +880,7 @@ char *strtok (char *restrict, const char *restrict);
 size_t strlen (const char *);
 
 char *strerror (int);
-# 65 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
+# 65 "/opt/microchip/xc8/v2.05/pic/include/c99/string.h" 3
 char *strtok_r (char *restrict, const char *restrict, char **restrict);
 int strerror_r (int, char *, size_t);
 char *stpcpy(char *restrict, const char *restrict);
@@ -795,12 +897,12 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 11 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/inline.h" 1 3
-# 12 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c" 2
-# 55 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 11 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
+# 1 "/opt/microchip/xc8/v2.05/pic/include/inline.h" 1 3
+# 12 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c" 2
+# 55 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
 static int flags, prec, width;
-# 66 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 66 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
 static char dbuf[32];
 
 
@@ -831,7 +933,7 @@ static int pad(FILE *fp, char *buf, int p)
 
     return strlen(buf) + w;
 }
-# 274 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 274 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
 static int dtoa(FILE *fp, long long d)
 {
     int i, p, s, w;
@@ -874,7 +976,7 @@ static int dtoa(FILE *fp, long long d)
 
     return pad(fp, &dbuf[i], w);
 }
-# 546 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 546 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
 static int stoa(FILE *fp, char *s)
 {
     char *cp, nuls[] = "(null)";
@@ -919,7 +1021,7 @@ static int stoa(FILE *fp, char *s)
 
     return l;
 }
-# 670 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 670 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
 static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 {
     char c, *cp, ct[3];
@@ -935,7 +1037,7 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
         flags = width = 0;
         prec = -1;
-# 825 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 825 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if ((*fmt[0] == 'd') || (*fmt[0] == 'i')) {
 
             ++*fmt;
@@ -943,7 +1045,7 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
             return dtoa(fp, ll);
         }
-# 1149 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 1149 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if (*fmt[0] == 's') {
 
             ++*fmt;
@@ -951,7 +1053,7 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
             return stoa(fp, cp);
         }
-# 1350 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+# 1350 "/opt/microchip/xc8/v2.05/pic/sources/c99/common/doprnt.c"
         if ((*fmt)[0] == '%') {
             ++*fmt;
             fputc((int)'%', fp);

@@ -60,9 +60,11 @@
 #define WARP	0x04
 #define SIREN	0x01
 
-#define	DEFAULT_SEQ	0
+#define	DEFAULT_SEQ	3
 #define DEBUG_SEQ	1
 #define WIN_SEQ		2
+#define CYLON		0
+#define LED_BAL		3
 
 #define DISPLAY_UPDATE	500	// 1000
 #define RXTO_DELAY	250	// 250
