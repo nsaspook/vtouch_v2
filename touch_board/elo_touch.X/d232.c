@@ -199,10 +199,33 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 	}
 
 	if (seq == LED_BAL) {
-		if (otto_b1.result>-4 && otto_b1.result < 5) {
+
+		if (otto_b1.result <= -120) {
+			IO.outbytes[2] = 0b10000000;
+		}
+		if (otto_b1.result > -120 && otto_b1.result < -80) {
+			IO.outbytes[2] = 0b01000000;
+		}
+		if (otto_b1.result >= -80 && otto_b1.result < -30) {
+			IO.outbytes[2] = 0b00100000;
+		}
+		if (otto_b1.result >= -30 && otto_b1.result < -5) {
+			IO.outbytes[2] = 0b00010000;
+		}
+		if (otto_b1.result >= -5 && otto_b1.result <= 5) {
 			IO.outbytes[2] = 0b00000000;
-		} else {
-			IO.outbytes[2] = 0b10000001;
+		}
+		if (otto_b1.result > 5 && otto_b1.result < 30) {
+			IO.outbytes[2] = 0b00001000;
+		}
+		if (otto_b1.result >= 30 && otto_b1.result < 80) {
+			IO.outbytes[2] = 0b00000100;
+		}
+		if (otto_b1.result >= 80 && otto_b1.result < 120) {
+			IO.outbytes[2] = 0b00000010;
+		}
+		if (otto_b1.result >= 120) {
+			IO.outbytes[2] = 0b00000001;
 		}
 	}
 }
