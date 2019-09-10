@@ -27555,6 +27555,7 @@ enum APP_TIMERS {
  TMR_EXTRA,
  TMR_EXTRA_MISS,
  TMR_SEQ,
+ TMR_BAL,
 
 
 
@@ -27595,6 +27596,12 @@ typedef enum {
  S_UPDATE,
 } SRQ_STATE;
 
+typedef enum {
+ UP,
+ ON,
+ DOWN,
+} BAL_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
@@ -27603,8 +27610,9 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
+ BAL_STATE BAL;
  uint8_t srq_value, seq_value, hits, misses, score, stats;
- adc_result_t button_value;
+ adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
@@ -27685,7 +27693,8 @@ A_data IO = {
  .speed = 10,
  .speed_update = 1,
  .sequence_done = 0,
- .seq_value = 3,
+ .seq_value = 0,
+ .seq_current = 0,
  .hits = 0,
  .misses = 0,
  .slower = 0,
@@ -27695,11 +27704,13 @@ A_data IO = {
  .f1 = 1,
  .f2 = 1,
  .f3 = 1,
+ .BAL = DOWN,
 };
 
 BPOT_type otto_b1 = {
  .offset = 400,
  .span = 3700,
+ .result = -256,
 };
 
 IN_data *switches = (IN_data *) & IO.inbytes[0];
@@ -27711,7 +27722,7 @@ void work_sw(void)
  if (TimerDone(TMR_INIT)) {
   IO.clock++;
   sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-  sprintf(buffer[1], " Score %i %i %i    ", IO.score, otto_b1.result, IO.clock);
+  sprintf(buffer[1], " Score %i %i    ", IO.score, otto_b1.result);
   buffer[1][16] = 0;
   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
@@ -27755,7 +27766,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "0.24");
+ sprintf(buffer, "SW %s Play!", "0.25");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  otto_b1.range = otto_b1.span - otto_b1.offset;
@@ -27823,15 +27834,25 @@ void main(void)
   } else {
    StartTimer(TMR_EXTRA, 500);
    StartTimer(TMR_EXTRA_MISS, 25);
-   IO.outbytes[1] = IO.outbytes[1] & (~0x02);
-   IO.outbytes[1] = IO.outbytes[1] & (~0x04);
-   IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+   if (IO.seq_value == 0) {
+    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+   }
+
+   if (IO.seq_value == 3 && TimerDone(TMR_BAL)) {
+    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+   }
    IO.speed_update = 1;
    IO.f1 = 1;
    IO.f2 = 1;
    IO.f3 = 1;
    if (TimerDone(TMR_SEQ)) {
-    IO.seq_value = 3;
+    if (otto_b1.result > 0)
+     IO.seq_current = 3;
+    IO.seq_value = IO.seq_current;
     if (IO.win) {
      IO.win = 0;
      IO.hits = 0;

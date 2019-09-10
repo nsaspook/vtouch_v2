@@ -26937,6 +26937,7 @@ enum APP_TIMERS {
  TMR_EXTRA,
  TMR_EXTRA_MISS,
  TMR_SEQ,
+ TMR_BAL,
 
 
 
@@ -26975,6 +26976,12 @@ typedef enum {
  S_UPDATE,
 } SRQ_STATE;
 
+typedef enum {
+ UP,
+ ON,
+ DOWN,
+} BAL_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
@@ -26983,8 +26990,9 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
+ BAL_STATE BAL;
  uint8_t srq_value, seq_value, hits, misses, score, stats;
- adc_result_t button_value;
+ adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
 } A_data;
@@ -27079,6 +27087,8 @@ void Digital232_init(void)
 
 int16_t calc_pot(adc_result_t value)
 {
+ if (value < otto_b1.offset)
+  value = otto_b1.offset;
  otto_b1.result = (adc_result_t) ((float) (value - otto_b1.offset) * otto_b1.scalar);
  otto_b1.result = -127 + otto_b1.result;
  return otto_b1.result;
@@ -27246,30 +27256,51 @@ void led_lightshow(uint8_t seq, uint16_t speed)
 
   if (otto_b1.result <= -120) {
    IO.outbytes[2] = 0b10000000;
+   IO.BAL = UP;
   }
   if (otto_b1.result > -120 && otto_b1.result < -80) {
    IO.outbytes[2] = 0b01000000;
+   IO.BAL = UP;
   }
   if (otto_b1.result >= -80 && otto_b1.result < -30) {
    IO.outbytes[2] = 0b00100000;
+   IO.BAL = UP;
   }
   if (otto_b1.result >= -30 && otto_b1.result < -5) {
+   if (IO.BAL != UP) {
+    IO.outbytes[1] = IO.outbytes[1] | 0x01;
+    StartTimer(TMR_BAL, 500);
+   }
    IO.outbytes[2] = 0b00010000;
+   IO.BAL = UP;
   }
   if (otto_b1.result >= -5 && otto_b1.result <= 5) {
+   if (IO.BAL != ON) {
+    IO.outbytes[1] = IO.outbytes[1] | 0x02;
+    StartTimer(TMR_BAL, 500);
+   }
    IO.outbytes[2] = 0b00000000;
+   IO.BAL = ON;
   }
   if (otto_b1.result > 5 && otto_b1.result < 30) {
+   if (IO.BAL != DOWN) {
+    IO.outbytes[1] = IO.outbytes[1] | 0x04;
+    StartTimer(TMR_BAL, 500);
+   }
    IO.outbytes[2] = 0b00001000;
+   IO.BAL = DOWN;
   }
   if (otto_b1.result >= 30 && otto_b1.result < 80) {
    IO.outbytes[2] = 0b00000100;
+   IO.BAL = DOWN;
   }
   if (otto_b1.result >= 80 && otto_b1.result < 120) {
    IO.outbytes[2] = 0b00000010;
+   IO.BAL = DOWN;
   }
   if (otto_b1.result >= 120) {
    IO.outbytes[2] = 0b00000001;
+   IO.BAL = DOWN;
   }
  }
 }

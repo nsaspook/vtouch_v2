@@ -58,6 +58,7 @@ A_data IO = {
 	.speed_update = true,
 	.sequence_done = false,
 	.seq_value = DEFAULT_SEQ,
+	.seq_current = DEFAULT_SEQ,
 	.hits = 0,
 	.misses = 0,
 	.slower = 0,
@@ -67,11 +68,13 @@ A_data IO = {
 	.f1 = true,
 	.f2 = true,
 	.f3 = true,
+	.BAL = DOWN,
 };
 
 BPOT_type otto_b1 = {
 	.offset = 400,
 	.span = 3700,
+	.result = -256,
 };
 
 IN_data *switches = (IN_data *) & IO.inbytes[0];
@@ -83,7 +86,7 @@ void work_sw(void)
 	if (TimerDone(TMR_INIT)) {
 		IO.clock++;
 		sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-		sprintf(buffer[1], " Score %i %i %i    ", IO.score, otto_b1.result, IO.clock);
+		sprintf(buffer[1], " Score %i %i    ", IO.score, otto_b1.result);
 		buffer[1][16] = 0; // cut off line for LCD
 		eaDogM_WriteStringAtPos(1, 0, buffer[0]);
 		eaDogM_WriteStringAtPos(2, 0, buffer[1]);
@@ -195,15 +198,25 @@ void main(void)
 		} else {
 			StartTimer(TMR_EXTRA, 500);
 			StartTimer(TMR_EXTRA_MISS, 25);
-			IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
-			IO.outbytes[1] = IO.outbytes[1] & (~WARP);
-			IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
+			if (IO.seq_value == CYLON) {
+				IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
+				IO.outbytes[1] = IO.outbytes[1] & (~WARP);
+				IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
+			}
+
+			if (IO.seq_value == LED_BAL && TimerDone(TMR_BAL)) {
+				IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
+				IO.outbytes[1] = IO.outbytes[1] & (~WARP);
+				IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
+			}
 			IO.speed_update = true;
 			IO.f1 = true;
 			IO.f2 = true;
 			IO.f3 = true;
 			if (TimerDone(TMR_SEQ)) {
-				IO.seq_value = DEFAULT_SEQ;
+				if (otto_b1.result > 0)
+					IO.seq_current = LED_BAL;
+				IO.seq_value = IO.seq_current;
 				if (IO.win) {
 					IO.win = false;
 					IO.hits = 0;
