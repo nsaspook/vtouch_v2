@@ -27615,6 +27615,7 @@ typedef struct A_data {
  adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
+ int16_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -27763,6 +27764,7 @@ void main(void)
 
  init_display();
  eaDogM_WriteCommand(0b00001100);
+ srand(99);
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
@@ -27844,6 +27846,8 @@ void main(void)
     IO.outbytes[1] = IO.outbytes[1] & (~0x02);
     IO.outbytes[1] = IO.outbytes[1] & (~0x04);
     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+    srand(IO.clock);
+    IO.rnd = rand() << 8;
    }
    IO.speed_update = 1;
    IO.f1 = 1;

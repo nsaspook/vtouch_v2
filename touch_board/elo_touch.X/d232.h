@@ -118,6 +118,7 @@ typedef struct A_data {
 	adc_result_t button_value, seq_current;
 	uint16_t speed, slower, clock;
 	bool speed_update, sequence_done, win, f1, f2, f3, f4;
+	int16_t	rnd;
 } A_data;
 
 typedef struct BPOT_type {

@@ -18,8 +18,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16256 . UP ON DOWN  ]
 "108 ./d232.h
 [; ;./d232.h: 108: typedef struct A_data {
-[s S2201 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16239 1 `E16232 1 `E16248 1 `E16256 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 `us 1 `us 1 `us 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 ]
-[n S2201 A_data inbytes outbytes input_ok output_ok io d232 srq BAL srq_value seq_value hits misses score stats button_value seq_current speed slower clock speed_update sequence_done win f1 f2 f3 f4 ]
+[s S2201 `uc -> 5 `i `uc -> 5 `i `a 1 `a 1 `E16239 1 `E16232 1 `E16248 1 `E16256 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `us 1 `us 1 `us 1 `us 1 `us 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `s 1 ]
+[n S2201 A_data inbytes outbytes input_ok output_ok io d232 srq BAL srq_value seq_value hits misses score stats button_value seq_current speed slower clock speed_update sequence_done win f1 f2 f3 f4 rnd ]
 "7 d232.c
 [; ;d232.c: 7: extern A_data IO;
 [v _IO `S2201 ~T0 @X0 0 e ]
@@ -44,8 +44,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;d232.c: 33:  StartTimer(TMR_SPS, 10);
 [c E16213 0 1 2 3 4 5 6 7 8 .. ]
 [n E16213 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_EXTRA TMR_EXTRA_MISS TMR_SEQ TMR_BAL TMR_COUNT  ]
-"123 ./d232.h
-[; ;./d232.h: 123: typedef struct BPOT_type {
+"124 ./d232.h
+[; ;./d232.h: 124: typedef struct BPOT_type {
 [s S2202 `s 1 `s 1 `s 1 `f 1 `s 1 `s 1 ]
 [n S2202 BPOT_type offset span range scalar zero result ]
 "8 d232.c
@@ -2392,8 +2392,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _j -> -> 0 `i `uc ]
 "48
 [; ;d232.c: 48:  static uint8_t x = 0;
-[v F16339 `uc ~T0 @X0 1 s x ]
-[i F16339
+[v F16340 `uc ~T0 @X0 1 s x ]
+[i F16340
 -> -> 0 `i `uc
 ]
 "51
@@ -2574,13 +2574,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "115
 [; ;d232.c: 115:    PWM8_LoadDutyValue(x++);
-[e ( _PWM8_LoadDutyValue (1 -> ++ F16339 -> -> 1 `i `uc `us ]
+[e ( _PWM8_LoadDutyValue (1 -> ++ F16340 -> -> 1 `i `uc `us ]
 "116
 [; ;d232.c: 116:    if (x > 3)
-[e $ ! > -> F16339 `i -> 3 `i 2232  ]
+[e $ ! > -> F16340 `i -> 3 `i 2232  ]
 "117
 [; ;d232.c: 117:     x = 0;
-[e = F16339 -> -> 0 `i `uc ]
+[e = F16340 -> -> 0 `i `uc ]
 [e :U 2232 ]
 "118
 [; ;d232.c: 118:    IO.io = IO_FAIL;
@@ -2640,13 +2640,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "135
 [; ;d232.c: 135:   PWM8_LoadDutyValue(x++);
-[e ( _PWM8_LoadDutyValue (1 -> ++ F16339 -> -> 1 `i `uc `us ]
+[e ( _PWM8_LoadDutyValue (1 -> ++ F16340 -> -> 1 `i `uc `us ]
 "136
 [; ;d232.c: 136:   if (x > 16)
-[e $ ! > -> F16339 `i -> 16 `i 2238  ]
+[e $ ! > -> F16340 `i -> 16 `i 2238  ]
 "137
 [; ;d232.c: 137:    x = 0;
-[e = F16339 -> -> 0 `i `uc ]
+[e = F16340 -> -> 0 `i `uc ]
 [e :U 2238 ]
 "138
 [; ;d232.c: 138:   IO.io = IO_FAIL;
@@ -2705,26 +2705,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "156
 [; ;d232.c: 156:  static uint16_t j = 0;
-[v F16343 `us ~T0 @X0 1 s j ]
-[i F16343
+[v F16344 `us ~T0 @X0 1 s j ]
+[i F16344
 -> -> 0 `i `us
 ]
 "157
 [; ;d232.c: 157:  static uint8_t cylon = 0xff;
-[v F16344 `uc ~T0 @X0 1 s cylon ]
-[i F16344
+[v F16345 `uc ~T0 @X0 1 s cylon ]
+[i F16345
 -> -> 255 `i `uc
 ]
 "158
 [; ;d232.c: 158:  static int16_t alive_led = 0;
-[v F16345 `s ~T0 @X0 1 s alive_led ]
-[i F16345
+[v F16346 `s ~T0 @X0 1 s alive_led ]
+[i F16346
 -> -> 0 `i `s
 ]
 "159
 [; ;d232.c: 159:  static _Bool LED_UP = 1;
-[v F16346 `a ~T0 @X0 1 s LED_UP ]
-[i F16346
+[v F16347 `a ~T0 @X0 1 s LED_UP ]
+[i F16347
 -> -> 1 `i `a
 ]
 "161
@@ -2775,7 +2775,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "176
 [; ;d232.c: 176:   if (j++ >= speed) {
-[e $ ! >= -> ++ F16343 -> -> 1 `i `us `ui -> _speed `ui 2245  ]
+[e $ ! >= -> ++ F16344 -> -> 1 `i `us `ui -> _speed `ui 2245  ]
 {
 "177
 [; ;d232.c: 177:    if (0) {
@@ -2783,7 +2783,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "178
 [; ;d232.c: 178:     IO.outbytes[2] = ~cylon;
-[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> ~ -> F16344 `i `uc ]
+[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux -> ~ -> F16345 `i `uc ]
 "179
 [; ;d232.c: 179:    } else {
 }
@@ -2792,21 +2792,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "180
 [; ;d232.c: 180:     IO.outbytes[2] = cylon;
-[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux F16344 ]
+[e = *U + &U . _IO 1 * -> -> -> 2 `i `ui `ux -> -> # *U &U . _IO 1 `ui `ux F16345 ]
 "181
 [; ;d232.c: 181:    }
 }
 [e :U 2247 ]
 "183
 [; ;d232.c: 183:    if (LED_UP && (alive_led != 0)) {
-[e $ ! && != -> F16346 `i -> 0 `i != -> F16345 `i -> 0 `i 2248  ]
+[e $ ! && != -> F16347 `i -> 0 `i != -> F16346 `i -> 0 `i 2248  ]
 {
 "184
 [; ;d232.c: 184:     alive_led = alive_led * 2;
-[e = F16345 -> * -> F16345 `i -> 2 `i `s ]
+[e = F16346 -> * -> F16346 `i -> 2 `i `s ]
 "185
 [; ;d232.c: 185:     cylon = cylon << 1;
-[e = F16344 -> << -> F16344 `i -> 1 `i `uc ]
+[e = F16345 -> << -> F16345 `i -> 1 `i `uc ]
 "186
 [; ;d232.c: 186:    } else {
 }
@@ -2815,26 +2815,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "187
 [; ;d232.c: 187:     if (alive_led != 0) alive_led = alive_led / 2;
-[e $ ! != -> F16345 `i -> 0 `i 2250  ]
-[e = F16345 -> / -> F16345 `i -> 2 `i `s ]
+[e $ ! != -> F16346 `i -> 0 `i 2250  ]
+[e = F16346 -> / -> F16346 `i -> 2 `i `s ]
 [e :U 2250 ]
 "188
 [; ;d232.c: 188:     cylon = cylon >> 1;
-[e = F16344 -> >> -> F16344 `i -> 1 `i `uc ]
+[e = F16345 -> >> -> F16345 `i -> 1 `i `uc ]
 "189
 [; ;d232.c: 189:    }
 }
 [e :U 2249 ]
 "190
 [; ;d232.c: 190:    if (alive_led < 2) {
-[e $ ! < -> F16345 `i -> 2 `i 2251  ]
+[e $ ! < -> F16346 `i -> 2 `i 2251  ]
 {
 "191
 [; ;d232.c: 191:     alive_led = 2;
-[e = F16345 -> -> 2 `i `s ]
+[e = F16346 -> -> 2 `i `s ]
 "192
 [; ;d232.c: 192:     LED_UP = 1;
-[e = F16346 -> -> 1 `i `a ]
+[e = F16347 -> -> 1 `i `a ]
 "193
 [; ;d232.c: 193:    } else {
 }
@@ -2843,14 +2843,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "194
 [; ;d232.c: 194:     if (alive_led > 128) {
-[e $ ! > -> F16345 `i -> 128 `i 2253  ]
+[e $ ! > -> F16346 `i -> 128 `i 2253  ]
 {
 "195
 [; ;d232.c: 195:      alive_led = 128;
-[e = F16345 -> -> 128 `i `s ]
+[e = F16346 -> -> 128 `i `s ]
 "196
 [; ;d232.c: 196:      LED_UP = 0;
-[e = F16346 -> -> 0 `i `a ]
+[e = F16347 -> -> 0 `i `a ]
 "197
 [; ;d232.c: 197:     }
 }
@@ -2861,7 +2861,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2252 ]
 "199
 [; ;d232.c: 199:    j = 0;
-[e = F16343 -> -> 0 `i `us ]
+[e = F16344 -> -> 0 `i `us ]
 "200
 [; ;d232.c: 200:   }
 }

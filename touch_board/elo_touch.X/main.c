@@ -127,6 +127,7 @@ void main(void)
 
 	init_display();
 	eaDogM_CursorOff();
+	srand(99);
 
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
@@ -208,6 +209,8 @@ void main(void)
 				IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
 				IO.outbytes[1] = IO.outbytes[1] & (~WARP);
 				IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
+				srand(IO.clock);
+				IO.rnd = rand() << 8;
 			}
 			IO.speed_update = true;
 			IO.f1 = true;
