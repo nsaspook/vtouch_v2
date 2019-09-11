@@ -1,29 +1,29 @@
-/* Microchip Technology Inc. and its subsidiaries.  You may use this software 
- * and any derivatives exclusively with Microchip products. 
- * 
- * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS".  NO WARRANTIES, WHETHER 
- * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED 
- * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A 
- * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION 
- * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION. 
+/* Microchip Technology Inc. and its subsidiaries.  You may use this software
+ * and any derivatives exclusively with Microchip products.
  *
- * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
- * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
- * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS 
- * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE 
- * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS 
- * IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF 
+ * THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS".  NO WARRANTIES, WHETHER
+ * EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY IMPLIED
+ * WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS FOR A
+ * PARTICULAR PURPOSE, OR ITS INTERACTION WITH MICROCHIP PRODUCTS, COMBINATION
+ * WITH ANY OTHER PRODUCTS, OR USE IN ANY APPLICATION.
+ *
+ * IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+ * INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+ * WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP HAS
+ * BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE.  TO THE
+ * FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL CLAIMS
+ * IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF
  * ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
  *
- * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE 
- * TERMS. 
+ * MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
+ * TERMS.
  */
 
-/* 
- * File:   
- * Author: 
+/*
+ * File:
+ * Author:
  * Comments:
- * Revision history: 
+ * Revision history:
  * 40 bits of data in 5 8-bit ports
  * port1 input
  * port-2-5 output
@@ -31,11 +31,11 @@
  */
 
 // This is a guard condition so that contents of this file are not included
-// more than once.  
+// more than once.
 #ifndef XC_HEADER_TEMPLATE_H
 #define	XC_HEADER_TEMPLATE_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include <xc.h> // include processor files - each processor file is guarded.
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -45,7 +45,7 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "0.25"
+#define sw_version "1.00"
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"
@@ -114,11 +114,11 @@ typedef struct A_data {
 	D232_STATE d232;
 	SRQ_STATE srq;
 	BAL_STATE BAL;
-	uint8_t srq_value, seq_value, hits, misses, score, stats;
+	uint8_t srq_value, seq_value, hits, misses, score, stats, rnd_count;
 	adc_result_t button_value, seq_current;
 	uint16_t speed, slower, clock;
 	bool speed_update, sequence_done, win, f1, f2, f3, f4;
-	int16_t	rnd;
+	int8_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -174,13 +174,14 @@ bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 bool once(bool*);
 int16_t calc_pot(adc_result_t);
+float lp_filter(float, int16_t, int16_t);
 
 #ifdef	__cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-	// TODO If C++ is being used, regular C code needs function names to have C 
-	// linkage so the functions can be used by the c code. 
+	// TODO If C++ is being used, regular C code needs function names to have C
+	// linkage so the functions can be used by the c code.
 
 #ifdef	__cplusplus
 }

@@ -27027,11 +27027,11 @@ typedef struct A_data {
  D232_STATE d232;
  SRQ_STATE srq;
  BAL_STATE BAL;
- uint8_t srq_value, seq_value, hits, misses, score, stats;
+ uint8_t srq_value, seq_value, hits, misses, score, stats,rnd_count;
  adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
- int16_t rnd;
+ int8_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -27087,6 +27087,7 @@ _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
 int16_t calc_pot(adc_result_t);
+float lp_filter(float, int16_t, int16_t);
 # 54 "mcc_generated_files/tmr5.c" 2
 
 

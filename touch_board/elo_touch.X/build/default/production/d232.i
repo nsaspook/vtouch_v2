@@ -26991,11 +26991,11 @@ typedef struct A_data {
  D232_STATE d232;
  SRQ_STATE srq;
  BAL_STATE BAL;
- uint8_t srq_value, seq_value, hits, misses, score, stats;
+ uint8_t srq_value, seq_value, hits, misses, score, stats,rnd_count;
  adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
- int16_t rnd;
+ int8_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -27051,6 +27051,7 @@ _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
 int16_t calc_pot(adc_result_t);
+float lp_filter(float, int16_t, int16_t);
 # 2 "d232.c" 2
 
 
@@ -27086,12 +27087,33 @@ void Digital232_init(void)
  StartTimer(TMR_SPS, 10);
 }
 
+float lp_filter(float new, int16_t bn, int16_t slow)
+{
+ float lp_speed, lp_x;
+ static float smooth[8];
+
+ if (bn > 7)
+  return new;
+ if (slow) {
+  lp_speed = 0.01;
+ } else {
+  lp_speed = 0.250;
+ }
+ lp_x = ((smooth[bn]*100.0) + (((new * 100.0)-(smooth[bn]*100.0)) * lp_speed)) / 100.0;
+ smooth[bn] = lp_x;
+ if (slow == (-1)) {
+  lp_x = 0.0;
+  smooth[bn] = 0.0;
+ }
+ return lp_x;
+}
+
 int16_t calc_pot(adc_result_t value)
 {
  if (value < otto_b1.offset)
   value = otto_b1.offset;
  otto_b1.result = (adc_result_t) ((float) (value - otto_b1.offset) * otto_b1.scalar);
- otto_b1.result = -127 + otto_b1.result;
+ otto_b1.result = -127 + otto_b1.result + (int8_t) lp_filter((float) IO.rnd, 0, 1);
  return otto_b1.result;
 }
 
@@ -27270,6 +27292,7 @@ void led_lightshow(uint8_t seq, uint16_t speed)
   if (otto_b1.result >= -30 && otto_b1.result < -5) {
    if (IO.BAL != UP) {
     IO.outbytes[1] = IO.outbytes[1] | 0x01;
+    IO.score--;
     StartTimer(TMR_BAL, 500);
    }
    IO.outbytes[2] = 0b00010000;
@@ -27278,6 +27301,11 @@ void led_lightshow(uint8_t seq, uint16_t speed)
   if (otto_b1.result >= -5 && otto_b1.result <= 5) {
    if (IO.BAL != ON) {
     IO.outbytes[1] = IO.outbytes[1] | 0x02;
+
+    if (TimerDone(TMR_BAL)) {
+     if (IO.score < 50)
+      IO.score++;
+    }
     StartTimer(TMR_BAL, 500);
    }
    IO.outbytes[2] = 0b00000000;
@@ -27287,6 +27315,7 @@ void led_lightshow(uint8_t seq, uint16_t speed)
    if (IO.BAL != DOWN) {
     IO.outbytes[1] = IO.outbytes[1] | 0x04;
     StartTimer(TMR_BAL, 500);
+    IO.score--;
    }
    IO.outbytes[2] = 0b00001000;
    IO.BAL = DOWN;

@@ -27611,11 +27611,11 @@ typedef struct A_data {
  D232_STATE d232;
  SRQ_STATE srq;
  BAL_STATE BAL;
- uint8_t srq_value, seq_value, hits, misses, score, stats;
+ uint8_t srq_value, seq_value, hits, misses, score, stats,rnd_count;
  adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
- int16_t rnd;
+ int8_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -27671,6 +27671,7 @@ _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
 int16_t calc_pot(adc_result_t);
+float lp_filter(float, int16_t, int16_t);
 # 51 "main.c" 2
 
 # 1 "./eadog.h" 1
@@ -27706,6 +27707,7 @@ A_data IO = {
  .f2 = 1,
  .f3 = 1,
  .BAL = DOWN,
+ .rnd_count = 0,
 };
 
 BPOT_type otto_b1 = {
@@ -27768,7 +27770,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "0.25");
+ sprintf(buffer, "SW %s Play!", "1.00");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  otto_b1.range = otto_b1.span - otto_b1.offset;
@@ -27847,7 +27849,11 @@ void main(void)
     IO.outbytes[1] = IO.outbytes[1] & (~0x04);
     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
     srand(IO.clock);
-    IO.rnd = rand() << 8;
+    if (IO.rnd_count++ > 64) {
+     IO.rnd = rand();
+     IO.rnd = IO.rnd / 4;
+     IO.rnd_count = 0;
+    }
    }
    IO.speed_update = 1;
    IO.f1 = 1;
