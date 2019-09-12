@@ -27036,6 +27036,7 @@ enum APP_TIMERS {
  TMR_EXTRA_MISS,
  TMR_SEQ,
  TMR_BAL,
+ TMR_CHANGE,
 
 
 
@@ -27046,7 +27047,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 75 "./d232.h"
+# 79 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27089,7 +27090,7 @@ typedef struct A_data {
  D232_STATE d232;
  SRQ_STATE srq;
  BAL_STATE BAL;
- uint8_t srq_value, seq_value, hits, misses, score, stats,rnd_count;
+ uint8_t srq_value, seq_value, hits, misses, score, stats, rnd_count;
  adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
@@ -27211,7 +27212,7 @@ static void send_lcd_data(const uint8_t data)
 {
  do { LATCbits.LATC1 = 1; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
-  wdtdelay(9);
+ wdtdelay(9);
  SPI1_Exchange8bit(data);
 }
 

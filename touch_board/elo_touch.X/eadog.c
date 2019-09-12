@@ -48,7 +48,7 @@ static void send_lcd_data(const uint8_t data)
 {
 	RS_SetHigh();
 	CSB_SetLow();
-		wdtdelay(IS_DELAYSHORT);
+	wdtdelay(IS_DELAYSHORT);
 	SPI1_Exchange8bit(data);
 }
 

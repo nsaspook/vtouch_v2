@@ -27556,6 +27556,7 @@ enum APP_TIMERS {
  TMR_EXTRA_MISS,
  TMR_SEQ,
  TMR_BAL,
+ TMR_CHANGE,
 
 
 
@@ -27568,7 +27569,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 75 "./d232.h"
+# 79 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27611,7 +27612,7 @@ typedef struct A_data {
  D232_STATE d232;
  SRQ_STATE srq;
  BAL_STATE BAL;
- uint8_t srq_value, seq_value, hits, misses, score, stats,rnd_count;
+ uint8_t srq_value, seq_value, hits, misses, score, stats, rnd_count;
  adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
@@ -27770,7 +27771,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "1.00");
+ sprintf(buffer, "SW %s Play!", "1.01");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  otto_b1.range = otto_b1.span - otto_b1.offset;
@@ -27799,7 +27800,6 @@ void main(void)
       IO.win = 1;
      }
      IO.speed_update = 0;
-
     }
    }
 
@@ -27817,7 +27817,6 @@ void main(void)
       IO.win = 1;
      }
      IO.speed_update = 0;
-
     }
    }
 
@@ -27828,7 +27827,6 @@ void main(void)
       if (IO.speed_update && (IO.misses++ > 26)) {
        if (IO.score-- < 10)
         IO.score = 10;
-
        IO.slower = 10;
        IO.speed_update = 0;
       }
@@ -27848,6 +27846,9 @@ void main(void)
     IO.outbytes[1] = IO.outbytes[1] & (~0x02);
     IO.outbytes[1] = IO.outbytes[1] & (~0x04);
     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+
+
+
     srand(IO.clock);
     if (IO.rnd_count++ > 64) {
      IO.rnd = rand();
@@ -27860,8 +27861,14 @@ void main(void)
    IO.f2 = 1;
    IO.f3 = 1;
    if (TimerDone(TMR_SEQ)) {
-    if (otto_b1.result > 0)
+    if (otto_b1.result > -64)
+    {
      IO.seq_current = 3;
+     StartTimer(TMR_CHANGE, 30000);
+    }
+    if (TimerDone(TMR_SEQ))
+     IO.seq_current = 0;
+
     IO.seq_value = IO.seq_current;
     if (IO.win) {
      IO.win = 0;

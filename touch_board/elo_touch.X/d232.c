@@ -33,7 +33,7 @@ void Digital232_init(void)
 	StartTimer(TMR_SPS, 10);
 }
 
-float lp_filter(float new, int16_t bn, int16_t slow) // low pass filter, slow rate of change for new, LPCHANC channels, slow/fast select (1) to zero channel
+float lp_filter(float new, int16_t bn, int16_t slow) // low pass filter, slow rate of change for new, LPCHANC channels, slow/fast select (-1) to zero channel
 {
 	float lp_speed, lp_x;
 	static float smooth[8];

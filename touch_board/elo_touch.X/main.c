@@ -161,7 +161,6 @@ void main(void)
 						IO.win = true;
 					}
 					IO.speed_update = false;
-					//					IO.misses = 0;
 				}
 			}
 
@@ -179,7 +178,6 @@ void main(void)
 						IO.win = true;
 					}
 					IO.speed_update = false;
-					//					IO.misses = 0;
 				}
 			}
 
@@ -190,7 +188,6 @@ void main(void)
 						if (IO.speed_update && (IO.misses++ > 26)) {
 							if (IO.score-- < 10)
 								IO.score = 10;
-							//					IO.misses = 0;
 							IO.slower = 10;
 							IO.speed_update = false;
 						}
@@ -210,6 +207,9 @@ void main(void)
 				IO.outbytes[1] = IO.outbytes[1] & (~CHIRP);
 				IO.outbytes[1] = IO.outbytes[1] & (~WARP);
 				IO.outbytes[1] = IO.outbytes[1] & (~SIREN);
+				/*
+				 * add a little randomness to the balance 
+				 */
 				srand(IO.clock);
 				if (IO.rnd_count++ > 64) {
 					IO.rnd = rand();
@@ -222,8 +222,14 @@ void main(void)
 			IO.f2 = true;
 			IO.f3 = true;
 			if (TimerDone(TMR_SEQ)) {
-				if (otto_b1.result > 0)
+				if (otto_b1.result > -64) // watch for OTTO vari-button pushes
+				{
 					IO.seq_current = LED_BAL;
+					StartTimer(TMR_CHANGE, 30000); // trigger for at least 30 seconds
+				}
+				if (TimerDone(TMR_SEQ)) // switch back to other game
+					IO.seq_current = CYLON;
+
 				IO.seq_value = IO.seq_current;
 				if (IO.win) {
 					IO.win = false;
