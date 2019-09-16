@@ -2486,7 +2486,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 134:  Digital232_init();
 [e ( _Digital232_init ..  ]
 "135
-[; ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.01");
+[; ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.02");
 [e ( _sprintf (1 , (. , &U _buffer :s 3C :s 4C ]
 "136
 [; ;main.c: 136:  eaDogM_WriteStringAtPos(0, 0, buffer);
@@ -2762,8 +2762,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! != -> ( _TimerDone (1 -> . `E16436 6 `uc `i -> 0 `i 2233  ]
 {
 "225
-[; ;main.c: 225:     if (otto_b1.result > -64)
-[e $ ! > -> . _otto_b1 5 `i -U -> 64 `i 2234  ]
+[; ;main.c: 225:     if ((otto_b1.result > 0) && (IO.seq_value == 0))
+[e $ ! && > -> . _otto_b1 5 `i -> 0 `i == -> . _IO 9 `i -> 0 `i 2234  ]
 "226
 [; ;main.c: 226:     {
 {
@@ -2774,62 +2774,71 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 228:      StartTimer(TMR_CHANGE, 30000);
 [e ( _StartTimer (2 , -> . `E16436 8 `uc -> -> 30000 `i `us ]
 "229
-[; ;main.c: 229:     }
+[; ;main.c: 229:      IO.win = 1;
+[e = . _IO 22 -> -> 1 `i `a ]
+"230
+[; ;main.c: 230:     }
 }
 [e :U 2234 ]
-"230
-[; ;main.c: 230:     if (TimerDone(TMR_SEQ))
-[e $ ! != -> ( _TimerDone (1 -> . `E16436 6 `uc `i -> 0 `i 2235  ]
 "231
-[; ;main.c: 231:      IO.seq_current = 0;
-[e = . _IO 16 -> -> 0 `i `us ]
-[e :U 2235 ]
+[; ;main.c: 231:     if (TimerDone(TMR_CHANGE))
+[e $ ! != -> ( _TimerDone (1 -> . `E16436 8 `uc `i -> 0 `i 2235  ]
+"232
+[; ;main.c: 232:     {
+{
 "233
-[; ;main.c: 233:     IO.seq_value = IO.seq_current;
-[e = . _IO 9 -> . _IO 16 `uc ]
+[; ;main.c: 233:      IO.seq_current = 0;
+[e = . _IO 16 -> -> 0 `i `us ]
 "234
-[; ;main.c: 234:     if (IO.win) {
+[; ;main.c: 234:      IO.win = 1;
+[e = . _IO 22 -> -> 1 `i `a ]
+"235
+[; ;main.c: 235:     }
+}
+[e :U 2235 ]
+"237
+[; ;main.c: 237:     IO.seq_value = IO.seq_current;
+[e = . _IO 9 -> . _IO 16 `uc ]
+"238
+[; ;main.c: 238:     if (IO.win) {
 [e $ ! != -> . _IO 22 `i -> 0 `i 2236  ]
 {
-"235
-[; ;main.c: 235:      IO.win = 0;
-[e = . _IO 22 -> -> 0 `i `a ]
-"236
-[; ;main.c: 236:      IO.hits = 0;
-[e = . _IO 10 -> -> 0 `i `uc ]
-"237
-[; ;main.c: 237:      IO.misses = 0;
-[e = . _IO 11 -> -> 0 `i `uc ]
-"238
-[; ;main.c: 238:      IO.clock = 0;
-[e = . _IO 19 -> -> 0 `i `us ]
 "239
-[; ;main.c: 239:      IO.score = 50;
-[e = . _IO 12 -> -> 50 `i `uc ]
+[; ;main.c: 239:      IO.win = 0;
+[e = . _IO 22 -> -> 0 `i `a ]
 "240
-[; ;main.c: 240:     }
+[; ;main.c: 240:      IO.hits = 0;
+[e = . _IO 10 -> -> 0 `i `uc ]
+"241
+[; ;main.c: 241:      IO.misses = 0;
+[e = . _IO 11 -> -> 0 `i `uc ]
+"242
+[; ;main.c: 242:      IO.score = 50;
+[e = . _IO 12 -> -> 50 `i `uc ]
+"243
+[; ;main.c: 243:     }
 }
 [e :U 2236 ]
-"241
-[; ;main.c: 241:    }
+"244
+[; ;main.c: 244:    }
 }
 [e :U 2233 ]
-"242
-[; ;main.c: 242:   }
+"245
+[; ;main.c: 245:   }
 }
 [e :U 2229 ]
-"244
-[; ;main.c: 244:  }
+"247
+[; ;main.c: 247:  }
 }
 [e :U 2211 ]
 [e $U 2212  ]
 [e :U 2213 ]
-"245
-[; ;main.c: 245: }
+"248
+[; ;main.c: 248: }
 [e :UE 2210 ]
 }
 [p f _sprintf 8650880 ]
-[a 4C 49 46 48 49 0 ]
+[a 4C 49 46 48 50 0 ]
 [a 3C 83 87 32 37 115 32 80 108 97 121 33 0 ]
 [a 2C 32 83 99 111 114 101 32 37 105 32 37 105 32 32 32 32 0 ]
 [a 1C 32 72 32 37 105 44 32 77 32 37 105 32 32 32 32 32 0 ]

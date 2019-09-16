@@ -27771,7 +27771,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "1.01");
+ sprintf(buffer, "SW %s Play!", "1.02");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  otto_b1.range = otto_b1.span - otto_b1.offset;
@@ -27861,20 +27861,23 @@ void main(void)
    IO.f2 = 1;
    IO.f3 = 1;
    if (TimerDone(TMR_SEQ)) {
-    if (otto_b1.result > -64)
+    if ((otto_b1.result > 0) && (IO.seq_value == 0))
     {
      IO.seq_current = 3;
      StartTimer(TMR_CHANGE, 30000);
+     IO.win = 1;
     }
-    if (TimerDone(TMR_SEQ))
+    if (TimerDone(TMR_CHANGE))
+    {
      IO.seq_current = 0;
+     IO.win = 1;
+    }
 
     IO.seq_value = IO.seq_current;
     if (IO.win) {
      IO.win = 0;
      IO.hits = 0;
      IO.misses = 0;
-     IO.clock = 0;
      IO.score = 50;
     }
    }
