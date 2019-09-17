@@ -45,7 +45,7 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "1.02"
+#define sw_version "1.03"
 /*
  * 1.01	Add auto game switching back to startup game
  * 

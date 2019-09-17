@@ -228,7 +228,7 @@ void main(void)
 					StartTimer(TMR_CHANGE, 30000); // trigger for at least 30 seconds
 					IO.win = true;
 				}
-				if (TimerDone(TMR_CHANGE)) // switch back to other game
+				if (TimerDone(TMR_CHANGE) && IO.seq_value == LED_BAL) // switch back to other game
 				{
 					IO.seq_current = CYLON;
 					IO.win = true;

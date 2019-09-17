@@ -2486,7 +2486,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 134:  Digital232_init();
 [e ( _Digital232_init ..  ]
 "135
-[; ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.02");
+[; ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.03");
 [e ( _sprintf (1 , (. , &U _buffer :s 3C :s 4C ]
 "136
 [; ;main.c: 136:  eaDogM_WriteStringAtPos(0, 0, buffer);
@@ -2781,8 +2781,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2234 ]
 "231
-[; ;main.c: 231:     if (TimerDone(TMR_CHANGE))
-[e $ ! != -> ( _TimerDone (1 -> . `E16436 8 `uc `i -> 0 `i 2235  ]
+[; ;main.c: 231:     if (TimerDone(TMR_CHANGE) && IO.seq_value == 3)
+[e $ ! && != -> ( _TimerDone (1 -> . `E16436 8 `uc `i -> 0 `i == -> . _IO 9 `i -> 3 `i 2235  ]
 "232
 [; ;main.c: 232:     {
 {
@@ -2838,7 +2838,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2210 ]
 }
 [p f _sprintf 8650880 ]
-[a 4C 49 46 48 50 0 ]
+[a 4C 49 46 48 51 0 ]
 [a 3C 83 87 32 37 115 32 80 108 97 121 33 0 ]
 [a 2C 32 83 99 111 114 101 32 37 105 32 37 105 32 32 32 32 0 ]
 [a 1C 32 72 32 37 105 44 32 77 32 37 105 32 32 32 32 32 0 ]
