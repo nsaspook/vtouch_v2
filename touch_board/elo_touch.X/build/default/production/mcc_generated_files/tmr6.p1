@@ -1,5 +1,5 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F15894 `(v ~T0 @X0 0 tf ]
+[v F15896 `(v ~T0 @X0 0 tf ]
 "40400 /opt/microchip/xc8/v2.10/pic/include/pic18f47k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f47k42.h: 40400: extern volatile unsigned char T6CLKCON __attribute__((address(0x3F96)));
 [v _T6CLKCON `Vuc ~T0 @X0 0 e@16278 ]
@@ -132,13 +132,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _PR6 `Vuc ~T0 @X0 0 e@16275 ]
 [t ~ __interrupt . k ]
 [t T1 __interrupt irq ( TMR6 ) base ( 8 ) ]
-[v F15917 `(v ~T0 @X0 0 tf ]
 [v F15919 `(v ~T0 @X0 0 tf ]
 [v F15921 `(v ~T0 @X0 0 tf ]
+[v F15923 `(v ~T0 @X0 0 tf ]
 "190 mcc_generated_files/tmr6.c
 [; ;mcc_generated_files/tmr6.c: 190:  for (i = 0; i < TMR_COUNT; i++) {
-[c E15874 0 1 2 3 4 5 6 7 .. ]
-[n E15874 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_EXTRA TMR_EXTRA_MISS TMR_SEQ TMR_COUNT  ]
+[c E15874 0 1 2 3 4 5 6 7 8 9 .. ]
+[n E15874 APP_TIMERS TMR_INTERNAL TMR_INIT TMR_RXTO TMR_SPS TMR_EXTRA TMR_EXTRA_MISS TMR_SEQ TMR_BAL TMR_CHANGE TMR_COUNT  ]
 "56
 [; ;mcc_generated_files/tmr6.c: 56: extern volatile uint16_t tickCount[TMR_COUNT];
 [v _tickCount `Vus ~T0 @X0 -> 0 `x e ]
@@ -2343,7 +2343,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "61 mcc_generated_files/tmr6.c
 [; ;mcc_generated_files/tmr6.c: 61: void (*TMR6_InterruptHandler)(void);
-[v _TMR6_InterruptHandler `*F15894 ~T0 @X0 1 e ]
+[v _TMR6_InterruptHandler `*F15896 ~T0 @X0 1 e ]
 "67
 [; ;mcc_generated_files/tmr6.c: 67: void TMR6_Initialize(void)
 [v _TMR6_Initialize `(v ~T0 @X0 1 ef ]
@@ -2615,7 +2615,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _PIR9bits 0 0 -> -> 0 `i `uc ]
 "174
 [; ;mcc_generated_files/tmr6.c: 174:  if (TMR6_InterruptHandler) {
-[e $ ! != _TMR6_InterruptHandler -> -> 0 `i `*F15917 2211  ]
+[e $ ! != _TMR6_InterruptHandler -> -> 0 `i `*F15919 2211  ]
 {
 "175
 [; ;mcc_generated_files/tmr6.c: 175:   TMR6_InterruptHandler();
@@ -2630,14 +2630,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 "179
 [; ;mcc_generated_files/tmr6.c: 179: void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
-[v _TMR6_SetInterruptHandler `(v ~T0 @X0 1 ef1`*F15919 ]
+[v _TMR6_SetInterruptHandler `(v ~T0 @X0 1 ef1`*F15921 ]
 "180
 [; ;mcc_generated_files/tmr6.c: 180: {
 {
 [e :U _TMR6_SetInterruptHandler ]
 "179
 [; ;mcc_generated_files/tmr6.c: 179: void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
-[v _InterruptHandler `*F15921 ~T0 @X0 1 r1 ]
+[v _InterruptHandler `*F15923 ~T0 @X0 1 r1 ]
 "180
 [; ;mcc_generated_files/tmr6.c: 180: {
 [f ]
@@ -2663,7 +2663,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/tmr6.c: 190:  for (i = 0; i < TMR_COUNT; i++) {
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> . `E15874 7 `i 2214  ]
+[e $ < -> _i `i -> . `E15874 9 `i 2214  ]
 [e $U 2215  ]
 [e :U 2214 ]
 {
@@ -2682,7 +2682,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/tmr6.c: 194:  }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> . `E15874 7 `i 2214  ]
+[e $ < -> _i `i -> . `E15874 9 `i 2214  ]
 [e :U 2215 ]
 }
 "195

@@ -27035,6 +27035,8 @@ enum APP_TIMERS {
  TMR_EXTRA,
  TMR_EXTRA_MISS,
  TMR_SEQ,
+ TMR_BAL,
+ TMR_CHANGE,
 
 
 
@@ -27045,7 +27047,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 73 "./d232.h"
+# 79 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27073,6 +27075,12 @@ typedef enum {
  S_UPDATE,
 } SRQ_STATE;
 
+typedef enum {
+ UP,
+ ON,
+ DOWN,
+} BAL_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
@@ -27081,10 +27089,12 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
- uint8_t srq_value, seq_value, hits, misses, score, stats;
- adc_result_t button_value;
+ BAL_STATE BAL;
+ uint8_t srq_value, seq_value, hits, misses, score, stats, rnd_count;
+ adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
+ int8_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -27140,6 +27150,7 @@ _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
 int16_t calc_pot(adc_result_t);
+float lp_filter(float, int16_t, int16_t);
 # 6 "eadog.c" 2
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
@@ -27201,7 +27212,7 @@ static void send_lcd_data(const uint8_t data)
 {
  do { LATCbits.LATC1 = 1; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
-  wdtdelay(9);
+ wdtdelay(9);
  SPI1_Exchange8bit(data);
 }
 

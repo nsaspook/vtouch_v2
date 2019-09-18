@@ -26937,6 +26937,8 @@ enum APP_TIMERS {
  TMR_EXTRA,
  TMR_EXTRA_MISS,
  TMR_SEQ,
+ TMR_BAL,
+ TMR_CHANGE,
 
 
 
@@ -26947,7 +26949,7 @@ __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
 # 47 "./d232.h" 2
-# 73 "./d232.h"
+# 79 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -26975,6 +26977,12 @@ typedef enum {
  S_UPDATE,
 } SRQ_STATE;
 
+typedef enum {
+ UP,
+ ON,
+ DOWN,
+} BAL_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
@@ -26983,10 +26991,12 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
- uint8_t srq_value, seq_value, hits, misses, score, stats;
- adc_result_t button_value;
+ BAL_STATE BAL;
+ uint8_t srq_value, seq_value, hits, misses, score, stats, rnd_count;
+ adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
+ int8_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -27042,6 +27052,7 @@ _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
 int16_t calc_pot(adc_result_t);
+float lp_filter(float, int16_t, int16_t);
 # 2 "d232.c" 2
 
 
@@ -27077,10 +27088,33 @@ void Digital232_init(void)
  StartTimer(TMR_SPS, 10);
 }
 
+float lp_filter(float new, int16_t bn, int16_t slow)
+{
+ float lp_speed, lp_x;
+ static float smooth[8];
+
+ if (bn > 7)
+  return new;
+ if (slow) {
+  lp_speed = 0.01;
+ } else {
+  lp_speed = 0.250;
+ }
+ lp_x = ((smooth[bn]*100.0) + (((new * 100.0)-(smooth[bn]*100.0)) * lp_speed)) / 100.0;
+ smooth[bn] = lp_x;
+ if (slow == (-1)) {
+  lp_x = 0.0;
+  smooth[bn] = 0.0;
+ }
+ return lp_x;
+}
+
 int16_t calc_pot(adc_result_t value)
 {
+ if (value < otto_b1.offset)
+  value = otto_b1.offset;
  otto_b1.result = (adc_result_t) ((float) (value - otto_b1.offset) * otto_b1.scalar);
- otto_b1.result = -127 + otto_b1.result;
+ otto_b1.result = -127 + otto_b1.result + (int8_t) lp_filter((float) IO.rnd, 0, 1);
  return otto_b1.result;
 }
 
@@ -27214,30 +27248,91 @@ void led_lightshow(uint8_t seq, uint16_t speed)
   return;
  }
 
- if (j++ >= speed) {
-  if (0) {
-   IO.outbytes[2] = ~cylon;
-  } else {
-   IO.outbytes[2] = cylon;
-  }
-
-  if (LED_UP && (alive_led != 0)) {
-   alive_led = alive_led * 2;
-   cylon = cylon << 1;
-  } else {
-   if (alive_led != 0) alive_led = alive_led / 2;
-   cylon = cylon >> 1;
-  }
-  if (alive_led < 2) {
-   alive_led = 2;
-   LED_UP = 1;
-  } else {
-   if (alive_led > 128) {
-    alive_led = 128;
-    LED_UP = 0;
+ if (seq == 0) {
+  if (j++ >= speed) {
+   if (0) {
+    IO.outbytes[2] = ~cylon;
+   } else {
+    IO.outbytes[2] = cylon;
    }
+
+   if (LED_UP && (alive_led != 0)) {
+    alive_led = alive_led * 2;
+    cylon = cylon << 1;
+   } else {
+    if (alive_led != 0) alive_led = alive_led / 2;
+    cylon = cylon >> 1;
+   }
+   if (alive_led < 2) {
+    alive_led = 2;
+    LED_UP = 1;
+   } else {
+    if (alive_led > 128) {
+     alive_led = 128;
+     LED_UP = 0;
+    }
+   }
+   j = 0;
   }
-  j = 0;
+ }
+
+ if (seq == 3) {
+
+  if (otto_b1.result <= -120) {
+   IO.outbytes[2] = 0b10000000;
+   IO.BAL = UP;
+  }
+  if (otto_b1.result > -120 && otto_b1.result < -80) {
+   IO.outbytes[2] = 0b01000000;
+   IO.BAL = UP;
+  }
+  if (otto_b1.result >= -80 && otto_b1.result < -30) {
+   IO.outbytes[2] = 0b00100000;
+   IO.BAL = UP;
+  }
+  if (otto_b1.result >= -30 && otto_b1.result < -5) {
+   if (IO.BAL != UP) {
+    IO.outbytes[1] = IO.outbytes[1] | 0x01;
+    IO.score--;
+    StartTimer(TMR_BAL, 500);
+   }
+   IO.outbytes[2] = 0b00010000;
+   IO.BAL = UP;
+  }
+  if (otto_b1.result >= -5 && otto_b1.result <= 5) {
+   if (IO.BAL != ON) {
+    IO.outbytes[1] = IO.outbytes[1] | 0x02;
+
+    if (TimerDone(TMR_BAL)) {
+     if (IO.score < 50)
+      IO.score++;
+    }
+    StartTimer(TMR_BAL, 500);
+   }
+   IO.outbytes[2] = 0b00000000;
+   IO.BAL = ON;
+  }
+  if (otto_b1.result > 5 && otto_b1.result < 30) {
+   if (IO.BAL != DOWN) {
+    IO.outbytes[1] = IO.outbytes[1] | 0x04;
+    StartTimer(TMR_BAL, 500);
+    IO.score--;
+   }
+   IO.outbytes[2] = 0b00001000;
+   IO.BAL = DOWN;
+  }
+  if (otto_b1.result >= 30 && otto_b1.result < 80) {
+   IO.outbytes[2] = 0b00000100;
+   IO.BAL = DOWN;
+  }
+  if (otto_b1.result >= 80 && otto_b1.result < 120) {
+   IO.outbytes[2] = 0b00000010;
+   IO.BAL = DOWN;
+  }
+  if (otto_b1.result >= 120) {
+   IO.outbytes[2] = 0b00000001;
+   IO.BAL = DOWN;
+  }
  }
 }
 

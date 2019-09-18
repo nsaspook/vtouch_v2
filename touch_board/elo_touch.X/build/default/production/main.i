@@ -27555,6 +27555,8 @@ enum APP_TIMERS {
  TMR_EXTRA,
  TMR_EXTRA_MISS,
  TMR_SEQ,
+ TMR_BAL,
+ TMR_CHANGE,
 
 
 
@@ -27567,7 +27569,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 73 "./d232.h"
+# 79 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27595,6 +27597,12 @@ typedef enum {
  S_UPDATE,
 } SRQ_STATE;
 
+typedef enum {
+ UP,
+ ON,
+ DOWN,
+} BAL_STATE;
+
 typedef struct A_data {
  uint8_t inbytes[5];
  uint8_t outbytes[5];
@@ -27603,10 +27611,12 @@ typedef struct A_data {
  IO_STATE io;
  D232_STATE d232;
  SRQ_STATE srq;
- uint8_t srq_value, seq_value, hits, misses, score, stats;
- adc_result_t button_value;
+ BAL_STATE BAL;
+ uint8_t srq_value, seq_value, hits, misses, score, stats, rnd_count;
+ adc_result_t button_value, seq_current;
  uint16_t speed, slower, clock;
  _Bool speed_update, sequence_done, win, f1, f2, f3, f4;
+ int8_t rnd;
 } A_data;
 
 typedef struct BPOT_type {
@@ -27662,6 +27672,7 @@ _Bool Digital232_RW(void);
 void led_lightshow(uint8_t, uint16_t);
 _Bool once(_Bool*);
 int16_t calc_pot(adc_result_t);
+float lp_filter(float, int16_t, int16_t);
 # 51 "main.c" 2
 
 # 1 "./eadog.h" 1
@@ -27686,6 +27697,7 @@ A_data IO = {
  .speed_update = 1,
  .sequence_done = 0,
  .seq_value = 0,
+ .seq_current = 0,
  .hits = 0,
  .misses = 0,
  .slower = 0,
@@ -27695,11 +27707,14 @@ A_data IO = {
  .f1 = 1,
  .f2 = 1,
  .f3 = 1,
+ .BAL = DOWN,
+ .rnd_count = 0,
 };
 
 BPOT_type otto_b1 = {
  .offset = 400,
  .span = 3700,
+ .result = -256,
 };
 
 IN_data *switches = (IN_data *) & IO.inbytes[0];
@@ -27711,7 +27726,7 @@ void work_sw(void)
  if (TimerDone(TMR_INIT)) {
   IO.clock++;
   sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-  sprintf(buffer[1], " Score %i %i %i    ", IO.score, otto_b1.result, IO.clock);
+  sprintf(buffer[1], " Score %i %i    ", IO.score, otto_b1.result);
   buffer[1][16] = 0;
   eaDogM_WriteStringAtPos(1, 0, buffer[0]);
   eaDogM_WriteStringAtPos(2, 0, buffer[1]);
@@ -27752,10 +27767,11 @@ void main(void)
 
  init_display();
  eaDogM_WriteCommand(0b00001100);
+ srand(99);
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "0.24");
+ sprintf(buffer, "SW %s Play!", "1.03");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  otto_b1.range = otto_b1.span - otto_b1.offset;
@@ -27784,7 +27800,6 @@ void main(void)
       IO.win = 1;
      }
      IO.speed_update = 0;
-
     }
    }
 
@@ -27802,7 +27817,6 @@ void main(void)
       IO.win = 1;
      }
      IO.speed_update = 0;
-
     }
    }
 
@@ -27813,7 +27827,6 @@ void main(void)
       if (IO.speed_update && (IO.misses++ > 26)) {
        if (IO.score-- < 10)
         IO.score = 10;
-
        IO.slower = 10;
        IO.speed_update = 0;
       }
@@ -27823,20 +27836,48 @@ void main(void)
   } else {
    StartTimer(TMR_EXTRA, 500);
    StartTimer(TMR_EXTRA_MISS, 25);
-   IO.outbytes[1] = IO.outbytes[1] & (~0x02);
-   IO.outbytes[1] = IO.outbytes[1] & (~0x04);
-   IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+   if (IO.seq_value == 0) {
+    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+   }
+
+   if (IO.seq_value == 3 && TimerDone(TMR_BAL)) {
+    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+
+
+
+    srand(IO.clock);
+    if (IO.rnd_count++ > 64) {
+     IO.rnd = rand();
+     IO.rnd = IO.rnd / 4;
+     IO.rnd_count = 0;
+    }
+   }
    IO.speed_update = 1;
    IO.f1 = 1;
    IO.f2 = 1;
    IO.f3 = 1;
    if (TimerDone(TMR_SEQ)) {
-    IO.seq_value = 0;
+    if ((otto_b1.result > 0) && (IO.seq_value == 0))
+    {
+     IO.seq_current = 3;
+     StartTimer(TMR_CHANGE, 30000);
+     IO.win = 1;
+    }
+    if (TimerDone(TMR_CHANGE) && IO.seq_value == 3)
+    {
+     IO.seq_current = 0;
+     IO.win = 1;
+    }
+
+    IO.seq_value = IO.seq_current;
     if (IO.win) {
      IO.win = 0;
      IO.hits = 0;
      IO.misses = 0;
-     IO.clock = 0;
      IO.score = 50;
     }
    }

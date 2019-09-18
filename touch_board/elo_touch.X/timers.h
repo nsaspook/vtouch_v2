@@ -17,6 +17,8 @@ enum APP_TIMERS {
 	TMR_EXTRA,
 	TMR_EXTRA_MISS,
 	TMR_SEQ,
+	TMR_BAL,
+	TMR_CHANGE,
 	//
 	//(Add timers here as needed)
 	//
