@@ -1532,6 +1532,14 @@ In this library the device names are the same as the pin names of the symbols, t
 <wire x1="55.88" y1="-10.16" x2="55.88" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="53.34" y="-10.16"/>
 <junction x="48.26" y="-22.86"/>
+<wire x1="55.88" y1="-10.16" x2="58.42" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="JP7" gate="A" pin="4"/>
+<wire x1="58.42" y1="-10.16" x2="60.96" y2="-10.16" width="0.1524" layer="91"/>
+<wire x1="60.96" y1="-10.16" x2="60.96" y2="-2.54" width="0.1524" layer="91"/>
+<pinref part="JP7" gate="A" pin="3"/>
+<wire x1="58.42" y1="-2.54" x2="58.42" y2="-10.16" width="0.1524" layer="91"/>
+<junction x="55.88" y="-10.16"/>
+<junction x="58.42" y="-10.16"/>
 </segment>
 <segment>
 <pinref part="JP4" gate="A" pin="10"/>
@@ -1548,14 +1556,16 @@ In this library the device names are the same as the pin names of the symbols, t
 <pinref part="SUPPLY5" gate="+5V" pin="+5V"/>
 </segment>
 <segment>
-<pinref part="JP7" gate="A" pin="3"/>
-<pinref part="SUPPLY11" gate="+5V" pin="+5V"/>
-<wire x1="58.42" y1="-2.54" x2="58.42" y2="-22.86" width="0.1524" layer="91"/>
-<junction x="58.42" y="-22.86"/>
-</segment>
-<segment>
 <pinref part="IC1" gate="G$1" pin="CD+"/>
 <pinref part="SUPPLY13" gate="+5V" pin="+5V"/>
+</segment>
+<segment>
+<pinref part="JP7" gate="A" pin="5"/>
+<wire x1="63.5" y1="-2.54" x2="63.5" y2="-20.32" width="0.1524" layer="91"/>
+<wire x1="63.5" y1="-20.32" x2="58.42" y2="-20.32" width="0.1524" layer="91"/>
+<pinref part="SUPPLY11" gate="+5V" pin="+5V"/>
+<wire x1="58.42" y1="-20.32" x2="58.42" y2="-22.86" width="0.1524" layer="91"/>
+<junction x="58.42" y="-22.86"/>
 </segment>
 </net>
 <net name="+10V" class="0">
@@ -1564,16 +1574,16 @@ In this library the device names are the same as the pin names of the symbols, t
 <pinref part="SUPPLY6" gate="G$1" pin="+10V"/>
 </segment>
 <segment>
-<pinref part="JP7" gate="A" pin="4"/>
-<wire x1="60.96" y1="-2.54" x2="60.96" y2="-22.86" width="0.1524" layer="91"/>
-<pinref part="SUPPLY12" gate="G$1" pin="+10V"/>
-<wire x1="60.96" y1="-22.86" x2="63.5" y2="-22.86" width="0.1524" layer="91"/>
-<junction x="63.5" y="-22.86"/>
-</segment>
-<segment>
 <pinref part="SG1" gate="G$1" pin="+"/>
 <pinref part="SUPPLY16" gate="G$1" pin="+10V"/>
 <junction x="73.66" y="43.18"/>
+</segment>
+<segment>
+<pinref part="JP7" gate="A" pin="7"/>
+<wire x1="68.58" y1="-2.54" x2="68.58" y2="-22.86" width="0.1524" layer="91"/>
+<pinref part="SUPPLY12" gate="G$1" pin="+10V"/>
+<wire x1="68.58" y1="-22.86" x2="63.5" y2="-22.86" width="0.1524" layer="91"/>
+<junction x="63.5" y="-22.86"/>
 </segment>
 </net>
 <net name="+24V" class="0">

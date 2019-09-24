@@ -12676,6 +12676,14 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="SUPPLY43" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="SUPPLY44" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+5V" device=""/>
 <part name="SUPPLY45" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+5V" device=""/>
+<part name="TP7" library="testpad" library_urn="urn:adsk.eagle:library:385" deviceset="TP" device="B2,54" package3d_urn="urn:adsk.eagle:package:27948/1"/>
+<part name="TP8" library="testpad" library_urn="urn:adsk.eagle:library:385" deviceset="TP" device="B2,54" package3d_urn="urn:adsk.eagle:package:27948/1"/>
+<part name="TP10" library="testpad" library_urn="urn:adsk.eagle:library:385" deviceset="TP" device="B2,54" package3d_urn="urn:adsk.eagle:package:27948/1"/>
+<part name="SUPPLY46" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+5V" device=""/>
+<part name="SUPPLY47" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+10V" device=""/>
+<part name="SUPPLY48" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+12V" device=""/>
+<part name="TP11" library="testpad" library_urn="urn:adsk.eagle:library:385" deviceset="TP" device="B2,54" package3d_urn="urn:adsk.eagle:package:27948/1"/>
+<part name="SUPPLY49" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+24V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13132,6 +13140,34 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="SUPPLY45" gate="+5V" x="76.2" y="106.68" smashed="yes" rot="R90">
 <attribute name="VALUE" x="73.025" y="104.775" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="TP7" gate="G$1" x="58.42" y="-43.18" smashed="yes">
+<attribute name="NAME" x="57.15" y="-41.91" size="1.778" layer="95"/>
+<attribute name="TP_SIGNAL_NAME" x="59.69" y="-44.45" size="1.778" layer="97"/>
+</instance>
+<instance part="TP8" gate="G$1" x="66.04" y="-43.18" smashed="yes">
+<attribute name="NAME" x="64.77" y="-41.91" size="1.778" layer="95"/>
+<attribute name="TP_SIGNAL_NAME" x="67.31" y="-44.45" size="1.778" layer="97"/>
+</instance>
+<instance part="TP10" gate="G$1" x="73.66" y="-43.18" smashed="yes">
+<attribute name="NAME" x="72.39" y="-41.91" size="1.778" layer="95"/>
+<attribute name="TP_SIGNAL_NAME" x="74.93" y="-44.45" size="1.778" layer="97"/>
+</instance>
+<instance part="SUPPLY46" gate="+5V" x="58.42" y="-48.26" smashed="yes" rot="R180">
+<attribute name="VALUE" x="60.325" y="-51.435" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="SUPPLY47" gate="G$1" x="66.04" y="-48.26" smashed="yes" rot="R180">
+<attribute name="VALUE" x="68.58" y="-51.435" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="SUPPLY48" gate="+12V" x="73.66" y="-48.26" smashed="yes" rot="R180">
+<attribute name="VALUE" x="76.2" y="-51.435" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="TP11" gate="G$1" x="81.28" y="-43.18" smashed="yes">
+<attribute name="NAME" x="80.01" y="-41.91" size="1.778" layer="95"/>
+<attribute name="TP_SIGNAL_NAME" x="82.55" y="-44.45" size="1.778" layer="97"/>
+</instance>
+<instance part="SUPPLY49" gate="+24V" x="81.28" y="-48.26" smashed="yes" rot="R180">
+<attribute name="VALUE" x="83.82" y="-51.435" size="1.778" layer="96" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -13193,6 +13229,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="X1" gate="-50" pin="S"/>
 <pinref part="SUPPLY20" gate="GND" pin="GND"/>
+<junction x="-43.18" y="-35.56"/>
 </segment>
 <segment>
 <pinref part="C1" gate="G$1" pin="2"/>
@@ -13331,6 +13368,11 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="TP5" gate="G$1" pin="TP"/>
 <pinref part="SUPPLY45" gate="+5V" pin="+5V"/>
 </segment>
+<segment>
+<pinref part="TP7" gate="G$1" pin="TP"/>
+<pinref part="SUPPLY46" gate="+5V" pin="+5V"/>
+<junction x="58.42" y="-45.72"/>
+</segment>
 </net>
 <net name="+10V" class="0">
 <segment>
@@ -13350,6 +13392,12 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="SUPPLY12" gate="G$1" pin="+10V"/>
 <wire x1="68.58" y1="-22.86" x2="63.5" y2="-22.86" width="0.1524" layer="91"/>
 <junction x="63.5" y="-22.86"/>
+</segment>
+<segment>
+<pinref part="SUPPLY47" gate="G$1" pin="+10V"/>
+<pinref part="SUPPLY47" gate="G$1" pin="+10V"/>
+<pinref part="TP8" gate="G$1" pin="TP"/>
+<junction x="66.04" y="-45.72"/>
 </segment>
 </net>
 <net name="+24V" class="0">
@@ -13387,6 +13435,11 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="SUPPLY33" gate="+24V" pin="+24V"/>
 <wire x1="129.54" y1="12.7" x2="129.54" y2="7.62" width="0.1524" layer="91"/>
 <junction x="129.54" y="7.62"/>
+</segment>
+<segment>
+<pinref part="TP11" gate="G$1" pin="TP"/>
+<pinref part="SUPPLY49" gate="+24V" pin="+24V"/>
+<junction x="81.28" y="-45.72"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -13897,6 +13950,11 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="71.12" y1="-2.54" x2="71.12" y2="-22.86" width="0.1524" layer="91"/>
 <pinref part="SUPPLY36" gate="+12V" pin="+12V"/>
 <junction x="71.12" y="-22.86"/>
+</segment>
+<segment>
+<pinref part="TP10" gate="G$1" pin="TP"/>
+<pinref part="SUPPLY48" gate="+12V" pin="+12V"/>
+<junction x="73.66" y="-45.72"/>
 </segment>
 </net>
 <net name="N$40" class="0">
