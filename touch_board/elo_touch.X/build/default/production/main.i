@@ -27785,7 +27785,7 @@ void main(void)
    led_lightshow(IO.seq_value, 1);
 
   if (!switches->detonator) {
-   IO.outbytes[1] = IO.outbytes[1] | 0x02;
+   IO.outbytes[1] = IO.outbytes[1] | 0x01;
    if (IO.outbytes[2]&0b00000001) {
     if (TimerDone(TMR_EXTRA)) {
      IO.outbytes[1] = IO.outbytes[1] | 0x04;
@@ -27805,7 +27805,7 @@ void main(void)
 
    if (IO.outbytes[2]&0b10000000) {
     if (TimerDone(TMR_EXTRA)) {
-     IO.outbytes[1] = IO.outbytes[1] | 0x01;
+     IO.outbytes[1] = IO.outbytes[1] | 0x02;
      if (once(&IO.f2))
       IO.hits++;
      if (IO.speed_update && IO.speed-- < 2) {
@@ -27837,15 +27837,15 @@ void main(void)
    StartTimer(TMR_EXTRA, 500);
    StartTimer(TMR_EXTRA_MISS, 25);
    if (IO.seq_value == 0) {
-    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
-    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
    }
 
    if (IO.seq_value == 3 && TimerDone(TMR_BAL)) {
-    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
-    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x04);
+    IO.outbytes[1] = IO.outbytes[1] & (~0x02);
 
 
 

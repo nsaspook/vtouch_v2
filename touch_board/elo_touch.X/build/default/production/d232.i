@@ -27292,7 +27292,7 @@ void led_lightshow(uint8_t seq, uint16_t speed)
   }
   if (otto_b1.result >= -30 && otto_b1.result < -5) {
    if (IO.BAL != UP) {
-    IO.outbytes[1] = IO.outbytes[1] | 0x01;
+    IO.outbytes[1] = IO.outbytes[1] | 0x02;
     IO.score--;
     StartTimer(TMR_BAL, 500);
    }
@@ -27301,7 +27301,7 @@ void led_lightshow(uint8_t seq, uint16_t speed)
   }
   if (otto_b1.result >= -5 && otto_b1.result <= 5) {
    if (IO.BAL != ON) {
-    IO.outbytes[1] = IO.outbytes[1] | 0x02;
+    IO.outbytes[1] = IO.outbytes[1] | 0x01;
 
     if (TimerDone(TMR_BAL)) {
      if (IO.score < 50)
