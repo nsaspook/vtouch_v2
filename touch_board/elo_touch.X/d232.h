@@ -45,11 +45,15 @@
 #include "mcc_generated_files/pwm8.h"
 #include "timers.h"
 
-#define sw_version "1.01"
+#define sw_version "1.04"
 /*
  * 1.01	Add auto game switching back to startup game
+ * 1.04 define output ports for led and source
  * 
  */
+
+#define LPORT	1	// prototype 2
+#define SPORT	2	// prototype 1
 
 #define RST	"XQ\r"
 #define CNF	"C4\r"

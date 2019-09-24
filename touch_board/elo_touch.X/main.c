@@ -222,20 +222,23 @@ void main(void)
 			IO.f2 = true;
 			IO.f3 = true;
 			if (TimerDone(TMR_SEQ)) {
-				if (otto_b1.result > -64) // watch for OTTO vari-button pushes
+				if ((otto_b1.result > 0) && (IO.seq_value == CYLON)) // watch for OTTO vari-button pushes
 				{
 					IO.seq_current = LED_BAL;
 					StartTimer(TMR_CHANGE, 30000); // trigger for at least 30 seconds
+					IO.win = true;
 				}
-				if (TimerDone(TMR_SEQ)) // switch back to other game
+				if (TimerDone(TMR_CHANGE) && IO.seq_value == LED_BAL) // switch back to other game
+				{
 					IO.seq_current = CYLON;
+					IO.win = true;
+				}
 
 				IO.seq_value = IO.seq_current;
 				if (IO.win) {
 					IO.win = false;
 					IO.hits = 0;
 					IO.misses = 0;
-					IO.clock = 0;
 					IO.score = 50;
 				}
 			}

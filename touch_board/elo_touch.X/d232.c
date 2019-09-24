@@ -120,8 +120,8 @@ bool Digital232_RW(void)
 	UART2_Write('D');
 	UART2_Write(IO.outbytes[4]); // port 5 first
 	UART2_Write(IO.outbytes[3]);
-	UART2_Write(IO.outbytes[2]);
 	UART2_Write(IO.outbytes[1]);
+	UART2_Write(IO.outbytes[2]);
 	UART2_Write(IO.outbytes[0]);
 	UART2_Write('\r');
 	printf("%s", DRD);
