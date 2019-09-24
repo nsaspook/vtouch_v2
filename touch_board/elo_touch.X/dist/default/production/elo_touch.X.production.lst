@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Mon Sep 23 21:07:31 2019
+                                                                                               Tue Sep 24 15:22:32 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F47K42
@@ -1643,9 +1643,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1619  002162  D0C4               	goto	l7828
   1620                           
   1621                           ; BSR set to: 1
-  1622                           ;main.c: 149:    IO.outbytes[1] = IO.outbytes[1] | 0x02;
+  1622                           ;main.c: 149:    IO.outbytes[1] = IO.outbytes[1] | 0x01;
   1623  002164  51AF               	movf	(_IO+6)& (0+255),w,b
-  1624  002166  0902               	iorlw	2
+  1624  002166  0901               	iorlw	1
   1625  002168  6FAF               	movwf	(_IO+6)& (0+255),b
   1626                           
   1627                           ; BSR set to: 1
@@ -1760,10 +1760,10 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1736  0021FC  B4D8               	btfsc	status,2,c
   1737  0021FE  D03A               	goto	l7812
   1738                           
-  1739                           ;main.c: 169:      IO.outbytes[1] = IO.outbytes[1] | 0x01;
+  1739                           ;main.c: 169:      IO.outbytes[1] = IO.outbytes[1] | 0x02;
   1740  002200  0101               	movlb	1	; () banked
   1741  002202  51AF               	movf	(_IO+6)& (0+255),w,b
-  1742  002204  0901               	iorlw	1
+  1742  002204  0902               	iorlw	2
   1743  002206  6FAF               	movwf	(_IO+6)& (0+255),b
   1744                           
   1745                           ; BSR set to: 1
@@ -1950,9 +1950,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1926  00230E  D009               	goto	l1089
   1927                           
   1928                           ; BSR set to: 1
-  1929                           ;main.c: 201:     IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+  1929                           ;main.c: 201:     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
   1930  002310  51AF               	movf	(_IO+6)& (0+255),w,b
-  1931  002312  0BFD               	andlw	253
+  1931  002312  0BFE               	andlw	254
   1932  002314  6FAF               	movwf	(_IO+6)& (0+255),b
   1933                           
   1934                           ;main.c: 202:     IO.outbytes[1] = IO.outbytes[1] & (~0x04);
@@ -1960,9 +1960,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1936  002318  0BFB               	andlw	251
   1937  00231A  6FAF               	movwf	(_IO+6)& (0+255),b
   1938                           
-  1939                           ;main.c: 203:     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+  1939                           ;main.c: 203:     IO.outbytes[1] = IO.outbytes[1] & (~0x02);
   1940  00231C  51AF               	movf	(_IO+6)& (0+255),w,b
-  1941  00231E  0BFE               	andlw	254
+  1941  00231E  0BFD               	andlw	253
   1942  002320  6FAF               	movwf	(_IO+6)& (0+255),b
   1943  002322                     l1089:
   1944                           
@@ -1980,10 +1980,10 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1956  002332  B4D8               	btfsc	status,2,c
   1957  002334  D031               	goto	l7848
   1958                           
-  1959                           ;main.c: 207:     IO.outbytes[1] = IO.outbytes[1] & (~0x02);
+  1959                           ;main.c: 207:     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
   1960  002336  0101               	movlb	1	; () banked
   1961  002338  51AF               	movf	(_IO+6)& (0+255),w,b
-  1962  00233A  0BFD               	andlw	253
+  1962  00233A  0BFE               	andlw	254
   1963  00233C  6FAF               	movwf	(_IO+6)& (0+255),b
   1964                           
   1965                           ;main.c: 208:     IO.outbytes[1] = IO.outbytes[1] & (~0x04);
@@ -1991,9 +1991,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1967  002340  0BFB               	andlw	251
   1968  002342  6FAF               	movwf	(_IO+6)& (0+255),b
   1969                           
-  1970                           ;main.c: 209:     IO.outbytes[1] = IO.outbytes[1] & (~0x01);
+  1970                           ;main.c: 209:     IO.outbytes[1] = IO.outbytes[1] & (~0x02);
   1971  002344  51AF               	movf	(_IO+6)& (0+255),w,b
-  1972  002346  0BFE               	andlw	254
+  1972  002346  0BFD               	andlw	253
   1973  002348  6FAF               	movwf	(_IO+6)& (0+255),b
   1974                           
   1975                           ; BSR set to: 1
@@ -3355,9 +3355,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3235  002C7A  D00B               	goto	l7652
   3236                           
   3237                           ; BSR set to: 1
-  3238                           ;d232.c: 240:     IO.outbytes[1] = IO.outbytes[1] | 0x01;
+  3238                           ;d232.c: 240:     IO.outbytes[1] = IO.outbytes[1] | 0x02;
   3239  002C7C  51AF               	movf	(_IO+6)& (0+255),w,b
-  3240  002C7E  0901               	iorlw	1
+  3240  002C7E  0902               	iorlw	2
   3241  002C80  6FAF               	movwf	(_IO+6)& (0+255),b
   3242                           
   3243                           ; BSR set to: 1
@@ -3415,9 +3415,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3295  002CC0  D015               	goto	l7672
   3296                           
   3297                           ; BSR set to: 1
-  3298                           ;d232.c: 249:     IO.outbytes[1] = IO.outbytes[1] | 0x02;
+  3298                           ;d232.c: 249:     IO.outbytes[1] = IO.outbytes[1] | 0x01;
   3299  002CC2  51AF               	movf	(_IO+6)& (0+255),w,b
-  3300  002CC4  0902               	iorlw	2
+  3300  002CC4  0901               	iorlw	1
   3301  002CC6  6FAF               	movwf	(_IO+6)& (0+255),b
   3302                           
   3303                           ; BSR set to: 1
@@ -17086,7 +17086,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Mon Sep 23 21:07:31 2019
+Symbol Table                                                                                   Tue Sep 24 15:22:32 2019
 
                            _SPI1_Exchange8bit 5346                                  ___fldiv@aexp 004F  
                                 ___fldiv@bexp 004E              __end_of_TMR5_SetInterruptHandler 549A  
