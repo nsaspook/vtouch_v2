@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Tue Sep 17 17:36:29 2019
+                                                                                               Mon Sep 23 21:07:31 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F47K42
@@ -481,7 +481,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
    467  00202F  31                 	db	49	;'1'
    468  002030  2E                 	db	46
    469  002031  30                 	db	48	;'0'
-   470  002032  33                 	db	51	;'3'
+   470  002032  34                 	db	52	;'4'
    471  002033  00                 	db	0
    472  002034                     STR_16:
    473                           
@@ -1543,7 +1543,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1519                           ;main.c: 134:  Digital232_init();
   1520  002094  ECCA  F020         	call	_Digital232_init	;wreg free
   1521                           
-  1522                           ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.03");
+  1522                           ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.04");
   1523  002098  0E84               	movlw	low main@buffer
   1524  00209A  0100               	movlb	0	; () banked
   1525  00209C  6F64               	movwf	sprintf@s& (0+255),b
@@ -7323,14 +7323,14 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6828  0036C0  51B1               	movf	(_IO+8)& (0+255),w,b
   6829  0036C2  ECDF  F026         	call	_UART2_Write
   6830                           
-  6831                           ;d232.c: 123:  UART2_Write(IO.outbytes[2]);
+  6831                           ;d232.c: 123:  UART2_Write(IO.outbytes[1]);
   6832  0036C6  0101               	movlb	1	; () banked
-  6833  0036C8  51B0               	movf	(_IO+7)& (0+255),w,b
+  6833  0036C8  51AF               	movf	(_IO+6)& (0+255),w,b
   6834  0036CA  ECDF  F026         	call	_UART2_Write
   6835                           
-  6836                           ;d232.c: 124:  UART2_Write(IO.outbytes[1]);
+  6836                           ;d232.c: 124:  UART2_Write(IO.outbytes[2]);
   6837  0036CE  0101               	movlb	1	; () banked
-  6838  0036D0  51AF               	movf	(_IO+6)& (0+255),w,b
+  6838  0036D0  51B0               	movf	(_IO+7)& (0+255),w,b
   6839  0036D2  ECDF  F026         	call	_UART2_Write
   6840                           
   6841                           ;d232.c: 125:  UART2_Write(IO.outbytes[0]);
@@ -17086,7 +17086,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Tue Sep 17 17:36:29 2019
+Symbol Table                                                                                   Mon Sep 23 21:07:31 2019
 
                            _SPI1_Exchange8bit 5346                                  ___fldiv@aexp 004F  
                                 ___fldiv@bexp 004E              __end_of_TMR5_SetInterruptHandler 549A  
