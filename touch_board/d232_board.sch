@@ -13475,6 +13475,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-10.16" y1="50.8" x2="-10.16" y2="81.28" width="0.1524" layer="91"/>
 <wire x1="-10.16" y1="81.28" x2="10.16" y2="81.28" width="0.1524" layer="91"/>
 <junction x="10.16" y="81.28"/>
+<junction x="-66.04" y="66.04"/>
 </segment>
 </net>
 <net name="N$10" class="0">
@@ -13491,6 +13492,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-7.62" y1="48.26" x2="-7.62" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="-7.62" y1="78.74" x2="10.16" y2="78.74" width="0.1524" layer="91"/>
 <junction x="10.16" y="78.74"/>
+<junction x="-43.18" y="66.04"/>
 </segment>
 </net>
 <net name="N$11" class="0">
@@ -13507,6 +13509,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-5.08" y1="43.18" x2="-5.08" y2="76.2" width="0.1524" layer="91"/>
 <wire x1="-5.08" y1="76.2" x2="10.16" y2="76.2" width="0.1524" layer="91"/>
 <junction x="10.16" y="76.2"/>
+<junction x="-66.04" y="60.96"/>
 </segment>
 </net>
 <net name="N$12" class="0">
@@ -13515,12 +13518,14 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="IC1" gate="G$1" pin="I4"/>
 <wire x1="10.16" y1="73.66" x2="27.94" y2="73.66" width="0.1524" layer="91"/>
 <junction x="27.94" y="73.66"/>
-<wire x1="-38.1" y1="60.96" x2="-27.94" y2="60.96" width="0.1524" layer="91"/>
 <wire x1="-27.94" y1="60.96" x2="-27.94" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="-27.94" y1="45.72" x2="-2.54" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="-2.54" y1="45.72" x2="-2.54" y2="73.66" width="0.1524" layer="91"/>
 <wire x1="-2.54" y1="73.66" x2="10.16" y2="73.66" width="0.1524" layer="91"/>
 <junction x="10.16" y="73.66"/>
+<pinref part="X1" gate="-12" pin="S"/>
+<wire x1="-27.94" y1="60.96" x2="-43.18" y2="60.96" width="0.1524" layer="91"/>
+<junction x="-43.18" y="60.96"/>
 </segment>
 </net>
 <net name="N$13" class="0">
@@ -13529,14 +13534,18 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="IC1" gate="G$1" pin="I5"/>
 <wire x1="10.16" y1="71.12" x2="27.94" y2="71.12" width="0.1524" layer="91"/>
 <junction x="27.94" y="71.12"/>
-<wire x1="-60.96" y1="55.88" x2="-53.34" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="-53.34" y1="55.88" x2="-53.34" y2="93.98" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="53.34" x2="-53.34" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="-53.34" y1="93.98" x2="-2.54" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="-2.54" y1="93.98" x2="-2.54" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="-2.54" y1="88.9" x2="0" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="0" y1="88.9" x2="0" y2="71.12" width="0.1524" layer="91"/>
 <wire x1="0" y1="71.12" x2="10.16" y2="71.12" width="0.1524" layer="91"/>
 <junction x="10.16" y="71.12"/>
+<pinref part="X1" gate="-13" pin="S"/>
+<wire x1="-66.04" y1="55.88" x2="-71.12" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="-71.12" y1="55.88" x2="-71.12" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="-71.12" y1="53.34" x2="-53.34" y2="53.34" width="0.1524" layer="91"/>
+<junction x="-66.04" y="55.88"/>
 </segment>
 </net>
 <net name="N$14" class="0">
@@ -13553,6 +13562,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="2.54" y1="96.52" x2="2.54" y2="68.58" width="0.1524" layer="91"/>
 <wire x1="2.54" y1="68.58" x2="10.16" y2="68.58" width="0.1524" layer="91"/>
 <junction x="10.16" y="68.58"/>
+<junction x="-43.18" y="55.88"/>
 </segment>
 </net>
 <net name="N$15" class="0">
@@ -13563,12 +13573,16 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="17.78" y1="66.04" x2="27.94" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="66.04" x2="30.48" y2="66.04" width="0.1524" layer="91"/>
 <junction x="27.94" y="66.04"/>
-<wire x1="-60.96" y1="50.8" x2="-50.8" y2="50.8" width="0.1524" layer="91"/>
-<wire x1="-50.8" y1="50.8" x2="-50.8" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="-50.8" y1="48.26" x2="-50.8" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="-50.8" y1="99.06" x2="17.78" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="17.78" y1="99.06" x2="17.78" y2="66.04" width="0.1524" layer="91"/>
 <junction x="17.78" y="66.04"/>
 <junction x="10.16" y="66.04"/>
+<pinref part="X1" gate="-15" pin="S"/>
+<wire x1="-66.04" y1="50.8" x2="-71.12" y2="50.8" width="0.1524" layer="91"/>
+<wire x1="-71.12" y1="50.8" x2="-71.12" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="-71.12" y1="48.26" x2="-50.8" y2="48.26" width="0.1524" layer="91"/>
+<junction x="-66.04" y="50.8"/>
 </segment>
 </net>
 <net name="N$16" class="0">
@@ -13586,6 +13600,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="20.32" y1="63.5" x2="22.86" y2="63.5" width="0.1524" layer="91"/>
 <junction x="20.32" y="63.5"/>
 <junction x="10.16" y="63.5"/>
+<junction x="-43.18" y="50.8"/>
 </segment>
 </net>
 <net name="N$17" class="0">
@@ -13603,6 +13618,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="5.08" y1="35.56" x2="5.08" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="5.08" y1="33.02" x2="10.16" y2="33.02" width="0.1524" layer="91"/>
 <junction x="10.16" y="33.02"/>
+<junction x="-66.04" y="45.72"/>
 </segment>
 </net>
 <net name="N$18" class="0">
@@ -13617,6 +13633,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-33.02" y1="43.18" x2="-33.02" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="-33.02" y1="30.48" x2="10.16" y2="30.48" width="0.1524" layer="91"/>
 <junction x="10.16" y="30.48"/>
+<junction x="-43.18" y="45.72"/>
 </segment>
 </net>
 <net name="N$19" class="0">
@@ -13626,10 +13643,14 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="IC2" gate="G$1" pin="I3"/>
 <junction x="27.94" y="27.94"/>
 <wire x1="27.94" y1="27.94" x2="30.48" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="-60.96" y1="40.64" x2="-53.34" y2="40.64" width="0.1524" layer="91"/>
-<wire x1="-53.34" y1="40.64" x2="-53.34" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="-53.34" y1="38.1" x2="-53.34" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="-53.34" y1="27.94" x2="10.16" y2="27.94" width="0.1524" layer="91"/>
 <junction x="10.16" y="27.94"/>
+<pinref part="X1" gate="-19" pin="S"/>
+<wire x1="-66.04" y1="40.64" x2="-68.58" y2="40.64" width="0.1524" layer="91"/>
+<wire x1="-68.58" y1="40.64" x2="-68.58" y2="38.1" width="0.1524" layer="91"/>
+<wire x1="-68.58" y1="38.1" x2="-53.34" y2="38.1" width="0.1524" layer="91"/>
+<junction x="-66.04" y="40.64"/>
 </segment>
 </net>
 <net name="N$20" class="0">
@@ -13645,6 +13666,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-25.4" y1="17.78" x2="-25.4" y2="25.4" width="0.1524" layer="91"/>
 <wire x1="-25.4" y1="25.4" x2="10.16" y2="25.4" width="0.1524" layer="91"/>
 <junction x="10.16" y="25.4"/>
+<junction x="-43.18" y="40.64"/>
 </segment>
 </net>
 <net name="N$21" class="0">
@@ -13660,6 +13682,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-22.86" y1="12.7" x2="-22.86" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="-22.86" y1="22.86" x2="10.16" y2="22.86" width="0.1524" layer="91"/>
 <junction x="10.16" y="22.86"/>
+<junction x="-66.04" y="35.56"/>
 </segment>
 </net>
 <net name="N$22" class="0">
@@ -13736,6 +13759,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-63.5" y1="91.44" x2="-63.5" y2="106.68" width="0.1524" layer="91"/>
 <junction x="-63.5" y="91.44"/>
 <junction x="-63.5" y="106.68"/>
+<junction x="-66.04" y="86.36"/>
 </segment>
 </net>
 <net name="N$29" class="0">
@@ -13752,6 +13776,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="35.56" y1="91.44" x2="-7.62" y2="91.44" width="0.1524" layer="91"/>
 <junction x="-22.86" y="88.9"/>
+<junction x="-43.18" y="86.36"/>
 </segment>
 </net>
 <net name="N$30" class="0">
@@ -13768,6 +13793,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-27.94" y1="104.14" x2="27.94" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="R10" gate="G$1" pin="1"/>
 <junction x="-27.94" y="83.82"/>
+<junction x="-66.04" y="81.28"/>
 </segment>
 </net>
 <net name="N$31" class="0">
@@ -13786,6 +13812,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-55.88" y1="104.14" x2="-55.88" y2="106.68" width="0.1524" layer="91"/>
 <junction x="-30.48" y="78.74"/>
 <junction x="-55.88" y="106.68"/>
+<junction x="-43.18" y="81.28"/>
 </segment>
 </net>
 <net name="N$32" class="0">
@@ -13964,10 +13991,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <approved hash="101,1,-43.18,76.2,X1-6,S,,,,"/>
 <approved hash="101,1,-66.04,71.12,X1-7,S,,,,"/>
 <approved hash="101,1,-43.18,71.12,X1-8,S,,,,"/>
-<approved hash="101,1,-43.18,60.96,X1-12,S,,,,"/>
-<approved hash="101,1,-66.04,55.88,X1-13,S,,,,"/>
-<approved hash="101,1,-66.04,50.8,X1-15,S,,,,"/>
-<approved hash="101,1,-66.04,40.64,X1-19,S,,,,"/>
 <approved hash="101,1,-43.18,35.56,X1-22,S,,,,"/>
 <approved hash="101,1,-66.04,30.48,X1-23,S,,,,"/>
 <approved hash="101,1,-43.18,30.48,X1-24,S,,,,"/>
