@@ -64,9 +64,9 @@
 
 #define SLED	LED_RSET_LAT
 
-#define CHIRP	0x02
+#define CHIRP	0x01
 #define WARP	0x04
-#define SIREN	0x01
+#define SIREN	0x02
 
 #define	DEFAULT_SEQ	0
 #define DEBUG_SEQ	1
