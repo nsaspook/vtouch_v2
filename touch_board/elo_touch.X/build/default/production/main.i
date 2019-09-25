@@ -27771,7 +27771,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "1.04");
+ sprintf(buffer, "SW %s Play!", "1.05");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  otto_b1.range = otto_b1.span - otto_b1.offset;
