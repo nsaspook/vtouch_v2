@@ -27569,7 +27569,7 @@ void WaitMs(uint16_t numMilliseconds);
 # 50 "main.c" 2
 
 # 1 "./d232.h" 1
-# 83 "./d232.h"
+# 84 "./d232.h"
 typedef enum {
  D232_IDLE,
  D232_INIT,
@@ -27771,7 +27771,7 @@ void main(void)
 
  StartTimer(TMR_INIT, 1000);
  Digital232_init();
- sprintf(buffer, "SW %s Play!", "1.05");
+ sprintf(buffer, "SW %s Play!", "1.06");
  eaDogM_WriteStringAtPos(0, 0, buffer);
 
  otto_b1.range = otto_b1.span - otto_b1.offset;
