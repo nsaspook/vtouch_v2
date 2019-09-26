@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Tue Sep 24 21:01:44 2019
+                                                                                               Wed Sep 25 22:42:47 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F47K42
@@ -481,7 +481,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
    467  00202F  31                 	db	49	;'1'
    468  002030  2E                 	db	46
    469  002031  30                 	db	48	;'0'
-   470  002032  35                 	db	53	;'5'
+   470  002032  36                 	db	54	;'6'
    471  002033  00                 	db	0
    472  002034                     STR_16:
    473                           
@@ -1543,7 +1543,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1519                           ;main.c: 134:  Digital232_init();
   1520  002094  ECCA  F020         	call	_Digital232_init	;wreg free
   1521                           
-  1522                           ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.05");
+  1522                           ;main.c: 135:  sprintf(buffer, "SW %s Play!", "1.06");
   1523  002098  0E84               	movlw	low main@buffer
   1524  00209A  0100               	movlb	0	; () banked
   1525  00209C  6F64               	movwf	sprintf@s& (0+255),b
@@ -2926,7 +2926,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2830                           
   2831 ;; *************** function _once *****************
   2832 ;; Defined at:
-  2833 ;;		line 284 in file "d232.c"
+  2833 ;;		line 287 in file "d232.c"
   2834 ;; Parameters:    Size  Location     Type
   2835 ;;  once_flag       2    5[COMRAM] PTR _Bool 
   2836 ;;		 -> IO(41), 
@@ -2971,7 +2971,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2865  0050F6                     _once:
   2866                           	opt callstack 26
   2867                           
-  2868                           ;d232.c: 284: _Bool once(_Bool *once_flag);d232.c: 285: {;d232.c: 286:  if (*once_flag) 
+  2868                           ;d232.c: 287: _Bool once(_Bool *once_flag);d232.c: 288: {;d232.c: 289:  if (*once_flag) 
       +                          {
   2869                           
   2870                           ; BSR set to: 0
@@ -2982,18 +2982,18 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2875  005104  B4D8               	btfsc	status,2,c
   2876  005106  D00A               	goto	l7718
   2877                           
-  2878                           ;d232.c: 287:   *once_flag = 0;
+  2878                           ;d232.c: 290:   *once_flag = 0;
   2879  005108  0060  F01B  FFD9   	movff	once@once_flag,fsr2l
   2880  00510E  0060  F01F  FFDA   	movff	once@once_flag+1,fsr2h
   2881  005114  0E00               	movlw	0
   2882  005116  6EDF               	movwf	indf2,c
   2883                           
-  2884                           ;d232.c: 288:   return 1;
+  2884                           ;d232.c: 291:   return 1;
   2885  005118  0E01               	movlw	1
   2886  00511A  0012               	return	
   2887  00511C                     l7718:
   2888                           
-  2889                           ;d232.c: 291:   return 0;
+  2889                           ;d232.c: 294:   return 0;
   2890  00511C  0E00               	movlw	0
   2891  00511E  0012               	return		;funcret
   2892  005120                     __end_of_once:
@@ -3001,7 +3001,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2894                           
   2895 ;; *************** function _led_lightshow *****************
   2896 ;; Defined at:
-  2897 ;;		line 175 in file "d232.c"
+  2897 ;;		line 178 in file "d232.c"
   2898 ;; Parameters:    Size  Location     Type
   2899 ;;  seq             1    wreg     unsigned char 
   2900 ;;  speed           2   13[COMRAM] unsigned short 
@@ -3052,40 +3052,40 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2935                           ;led_lightshow@seq stored from wreg
   2936  002AF4  6E12               	movwf	led_lightshow@seq^0,c
   2937                           
-  2938                           ;d232.c: 175: void led_lightshow(uint8_t seq, uint16_t speed);d232.c: 176: {;d232.c: 177
-      +                          :  static uint16_t j = 0;;d232.c: 178:  static uint8_t cylon = 0xff;;d232.c: 179:  stati
-      +                          c int16_t alive_led = 0;;d232.c: 180:  static _Bool LED_UP = 1;;d232.c: 182:  if (seq ==
+  2938                           ;d232.c: 178: void led_lightshow(uint8_t seq, uint16_t speed);d232.c: 179: {;d232.c: 180
+      +                          :  static uint16_t j = 0;;d232.c: 181:  static uint8_t cylon = 0xff;;d232.c: 182:  stati
+      +                          c int16_t alive_led = 0;;d232.c: 183:  static _Bool LED_UP = 1;;d232.c: 185:  if (seq ==
       +                           1) {
   2939  002AF6  0412               	decf	led_lightshow@seq^0,w,c
   2940  002AF8  A4D8               	btfss	status,2,c
   2941  002AFA  D003               	goto	l7582
   2942                           
-  2943                           ;d232.c: 183:   IO.outbytes[2] = IO.inbytes[0];
+  2943                           ;d232.c: 186:   IO.outbytes[2] = IO.inbytes[0];
   2944  002AFC  C1A9  F1B0         	movff	_IO,_IO+7
   2945                           
-  2946                           ;d232.c: 184:   return;
+  2946                           ;d232.c: 187:   return;
   2947  002B00  0012               	return	
   2948  002B02                     l7582:
   2949                           
-  2950                           ;d232.c: 187:  if (seq == 2) {
+  2950                           ;d232.c: 190:  if (seq == 2) {
   2951  002B02  0E02               	movlw	2
   2952  002B04  1812               	xorwf	led_lightshow@seq^0,w,c
   2953  002B06  A4D8               	btfss	status,2,c
   2954  002B08  D010               	goto	l7594
   2955                           
-  2956                           ;d232.c: 188:   if (IO.sequence_done) {
+  2956                           ;d232.c: 191:   if (IO.sequence_done) {
   2957  002B0A  0101               	movlb	1	; () banked
   2958  002B0C  51CB               	movf	(_IO+34)& (0+255),w,b
   2959  002B0E  B4D8               	btfsc	status,2,c
   2960  002B10  D009               	goto	l7590
   2961                           
   2962                           ; BSR set to: 1
-  2963                           ;d232.c: 189:    IO.sequence_done = 0;
+  2963                           ;d232.c: 192:    IO.sequence_done = 0;
   2964  002B12  0E00               	movlw	0
   2965  002B14  6FCB               	movwf	(_IO+34)& (0+255),b
   2966                           
   2967                           ; BSR set to: 1
-  2968                           ;d232.c: 190:    StartTimer(TMR_SEQ, 30000);
+  2968                           ;d232.c: 193:    StartTimer(TMR_SEQ, 30000);
   2969  002B16  0E75               	movlw	117
   2970  002B18  6E07               	movwf	(StartTimer@count+1)^0,c
   2971  002B1A  0E30               	movlw	48
@@ -3094,18 +3094,18 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2974  002B20  EC03  F028         	call	_StartTimer
   2975  002B24                     l7590:
   2976                           
-  2977                           ;d232.c: 192:   IO.outbytes[2]++;
+  2977                           ;d232.c: 195:   IO.outbytes[2]++;
   2978  002B24  0101               	movlb	1	; () banked
   2979  002B26  2BB0               	incf	(_IO+7)& (0+255),f,b
   2980  002B28  0012               	return	
   2981  002B2A                     l7594:
   2982                           
-  2983                           ;d232.c: 196:  if (seq == 0) {
+  2983                           ;d232.c: 199:  if (seq == 0) {
   2984  002B2A  5012               	movf	led_lightshow@seq^0,w,c
   2985  002B2C  A4D8               	btfss	status,2,c
   2986  002B2E  D05A               	goto	l7622
   2987                           
-  2988                           ;d232.c: 197:   if (j++ >= speed) {
+  2988                           ;d232.c: 200:   if (j++ >= speed) {
   2989  002B30  0101               	movlb	1	; () banked
   2990  002B32  518E               	movf	led_lightshow@j& (0+255),w,b
   2991  002B34  6E10               	movwf	??_led_lightshow^0,c
@@ -3121,11 +3121,11 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3001  002B48  D04D               	goto	l7622
   3002                           
   3003                           ; BSR set to: 1
-  3004                           ;d232.c: 201:     IO.outbytes[2] = cylon;
+  3004                           ;d232.c: 204:     IO.outbytes[2] = cylon;
   3005  002B4A  C0AD  F1B0         	movff	led_lightshow@cylon,_IO+7
   3006                           
   3007                           ; BSR set to: 1
-  3008                           ;d232.c: 204:    if (LED_UP && (alive_led != 0)) {
+  3008                           ;d232.c: 207:    if (LED_UP && (alive_led != 0)) {
   3009  002B4E  0100               	movlb	0	; () banked
   3010  002B50  51AC               	movf	led_lightshow@LED_UP& (0+255),w,b
   3011  002B52  B4D8               	btfsc	status,2,c
@@ -3138,21 +3138,21 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3018  002B5C  D008               	goto	l7608
   3019                           
   3020                           ; BSR set to: 0
-  3021                           ;d232.c: 205:     alive_led = alive_led * 2;
+  3021                           ;d232.c: 208:     alive_led = alive_led * 2;
   3022  002B5E  90D8               	bcf	status,0,c
   3023  002B60  35A0               	rlcf	led_lightshow@alive_led& (0+255),w,b
   3024  002B62  6FA0               	movwf	led_lightshow@alive_led& (0+255),b
   3025  002B64  35A1               	rlcf	(led_lightshow@alive_led+1)& (0+255),w,b
   3026  002B66  6FA1               	movwf	(led_lightshow@alive_led+1)& (0+255),b
   3027                           
-  3028                           ;d232.c: 206:     cylon = cylon << 1;
+  3028                           ;d232.c: 209:     cylon = cylon << 1;
   3029  002B68  51AD               	movf	led_lightshow@cylon& (0+255),w,b
   3030  002B6A  25AD               	addwf	led_lightshow@cylon& (0+255),w,b
   3031  002B6C  D019               	goto	L1
   3032  002B6E                     l7608:
   3033                           
   3034                           ; BSR set to: 0
-  3035                           ;d232.c: 208:     if (alive_led != 0) alive_led = alive_led / 2;
+  3035                           ;d232.c: 211:     if (alive_led != 0) alive_led = alive_led / 2;
   3036  002B6E  51A0               	movf	led_lightshow@alive_led& (0+255),w,b
   3037  002B70  11A1               	iorwf	(led_lightshow@alive_led+1)& (0+255),w,b
   3038  002B72  B4D8               	btfsc	status,2,c
@@ -3170,7 +3170,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3050  002B94  0060  F01C  F0A1   	movff	?___awdiv+1,led_lightshow@alive_led+1
   3051  002B9A                     l7612:
   3052                           
-  3053                           ;d232.c: 209:     cylon = cylon >> 1;
+  3053                           ;d232.c: 212:     cylon = cylon >> 1;
   3054  002B9A  0100               	movlb	0	; () banked
   3055  002B9C  90D8               	bcf	status,0,c
   3056  002B9E  31AD               	rrcf	led_lightshow@cylon& (0+255),w,b
@@ -3178,7 +3178,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3058  002BA0  6FAD               	movwf	led_lightshow@cylon& (0+255),b
   3059                           
   3060                           ; BSR set to: 0
-  3061                           ;d232.c: 211:    if (alive_led < 2) {
+  3061                           ;d232.c: 214:    if (alive_led < 2) {
   3062  002BA2  BFA1               	btfsc	(led_lightshow@alive_led+1)& (0+255),7,b
   3063  002BA4  D006               	goto	u8080
   3064  002BA6  51A1               	movf	(led_lightshow@alive_led+1)& (0+255),w,b
@@ -3190,19 +3190,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3070  002BB2                     u8080:
   3071                           
   3072                           ; BSR set to: 0
-  3073                           ;d232.c: 212:     alive_led = 2;
+  3073                           ;d232.c: 215:     alive_led = 2;
   3074  002BB2  0E00               	movlw	0
   3075  002BB4  6FA1               	movwf	(led_lightshow@alive_led+1)& (0+255),b
   3076  002BB6  0E02               	movlw	2
   3077  002BB8  6FA0               	movwf	led_lightshow@alive_led& (0+255),b
   3078                           
-  3079                           ;d232.c: 213:     LED_UP = 1;
+  3079                           ;d232.c: 216:     LED_UP = 1;
   3080  002BBA  0E01               	movlw	1
   3081  002BBC  D00D               	goto	L2
   3082  002BBE                     l7618:
   3083                           
   3084                           ; BSR set to: 0
-  3085                           ;d232.c: 215:     if (alive_led > 128) {
+  3085                           ;d232.c: 218:     if (alive_led > 128) {
   3086  002BBE  BFA1               	btfsc	(led_lightshow@alive_led+1)& (0+255),7,b
   3087  002BC0  D00C               	goto	l1206
   3088  002BC2  51A1               	movf	(led_lightshow@alive_led+1)& (0+255),w,b
@@ -3214,20 +3214,20 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3094  002BCE                     u8090:
   3095                           
   3096                           ; BSR set to: 0
-  3097                           ;d232.c: 216:      alive_led = 128;
+  3097                           ;d232.c: 219:      alive_led = 128;
   3098  002BCE  0E00               	movlw	0
   3099  002BD0  6FA1               	movwf	(led_lightshow@alive_led+1)& (0+255),b
   3100  002BD2  0E80               	movlw	128
   3101  002BD4  6FA0               	movwf	led_lightshow@alive_led& (0+255),b
   3102                           
-  3103                           ;d232.c: 217:      LED_UP = 0;
+  3103                           ;d232.c: 220:      LED_UP = 0;
   3104  002BD6  0E00               	movlw	0
   3105  002BD8                     L2:
   3106  002BD8  6FAC               	movwf	led_lightshow@LED_UP& (0+255),b
   3107  002BDA                     l1206:
   3108                           
   3109                           ; BSR set to: 0
-  3110                           ;d232.c: 220:    j = 0;
+  3110                           ;d232.c: 223:    j = 0;
   3111  002BDA  0E00               	movlw	0
   3112  002BDC  0101               	movlb	1	; () banked
   3113  002BDE  6F8F               	movwf	(led_lightshow@j+1)& (0+255),b
@@ -3235,13 +3235,13 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3115  002BE2  6F8E               	movwf	led_lightshow@j& (0+255),b
   3116  002BE4                     l7622:
   3117                           
-  3118                           ;d232.c: 224:  if (seq == 3) {
+  3118                           ;d232.c: 227:  if (seq == 3) {
   3119  002BE4  0E03               	movlw	3
   3120  002BE6  1812               	xorwf	led_lightshow@seq^0,w,c
   3121  002BE8  A4D8               	btfss	status,2,c
   3122  002BEA  0012               	return	
   3123                           
-  3124                           ;d232.c: 226:   if (otto_b1.result <= -120) {
+  3124                           ;d232.c: 229:   if (otto_b1.result <= -120) {
   3125  002BEC  0101               	movlb	1	; () banked
   3126  002BEE  AFDF               	btfss	(_otto_b1+13)& (0+255),7,b
   3127  002BF0  D00A               	goto	l7628
@@ -3253,17 +3253,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3133  002BFC  D004               	goto	l7628
   3134                           
   3135                           ; BSR set to: 1
-  3136                           ;d232.c: 227:    IO.outbytes[2] = 0b10000000;
+  3136                           ;d232.c: 230:    IO.outbytes[2] = 0b10000000;
   3137  002BFE  0E80               	movlw	128
   3138  002C00  6FB0               	movwf	(_IO+7)& (0+255),b
   3139                           
-  3140                           ;d232.c: 228:    IO.BAL = UP;
+  3140                           ;d232.c: 231:    IO.BAL = UP;
   3141  002C02  0E00               	movlw	0
   3142  002C04  6FB8               	movwf	(_IO+15)& (0+255),b
   3143  002C06                     l7628:
   3144                           
   3145                           ; BSR set to: 1
-  3146                           ;d232.c: 230:   if (otto_b1.result > -120 && otto_b1.result < -80) {
+  3146                           ;d232.c: 233:   if (otto_b1.result > -120 && otto_b1.result < -80) {
   3147  002C06  AFDF               	btfss	(_otto_b1+13)& (0+255),7,b
   3148  002C08  D006               	goto	u8120
   3149  002C0A  0E89               	movlw	137
@@ -3285,17 +3285,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3165  002C24  D004               	goto	l7634
   3166                           
   3167                           ; BSR set to: 1
-  3168                           ;d232.c: 231:    IO.outbytes[2] = 0b01000000;
+  3168                           ;d232.c: 234:    IO.outbytes[2] = 0b01000000;
   3169  002C26  0E40               	movlw	64
   3170  002C28  6FB0               	movwf	(_IO+7)& (0+255),b
   3171                           
-  3172                           ;d232.c: 232:    IO.BAL = UP;
+  3172                           ;d232.c: 235:    IO.BAL = UP;
   3173  002C2A  0E00               	movlw	0
   3174  002C2C  6FB8               	movwf	(_IO+15)& (0+255),b
   3175  002C2E                     l7634:
   3176                           
   3177                           ; BSR set to: 1
-  3178                           ;d232.c: 234:   if (otto_b1.result >= -80 && otto_b1.result < -30) {
+  3178                           ;d232.c: 237:   if (otto_b1.result >= -80 && otto_b1.result < -30) {
   3179  002C2E  AFDF               	btfss	(_otto_b1+13)& (0+255),7,b
   3180  002C30  D006               	goto	u8140
   3181  002C32  0EB0               	movlw	176
@@ -3317,17 +3317,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3197  002C4C  D004               	goto	l7640
   3198                           
   3199                           ; BSR set to: 1
-  3200                           ;d232.c: 235:    IO.outbytes[2] = 0b00100000;
+  3200                           ;d232.c: 238:    IO.outbytes[2] = 0b00100000;
   3201  002C4E  0E20               	movlw	32
   3202  002C50  6FB0               	movwf	(_IO+7)& (0+255),b
   3203                           
-  3204                           ;d232.c: 236:    IO.BAL = UP;
+  3204                           ;d232.c: 239:    IO.BAL = UP;
   3205  002C52  0E00               	movlw	0
   3206  002C54  6FB8               	movwf	(_IO+15)& (0+255),b
   3207  002C56                     l7640:
   3208                           
   3209                           ; BSR set to: 1
-  3210                           ;d232.c: 238:   if (otto_b1.result >= -30 && otto_b1.result < -5) {
+  3210                           ;d232.c: 241:   if (otto_b1.result >= -30 && otto_b1.result < -5) {
   3211  002C56  AFDF               	btfss	(_otto_b1+13)& (0+255),7,b
   3212  002C58  D006               	goto	u8160
   3213  002C5A  0EE2               	movlw	226
@@ -3349,23 +3349,23 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3229  002C74  D013               	goto	l7656
   3230                           
   3231                           ; BSR set to: 1
-  3232                           ;d232.c: 239:    if (IO.BAL != UP) {
+  3232                           ;d232.c: 242:    if (IO.BAL != UP) {
   3233  002C76  51B8               	movf	(_IO+15)& (0+255),w,b
   3234  002C78  B4D8               	btfsc	status,2,c
   3235  002C7A  D00B               	goto	l7652
   3236                           
   3237                           ; BSR set to: 1
-  3238                           ;d232.c: 240:     IO.outbytes[1] = IO.outbytes[1] | 0x02;
+  3238                           ;d232.c: 243:     IO.outbytes[1] = IO.outbytes[1] | 0x02;
   3239  002C7C  51AF               	movf	(_IO+6)& (0+255),w,b
   3240  002C7E  0902               	iorlw	2
   3241  002C80  6FAF               	movwf	(_IO+6)& (0+255),b
   3242                           
   3243                           ; BSR set to: 1
-  3244                           ;d232.c: 241:     IO.score--;
+  3244                           ;d232.c: 244:     IO.score--;
   3245  002C82  07BD               	decf	(_IO+20)& (0+255),f,b
   3246                           
   3247                           ; BSR set to: 1
-  3248                           ;d232.c: 242:     StartTimer(TMR_BAL, 500);
+  3248                           ;d232.c: 245:     StartTimer(TMR_BAL, 500);
   3249  002C84  0E01               	movlw	1
   3250  002C86  6E07               	movwf	(StartTimer@count+1)^0,c
   3251  002C88  0EF4               	movlw	244
@@ -3374,19 +3374,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3254  002C8E  EC03  F028         	call	_StartTimer
   3255  002C92                     l7652:
   3256                           
-  3257                           ;d232.c: 244:    IO.outbytes[2] = 0b00010000;
+  3257                           ;d232.c: 247:    IO.outbytes[2] = 0b00010000;
   3258  002C92  0E10               	movlw	16
   3259  002C94  0101               	movlb	1	; () banked
   3260  002C96  6FB0               	movwf	(_IO+7)& (0+255),b
   3261                           
   3262                           ; BSR set to: 1
-  3263                           ;d232.c: 245:    IO.BAL = UP;
+  3263                           ;d232.c: 248:    IO.BAL = UP;
   3264  002C98  0E00               	movlw	0
   3265  002C9A  6FB8               	movwf	(_IO+15)& (0+255),b
   3266  002C9C                     l7656:
   3267                           
   3268                           ; BSR set to: 1
-  3269                           ;d232.c: 247:   if (otto_b1.result >= -5 && otto_b1.result <= 5) {
+  3269                           ;d232.c: 250:   if (otto_b1.result >= -5 && otto_b1.result <= 5) {
   3270  002C9C  AFDF               	btfss	(_otto_b1+13)& (0+255),7,b
   3271  002C9E  D006               	goto	u8190
   3272  002CA0  0EFB               	movlw	251
@@ -3409,37 +3409,37 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3289  002CBC                     u8200:
   3290                           
   3291                           ; BSR set to: 1
-  3292                           ;d232.c: 248:    if (IO.BAL != ON) {
+  3292                           ;d232.c: 251:    if (IO.BAL != ON) {
   3293  002CBC  05B8               	decf	(_IO+15)& (0+255),w,b
   3294  002CBE  B4D8               	btfsc	status,2,c
   3295  002CC0  D015               	goto	l7672
   3296                           
   3297                           ; BSR set to: 1
-  3298                           ;d232.c: 249:     IO.outbytes[1] = IO.outbytes[1] | 0x01;
+  3298                           ;d232.c: 252:     IO.outbytes[1] = IO.outbytes[1] | 0x01;
   3299  002CC2  51AF               	movf	(_IO+6)& (0+255),w,b
   3300  002CC4  0901               	iorlw	1
   3301  002CC6  6FAF               	movwf	(_IO+6)& (0+255),b
   3302                           
   3303                           ; BSR set to: 1
-  3304                           ;d232.c: 251:     if (TimerDone(TMR_BAL)) {
+  3304                           ;d232.c: 254:     if (TimerDone(TMR_BAL)) {
   3305  002CC8  0E07               	movlw	7
   3306  002CCA  ECB6  F028         	call	_TimerDone
   3307  002CCE  0900               	iorlw	0
   3308  002CD0  B4D8               	btfsc	status,2,c
   3309  002CD2  D005               	goto	l7670
   3310                           
-  3311                           ;d232.c: 252:      if (IO.score < 50)
+  3311                           ;d232.c: 255:      if (IO.score < 50)
   3312  002CD4  0E32               	movlw	50
   3313  002CD6  0101               	movlb	1	; () banked
   3314  002CD8  61BD               	cpfslt	(_IO+20)& (0+255),b
   3315  002CDA  D001               	goto	l7670
   3316                           
   3317                           ; BSR set to: 1
-  3318                           ;d232.c: 253:       IO.score++;
+  3318                           ;d232.c: 256:       IO.score++;
   3319  002CDC  2BBD               	incf	(_IO+20)& (0+255),f,b
   3320  002CDE                     l7670:
   3321                           
-  3322                           ;d232.c: 255:     StartTimer(TMR_BAL, 500);
+  3322                           ;d232.c: 258:     StartTimer(TMR_BAL, 500);
   3323  002CDE  0E01               	movlw	1
   3324  002CE0  6E07               	movwf	(StartTimer@count+1)^0,c
   3325  002CE2  0EF4               	movlw	244
@@ -3448,19 +3448,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3328  002CE8  EC03  F028         	call	_StartTimer
   3329  002CEC                     l7672:
   3330                           
-  3331                           ;d232.c: 257:    IO.outbytes[2] = 0b00000000;
+  3331                           ;d232.c: 260:    IO.outbytes[2] = 0b00000000;
   3332  002CEC  0E00               	movlw	0
   3333  002CEE  0101               	movlb	1	; () banked
   3334  002CF0  6FB0               	movwf	(_IO+7)& (0+255),b
   3335                           
   3336                           ; BSR set to: 1
-  3337                           ;d232.c: 258:    IO.BAL = ON;
+  3337                           ;d232.c: 261:    IO.BAL = ON;
   3338  002CF2  0E01               	movlw	1
   3339  002CF4  6FB8               	movwf	(_IO+15)& (0+255),b
   3340  002CF6                     l7676:
   3341                           
   3342                           ; BSR set to: 1
-  3343                           ;d232.c: 260:   if (otto_b1.result > 5 && otto_b1.result < 30) {
+  3343                           ;d232.c: 263:   if (otto_b1.result > 5 && otto_b1.result < 30) {
   3344  002CF6  BFDF               	btfsc	(_otto_b1+13)& (0+255),7,b
   3345  002CF8  D022               	goto	l7692
   3346  002CFA  51DF               	movf	(_otto_b1+13)& (0+255),w,b
@@ -3483,20 +3483,20 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3363  002D16                     u8250:
   3364                           
   3365                           ; BSR set to: 1
-  3366                           ;d232.c: 261:    if (IO.BAL != DOWN) {
+  3366                           ;d232.c: 264:    if (IO.BAL != DOWN) {
   3367  002D16  0E02               	movlw	2
   3368  002D18  19B8               	xorwf	(_IO+15)& (0+255),w,b
   3369  002D1A  B4D8               	btfsc	status,2,c
   3370  002D1C  D00C               	goto	l7688
   3371                           
   3372                           ; BSR set to: 1
-  3373                           ;d232.c: 262:     IO.outbytes[1] = IO.outbytes[1] | 0x04;
+  3373                           ;d232.c: 265:     IO.outbytes[1] = IO.outbytes[1] | 0x04;
   3374  002D1E  51AF               	movf	(_IO+6)& (0+255),w,b
   3375  002D20  0904               	iorlw	4
   3376  002D22  6FAF               	movwf	(_IO+6)& (0+255),b
   3377                           
   3378                           ; BSR set to: 1
-  3379                           ;d232.c: 263:     StartTimer(TMR_BAL, 500);
+  3379                           ;d232.c: 266:     StartTimer(TMR_BAL, 500);
   3380  002D24  0E01               	movlw	1
   3381  002D26  6E07               	movwf	(StartTimer@count+1)^0,c
   3382  002D28  0EF4               	movlw	244
@@ -3504,24 +3504,24 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3384  002D2C  0E07               	movlw	7
   3385  002D2E  EC03  F028         	call	_StartTimer
   3386                           
-  3387                           ;d232.c: 264:     IO.score--;
+  3387                           ;d232.c: 267:     IO.score--;
   3388  002D32  0101               	movlb	1	; () banked
   3389  002D34  07BD               	decf	(_IO+20)& (0+255),f,b
   3390  002D36                     l7688:
   3391                           
   3392                           ; BSR set to: 1
-  3393                           ;d232.c: 266:    IO.outbytes[2] = 0b00001000;
+  3393                           ;d232.c: 269:    IO.outbytes[2] = 0b00001000;
   3394  002D36  0E08               	movlw	8
   3395  002D38  6FB0               	movwf	(_IO+7)& (0+255),b
   3396                           
   3397                           ; BSR set to: 1
-  3398                           ;d232.c: 267:    IO.BAL = DOWN;
+  3398                           ;d232.c: 270:    IO.BAL = DOWN;
   3399  002D3A  0E02               	movlw	2
   3400  002D3C  6FB8               	movwf	(_IO+15)& (0+255),b
   3401  002D3E                     l7692:
   3402                           
   3403                           ; BSR set to: 1
-  3404                           ;d232.c: 269:   if (otto_b1.result >= 30 && otto_b1.result < 80) {
+  3404                           ;d232.c: 272:   if (otto_b1.result >= 30 && otto_b1.result < 80) {
   3405  002D3E  BFDF               	btfsc	(_otto_b1+13)& (0+255),7,b
   3406  002D40  D012               	goto	l7698
   3407  002D42  51DF               	movf	(_otto_b1+13)& (0+255),w,b
@@ -3544,17 +3544,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3424  002D5E                     u8280:
   3425                           
   3426                           ; BSR set to: 1
-  3427                           ;d232.c: 270:    IO.outbytes[2] = 0b00000100;
+  3427                           ;d232.c: 273:    IO.outbytes[2] = 0b00000100;
   3428  002D5E  0E04               	movlw	4
   3429  002D60  6FB0               	movwf	(_IO+7)& (0+255),b
   3430                           
-  3431                           ;d232.c: 271:    IO.BAL = DOWN;
+  3431                           ;d232.c: 274:    IO.BAL = DOWN;
   3432  002D62  0E02               	movlw	2
   3433  002D64  6FB8               	movwf	(_IO+15)& (0+255),b
   3434  002D66                     l7698:
   3435                           
   3436                           ; BSR set to: 1
-  3437                           ;d232.c: 273:   if (otto_b1.result >= 80 && otto_b1.result < 120) {
+  3437                           ;d232.c: 276:   if (otto_b1.result >= 80 && otto_b1.result < 120) {
   3438  002D66  BFDF               	btfsc	(_otto_b1+13)& (0+255),7,b
   3439  002D68  D012               	goto	l7704
   3440  002D6A  51DF               	movf	(_otto_b1+13)& (0+255),w,b
@@ -3577,17 +3577,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3457  002D86                     u8300:
   3458                           
   3459                           ; BSR set to: 1
-  3460                           ;d232.c: 274:    IO.outbytes[2] = 0b00000010;
+  3460                           ;d232.c: 277:    IO.outbytes[2] = 0b00000010;
   3461  002D86  0E02               	movlw	2
   3462  002D88  6FB0               	movwf	(_IO+7)& (0+255),b
   3463                           
-  3464                           ;d232.c: 275:    IO.BAL = DOWN;
+  3464                           ;d232.c: 278:    IO.BAL = DOWN;
   3465  002D8A  0E02               	movlw	2
   3466  002D8C  6FB8               	movwf	(_IO+15)& (0+255),b
   3467  002D8E                     l7704:
   3468                           
   3469                           ; BSR set to: 1
-  3470                           ;d232.c: 277:   if (otto_b1.result >= 120) {
+  3470                           ;d232.c: 280:   if (otto_b1.result >= 120) {
   3471  002D8E  BFDF               	btfsc	(_otto_b1+13)& (0+255),7,b
   3472  002D90  0012               	return	
   3473  002D92  51DF               	movf	(_otto_b1+13)& (0+255),w,b
@@ -3599,11 +3599,11 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3479  002D9E                     u8310:
   3480                           
   3481                           ; BSR set to: 1
-  3482                           ;d232.c: 278:    IO.outbytes[2] = 0b00000001;
+  3482                           ;d232.c: 281:    IO.outbytes[2] = 0b00000001;
   3483  002D9E  0E01               	movlw	1
   3484  002DA0  6FB0               	movwf	(_IO+7)& (0+255),b
   3485                           
-  3486                           ;d232.c: 279:    IO.BAL = DOWN;
+  3486                           ;d232.c: 282:    IO.BAL = DOWN;
   3487  002DA2  0E02               	movlw	2
   3488  002DA4  6FB8               	movwf	(_IO+15)& (0+255),b
   3489  002DA6  0012               	return		;funcret
@@ -7313,37 +7313,37 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6818  0036B0  0E44               	movlw	68
   6819  0036B2  ECDF  F026         	call	_UART2_Write
   6820                           
-  6821                           ;d232.c: 121:  UART2_Write(IO.outbytes[4]);
+  6821                           ;d232.c: 124:  UART2_Write(IO.outbytes[4]);
   6822  0036B6  0101               	movlb	1	; () banked
   6823  0036B8  51B2               	movf	(_IO+9)& (0+255),w,b
   6824  0036BA  ECDF  F026         	call	_UART2_Write
   6825                           
-  6826                           ;d232.c: 122:  UART2_Write(IO.outbytes[3]);
+  6826                           ;d232.c: 125:  UART2_Write(IO.outbytes[3]);
   6827  0036BE  0101               	movlb	1	; () banked
   6828  0036C0  51B1               	movf	(_IO+8)& (0+255),w,b
   6829  0036C2  ECDF  F026         	call	_UART2_Write
   6830                           
-  6831                           ;d232.c: 123:  UART2_Write(IO.outbytes[1]);
+  6831                           ;d232.c: 126:  UART2_Write(IO.outbytes[1]);
   6832  0036C6  0101               	movlb	1	; () banked
   6833  0036C8  51AF               	movf	(_IO+6)& (0+255),w,b
   6834  0036CA  ECDF  F026         	call	_UART2_Write
   6835                           
-  6836                           ;d232.c: 124:  UART2_Write(IO.outbytes[2]);
+  6836                           ;d232.c: 127:  UART2_Write(IO.outbytes[2]);
   6837  0036CE  0101               	movlb	1	; () banked
   6838  0036D0  51B0               	movf	(_IO+7)& (0+255),w,b
   6839  0036D2  ECDF  F026         	call	_UART2_Write
   6840                           
-  6841                           ;d232.c: 125:  UART2_Write(IO.outbytes[0]);
+  6841                           ;d232.c: 128:  UART2_Write(IO.outbytes[0]);
   6842  0036D6  0101               	movlb	1	; () banked
   6843  0036D8  51AE               	movf	(_IO+5)& (0+255),w,b
   6844  0036DA  ECDF  F026         	call	_UART2_Write
   6845                           
-  6846                           ;d232.c: 126:  UART2_Write('\r');
+  6846                           ;d232.c: 129:  UART2_Write('\r');
   6847  0036DE  0E0D               	movlw	13
   6848  0036E0  ECDF  F026         	call	_UART2_Write
   6849                           
   6850                           ; BSR set to: 57
-  6851                           ;d232.c: 127:  printf("%s", "R0\r");
+  6851                           ;d232.c: 130:  printf("%s", "R0\r");
   6852  0036E4  0E4C               	movlw	low STR_5
   6853  0036E6  0100               	movlb	0	; () banked
   6854  0036E8  6F64               	movwf	printf@fmt& (0+255),b
@@ -7356,17 +7356,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6861  0036F6  EC95  F029         	call	_printf	;wreg free
   6862                           
   6863                           ; BSR set to: 1
-  6864                           ;d232.c: 128:  IO.output_ok = 1;
+  6864                           ;d232.c: 131:  IO.output_ok = 1;
   6865  0036FA  0E01               	movlw	1
   6866  0036FC  6FB4               	movwf	(_IO+11)& (0+255),b
   6867                           
   6868                           ; BSR set to: 1
-  6869                           ;d232.c: 129:  IO.io = IO_OUT;
+  6869                           ;d232.c: 132:  IO.io = IO_OUT;
   6870  0036FE  0E02               	movlw	2
   6871  003700  6FB5               	movwf	(_IO+12)& (0+255),b
   6872                           
   6873                           ; BSR set to: 1
-  6874                           ;d232.c: 133:  StartTimer(TMR_RXTO, 250);
+  6874                           ;d232.c: 136:  StartTimer(TMR_RXTO, 250);
   6875  003702  0E00               	movlw	0
   6876  003704  6E07               	movwf	(StartTimer@count+1)^0,c
   6877  003706  0EFA               	movlw	250
@@ -7374,19 +7374,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6879  00370A  0E02               	movlw	2
   6880  00370C  EC03  F028         	call	_StartTimer
   6881                           
-  6882                           ;d232.c: 134:  while (!UART2_is_rx_ready()) {
+  6882                           ;d232.c: 137:  while (!UART2_is_rx_ready()) {
   6883  003710  D015               	goto	l7522
   6884  003712                     l7508:
   6885                           
   6886                           ; BSR set to: 0
-  6887                           ;d232.c: 135:   if (TimerDone(TMR_RXTO)) {
+  6887                           ;d232.c: 138:   if (TimerDone(TMR_RXTO)) {
   6888  003712  0E02               	movlw	2
   6889  003714  ECB6  F028         	call	_TimerDone
   6890  003718  0900               	iorlw	0
   6891  00371A  B4D8               	btfsc	status,2,c
   6892  00371C  D00F               	goto	l7522
   6893                           
-  6894                           ;d232.c: 136:    PWM8_LoadDutyValue(x++);
+  6894                           ;d232.c: 139:    PWM8_LoadDutyValue(x++);
   6895  00371E  0060  F288  F006   	movff	Digital232_RW@x,PWM8_LoadDutyValue@dutyValue
   6896  003724  6A07               	clrf	(PWM8_LoadDutyValue@dutyValue+1)^0,c
   6897  003726  EC95  F027         	call	_PWM8_LoadDutyValue	;wreg free
@@ -7394,36 +7394,36 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6899  00372C  2BA2               	incf	Digital232_RW@x& (0+255),f,b
   6900                           
   6901                           ; BSR set to: 0
-  6902                           ;d232.c: 137:    if (x > 3)
+  6902                           ;d232.c: 140:    if (x > 3)
   6903  00372E  0E03               	movlw	3
   6904  003730  65A2               	cpfsgt	Digital232_RW@x& (0+255),b
   6905  003732  D002               	goto	l1171
   6906                           
   6907                           ; BSR set to: 0
-  6908                           ;d232.c: 138:     x = 0;
+  6908                           ;d232.c: 141:     x = 0;
   6909  003734  0E00               	movlw	0
   6910  003736  6FA2               	movwf	Digital232_RW@x& (0+255),b
   6911  003738                     l1171:
   6912                           
   6913                           ; BSR set to: 0
-  6914                           ;d232.c: 139:    IO.io = IO_FAIL;
+  6914                           ;d232.c: 142:    IO.io = IO_FAIL;
   6915  003738  0E06               	movlw	6
   6916  00373A  D744               	goto	L8
   6917  00373C                     l7522:
   6918                           
-  6919                           ;d232.c: 134:  while (!UART2_is_rx_ready()) {
+  6919                           ;d232.c: 137:  while (!UART2_is_rx_ready()) {
   6920  00373C  EC74  F02A         	call	_UART2_is_rx_ready	;wreg free
   6921  003740  0900               	iorlw	0
   6922  003742  B4D8               	btfsc	status,2,c
   6923  003744  D7E6               	goto	l7508
   6924                           
   6925                           ; BSR set to: 0
-  6926                           ;d232.c: 147:  i = 0;
+  6926                           ;d232.c: 150:  i = 0;
   6927  003746  0E00               	movlw	0
   6928  003748  6F80               	movwf	Digital232_RW@i& (0+255),b
   6929                           
   6930                           ; BSR set to: 0
-  6931                           ;d232.c: 148:  StartTimer(TMR_RXTO, 250);
+  6931                           ;d232.c: 151:  StartTimer(TMR_RXTO, 250);
   6932  00374A  0E00               	movlw	0
   6933  00374C  6E07               	movwf	(StartTimer@count+1)^0,c
   6934  00374E  0EFA               	movlw	250
@@ -7431,19 +7431,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6936  003752  0E02               	movlw	2
   6937  003754  EC03  F028         	call	_StartTimer
   6938                           
-  6939                           ;d232.c: 149:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
+  6939                           ;d232.c: 152:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
   6940  003758  D015               	goto	l7534
   6941  00375A                     l7528:
   6942                           
   6943                           ; BSR set to: 0
-  6944                           ;d232.c: 150:   if (UART2_is_rx_ready()) {
+  6944                           ;d232.c: 153:   if (UART2_is_rx_ready()) {
   6945  00375A  EC74  F02A         	call	_UART2_is_rx_ready	;wreg free
   6946  00375E  0900               	iorlw	0
   6947  003760  B4D8               	btfsc	status,2,c
   6948  003762  D010               	goto	l7534
   6949                           
   6950                           ; BSR set to: 0
-  6951                           ;d232.c: 151:    IO.inbytes[4 - i] = UART2_Read();
+  6951                           ;d232.c: 154:    IO.inbytes[4 - i] = UART2_Read();
   6952  003764  EC9C  F026         	call	_UART2_Read	;wreg free
   6953  003768  0100               	movlb	0	; () banked
   6954  00376A  6F7E               	movwf	??_Digital232_RW& (0+255),b
@@ -7458,11 +7458,11 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6963  00377C  0060  F1FB  FFDF   	movff	??_Digital232_RW,indf2
   6964                           
   6965                           ; BSR set to: 0
-  6966                           ;d232.c: 152:    i++;
+  6966                           ;d232.c: 155:    i++;
   6967  003782  2B80               	incf	Digital232_RW@i& (0+255),f,b
   6968  003784                     l7534:
   6969                           
-  6970                           ;d232.c: 149:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
+  6970                           ;d232.c: 152:  while (!TimerDone(TMR_RXTO) && (i < 6)) {
   6971  003784  0E02               	movlw	2
   6972  003786  ECB6  F028         	call	_TimerDone
   6973  00378A  0900               	iorlw	0
@@ -7474,7 +7474,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6979  003796  D7E1               	goto	l7528
   6980  003798                     u7950:
   6981                           
-  6982                           ;d232.c: 155:  if (TimerDone(TMR_RXTO) || i < 6) {
+  6982                           ;d232.c: 158:  if (TimerDone(TMR_RXTO) || i < 6) {
   6983  003798  0E02               	movlw	2
   6984  00379A  ECB6  F028         	call	_TimerDone
   6985  00379E  0900               	iorlw	0
@@ -7486,7 +7486,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6991  0037AA  D00A               	goto	l7554
   6992  0037AC                     u7970:
   6993                           
-  6994                           ;d232.c: 156:   PWM8_LoadDutyValue(x++);
+  6994                           ;d232.c: 159:   PWM8_LoadDutyValue(x++);
   6995  0037AC  0060  F288  F006   	movff	Digital232_RW@x,PWM8_LoadDutyValue@dutyValue
   6996  0037B2  6A07               	clrf	(PWM8_LoadDutyValue@dutyValue+1)^0,c
   6997  0037B4  EC95  F027         	call	_PWM8_LoadDutyValue	;wreg free
@@ -7494,51 +7494,51 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6999  0037BA  2BA2               	incf	Digital232_RW@x& (0+255),f,b
   7000                           
   7001                           ; BSR set to: 0
-  7002                           ;d232.c: 157:   if (x > 16)
+  7002                           ;d232.c: 160:   if (x > 16)
   7003  0037BC  0E10               	movlw	16
   7004  0037BE  D7B8               	goto	L9
   7005  0037C0                     l7554:
   7006                           
   7007                           ; BSR set to: 0
-  7008                           ;d232.c: 163:  if (UART2_is_rx_ready())
+  7008                           ;d232.c: 166:  if (UART2_is_rx_ready())
   7009  0037C0  EC74  F02A         	call	_UART2_is_rx_ready	;wreg free
   7010  0037C4  0900               	iorlw	0
   7011  0037C6  A4D8               	btfss	status,2,c
   7012                           
   7013                           ; BSR set to: 0
-  7014                           ;d232.c: 164:   UART2_Read();
+  7014                           ;d232.c: 167:   UART2_Read();
   7015  0037C8  EC9C  F026         	call	_UART2_Read	;wreg free
   7016                           
-  7017                           ;d232.c: 166:  IO.input_ok = 1;
+  7017                           ;d232.c: 169:  IO.input_ok = 1;
   7018  0037CC  0E01               	movlw	1
   7019  0037CE  0101               	movlb	1	; () banked
   7020  0037D0  6FB3               	movwf	(_IO+10)& (0+255),b
   7021                           
   7022                           ; BSR set to: 1
-  7023                           ;d232.c: 167:  IO.io = IO_IN;
+  7023                           ;d232.c: 170:  IO.io = IO_IN;
   7024  0037D2  0E03               	movlw	3
   7025  0037D4  6FB5               	movwf	(_IO+12)& (0+255),b
   7026                           
   7027                           ; BSR set to: 1
-  7028                           ;d232.c: 168:  IO.d232 = D232_OUT_IN;
+  7028                           ;d232.c: 171:  IO.d232 = D232_OUT_IN;
   7029  0037D6  0E02               	movlw	2
   7030  0037D8  6FB6               	movwf	(_IO+13)& (0+255),b
   7031                           
   7032                           ; BSR set to: 1
-  7033                           ;d232.c: 170:  PWM8_LoadDutyValue(199);
+  7033                           ;d232.c: 173:  PWM8_LoadDutyValue(199);
   7034  0037DA  0E00               	movlw	0
   7035  0037DC  6E07               	movwf	(PWM8_LoadDutyValue@dutyValue+1)^0,c
   7036  0037DE  0EC7               	movlw	199
   7037  0037E0  6E06               	movwf	PWM8_LoadDutyValue@dutyValue^0,c
   7038  0037E2  EC95  F027         	call	_PWM8_LoadDutyValue	;wreg free
   7039                           
-  7040                           ;d232.c: 171:  IO.io = IO_UPDATE;
+  7040                           ;d232.c: 174:  IO.io = IO_UPDATE;
   7041  0037E6  0E05               	movlw	5
   7042  0037E8  0101               	movlb	1	; () banked
   7043  0037EA  6FB5               	movwf	(_IO+12)& (0+255),b
   7044                           
   7045                           ; BSR set to: 1
-  7046                           ;d232.c: 172:  return 1;
+  7046                           ;d232.c: 175:  return 1;
   7047  0037EC  0E01               	movlw	1
   7048                           
   7049                           ; BSR set to: 1
@@ -17086,7 +17086,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Tue Sep 24 21:01:44 2019
+Symbol Table                                                                                   Wed Sep 25 22:42:47 2019
 
                            _SPI1_Exchange8bit 5346                                  ___fldiv@aexp 004F  
                                 ___fldiv@bexp 004E              __end_of_TMR5_SetInterruptHandler 549A  

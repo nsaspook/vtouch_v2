@@ -118,10 +118,13 @@ bool Digital232_RW(void)
 	}
 
 	UART2_Write('D');
-	UART2_Write(IO.outbytes[4]); // port 5 first
+	/*
+	 * send working output buffers to DAQ device
+	 */
+	UART2_Write(IO.outbytes[4]); // D232 port 5 first
 	UART2_Write(IO.outbytes[3]);
-	UART2_Write(IO.outbytes[1]);
-	UART2_Write(IO.outbytes[2]);
+	UART2_Write(IO.outbytes[LPORT]);
+	UART2_Write(IO.outbytes[SPORT]);
 	UART2_Write(IO.outbytes[0]);
 	UART2_Write('\r');
 	printf("%s", DRD);
