@@ -52,10 +52,15 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "interrupt_manager.h"
+#include "tmr5.h"
+#include "tmr6.h"
 #include "pwm8.h"
 #include "tmr2.h"
+#include "adcc.h"
+#include "fvr.h"
 #include "uart2.h"
 #include "uart1.h"
+#include "spi1.h"
 
 
 

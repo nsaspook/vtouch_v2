@@ -86,18 +86,6 @@ void DRV_ADC_Initialize(void)
     /* MUX A Positive Input Select */
     PLIB_ADC_MuxChannel0InputPositiveSelect(DRV_ADC_ID_1, ADC_MUX_A, ADC_INPUT_POSITIVE_AN0);
  
- 
-
-
-    /* MUX A Positive Input Select */
-    PLIB_ADC_MuxChannel0InputPositiveSelect(DRV_ADC_ID_1, ADC_MUX_A, ADC_INPUT_POSITIVE_AN1);
- 
- 
-
-
-    /* MUX A Positive Input Select */
-    PLIB_ADC_MuxChannel0InputPositiveSelect(DRV_ADC_ID_1, ADC_MUX_A, ADC_INPUT_POSITIVE_AN2);
- 
 }
 
 inline void DRV_ADC_DeInitialize(void)

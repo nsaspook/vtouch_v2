@@ -70,6 +70,7 @@ OBJECTFILES=${OBJECTDIR}/mcc_generated_files/ext_int.p1 ${OBJECTDIR}/mcc_generat
 SOURCEFILES=mcc_generated_files/ext_int.c mcc_generated_files/device_config.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/adcc.c mcc_generated_files/uart1.c mcc_generated_files/uart2.c mcc_generated_files/tmr6.c mcc_generated_files/spi1.c mcc_generated_files/dma1.c mcc_generated_files/dsm.c mcc_generated_files/clkref.c mcc_generated_files/nco1.c mcc_generated_files/clc1.c mcc_generated_files/memory.c mcc_generated_files/tmr5.c mcc_generated_files/pwm8.c mcc_generated_files/tmr2.c mcc_generated_files/dma2.c main.c eadog.c ringbufs.c gemsecs.c timers.c mconfig.c
 
 
+
 CFLAGS=
 ASFLAGS=
 LDLIBSOPTIONS=

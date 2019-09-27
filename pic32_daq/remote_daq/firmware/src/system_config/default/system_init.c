@@ -59,7 +59,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 
 /*** DEVCFG0 ***/
 
-#pragma config DEBUG =      ON
+#pragma config DEBUG =      OFF
 #pragma config ICESEL =     ICS_PGx2
 #pragma config PWP =        OFF
 #pragma config BWP =        OFF
@@ -68,7 +68,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 /*** DEVCFG1 ***/
 
 #pragma config FNOSC =      PRIPLL
-#pragma config FSOSCEN =    ON
+#pragma config FSOSCEN =    OFF
 #pragma config IESO =       ON
 #pragma config POSCMOD =    XT
 #pragma config OSCIOFNC =   OFF
@@ -82,16 +82,16 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #pragma config FPLLMUL =    MUL_20
 #pragma config FPLLODIV =   DIV_1
 #pragma config UPLLIDIV =   DIV_2
-#pragma config UPLLEN =     ON
+#pragma config UPLLEN =     OFF
 /*** DEVCFG3 ***/
 
 #pragma config USERID =     0xffff
 #pragma config FSRSSEL =    PRIORITY_7
 #pragma config FMIIEN =     OFF
-#pragma config FETHIO =     ON
-#pragma config FCANIO =     ON
-#pragma config FUSBIDIO =   ON
-#pragma config FVBUSONIO =  ON
+#pragma config FETHIO =     OFF
+#pragma config FCANIO =     OFF
+#pragma config FUSBIDIO =   OFF
+#pragma config FVBUSONIO =  OFF
 // </editor-fold>
 
 // *****************************************************************************
@@ -99,29 +99,49 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: Driver Initialization Data
 // *****************************************************************************
 // *****************************************************************************
-// <editor-fold defaultstate="collapsed" desc="ENC 600 Driver Initialization Data">
-/* ENC 600 Driver Configuration */
-DRV_ENCX24J600_Configuration drvEncX24j600InitDataIdx0 = {
-    .txDescriptors =        DRV_ENCX24J600_MAC_TX_DESCRIPTORS_IDX0,
-    .rxDescriptors =        DRV_ENCX24J600_MAC_RX_DESCRIPTORS_IDX0,
-    .rxDescBufferSize =     DRV_ENCX24J600_MAX_RX_BUFFER_IDX0,
-    .spiDrvIndex =          DRV_ENCX24J600_SPI_DRIVER_INDEX_IDX0,
-    .spiBps =               DRV_ENCX24J600_SPI_BPS_IDX0,
-    .spiSSPortModule =      DRV_ENCX24J600_SPI_SS_PORT_MODULE_IDX0,
-    .spiSSPortChannel =     DRV_ENCX24J600_SPI_SS_PORT_CHANNEL_IDX0,
-    .spiSSPortPin =         DRV_ENCX24J600_SPI_SS_PORT_PIN_IDX0,
-    .rxBufferSize = 		DRV_ENCX24J600_RX_BUFFER_SIZE_IDX0,
-    .maxFrameSize =	        DRV_ENCX24J600_MAX_FRAME_SIZE_IDX0,
-	.ethType=			    DRV_ENCX24J600_ETHERNET_TYPE_IDX0,
-	.dupMode=				DRV_ENCX24J600_DUPLEX_MODE_IDX0,
-};
-// </editor-fold>
 
 /* MIIM Driver Configuration */
 static const DRV_MIIM_INIT drvMiimInitData =
 {
     .moduleInit = {SYS_MODULE_POWER_RUN_FULL},
     .ethphyId = DRV_MIIM_ETH_MODULE_ID,
+};
+/*** FLASH Driver Initialization Data ***/
+extern const uint8_t NVM_MEDIA_DATA[];
+SYS_FS_MEDIA_REGION_GEOMETRY NVMGeometryTable[3] =
+{
+    {
+        .blockSize = 1,
+        .numBlocks = (DRV_NVM_MEDIA_SIZE * 1024),
+    },
+    {
+       .blockSize = DRV_NVM_ROW_SIZE,
+       .numBlocks = ((DRV_NVM_MEDIA_SIZE * 1024)/DRV_NVM_ROW_SIZE)
+    },
+    {
+       .blockSize = DRV_NVM_PAGE_SIZE,
+       .numBlocks = ((DRV_NVM_MEDIA_SIZE * 1024)/DRV_NVM_PAGE_SIZE)
+    }
+};
+
+const SYS_FS_MEDIA_GEOMETRY NVMGeometry =
+{
+    .mediaProperty = SYS_FS_MEDIA_WRITE_IS_BLOCKING,
+    .numReadRegions = 1,
+    .numWriteRegions = 1,
+    .numEraseRegions = 1,
+    .geometryTable = (SYS_FS_MEDIA_REGION_GEOMETRY *)&NVMGeometryTable
+};
+
+const DRV_NVM_INIT drvNvmInit =
+{
+    .moduleInit.sys.powerState = SYS_MODULE_POWER_RUN_FULL,
+    .nvmID = NVM_ID_0,
+    .interruptSource = INT_SOURCE_FLASH_CONTROL,
+
+    .mediaStartAddress = 0x9D070000,
+    .nvmMediaGeometry = (SYS_FS_MEDIA_GEOMETRY *)&NVMGeometry
+
 };
 // <editor-fold defaultstate="collapsed" desc="DRV_SPI Initialization Data"> 
  /*** SPI Driver Initialization Data ***/
@@ -159,6 +179,30 @@ const DRV_TMR_INIT drvTmr0InitData =
     .interruptSource = DRV_TMR_INTERRUPT_SOURCE_IDX0,
     .asyncWriteEnable = false,
 };
+// <editor-fold defaultstate="collapsed" desc="DRV_USART Initialization Data">
+
+const DRV_USART_INIT drvUsart0InitData =
+{
+    .moduleInit.value = DRV_USART_POWER_STATE_IDX0,
+    .usartID = DRV_USART_PERIPHERAL_ID_IDX0, 
+    .mode = DRV_USART_OPER_MODE_IDX0,
+    .flags = DRV_USART_INIT_FLAGS_IDX0,
+    .brgClock = DRV_USART_BRG_CLOCK_IDX0,
+    .lineControl = DRV_USART_LINE_CNTRL_IDX0,
+    .baud = DRV_USART_BAUD_RATE_IDX0,
+    .handshake = DRV_USART_HANDSHAKE_MODE_IDX0,
+    .linesEnable = DRV_USART_LINES_ENABLE_IDX0,
+    .interruptTransmit = DRV_USART_XMIT_INT_SRC_IDX0,
+    .interruptReceive = DRV_USART_RCV_INT_SRC_IDX0,
+    .interruptError = DRV_USART_ERR_INT_SRC_IDX0,
+    .queueSizeTransmit = DRV_USART_XMIT_QUEUE_SIZE_IDX0,
+    .queueSizeReceive = DRV_USART_RCV_QUEUE_SIZE_IDX0,
+    .dmaChannelTransmit = DMA_CHANNEL_NONE,
+    .dmaInterruptTransmit = DRV_USART_XMIT_INT_SRC_IDX0,    
+    .dmaChannelReceive = DMA_CHANNEL_NONE,
+    .dmaInterruptReceive = DRV_USART_RCV_INT_SRC_IDX0,    
+};
+// </editor-fold>
 
 // *****************************************************************************
 // *****************************************************************************
@@ -296,7 +340,7 @@ static const NET_PRES_INIT_DATA netPresInitData =
 SYS_CMD_INIT sysCmdInit =
 {
     .moduleInit = {0},
-    .consoleCmdIOParam = SYS_CMD_FULL_COMMAND_READ_CONSOLE_IO_PARAM,
+    .consoleCmdIOParam = SYS_CMD_SINGLE_CHARACTER_READ_CONSOLE_IO_PARAM,
 };
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="SYS_CONSOLE Initialization Data">
@@ -304,14 +348,32 @@ SYS_CMD_INIT sysCmdInit =
 
 SYS_MODULE_OBJ sysConsoleObjects[] = { SYS_MODULE_OBJ_INVALID };
 
-/* Declared in console device implementation (sys_console_appio.c) */
-extern SYS_CONSOLE_DEV_DESC consAppIODevDesc;
-
-SYS_CONSOLE_INIT consAppIOInit0 =
+/* Declared in console device implementation (sys_console_uart.c) */
+extern SYS_CONSOLE_DEV_DESC consUsartDevDesc;
+SYS_CONSOLE_INIT consUsartInit0 =
 {
     .moduleInit = {0},
-    .consDevDesc = &consAppIODevDesc,
+    .consDevDesc = &consUsartDevDesc,
 };
+// </editor-fold>
+// <editor-fold defaultstate="collapsed" desc="SYS_FS Initialization Data">
+/*** File System Initialization Data ***/
+
+const SYS_FS_MEDIA_MOUNT_DATA sysfsMountTable[SYS_FS_VOLUME_NUMBER] = 
+{
+	{NULL}
+};
+
+
+
+const SYS_FS_REGISTRATION_TABLE sysFSInit [ SYS_FS_MAX_FILE_SYSTEM_TYPE ] =
+{
+    {
+        .nativeFileSystemType = MPFS2,
+        .nativeFileSystemFunctions = &MPFSFunctions
+    }
+};
+
 // </editor-fold>
 // <editor-fold defaultstate="collapsed" desc="SYS_TMR Initialization Data">
 /*** TMR Service Initialization Data ***/
@@ -375,8 +437,30 @@ const TCPIP_TCP_MODULE_CONFIG tcpipTCPInitData =
     .sktRxBuffSize  = TCPIP_TCP_SOCKET_DEFAULT_RX_SIZE,
 };
 
+/*** HTTP Server Initialization Data ***/
+const TCPIP_HTTP_MODULE_CONFIG tcpipHTTPInitData =
+{
+    .nConnections   = TCPIP_HTTP_MAX_CONNECTIONS,
+    .dataLen		= TCPIP_HTTP_MAX_DATA_LEN,
+    .sktTxBuffSize	= TCPIP_HTTP_SKT_TX_BUFF_SIZE,
+    .sktRxBuffSize	= TCPIP_HTTP_SKT_RX_BUFF_SIZE,
+    .configFlags	= TCPIP_HTTP_CONFIG_FLAGS,
+    .http_malloc_fnc    = TCPIP_HTTP_MALLOC_FUNC,
+    .http_free_fnc      = TCPIP_HTTP_FREE_FUNC,
+};
 
 
+/*** SNTP Client Initialization Data ***/
+const TCPIP_SNTP_MODULE_CONFIG tcpipSNTPInitData =
+{
+    .ntp_server		        = TCPIP_NTP_SERVER,
+    .ntp_interface		    = TCPIP_NTP_DEFAULT_IF,
+    .ntp_connection_type	= TCPIP_NTP_DEFAULT_CONNECTION_TYPE,
+    .ntp_reply_timeout		= TCPIP_NTP_REPLY_TIMEOUT,
+    .ntp_stamp_timeout		= TCPIP_NTP_TIME_STAMP_TMO,
+    .ntp_success_interval	= TCPIP_NTP_QUERY_INTERVAL,
+    .ntp_error_interval		= TCPIP_NTP_FAST_QUERY_INTERVAL,
+};
 
 
 
@@ -390,6 +474,11 @@ const TCPIP_DHCP_MODULE_CONFIG tcpipDHCPInitData =
 
 };
 
+/*** Berkeley API Initialization Data ***/
+const BERKELEY_MODULE_CONFIG tcpipBerkeleyInitData = 
+{
+    .maxSockets     = MAX_BSD_SOCKETS,
+};
 
 
 /*** NBNS Server Initialization Data ***/
@@ -408,7 +497,7 @@ const DRV_ETHPHY_INIT tcpipPhyInitData =
     .ethphyId               = TCPIP_EMAC_MODULE_ID,
     .phyAddress             = TCPIP_EMAC_PHY_ADDRESS,
     .phyFlags               = TCPIP_EMAC_PHY_CONFIG_FLAGS,
-    .pPhyObject             = &DRV_ETHPHY_OBJECT_SMSC_LAN8740,
+    .pPhyObject             = &DRV_ETHPHY_OBJECT_National_DP83848,
     .resetFunction          = 0,
     .pMiimObject            = &DRV_MIIM_OBJECT_BASE_Default,
     .pMiimInit              = &drvMiimInitData,
@@ -492,11 +581,14 @@ const TCPIP_STACK_MODULE_CONFIG TCPIP_STACK_MODULE_CONFIG_TBL [] =
     {TCPIP_MODULE_ANNOUNCE,         &tcpipAnnounceInitData},        // TCPIP_MODULE_ANNOUNCE
     {TCPIP_MODULE_DNS_CLIENT,       &tcpipDNSClientInitData},       // TCPIP_MODULE_DNS_CLIENT
     {TCPIP_MODULE_NBNS,             &tcpipNBNSInitData},            // TCPIP_MODULE_NBNS
+    {TCPIP_MODULE_SNTP,             &tcpipSNTPInitData},            // TCPIP_MODULE_SNTP
 
+    {TCPIP_MODULE_BERKELEY,         &tcpipBerkeleyInitData},        // TCPIP_MODULE_BERKELEY
+    {TCPIP_MODULE_HTTP_SERVER,      &tcpipHTTPInitData},            // TCPIP_MODULE_HTTP_SERVER
     {TCPIP_MODULE_TELNET_SERVER,    &tcpipTelnetInitData},          // TCPIP_MODULE_TELNET_SERVER
     { TCPIP_MODULE_MANAGER,         &tcpipHeapConfig },             // TCPIP_MODULE_MANAGER
     // MAC modules
-    {TCPIP_MODULE_MAC_ENCJ600,      &drvEncX24j600InitDataIdx0},    // TCPIP_MODULE_MAC_ENCJ600
+    {TCPIP_MODULE_MAC_PIC32INT,     &tcpipMACPIC32INTInitData},     // TCPIP_MODULE_MAC_PIC32INT
 
 };
 
@@ -570,6 +662,12 @@ void SYS_Initialize ( void* data )
 
     /* Initialize the MIIM Driver */
     sysObj.drvMiim = DRV_MIIM_Initialize(DRV_MIIM_INDEX_0, (const SYS_MODULE_INIT  * const)&drvMiimInitData);
+    /* Configure the Flash Controller Interrupt Priority */
+    SYS_INT_VectorPrioritySet(INT_VECTOR_FLASH, INT_PRIORITY_LEVEL3);
+    /* Configure the Flash Controller Interrupt Sub Priority */
+    SYS_INT_VectorSubprioritySet(INT_VECTOR_FCE, INT_SUBPRIORITY_LEVEL0);
+    /* Initialize the NVM Driver */
+    sysObj.drvNvm = DRV_NVM_Initialize(DRV_NVM_INDEX_0, (SYS_MODULE_INIT *)&drvNvmInit);
 
     /*** SPI Driver Index 0 initialization***/
 
@@ -584,14 +682,20 @@ void SYS_Initialize ( void* data )
     SYS_INT_VectorSubprioritySet(INT_VECTOR_T1, INT_SUBPRIORITY_LEVEL0);
  
  
- 
+     sysObj.drvUsart0 = DRV_USART_Initialize(DRV_USART_INDEX_0, (SYS_MODULE_INIT *)&drvUsart0InitData);
+    SYS_INT_VectorPrioritySet(INT_VECTOR_UART1, INT_PRIORITY_LEVEL1);
+    SYS_INT_VectorSubprioritySet(INT_VECTOR_UART1, INT_SUBPRIORITY_LEVEL0);
+
     /* Initialize System Services */
     SYS_PORTS_Initialize();
 
     /*** Command Service Initialization Code ***/
     SYS_CMD_Initialize((SYS_MODULE_INIT*)&sysCmdInit);
-    sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&consAppIOInit0);
+    sysObj.sysConsole0 = SYS_CONSOLE_Initialize(SYS_CONSOLE_INDEX_0, (SYS_MODULE_INIT *)&consUsartInit0);
 
+
+    /*** File System Service Initialization Code ***/
+    SYS_FS_Initialize( (const void *) sysFSInit );
 
     /*** Interrupt Service Initialization Code ***/
     SYS_INT_Initialize();

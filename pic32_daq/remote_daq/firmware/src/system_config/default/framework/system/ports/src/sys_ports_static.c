@@ -78,16 +78,40 @@ void SYS_PORTS_Initialize(void)
     PLIB_PORTS_ChangeNoticeEnable(PORTS_ID_0);
 
     
+    /* PORT A Initialization */
+    PLIB_PORTS_OpenDrainEnable(PORTS_ID_0, PORT_CHANNEL_A, SYS_PORT_A_ODC);
+    PLIB_PORTS_Write( PORTS_ID_0, PORT_CHANNEL_A,  SYS_PORT_A_LAT);
+	PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_A,  SYS_PORT_A_TRIS ^ 0xFFFF);
     
     /* PORT B Initialization */
     PLIB_PORTS_OpenDrainEnable(PORTS_ID_0, PORT_CHANNEL_B, SYS_PORT_B_ODC);
     PLIB_PORTS_Write( PORTS_ID_0, PORT_CHANNEL_B,  SYS_PORT_B_LAT);
 	PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_B,  SYS_PORT_B_TRIS ^ 0xFFFF);
     
+    /* PORT C Initialization */
+    PLIB_PORTS_OpenDrainEnable(PORTS_ID_0, PORT_CHANNEL_C, SYS_PORT_C_ODC);
+    PLIB_PORTS_Write( PORTS_ID_0, PORT_CHANNEL_C,  SYS_PORT_C_LAT);
+	PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_C,  SYS_PORT_C_TRIS ^ 0xFFFF);
+    
     /* PORT D Initialization */
     PLIB_PORTS_OpenDrainEnable(PORTS_ID_0, PORT_CHANNEL_D, SYS_PORT_D_ODC);
     PLIB_PORTS_Write( PORTS_ID_0, PORT_CHANNEL_D,  SYS_PORT_D_LAT);
 	PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_D,  SYS_PORT_D_TRIS ^ 0xFFFF);
+    
+    /* PORT E Initialization */
+    PLIB_PORTS_OpenDrainEnable(PORTS_ID_0, PORT_CHANNEL_E, SYS_PORT_E_ODC);
+    PLIB_PORTS_Write( PORTS_ID_0, PORT_CHANNEL_E,  SYS_PORT_E_LAT);
+	PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_E,  SYS_PORT_E_TRIS ^ 0xFFFF);
+    
+    /* PORT F Initialization */
+    PLIB_PORTS_OpenDrainEnable(PORTS_ID_0, PORT_CHANNEL_F, SYS_PORT_F_ODC);
+    PLIB_PORTS_Write( PORTS_ID_0, PORT_CHANNEL_F,  SYS_PORT_F_LAT);
+	PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_F,  SYS_PORT_F_TRIS ^ 0xFFFF);
+    
+    /* PORT G Initialization */
+    PLIB_PORTS_OpenDrainEnable(PORTS_ID_0, PORT_CHANNEL_G, SYS_PORT_G_ODC);
+    PLIB_PORTS_Write( PORTS_ID_0, PORT_CHANNEL_G,  SYS_PORT_G_LAT);
+	PLIB_PORTS_DirectionOutputSet( PORTS_ID_0, PORT_CHANNEL_G,  SYS_PORT_G_TRIS ^ 0xFFFF);
     
 }
 

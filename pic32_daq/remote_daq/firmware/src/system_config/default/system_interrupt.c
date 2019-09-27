@@ -68,7 +68,26 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 // Section: System Interrupt Vector Functions
 // *****************************************************************************
 // *****************************************************************************
+void __ISR(_UART_1_VECTOR, ipl1AUTO) _IntHandlerDrvUsartInstance0(void)
+{
+    DRV_USART_TasksTransmit(sysObj.drvUsart0);
+    DRV_USART_TasksError(sysObj.drvUsart0);
+    DRV_USART_TasksReceive(sysObj.drvUsart0);
+}
+ 
+ 
+ 
 
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+ 
  
 
 void __ISR(_TIMER_1_VECTOR, ipl1AUTO) IntHandlerDrvTmrInstance0(void)
@@ -80,6 +99,12 @@ void __ISR(_SPI_1_VECTOR, ipl1AUTO) _IntHandlerSPIInstance0(void)
 {
     DRV_SPI_Tasks(sysObj.spiObjectIdx0);
 }
+void __ISR(_FCE_VECTOR, ipl3AUTO) _IntHandlerDrvNvm (void)
+{
+    DRV_NVM_Tasks(sysObj.drvNvm);
+
+}
+
 void __ISR(_ETH_VECTOR, ipl5AUTO) _IntHandler_ETHMAC(void)
 {
     DRV_ETHMAC_Tasks_ISR((SYS_MODULE_OBJ)0);
