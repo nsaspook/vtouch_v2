@@ -12614,9 +12614,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="SUPPLY13" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+5V" device=""/>
 <part name="SUPPLY14" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="SUPPLY15" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
-<part name="SG1" library="buzzer" library_urn="urn:adsk.eagle:library:113" deviceset="EB2209A" device="" package3d_urn="urn:adsk.eagle:package:5276/1"/>
-<part name="SG2" library="buzzer" library_urn="urn:adsk.eagle:library:113" deviceset="EB2209A" device="" package3d_urn="urn:adsk.eagle:package:5276/1"/>
-<part name="SG3" library="buzzer" library_urn="urn:adsk.eagle:library:113" deviceset="EB2209A" device="" package3d_urn="urn:adsk.eagle:package:5276/1"/>
+<part name="MSE14LCH2" library="buzzer" library_urn="urn:adsk.eagle:library:113" deviceset="EB2209A" device="" package3d_urn="urn:adsk.eagle:package:5276/1"/>
+<part name="MSE28LWH1" library="buzzer" library_urn="urn:adsk.eagle:library:113" deviceset="EB2209A" device="" package3d_urn="urn:adsk.eagle:package:5276/1"/>
+<part name="MSE28LDD7" library="buzzer" library_urn="urn:adsk.eagle:library:113" deviceset="EB2209A" device="" package3d_urn="urn:adsk.eagle:package:5276/1"/>
 <part name="SUPPLY16" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+10V" device=""/>
 <part name="SUPPLY17" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+24V" device=""/>
 <part name="SUPPLY18" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="+24V" device=""/>
@@ -12688,6 +12688,9 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <sheets>
 <sheet>
 <plain>
+<text x="76.2" y="38.1" size="1.778" layer="91">chirp</text>
+<text x="96.52" y="27.94" size="1.778" layer="91">siren</text>
+<text x="114.3" y="17.78" size="1.778" layer="91">warp</text>
 </plain>
 <instances>
 <instance part="IC1" gate="G$1" x="40.64" y="71.12" smashed="yes">
@@ -12776,15 +12779,15 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="SUPPLY15" gate="GND" x="10.16" y="7.62" smashed="yes">
 <attribute name="VALUE" x="8.255" y="4.445" size="1.778" layer="96"/>
 </instance>
-<instance part="SG1" gate="G$1" x="71.12" y="40.64" smashed="yes" rot="R180">
+<instance part="MSE14LCH2" gate="G$1" x="71.12" y="40.64" smashed="yes" rot="R180">
 <attribute name="NAME" x="73.66" y="34.29" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="66.04" y="40.64" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="SG2" gate="G$1" x="91.44" y="30.48" smashed="yes" rot="R180">
+<instance part="MSE28LWH1" gate="G$1" x="91.44" y="30.48" smashed="yes" rot="R180">
 <attribute name="NAME" x="93.98" y="24.13" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="86.36" y="30.48" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="SG3" gate="G$1" x="109.22" y="20.32" smashed="yes" rot="R180">
+<instance part="MSE28LDD7" gate="G$1" x="109.22" y="20.32" smashed="yes" rot="R180">
 <attribute name="NAME" x="111.76" y="13.97" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="104.14" y="20.32" size="1.778" layer="96" rot="R180"/>
 </instance>
@@ -13382,7 +13385,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="40.64" y="-17.78"/>
 </segment>
 <segment>
-<pinref part="SG1" gate="G$1" pin="+"/>
+<pinref part="MSE14LCH2" gate="G$1" pin="+"/>
 <pinref part="SUPPLY16" gate="G$1" pin="+10V"/>
 <junction x="73.66" y="43.18"/>
 </segment>
@@ -13394,7 +13397,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="63.5" y="-22.86"/>
 </segment>
 <segment>
-<pinref part="SUPPLY47" gate="G$1" pin="+10V"/>
 <pinref part="SUPPLY47" gate="G$1" pin="+10V"/>
 <pinref part="TP8" gate="G$1" pin="TP"/>
 <junction x="66.04" y="-45.72"/>
@@ -13415,12 +13417,12 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="78.74" y="-27.94"/>
 </segment>
 <segment>
-<pinref part="SG2" gate="G$1" pin="+"/>
+<pinref part="MSE28LWH1" gate="G$1" pin="+"/>
 <pinref part="SUPPLY17" gate="+24V" pin="+24V"/>
 <junction x="93.98" y="33.02"/>
 </segment>
 <segment>
-<pinref part="SG3" gate="G$1" pin="+"/>
+<pinref part="MSE28LDD7" gate="G$1" pin="+"/>
 <pinref part="SUPPLY18" gate="+24V" pin="+24V"/>
 <junction x="111.76" y="22.86"/>
 </segment>
@@ -13770,7 +13772,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="IC2" gate="G$1" pin="O1"/>
 <wire x1="53.34" y1="33.02" x2="53.34" y2="43.18" width="0.1524" layer="91"/>
-<pinref part="SG1" gate="G$1" pin="-"/>
+<pinref part="MSE14LCH2" gate="G$1" pin="-"/>
 <wire x1="53.34" y1="43.18" x2="66.04" y2="43.18" width="0.1524" layer="91"/>
 <junction x="53.34" y="33.02"/>
 <junction x="66.04" y="43.18"/>
@@ -13781,7 +13783,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="IC2" gate="G$1" pin="O2"/>
 <wire x1="53.34" y1="30.48" x2="81.28" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="30.48" x2="81.28" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="SG2" gate="G$1" pin="-"/>
+<pinref part="MSE28LWH1" gate="G$1" pin="-"/>
 <wire x1="81.28" y1="33.02" x2="86.36" y2="33.02" width="0.1524" layer="91"/>
 <junction x="53.34" y="30.48"/>
 <junction x="86.36" y="33.02"/>
@@ -13792,7 +13794,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="IC2" gate="G$1" pin="O3"/>
 <wire x1="53.34" y1="27.94" x2="81.28" y2="27.94" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="27.94" x2="81.28" y2="22.86" width="0.1524" layer="91"/>
-<pinref part="SG3" gate="G$1" pin="-"/>
+<pinref part="MSE28LDD7" gate="G$1" pin="-"/>
 <wire x1="81.28" y1="22.86" x2="104.14" y2="22.86" width="0.1524" layer="91"/>
 <junction x="53.34" y="27.94"/>
 <junction x="104.14" y="22.86"/>
