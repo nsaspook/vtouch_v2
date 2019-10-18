@@ -681,9 +681,9 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
 			set_vterm(0); // set to buffer 0
-			sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
+			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
 			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
+			sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
 			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
