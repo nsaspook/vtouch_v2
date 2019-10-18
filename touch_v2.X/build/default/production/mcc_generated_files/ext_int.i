@@ -27227,32 +27227,24 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 27 "mcc_generated_files/ext_int.c" 2
 
 # 1 "mcc_generated_files/ext_int.h" 1
-# 562 "mcc_generated_files/ext_int.h"
+# 406 "mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
-# 590 "mcc_generated_files/ext_int.h"
+# 434 "mcc_generated_files/ext_int.h"
 void INT0_CallBack(void);
-# 613 "mcc_generated_files/ext_int.h"
+# 457 "mcc_generated_files/ext_int.h"
 void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
-# 637 "mcc_generated_files/ext_int.h"
+# 481 "mcc_generated_files/ext_int.h"
 extern void (*INT0_InterruptHandler)(void);
-# 661 "mcc_generated_files/ext_int.h"
+# 505 "mcc_generated_files/ext_int.h"
 void INT0_DefaultInterruptHandler(void);
-# 685 "mcc_generated_files/ext_int.h"
+# 529 "mcc_generated_files/ext_int.h"
 void INT1_CallBack(void);
-# 708 "mcc_generated_files/ext_int.h"
+# 552 "mcc_generated_files/ext_int.h"
 void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
-# 732 "mcc_generated_files/ext_int.h"
+# 576 "mcc_generated_files/ext_int.h"
 extern void (*INT1_InterruptHandler)(void);
-# 756 "mcc_generated_files/ext_int.h"
+# 600 "mcc_generated_files/ext_int.h"
 void INT1_DefaultInterruptHandler(void);
-# 780 "mcc_generated_files/ext_int.h"
-void INT2_CallBack(void);
-# 803 "mcc_generated_files/ext_int.h"
-void INT2_SetInterruptHandler(void (* InterruptHandler)(void));
-# 827 "mcc_generated_files/ext_int.h"
-extern void (*INT2_InterruptHandler)(void);
-# 851 "mcc_generated_files/ext_int.h"
-void INT2_DefaultInterruptHandler(void);
 # 28 "mcc_generated_files/ext_int.c" 2
 
 # 1 "mcc_generated_files/interrupt_manager.h" 1
@@ -27261,7 +27253,7 @@ void INTERRUPT_Initialize (void);
 # 29 "mcc_generated_files/ext_int.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 672 "mcc_generated_files/pin_manager.h"
+# 804 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 30 "mcc_generated_files/ext_int.c" 2
 
@@ -27363,69 +27355,76 @@ typedef enum
     channel_ANA0 = 0x0,
     channel_ANA1 = 0x1,
     channel_ANA2 = 0x2,
+    channel_ANA4 = 0x4,
+    channel_ANA5 = 0x5,
+    channel_ANA6 = 0x6,
+    channel_ANB2 = 0xA,
+    channel_ANB3 = 0xB,
+    channel_ANB4 = 0xC,
+    channel_ANB5 = 0xD,
     channel_VSS = 0x3B,
     channel_Temp = 0x3C,
     channel_DAC1 = 0x3D,
     channel_FVR_Buffer1 = 0x3E,
     channel_FVR_Buffer2 = 0x3F
 } adcc_channel_t;
-# 133 "./mcc_generated_files/adcc.h"
+# 140 "./mcc_generated_files/adcc.h"
 void ADCC_Initialize(void);
-# 162 "./mcc_generated_files/adcc.h"
+# 169 "./mcc_generated_files/adcc.h"
 void ADCC_StartConversion(adcc_channel_t channel);
-# 192 "./mcc_generated_files/adcc.h"
+# 199 "./mcc_generated_files/adcc.h"
 _Bool ADCC_IsConversionDone();
-# 224 "./mcc_generated_files/adcc.h"
+# 231 "./mcc_generated_files/adcc.h"
 adc_result_t ADCC_GetConversionResult(void);
-# 255 "./mcc_generated_files/adcc.h"
+# 262 "./mcc_generated_files/adcc.h"
 adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-# 280 "./mcc_generated_files/adcc.h"
+# 287 "./mcc_generated_files/adcc.h"
 void ADCC_StopConversion(void);
-# 307 "./mcc_generated_files/adcc.h"
+# 314 "./mcc_generated_files/adcc.h"
 void ADCC_SetStopOnInterrupt(void);
-# 332 "./mcc_generated_files/adcc.h"
+# 339 "./mcc_generated_files/adcc.h"
 void ADCC_DischargeSampleCapacitor(void);
-# 358 "./mcc_generated_files/adcc.h"
+# 365 "./mcc_generated_files/adcc.h"
 void ADCC_LoadAcquisitionRegister(uint16_t);
-# 384 "./mcc_generated_files/adcc.h"
+# 391 "./mcc_generated_files/adcc.h"
 void ADCC_SetPrechargeTime(uint16_t);
-# 409 "./mcc_generated_files/adcc.h"
+# 416 "./mcc_generated_files/adcc.h"
 void ADCC_SetRepeatCount(uint8_t);
-# 437 "./mcc_generated_files/adcc.h"
+# 444 "./mcc_generated_files/adcc.h"
 uint8_t ADCC_GetCurrentCountofConversions(void);
-# 461 "./mcc_generated_files/adcc.h"
+# 468 "./mcc_generated_files/adcc.h"
 void ADCC_ClearAccumulator(void);
-# 486 "./mcc_generated_files/adcc.h"
+# 493 "./mcc_generated_files/adcc.h"
 int24_t ADCC_GetAccumulatorValue(void);
-# 514 "./mcc_generated_files/adcc.h"
+# 521 "./mcc_generated_files/adcc.h"
 _Bool ADCC_HasAccumulatorOverflowed(void);
-# 539 "./mcc_generated_files/adcc.h"
+# 546 "./mcc_generated_files/adcc.h"
 uint16_t ADCC_GetFilterValue(void);
-# 567 "./mcc_generated_files/adcc.h"
+# 574 "./mcc_generated_files/adcc.h"
 uint16_t ADCC_GetPreviousResult(void);
-# 593 "./mcc_generated_files/adcc.h"
+# 600 "./mcc_generated_files/adcc.h"
 void ADCC_DefineSetPoint(uint16_t);
-# 619 "./mcc_generated_files/adcc.h"
+# 626 "./mcc_generated_files/adcc.h"
 void ADCC_SetUpperThreshold(uint16_t);
-# 645 "./mcc_generated_files/adcc.h"
+# 652 "./mcc_generated_files/adcc.h"
 void ADCC_SetLowerThreshold(uint16_t);
-# 672 "./mcc_generated_files/adcc.h"
+# 679 "./mcc_generated_files/adcc.h"
 uint16_t ADCC_GetErrorCalculation(void);
-# 699 "./mcc_generated_files/adcc.h"
+# 706 "./mcc_generated_files/adcc.h"
 void ADCC_EnableDoubleSampling(void);
-# 723 "./mcc_generated_files/adcc.h"
+# 730 "./mcc_generated_files/adcc.h"
 void ADCC_EnableContinuousConversion(void);
-# 747 "./mcc_generated_files/adcc.h"
+# 754 "./mcc_generated_files/adcc.h"
 void ADCC_DisableContinuousConversion(void);
-# 775 "./mcc_generated_files/adcc.h"
+# 782 "./mcc_generated_files/adcc.h"
 _Bool ADCC_HasErrorCrossedUpperThreshold(void);
-# 803 "./mcc_generated_files/adcc.h"
+# 810 "./mcc_generated_files/adcc.h"
 _Bool ADCC_HasErrorCrossedLowerThreshold(void);
-# 830 "./mcc_generated_files/adcc.h"
+# 837 "./mcc_generated_files/adcc.h"
 uint8_t ADCC_GetConversionStageStatus(void);
-# 847 "./mcc_generated_files/adcc.h"
+# 854 "./mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 867 "./mcc_generated_files/adcc.h"
+# 874 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 12 "mcc_generated_files/../vconfig.h" 2
 
@@ -27473,7 +27472,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 91 "./vconfig.h"
+# 92 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27620,10 +27619,8 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
 # 31 "mcc_generated_files/ext_int.c" 2
 
 
-
 void (*INT0_InterruptHandler)(void);
 void (*INT1_InterruptHandler)(void);
-void (*INT2_InterruptHandler)(void);
 
 void __attribute__((picinterrupt(("irq(INT0), base(8)")))) INT0_ISR()
 {
@@ -27679,33 +27676,6 @@ void INT1_DefaultInterruptHandler(void)
 
 }
 
-void __attribute__((picinterrupt(("irq(INT2), base(8)")))) INT2_ISR()
-{
- (PIR7bits.INT2IF = 0);
-
-
- INT2_CallBack();
-}
-
-void INT2_CallBack(void)
-{
-
- if (INT2_InterruptHandler) {
-  INT2_InterruptHandler();
- }
-}
-
-void INT2_SetInterruptHandler(void (* InterruptHandler)(void))
-{
- INT2_InterruptHandler = InterruptHandler;
-}
-
-void INT2_DefaultInterruptHandler(void)
-{
-
-
-}
-
 void EXT_INT_Initialize(void)
 {
 
@@ -27725,14 +27695,5 @@ void EXT_INT_Initialize(void)
 
  INT1_SetInterruptHandler(INT1_DefaultInterruptHandler);
  (PIE5bits.INT1IE = 1);
-
-
-
-
- (PIR7bits.INT2IF = 0);
- (INTCON0bits.INT2EDG = 0);
-
- INT2_SetInterruptHandler(INT2_DefaultInterruptHandler);
- (PIE7bits.INT2IE = 1);
 
 }

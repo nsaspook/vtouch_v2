@@ -871,32 +871,7 @@ void main(void)
 			break;
 		}
 		if (V.ticks) {
-			if (V.failed_receive) {
-				BILED1_1_SetLow(); // red
-				BILED1_2_SetHigh();
-				if (V.error == LINK_ERROR_CHECKSUM) {
-					BILED3_1_SetLow(); // red
-					BILED3_2_SetHigh();
-				}
-			} else {
-				BILED1_1_SetHigh(); //green
-				BILED1_2_SetLow();
-				BILED3_1_SetHigh(); //green
-				BILED3_2_SetLow();
-			}
-			if (V.failed_send) {
-				BILED2_1_SetLow(); // red
-				BILED2_2_SetHigh();
-				if (V.error == LINK_ERROR_CHECKSUM) {
-					BILED4_1_SetLow(); // red
-					BILED4_2_SetHigh();
-				}
-			} else {
-				BILED2_1_SetHigh(); //green
-				BILED2_2_SetLow();
-				BILED4_1_SetHigh(); //green
-				BILED4_2_SetLow();
-			}
+
 		}
 
 		if (mode != UI_STATE_LOG)

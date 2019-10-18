@@ -27351,7 +27351,7 @@ void INTERRUPT_Initialize (void);
 # 52 "mcc_generated_files/uart1.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 672 "mcc_generated_files/pin_manager.h"
+# 804 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 53 "mcc_generated_files/uart1.c" 2
 # 65 "mcc_generated_files/uart1.c"
