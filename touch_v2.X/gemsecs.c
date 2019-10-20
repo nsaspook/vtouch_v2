@@ -923,7 +923,6 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 	static response_type block;
 	uint16_t i = 0;
 
-	IO_RB4_Toggle();
 	V.abort = LINK_ERROR_NONE;
 	V.queue = false;
 	block.respond = false;

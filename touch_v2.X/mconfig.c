@@ -180,8 +180,7 @@ void vterm_sequence(void)
  */
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
-	//	DLED = true;
-	IO_RB5_Toggle();
+
 	wait_lcd_done();
 	if (V.response.info == DIS_STR) {
 		eaDogM_WriteStringAtPos(r, c, strPtr);

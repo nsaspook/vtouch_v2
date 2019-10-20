@@ -681,9 +681,9 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
 			set_vterm(0); // set to buffer 0
-			sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
+			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
 			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
+			sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
 			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
@@ -871,32 +871,7 @@ void main(void)
 			break;
 		}
 		if (V.ticks) {
-			if (V.failed_receive) {
-				BILED1_1_SetLow(); // red
-				BILED1_2_SetHigh();
-				if (V.error == LINK_ERROR_CHECKSUM) {
-					BILED3_1_SetLow(); // red
-					BILED3_2_SetHigh();
-				}
-			} else {
-				BILED1_1_SetHigh(); //green
-				BILED1_2_SetLow();
-				BILED3_1_SetHigh(); //green
-				BILED3_2_SetLow();
-			}
-			if (V.failed_send) {
-				BILED2_1_SetLow(); // red
-				BILED2_2_SetHigh();
-				if (V.error == LINK_ERROR_CHECKSUM) {
-					BILED4_1_SetLow(); // red
-					BILED4_2_SetHigh();
-				}
-			} else {
-				BILED2_1_SetHigh(); //green
-				BILED2_2_SetLow();
-				BILED4_1_SetHigh(); //green
-				BILED4_2_SetLow();
-			}
+
 		}
 
 		if (mode != UI_STATE_LOG)

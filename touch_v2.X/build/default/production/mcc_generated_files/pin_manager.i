@@ -27227,7 +27227,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 49 "mcc_generated_files/pin_manager.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 672 "mcc_generated_files/pin_manager.h"
+# 804 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 50 "mcc_generated_files/pin_manager.c" 2
 
@@ -27249,33 +27249,33 @@ void PIN_MANAGER_Initialize(void)
     LATA = 0x00;
     LATF = 0x00;
     LATB = 0x00;
-    LATC = 0x06;
+    LATC = 0x07;
 
 
 
 
     TRISE = 0x00;
     TRISF = 0x0F;
-    TRISA = 0x8F;
-    TRISB = 0x8F;
-    TRISC = 0x91;
+    TRISA = 0xFF;
+    TRISB = 0xBF;
+    TRISC = 0x90;
     TRISD = 0x0C;
 
 
 
 
-    ANSELD = 0x00;
-    ANSELC = 0x01;
-    ANSELB = 0x08;
+    ANSELD = 0x08;
+    ANSELC = 0x00;
+    ANSELB = 0x3C;
     ANSELE = 0x00;
-    ANSELF = 0x0F;
-    ANSELA = 0x8F;
+    ANSELF = 0x00;
+    ANSELA = 0xFF;
 
 
 
 
-    WPUD = 0xFC;
-    WPUF = 0xF0;
+    WPUD = 0x0C;
+    WPUF = 0x0F;
     WPUE = 0x00;
     WPUB = 0x87;
     WPUA = 0x00;
@@ -27302,19 +27302,15 @@ void PIN_MANAGER_Initialize(void)
     SLRCONF = 0xFF;
 # 126 "mcc_generated_files/pin_manager.c"
     U2RXPPS = 0x0F;
+    SPI1SCKPPS = 0x13;
     RB6PPS = 0x16;
     RC3PPS = 0x1E;
     INT0PPS = 0x08;
-    INT2PPS = 0x0A;
-    INT1PPS = 0x09;
-    U1RXPPS = 0x17;
-    SPI1SCKPPS = 0x13;
-    RA4PPS = 0x01;
-    RA5PPS = 0x26;
-    RA6PPS = 0x28;
     RD1PPS = 0x10;
+    INT1PPS = 0x09;
     RC5PPS = 0x1F;
     RC6PPS = 0x13;
+    U1RXPPS = 0x17;
     SPI1SDIPPS = 0x14;
 }
 
