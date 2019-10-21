@@ -27227,7 +27227,7 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 49 "mcc_generated_files/pin_manager.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 804 "mcc_generated_files/pin_manager.h"
+# 824 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 50 "mcc_generated_files/pin_manager.c" 2
 
@@ -27264,7 +27264,7 @@ void PIN_MANAGER_Initialize(void)
 
 
 
-    ANSELD = 0x08;
+    ANSELD = 0x00;
     ANSELC = 0x00;
     ANSELB = 0x3C;
     ANSELE = 0x00;

@@ -27309,9 +27309,10 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/tmr6.h" 2
+# 54 "mcc_generated_files/tmr6.h" 2
+
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
-# 56 "mcc_generated_files/tmr6.h" 2
+# 55 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27666,7 +27667,7 @@ uint8_t SPI1_Exchange8bit(uint8_t data);
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
 # 19 "mcc_generated_files/../vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 804 "./mcc_generated_files/pin_manager.h"
+# 824 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 20 "mcc_generated_files/../vconfig.h" 2
 # 1 "./ringbufs.h" 1

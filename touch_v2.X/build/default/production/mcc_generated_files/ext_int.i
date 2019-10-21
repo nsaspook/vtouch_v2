@@ -27253,7 +27253,7 @@ void INTERRUPT_Initialize (void);
 # 29 "mcc_generated_files/ext_int.c" 2
 
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 804 "mcc_generated_files/pin_manager.h"
+# 824 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 30 "mcc_generated_files/ext_int.c" 2
 
