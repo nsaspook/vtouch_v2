@@ -23,7 +23,7 @@ extern "C" {
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
-	 * 0.3 configure for mbmc_io bard
+	 * 0.3 configure for mbmc_io board
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
