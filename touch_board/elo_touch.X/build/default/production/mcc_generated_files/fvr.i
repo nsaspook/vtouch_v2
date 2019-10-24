@@ -26670,7 +26670,7 @@ _Bool FVR_IsOutputReady(void);
 void FVR_Initialize(void)
 {
 
-    FVRCON = 0xAD;
+    FVRCON = 0xAF;
 }
 
 _Bool FVR_IsOutputReady(void)
