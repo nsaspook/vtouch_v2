@@ -59,25 +59,25 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
-// get/set V_PV aliases
-#define V_PV_TRIS                 TRISAbits.TRISA0
-#define V_PV_LAT                  LATAbits.LATA0
-#define V_PV_PORT                 PORTAbits.RA0
-#define V_PV_WPU                  WPUAbits.WPUA0
-#define V_PV_OD                   ODCONAbits.ODCA0
-#define V_PV_ANS                  ANSELAbits.ANSELA0
-#define V_PV_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
-#define V_PV_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
-#define V_PV_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
-#define V_PV_GetValue()           PORTAbits.RA0
-#define V_PV_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
-#define V_PV_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
-#define V_PV_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
-#define V_PV_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
-#define V_PV_SetPushPull()        do { ODCONAbits.ODCA0 = 0; } while(0)
-#define V_PV_SetOpenDrain()       do { ODCONAbits.ODCA0 = 1; } while(0)
-#define V_PV_SetAnalogMode()      do { ANSELAbits.ANSELA0 = 1; } while(0)
-#define V_PV_SetDigitalMode()     do { ANSELAbits.ANSELA0 = 0; } while(0)
+// get/set C_BATT aliases
+#define C_BATT_TRIS                 TRISAbits.TRISA0
+#define C_BATT_LAT                  LATAbits.LATA0
+#define C_BATT_PORT                 PORTAbits.RA0
+#define C_BATT_WPU                  WPUAbits.WPUA0
+#define C_BATT_OD                   ODCONAbits.ODCA0
+#define C_BATT_ANS                  ANSELAbits.ANSELA0
+#define C_BATT_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
+#define C_BATT_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
+#define C_BATT_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
+#define C_BATT_GetValue()           PORTAbits.RA0
+#define C_BATT_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
+#define C_BATT_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
+#define C_BATT_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
+#define C_BATT_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
+#define C_BATT_SetPushPull()        do { ODCONAbits.ODCA0 = 0; } while(0)
+#define C_BATT_SetOpenDrain()       do { ODCONAbits.ODCA0 = 1; } while(0)
+#define C_BATT_SetAnalogMode()      do { ANSELAbits.ANSELA0 = 1; } while(0)
+#define C_BATT_SetDigitalMode()     do { ANSELAbits.ANSELA0 = 0; } while(0)
 
 // get/set C_PV aliases
 #define C_PV_TRIS                 TRISAbits.TRISA1
@@ -151,25 +151,25 @@
 #define V_BAT_SetAnalogMode()      do { ANSELAbits.ANSELA4 = 1; } while(0)
 #define V_BAT_SetDigitalMode()     do { ANSELAbits.ANSELA4 = 0; } while(0)
 
-// get/set C_BAT aliases
-#define C_BAT_TRIS                 TRISAbits.TRISA5
-#define C_BAT_LAT                  LATAbits.LATA5
-#define C_BAT_PORT                 PORTAbits.RA5
-#define C_BAT_WPU                  WPUAbits.WPUA5
-#define C_BAT_OD                   ODCONAbits.ODCA5
-#define C_BAT_ANS                  ANSELAbits.ANSELA5
-#define C_BAT_SetHigh()            do { LATAbits.LATA5 = 1; } while(0)
-#define C_BAT_SetLow()             do { LATAbits.LATA5 = 0; } while(0)
-#define C_BAT_Toggle()             do { LATAbits.LATA5 = ~LATAbits.LATA5; } while(0)
-#define C_BAT_GetValue()           PORTAbits.RA5
-#define C_BAT_SetDigitalInput()    do { TRISAbits.TRISA5 = 1; } while(0)
-#define C_BAT_SetDigitalOutput()   do { TRISAbits.TRISA5 = 0; } while(0)
-#define C_BAT_SetPullup()          do { WPUAbits.WPUA5 = 1; } while(0)
-#define C_BAT_ResetPullup()        do { WPUAbits.WPUA5 = 0; } while(0)
-#define C_BAT_SetPushPull()        do { ODCONAbits.ODCA5 = 0; } while(0)
-#define C_BAT_SetOpenDrain()       do { ODCONAbits.ODCA5 = 1; } while(0)
-#define C_BAT_SetAnalogMode()      do { ANSELAbits.ANSELA5 = 1; } while(0)
-#define C_BAT_SetDigitalMode()     do { ANSELAbits.ANSELA5 = 0; } while(0)
+// get/set V_PV aliases
+#define V_PV_TRIS                 TRISAbits.TRISA5
+#define V_PV_LAT                  LATAbits.LATA5
+#define V_PV_PORT                 PORTAbits.RA5
+#define V_PV_WPU                  WPUAbits.WPUA5
+#define V_PV_OD                   ODCONAbits.ODCA5
+#define V_PV_ANS                  ANSELAbits.ANSELA5
+#define V_PV_SetHigh()            do { LATAbits.LATA5 = 1; } while(0)
+#define V_PV_SetLow()             do { LATAbits.LATA5 = 0; } while(0)
+#define V_PV_Toggle()             do { LATAbits.LATA5 = ~LATAbits.LATA5; } while(0)
+#define V_PV_GetValue()           PORTAbits.RA5
+#define V_PV_SetDigitalInput()    do { TRISAbits.TRISA5 = 1; } while(0)
+#define V_PV_SetDigitalOutput()   do { TRISAbits.TRISA5 = 0; } while(0)
+#define V_PV_SetPullup()          do { WPUAbits.WPUA5 = 1; } while(0)
+#define V_PV_ResetPullup()        do { WPUAbits.WPUA5 = 0; } while(0)
+#define V_PV_SetPushPull()        do { ODCONAbits.ODCA5 = 0; } while(0)
+#define V_PV_SetOpenDrain()       do { ODCONAbits.ODCA5 = 1; } while(0)
+#define V_PV_SetAnalogMode()      do { ANSELAbits.ANSELA5 = 1; } while(0)
+#define V_PV_SetDigitalMode()     do { ANSELAbits.ANSELA5 = 0; } while(0)
 
 // get/set V_CBUS aliases
 #define V_CBUS_TRIS                 TRISAbits.TRISA6

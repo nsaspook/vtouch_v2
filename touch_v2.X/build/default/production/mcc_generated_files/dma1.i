@@ -27331,14 +27331,14 @@ typedef uint16_t adc_result_t;
 # 89 "./mcc_generated_files/adcc.h"
 typedef enum
 {
-    channel_ANA0 = 0x0,
-    channel_ANA1 = 0x1,
-    channel_ANA2 = 0x2,
-    channel_ANA4 = 0x4,
-    channel_ANA5 = 0x5,
-    channel_ANA6 = 0x6,
-    channel_ANB2 = 0xA,
-    channel_ANB3 = 0xB,
+    C_BATT = 0x0,
+    C_PV = 0x1,
+    V_CC = 0x2,
+    V_BAT = 0x4,
+    V_PV = 0x5,
+    V_CBUS = 0x6,
+    V_BBAT = 0xA,
+    V_TEMP = 0xB,
     channel_ANB4 = 0xC,
     channel_ANB5 = 0xD,
     channel_VSS = 0x3B,
@@ -27454,7 +27454,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 93 "./vconfig.h"
+# 94 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
