@@ -41,6 +41,12 @@
     SOFTWARE.
  */
 
+/*
+ * timer 2 100 us PWM clock, no interrupt
+ * timer 5 one second timer, interrupt
+ * timer 6 500 us software timer ticker, interrupt
+ */
+
 #pragma warning disable 520
 #pragma warning disable 1498 
 

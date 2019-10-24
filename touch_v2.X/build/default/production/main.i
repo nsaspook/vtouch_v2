@@ -7,7 +7,7 @@
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 44 "main.c"
+# 50 "main.c"
 #pragma warning disable 520
 #pragma warning disable 1498
 
@@ -171,7 +171,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 52 "main.c" 2
+# 58 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
@@ -227,7 +227,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 53 "main.c" 2
+# 59 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -28140,25 +28140,6 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 60 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 61 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 406 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28178,6 +28159,25 @@ void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT1_InterruptHandler)(void);
 # 600 "./mcc_generated_files/ext_int.h"
 void INT1_DefaultInterruptHandler(void);
+# 61 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
 # 62 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/uart2.h" 1
@@ -28281,7 +28281,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 # 109 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 54 "main.c" 2
+# 60 "main.c" 2
 
 
 # 1 "./eadog.h" 1
@@ -28480,7 +28480,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 56 "main.c" 2
+# 62 "main.c" 2
 
 # 1 "./gemsecs.h" 1
 # 25 "./gemsecs.h"
@@ -28714,7 +28714,7 @@ void mode_lamp_bright(void);
  _Bool gem_messages(response_type *, uint8_t);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
-# 57 "main.c" 2
+# 63 "main.c" 2
 
 
 
@@ -28973,7 +28973,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 336 "main.c"
+# 342 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28992,7 +28992,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 374 "main.c"
+# 380 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29449,7 +29449,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 838 "main.c"
+# 844 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29517,6 +29517,6 @@ void main(void)
     update_lcd(2);
    }
   }
-# 913 "main.c"
+# 919 "main.c"
  }
 }

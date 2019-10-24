@@ -27881,125 +27881,125 @@ void TMR6_Initialize(void)
 
 
 
- T6CLKCON = 0x01;
+    T6CLKCON = 0x01;
 
 
- T6HLT = 0x00;
+    T6HLT = 0x00;
 
 
- T6RST = 0x00;
+    T6RST = 0x00;
 
 
- T6PR = 0x03;
+    T6PR = 0x7C;
 
 
- T6TMR = 0x00;
+    T6TMR = 0x00;
 
 
- PIR9bits.TMR6IF = 0;
+    PIR9bits.TMR6IF = 0;
 
 
- PIE9bits.TMR6IE = 1;
+    PIE9bits.TMR6IE = 1;
 
 
- TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
+    TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
 
 
- T6CON = 0xFF;
+    T6CON = 0xE0;
 }
 
 void TMR6_ModeSet(TMR6_HLT_MODE mode)
 {
 
- T6HLTbits.MODE = mode;
+    T6HLTbits.MODE = mode;
 }
 
 void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset)
 {
 
- T6RSTbits.RSEL = reset;
+    T6RSTbits.RSEL = reset;
 }
 
 void TMR6_Start(void)
 {
 
- T6CONbits.TMR6ON = 1;
+    T6CONbits.TMR6ON = 1;
 }
 
 void TMR6_StartTimer(void)
 {
- TMR6_Start();
+    TMR6_Start();
 }
 
 void TMR6_Stop(void)
 {
 
- T6CONbits.TMR6ON = 0;
+    T6CONbits.TMR6ON = 0;
 }
 
 void TMR6_StopTimer(void)
 {
- TMR6_Stop();
+    TMR6_Stop();
 }
 
 uint8_t TMR6_Counter8BitGet(void)
 {
- uint8_t readVal;
+    uint8_t readVal;
 
- readVal = TMR6;
+    readVal = TMR6;
 
- return readVal;
+    return readVal;
 }
 
 uint8_t TMR6_ReadTimer(void)
 {
- return TMR6_Counter8BitGet();
+    return TMR6_Counter8BitGet();
 }
 
 void TMR6_Counter8BitSet(uint8_t timerVal)
 {
 
- TMR6 = timerVal;
+    TMR6 = timerVal;
 }
 
 void TMR6_WriteTimer(uint8_t timerVal)
 {
- TMR6_Counter8BitSet(timerVal);
+    TMR6_Counter8BitSet(timerVal);
 }
 
 void TMR6_Period8BitSet(uint8_t periodVal)
 {
- PR6 = periodVal;
+   PR6 = periodVal;
 }
 
 void TMR6_LoadPeriodRegister(uint8_t periodVal)
 {
- TMR6_Period8BitSet(periodVal);
+   TMR6_Period8BitSet(periodVal);
 }
 
-void __attribute__((picinterrupt(("irq(TMR6), base(8)")))) TMR6_ISR()
+void __attribute__((picinterrupt(("irq(TMR6),base(8)")))) TMR6_ISR()
 {
 
 
- PIR9bits.TMR6IF = 0;
+    PIR9bits.TMR6IF = 0;
 
 
 
- TMR6_CallBack();
+    TMR6_CallBack();
 }
 
 void TMR6_CallBack(void)
 {
 
 
- if (TMR6_InterruptHandler) {
-  TMR6_InterruptHandler();
- }
+    if(TMR6_InterruptHandler)
+    {
+        TMR6_InterruptHandler();
+    }
 }
 
-void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
-{
- TMR6_InterruptHandler = InterruptHandler;
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
+    TMR6_InterruptHandler = InterruptHandler;
 }
 
 void TMR6_DefaultInterruptHandler(void)
@@ -28012,6 +28012,6 @@ void TMR6_DefaultInterruptHandler(void)
  for (i = 0; i < TMR_COUNT; i++) {
   if (tickCount[i] != 0) {
    tickCount[i]--;
-  }
+}
  }
 }
