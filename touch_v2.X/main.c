@@ -42,9 +42,60 @@
  */
 
 /*
+ *
+ * This program controls and monitors solar power battery arrays on a 12vdc system
+ * MBMC uses a simple expert machine to try and keep current the energy stored in a bank of batteries
+ * The main physics functions are contained in the noload_soc, update_cef, ChargeBatt and pick_batt functions
+ * Much more work is needed to make the program flow logical but making it work first is the current effort
+ * The network interface processor on a pic32 will be able to analyze the collected data for better control at some future point
+ *
+ * standard program display units:
+ * Voltage  in millivolts,
+ * Current in milliamps
+ * Watts Power in milliwatts
+ * Ah battery capacity milliAh
+ *
+ * R: structure, real values from measurements
+ * C: structure, calculated values from measurements or programs
+ * B: structure, battery parameters
+ *
+ * USART2 		Is the client comm port 38400
+ * USART1		MBMC host network 38400
  * timer 2 100 us PWM clock, no interrupt
  * timer 5 one second timer, interrupt
  * timer 6 500 us software timer ticker, interrupt
+ * 
+ * 10 analog channels are active
+ * PORTA,PORTB		analog inputs
+ * ana0	battery current					300A AMPLOC sensor battery output to inverter 5v R1
+ * ana1	PV input current				50A AMPLOC sensor input from PV array 5v R2
+ * ana2	charge controller output voltage		R3
+ * ana3  PLUS VREF					Using a external 4.095 volt reference IC from TI/BB
+ * ana4	battery voltage					Voltage a primary inverter battery R4
+ * ana5	pv voltage					R5
+ * ana6 controller buss voltage				R6
+ * anb2 backup battery voltage				R7
+ * anb3 thermo_batt					thermistor input 10K at 25C 5v R8
+ * anb4 inverter voltage				R9
+ * anb5 spare						R10
+ * 
+ * 
+ * adc_cal[0-3]						current sensors zero offset stored in eeprom 0=a300, 1=a50, 2..3=future
+ * 3x16 LCD status panel and led status lights.
+ *
+ * system variables float
+ * 
+ * current_in
+ * current_battery
+ * current_load
+ * 
+ * voltage_pv
+ * voltage_cc
+ * voltage_battery
+ * voltage_load
+ * voltage_buss
+ * voltage_thermo
+ * voltage_backup
  */
 
 #pragma warning disable 520

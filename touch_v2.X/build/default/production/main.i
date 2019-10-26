@@ -7,7 +7,7 @@
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 50 "main.c"
+# 101 "main.c"
 #pragma warning disable 520
 #pragma warning disable 1498
 
@@ -171,7 +171,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 58 "main.c" 2
+# 109 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
@@ -227,7 +227,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 59 "main.c" 2
+# 110 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -28281,7 +28281,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 # 109 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 60 "main.c" 2
+# 111 "main.c" 2
 
 
 # 1 "./eadog.h" 1
@@ -28480,7 +28480,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 62 "main.c" 2
+# 113 "main.c" 2
 
 # 1 "./gemsecs.h" 1
 # 25 "./gemsecs.h"
@@ -28714,7 +28714,7 @@ void mode_lamp_bright(void);
  _Bool gem_messages(response_type *, uint8_t);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
-# 63 "main.c" 2
+# 114 "main.c" 2
 
 
 
@@ -28973,7 +28973,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 342 "main.c"
+# 393 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -28992,7 +28992,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 380 "main.c"
+# 431 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -29449,7 +29449,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 844 "main.c"
+# 895 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29517,6 +29517,6 @@ void main(void)
     update_lcd(2);
    }
   }
-# 919 "main.c"
+# 970 "main.c"
  }
 }
