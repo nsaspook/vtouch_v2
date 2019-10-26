@@ -27327,7 +27327,7 @@ typedef enum
     V_CBUS = 0x6,
     V_BBAT = 0xA,
     V_TEMP = 0xB,
-    channel_ANB4 = 0xC,
+    V_INVERTER = 0xC,
     channel_ANB5 = 0xD,
     channel_VSS = 0x3B,
     channel_Temp = 0x3C,

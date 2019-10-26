@@ -255,25 +255,25 @@
 #define V_TEMP_SetAnalogMode()      do { ANSELBbits.ANSELB3 = 1; } while(0)
 #define V_TEMP_SetDigitalMode()     do { ANSELBbits.ANSELB3 = 0; } while(0)
 
-// get/set channel_ANB4 aliases
-#define channel_ANB4_TRIS                 TRISBbits.TRISB4
-#define channel_ANB4_LAT                  LATBbits.LATB4
-#define channel_ANB4_PORT                 PORTBbits.RB4
-#define channel_ANB4_WPU                  WPUBbits.WPUB4
-#define channel_ANB4_OD                   ODCONBbits.ODCB4
-#define channel_ANB4_ANS                  ANSELBbits.ANSELB4
-#define channel_ANB4_SetHigh()            do { LATBbits.LATB4 = 1; } while(0)
-#define channel_ANB4_SetLow()             do { LATBbits.LATB4 = 0; } while(0)
-#define channel_ANB4_Toggle()             do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0)
-#define channel_ANB4_GetValue()           PORTBbits.RB4
-#define channel_ANB4_SetDigitalInput()    do { TRISBbits.TRISB4 = 1; } while(0)
-#define channel_ANB4_SetDigitalOutput()   do { TRISBbits.TRISB4 = 0; } while(0)
-#define channel_ANB4_SetPullup()          do { WPUBbits.WPUB4 = 1; } while(0)
-#define channel_ANB4_ResetPullup()        do { WPUBbits.WPUB4 = 0; } while(0)
-#define channel_ANB4_SetPushPull()        do { ODCONBbits.ODCB4 = 0; } while(0)
-#define channel_ANB4_SetOpenDrain()       do { ODCONBbits.ODCB4 = 1; } while(0)
-#define channel_ANB4_SetAnalogMode()      do { ANSELBbits.ANSELB4 = 1; } while(0)
-#define channel_ANB4_SetDigitalMode()     do { ANSELBbits.ANSELB4 = 0; } while(0)
+// get/set V_INVERTER aliases
+#define V_INVERTER_TRIS                 TRISBbits.TRISB4
+#define V_INVERTER_LAT                  LATBbits.LATB4
+#define V_INVERTER_PORT                 PORTBbits.RB4
+#define V_INVERTER_WPU                  WPUBbits.WPUB4
+#define V_INVERTER_OD                   ODCONBbits.ODCB4
+#define V_INVERTER_ANS                  ANSELBbits.ANSELB4
+#define V_INVERTER_SetHigh()            do { LATBbits.LATB4 = 1; } while(0)
+#define V_INVERTER_SetLow()             do { LATBbits.LATB4 = 0; } while(0)
+#define V_INVERTER_Toggle()             do { LATBbits.LATB4 = ~LATBbits.LATB4; } while(0)
+#define V_INVERTER_GetValue()           PORTBbits.RB4
+#define V_INVERTER_SetDigitalInput()    do { TRISBbits.TRISB4 = 1; } while(0)
+#define V_INVERTER_SetDigitalOutput()   do { TRISBbits.TRISB4 = 0; } while(0)
+#define V_INVERTER_SetPullup()          do { WPUBbits.WPUB4 = 1; } while(0)
+#define V_INVERTER_ResetPullup()        do { WPUBbits.WPUB4 = 0; } while(0)
+#define V_INVERTER_SetPushPull()        do { ODCONBbits.ODCB4 = 0; } while(0)
+#define V_INVERTER_SetOpenDrain()       do { ODCONBbits.ODCB4 = 1; } while(0)
+#define V_INVERTER_SetAnalogMode()      do { ANSELBbits.ANSELB4 = 1; } while(0)
+#define V_INVERTER_SetDigitalMode()     do { ANSELBbits.ANSELB4 = 0; } while(0)
 
 // get/set channel_ANB5 aliases
 #define channel_ANB5_TRIS                 TRISBbits.TRISB5

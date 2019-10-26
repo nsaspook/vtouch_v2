@@ -27524,7 +27524,7 @@ typedef enum
     V_CBUS = 0x6,
     V_BBAT = 0xA,
     V_TEMP = 0xB,
-    channel_ANB4 = 0xC,
+    V_INVERTER = 0xC,
     channel_ANB5 = 0xD,
     channel_VSS = 0x3B,
     channel_Temp = 0x3C,
@@ -27797,13 +27797,13 @@ void PIN_MANAGER_Initialize (void);
 void INTERRUPT_Initialize (void);
 # 54 "./mcc_generated_files/mcc.h" 2
 
+
 # 1 "./mcc_generated_files/fvr.h" 1
 # 93 "./mcc_generated_files/fvr.h"
  void FVR_Initialize(void);
 # 127 "./mcc_generated_files/fvr.h"
 _Bool FVR_IsOutputReady(void);
-# 55 "./mcc_generated_files/mcc.h" 2
-
+# 56 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr5.h" 1
 # 101 "./mcc_generated_files/tmr5.h"

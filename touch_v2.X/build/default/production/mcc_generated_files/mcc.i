@@ -27328,13 +27328,6 @@ typedef uint32_t uint_fast32_t;
 void INTERRUPT_Initialize (void);
 # 54 "mcc_generated_files/mcc.h" 2
 
-# 1 "mcc_generated_files/fvr.h" 1
-# 93 "mcc_generated_files/fvr.h"
- void FVR_Initialize(void);
-# 127 "mcc_generated_files/fvr.h"
-_Bool FVR_IsOutputReady(void);
-# 55 "mcc_generated_files/mcc.h" 2
-
 # 1 "mcc_generated_files/adcc.h" 1
 # 72 "mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
@@ -27349,7 +27342,7 @@ typedef enum
     V_CBUS = 0x6,
     V_BBAT = 0xA,
     V_TEMP = 0xB,
-    channel_ANB4 = 0xC,
+    V_INVERTER = 0xC,
     channel_ANB5 = 0xD,
     channel_VSS = 0x3B,
     channel_Temp = 0x3C,
@@ -27415,6 +27408,13 @@ uint8_t ADCC_GetConversionStageStatus(void);
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 # 874 "mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
+# 55 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/fvr.h" 1
+# 93 "mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
 # 56 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/tmr5.h" 1
@@ -28090,8 +28090,8 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     FVR_Initialize();
     ADCC_Initialize();
-    TMR2_Initialize();
     PWM8_Initialize();
+    TMR2_Initialize();
     EXT_INT_Initialize();
     TMR6_Initialize();
     TMR5_Initialize();
