@@ -71,7 +71,7 @@ void init_display(void)
 }
 
 /*
- * channel 2 DMA
+ * channel 2 DMA, TEsting only
  */
 void init_port(void)
 {

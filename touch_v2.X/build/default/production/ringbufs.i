@@ -27480,7 +27480,7 @@ void PIN_MANAGER_Initialize (void);
 # 20 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 21 "./vconfig.h" 2
-# 73 "./vconfig.h"
+# 74 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27500,7 +27500,7 @@ void PIN_MANAGER_Initialize (void);
  } D_CODES;
 
  typedef struct terminal_type {
-  uint8_t ack[32], mesgid;
+  uint8_t mesgid;
   uint8_t TID, mcode, mparm, cmdlen, log_seq;
   uint8_t host_display_ack : 1;
   D_CODES info, help_temp;
@@ -27518,7 +27518,7 @@ void PIN_MANAGER_Initialize (void);
 
  typedef struct V_data {
   UI_STATES ui_state;
-  char buf[64], terminal[160], info[64];
+  char buf[64], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -27534,7 +27534,7 @@ void PIN_MANAGER_Initialize (void);
  } V_data;
 
  typedef struct V_help {
-  const char message[32], display[32];
+  const char message[18], display[18];
  } V_help;
 # 16 "./ringbufs.h" 2
 

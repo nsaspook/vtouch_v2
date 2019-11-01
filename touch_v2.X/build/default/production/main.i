@@ -28310,7 +28310,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 73 "./vconfig.h"
+# 74 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28330,7 +28330,7 @@ void PMD_Initialize(void);
  } D_CODES;
 
  typedef struct terminal_type {
-  uint8_t ack[32], mesgid;
+  uint8_t mesgid;
   uint8_t TID, mcode, mparm, cmdlen, log_seq;
   uint8_t host_display_ack : 1;
   D_CODES info, help_temp;
@@ -28348,7 +28348,7 @@ void PMD_Initialize(void);
 
  typedef struct V_data {
   UI_STATES ui_state;
-  char buf[64], terminal[160], info[64];
+  char buf[64], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -28364,7 +28364,7 @@ void PMD_Initialize(void);
  } V_data;
 
  typedef struct V_help {
-  const char message[32], display[32];
+  const char message[18], display[18];
  } V_help;
 # 27 "./eadog.h" 2
 
@@ -28430,7 +28430,7 @@ void mode_lamp_bright(void);
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
 typedef struct D_data {
-    char lcd[4][4][32];
+    char lcd[4][3][18];
     uint8_t vterm : 1;
     D_CODES last_info;
 } D_data;
@@ -28450,9 +28450,18 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
+# 37 "./daq.h"
+typedef struct R_data {
+ adc_result_t raw_adc[0x0F];
+} R_data;
 # 117 "main.c" 2
 
 # 1 "./mbmc.h" 1
+# 36 "./mbmc.h"
+typedef struct C_data {
+ float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
+ float t_comp;
+} C_data;
 # 118 "main.c" 2
 
 
@@ -28534,10 +28543,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.4");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.5");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.4");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.5");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

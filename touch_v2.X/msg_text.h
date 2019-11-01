@@ -20,15 +20,7 @@ extern "C" {
 		display_comm,
 	} DISPLAY_TYPES;
 
-	/*
-	 * *****************|*********|**********|**********|*********|***|
-	 */
-	const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
-	const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
-	const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
-	const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
-
-	V_help T[] = {
+	const V_help T[] = {
 		{
 			.message = "commands 1",
 			.display = "displays 1",

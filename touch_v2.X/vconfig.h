@@ -19,12 +19,13 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.4"
+#define VER	"0.5"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
 	 * 0.3 configure for mbmc_io board
 	 * 0.4 ADC setup
+	 * 0.5 remove gemsecs coding
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -89,7 +90,7 @@ extern "C" {
 	} D_CODES;
 
 	typedef struct terminal_type {
-		uint8_t ack[32], mesgid;
+		uint8_t  mesgid;
 		uint8_t TID, mcode, mparm, cmdlen, log_seq;
 		uint8_t host_display_ack : 1;
 		D_CODES info, help_temp;
@@ -107,7 +108,7 @@ extern "C" {
 
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
-		char buf[64], terminal[160], info[64];
+		char buf[64], info[64];
 		uint32_t ticks, systemb;
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -123,7 +124,7 @@ extern "C" {
 	} V_data;
 
 	typedef struct V_help {
-		const char message[32], display[32];
+		const char message[18], display[18];
 	} V_help;
 
 #ifdef	__cplusplus
