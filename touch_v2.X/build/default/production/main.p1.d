@@ -21,8 +21,8 @@ mcc_generated_files/clkref.h  \
 eadog.h  \
 vconfig.h  \
 ringbufs.h  \
-gemsecs.h  \
 timers.h  \
+mconfig.h  \
 mydisplay.h  \
-msg_text.h  \
-mconfig.h 
+daq.h  \
+mbmc.h 

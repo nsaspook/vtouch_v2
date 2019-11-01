@@ -28310,7 +28310,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 94 "./vconfig.h"
+# 73 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28323,31 +28323,8 @@ void PMD_Initialize(void);
  };
 
  typedef enum {
-  CODE_TS = 0,
-  CODE_TM = 1,
-  CODE_ONLOCAL = 2,
-  CODE_ONREMOTE = 3,
-  CODE_OFFLINE = 4,
-  CODE_DEBUG,
-  CODE_LOG,
-  CODE_LOAD,
-  CODE_UNLOAD,
-  CODE_PUMP,
-  CODE_HELP,
-  CODE_SEQUENCE,
-  CODE_ERR,
- } P_CODES;
-
- typedef enum {
   DIS_STR = 0,
-  DIS_TERM,
-  DIS_LOG,
-  DIS_LOAD,
-  DIS_UNLOAD,
-  DIS_PUMP,
   DIS_HELP,
-  DIS_SEQUENCE,
-  DIS_SEQUENCE_M,
   DIS_ERR,
   DIS_CLEAR,
  } D_CODES;
@@ -28362,16 +28339,6 @@ void PMD_Initialize(void);
  } terminal_type;
 
  typedef enum {
-  SEQ_STATE_INIT = 0,
-  SEQ_STATE_RX,
-  SEQ_STATE_TX,
-  SEQ_STATE_TRIGGER,
-  SEQ_STATE_QUEUE,
-  SEQ_STATE_DONE,
-  SEQ_STATE_ERROR
- } SEQ_STATES;
-
- typedef enum {
   UI_STATE_INIT = 0,
   UI_STATE_HOST,
   UI_STATE_DEBUG,
@@ -28379,63 +28346,8 @@ void PMD_Initialize(void);
   UI_STATE_ERROR
  } UI_STATES;
 
- typedef enum {
-  GEM_STATE_DISABLE = 0,
-  GEM_STATE_COMM,
-  GEM_STATE_OFFLINE,
-  GEM_STATE_ONLINE,
-  GEM_STATE_REMOTE,
-  GEM_STATE_ERROR
- } GEM_STATES;
-
- typedef enum {
-  GEM_GENERIC = 0,
-  GEM_VII80,
-  GEM_E220,
-  GEM_ERROR
- } GEM_EQUIP;
-
- typedef enum {
-  LINK_STATE_IDLE = 0,
-  LINK_STATE_ENQ,
-  LINK_STATE_EOT,
-  LINK_STATE_ACK,
-  LINK_STATE_DONE,
-  LINK_STATE_NAK,
-  LINK_STATE_ERROR
- } LINK_STATES;
-
- typedef enum {
-  LINK_ERROR_NONE = 10,
-  LINK_ERROR_T1,
-  LINK_ERROR_T2,
-  LINK_ERROR_T3,
-  LINK_ERROR_T4,
-  LINK_ERROR_CHECKSUM,
-  LINK_ERROR_NAK,
-  LINK_ERROR_ABORT,
-  LINK_ERROR_SEND
- } LINK_ERRORS;
-
- typedef enum {
-  MSG_ERROR_NONE = 0,
-  MSG_ERROR_ID = 1,
-  MSG_ERROR_STREAM = 3,
-  MSG_ERROR_FUNCTION = 5,
-  MSG_ERROR_DATA = 7,
-  MSG_ERROR_TIMEOUT = 9,
-  MSG_ERROR_DATASIZE = 11,
-  MSG_ERROR_RESET = 20
- } MSG_ERRORS;
-
  typedef struct V_data {
-  SEQ_STATES s_state;
   UI_STATES ui_state;
-  GEM_STATES g_state;
-  GEM_EQUIP e_types;
-  LINK_STATES m_l_state;
-  LINK_STATES r_l_state;
-  LINK_STATES t_l_state;
   char buf[64], terminal[160], info[64];
   uint32_t ticks, systemb;
   int32_t testing;
@@ -28482,8 +28394,6 @@ void PMD_Initialize(void);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
 # 113 "main.c" 2
 
-# 1 "./gemsecs.h" 1
-# 25 "./gemsecs.h"
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 enum APP_TIMERS {
@@ -28509,7 +28419,14 @@ enum APP_TIMERS {
 __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
 __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 void WaitMs(uint16_t numMilliseconds);
-# 26 "./gemsecs.h" 2
+# 114 "main.c" 2
+
+# 1 "./mconfig.h" 1
+# 38 "./mconfig.h"
+void mode_lamp_dim(uint16_t);
+void mode_lamp_bright(void);
+# 115 "main.c" 2
+
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
 typedef struct D_data {
@@ -28530,214 +28447,24 @@ _Bool help_button(void);
 void check_help(_Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
-# 27 "./gemsecs.h" 2
-# 1 "./msg_text.h" 1
-# 14 "./msg_text.h"
-# 1 "./mconfig.h" 1
-# 38 "./mconfig.h"
-void mode_lamp_dim(uint16_t);
-void mode_lamp_bright(void);
-# 15 "./msg_text.h" 2
+# 116 "main.c" 2
 
+# 1 "./daq.h" 1
+# 117 "main.c" 2
 
- typedef enum {
-  display_message = 0,
-  display_online,
-  display_comm,
- } DISPLAY_TYPES;
-
-
-
-
- const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
-
- V_help T[] = {
-  {
-   .message = "commands 1",
-   .display = "displays 1",
-  },
-  {
-   .message = "commands 2",
-   .display = "displays 2",
-  },
-  {
-   .message = "commands 3",
-   .display = "displays 3",
-  },
-  {
-   .message = "commands 4",
-   .display = "displays 4",
-  },
- };
-# 28 "./gemsecs.h" 2
-
- typedef struct block10_type {
-  uint32_t systemb;
-  uint8_t bidl;
-  uint8_t bidh : 7;
-  uint8_t ebit : 1;
-  uint8_t function;
-  uint8_t stream : 7;
-  uint8_t wbit : 1;
-  uint8_t didl;
-  uint8_t didh : 7;
-  uint8_t rbit : 1;
- } block10_type;
-
- typedef union block10 {
-  uint8_t b[sizeof(block10_type)];
-  block10_type block;
- } block10;
-
- typedef struct header10 {
-  uint16_t checksum;
-  block10 block;
-  uint8_t length;
- } header10;
-
- typedef struct header12 {
-  uint16_t checksum;
-  uint8_t data[2];
-  block10 block;
-  uint8_t length;
- } header12;
-
- typedef struct header13 {
-  uint16_t checksum;
-  uint8_t data[3];
-  block10 block;
-  uint8_t length;
- } header13;
-
- typedef struct header14 {
-  uint16_t checksum;
-  uint8_t data[4];
-  block10 block;
-  uint8_t length;
- } header14;
-
- typedef struct header17 {
-  uint16_t checksum;
-  uint8_t data[7];
-  block10 block;
-  uint8_t length;
- } header17;
-
- typedef struct header18 {
-  uint16_t checksum;
-  uint8_t data[8];
-  block10 block;
-  uint8_t length;
- } header18;
-
- typedef struct header24 {
-  uint16_t checksum;
-  uint8_t data[12];
-  uint8_t datam[2];
-  block10 block;
-  uint8_t length;
- } header24;
-
- typedef struct header26 {
-  uint16_t checksum;
-  uint8_t data[14];
-  uint8_t datam[2];
-  block10 block;
-  uint8_t length;
- } header26;
-
- typedef struct header27 {
-  uint16_t checksum;
-  uint8_t data[17];
-  block10 block;
-  uint8_t length;
- } header27;
-
- typedef struct header33 {
-  uint16_t checksum;
-  uint8_t data[23];
-  block10 block;
-  uint8_t length;
- } header33;
-
- typedef struct header153 {
-  uint16_t checksum;
-  uint8_t data[143];
-  block10 block;
-  uint8_t length;
- } header153;
-
- typedef struct header254 {
-  uint16_t checksum;
-  uint8_t data[244];
-  block10 block;
-  uint8_t length;
- } header254;
-
- typedef struct response_type {
-  uint8_t *header;
-  uint8_t length;
-  uint8_t *reply;
-  uint8_t reply_length;
-  uint8_t respond : 1;
- } response_type;
-
- typedef struct gem_message_type {
-  header33 message;
-  response_type block;
-  uint16_t delay;
-  uint8_t stack;
- } gem_message_type;
-
- typedef struct gem_display_type {
-  header153 message;
-  response_type block;
-  uint16_t delay;
-  uint8_t stack;
- } gem_display_type;
-
- uint16_t block_checksum(uint8_t *, const uint16_t);
- uint16_t run_checksum(const uint8_t, const _Bool);
- LINK_STATES m_protocol(LINK_STATES *);
- LINK_STATES r_protocol(LINK_STATES *);
- LINK_STATES t_protocol(LINK_STATES *);
- void hb_message(void);
- void terminal_format(DISPLAY_TYPES);
- uint16_t format_display_text(const char *);
- P_CODES s10f1_opcmd(void);
- uint16_t s6f11_opcmd(void);
- response_type secs_II_message(uint8_t, uint8_t);
- _Bool sequence_messages(uint8_t);
- _Bool gem_messages(response_type *, uint8_t);
- void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
- GEM_STATES secs_gem_state(uint8_t, uint8_t);
-# 114 "main.c" 2
-
-
-
+# 1 "./mbmc.h" 1
+# 118 "main.c" 2
 
 
 extern struct spi_link_type spi_link;
 
 V_data V = {
- .error = LINK_ERROR_NONE,
- .abort = LINK_ERROR_NONE,
- .msg_error = MSG_ERROR_RESET,
  .uart = 1,
- .g_state = GEM_STATE_DISABLE,
- .e_types = GEM_GENERIC,
  .ticker = 45,
  .checksum_error = 0,
  .all_errors = 0,
  .timer_error = 0,
  .debug = 0,
- .response.info = DIS_STR,
- .response.log_num = 0,
- .response.log_seq = 0,
- .response.host_display_ack = 0,
  .queue = 0,
  .stack = 0,
  .sid = 1,
@@ -28747,504 +28474,9 @@ V_data V = {
  .set_sequ = 0,
 };
 
-header10 H10[] = {
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 1,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 0,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 1,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 17,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 15,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 17,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
 
-header12 H12[] = {
- {
-  .length = 12,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 2,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[1] = 1,
-  .data[0] = 0,
- },
- {
-  .length = 12,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[1] = 1,
-  .data[0] = 0,
- },
-};
 
-header13 H13[] = {
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 6,
-  .block.block.function = 12,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 10,
-  .block.block.function = 2,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 5,
-  .block.block.function = 2,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 2,
-  .block.block.function = 26,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0xff,
- },
-};
 
-header14 H14[] = {
- {
-  .length = 14,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 4,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[3] = 0x01,
-  .data[2] = 0x11,
-  .data[1] = 0x41,
-  .data[0] = 0x00,
- },
-};
-
-header17 H17[] = {
- {
-  .length = 17,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 14,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[6] = 0x01,
-  .data[5] = 0x02,
-  .data[4] = 0x21,
-  .data[3] = 0x01,
-  .data[2] = 0x00,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
-};
-# 393 "main.c"
-header26 H26[] = {
- {
-  .length = 26,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 2,
-  .block.block.function = 18,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data = "01091108460000",
-  .datam[1] = 0x41,
-  .datam[0] = 14,
- },
-};
-# 431 "main.c"
-header33 H33[] = {
- {
-  .length = 33,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 41,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[22] = 0x01,
-  .data[21] = 0x02,
-  .data[20] = 0x41,
-  .data[19] = 0x02,
-  .data[18] = 0x31,
-  .data[17] = 0x37,
-  .data[16] = 0x01,
-  .data[15] = 0x01,
-  .data[14] = 0x01,
-  .data[13] = 0x02,
-  .data[12] = 0x41,
-  .data[11] = 0x08,
-  .data[10] = 0x4c,
-  .data[9] = 0x4f,
-  .data[8] = 0x41,
-  .data[7] = 0x44,
-  .data[6] = 0x4c,
-  .data[5] = 0x4f,
-  .data[4] = 0x43,
-  .data[3] = 0x4b,
-  .data[2] = 0xa5,
-  .data[1] = 0x01,
-  .data[0] = 0x01,
- },
-};
-
-const header33 HC33[] = {
- {
-  .length = 33,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 41,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[22] = 0x01,
-  .data[21] = 0x02,
-  .data[20] = 0x41,
-  .data[19] = 0x02,
-  .data[18] = 0x31,
-  .data[17] = 0x37,
-  .data[16] = 0x01,
-  .data[15] = 0x01,
-  .data[14] = 0x01,
-  .data[13] = 0x02,
-  .data[12] = 0x41,
-  .data[11] = 0x08,
-  .data[10] = 0x4c,
-  .data[9] = 0x4f,
-  .data[8] = 0x41,
-  .data[7] = 0x44,
-  .data[6] = 0x4c,
-  .data[5] = 0x4f,
-  .data[4] = 0x43,
-  .data[3] = 0x4b,
-  .data[2] = 0xa5,
-  .data[1] = 0x01,
-  .data[0] = 0x01,
- },
- {
-  .length = 33,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 41,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[22] = 0x01,
-  .data[21] = 0x02,
-  .data[20] = 0x41,
-  .data[19] = 0x02,
-  .data[18] = 0x31,
-  .data[17] = 0x32,
-  .data[16] = 0x01,
-  .data[15] = 0x01,
-  .data[14] = 0x01,
-  .data[13] = 0x02,
-  .data[12] = 0x41,
-  .data[11] = 0x08,
-  .data[10] = 0x4c,
-  .data[9] = 0x4f,
-  .data[8] = 0x41,
-  .data[7] = 0x44,
-  .data[6] = 0x4c,
-  .data[5] = 0x4f,
-  .data[4] = 0x43,
-  .data[3] = 0x4b,
-  .data[2] = 0xa5,
-  .data[1] = 0x01,
-  .data[0] = 0x01,
- },
-};
-
-header153 H153[] = {
- {
-  .length = 153,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 10,
-  .block.block.function = 3,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[142] = 0x01,
-  .data[141] = 0x02,
-  .data[140] = 0x21,
-  .data[139] = 0x01,
-  .data[138] = 1,
-  .data[137] = 0x41,
-  .data[136] = 44,
-  .data[35] = ' ',
-  .data[34] = 'F',
-  .data[33] = 'R',
-  .data[32] = 'E',
-  .data[31] = 'D',
-  .data[30] = '1',
-  .data[29] = '2',
-  .data[28] = '3',
-  .data[27] = '0',
-  .data[26] = '0',
-  .data[25] = '4',
-  .data[24] = 'B',
-  .data[23] = 'B',
-  .data[22] = 'B',
-  .data[21] = 'B',
-  .data[20] = 'R',
-  .data[19] = 'O',
-  .data[18] = 'O',
-  .data[17] = 'K',
-  .data[16] = 'S',
-  .data[15] = '1',
-  .data[14] = '2',
-  .data[13] = 'E',
-  .data[12] = 'D',
-  .data[11] = '1',
-  .data[10] = '2',
-  .data[9] = '3',
-  .data[8] = '4',
-  .data[7] = 'B',
-  .data[6] = 'B',
-  .data[5] = 'B',
-  .data[4] = 'B',
-  .data[3] = 'R',
-  .data[2] = 'O',
-  .data[1] = 'O',
-  .data[0] = 'K',
- },
- {
-  .length = 153,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 10,
-  .block.block.function = 5,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[142] = 0x01,
-  .data[141] = 0x02,
-  .data[140] = 0x21,
-  .data[139] = 0x01,
-  .data[138] = 1,
-  .data[137] = 0x01,
-  .data[136] = 0x02,
-  .data[135] = 0x41,
-  .data[134] = 9,
-  .data[33] = '*',
-  .data[32] = 'F',
-  .data[31] = 'R',
-  .data[30] = 'E',
-  .data[29] = 'D',
-  .data[28] = '1',
-  .data[27] = '2',
-  .data[26] = '3',
-  .data[25] = '4',
-  .data[24] = 0x41,
-  .data[23] = 23,
-  .data[22] = '*',
-  .data[21] = 'B',
-  .data[20] = 'R',
-  .data[19] = 'K',
-  .data[18] = 'S',
-  .data[17] = '1',
-  .data[16] = '2',
-  .data[15] = 'E',
-  .data[14] = 'D',
-  .data[13] = '1',
-  .data[12] = '2',
-  .data[11] = '3',
-  .data[10] = '4',
-  .data[9] = 'B',
-  .data[8] = 'B',
-  .data[7] = 'B',
-  .data[6] = 'B',
-  .data[5] = 'R',
-  .data[4] = 'O',
-  .data[3] = 'O',
-  .data[2] = 'K',
-  .data[1] = 'S',
-  .data[0] = 'o',
- },
-};
-
-header254 H254[] = {
- {
-  .length = 254,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0xEF,
-  .block.block.wbit = 1,
-  .block.block.stream = 10,
-  .block.block.function = 3,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .checksum = 0x2019,
-  .data[1] = 0x19,
-  .data[0] = 0x57,
- },
-};
-
-gem_message_type S[10];
-gem_display_type D[2];
-
-header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
@@ -29255,7 +28487,6 @@ volatile uint8_t mode_sw = 0;
 void main(void)
 {
  UI_STATES mode;
- char * s;
 
 
  SYSTEM_Initialize();
@@ -29300,7 +28531,6 @@ void main(void)
    eaDogM_WriteCommand(0b00001100);
 
    V.ui_state = mode;
-   V.s_state = SEQ_STATE_INIT;
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
@@ -29318,167 +28548,8 @@ void main(void)
    StartTimer(TMR_HELPDIS, 3000);
    break;
   case UI_STATE_HOST:
-   switch (V.s_state) {
-   case SEQ_STATE_INIT:
-    V.r_l_state = LINK_STATE_IDLE;
-    V.t_l_state = LINK_STATE_IDLE;
-    V.s_state = SEQ_STATE_RX;
-    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-     if (V.debug)
-      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
-     else
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
-    }
-
-
-
-
-    break;
-   case SEQ_STATE_RX:
-
-
-
-    if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-     set_display_info(DIS_STR);
-     s = get_vterm_ptr(0, 0);
-     if (V.stream == 9) {
-      V.msg_error = V.function;
-      sprintf(s, " S%dF%d Err         ", V.stream, V.function);
-     } else {
-      V.msg_error = MSG_ERROR_NONE;
-      sprintf(s, " S%dF%d #           ", V.stream, V.function);
-     }
-     s[16] = 0;
-     MyeaDogM_WriteStringAtPos(0, 0, s);
-
-
-
-     if (V.wbit) {
-      V.s_state = SEQ_STATE_TX;
-      V.failed_send = 0;
-      V.t_l_state = LINK_STATE_IDLE;
-     } else {
-      V.s_state = SEQ_STATE_TRIGGER;
-     }
-    }
-    if (V.r_l_state == LINK_STATE_ERROR)
-     V.s_state = SEQ_STATE_ERROR;
-    break;
-   case SEQ_STATE_TX:
-
-
-
-    if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
-     V.s_state = SEQ_STATE_TRIGGER;
-    }
-    if (V.t_l_state == LINK_STATE_ERROR)
-     V.s_state = SEQ_STATE_ERROR;
-    break;
-   case SEQ_STATE_TRIGGER:
-    set_display_info(DIS_STR);
-    s = get_vterm_ptr(0, 0);
-    if (V.queue) {
-     V.r_l_state = LINK_STATE_IDLE;
-     V.t_l_state = LINK_STATE_IDLE;
-     V.s_state = SEQ_STATE_TX;
-     sprintf(s, " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
-    } else {
-     V.s_state = SEQ_STATE_DONE;
-     sprintf(s, " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
-    }
-
-    s[16] = 0;
-    MyeaDogM_WriteStringAtPos(0, 0, s);
-    break;
-   case SEQ_STATE_DONE:
-    V.s_state = SEQ_STATE_INIT;
-    break;
-   case SEQ_STATE_ERROR:
-   default:
-    V.s_state = SEQ_STATE_INIT;
-    sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
-    update_lcd(0);
-    WaitMs(2000);
-    break;
-   }
-   if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-    if (TimerDone(TMR_DISPLAY)) {
-     if (V.debug)
-      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-     else
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
-
-    }
-
-
-
-    if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
-     if ((V.r_l_state == LINK_STATE_IDLE) && (V.t_l_state == LINK_STATE_IDLE)) {
-      if (TimerDone(TMR_HBIO)) {
-       set_display_info(DIS_STR);
-
-       if (V.stack) {
-        hb_message();
-        V.msg_error = MSG_ERROR_NONE;
-        V.ping_count = 0;
-        V.error = LINK_ERROR_NONE;
-        V.abort = LINK_ERROR_NONE;
-       } else {
-        StartTimer(TMR_HBIO, 30000);
-        if (V.ping_count++ > 4) {
-         set_display_info(DIS_STR);
-         hb_message();
-         sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
-         update_lcd(0);
-         WaitMs(250);
-         V.ping_count = 0;
-        }
-        set_display_info(DIS_STR);
-       }
-      }
-     }
-    }
-   }
    break;
   case UI_STATE_LOG:
-   switch (V.s_state) {
-   case SEQ_STATE_INIT:
-    V.m_l_state = LINK_STATE_IDLE;
-    V.s_state = SEQ_STATE_RX;
-    if (V.debug)
-     sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-    else
-     sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 895 "main.c"
-    break;
-   case SEQ_STATE_RX:
-
-
-
-    if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-     sprintf(V.buf, "S%dF%d #%ld       ", V.stream, V.function, V.ticks);
-     V.buf[13] = 0;
-     MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
-     V.s_state = SEQ_STATE_TRIGGER;
-    }
-    if (V.m_l_state == LINK_STATE_ERROR)
-     V.s_state = SEQ_STATE_ERROR;
-    break;
-   case SEQ_STATE_TRIGGER:
-    V.s_state = SEQ_STATE_DONE;
-    sprintf(V.buf, "OK ");
-    MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
-    break;
-   case SEQ_STATE_DONE:
-   case SEQ_STATE_ERROR:
-   default:
-    V.s_state = SEQ_STATE_INIT;
-    break;
-   }
-   if (V.debug)
-    sprintf(get_vterm_ptr(2, 0), "Equip type %d       ", V.e_types);
-   else
-    sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
    break;
   case UI_STATE_ERROR:
   default:
@@ -29494,7 +28565,7 @@ void main(void)
     if (TimerDone(TMR_HELPDIS)) {
      set_display_info(DIS_STR);
     }
-    sprintf(get_vterm_ptr(1, 0), "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+    sprintf(get_vterm_ptr(1, 0), "R%d %d, T%d %d C%d %d      #", 0, 1, 2, 3, 4, 5);
     StartTimer(TMR_DISPLAY, 100);
     update_lcd(0);
    }
@@ -29517,6 +28588,5 @@ void main(void)
     update_lcd(2);
    }
   }
-# 970 "main.c"
  }
 }
