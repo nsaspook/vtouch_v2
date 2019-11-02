@@ -27609,7 +27609,9 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 854 "./mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 874 "./mcc_generated_files/adcc.h"
+# 870 "./mcc_generated_files/adcc.h"
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+# 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 55 "./mcc_generated_files/mcc.h" 2
 
@@ -28310,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 74 "./vconfig.h"
+# 75 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28398,7 +28400,7 @@ void PMD_Initialize(void);
 # 11 "./timers.h"
 enum APP_TIMERS {
  TMR_INTERNAL = 0,
- TMR_T1,
+ TMR_ADC,
  TMR_T2,
  TMR_T3,
  TMR_T4,
@@ -28408,7 +28410,6 @@ enum APP_TIMERS {
  TMR_HELP,
  TMR_HELPDIS,
  TMR_DISPLAY,
- TMR_SEQ,
  TMR_FLIPPER,
 
 
@@ -28450,10 +28451,11 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
-# 37 "./daq.h"
-typedef struct R_data {
- adc_result_t raw_adc[0x0F];
-} R_data;
+# 41 "./daq.h"
+_Bool start_adc_scan(void);
+_Bool check_adc_scan(void);
+void clear_adc_scan(void);
+adc_result_t get_raw_result(adcc_channel_t);
 # 117 "main.c" 2
 
 # 1 "./mbmc.h" 1
@@ -28543,18 +28545,21 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.5");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.6");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.5");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.6");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
    StartTimer(TMR_DISPLAY, 100);
-   StartTimer(TMR_SEQ, 10000);
+   StartTimer(TMR_ADC, 50);
    StartTimer(TMR_INFO, 3000);
    StartTimer(TMR_FLIPPER, 1500);
    StartTimer(TMR_HELPDIS, 3000);
+
+   start_adc_scan();
+
    break;
   case UI_STATE_HOST:
    break;
@@ -28565,19 +28570,25 @@ void main(void)
    V.ui_state = UI_STATE_INIT;
    break;
   }
+
+  if (TimerDone(TMR_ADC) && check_adc_scan()) {
+   clear_adc_scan();
+   start_adc_scan();
+   StartTimer(TMR_ADC, 50);
+  }
+
   if (V.ticks) {
 
   }
 
-  if (mode != UI_STATE_LOG)
-   if (TimerDone(TMR_DISPLAY)) {
-    if (TimerDone(TMR_HELPDIS)) {
-     set_display_info(DIS_STR);
-    }
-    sprintf(get_vterm_ptr(1, 0), "R%d %d, T%d %d C%d %d      #", 0, 1, 2, 3, 4, 5);
-    StartTimer(TMR_DISPLAY, 100);
-    update_lcd(0);
+  if (TimerDone(TMR_DISPLAY)) {
+   if (TimerDone(TMR_HELPDIS)) {
+    set_display_info(DIS_STR);
    }
+   sprintf(get_vterm_ptr(1, 0), "%d %d, %d %d    #", get_raw_result(C_BATT), get_raw_result(C_PV), get_raw_result(V_CC), get_raw_result(V_BAT));
+   StartTimer(TMR_DISPLAY, 100);
+   update_lcd(0);
+  }
 
 
 

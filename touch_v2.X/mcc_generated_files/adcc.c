@@ -56,6 +56,7 @@
   Section: ADCC Module Variables
 */
 void (*ADCC_ADI_InterruptHandler)(void);
+void (*ADCC_ADTI_InterruptHandler)(void);
 
 /**
   Section: ADCC Module APIs
@@ -78,8 +79,8 @@ void ADCC_Initialize(void)
     ADSTPTH = 0x00;
     // ADACC 0; 
     ADACCU = 0x00;
-    // ADRPT 0; 
-    ADRPT = 0x00;
+    // ADRPT 16; 
+    ADRPT = 0x10;
     // ADPCH ANA0; 
     ADPCH = 0x00;
     // ADACQ 0; 
@@ -94,20 +95,20 @@ void ADCC_Initialize(void)
     ADPREH = 0x00;
     // ADDSEN disabled; ADGPOL digital_low; ADIPEN disabled; ADPPOL Vss; 
     ADCON1 = 0x00;
-    // ADCRS 0; ADMD Basic_mode; ADACLR disabled; ADPSIS RES; 
-    ADCON2 = 0x00;
-    // ADCALC First derivative of Single measurement; ADTMD disabled; ADSOI ADGO not cleared; 
-    ADCON3 = 0x00;
+    // ADCRS 4; ADMD Burst_average_mode; ADACLR enabled; ADPSIS RES; 
+    ADCON2 = 0x4B;
+    // ADCALC Actual result vs filtered value; ADTMD enabled; ADSOI ADGO not cleared; 
+    ADCON3 = 0x27;
     // ADMATH registers not updated; 
     ADSTAT = 0x00;
     // ADNREF VSS; ADPREF external; 
     ADREF = 0x02;
     // ADACT disabled; 
     ADACT = 0x00;
-    // ADCS FOSC/2; 
-    ADCLK = 0x00;
-    // ADGO stop; ADFM right; ADON enabled; ADCS Frc; ADCONT disabled; 
-    ADCON0 = 0x94;
+    // ADCS FOSC/16; 
+    ADCLK = 0x07;
+    // ADGO stop; ADFM right; ADON enabled; ADCS FOSC/ADCLK; ADCONT disabled; 
+    ADCON0 = 0x84;
     
     // Clear the ADC interrupt flag
     PIR1bits.ADIF = 0;
@@ -116,6 +117,12 @@ void ADCC_Initialize(void)
 
     ADCC_SetADIInterruptHandler(ADCC_DefaultInterruptHandler);
 
+    // Clear the ADC Threshold interrupt flag
+    PIR1bits.ADTIF = 0;
+    // Enabling ADCC threshold interrupt.
+    PIE1bits.ADTIE = 1;
+
+    ADCC_SetADTIInterruptHandler(ADCC_DefaultInterruptHandler);
 }
 
 void ADCC_StartConversion(adcc_channel_t channel)
@@ -317,6 +324,18 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void)){
     ADCC_ADI_InterruptHandler = InterruptHandler;
 }
 
+void __interrupt(irq(ADT),base(8)) ADCC_ThresholdISR()
+{
+    // Clear the ADCC Threshold interrupt flag
+    PIR1bits.ADTIF = 0;
+
+    if (ADCC_ADTI_InterruptHandler)
+        ADCC_ADTI_InterruptHandler();
+}
+
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void)){
+    ADCC_ADTI_InterruptHandler = InterruptHandler;
+}
 void ADCC_DefaultInterruptHandler(void){
     // add your ADCC interrupt custom code
     // or set custom function using ADCC_SetADIInterruptHandler() or ADCC_SetADTIInterruptHandler()

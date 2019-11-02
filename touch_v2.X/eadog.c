@@ -183,7 +183,7 @@ void eaDogM_ClearRow(const uint8_t r)
  */
 void eaDogM_WriteString(char *strPtr)
 {
-	DEBUG2_SetHigh();
+//	DEBUG2_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -204,7 +204,7 @@ void eaDogM_WriteString(char *strPtr)
  */
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
-	DEBUG2_SetHigh();
+//	DEBUG2_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -224,7 +224,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
  */
 void send_lcd_data_dma(uint8_t strPtr)
 {
-	DEBUG2_SetHigh();
+//	DEBUG2_SetHigh();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);

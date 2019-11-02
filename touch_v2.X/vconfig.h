@@ -19,13 +19,14 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.5"
+#define VER	"0.6"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
 	 * 0.3 configure for mbmc_io board
 	 * 0.4 ADC setup
 	 * 0.5 remove gemsecs coding
+	 * 0.6 adc scanning by threshold interrupt using burst average mode
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -90,7 +91,7 @@ extern "C" {
 	} D_CODES;
 
 	typedef struct terminal_type {
-		uint8_t  mesgid;
+		uint8_t mesgid;
 		uint8_t TID, mcode, mparm, cmdlen, log_seq;
 		uint8_t host_display_ack : 1;
 		D_CODES info, help_temp;

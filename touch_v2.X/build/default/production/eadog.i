@@ -27392,7 +27392,9 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 854 "./mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 874 "./mcc_generated_files/adcc.h"
+# 870 "./mcc_generated_files/adcc.h"
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+# 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 12 "./vconfig.h" 2
 
@@ -27443,7 +27445,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 74 "./vconfig.h"
+# 75 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27897,7 +27899,7 @@ void eaDogM_ClearRow(const uint8_t r)
 
 void eaDogM_WriteString(char *strPtr)
 {
- do { LATEbits.LATE2 = 1; } while(0);
+
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27918,7 +27920,7 @@ void eaDogM_WriteString(char *strPtr)
 
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
- do { LATEbits.LATE2 = 1; } while(0);
+
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27938,7 +27940,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 
 void send_lcd_data_dma(uint8_t strPtr)
 {
- do { LATEbits.LATE2 = 1; } while(0);
+
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);

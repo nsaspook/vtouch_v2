@@ -1,5 +1,6 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F16195 `(v ~T0 @X0 0 tf ]
+[v F16199 `(v ~T0 @X0 0 tf ]
+[v F16201 `(v ~T0 @X0 0 tf ]
 "28950 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 28950: extern volatile unsigned char ADLTHL __attribute__((address(0x3EDE)));
 [v _ADLTHL `Vuc ~T0 @X0 0 e@16094 ]
@@ -108,11 +109,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "854 mcc_generated_files/adcc.h
 [; ;mcc_generated_files/adcc.h: 854: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 [v _ADCC_SetADIInterruptHandler `(v ~T0 @X0 0 ef1`*F16189 ]
-"874
-[; ;mcc_generated_files/adcc.h: 874: void ADCC_DefaultInterruptHandler(void);
+"889
+[; ;mcc_generated_files/adcc.h: 889: void ADCC_DefaultInterruptHandler(void);
 [v _ADCC_DefaultInterruptHandler `(v ~T0 @X0 0 ef ]
-"121 mcc_generated_files/adcc.c
-[; ;mcc_generated_files/adcc.c: 121: void ADCC_StartConversion(adcc_channel_t channel)
+[v F16193 `(v ~T0 @X0 0 tf ]
+"870
+[; ;mcc_generated_files/adcc.h: 870: void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+[v _ADCC_SetADTIInterruptHandler `(v ~T0 @X0 0 ef1`*F16193 ]
+"128 mcc_generated_files/adcc.c
+[; ;mcc_generated_files/adcc.c: 128: void ADCC_StartConversion(adcc_channel_t channel)
 [c E16136 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
 [n E16136 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
 "32081 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
@@ -281,9 +286,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _ADCON1bits `VS1432 ~T0 @X0 0 e@16121 ]
 [t ~ __interrupt . k ]
 [t T1 __interrupt irq ( AD ) base ( 8 ) ]
-[v F16233 `(v ~T0 @X0 0 tf ]
-[v F16235 `(v ~T0 @X0 0 tf ]
-[v F16237 `(v ~T0 @X0 0 tf ]
+[v F16240 `(v ~T0 @X0 0 tf ]
+[v F16242 `(v ~T0 @X0 0 tf ]
+[v F16244 `(v ~T0 @X0 0 tf ]
+[t T2 __interrupt irq ( ADT ) base ( 8 ) ]
+[v F16247 `(v ~T0 @X0 0 tf ]
+[v F16249 `(v ~T0 @X0 0 tf ]
+[v F16251 `(v ~T0 @X0 0 tf ]
 "250 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -2533,628 +2542,677 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "58 mcc_generated_files/adcc.c
 [; ;mcc_generated_files/adcc.c: 58: void (*ADCC_ADI_InterruptHandler)(void);
-[v _ADCC_ADI_InterruptHandler `*F16195 ~T0 @X0 1 e ]
-"64
-[; ;mcc_generated_files/adcc.c: 64: void ADCC_Initialize(void)
-[v _ADCC_Initialize `(v ~T0 @X0 1 ef ]
+[v _ADCC_ADI_InterruptHandler `*F16199 ~T0 @X0 1 e ]
+"59
+[; ;mcc_generated_files/adcc.c: 59: void (*ADCC_ADTI_InterruptHandler)(void);
+[v _ADCC_ADTI_InterruptHandler `*F16201 ~T0 @X0 1 e ]
 "65
-[; ;mcc_generated_files/adcc.c: 65: {
+[; ;mcc_generated_files/adcc.c: 65: void ADCC_Initialize(void)
+[v _ADCC_Initialize `(v ~T0 @X0 1 ef ]
+"66
+[; ;mcc_generated_files/adcc.c: 66: {
 {
 [e :U _ADCC_Initialize ]
 [f ]
-"68
-[; ;mcc_generated_files/adcc.c: 68:     ADLTHL = 0x00;
+"69
+[; ;mcc_generated_files/adcc.c: 69:     ADLTHL = 0x00;
 [e = _ADLTHL -> -> 0 `i `uc ]
-"70
-[; ;mcc_generated_files/adcc.c: 70:     ADLTHH = 0x00;
+"71
+[; ;mcc_generated_files/adcc.c: 71:     ADLTHH = 0x00;
 [e = _ADLTHH -> -> 0 `i `uc ]
-"72
-[; ;mcc_generated_files/adcc.c: 72:     ADUTHL = 0x00;
+"73
+[; ;mcc_generated_files/adcc.c: 73:     ADUTHL = 0x00;
 [e = _ADUTHL -> -> 0 `i `uc ]
-"74
-[; ;mcc_generated_files/adcc.c: 74:     ADUTHH = 0x00;
+"75
+[; ;mcc_generated_files/adcc.c: 75:     ADUTHH = 0x00;
 [e = _ADUTHH -> -> 0 `i `uc ]
-"76
-[; ;mcc_generated_files/adcc.c: 76:     ADSTPTL = 0x00;
+"77
+[; ;mcc_generated_files/adcc.c: 77:     ADSTPTL = 0x00;
 [e = _ADSTPTL -> -> 0 `i `uc ]
-"78
-[; ;mcc_generated_files/adcc.c: 78:     ADSTPTH = 0x00;
+"79
+[; ;mcc_generated_files/adcc.c: 79:     ADSTPTH = 0x00;
 [e = _ADSTPTH -> -> 0 `i `uc ]
-"80
-[; ;mcc_generated_files/adcc.c: 80:     ADACCU = 0x00;
+"81
+[; ;mcc_generated_files/adcc.c: 81:     ADACCU = 0x00;
 [e = _ADACCU -> -> 0 `i `uc ]
-"82
-[; ;mcc_generated_files/adcc.c: 82:     ADRPT = 0x00;
-[e = _ADRPT -> -> 0 `i `uc ]
-"84
-[; ;mcc_generated_files/adcc.c: 84:     ADPCH = 0x00;
+"83
+[; ;mcc_generated_files/adcc.c: 83:     ADRPT = 0x10;
+[e = _ADRPT -> -> 16 `i `uc ]
+"85
+[; ;mcc_generated_files/adcc.c: 85:     ADPCH = 0x00;
 [e = _ADPCH -> -> 0 `i `uc ]
-"86
-[; ;mcc_generated_files/adcc.c: 86:     ADACQL = 0x00;
+"87
+[; ;mcc_generated_files/adcc.c: 87:     ADACQL = 0x00;
 [e = _ADACQL -> -> 0 `i `uc ]
-"88
-[; ;mcc_generated_files/adcc.c: 88:     ADACQH = 0x00;
+"89
+[; ;mcc_generated_files/adcc.c: 89:     ADACQH = 0x00;
 [e = _ADACQH -> -> 0 `i `uc ]
-"90
-[; ;mcc_generated_files/adcc.c: 90:     ADCAP = 0x00;
+"91
+[; ;mcc_generated_files/adcc.c: 91:     ADCAP = 0x00;
 [e = _ADCAP -> -> 0 `i `uc ]
-"92
-[; ;mcc_generated_files/adcc.c: 92:     ADPREL = 0x00;
+"93
+[; ;mcc_generated_files/adcc.c: 93:     ADPREL = 0x00;
 [e = _ADPREL -> -> 0 `i `uc ]
-"94
-[; ;mcc_generated_files/adcc.c: 94:     ADPREH = 0x00;
+"95
+[; ;mcc_generated_files/adcc.c: 95:     ADPREH = 0x00;
 [e = _ADPREH -> -> 0 `i `uc ]
-"96
-[; ;mcc_generated_files/adcc.c: 96:     ADCON1 = 0x00;
+"97
+[; ;mcc_generated_files/adcc.c: 97:     ADCON1 = 0x00;
 [e = _ADCON1 -> -> 0 `i `uc ]
-"98
-[; ;mcc_generated_files/adcc.c: 98:     ADCON2 = 0x00;
-[e = _ADCON2 -> -> 0 `i `uc ]
-"100
-[; ;mcc_generated_files/adcc.c: 100:     ADCON3 = 0x00;
-[e = _ADCON3 -> -> 0 `i `uc ]
-"102
-[; ;mcc_generated_files/adcc.c: 102:     ADSTAT = 0x00;
+"99
+[; ;mcc_generated_files/adcc.c: 99:     ADCON2 = 0x4B;
+[e = _ADCON2 -> -> 75 `i `uc ]
+"101
+[; ;mcc_generated_files/adcc.c: 101:     ADCON3 = 0x27;
+[e = _ADCON3 -> -> 39 `i `uc ]
+"103
+[; ;mcc_generated_files/adcc.c: 103:     ADSTAT = 0x00;
 [e = _ADSTAT -> -> 0 `i `uc ]
-"104
-[; ;mcc_generated_files/adcc.c: 104:     ADREF = 0x02;
+"105
+[; ;mcc_generated_files/adcc.c: 105:     ADREF = 0x02;
 [e = _ADREF -> -> 2 `i `uc ]
-"106
-[; ;mcc_generated_files/adcc.c: 106:     ADACT = 0x00;
+"107
+[; ;mcc_generated_files/adcc.c: 107:     ADACT = 0x00;
 [e = _ADACT -> -> 0 `i `uc ]
-"108
-[; ;mcc_generated_files/adcc.c: 108:     ADCLK = 0x00;
-[e = _ADCLK -> -> 0 `i `uc ]
-"110
-[; ;mcc_generated_files/adcc.c: 110:     ADCON0 = 0x94;
-[e = _ADCON0 -> -> 148 `i `uc ]
-"113
-[; ;mcc_generated_files/adcc.c: 113:     PIR1bits.ADIF = 0;
+"109
+[; ;mcc_generated_files/adcc.c: 109:     ADCLK = 0x07;
+[e = _ADCLK -> -> 7 `i `uc ]
+"111
+[; ;mcc_generated_files/adcc.c: 111:     ADCON0 = 0x84;
+[e = _ADCON0 -> -> 132 `i `uc ]
+"114
+[; ;mcc_generated_files/adcc.c: 114:     PIR1bits.ADIF = 0;
 [e = . . _PIR1bits 0 2 -> -> 0 `i `uc ]
-"115
-[; ;mcc_generated_files/adcc.c: 115:     PIE1bits.ADIE = 1;
+"116
+[; ;mcc_generated_files/adcc.c: 116:     PIE1bits.ADIE = 1;
 [e = . . _PIE1bits 0 2 -> -> 1 `i `uc ]
-"117
-[; ;mcc_generated_files/adcc.c: 117:     ADCC_SetADIInterruptHandler(ADCC_DefaultInterruptHandler);
+"118
+[; ;mcc_generated_files/adcc.c: 118:     ADCC_SetADIInterruptHandler(ADCC_DefaultInterruptHandler);
 [e ( _ADCC_SetADIInterruptHandler (1 &U _ADCC_DefaultInterruptHandler ]
-"119
-[; ;mcc_generated_files/adcc.c: 119: }
+"121
+[; ;mcc_generated_files/adcc.c: 121:     PIR1bits.ADTIF = 0;
+[e = . . _PIR1bits 0 3 -> -> 0 `i `uc ]
+"123
+[; ;mcc_generated_files/adcc.c: 123:     PIE1bits.ADTIE = 1;
+[e = . . _PIE1bits 0 3 -> -> 1 `i `uc ]
+"125
+[; ;mcc_generated_files/adcc.c: 125:     ADCC_SetADTIInterruptHandler(ADCC_DefaultInterruptHandler);
+[e ( _ADCC_SetADTIInterruptHandler (1 &U _ADCC_DefaultInterruptHandler ]
+"126
+[; ;mcc_generated_files/adcc.c: 126: }
 [e :UE 2230 ]
 }
-"121
-[; ;mcc_generated_files/adcc.c: 121: void ADCC_StartConversion(adcc_channel_t channel)
+"128
+[; ;mcc_generated_files/adcc.c: 128: void ADCC_StartConversion(adcc_channel_t channel)
 [v _ADCC_StartConversion `(v ~T0 @X0 1 ef1`E16136 ]
-"122
-[; ;mcc_generated_files/adcc.c: 122: {
+"129
+[; ;mcc_generated_files/adcc.c: 129: {
 {
 [e :U _ADCC_StartConversion ]
-"121
-[; ;mcc_generated_files/adcc.c: 121: void ADCC_StartConversion(adcc_channel_t channel)
+"128
+[; ;mcc_generated_files/adcc.c: 128: void ADCC_StartConversion(adcc_channel_t channel)
 [v _channel `E16136 ~T0 @X0 1 r1 ]
-"122
-[; ;mcc_generated_files/adcc.c: 122: {
+"129
+[; ;mcc_generated_files/adcc.c: 129: {
 [f ]
-"124
-[; ;mcc_generated_files/adcc.c: 124:     ADPCH = channel;
-[e = _ADPCH -> _channel `uc ]
-"127
-[; ;mcc_generated_files/adcc.c: 127:     ADCON0bits.ADON = 1;
-[e = . . _ADCON0bits 1 6 -> -> 1 `i `uc ]
-"130
-[; ;mcc_generated_files/adcc.c: 130:     ADCON0bits.ADGO = 1;
-[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
 "131
-[; ;mcc_generated_files/adcc.c: 131: }
+[; ;mcc_generated_files/adcc.c: 131:     ADPCH = channel;
+[e = _ADPCH -> _channel `uc ]
+"134
+[; ;mcc_generated_files/adcc.c: 134:     ADCON0bits.ADON = 1;
+[e = . . _ADCON0bits 1 6 -> -> 1 `i `uc ]
+"137
+[; ;mcc_generated_files/adcc.c: 137:     ADCON0bits.ADGO = 1;
+[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
+"138
+[; ;mcc_generated_files/adcc.c: 138: }
 [e :UE 2231 ]
 }
-"133
-[; ;mcc_generated_files/adcc.c: 133: _Bool ADCC_IsConversionDone()
+"140
+[; ;mcc_generated_files/adcc.c: 140: _Bool ADCC_IsConversionDone()
 [v _ADCC_IsConversionDone `(a ~T0 @X0 1 ef ]
-"134
-[; ;mcc_generated_files/adcc.c: 134: {
+"141
+[; ;mcc_generated_files/adcc.c: 141: {
 {
 [e :U _ADCC_IsConversionDone ]
 [f ]
-"136
-[; ;mcc_generated_files/adcc.c: 136:     return ((unsigned char)(!ADCON0bits.ADGO));
+"143
+[; ;mcc_generated_files/adcc.c: 143:     return ((unsigned char)(!ADCON0bits.ADGO));
 [e ) -> -> -> ! != -> . . _ADCON0bits 1 0 `i -> 0 `i `i `uc `a ]
 [e $UE 2232  ]
-"137
-[; ;mcc_generated_files/adcc.c: 137: }
+"144
+[; ;mcc_generated_files/adcc.c: 144: }
 [e :UE 2232 ]
 }
-"139
-[; ;mcc_generated_files/adcc.c: 139: adc_result_t ADCC_GetConversionResult(void)
+"146
+[; ;mcc_generated_files/adcc.c: 146: adc_result_t ADCC_GetConversionResult(void)
 [v _ADCC_GetConversionResult `(us ~T0 @X0 1 ef ]
-"140
-[; ;mcc_generated_files/adcc.c: 140: {
+"147
+[; ;mcc_generated_files/adcc.c: 147: {
 {
 [e :U _ADCC_GetConversionResult ]
 [f ]
-"142
-[; ;mcc_generated_files/adcc.c: 142:     return ((adc_result_t)((ADRESH << 8) + ADRESL));
+"149
+[; ;mcc_generated_files/adcc.c: 149:     return ((adc_result_t)((ADRESH << 8) + ADRESL));
 [e ) -> + << -> _ADRESH `i -> 8 `i -> _ADRESL `i `us ]
 [e $UE 2233  ]
-"143
-[; ;mcc_generated_files/adcc.c: 143: }
+"150
+[; ;mcc_generated_files/adcc.c: 150: }
 [e :UE 2233 ]
 }
-"145
-[; ;mcc_generated_files/adcc.c: 145: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
+"152
+[; ;mcc_generated_files/adcc.c: 152: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
 [v _ADCC_GetSingleConversion `(us ~T0 @X0 1 ef1`E16136 ]
-"146
-[; ;mcc_generated_files/adcc.c: 146: {
+"153
+[; ;mcc_generated_files/adcc.c: 153: {
 {
 [e :U _ADCC_GetSingleConversion ]
-"145
-[; ;mcc_generated_files/adcc.c: 145: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
+"152
+[; ;mcc_generated_files/adcc.c: 152: adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
 [v _channel `E16136 ~T0 @X0 1 r1 ]
-"146
-[; ;mcc_generated_files/adcc.c: 146: {
+"153
+[; ;mcc_generated_files/adcc.c: 153: {
 [f ]
-"148
-[; ;mcc_generated_files/adcc.c: 148:     ADPCH = channel;
+"155
+[; ;mcc_generated_files/adcc.c: 155:     ADPCH = channel;
 [e = _ADPCH -> _channel `uc ]
-"151
-[; ;mcc_generated_files/adcc.c: 151:     ADCON0bits.ADON = 1;
+"158
+[; ;mcc_generated_files/adcc.c: 158:     ADCON0bits.ADON = 1;
 [e = . . _ADCON0bits 1 6 -> -> 1 `i `uc ]
-"154
-[; ;mcc_generated_files/adcc.c: 154:     ADCON0bits.ADCONT = 0;
-[e = . . _ADCON0bits 1 5 -> -> 0 `i `uc ]
-"157
-[; ;mcc_generated_files/adcc.c: 157:     ADCON0bits.ADGO = 1;
-[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
 "161
-[; ;mcc_generated_files/adcc.c: 161:     while (ADCON0bits.ADGO)
+[; ;mcc_generated_files/adcc.c: 161:     ADCON0bits.ADCONT = 0;
+[e = . . _ADCON0bits 1 5 -> -> 0 `i `uc ]
+"164
+[; ;mcc_generated_files/adcc.c: 164:     ADCON0bits.ADGO = 1;
+[e = . . _ADCON0bits 1 0 -> -> 1 `i `uc ]
+"168
+[; ;mcc_generated_files/adcc.c: 168:     while (ADCON0bits.ADGO)
 [e $U 2235  ]
 [e :U 2236 ]
-"162
-[; ;mcc_generated_files/adcc.c: 162:     {
+"169
+[; ;mcc_generated_files/adcc.c: 169:     {
 {
-"163
-[; ;mcc_generated_files/adcc.c: 163:     }
+"170
+[; ;mcc_generated_files/adcc.c: 170:     }
 }
 [e :U 2235 ]
-"161
-[; ;mcc_generated_files/adcc.c: 161:     while (ADCON0bits.ADGO)
+"168
+[; ;mcc_generated_files/adcc.c: 168:     while (ADCON0bits.ADGO)
 [e $ != -> . . _ADCON0bits 1 0 `i -> 0 `i 2236  ]
 [e :U 2237 ]
-"167
-[; ;mcc_generated_files/adcc.c: 167:     return ((adc_result_t)((ADRESH << 8) + ADRESL));
+"174
+[; ;mcc_generated_files/adcc.c: 174:     return ((adc_result_t)((ADRESH << 8) + ADRESL));
 [e ) -> + << -> _ADRESH `i -> 8 `i -> _ADRESL `i `us ]
 [e $UE 2234  ]
-"168
-[; ;mcc_generated_files/adcc.c: 168: }
+"175
+[; ;mcc_generated_files/adcc.c: 175: }
 [e :UE 2234 ]
 }
-"170
-[; ;mcc_generated_files/adcc.c: 170: void ADCC_StopConversion(void)
+"177
+[; ;mcc_generated_files/adcc.c: 177: void ADCC_StopConversion(void)
 [v _ADCC_StopConversion `(v ~T0 @X0 1 ef ]
-"171
-[; ;mcc_generated_files/adcc.c: 171: {
+"178
+[; ;mcc_generated_files/adcc.c: 178: {
 {
 [e :U _ADCC_StopConversion ]
 [f ]
-"173
-[; ;mcc_generated_files/adcc.c: 173:     ADCON0bits.ADGO = 0;
+"180
+[; ;mcc_generated_files/adcc.c: 180:     ADCON0bits.ADGO = 0;
 [e = . . _ADCON0bits 1 0 -> -> 0 `i `uc ]
-"174
-[; ;mcc_generated_files/adcc.c: 174: }
+"181
+[; ;mcc_generated_files/adcc.c: 181: }
 [e :UE 2238 ]
 }
-"176
-[; ;mcc_generated_files/adcc.c: 176: void ADCC_SetStopOnInterrupt(void)
+"183
+[; ;mcc_generated_files/adcc.c: 183: void ADCC_SetStopOnInterrupt(void)
 [v _ADCC_SetStopOnInterrupt `(v ~T0 @X0 1 ef ]
-"177
-[; ;mcc_generated_files/adcc.c: 177: {
+"184
+[; ;mcc_generated_files/adcc.c: 184: {
 {
 [e :U _ADCC_SetStopOnInterrupt ]
 [f ]
-"179
-[; ;mcc_generated_files/adcc.c: 179:     ADCON3bits.ADSOI = 1;
+"186
+[; ;mcc_generated_files/adcc.c: 186:     ADCON3bits.ADSOI = 1;
 [e = . . _ADCON3bits 1 3 -> -> 1 `i `uc ]
-"180
-[; ;mcc_generated_files/adcc.c: 180: }
+"187
+[; ;mcc_generated_files/adcc.c: 187: }
 [e :UE 2239 ]
 }
-"182
-[; ;mcc_generated_files/adcc.c: 182: void ADCC_DischargeSampleCapacitor(void)
+"189
+[; ;mcc_generated_files/adcc.c: 189: void ADCC_DischargeSampleCapacitor(void)
 [v _ADCC_DischargeSampleCapacitor `(v ~T0 @X0 1 ef ]
-"183
-[; ;mcc_generated_files/adcc.c: 183: {
+"190
+[; ;mcc_generated_files/adcc.c: 190: {
 {
 [e :U _ADCC_DischargeSampleCapacitor ]
 [f ]
-"185
-[; ;mcc_generated_files/adcc.c: 185:     ADPCH = 0x3b;
-[e = _ADPCH -> -> 59 `i `uc ]
-"186
-[; ;mcc_generated_files/adcc.c: 186: }
-[e :UE 2240 ]
-}
-"188
-[; ;mcc_generated_files/adcc.c: 188: void ADCC_LoadAcquisitionRegister(uint16_t acquisitionValue)
-[v _ADCC_LoadAcquisitionRegister `(v ~T0 @X0 1 ef1`us ]
-"189
-[; ;mcc_generated_files/adcc.c: 189: {
-{
-[e :U _ADCC_LoadAcquisitionRegister ]
-"188
-[; ;mcc_generated_files/adcc.c: 188: void ADCC_LoadAcquisitionRegister(uint16_t acquisitionValue)
-[v _acquisitionValue `us ~T0 @X0 1 r1 ]
-"189
-[; ;mcc_generated_files/adcc.c: 189: {
-[f ]
-"191
-[; ;mcc_generated_files/adcc.c: 191:     ADACQH = acquisitionValue >> 8;
-[e = _ADACQH -> >> -> _acquisitionValue `ui -> 8 `i `uc ]
 "192
-[; ;mcc_generated_files/adcc.c: 192:     ADACQL = acquisitionValue;
-[e = _ADACQL -> _acquisitionValue `uc ]
+[; ;mcc_generated_files/adcc.c: 192:     ADPCH = 0x3b;
+[e = _ADPCH -> -> 59 `i `uc ]
 "193
 [; ;mcc_generated_files/adcc.c: 193: }
-[e :UE 2241 ]
+[e :UE 2240 ]
 }
 "195
-[; ;mcc_generated_files/adcc.c: 195: void ADCC_SetPrechargeTime(uint16_t prechargeTime)
-[v _ADCC_SetPrechargeTime `(v ~T0 @X0 1 ef1`us ]
+[; ;mcc_generated_files/adcc.c: 195: void ADCC_LoadAcquisitionRegister(uint16_t acquisitionValue)
+[v _ADCC_LoadAcquisitionRegister `(v ~T0 @X0 1 ef1`us ]
 "196
 [; ;mcc_generated_files/adcc.c: 196: {
 {
-[e :U _ADCC_SetPrechargeTime ]
+[e :U _ADCC_LoadAcquisitionRegister ]
 "195
-[; ;mcc_generated_files/adcc.c: 195: void ADCC_SetPrechargeTime(uint16_t prechargeTime)
-[v _prechargeTime `us ~T0 @X0 1 r1 ]
+[; ;mcc_generated_files/adcc.c: 195: void ADCC_LoadAcquisitionRegister(uint16_t acquisitionValue)
+[v _acquisitionValue `us ~T0 @X0 1 r1 ]
 "196
 [; ;mcc_generated_files/adcc.c: 196: {
 [f ]
 "198
-[; ;mcc_generated_files/adcc.c: 198:     ADPREH = prechargeTime >> 8;
-[e = _ADPREH -> >> -> _prechargeTime `ui -> 8 `i `uc ]
+[; ;mcc_generated_files/adcc.c: 198:     ADACQH = acquisitionValue >> 8;
+[e = _ADACQH -> >> -> _acquisitionValue `ui -> 8 `i `uc ]
 "199
-[; ;mcc_generated_files/adcc.c: 199:     ADPREL = prechargeTime;
-[e = _ADPREL -> _prechargeTime `uc ]
+[; ;mcc_generated_files/adcc.c: 199:     ADACQL = acquisitionValue;
+[e = _ADACQL -> _acquisitionValue `uc ]
 "200
 [; ;mcc_generated_files/adcc.c: 200: }
-[e :UE 2242 ]
+[e :UE 2241 ]
 }
 "202
-[; ;mcc_generated_files/adcc.c: 202: void ADCC_SetRepeatCount(uint8_t repeatCount)
-[v _ADCC_SetRepeatCount `(v ~T0 @X0 1 ef1`uc ]
+[; ;mcc_generated_files/adcc.c: 202: void ADCC_SetPrechargeTime(uint16_t prechargeTime)
+[v _ADCC_SetPrechargeTime `(v ~T0 @X0 1 ef1`us ]
 "203
 [; ;mcc_generated_files/adcc.c: 203: {
 {
-[e :U _ADCC_SetRepeatCount ]
+[e :U _ADCC_SetPrechargeTime ]
 "202
-[; ;mcc_generated_files/adcc.c: 202: void ADCC_SetRepeatCount(uint8_t repeatCount)
-[v _repeatCount `uc ~T0 @X0 1 r1 ]
+[; ;mcc_generated_files/adcc.c: 202: void ADCC_SetPrechargeTime(uint16_t prechargeTime)
+[v _prechargeTime `us ~T0 @X0 1 r1 ]
 "203
 [; ;mcc_generated_files/adcc.c: 203: {
 [f ]
 "205
-[; ;mcc_generated_files/adcc.c: 205:     ADRPT = repeatCount;
-[e = _ADRPT _repeatCount ]
+[; ;mcc_generated_files/adcc.c: 205:     ADPREH = prechargeTime >> 8;
+[e = _ADPREH -> >> -> _prechargeTime `ui -> 8 `i `uc ]
 "206
-[; ;mcc_generated_files/adcc.c: 206: }
+[; ;mcc_generated_files/adcc.c: 206:     ADPREL = prechargeTime;
+[e = _ADPREL -> _prechargeTime `uc ]
+"207
+[; ;mcc_generated_files/adcc.c: 207: }
+[e :UE 2242 ]
+}
+"209
+[; ;mcc_generated_files/adcc.c: 209: void ADCC_SetRepeatCount(uint8_t repeatCount)
+[v _ADCC_SetRepeatCount `(v ~T0 @X0 1 ef1`uc ]
+"210
+[; ;mcc_generated_files/adcc.c: 210: {
+{
+[e :U _ADCC_SetRepeatCount ]
+"209
+[; ;mcc_generated_files/adcc.c: 209: void ADCC_SetRepeatCount(uint8_t repeatCount)
+[v _repeatCount `uc ~T0 @X0 1 r1 ]
+"210
+[; ;mcc_generated_files/adcc.c: 210: {
+[f ]
+"212
+[; ;mcc_generated_files/adcc.c: 212:     ADRPT = repeatCount;
+[e = _ADRPT _repeatCount ]
+"213
+[; ;mcc_generated_files/adcc.c: 213: }
 [e :UE 2243 ]
 }
-"208
-[; ;mcc_generated_files/adcc.c: 208: uint8_t ADCC_GetCurrentCountofConversions(void)
+"215
+[; ;mcc_generated_files/adcc.c: 215: uint8_t ADCC_GetCurrentCountofConversions(void)
 [v _ADCC_GetCurrentCountofConversions `(uc ~T0 @X0 1 ef ]
-"209
-[; ;mcc_generated_files/adcc.c: 209: {
+"216
+[; ;mcc_generated_files/adcc.c: 216: {
 {
 [e :U _ADCC_GetCurrentCountofConversions ]
 [f ]
-"211
-[; ;mcc_generated_files/adcc.c: 211:     return ADCNT;
+"218
+[; ;mcc_generated_files/adcc.c: 218:     return ADCNT;
 [e ) _ADCNT ]
 [e $UE 2244  ]
-"212
-[; ;mcc_generated_files/adcc.c: 212: }
+"219
+[; ;mcc_generated_files/adcc.c: 219: }
 [e :UE 2244 ]
 }
-"214
-[; ;mcc_generated_files/adcc.c: 214: void ADCC_ClearAccumulator(void)
+"221
+[; ;mcc_generated_files/adcc.c: 221: void ADCC_ClearAccumulator(void)
 [v _ADCC_ClearAccumulator `(v ~T0 @X0 1 ef ]
-"215
-[; ;mcc_generated_files/adcc.c: 215: {
+"222
+[; ;mcc_generated_files/adcc.c: 222: {
 {
 [e :U _ADCC_ClearAccumulator ]
 [f ]
-"217
-[; ;mcc_generated_files/adcc.c: 217:     ADCON2bits.ADACLR = 1;
+"224
+[; ;mcc_generated_files/adcc.c: 224:     ADCON2bits.ADACLR = 1;
 [e = . . _ADCON2bits 1 3 -> -> 1 `i `uc ]
-"218
-[; ;mcc_generated_files/adcc.c: 218: }
+"225
+[; ;mcc_generated_files/adcc.c: 225: }
 [e :UE 2245 ]
 }
-"220
-[; ;mcc_generated_files/adcc.c: 220: int24_t ADCC_GetAccumulatorValue(void)
+"227
+[; ;mcc_generated_files/adcc.c: 227: int24_t ADCC_GetAccumulatorValue(void)
 [v _ADCC_GetAccumulatorValue `(m ~T0 @X0 1 ef ]
-"221
-[; ;mcc_generated_files/adcc.c: 221: {
+"228
+[; ;mcc_generated_files/adcc.c: 228: {
 {
 [e :U _ADCC_GetAccumulatorValue ]
 [f ]
-"223
-[; ;mcc_generated_files/adcc.c: 223:     return (((int24_t)ADACCU << 16)+((int24_t)ADACCH << 8) + ADACCL);
+"230
+[; ;mcc_generated_files/adcc.c: 230:     return (((int24_t)ADACCU << 16)+((int24_t)ADACCH << 8) + ADACCL);
 [e ) + + << -> _ADACCU `m -> 16 `i << -> _ADACCH `m -> 8 `i -> _ADACCL `m ]
 [e $UE 2246  ]
-"224
-[; ;mcc_generated_files/adcc.c: 224: }
+"231
+[; ;mcc_generated_files/adcc.c: 231: }
 [e :UE 2246 ]
 }
-"226
-[; ;mcc_generated_files/adcc.c: 226: _Bool ADCC_HasAccumulatorOverflowed(void)
+"233
+[; ;mcc_generated_files/adcc.c: 233: _Bool ADCC_HasAccumulatorOverflowed(void)
 [v _ADCC_HasAccumulatorOverflowed `(a ~T0 @X0 1 ef ]
-"227
-[; ;mcc_generated_files/adcc.c: 227: {
+"234
+[; ;mcc_generated_files/adcc.c: 234: {
 {
 [e :U _ADCC_HasAccumulatorOverflowed ]
 [f ]
-"229
-[; ;mcc_generated_files/adcc.c: 229:     return ADSTATbits.ADAOV;
+"236
+[; ;mcc_generated_files/adcc.c: 236:     return ADSTATbits.ADAOV;
 [e ) -> . . _ADSTATbits 1 7 `a ]
 [e $UE 2247  ]
-"230
-[; ;mcc_generated_files/adcc.c: 230: }
+"237
+[; ;mcc_generated_files/adcc.c: 237: }
 [e :UE 2247 ]
 }
-"232
-[; ;mcc_generated_files/adcc.c: 232: uint16_t ADCC_GetFilterValue(void)
+"239
+[; ;mcc_generated_files/adcc.c: 239: uint16_t ADCC_GetFilterValue(void)
 [v _ADCC_GetFilterValue `(us ~T0 @X0 1 ef ]
-"233
-[; ;mcc_generated_files/adcc.c: 233: {
+"240
+[; ;mcc_generated_files/adcc.c: 240: {
 {
 [e :U _ADCC_GetFilterValue ]
 [f ]
-"235
-[; ;mcc_generated_files/adcc.c: 235:     return ((uint16_t)((ADFLTRH << 8) + ADFLTRL));
+"242
+[; ;mcc_generated_files/adcc.c: 242:     return ((uint16_t)((ADFLTRH << 8) + ADFLTRL));
 [e ) -> + << -> _ADFLTRH `i -> 8 `i -> _ADFLTRL `i `us ]
 [e $UE 2248  ]
-"236
-[; ;mcc_generated_files/adcc.c: 236: }
+"243
+[; ;mcc_generated_files/adcc.c: 243: }
 [e :UE 2248 ]
 }
-"238
-[; ;mcc_generated_files/adcc.c: 238: uint16_t ADCC_GetPreviousResult(void)
+"245
+[; ;mcc_generated_files/adcc.c: 245: uint16_t ADCC_GetPreviousResult(void)
 [v _ADCC_GetPreviousResult `(us ~T0 @X0 1 ef ]
-"239
-[; ;mcc_generated_files/adcc.c: 239: {
+"246
+[; ;mcc_generated_files/adcc.c: 246: {
 {
 [e :U _ADCC_GetPreviousResult ]
 [f ]
-"241
-[; ;mcc_generated_files/adcc.c: 241:     return ((uint16_t)((ADPREVH << 8) + ADPREVL));
+"248
+[; ;mcc_generated_files/adcc.c: 248:     return ((uint16_t)((ADPREVH << 8) + ADPREVL));
 [e ) -> + << -> _ADPREVH `i -> 8 `i -> _ADPREVL `i `us ]
 [e $UE 2249  ]
-"242
-[; ;mcc_generated_files/adcc.c: 242: }
-[e :UE 2249 ]
-}
-"244
-[; ;mcc_generated_files/adcc.c: 244: void ADCC_DefineSetPoint(uint16_t setPoint)
-[v _ADCC_DefineSetPoint `(v ~T0 @X0 1 ef1`us ]
-"245
-[; ;mcc_generated_files/adcc.c: 245: {
-{
-[e :U _ADCC_DefineSetPoint ]
-"244
-[; ;mcc_generated_files/adcc.c: 244: void ADCC_DefineSetPoint(uint16_t setPoint)
-[v _setPoint `us ~T0 @X0 1 r1 ]
-"245
-[; ;mcc_generated_files/adcc.c: 245: {
-[f ]
-"247
-[; ;mcc_generated_files/adcc.c: 247:     ADSTPTH = setPoint >> 8;
-[e = _ADSTPTH -> >> -> _setPoint `ui -> 8 `i `uc ]
-"248
-[; ;mcc_generated_files/adcc.c: 248:     ADSTPTL = setPoint;
-[e = _ADSTPTL -> _setPoint `uc ]
 "249
 [; ;mcc_generated_files/adcc.c: 249: }
-[e :UE 2250 ]
+[e :UE 2249 ]
 }
 "251
-[; ;mcc_generated_files/adcc.c: 251: void ADCC_SetUpperThreshold(uint16_t upperThreshold)
-[v _ADCC_SetUpperThreshold `(v ~T0 @X0 1 ef1`us ]
+[; ;mcc_generated_files/adcc.c: 251: void ADCC_DefineSetPoint(uint16_t setPoint)
+[v _ADCC_DefineSetPoint `(v ~T0 @X0 1 ef1`us ]
 "252
 [; ;mcc_generated_files/adcc.c: 252: {
 {
-[e :U _ADCC_SetUpperThreshold ]
+[e :U _ADCC_DefineSetPoint ]
 "251
-[; ;mcc_generated_files/adcc.c: 251: void ADCC_SetUpperThreshold(uint16_t upperThreshold)
-[v _upperThreshold `us ~T0 @X0 1 r1 ]
+[; ;mcc_generated_files/adcc.c: 251: void ADCC_DefineSetPoint(uint16_t setPoint)
+[v _setPoint `us ~T0 @X0 1 r1 ]
 "252
 [; ;mcc_generated_files/adcc.c: 252: {
 [f ]
 "254
-[; ;mcc_generated_files/adcc.c: 254:     ADUTHH = upperThreshold >> 8;
-[e = _ADUTHH -> >> -> _upperThreshold `ui -> 8 `i `uc ]
+[; ;mcc_generated_files/adcc.c: 254:     ADSTPTH = setPoint >> 8;
+[e = _ADSTPTH -> >> -> _setPoint `ui -> 8 `i `uc ]
 "255
-[; ;mcc_generated_files/adcc.c: 255:     ADUTHL = upperThreshold;
-[e = _ADUTHL -> _upperThreshold `uc ]
+[; ;mcc_generated_files/adcc.c: 255:     ADSTPTL = setPoint;
+[e = _ADSTPTL -> _setPoint `uc ]
 "256
 [; ;mcc_generated_files/adcc.c: 256: }
-[e :UE 2251 ]
+[e :UE 2250 ]
 }
 "258
-[; ;mcc_generated_files/adcc.c: 258: void ADCC_SetLowerThreshold(uint16_t lowerThreshold)
-[v _ADCC_SetLowerThreshold `(v ~T0 @X0 1 ef1`us ]
+[; ;mcc_generated_files/adcc.c: 258: void ADCC_SetUpperThreshold(uint16_t upperThreshold)
+[v _ADCC_SetUpperThreshold `(v ~T0 @X0 1 ef1`us ]
 "259
 [; ;mcc_generated_files/adcc.c: 259: {
 {
-[e :U _ADCC_SetLowerThreshold ]
+[e :U _ADCC_SetUpperThreshold ]
 "258
-[; ;mcc_generated_files/adcc.c: 258: void ADCC_SetLowerThreshold(uint16_t lowerThreshold)
-[v _lowerThreshold `us ~T0 @X0 1 r1 ]
+[; ;mcc_generated_files/adcc.c: 258: void ADCC_SetUpperThreshold(uint16_t upperThreshold)
+[v _upperThreshold `us ~T0 @X0 1 r1 ]
 "259
 [; ;mcc_generated_files/adcc.c: 259: {
 [f ]
 "261
-[; ;mcc_generated_files/adcc.c: 261:     ADLTHH = lowerThreshold >> 8;
-[e = _ADLTHH -> >> -> _lowerThreshold `ui -> 8 `i `uc ]
+[; ;mcc_generated_files/adcc.c: 261:     ADUTHH = upperThreshold >> 8;
+[e = _ADUTHH -> >> -> _upperThreshold `ui -> 8 `i `uc ]
 "262
-[; ;mcc_generated_files/adcc.c: 262:     ADLTHL = lowerThreshold;
-[e = _ADLTHL -> _lowerThreshold `uc ]
+[; ;mcc_generated_files/adcc.c: 262:     ADUTHL = upperThreshold;
+[e = _ADUTHL -> _upperThreshold `uc ]
 "263
 [; ;mcc_generated_files/adcc.c: 263: }
-[e :UE 2252 ]
+[e :UE 2251 ]
 }
 "265
-[; ;mcc_generated_files/adcc.c: 265: uint16_t ADCC_GetErrorCalculation(void)
-[v _ADCC_GetErrorCalculation `(us ~T0 @X0 1 ef ]
+[; ;mcc_generated_files/adcc.c: 265: void ADCC_SetLowerThreshold(uint16_t lowerThreshold)
+[v _ADCC_SetLowerThreshold `(v ~T0 @X0 1 ef1`us ]
 "266
 [; ;mcc_generated_files/adcc.c: 266: {
 {
-[e :U _ADCC_GetErrorCalculation ]
+[e :U _ADCC_SetLowerThreshold ]
+"265
+[; ;mcc_generated_files/adcc.c: 265: void ADCC_SetLowerThreshold(uint16_t lowerThreshold)
+[v _lowerThreshold `us ~T0 @X0 1 r1 ]
+"266
+[; ;mcc_generated_files/adcc.c: 266: {
 [f ]
 "268
-[; ;mcc_generated_files/adcc.c: 268:  return ((uint16_t)((ADERRH << 8) + ADERRL));
+[; ;mcc_generated_files/adcc.c: 268:     ADLTHH = lowerThreshold >> 8;
+[e = _ADLTHH -> >> -> _lowerThreshold `ui -> 8 `i `uc ]
+"269
+[; ;mcc_generated_files/adcc.c: 269:     ADLTHL = lowerThreshold;
+[e = _ADLTHL -> _lowerThreshold `uc ]
+"270
+[; ;mcc_generated_files/adcc.c: 270: }
+[e :UE 2252 ]
+}
+"272
+[; ;mcc_generated_files/adcc.c: 272: uint16_t ADCC_GetErrorCalculation(void)
+[v _ADCC_GetErrorCalculation `(us ~T0 @X0 1 ef ]
+"273
+[; ;mcc_generated_files/adcc.c: 273: {
+{
+[e :U _ADCC_GetErrorCalculation ]
+[f ]
+"275
+[; ;mcc_generated_files/adcc.c: 275:  return ((uint16_t)((ADERRH << 8) + ADERRL));
 [e ) -> + << -> _ADERRH `i -> 8 `i -> _ADERRL `i `us ]
 [e $UE 2253  ]
-"269
-[; ;mcc_generated_files/adcc.c: 269: }
+"276
+[; ;mcc_generated_files/adcc.c: 276: }
 [e :UE 2253 ]
 }
-"271
-[; ;mcc_generated_files/adcc.c: 271: void ADCC_EnableDoubleSampling(void)
+"278
+[; ;mcc_generated_files/adcc.c: 278: void ADCC_EnableDoubleSampling(void)
 [v _ADCC_EnableDoubleSampling `(v ~T0 @X0 1 ef ]
-"272
-[; ;mcc_generated_files/adcc.c: 272: {
+"279
+[; ;mcc_generated_files/adcc.c: 279: {
 {
 [e :U _ADCC_EnableDoubleSampling ]
 [f ]
-"274
-[; ;mcc_generated_files/adcc.c: 274:     ADCON1bits.ADDSEN = 1;
+"281
+[; ;mcc_generated_files/adcc.c: 281:     ADCON1bits.ADDSEN = 1;
 [e = . . _ADCON1bits 1 0 -> -> 1 `i `uc ]
-"275
-[; ;mcc_generated_files/adcc.c: 275: }
+"282
+[; ;mcc_generated_files/adcc.c: 282: }
 [e :UE 2254 ]
 }
-"277
-[; ;mcc_generated_files/adcc.c: 277: void ADCC_EnableContinuousConversion(void)
+"284
+[; ;mcc_generated_files/adcc.c: 284: void ADCC_EnableContinuousConversion(void)
 [v _ADCC_EnableContinuousConversion `(v ~T0 @X0 1 ef ]
-"278
-[; ;mcc_generated_files/adcc.c: 278: {
+"285
+[; ;mcc_generated_files/adcc.c: 285: {
 {
 [e :U _ADCC_EnableContinuousConversion ]
 [f ]
-"280
-[; ;mcc_generated_files/adcc.c: 280:     ADCON0bits.ADCONT = 1;
+"287
+[; ;mcc_generated_files/adcc.c: 287:     ADCON0bits.ADCONT = 1;
 [e = . . _ADCON0bits 1 5 -> -> 1 `i `uc ]
-"281
-[; ;mcc_generated_files/adcc.c: 281: }
+"288
+[; ;mcc_generated_files/adcc.c: 288: }
 [e :UE 2255 ]
 }
-"283
-[; ;mcc_generated_files/adcc.c: 283: void ADCC_DisableContinuousConversion(void)
+"290
+[; ;mcc_generated_files/adcc.c: 290: void ADCC_DisableContinuousConversion(void)
 [v _ADCC_DisableContinuousConversion `(v ~T0 @X0 1 ef ]
-"284
-[; ;mcc_generated_files/adcc.c: 284: {
+"291
+[; ;mcc_generated_files/adcc.c: 291: {
 {
 [e :U _ADCC_DisableContinuousConversion ]
 [f ]
-"286
-[; ;mcc_generated_files/adcc.c: 286:     ADCON0bits.ADCONT = 0;
+"293
+[; ;mcc_generated_files/adcc.c: 293:     ADCON0bits.ADCONT = 0;
 [e = . . _ADCON0bits 1 5 -> -> 0 `i `uc ]
-"287
-[; ;mcc_generated_files/adcc.c: 287: }
+"294
+[; ;mcc_generated_files/adcc.c: 294: }
 [e :UE 2256 ]
 }
-"289
-[; ;mcc_generated_files/adcc.c: 289: _Bool ADCC_HasErrorCrossedUpperThreshold(void)
+"296
+[; ;mcc_generated_files/adcc.c: 296: _Bool ADCC_HasErrorCrossedUpperThreshold(void)
 [v _ADCC_HasErrorCrossedUpperThreshold `(a ~T0 @X0 1 ef ]
-"290
-[; ;mcc_generated_files/adcc.c: 290: {
+"297
+[; ;mcc_generated_files/adcc.c: 297: {
 {
 [e :U _ADCC_HasErrorCrossedUpperThreshold ]
 [f ]
-"292
-[; ;mcc_generated_files/adcc.c: 292:     return ADSTATbits.ADUTHR;
+"299
+[; ;mcc_generated_files/adcc.c: 299:     return ADSTATbits.ADUTHR;
 [e ) -> . . _ADSTATbits 1 6 `a ]
 [e $UE 2257  ]
-"293
-[; ;mcc_generated_files/adcc.c: 293: }
+"300
+[; ;mcc_generated_files/adcc.c: 300: }
 [e :UE 2257 ]
 }
-"295
-[; ;mcc_generated_files/adcc.c: 295: _Bool ADCC_HasErrorCrossedLowerThreshold(void)
+"302
+[; ;mcc_generated_files/adcc.c: 302: _Bool ADCC_HasErrorCrossedLowerThreshold(void)
 [v _ADCC_HasErrorCrossedLowerThreshold `(a ~T0 @X0 1 ef ]
-"296
-[; ;mcc_generated_files/adcc.c: 296: {
+"303
+[; ;mcc_generated_files/adcc.c: 303: {
 {
 [e :U _ADCC_HasErrorCrossedLowerThreshold ]
 [f ]
-"298
-[; ;mcc_generated_files/adcc.c: 298:     return ADSTATbits.ADLTHR;
+"305
+[; ;mcc_generated_files/adcc.c: 305:     return ADSTATbits.ADLTHR;
 [e ) -> . . _ADSTATbits 1 5 `a ]
 [e $UE 2258  ]
-"299
-[; ;mcc_generated_files/adcc.c: 299: }
+"306
+[; ;mcc_generated_files/adcc.c: 306: }
 [e :UE 2258 ]
 }
-"301
-[; ;mcc_generated_files/adcc.c: 301: uint8_t ADCC_GetConversionStageStatus(void)
+"308
+[; ;mcc_generated_files/adcc.c: 308: uint8_t ADCC_GetConversionStageStatus(void)
 [v _ADCC_GetConversionStageStatus `(uc ~T0 @X0 1 ef ]
-"302
-[; ;mcc_generated_files/adcc.c: 302: {
+"309
+[; ;mcc_generated_files/adcc.c: 309: {
 {
 [e :U _ADCC_GetConversionStageStatus ]
 [f ]
-"304
-[; ;mcc_generated_files/adcc.c: 304:     return ADSTATbits.ADSTAT;
+"311
+[; ;mcc_generated_files/adcc.c: 311:     return ADSTATbits.ADSTAT;
 [e ) . . _ADSTATbits 2 0 ]
 [e $UE 2259  ]
-"305
-[; ;mcc_generated_files/adcc.c: 305: }
+"312
+[; ;mcc_generated_files/adcc.c: 312: }
 [e :UE 2259 ]
 }
 [v $root$_ADCC_ISR `(v ~T0 @X0 0 e ]
-"307
-[; ;mcc_generated_files/adcc.c: 307: void __attribute__((picinterrupt(("irq(AD),base(8)")))) ADCC_ISR()
+"314
+[; ;mcc_generated_files/adcc.c: 314: void __attribute__((picinterrupt(("irq(AD),base(8)")))) ADCC_ISR()
 [v _ADCC_ISR `(v ~T1 @X0 1 ef ]
-"308
-[; ;mcc_generated_files/adcc.c: 308: {
+"315
+[; ;mcc_generated_files/adcc.c: 315: {
 {
 [e :U _ADCC_ISR ]
 [f ]
-"310
-[; ;mcc_generated_files/adcc.c: 310:     PIR1bits.ADIF = 0;
+"317
+[; ;mcc_generated_files/adcc.c: 317:     PIR1bits.ADIF = 0;
 [e = . . _PIR1bits 0 2 -> -> 0 `i `uc ]
-"312
-[; ;mcc_generated_files/adcc.c: 312:     if (ADCC_ADI_InterruptHandler)
-[e $ ! != _ADCC_ADI_InterruptHandler -> -> 0 `i `*F16233 2261  ]
-"313
-[; ;mcc_generated_files/adcc.c: 313:             ADCC_ADI_InterruptHandler();
+"319
+[; ;mcc_generated_files/adcc.c: 319:     if (ADCC_ADI_InterruptHandler)
+[e $ ! != _ADCC_ADI_InterruptHandler -> -> 0 `i `*F16240 2261  ]
+"320
+[; ;mcc_generated_files/adcc.c: 320:             ADCC_ADI_InterruptHandler();
 [e ( *U _ADCC_ADI_InterruptHandler ..  ]
 [e :U 2261 ]
-"314
-[; ;mcc_generated_files/adcc.c: 314: }
+"321
+[; ;mcc_generated_files/adcc.c: 321: }
 [e :UE 2260 ]
 }
-"316
-[; ;mcc_generated_files/adcc.c: 316: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void)){
-[v _ADCC_SetADIInterruptHandler `(v ~T0 @X0 1 ef1`*F16235 ]
+"323
+[; ;mcc_generated_files/adcc.c: 323: void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void)){
+[v _ADCC_SetADIInterruptHandler `(v ~T0 @X0 1 ef1`*F16242 ]
 {
 [e :U _ADCC_SetADIInterruptHandler ]
-[v _InterruptHandler `*F16237 ~T0 @X0 1 r1 ]
+[v _InterruptHandler `*F16244 ~T0 @X0 1 r1 ]
 [f ]
-"317
-[; ;mcc_generated_files/adcc.c: 317:     ADCC_ADI_InterruptHandler = InterruptHandler;
+"324
+[; ;mcc_generated_files/adcc.c: 324:     ADCC_ADI_InterruptHandler = InterruptHandler;
 [e = _ADCC_ADI_InterruptHandler _InterruptHandler ]
-"318
-[; ;mcc_generated_files/adcc.c: 318: }
+"325
+[; ;mcc_generated_files/adcc.c: 325: }
 [e :UE 2262 ]
 }
-"320
-[; ;mcc_generated_files/adcc.c: 320: void ADCC_DefaultInterruptHandler(void){
+[v $root$_ADCC_ThresholdISR `(v ~T0 @X0 0 e ]
+"327
+[; ;mcc_generated_files/adcc.c: 327: void __attribute__((picinterrupt(("irq(ADT),base(8)")))) ADCC_ThresholdISR()
+[v _ADCC_ThresholdISR `(v ~T2 @X0 1 ef ]
+"328
+[; ;mcc_generated_files/adcc.c: 328: {
+{
+[e :U _ADCC_ThresholdISR ]
+[f ]
+"330
+[; ;mcc_generated_files/adcc.c: 330:     PIR1bits.ADTIF = 0;
+[e = . . _PIR1bits 0 3 -> -> 0 `i `uc ]
+"332
+[; ;mcc_generated_files/adcc.c: 332:     if (ADCC_ADTI_InterruptHandler)
+[e $ ! != _ADCC_ADTI_InterruptHandler -> -> 0 `i `*F16247 2264  ]
+"333
+[; ;mcc_generated_files/adcc.c: 333:         ADCC_ADTI_InterruptHandler();
+[e ( *U _ADCC_ADTI_InterruptHandler ..  ]
+[e :U 2264 ]
+"334
+[; ;mcc_generated_files/adcc.c: 334: }
+[e :UE 2263 ]
+}
+"336
+[; ;mcc_generated_files/adcc.c: 336: void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void)){
+[v _ADCC_SetADTIInterruptHandler `(v ~T0 @X0 1 ef1`*F16249 ]
+{
+[e :U _ADCC_SetADTIInterruptHandler ]
+[v _InterruptHandler `*F16251 ~T0 @X0 1 r1 ]
+[f ]
+"337
+[; ;mcc_generated_files/adcc.c: 337:     ADCC_ADTI_InterruptHandler = InterruptHandler;
+[e = _ADCC_ADTI_InterruptHandler _InterruptHandler ]
+"338
+[; ;mcc_generated_files/adcc.c: 338: }
+[e :UE 2265 ]
+}
+"339
+[; ;mcc_generated_files/adcc.c: 339: void ADCC_DefaultInterruptHandler(void){
 [v _ADCC_DefaultInterruptHandler `(v ~T0 @X0 1 ef ]
 {
 [e :U _ADCC_DefaultInterruptHandler ]
 [f ]
-"323
-[; ;mcc_generated_files/adcc.c: 323: }
-[e :UE 2263 ]
+"342
+[; ;mcc_generated_files/adcc.c: 342: }
+[e :UE 2266 ]
 }

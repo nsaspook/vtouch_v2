@@ -27403,7 +27403,9 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 854 "./mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 874 "./mcc_generated_files/adcc.h"
+# 870 "./mcc_generated_files/adcc.h"
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+# 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 12 "mcc_generated_files/../vconfig.h" 2
 
@@ -27454,7 +27456,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 74 "./vconfig.h"
+# 75 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27564,7 +27566,7 @@ void __attribute__((picinterrupt(("irq(DMA1SCNT), base(8)")))) DMA1_DMASCNT_ISR(
  PIR2bits.DMA1SCNTIF = 0;
 
  spi_link.LCD_DATA = 0;
- do { LATEbits.LATE2 = 0; } while(0);
+
 }
 
 void __attribute__((picinterrupt(("irq(DMA1DCNT), base(8)")))) DMA1_DMADCNT_ISR()

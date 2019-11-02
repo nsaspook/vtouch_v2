@@ -203,10 +203,13 @@ void main(void)
 			update_lcd(0);
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
-			StartTimer(TMR_SEQ, 10000);
+			StartTimer(TMR_ADC, ADC_SCAN_SPEED);
 			StartTimer(TMR_INFO, TDELAY);
 			StartTimer(TMR_FLIPPER, DFLIP);
 			StartTimer(TMR_HELPDIS, TDELAY);
+
+			start_adc_scan();
+
 			break;
 		case UI_STATE_HOST: //slave
 			break;
@@ -217,19 +220,25 @@ void main(void)
 			V.ui_state = UI_STATE_INIT;
 			break;
 		}
+
+		if (TimerDone(TMR_ADC) && check_adc_scan()) {
+			clear_adc_scan();
+			start_adc_scan();
+			StartTimer(TMR_ADC, ADC_SCAN_SPEED);
+		}
+
 		if (V.ticks) {
 
 		}
 
-		if (mode != UI_STATE_LOG)
-			if (TimerDone(TMR_DISPLAY)) { // limit update rate
-				if (TimerDone(TMR_HELPDIS)) {
-					set_display_info(DIS_STR);
-				}
-				sprintf(get_vterm_ptr(1, 0), "R%d %d, T%d %d C%d %d      #", 0, 1, 2, 3, 4, 5);
-				StartTimer(TMR_DISPLAY, DDELAY);
-				update_lcd(0);
+		if (TimerDone(TMR_DISPLAY)) { // limit update rate
+			if (TimerDone(TMR_HELPDIS)) {
+				set_display_info(DIS_STR);
 			}
+			sprintf(get_vterm_ptr(1, 0), "%d %d, %d %d    #", get_raw_result(C_BATT), get_raw_result(C_PV), get_raw_result(V_CC), get_raw_result(V_BAT));
+			StartTimer(TMR_DISPLAY, DDELAY);
+			update_lcd(0);
+		}
 
 		/*
 		 * show help display if button pressed

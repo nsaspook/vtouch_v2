@@ -1,8 +1,8 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F16414 `(v ~T0 @X0 0 tf ]
-[v F16416 `(v ~T0 @X0 0 tf ]
-[v F16439 `(v ~T0 @X0 0 tf ]
-[v F16441 `(v ~T0 @X0 0 tf ]
+[v F16418 `(v ~T0 @X0 0 tf ]
+[v F16420 `(v ~T0 @X0 0 tf ]
+[v F16443 `(v ~T0 @X0 0 tf ]
+[v F16445 `(v ~T0 @X0 0 tf ]
 "47201 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 47201:     struct {
 [s S2123 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -2388,16 +2388,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSU equ 03FFFh ;# ">
 "389 mcc_generated_files/uart2.h
 [; ;mcc_generated_files/uart2.h: 389: void (*UART2_RxInterruptHandler)(void);
-[v _UART2_RxInterruptHandler `*F16414 ~T0 @X0 1 e ]
+[v _UART2_RxInterruptHandler `*F16418 ~T0 @X0 1 e ]
 "407
 [; ;mcc_generated_files/uart2.h: 407: void (*UART2_TxInterruptHandler)(void);
-[v _UART2_TxInterruptHandler `*F16416 ~T0 @X0 1 e ]
+[v _UART2_TxInterruptHandler `*F16420 ~T0 @X0 1 e ]
 "389 mcc_generated_files/uart1.h
 [; ;mcc_generated_files/uart1.h: 389:  void (*UART1_RxInterruptHandler)(void);
-[v _UART1_RxInterruptHandler `*F16439 ~T0 @X0 1 e ]
+[v _UART1_RxInterruptHandler `*F16443 ~T0 @X0 1 e ]
 "407
 [; ;mcc_generated_files/uart1.h: 407:  void (*UART1_TxInterruptHandler)(void);
-[v _UART1_TxInterruptHandler `*F16441 ~T0 @X0 1 e ]
+[v _UART1_TxInterruptHandler `*F16445 ~T0 @X0 1 e ]
 "52 mcc_generated_files/interrupt_manager.c
 [; ;mcc_generated_files/interrupt_manager.c: 52: void INTERRUPT_Initialize (void)
 [v _INTERRUPT_Initialize `(v ~T0 @X0 1 ef ]
@@ -2486,19 +2486,22 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/interrupt_manager.c: 84:     IPR1bits.ADIP = 1;
 [e = . . _IPR1bits 0 2 -> -> 1 `i `uc ]
 "85
-[; ;mcc_generated_files/interrupt_manager.c: 85: }
+[; ;mcc_generated_files/interrupt_manager.c: 85:     IPR1bits.ADTIP = 1;
+[e = . . _IPR1bits 0 3 -> -> 1 `i `uc ]
+"86
+[; ;mcc_generated_files/interrupt_manager.c: 86: }
 [e :UE 2230 ]
 }
 [v $root$_Default_ISR `(v ~T0 @X0 0 e ]
-"87
-[; ;mcc_generated_files/interrupt_manager.c: 87: void __attribute__((picinterrupt(("irq(default),base(8)")))) Default_ISR()
-[v _Default_ISR `(v ~T1 @X0 1 ef ]
 "88
-[; ;mcc_generated_files/interrupt_manager.c: 88: {
+[; ;mcc_generated_files/interrupt_manager.c: 88: void __attribute__((picinterrupt(("irq(default),base(8)")))) Default_ISR()
+[v _Default_ISR `(v ~T1 @X0 1 ef ]
+"89
+[; ;mcc_generated_files/interrupt_manager.c: 89: {
 {
 [e :U _Default_ISR ]
 [f ]
-"89
-[; ;mcc_generated_files/interrupt_manager.c: 89: }
+"90
+[; ;mcc_generated_files/interrupt_manager.c: 90: }
 [e :UE 2231 ]
 }

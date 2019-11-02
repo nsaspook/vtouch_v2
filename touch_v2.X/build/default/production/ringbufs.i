@@ -27449,7 +27449,9 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 854 "./mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 874 "./mcc_generated_files/adcc.h"
+# 870 "./mcc_generated_files/adcc.h"
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+# 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 12 "./vconfig.h" 2
 
@@ -27480,7 +27482,7 @@ void PIN_MANAGER_Initialize (void);
 # 20 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 21 "./vconfig.h" 2
-# 74 "./vconfig.h"
+# 75 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;

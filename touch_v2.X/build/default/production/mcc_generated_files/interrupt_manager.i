@@ -27407,7 +27407,9 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 854 "mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 874 "mcc_generated_files/adcc.h"
+# 870 "mcc_generated_files/adcc.h"
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+# 889 "mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 55 "mcc_generated_files/mcc.h" 2
 
@@ -28115,6 +28117,7 @@ void INTERRUPT_Initialize (void)
     IPR9bits.TMR6IP = 1;
     IPR8bits.TMR5IP = 0;
     IPR1bits.ADIP = 1;
+    IPR1bits.ADTIP = 1;
 }
 
 void __attribute__((picinterrupt(("irq(default),base(8)")))) Default_ISR()

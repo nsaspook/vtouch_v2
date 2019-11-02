@@ -27391,7 +27391,9 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 854 "mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 874 "mcc_generated_files/adcc.h"
+# 870 "mcc_generated_files/adcc.h"
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+# 889 "mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 52 "mcc_generated_files/adcc.c" 2
 
@@ -27405,6 +27407,7 @@ void INTERRUPT_Initialize (void);
 
 
 void (*ADCC_ADI_InterruptHandler)(void);
+void (*ADCC_ADTI_InterruptHandler)(void);
 
 
 
@@ -27428,7 +27431,7 @@ void ADCC_Initialize(void)
 
     ADACCU = 0x00;
 
-    ADRPT = 0x00;
+    ADRPT = 0x10;
 
     ADPCH = 0x00;
 
@@ -27444,9 +27447,9 @@ void ADCC_Initialize(void)
 
     ADCON1 = 0x00;
 
-    ADCON2 = 0x00;
+    ADCON2 = 0x4B;
 
-    ADCON3 = 0x00;
+    ADCON3 = 0x27;
 
     ADSTAT = 0x00;
 
@@ -27454,9 +27457,9 @@ void ADCC_Initialize(void)
 
     ADACT = 0x00;
 
-    ADCLK = 0x00;
+    ADCLK = 0x07;
 
-    ADCON0 = 0x94;
+    ADCON0 = 0x84;
 
 
     PIR1bits.ADIF = 0;
@@ -27465,6 +27468,12 @@ void ADCC_Initialize(void)
 
     ADCC_SetADIInterruptHandler(ADCC_DefaultInterruptHandler);
 
+
+    PIR1bits.ADTIF = 0;
+
+    PIE1bits.ADTIE = 1;
+
+    ADCC_SetADTIInterruptHandler(ADCC_DefaultInterruptHandler);
 }
 
 void ADCC_StartConversion(adcc_channel_t channel)
@@ -27666,6 +27675,18 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void)){
     ADCC_ADI_InterruptHandler = InterruptHandler;
 }
 
+void __attribute__((picinterrupt(("irq(ADT),base(8)")))) ADCC_ThresholdISR()
+{
+
+    PIR1bits.ADTIF = 0;
+
+    if (ADCC_ADTI_InterruptHandler)
+        ADCC_ADTI_InterruptHandler();
+}
+
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void)){
+    ADCC_ADTI_InterruptHandler = InterruptHandler;
+}
 void ADCC_DefaultInterruptHandler(void){
 
 

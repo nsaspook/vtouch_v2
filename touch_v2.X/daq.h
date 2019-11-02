@@ -31,12 +31,17 @@
 #ifndef DAQ_H
 #define	DAQ_H
 
+#define LAST_ADC_CHAN	0XD
+#define ADC_SCAN_SPEED	50 // sample timer speed in ms
+
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
+#include "mcc_generated_files/pin_manager.h"
 
-typedef struct R_data { // set only in adc_read
-	adc_result_t raw_adc[0x0F];
-} R_data;
+bool start_adc_scan(void);
+bool check_adc_scan(void);
+void clear_adc_scan(void);
+adc_result_t get_raw_result(adcc_channel_t);
 
 #endif
 

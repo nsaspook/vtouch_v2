@@ -27406,7 +27406,9 @@ _Bool ADCC_HasErrorCrossedLowerThreshold(void);
 uint8_t ADCC_GetConversionStageStatus(void);
 # 854 "mcc_generated_files/adcc.h"
 void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 874 "mcc_generated_files/adcc.h"
+# 870 "mcc_generated_files/adcc.h"
+void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
+# 889 "mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 55 "mcc_generated_files/mcc.h" 2
 
@@ -28090,8 +28092,8 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     FVR_Initialize();
     ADCC_Initialize();
-    PWM8_Initialize();
     TMR2_Initialize();
+    PWM8_Initialize();
     EXT_INT_Initialize();
     TMR6_Initialize();
     TMR5_Initialize();
