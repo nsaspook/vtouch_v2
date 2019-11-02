@@ -19,11 +19,10 @@
  * TERMS. 
  */
 
-/* 
- * File:   
- * Author: 
- * Comments:
- * Revision history: 
+/*
+ * 12-bit analog 32 sample average per channel on ports A and B
+ * uses the compute burst average mode threshold interrupt to auto change
+ * channels during interrupt after a repeat count
  */
 
 // This is a guard condition so that contents of this file are not included
@@ -32,7 +31,9 @@
 #define	DAQ_H
 
 #define LAST_ADC_CHAN	0XD
+#define ADC_BUFFER_SIZE	0xF
 #define ADC_SCAN_SPEED	200 // sample timer speed in ms
+#define ADC_SCAN_CHAN	0b0011110001110111 // convert these analog ports bitmap
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"

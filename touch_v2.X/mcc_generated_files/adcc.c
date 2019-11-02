@@ -79,12 +79,12 @@ void ADCC_Initialize(void)
     ADSTPTH = 0x00;
     // ADACC 0; 
     ADACCU = 0x00;
-    // ADRPT 16; 
-    ADRPT = 0x10;
+    // ADRPT 64; 
+    ADRPT = 0x40;
     // ADPCH ANA0; 
     ADPCH = 0x00;
-    // ADACQ 0; 
-    ADACQL = 0x00;
+    // ADACQ 5; 
+    ADACQL = 0x05;
     // ADACQ 0; 
     ADACQH = 0x00;
     // ADCAP Additional uC disabled; 
@@ -95,8 +95,8 @@ void ADCC_Initialize(void)
     ADPREH = 0x00;
     // ADDSEN disabled; ADGPOL digital_low; ADIPEN disabled; ADPPOL Vss; 
     ADCON1 = 0x00;
-    // ADCRS 4; ADMD Burst_average_mode; ADACLR enabled; ADPSIS RES; 
-    ADCON2 = 0x4B;
+    // ADCRS 6; ADMD Burst_average_mode; ADACLR enabled; ADPSIS RES; 
+    ADCON2 = 0x6B;
     // ADCALC Actual result vs filtered value; ADTMD enabled; ADSOI ADGO not cleared; 
     ADCON3 = 0x27;
     // ADMATH registers not updated; 
@@ -105,8 +105,8 @@ void ADCC_Initialize(void)
     ADREF = 0x02;
     // ADACT disabled; 
     ADACT = 0x00;
-    // ADCS FOSC/16; 
-    ADCLK = 0x07;
+    // ADCS FOSC/6; 
+    ADCLK = 0x02;
     // ADGO stop; ADFM right; ADON enabled; ADCS FOSC/ADCLK; ADCONT disabled; 
     ADCON0 = 0x84;
     
