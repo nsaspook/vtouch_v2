@@ -32,7 +32,7 @@
 #define	DAQ_H
 
 #define LAST_ADC_CHAN	0XD
-#define ADC_SCAN_SPEED	50 // sample timer speed in ms
+#define ADC_SCAN_SPEED	200 // sample timer speed in ms
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"

@@ -193,7 +193,6 @@ void UART1_Write(uint8_t txData)
 		uart1TxBufferRemaining--;
 	}
 	PIE3bits.U1TXIE = 1;
-	DEBUG1_SetLow();
 	
 }
 

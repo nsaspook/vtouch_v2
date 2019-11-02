@@ -28553,7 +28553,7 @@ void main(void)
    update_lcd(0);
    WaitMs(3000);
    StartTimer(TMR_DISPLAY, 100);
-   StartTimer(TMR_ADC, 50);
+   StartTimer(TMR_ADC, 200);
    StartTimer(TMR_INFO, 3000);
    StartTimer(TMR_FLIPPER, 1500);
    StartTimer(TMR_HELPDIS, 3000);
@@ -28574,7 +28574,7 @@ void main(void)
   if (TimerDone(TMR_ADC) && check_adc_scan()) {
    clear_adc_scan();
    start_adc_scan();
-   StartTimer(TMR_ADC, 50);
+   StartTimer(TMR_ADC, 200);
   }
 
   if (V.ticks) {

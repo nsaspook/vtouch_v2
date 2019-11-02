@@ -27486,7 +27486,6 @@ void UART1_Write(uint8_t txData)
   uart1TxBufferRemaining--;
  }
  PIE3bits.U1TXIE = 1;
- do { LATEbits.LATE1 = 0; } while(0);
 
 }
 
