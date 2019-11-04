@@ -66,6 +66,28 @@ adc_result_t get_raw_result(adcc_channel_t index)
 }
 
 /*
+ * turn ADC values into standard program values
+ */
+float conv_raw_result(adcc_channel_t chan, adc_conv_t to_what)
+{
+	switch (to_what) {
+	case T_CONV:
+		return 25.0;
+		break;
+	case C_CONV:
+		return((float) get_raw_result(chan) * C_SCALE) / 1000.0;
+		break;
+	case V_CONV:
+		return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+		break;
+	default:
+		return 0.0;
+		break;
+	}
+	return 0.0;
+}
+
+/*
  * ADC per conversion interrupt
  */
 static void adc_int_handler(void)

@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.6"
+#define VER	"0.7"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -27,6 +27,7 @@ extern "C" {
 	 * 0.4 ADC setup
 	 * 0.5 remove gemsecs coding
 	 * 0.6 adc scanning by threshold interrupt using burst average mode
+	 * 0.7 system data conversion from ADC data
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

@@ -35,14 +35,24 @@
 #define ADC_SCAN_SPEED	200 // sample timer speed in ms
 #define ADC_SCAN_CHAN	0b0011110001110111 // convert these analog ports bitmap
 
+#define C_SCALE		1.25
+#define V_SCALE		8.250825
+
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
 #include "mcc_generated_files/pin_manager.h"
+
+typedef enum {
+	C_CONV,
+	V_CONV,
+	T_CONV,
+} adc_conv_t;
 
 bool start_adc_scan(void);
 bool check_adc_scan(void);
 void clear_adc_scan(void);
 adc_result_t get_raw_result(adcc_channel_t);
+float conv_raw_result(adcc_channel_t, adc_conv_t);
 
 #endif
 

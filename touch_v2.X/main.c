@@ -223,6 +223,14 @@ void main(void)
 		}
 
 		if (TimerDone(TMR_ADC) && check_adc_scan()) {
+			/*
+			 * download the system data variables
+			 */
+			C.calc[C_BATT] = conv_raw_result(C_BATT, C_CONV);
+			C.calc[V_CC] = conv_raw_result(V_CC, V_CONV);
+			/*
+			 * restart the conversion process
+			 */
 			clear_adc_scan();
 			start_adc_scan();
 			StartTimer(TMR_ADC, ADC_SCAN_SPEED);
@@ -236,10 +244,6 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
-			C.calc[C_BATT] = get_raw_result(C_BATT);
-			C.calc[V_CC] = get_raw_result(V_CC);
-			C.calc[C_BATT] = (C.calc[C_BATT]*1.25)/1000.0;
-			C.calc[V_CC] = (C.calc[V_CC]*8.250825)/1000.0;
 			sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
 			sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
 			StartTimer(TMR_DISPLAY, DDELAY);

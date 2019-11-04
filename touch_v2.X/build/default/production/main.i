@@ -28312,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 75 "./vconfig.h"
+# 76 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28451,11 +28451,18 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
-# 42 "./daq.h"
+# 45 "./daq.h"
+typedef enum {
+ C_CONV,
+ V_CONV,
+ T_CONV,
+} adc_conv_t;
+
 _Bool start_adc_scan(void);
 _Bool check_adc_scan(void);
 void clear_adc_scan(void);
 adc_result_t get_raw_result(adcc_channel_t);
+float conv_raw_result(adcc_channel_t, adc_conv_t);
 # 117 "main.c" 2
 
 # 1 "./mbmc.h" 1
@@ -28547,10 +28554,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.6");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.7");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.6");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.7");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28574,6 +28581,14 @@ void main(void)
   }
 
   if (TimerDone(TMR_ADC) && check_adc_scan()) {
+
+
+
+   C.calc[C_BATT] = conv_raw_result(C_BATT, C_CONV);
+   C.calc[V_CC] = conv_raw_result(V_CC, V_CONV);
+
+
+
    clear_adc_scan();
    start_adc_scan();
    StartTimer(TMR_ADC, 200);
@@ -28587,10 +28602,6 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
-   C.calc[C_BATT] = get_raw_result(C_BATT);
-   C.calc[V_CC] = get_raw_result(V_CC);
-   C.calc[C_BATT] = (C.calc[C_BATT]*1.25)/1000.0;
-   C.calc[V_CC] = (C.calc[V_CC]*8.250825)/1000.0;
    sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
    sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
    StartTimer(TMR_DISPLAY, 100);
