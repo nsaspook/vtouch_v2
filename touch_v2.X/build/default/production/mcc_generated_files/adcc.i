@@ -27435,7 +27435,7 @@ void ADCC_Initialize(void)
 
     ADPCH = 0x00;
 
-    ADACQL = 0x05;
+    ADACQL = 0x40;
 
     ADACQH = 0x00;
 

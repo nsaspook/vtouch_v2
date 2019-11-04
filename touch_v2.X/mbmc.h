@@ -34,6 +34,7 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 
 typedef struct C_data { // real calculated variables
+	float calc[ADC_BUFFER_SIZE];
 	float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
 	float t_comp;
 } C_data;

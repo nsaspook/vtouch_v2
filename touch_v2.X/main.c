@@ -141,6 +141,7 @@ V_data V = {
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
+C_data C;
 
 /*
  * Main application
@@ -235,7 +236,12 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
-			sprintf(get_vterm_ptr(1, 0), "%d %d, %d %d    #", get_raw_result(C_BATT), get_raw_result(C_PV), get_raw_result(V_CC), get_raw_result(V_BAT));
+			C.calc[C_BATT] = get_raw_result(C_BATT);
+			C.calc[V_CC] = get_raw_result(V_CC);
+			C.calc[C_BATT] = (C.calc[C_BATT]*1.25)/1000.0;
+			C.calc[V_CC] = (C.calc[V_CC]*8.250825)/1000.0;
+			sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
+			sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			update_lcd(0);
 		}
