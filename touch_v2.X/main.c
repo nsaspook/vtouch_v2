@@ -226,7 +226,7 @@ void main(void)
 			/*
 			 * download the system data variables
 			 */
-			C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, true);
+			C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, false);
 			C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, false);
 			/*
 			 * restart the conversion process

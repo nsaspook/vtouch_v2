@@ -6,16 +6,16 @@ float lp_filter(float new, uint8_t bn, int8_t slow) // low pass filter, slow rat
 
 	if (bn > ADC_BUFFER_SIZE)
 		return new;
+	if (slow == (-1)) { // reset smooth buffer and return original value
+		smooth[bn] = 0.0;
+		return new;
+	}
 	if (slow) {
 		lp_speed = 0.066;
 	} else {
-		lp_speed = 0.250;
+		lp_speed = 0.333;
 	}
 	lp_x = ((smooth[bn]*1000.0) + (((new * 1000.0)-(smooth[bn]*1000.0)) * lp_speed)) / 1000.0;
 	smooth[bn] = lp_x;
-	if (slow == (-1)) { // reset and return zero
-		lp_x = 0.0;
-		smooth[bn] = 0.0;
-	}
 	return lp_x;
 }

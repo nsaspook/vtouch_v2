@@ -28451,7 +28451,7 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
-# 46 "./daq.h"
+# 48 "./daq.h"
 typedef enum {
  C_CONV,
  V_CONV,
@@ -28586,7 +28586,7 @@ void main(void)
 
 
 
-   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 1);
+   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
    C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, 0);
 
 

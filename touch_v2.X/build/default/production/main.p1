@@ -104,38 +104,38 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 206:    StartTimer(TMR_DISPLAY, 100);
 [c E17094 0 1 2 3 4 5 6 7 8 9 10 11 12 .. ]
 [n E17094 APP_TIMERS TMR_INTERNAL TMR_ADC TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_FLIPPER TMR_COUNT  ]
-"52 ./daq.h
-[; ;./daq.h: 52: _Bool start_adc_scan(void);
+"54 ./daq.h
+[; ;./daq.h: 54: _Bool start_adc_scan(void);
 [v _start_adc_scan `(a ~T0 @X0 0 ef ]
 [v F17113 `(a ~T0 @X0 1 tf1`uc ]
 "31 ./timers.h
 [; ;./timers.h: 31: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 [v _TimerDone `TF17113 ~T0 @X0 0 e ]
-"53 ./daq.h
-[; ;./daq.h: 53: _Bool check_adc_scan(void);
+"55 ./daq.h
+[; ;./daq.h: 55: _Bool check_adc_scan(void);
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
 "229 main.c
-[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 1);
+[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
 [c E16625 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
 [n E16625 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
 "43 ./mbmc.h
 [; ;./mbmc.h: 43: float lp_filter(float, uint8_t, int8_t);
 [v _lp_filter `(f ~T0 @X0 0 ef3`f`uc`c ]
 "229 main.c
-[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 1);
+[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
 [c E17151 0 1 2 .. ]
 [n E17151 . C_CONV V_CONV T_CONV  ]
-"56 ./daq.h
-[; ;./daq.h: 56: float conv_raw_result(adcc_channel_t, adc_conv_t);
+"58 ./daq.h
+[; ;./daq.h: 58: float conv_raw_result(adcc_channel_t, adc_conv_t);
 [v _conv_raw_result `(f ~T0 @X0 0 ef2`E16625`E17151 ]
-"54
-[; ;./daq.h: 54: void clear_adc_scan(void);
+"56
+[; ;./daq.h: 56: void clear_adc_scan(void);
 [v _clear_adc_scan `(v ~T0 @X0 0 ef ]
 "58 ./mydisplay.h
 [; ;./mydisplay.h: 58: D_CODES set_display_info(const D_CODES);
 [v _set_display_info `(E16986 ~T0 @X0 0 ef1`CE16986 ]
-"55 ./daq.h
-[; ;./daq.h: 55: adc_result_t get_raw_result(adcc_channel_t);
+"57 ./daq.h
+[; ;./daq.h: 57: adc_result_t get_raw_result(adcc_channel_t);
 [v _get_raw_result `(us ~T0 @X0 0 ef1`E16625 ]
 "57 ./mydisplay.h
 [; ;./mydisplay.h: 57: void check_help(_Bool);
@@ -2808,8 +2808,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! && != -> ( _TimerDone (1 -> . `E17094 1 `uc `i -> 0 `i != -> ( _check_adc_scan ..  `i -> 0 `i 2261  ]
 {
 "229
-[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 1);
-[e = *U + &U . _C 0 * -> . `E16625 0 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 0 . `E17151 0 -> . `E16625 0 `uc -> -> 1 `i `c ]
+[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
+[e = *U + &U . _C 0 * -> . `E16625 0 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 0 . `E17151 0 -> . `E16625 0 `uc -> -> 0 `i `c ]
 "230
 [; ;main.c: 230:    C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, 0);
 [e = *U + &U . _C 0 * -> . `E16625 2 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 2 . `E17151 1 -> . `E16625 2 `uc -> -> 0 `i `c ]
