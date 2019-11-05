@@ -37,6 +37,7 @@
 
 #define C_SCALE		1.25
 #define V_SCALE		8.250825
+#define C_A100		59.32
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"

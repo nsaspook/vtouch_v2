@@ -75,7 +75,7 @@ float conv_raw_result(adcc_channel_t chan, adc_conv_t to_what)
 		return 25.0;
 		break;
 	case C_CONV:
-		return((float) get_raw_result(chan) * C_SCALE) / 1000.0;
+		return(((float) get_raw_result(chan) * C_SCALE) - 2500.0)*C_A100 / 1000.0;
 		break;
 	case V_CONV:
 		return((float) get_raw_result(chan) * V_SCALE) / 1000.0;

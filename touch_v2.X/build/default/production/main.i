@@ -28451,7 +28451,7 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
-# 45 "./daq.h"
+# 46 "./daq.h"
 typedef enum {
  C_CONV,
  V_CONV,
@@ -28500,6 +28500,8 @@ V_data V = {
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 C_data C;
+
+float lp_filter(float, uint8_t, int8_t);
 
 
 
@@ -28584,8 +28586,8 @@ void main(void)
 
 
 
-   C.calc[C_BATT] = conv_raw_result(C_BATT, C_CONV);
-   C.calc[V_CC] = conv_raw_result(V_CC, V_CONV);
+   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 1);
+   C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, 0);
 
 
 
@@ -28627,4 +28629,24 @@ void main(void)
    }
   }
  }
+}
+
+float lp_filter(float new, uint8_t bn, int8_t slow)
+{
+ static float smooth[0xF], lp_speed, lp_x;
+
+ if (bn > 0xF)
+  return new;
+ if (slow) {
+  lp_speed = 0.066;
+ } else {
+  lp_speed = 0.250;
+ }
+ lp_x = ((smooth[bn]*100.0) + (((new * 100.0)-(smooth[bn]*100.0)) * lp_speed)) / 100.0;
+ smooth[bn] = lp_x;
+ if (slow == (-1)) {
+  lp_x = 0.0;
+  smooth[bn] = 0.0;
+ }
+ return lp_x;
 }
