@@ -32,6 +32,7 @@
 #define	MBMC_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
+#include "daq.h"
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
@@ -39,4 +40,5 @@ typedef struct C_data { // real calculated variables
 	float t_comp;
 } C_data;
 
+float lp_filter(float, uint8_t, int8_t);
 #endif

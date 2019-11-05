@@ -28142,25 +28142,6 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 60 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 61 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 406 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28180,6 +28161,25 @@ void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT1_InterruptHandler)(void);
 # 600 "./mcc_generated_files/ext_int.h"
 void INT1_DefaultInterruptHandler(void);
+# 61 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
 # 62 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/uart2.h" 1
@@ -28466,12 +28466,14 @@ float conv_raw_result(adcc_channel_t, adc_conv_t);
 # 117 "main.c" 2
 
 # 1 "./mbmc.h" 1
-# 36 "./mbmc.h"
+# 37 "./mbmc.h"
 typedef struct C_data {
  float calc[0xF];
  float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
  float t_comp;
 } C_data;
+
+float lp_filter(float, uint8_t, int8_t);
 # 118 "main.c" 2
 
 
@@ -28500,8 +28502,6 @@ V_data V = {
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 C_data C;
-
-float lp_filter(float, uint8_t, int8_t);
 
 
 
@@ -28629,24 +28629,4 @@ void main(void)
    }
   }
  }
-}
-
-float lp_filter(float new, uint8_t bn, int8_t slow)
-{
- static float smooth[0xF], lp_speed, lp_x;
-
- if (bn > 0xF)
-  return new;
- if (slow) {
-  lp_speed = 0.066;
- } else {
-  lp_speed = 0.250;
- }
- lp_x = ((smooth[bn]*100.0) + (((new * 100.0)-(smooth[bn]*100.0)) * lp_speed)) / 100.0;
- smooth[bn] = lp_x;
- if (slow == (-1)) {
-  lp_x = 0.0;
-  smooth[bn] = 0.0;
- }
- return lp_x;
 }
