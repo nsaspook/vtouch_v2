@@ -28563,8 +28563,8 @@ void main(void)
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
-   StartTimer(TMR_DISPLAY, 100);
-   StartTimer(TMR_ADC, 200);
+   StartTimer(TMR_DISPLAY, 250);
+   StartTimer(TMR_ADC, 500);
    StartTimer(TMR_INFO, 3000);
    StartTimer(TMR_FLIPPER, 1500);
    StartTimer(TMR_HELPDIS, 3000);
@@ -28593,7 +28593,7 @@ void main(void)
 
    clear_adc_scan();
    start_adc_scan();
-   StartTimer(TMR_ADC, 200);
+   StartTimer(TMR_ADC, 500);
   }
 
   if (V.ticks) {
@@ -28606,7 +28606,7 @@ void main(void)
    }
    sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
    sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
-   StartTimer(TMR_DISPLAY, 100);
+   StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
   }
 

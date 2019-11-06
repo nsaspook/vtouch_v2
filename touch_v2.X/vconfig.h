@@ -62,7 +62,7 @@ extern "C" {
 #define LDELAY	1000
 #define SDELAY	500
 #define BDELAY	300
-#define DDELAY	100 // display update spacing
+#define DDELAY	250 // display update spacing
 #define DFLIP	1500 // display info flipping spacing
 
 	/*
