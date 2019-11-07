@@ -38,6 +38,7 @@
 #define C_SCALE		1.25
 #define V_SCALE		8.250825
 #define C_A100		59.30
+#define C_A200		30.00
 #define C_OFFSET1	2493.0
 #define C_OFFSET2	2500.0
 
@@ -46,7 +47,8 @@
 #include "mcc_generated_files/pin_manager.h"
 
 typedef enum {
-	C_CONV,
+	C_CONV1,
+	C_CONV2,
 	V_CONV,
 	T_CONV,
 } adc_conv_t;

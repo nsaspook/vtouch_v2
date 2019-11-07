@@ -28451,9 +28451,10 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
-# 48 "./daq.h"
+# 49 "./daq.h"
 typedef enum {
- C_CONV,
+ C_CONV1,
+ C_CONV2,
  V_CONV,
  T_CONV,
 } adc_conv_t;
@@ -28586,8 +28587,16 @@ void main(void)
 
 
 
-   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
+   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV1), C_BATT, 0);
+   C.calc[C_PV] = lp_filter(conv_raw_result(C_PV, C_CONV2), C_PV, 0);
    C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, 0);
+   C.calc[V_BAT] = lp_filter(conv_raw_result(V_BAT, V_CONV), V_BAT, 0);
+   C.calc[V_PV] = lp_filter(conv_raw_result(V_PV, V_CONV), V_PV, 0);
+   C.calc[V_CBUS] = lp_filter(conv_raw_result(V_CBUS, V_CONV), V_CBUS, 0);
+   C.calc[V_BBAT] = lp_filter(conv_raw_result(V_BBAT, V_CONV), V_BBAT, 0);
+   C.calc[V_TEMP] = lp_filter(conv_raw_result(V_TEMP, V_CONV), V_TEMP, 0);
+   C.calc[V_INVERTER] = lp_filter(conv_raw_result(V_INVERTER, V_CONV), V_INVERTER, 0);
+   C.calc[channel_ANB5] = lp_filter(conv_raw_result(channel_ANB5, V_CONV), channel_ANB5, 0);
 
 
 

@@ -226,8 +226,16 @@ void main(void)
 			/*
 			 * download the system data variables
 			 */
-			C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, false);
+			C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV1), C_BATT, false);
+			C.calc[C_PV] = lp_filter(conv_raw_result(C_PV, C_CONV2), C_PV, false);
 			C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, false);
+			C.calc[V_BAT] = lp_filter(conv_raw_result(V_BAT, V_CONV), V_BAT, false);
+			C.calc[V_PV] = lp_filter(conv_raw_result(V_PV, V_CONV), V_PV, false);
+			C.calc[V_CBUS] = lp_filter(conv_raw_result(V_CBUS, V_CONV), V_CBUS, false);
+			C.calc[V_BBAT] = lp_filter(conv_raw_result(V_BBAT, V_CONV), V_BBAT, false);
+			C.calc[V_TEMP] = lp_filter(conv_raw_result(V_TEMP, V_CONV), V_TEMP, false);
+			C.calc[V_INVERTER] = lp_filter(conv_raw_result(V_INVERTER, V_CONV), V_INVERTER, false);
+			C.calc[channel_ANB5] = lp_filter(conv_raw_result(channel_ANB5, V_CONV), channel_ANB5, false);
 			/*
 			 * restart the conversion process
 			 */

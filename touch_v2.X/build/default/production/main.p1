@@ -104,38 +104,38 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 206:    StartTimer(TMR_DISPLAY, 250);
 [c E17094 0 1 2 3 4 5 6 7 8 9 10 11 12 .. ]
 [n E17094 APP_TIMERS TMR_INTERNAL TMR_ADC TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_FLIPPER TMR_COUNT  ]
-"54 ./daq.h
-[; ;./daq.h: 54: _Bool start_adc_scan(void);
+"56 ./daq.h
+[; ;./daq.h: 56: _Bool start_adc_scan(void);
 [v _start_adc_scan `(a ~T0 @X0 0 ef ]
 [v F17113 `(a ~T0 @X0 1 tf1`uc ]
 "31 ./timers.h
 [; ;./timers.h: 31: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
 [v _TimerDone `TF17113 ~T0 @X0 0 e ]
-"55 ./daq.h
-[; ;./daq.h: 55: _Bool check_adc_scan(void);
+"57 ./daq.h
+[; ;./daq.h: 57: _Bool check_adc_scan(void);
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
 "229 main.c
-[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
+[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV1), C_BATT, 0);
 [c E16625 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
 [n E16625 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
 "43 ./mbmc.h
 [; ;./mbmc.h: 43: float lp_filter(float, uint8_t, int8_t);
 [v _lp_filter `(f ~T0 @X0 0 ef3`f`uc`c ]
 "229 main.c
-[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
-[c E17151 0 1 2 .. ]
-[n E17151 . C_CONV V_CONV T_CONV  ]
-"58 ./daq.h
-[; ;./daq.h: 58: float conv_raw_result(adcc_channel_t, adc_conv_t);
+[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV1), C_BATT, 0);
+[c E17151 0 1 2 3 .. ]
+[n E17151 . C_CONV1 C_CONV2 V_CONV T_CONV  ]
+"60 ./daq.h
+[; ;./daq.h: 60: float conv_raw_result(adcc_channel_t, adc_conv_t);
 [v _conv_raw_result `(f ~T0 @X0 0 ef2`E16625`E17151 ]
-"56
-[; ;./daq.h: 56: void clear_adc_scan(void);
+"58
+[; ;./daq.h: 58: void clear_adc_scan(void);
 [v _clear_adc_scan `(v ~T0 @X0 0 ef ]
 "58 ./mydisplay.h
 [; ;./mydisplay.h: 58: D_CODES set_display_info(const D_CODES);
 [v _set_display_info `(E16986 ~T0 @X0 0 ef1`CE16986 ]
-"57 ./daq.h
-[; ;./daq.h: 57: adc_result_t get_raw_result(adcc_channel_t);
+"59 ./daq.h
+[; ;./daq.h: 59: adc_result_t get_raw_result(adcc_channel_t);
 [v _get_raw_result `(us ~T0 @X0 0 ef1`E16625 ]
 "57 ./mydisplay.h
 [; ;./mydisplay.h: 57: void check_help(_Bool);
@@ -2808,111 +2808,135 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ ! && != -> ( _TimerDone (1 -> . `E17094 1 `uc `i -> 0 `i != -> ( _check_adc_scan ..  `i -> 0 `i 2261  ]
 {
 "229
-[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV), C_BATT, 0);
+[; ;main.c: 229:    C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV1), C_BATT, 0);
 [e = *U + &U . _C 0 * -> . `E16625 0 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 0 . `E17151 0 -> . `E16625 0 `uc -> -> 0 `i `c ]
 "230
-[; ;main.c: 230:    C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, 0);
-[e = *U + &U . _C 0 * -> . `E16625 2 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 2 . `E17151 1 -> . `E16625 2 `uc -> -> 0 `i `c ]
+[; ;main.c: 230:    C.calc[C_PV] = lp_filter(conv_raw_result(C_PV, C_CONV2), C_PV, 0);
+[e = *U + &U . _C 0 * -> . `E16625 1 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 1 . `E17151 1 -> . `E16625 1 `uc -> -> 0 `i `c ]
+"231
+[; ;main.c: 231:    C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, 0);
+[e = *U + &U . _C 0 * -> . `E16625 2 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 2 . `E17151 2 -> . `E16625 2 `uc -> -> 0 `i `c ]
+"232
+[; ;main.c: 232:    C.calc[V_BAT] = lp_filter(conv_raw_result(V_BAT, V_CONV), V_BAT, 0);
+[e = *U + &U . _C 0 * -> . `E16625 3 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 3 . `E17151 2 -> . `E16625 3 `uc -> -> 0 `i `c ]
+"233
+[; ;main.c: 233:    C.calc[V_PV] = lp_filter(conv_raw_result(V_PV, V_CONV), V_PV, 0);
+[e = *U + &U . _C 0 * -> . `E16625 4 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 4 . `E17151 2 -> . `E16625 4 `uc -> -> 0 `i `c ]
 "234
-[; ;main.c: 234:    clear_adc_scan();
-[e ( _clear_adc_scan ..  ]
+[; ;main.c: 234:    C.calc[V_CBUS] = lp_filter(conv_raw_result(V_CBUS, V_CONV), V_CBUS, 0);
+[e = *U + &U . _C 0 * -> . `E16625 5 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 5 . `E17151 2 -> . `E16625 5 `uc -> -> 0 `i `c ]
 "235
-[; ;main.c: 235:    start_adc_scan();
-[e ( _start_adc_scan ..  ]
+[; ;main.c: 235:    C.calc[V_BBAT] = lp_filter(conv_raw_result(V_BBAT, V_CONV), V_BBAT, 0);
+[e = *U + &U . _C 0 * -> . `E16625 6 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 6 . `E17151 2 -> . `E16625 6 `uc -> -> 0 `i `c ]
 "236
-[; ;main.c: 236:    StartTimer(TMR_ADC, 500);
-[e ( _StartTimer (2 , -> . `E17094 1 `uc -> -> 500 `i `us ]
+[; ;main.c: 236:    C.calc[V_TEMP] = lp_filter(conv_raw_result(V_TEMP, V_CONV), V_TEMP, 0);
+[e = *U + &U . _C 0 * -> . `E16625 7 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 7 . `E17151 2 -> . `E16625 7 `uc -> -> 0 `i `c ]
 "237
-[; ;main.c: 237:   }
+[; ;main.c: 237:    C.calc[V_INVERTER] = lp_filter(conv_raw_result(V_INVERTER, V_CONV), V_INVERTER, 0);
+[e = *U + &U . _C 0 * -> . `E16625 8 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 8 . `E17151 2 -> . `E16625 8 `uc -> -> 0 `i `c ]
+"238
+[; ;main.c: 238:    C.calc[channel_ANB5] = lp_filter(conv_raw_result(channel_ANB5, V_CONV), channel_ANB5, 0);
+[e = *U + &U . _C 0 * -> . `E16625 9 `ux -> -> # *U &U . _C 0 `ui `ux ( _lp_filter (3 , , ( _conv_raw_result (2 , . `E16625 9 . `E17151 2 -> . `E16625 9 `uc -> -> 0 `i `c ]
+"242
+[; ;main.c: 242:    clear_adc_scan();
+[e ( _clear_adc_scan ..  ]
+"243
+[; ;main.c: 243:    start_adc_scan();
+[e ( _start_adc_scan ..  ]
+"244
+[; ;main.c: 244:    StartTimer(TMR_ADC, 500);
+[e ( _StartTimer (2 , -> . `E17094 1 `uc -> -> 500 `i `us ]
+"245
+[; ;main.c: 245:   }
 }
 [e :U 2261 ]
-"239
-[; ;main.c: 239:   if (V.ticks) {
+"247
+[; ;main.c: 247:   if (V.ticks) {
 [e $ ! != . _V 3 -> -> -> 0 `i `l `ul 2262  ]
 {
-"241
-[; ;main.c: 241:   }
+"249
+[; ;main.c: 249:   }
 }
 [e :U 2262 ]
-"243
-[; ;main.c: 243:   if (TimerDone(TMR_DISPLAY)) {
+"251
+[; ;main.c: 251:   if (TimerDone(TMR_DISPLAY)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17094 10 `uc `i -> 0 `i 2263  ]
 {
-"244
-[; ;main.c: 244:    if (TimerDone(TMR_HELPDIS)) {
+"252
+[; ;main.c: 252:    if (TimerDone(TMR_HELPDIS)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17094 9 `uc `i -> 0 `i 2264  ]
 {
-"245
-[; ;main.c: 245:     set_display_info(DIS_STR);
+"253
+[; ;main.c: 253:     set_display_info(DIS_STR);
 [e ( _set_display_info (1 . `E16986 0 ]
-"246
-[; ;main.c: 246:    }
+"254
+[; ;main.c: 254:    }
 }
 [e :U 2264 ]
-"247
-[; ;main.c: 247:    sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
+"255
+[; ;main.c: 255:    sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
 [e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 9C -> ( _get_raw_result (1 . `E16625 0 `ui -> *U + &U . _C 0 * -> . `E16625 0 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
-"248
-[; ;main.c: 248:    sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
+"256
+[; ;main.c: 256:    sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
 [e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 10C -> ( _get_raw_result (1 . `E16625 2 `ui -> *U + &U . _C 0 * -> . `E16625 2 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
-"249
-[; ;main.c: 249:    StartTimer(TMR_DISPLAY, 250);
+"257
+[; ;main.c: 257:    StartTimer(TMR_DISPLAY, 250);
 [e ( _StartTimer (2 , -> . `E17094 10 `uc -> -> 250 `i `us ]
-"250
-[; ;main.c: 250:    update_lcd(0);
+"258
+[; ;main.c: 258:    update_lcd(0);
 [e ( _update_lcd (1 -> -> 0 `i `uc ]
-"251
-[; ;main.c: 251:   }
+"259
+[; ;main.c: 259:   }
 }
 [e :U 2263 ]
-"256
-[; ;main.c: 256:   check_help(V.flipper);
+"264
+[; ;main.c: 264:   check_help(V.flipper);
 [e ( _check_help (1 . _V 40 ]
-"261
-[; ;main.c: 261:   if (V.set_sequ) {
+"269
+[; ;main.c: 269:   if (V.set_sequ) {
 [e $ ! != -> . _V 26 `i -> 0 `i 2265  ]
 {
-"262
-[; ;main.c: 262:    if (TimerDone(TMR_INFO)) {
+"270
+[; ;main.c: 270:    if (TimerDone(TMR_INFO)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17094 7 `uc `i -> 0 `i 2266  ]
 {
-"263
-[; ;main.c: 263:     V.set_sequ = 0;
+"271
+[; ;main.c: 271:     V.set_sequ = 0;
 [e = . _V 26 -> -> 0 `i `uc ]
-"264
-[; ;main.c: 264:     set_vterm(0);
+"272
+[; ;main.c: 272:     set_vterm(0);
 [e ( _set_vterm (1 -> -> 0 `i `uc ]
-"265
-[; ;main.c: 265:     update_lcd(0);
+"273
+[; ;main.c: 273:     update_lcd(0);
 [e ( _update_lcd (1 -> -> 0 `i `uc ]
-"266
-[; ;main.c: 266:    } else {
+"274
+[; ;main.c: 274:    } else {
 }
 [e $U 2267  ]
 [e :U 2266 ]
 {
-"267
-[; ;main.c: 267:     set_vterm(2);
+"275
+[; ;main.c: 275:     set_vterm(2);
 [e ( _set_vterm (1 -> -> 2 `i `uc ]
-"268
-[; ;main.c: 268:     update_lcd(2);
+"276
+[; ;main.c: 276:     update_lcd(2);
 [e ( _update_lcd (1 -> -> 2 `i `uc ]
-"269
-[; ;main.c: 269:    }
+"277
+[; ;main.c: 277:    }
 }
 [e :U 2267 ]
-"270
-[; ;main.c: 270:   }
+"278
+[; ;main.c: 278:   }
 }
 [e :U 2265 ]
-"271
-[; ;main.c: 271:  }
+"279
+[; ;main.c: 279:  }
 }
 [e :U 2251 ]
 [e $U 2252  ]
 [e :U 2253 ]
-"272
-[; ;main.c: 272: }
+"280
+[; ;main.c: 280: }
 [e :UE 2240 ]
 }
 [p f _sprintf 8757376 ]
