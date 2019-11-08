@@ -34,7 +34,7 @@
  * adc channel configuration
  */
 #define LAST_ADC_CHAN	0XD
-#define ADC_BUFFER_SIZE	16
+#define ADC_BUFFER_SIZE	16 // MUST BE AT LEAST 1
 #define ADC_SCAN_SPEED	500 // sample timer speed in ms
 #define ADC_SCAN_CHAN	0b0011110001110111 // convert these analog ports bitmap
 /*
@@ -46,7 +46,7 @@
 /*
  * temp sensor configuration
  */
-#define NUM_T_SENSORS	2
+#define NUM_T_SENSORS	1
 #define ADC_T_CHAN	0b0000100000000000 // 5 volt temp sensor bitmap
 #define ADC_T_CHAN_TYPE	0b0000100000000000 // type bitmap
 

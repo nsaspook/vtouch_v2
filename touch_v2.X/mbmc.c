@@ -30,9 +30,9 @@ float lp_filter(float new, uint8_t bn, int8_t slow)
 
 void convert_adc_data(void)
 {
-	uint8_t i;
+	uint8_t i = 0;
 
-	for (i = 0; i < ADC_BUFFER_SIZE; i++) {
+	do {
 		C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, false);
-	}
+	} while (++i < ADC_BUFFER_SIZE);
 }
