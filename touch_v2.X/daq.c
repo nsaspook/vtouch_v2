@@ -5,9 +5,11 @@
  */
 
 #include "daq.h"
+#include <math.h>
 
 typedef struct R_data { // internal variables
 	adc_result_t raw_adc[ADC_BUFFER_SIZE];
+	float c_offset[NUM_C_SENSORS];
 	uint8_t scan_index;
 	uint16_t scan_select;
 	bool done;
@@ -16,6 +18,8 @@ typedef struct R_data { // internal variables
 static volatile R_data R = {
 	.done = false,
 	.scan_index = 0,
+	.c_offset[0] = C_OFFSET0,
+	.c_offset[1] = C_OFFSET1,
 };
 
 static void adc_int_handler(void);
@@ -42,7 +46,7 @@ bool start_adc_scan(void)
 }
 
 /*
- * check done flag
+ * check scan done flag
  */
 bool check_adc_scan(void)
 {
@@ -50,7 +54,7 @@ bool check_adc_scan(void)
 }
 
 /*
- * clear done flag
+ * clear scan done flag
  */
 void clear_adc_scan(void)
 {
@@ -70,18 +74,27 @@ adc_result_t get_raw_result(adcc_channel_t index)
  */
 float conv_raw_result(adcc_channel_t chan, adc_conv_t to_what)
 {
+	if (!(ADC_SCAN_CHAN >> chan & 0x1))
+		return NAN;
+
 	switch (to_what) {
-	case T_CONV:
-		return 25.0;
+	case CONV:
+		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
+			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
+				return(((float) get_raw_result(chan) * C_SCALE) - R.c_offset[1]) * C_A200 / 1000.0;
+			} else {
+				return(((float) get_raw_result(chan) * C_SCALE) - R.c_offset[0]) * C_A100 / 1000.0;
+			}
+		} else {
+			if (ADC_T_CHAN >> chan & 0x1) { // temp conversion
+				return 25.0; // filler until sensor is selected
+			} else { // voltage conversion
+				return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+			}
+		}
 		break;
-	case C_CONV1:
-		return(((float) get_raw_result(chan) * C_SCALE) - C_OFFSET1) * C_A100 / 1000.0;
-		break;
-	case C_CONV2:
-		return(((float) get_raw_result(chan) * C_SCALE) - C_OFFSET2) * C_A200 / 1000.0;
-		break;
-	case V_CONV:
-		return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+	case O_CONV:
+		return((float) get_raw_result(chan) * C_SCALE) / 1000.0;
 		break;
 	default:
 		return 0.0;
@@ -113,7 +126,7 @@ static void adc_int_t_handler(void)
 			DEBUG1_SetLow();
 			return;
 		}
-	} while (!((R.scan_select >> R.scan_index) &0x01)); // check for analog port bit
+	} while (!((R.scan_select >> R.scan_index) &0x1)); // check for analog port bit
 	ADCC_StartConversion(R.scan_index & 0xf);
 	DEBUG1_Toggle();
 }

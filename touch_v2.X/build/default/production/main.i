@@ -28312,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 77 "./vconfig.h"
+# 78 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28451,12 +28451,10 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
-# 49 "./daq.h"
+# 67 "./daq.h"
 typedef enum {
- C_CONV1,
- C_CONV2,
- V_CONV,
- T_CONV,
+ CONV,
+ O_CONV,
 } adc_conv_t;
 
 _Bool start_adc_scan(void);
@@ -28557,10 +28555,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.8");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.9");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.8");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.9");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28587,16 +28585,16 @@ void main(void)
 
 
 
-   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, C_CONV1), C_BATT, 0);
-   C.calc[C_PV] = lp_filter(conv_raw_result(C_PV, C_CONV2), C_PV, 0);
-   C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, V_CONV), V_CC, 0);
-   C.calc[V_BAT] = lp_filter(conv_raw_result(V_BAT, V_CONV), V_BAT, 0);
-   C.calc[V_PV] = lp_filter(conv_raw_result(V_PV, V_CONV), V_PV, 0);
-   C.calc[V_CBUS] = lp_filter(conv_raw_result(V_CBUS, V_CONV), V_CBUS, 0);
-   C.calc[V_BBAT] = lp_filter(conv_raw_result(V_BBAT, V_CONV), V_BBAT, 0);
-   C.calc[V_TEMP] = lp_filter(conv_raw_result(V_TEMP, V_CONV), V_TEMP, 0);
-   C.calc[V_INVERTER] = lp_filter(conv_raw_result(V_INVERTER, V_CONV), V_INVERTER, 0);
-   C.calc[channel_ANB5] = lp_filter(conv_raw_result(channel_ANB5, V_CONV), channel_ANB5, 0);
+   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, CONV), C_BATT, 0);
+   C.calc[C_PV] = lp_filter(conv_raw_result(C_PV, CONV), C_PV, 0);
+   C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, CONV), V_CC, 0);
+   C.calc[V_BAT] = lp_filter(conv_raw_result(V_BAT, CONV), V_BAT, 0);
+   C.calc[V_PV] = lp_filter(conv_raw_result(V_PV, CONV), V_PV, 0);
+   C.calc[V_CBUS] = lp_filter(conv_raw_result(V_CBUS, CONV), V_CBUS, 0);
+   C.calc[V_BBAT] = lp_filter(conv_raw_result(V_BBAT, CONV), V_BBAT, 0);
+   C.calc[V_TEMP] = lp_filter(conv_raw_result(V_TEMP, CONV), V_TEMP, 0);
+   C.calc[V_INVERTER] = lp_filter(conv_raw_result(V_INVERTER, CONV), V_INVERTER, 0);
+   C.calc[channel_ANB5] = lp_filter(conv_raw_result(channel_ANB5, CONV), channel_ANB5, 0);
 
 
 
