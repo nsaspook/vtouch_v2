@@ -41,4 +41,5 @@ typedef struct C_data { // real calculated variables
 } C_data;
 
 float lp_filter(float, uint8_t, int8_t);
+void convert_adc_data(void);
 #endif

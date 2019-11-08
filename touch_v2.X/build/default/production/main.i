@@ -28351,16 +28351,13 @@ void PMD_Initialize(void);
  typedef struct V_data {
   UI_STATES ui_state;
   char buf[64], info[64];
-  uint32_t ticks, systemb;
+  uint32_t ticks;
   int32_t testing;
-  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
+  uint8_t error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
-  failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+  uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
+  uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count;
   volatile uint8_t ticker;
   _Bool flipper;
  } V_data;
@@ -28467,29 +28464,23 @@ float conv_raw_result(adcc_channel_t, adc_conv_t);
 # 1 "./mbmc.h" 1
 # 37 "./mbmc.h"
 typedef struct C_data {
- float calc[0xF];
+ float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
  float t_comp;
 } C_data;
 
 float lp_filter(float, uint8_t, int8_t);
+void convert_adc_data(void);
 # 118 "main.c" 2
 
 
-extern struct spi_link_type spi_link;
-
 V_data V = {
- .uart = 1,
  .ticker = 45,
  .checksum_error = 0,
  .all_errors = 0,
- .timer_error = 0,
  .debug = 0,
- .queue = 0,
  .stack = 0,
- .sid = 1,
  .help_id = 0,
- .ping_count = 0,
  .sequences = 0,
  .set_sequ = 0,
 };
@@ -28585,16 +28576,7 @@ void main(void)
 
 
 
-   C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, CONV), C_BATT, 0);
-   C.calc[C_PV] = lp_filter(conv_raw_result(C_PV, CONV), C_PV, 0);
-   C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, CONV), V_CC, 0);
-   C.calc[V_BAT] = lp_filter(conv_raw_result(V_BAT, CONV), V_BAT, 0);
-   C.calc[V_PV] = lp_filter(conv_raw_result(V_PV, CONV), V_PV, 0);
-   C.calc[V_CBUS] = lp_filter(conv_raw_result(V_CBUS, CONV), V_CBUS, 0);
-   C.calc[V_BBAT] = lp_filter(conv_raw_result(V_BBAT, CONV), V_BBAT, 0);
-   C.calc[V_TEMP] = lp_filter(conv_raw_result(V_TEMP, CONV), V_TEMP, 0);
-   C.calc[V_INVERTER] = lp_filter(conv_raw_result(V_INVERTER, CONV), V_INVERTER, 0);
-   C.calc[channel_ANB5] = lp_filter(conv_raw_result(channel_ANB5, CONV), channel_ANB5, 0);
+   convert_adc_data();
 
 
 

@@ -34,7 +34,7 @@
  * adc channel configuration
  */
 #define LAST_ADC_CHAN	0XD
-#define ADC_BUFFER_SIZE	0xF
+#define ADC_BUFFER_SIZE	16
 #define ADC_SCAN_SPEED	500 // sample timer speed in ms
 #define ADC_SCAN_CHAN	0b0011110001110111 // convert these analog ports bitmap
 /*

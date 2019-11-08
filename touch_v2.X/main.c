@@ -117,20 +117,13 @@ typedef signed long long int24_t;
 #include "daq.h"
 #include "mbmc.h"
 
-extern struct spi_link_type spi_link;
-
 V_data V = {
-	.uart = 1,
 	.ticker = 45,
 	.checksum_error = 0,
 	.all_errors = 0,
-	.timer_error = 0,
 	.debug = false,
-	.queue = false,
 	.stack = false, // 0 no messages, 1-10 messages in queue
-	.sid = 1,
 	.help_id = 0,
-	.ping_count = 0,
 	.sequences = 0,
 	.set_sequ = false,
 };
@@ -226,16 +219,7 @@ void main(void)
 			/*
 			 * download the system data variables
 			 */
-			C.calc[C_BATT] = lp_filter(conv_raw_result(C_BATT, CONV), C_BATT, false);
-			C.calc[C_PV] = lp_filter(conv_raw_result(C_PV, CONV), C_PV, false);
-			C.calc[V_CC] = lp_filter(conv_raw_result(V_CC, CONV), V_CC, false);
-			C.calc[V_BAT] = lp_filter(conv_raw_result(V_BAT, CONV), V_BAT, false);
-			C.calc[V_PV] = lp_filter(conv_raw_result(V_PV, CONV), V_PV, false);
-			C.calc[V_CBUS] = lp_filter(conv_raw_result(V_CBUS, CONV), V_CBUS, false);
-			C.calc[V_BBAT] = lp_filter(conv_raw_result(V_BBAT, CONV), V_BBAT, false);
-			C.calc[V_TEMP] = lp_filter(conv_raw_result(V_TEMP, CONV), V_TEMP, false);
-			C.calc[V_INVERTER] = lp_filter(conv_raw_result(V_INVERTER, CONV), V_INVERTER, false);
-			C.calc[channel_ANB5] = lp_filter(conv_raw_result(channel_ANB5, CONV), channel_ANB5, false);
+			convert_adc_data();
 			/*
 			 * restart the conversion process
 			 */
