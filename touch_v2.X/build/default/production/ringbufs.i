@@ -27482,7 +27482,7 @@ void PIN_MANAGER_Initialize (void);
 # 20 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 21 "./vconfig.h" 2
-# 78 "./vconfig.h"
+# 79 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27515,6 +27515,7 @@ void PIN_MANAGER_Initialize (void);
   UI_STATE_HOST,
   UI_STATE_DEBUG,
   UI_STATE_LOG,
+  UI_STATE_MON,
   UI_STATE_ERROR
  } UI_STATES;
 
@@ -27530,6 +27531,7 @@ void PIN_MANAGER_Initialize (void);
   terminal_type response;
   volatile uint8_t ticker;
   _Bool flipper;
+  volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
  typedef struct V_help {

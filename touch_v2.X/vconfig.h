@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.9"
+#define VER	"0.91"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -30,6 +30,7 @@ extern "C" {
 	 * 0.7 system data conversion from ADC data
 	 * 0.8 basic current and voltage tracking
 	 * 0.9 auto convert bitmaps
+	 * 0.91 start adding 32 utc time code
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -107,6 +108,7 @@ extern "C" {
 		UI_STATE_HOST,
 		UI_STATE_DEBUG,
 		UI_STATE_LOG,
+		UI_STATE_MON,
 		UI_STATE_ERROR
 	} UI_STATES;
 
@@ -122,6 +124,7 @@ extern "C" {
 		terminal_type response;
 		volatile uint8_t ticker;
 		bool flipper;
+		volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
 	} V_data;
 
 	typedef struct V_help {

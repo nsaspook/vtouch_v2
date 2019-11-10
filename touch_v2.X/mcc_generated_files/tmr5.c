@@ -197,6 +197,7 @@ void TMR5_DefaultInterruptHandler(void)
 	// add your TMR5 interrupt custom code
 	// or set custom function using TMR5_SetInterruptHandler()
 	SLED = (uint8_t) ~SLED;
+	V.timerint_count++;
 }
 
 /**

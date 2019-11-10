@@ -25,4 +25,5 @@ timers.h  \
 mconfig.h  \
 mydisplay.h  \
 daq.h  \
+tests.h  \
 mbmc.h 

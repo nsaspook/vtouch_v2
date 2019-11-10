@@ -40,8 +40,12 @@ bool start_adc_scan(void)
 	ADCC_SetADIInterruptHandler(adc_int_handler);
 	ADCC_SetADTIInterruptHandler(adc_int_t_handler);
 	ADCC_StartConversion(R.scan_index & 0xf);
+#ifdef DEBUG_DAQ1
 	DEBUG1_SetHigh();
+#endif
+#ifdef DEBUG_DAQ2
 	DEBUG2_SetHigh();
+#endif
 	return true;
 }
 
@@ -108,7 +112,9 @@ float conv_raw_result(adcc_channel_t chan, adc_conv_t to_what)
  */
 static void adc_int_handler(void)
 {
+#ifdef DEBUG_DAQ2
 	DEBUG2_Toggle();
+#endif
 }
 
 /*
@@ -123,10 +129,15 @@ static void adc_int_t_handler(void)
 	do {
 		if (++R.scan_index > LAST_ADC_CHAN) {
 			R.done = true;
+#ifdef DEBUG_DAQ1
 			DEBUG1_SetLow();
+#endif
 			return;
 		}
 	} while (!((R.scan_select >> R.scan_index) &0x1)); // check for analog port bit
+	ADCC_DischargeSampleCapacitor(); // short ADC sample cap before next channel sampling
 	ADCC_StartConversion(R.scan_index & 0xf);
+#ifdef DEBUG_DAQ1
 	DEBUG1_Toggle();
+#endif
 }

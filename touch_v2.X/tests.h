@@ -28,51 +28,17 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef MBMC_H
-#define	MBMC_H
+#ifndef TESTS_H
+#define	TESTS_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
-#include <time.h>
-#include "daq.h"
 
-#define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
+#define DEBUG_MBMC	// global application debug switch
 
-typedef struct C_data { // real calculated variables
-	float calc[ADC_BUFFER_SIZE];
-	float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
-	float t_comp;
-} C_data;
-
-typedef struct P_data {
-	uint8_t BCHECK : 1;
-	uint8_t TIMERFLAG : 1;
-	uint8_t PRIPOWEROK : 1;
-	uint8_t FORCEOUT : 1;
-	uint8_t WORKERFLAG : 1;
-	uint8_t CHARGEROVERRIDE : 1;
-	uint8_t FAILSAFE : 1;
-	uint8_t MORNING_HELP : 1;
-	uint8_t SYSTEM_STABLE : 1;
-	uint8_t HOLD_PROC : 1;
-	uint8_t POWER_UNSTABLE : 1;
-	uint8_t B2 : 1;
-	uint8_t B3 : 1;
-	uint8_t B4 : 1;
-	uint8_t SET_BATT : 1;
-	uint8_t BLANK_LCD : 1;
-	uint8_t STATIC_SOC : 1;
-	uint8_t SET_CEF : 1;
-	uint8_t D_UPDATE : 1;
-	uint8_t GLITCH_CHECK : 1;
-	uint8_t FORCEDAY : 1;
-	uint8_t COOLING : 1;
-	uint8_t UPDATE_EEP : 1;
-	uint8_t RESET_ZEROS : 1;
-	uint8_t SAVE_DAILY : 1;
-	uint8_t SETBATT_SOC : 1;
-	uint8_t SYNCSOC : 1;
-} P_data_t;
-
-float lp_filter(float, uint8_t, int8_t);
-void convert_adc_data(void);
+#ifdef DEBUG_MBMC
+#define DEBUG_DAQ1 // daq debug switches
+#define DEBUG_DAQ2
 #endif
+
+#endif	/* XC_HEADER_TEMPLATE_H */
+

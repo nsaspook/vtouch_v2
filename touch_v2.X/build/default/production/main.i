@@ -28312,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 78 "./vconfig.h"
+# 79 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28345,6 +28345,7 @@ void PMD_Initialize(void);
   UI_STATE_HOST,
   UI_STATE_DEBUG,
   UI_STATE_LOG,
+  UI_STATE_MON,
   UI_STATE_ERROR
  } UI_STATES;
 
@@ -28360,6 +28361,7 @@ void PMD_Initialize(void);
   terminal_type response;
   volatile uint8_t ticker;
   _Bool flipper;
+  volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
  typedef struct V_help {
@@ -28448,7 +28450,10 @@ D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
 
 # 1 "./daq.h" 1
-# 67 "./daq.h"
+# 33 "./daq.h"
+# 1 "./tests.h" 1
+# 34 "./daq.h" 2
+# 69 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28462,12 +28467,143 @@ float conv_raw_result(adcc_channel_t, adc_conv_t);
 # 117 "main.c" 2
 
 # 1 "./mbmc.h" 1
-# 37 "./mbmc.h"
+# 35 "./mbmc.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 1 3
+# 33 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 76 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long long time_t;
+# 293 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef void * timer_t;
+
+
+
+
+typedef int clockid_t;
+
+
+
+
+typedef long clock_t;
+# 313 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+struct timespec { time_t tv_sec; long tv_nsec; };
+
+
+
+
+
+typedef int pid_t;
+# 34 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 2 3
+
+
+
+
+
+
+struct tm {
+ int tm_sec;
+ int tm_min;
+ int tm_hour;
+ int tm_mday;
+ int tm_mon;
+ int tm_year;
+ int tm_wday;
+ int tm_yday;
+ int tm_isdst;
+ long __tm_gmtoff;
+ const char *__tm_zone;
+};
+
+clock_t clock (void);
+time_t time (time_t *);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
+size_t strftime (char *restrict, size_t, const char *restrict, const struct tm *restrict);
+struct tm *gmtime (const time_t *);
+struct tm *localtime (const time_t *);
+char *asctime (const struct tm *);
+char *ctime (const time_t *);
+int timespec_get(struct timespec *, int);
+# 73 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+size_t strftime_l (char * restrict, size_t, const char * restrict, const struct tm * restrict, locale_t);
+
+struct tm *gmtime_r (const time_t *restrict, struct tm *restrict);
+struct tm *localtime_r (const time_t *restrict, struct tm *restrict);
+char *asctime_r (const struct tm *restrict, char *restrict);
+char *ctime_r (const time_t *, char *);
+
+void tzset (void);
+
+struct itimerspec {
+ struct timespec it_interval;
+ struct timespec it_value;
+};
+# 102 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+int nanosleep (const struct timespec *, struct timespec *);
+int clock_getres (clockid_t, struct timespec *);
+int clock_gettime (clockid_t, struct timespec *);
+int clock_settime (clockid_t, const struct timespec *);
+int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
+int clock_getcpuclockid (pid_t, clockid_t *);
+
+struct sigevent;
+int timer_create (clockid_t, struct sigevent *restrict, timer_t *restrict);
+int timer_delete (timer_t);
+int timer_settime (timer_t, int, const struct itimerspec *restrict, struct itimerspec *restrict);
+int timer_gettime (timer_t, struct itimerspec *);
+int timer_getoverrun (timer_t);
+
+extern char *tzname[2];
+
+
+
+
+
+char *strptime (const char *restrict, const char *restrict, struct tm *restrict);
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+struct tm *getdate (const char *);
+# 36 "./mbmc.h" 2
+
+
+
+
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
  float t_comp;
 } C_data;
+
+typedef struct P_data {
+ uint8_t BCHECK : 1;
+ uint8_t TIMERFLAG : 1;
+ uint8_t PRIPOWEROK : 1;
+ uint8_t FORCEOUT : 1;
+ uint8_t WORKERFLAG : 1;
+ uint8_t CHARGEROVERRIDE : 1;
+ uint8_t FAILSAFE : 1;
+ uint8_t MORNING_HELP : 1;
+ uint8_t SYSTEM_STABLE : 1;
+ uint8_t HOLD_PROC : 1;
+ uint8_t POWER_UNSTABLE : 1;
+ uint8_t B2 : 1;
+ uint8_t B3 : 1;
+ uint8_t B4 : 1;
+ uint8_t SET_BATT : 1;
+ uint8_t BLANK_LCD : 1;
+ uint8_t STATIC_SOC : 1;
+ uint8_t SET_CEF : 1;
+ uint8_t D_UPDATE : 1;
+ uint8_t GLITCH_CHECK : 1;
+ uint8_t FORCEDAY : 1;
+ uint8_t COOLING : 1;
+ uint8_t UPDATE_EEP : 1;
+ uint8_t RESET_ZEROS : 1;
+ uint8_t SAVE_DAILY : 1;
+ uint8_t SETBATT_SOC : 1;
+ uint8_t SYNCSOC : 1;
+} P_data_t;
 
 float lp_filter(float, uint8_t, int8_t);
 void convert_adc_data(void);
@@ -28483,6 +28619,9 @@ V_data V = {
  .help_id = 0,
  .sequences = 0,
  .set_sequ = 0,
+ .highint_count = 0,
+ .lowint_count = 0,
+ .timerint_count = 0,
 };
 
 
@@ -28492,6 +28631,8 @@ V_data V = {
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 C_data C;
+
+extern volatile struct P_data P;
 
 
 
@@ -28546,10 +28687,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.9");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.91");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.9");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.91");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28565,6 +28706,9 @@ void main(void)
   case UI_STATE_HOST:
    break;
   case UI_STATE_LOG:
+   break;
+  case UI_STATE_MON:
+   P.SYSTEM_STABLE = 1;
    break;
   case UI_STATE_ERROR:
   default:
@@ -28593,8 +28737,9 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
-   sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
-   sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
+   sprintf(get_vterm_ptr(0, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
+   sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_PV), C.calc[C_PV]);
+   sprintf(get_vterm_ptr(2, 0), "%d %2.2f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
    StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
   }

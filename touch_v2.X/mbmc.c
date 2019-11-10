@@ -2,6 +2,12 @@
 
 extern C_data C;
 
+struct tm t_mbmc; // don't use the xc8 clock function
+volatile uint32_t utctime = 0; // utctime set from remote ntp server
+volatile struct P_data P = {
+	.SYSTEM_STABLE = false,
+};
+
 /*
  * floating point low pass filter, 
  * slow/fast select, use (-1) to zero buffer channel and return new

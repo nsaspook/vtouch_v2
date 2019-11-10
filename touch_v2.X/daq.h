@@ -30,6 +30,8 @@
 #ifndef DAQ_H
 #define	DAQ_H
 
+#include "tests.h"
+
 /*
  * adc channel configuration
  */

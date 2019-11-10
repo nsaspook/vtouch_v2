@@ -1122,7 +1122,39 @@ static int stoa(FILE *fp, char *s)
 
     return l;
 }
-# 623 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+
+
+
+static int utoa(FILE *fp, unsigned long long d)
+{
+    int i, p, w;
+    unsigned long long n;
+
+
+    if (!(prec < 0)) {
+        flags &= ~(1 << 1);
+    }
+    p = (0 < prec) ? prec : 1;
+    w = width;
+
+
+    n = d;
+    i = sizeof(dbuf) - 1;
+    dbuf[i] = '\0';
+    while (i && (n || (0 < p) || ((0 < w) && (flags & (1 << 1))))) {
+        --i;
+        dbuf[i] = '0' + (n % 10);
+        --p;
+        --w;
+        n = n / 10;
+    }
+
+
+    return pad(fp, &dbuf[i], w);
+}
+
+
+
 static int xtoa(FILE *fp, unsigned long long d, char x)
 {
     int c, i, p, w;
@@ -1241,6 +1273,17 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
             return dtoa(fp, ll);
         }
+
+
+
+        if (!strncmp(*fmt, "ld", ((sizeof("ld")/sizeof("ld"[0]))-1)) || !strncmp(*fmt, "li", ((sizeof("li")/sizeof("li"[0]))-1))) {
+
+
+            *fmt += ((sizeof("ld")/sizeof("ld"[0]))-1);
+            ll = (long long)(*(long *)__va_arg(*(long **)ap, (long)0));
+
+            return dtoa(fp, ll);
+        }
 # 920 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
         if (ct[0] == 'f') {
 
@@ -1270,12 +1313,42 @@ static int vfpfcnvrt(FILE *fp, char *fmt[], va_list ap)
 
             return stoa(fp, cp);
         }
+# 1182 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
+        if (*fmt[0] == 'u') {
+
+            ++*fmt;
+            llu = (unsigned long long)(*(unsigned int *)__va_arg(*(unsigned int **)ap, (unsigned int)0));
+
+            return utoa(fp, llu);
+        }
+
+
+
+        if (!strncmp(*fmt, "lu", ((sizeof("lu")/sizeof("lu"[0]))-1))) {
+
+            *fmt += ((sizeof("lu")/sizeof("lu"[0]))-1);
+            llu = (unsigned long long)(*(unsigned long *)__va_arg(*(unsigned long **)ap, (unsigned long)0));
+
+            return utoa(fp, llu);
+        }
 # 1274 "/opt/microchip/xc8/v2.10/pic/sources/c99/common/doprnt.c"
         if ((*fmt[0] == 'x') || (*fmt[0] == 'X')) {
 
             c = (*fmt)[0];
             ++*fmt;
             llu = (unsigned long long)(*(unsigned int *)__va_arg(*(unsigned int **)ap, (unsigned int)0));
+
+            return xtoa(fp, llu, c);
+        }
+
+
+
+        if (!strncmp(*fmt, "lx", ((sizeof("lx")/sizeof("lx"[0]))-1)) || !strncmp(*fmt, "lX", ((sizeof("lX")/sizeof("lX"[0]))-1))) {
+
+
+            c = (*fmt)[1];
+            *fmt += ((sizeof("lx")/sizeof("lx"[0]))-1);
+            llu = (unsigned long long)(*(unsigned long *)__va_arg(*(unsigned long **)ap, (unsigned long)0));
 
             return xtoa(fp, llu, c);
         }

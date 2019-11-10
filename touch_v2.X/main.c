@@ -126,6 +126,9 @@ V_data V = {
 	.help_id = 0,
 	.sequences = 0,
 	.set_sequ = false,
+	.highint_count = 0,
+	.lowint_count = 0,
+	.timerint_count = 0,
 };
 
 /*
@@ -135,6 +138,8 @@ V_data V = {
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 C_data C;
+
+extern volatile struct P_data P;
 
 /*
  * Main application
@@ -205,9 +210,12 @@ void main(void)
 			start_adc_scan();
 
 			break;
-		case UI_STATE_HOST: //slave
+		case UI_STATE_HOST:
 			break;
-		case UI_STATE_LOG: // monitor
+		case UI_STATE_LOG:
+			break;
+		case UI_STATE_MON: // monitor
+			P.SYSTEM_STABLE = true;
 			break;
 		case UI_STATE_ERROR:
 		default:
@@ -236,8 +244,9 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
-			sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
-			sprintf(get_vterm_ptr(2, 0), "%d %2.2f   #", get_raw_result(V_CC), C.calc[V_CC]);
+			sprintf(get_vterm_ptr(0, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
+			sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_PV), C.calc[C_PV]);
+			sprintf(get_vterm_ptr(2, 0), "%d %2.2f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			update_lcd(0);
 		}
