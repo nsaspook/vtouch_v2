@@ -253,7 +253,7 @@ TMR_DISPLAY 10
 TMR_FLIPPER 11
 TMR_COUNT 12
 ]
-"42 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
+"43 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [e E16136 . `uc
 C_BATT 0
 C_PV 1
@@ -271,7 +271,7 @@ channel_DAC1 61
 channel_FVR_Buffer1 62
 channel_FVR_Buffer2 63
 ]
-"79
+"80
 [e E16198 . `uc
 CONV 0
 O_CONV 1
@@ -408,17 +408,17 @@ O_CONV 1
 [v ___xxtofl __xxtofl `R(d  1 e 4 0 ]
 "33 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _start_adc_scan start_adc_scan `R(a  1 e 1 0 ]
-"55
+"56
 [v _check_adc_scan check_adc_scan `R(a  1 e 1 0 ]
-"63
+"64
 [v _clear_adc_scan clear_adc_scan `R(v  1 e 1 0 ]
-"71
+"72
 [v _get_raw_result get_raw_result `R(us  1 e 2 0 ]
-"79
+"80
 [v _conv_raw_result conv_raw_result `R(f  1 e 4 0 ]
-"113
+"114
 [v _adc_int_handler adc_int_handler `R(v  1 s 1 adc_int_handler ]
-"123
+"124
 [v _adc_int_t_handler adc_int_t_handler `R(v  1 s 1 adc_int_t_handler ]
 "22 /root/MPLABXProjects/vtouch_v2/touch_v2.X/eadog.c
 [v _wdtdelay wdtdelay `R(v  1 e 1 0 ]
@@ -1636,13 +1636,18 @@ O_CONV 1
 "33 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _start_adc_scan start_adc_scan `R(a  1 e 1 0 ]
 {
-"50
+"51
 } 0
 "128 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/adcc.c
 [v _ADCC_StartConversion ADCC_StartConversion `R(v  1 e 1 0 ]
 {
 [v _channel channel `E16136  1 p 1 -1 ]
 "138
+} 0
+"189
+[v _ADCC_DischargeSampleCapacitor ADCC_DischargeSampleCapacitor `R(v  1 e 1 0 ]
+{
+"193
 } 0
 "10 /opt/microchip/xc8/v2.10/pic/sources/c99/common/rand.c
 [v _srand srand `R(v  1 e 1 0 ]
@@ -1706,12 +1711,12 @@ O_CONV 1
 [v lp_filter@smooth smooth `[16]f  1 s 64 smooth ]
 "35
 } 4
-"79 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
+"80 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _conv_raw_result conv_raw_result `R(f  1 e 4 0 ]
 {
 [v _chan chan `E16136  1 p 1 -1 ]
 [v _to_what to_what `E16198  1 p 1 -2 ]
-"108
+"109
 } 0
 "4 /opt/microchip/xc8/v2.10/pic/sources/c99/common/nanf.c
 [v _nanf nanf `R(f  1 e 4 0 ]
@@ -1721,11 +1726,11 @@ O_CONV 1
 [v _u u `S4737  1 a 4 0 ]
 "9
 } 4
-"71 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
+"72 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _get_raw_result get_raw_result `R(us  1 e 2 0 ]
 {
 [v _index index `E16136  1 p 1 -1 ]
-"74
+"75
 } 0
 "10 /opt/microchip/xc8/v2.10/pic/sources/c99/common/xxtofl.c
 [v ___xxtofl __xxtofl `R(d  1 e 4 0 ]
@@ -1739,10 +1744,10 @@ O_CONV 1
 [v _val val `l  1 p 4 -5 ]
 "44
 } 5
-"63 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
+"64 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _clear_adc_scan clear_adc_scan `R(v  1 e 1 0 ]
 {
-"66
+"67
 } 0
 "40 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mconfig.c
 [v _check_help check_help `R(v  1 e 1 0 ]
@@ -2403,10 +2408,10 @@ O_CONV 1
 {
 "195
 } 0
-"55 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
+"56 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _check_adc_scan check_adc_scan `R(a  1 e 1 0 ]
 {
-"58
+"59
 } 0
 "50 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize SYSTEM_Initialize `R(v  1 e 1 0 ]
@@ -2623,30 +2628,25 @@ O_CONV 1
 {
 "321
 } 0
-"123 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
+"124 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _adc_int_t_handler adc_int_t_handler `R(v  1 s 1 adc_int_t_handler ]
 {
-"143
+"144
 } 0
 "339 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/adcc.c
 [v _ADCC_DefaultInterruptHandler ADCC_DefaultInterruptHandler `R(v  1 e 1 0 ]
 {
 "342
 } 0
-"113 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
+"114 /root/MPLABXProjects/vtouch_v2/touch_v2.X/daq.c
 [v _adc_int_handler adc_int_handler `R(v  1 s 1 adc_int_handler ]
 {
-"118
+"119
 } 0
 "327 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/adcc.c
 [v _ADCC_ThresholdISR ADCC_ThresholdISR `IIH(v  1 e 1 0 ]
 {
 "334
-} 0
-"189
-[v _ADCC_DischargeSampleCapacitor ADCC_DischargeSampleCapacitor `R(v  1 e 1 0 ]
-{
-"193
 } 0
 "199 /root/MPLABXProjects/vtouch_v2/touch_v2.X/mcc_generated_files/uart1.c
 [v _UART1_tx_vect_isr UART1_tx_vect_isr `IIH(v  1 e 1 0 ]

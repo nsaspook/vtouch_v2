@@ -27447,7 +27447,7 @@ void ADCC_Initialize(void)
 
     ADCON1 = 0x00;
 
-    ADCON2 = 0x6B;
+    ADCON2 = 0x5B;
 
     ADCON3 = 0x27;
 

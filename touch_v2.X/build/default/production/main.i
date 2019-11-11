@@ -28453,7 +28453,7 @@ D_CODES set_temp_display_help(const D_CODES);
 # 33 "./daq.h"
 # 1 "./tests.h" 1
 # 34 "./daq.h" 2
-# 69 "./daq.h"
+# 74 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,

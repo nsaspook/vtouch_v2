@@ -55,12 +55,17 @@
 /*
  * conversion constants
  */
-#define C_SCALE		1.25
-#define V_SCALE		8.250825
-#define C_A100		59.30
-#define C_A200		30.00
-#define C_OFFSET0	2493.0
-#define C_OFFSET1	2472.0
+/*
+ * 13-bit adc result ADRPT 64 samples and a ADCRS of 5 [0..8190] steps
+ */
+#define C_SCALE		1.25/2.0
+#define V_SCALE		8.250825/2.0
+
+#define C_A200		59.30
+#define C_A100		30.00
+
+#define C_OFFSET0	2472.0
+#define C_OFFSET1	2493.0
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"

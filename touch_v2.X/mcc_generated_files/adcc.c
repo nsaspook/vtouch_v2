@@ -95,8 +95,8 @@ void ADCC_Initialize(void)
     ADPREH = 0x00;
     // ADDSEN disabled; ADGPOL digital_low; ADIPEN disabled; ADPPOL Vss; 
     ADCON1 = 0x00;
-    // ADCRS 6; ADMD Burst_average_mode; ADACLR enabled; ADPSIS RES; 
-    ADCON2 = 0x6B;
+    // ADCRS 5; ADMD Burst_average_mode; ADACLR enabled; ADPSIS RES; 
+    ADCON2 = 0x5B;
     // ADCALC Actual result vs filtered value; ADTMD enabled; ADSOI ADGO not cleared; 
     ADCON3 = 0x27;
     // ADMATH registers not updated; 

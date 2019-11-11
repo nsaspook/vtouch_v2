@@ -39,6 +39,7 @@ bool start_adc_scan(void)
 	R.scan_select = (uint16_t) ((ANSELB << 8) + ANSELA) & ADC_SCAN_CHAN; // skip digital pins PORT A and B
 	ADCC_SetADIInterruptHandler(adc_int_handler);
 	ADCC_SetADTIInterruptHandler(adc_int_t_handler);
+	ADCC_DischargeSampleCapacitor(); // short ADC sample cap before channel sampling
 	ADCC_StartConversion(R.scan_index & 0xf);
 #ifdef DEBUG_DAQ1
 	DEBUG1_SetHigh();
@@ -85,9 +86,9 @@ float conv_raw_result(adcc_channel_t chan, adc_conv_t to_what)
 	case CONV:
 		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
-				return(((float) get_raw_result(chan) * C_SCALE) - R.c_offset[1]) * C_A200 / 1000.0;
+				return(((float) get_raw_result(chan) * C_SCALE) - R.c_offset[0]) * C_A200 / 1000.0;
 			} else {
-				return(((float) get_raw_result(chan) * C_SCALE) - R.c_offset[0]) * C_A100 / 1000.0;
+				return(((float) get_raw_result(chan) * C_SCALE) - R.c_offset[1]) * C_A100 / 1000.0;
 			}
 		} else {
 			if (ADC_T_CHAN >> chan & 0x1) { // temp conversion
