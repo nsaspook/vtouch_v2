@@ -28694,7 +28694,7 @@ void main(void)
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
-   StartTimer(TMR_DISPLAY, 250);
+   StartTimer(TMR_DISPLAY, 100);
    StartTimer(TMR_ADC, 500);
    StartTimer(TMR_INFO, 3000);
    StartTimer(TMR_FLIPPER, 1500);
@@ -28737,10 +28737,10 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
-   sprintf(get_vterm_ptr(0, 0), "%d %2.2f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
-   sprintf(get_vterm_ptr(1, 0), "%d %2.2f   #", get_raw_result(C_PV), C.calc[C_PV]);
-   sprintf(get_vterm_ptr(2, 0), "%d %2.2f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
-   StartTimer(TMR_DISPLAY, 250);
+   sprintf(get_vterm_ptr(0, 0), "%d %2.4f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
+   sprintf(get_vterm_ptr(1, 0), "%d %2.4f   #", get_raw_result(C_PV), C.calc[C_PV]);
+   sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
+   StartTimer(TMR_DISPLAY, 100);
    update_lcd(0);
   }
 

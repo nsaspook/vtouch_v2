@@ -72,8 +72,8 @@
 #include "mcc_generated_files/pin_manager.h"
 
 typedef enum {
-	CONV,
-	O_CONV,
+	CONV, // auto system conversion
+	O_CONV, // convert to voltage for calibration/offsets
 } adc_conv_t;
 
 bool start_adc_scan(void);
