@@ -39,6 +39,10 @@ void convert_adc_data(void)
 	uint8_t i = 0;
 
 	do {
+#ifdef CALIB
+		C.calc[i] = lp_filter(conv_raw_result(i, O_CONV), i, true);
+#else
 		C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, false);
+#endif
 	} while (++i < ADC_BUFFER_SIZE);
 }

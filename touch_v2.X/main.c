@@ -67,8 +67,8 @@
  * 
  * 10 analog channels are active
  * PORTA,PORTB		analog inputs
- * ana0	battery current					300A AMPLOC sensor battery output to inverter 5v R1
- * ana1	PV input current				50A AMPLOC sensor input from PV array 5v R2
+ * ana0	battery current					200A hall sensor battery output to inverter 5v R1
+ * ana1	PV input current				100A hall sensor input from PV array 5v R2
  * ana2	charge controller output voltage		R3
  * ana3  PLUS VREF					Using a external 4.095 volt reference IC from TI/BB
  * ana4	battery voltage					Voltage a primary inverter battery R4

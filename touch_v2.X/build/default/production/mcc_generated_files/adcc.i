@@ -27435,7 +27435,7 @@ void ADCC_Initialize(void)
 
     ADPCH = 0x00;
 
-    ADACQL = 0x00;
+    ADACQL = 0x20;
 
     ADACQH = 0x00;
 
@@ -27457,9 +27457,9 @@ void ADCC_Initialize(void)
 
     ADACT = 0x00;
 
-    ADCLK = 0x02;
+    ADCLK = 0x07;
 
-    ADCON0 = 0x94;
+    ADCON0 = 0x84;
 
 
     PIR1bits.ADIF = 0;

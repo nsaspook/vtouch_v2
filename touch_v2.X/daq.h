@@ -20,7 +20,7 @@
  */
 
 /*
- * 12-bit analog 32 sample average per channel on ports A and B
+ * 12-bit analog 64 sample average per channel on ports A and B
  * uses the compute burst average mode threshold interrupt to auto change
  * channels during interrupt after a repeat count
  */
@@ -64,7 +64,7 @@
 #define C_A200		143.85
 #define C_A100		60.1
 
-#define C_OFFSET0	2457.0
+#define C_OFFSET0	2456.0
 #define C_OFFSET1	2485.2
 
 #include <xc.h> // include processor files - each processor file is guarded.  
