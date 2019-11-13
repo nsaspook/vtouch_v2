@@ -41,8 +41,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 47215: extern volatile INTCON0bits_t INTCON0bits __attribute__((address(0x3FD2)));
 [v _INTCON0bits `VS2125 ~T0 @X0 0 e@16338 ]
 "32 ./timers.h
-[; ;./timers.h: 32: void WaitMs(uint16_t numMilliseconds);
-[v _WaitMs `(v ~T0 @X0 0 ef1`us ]
+[; ;./timers.h: 32: void WaitMs(const uint16_t numMilliseconds);
+[v _WaitMs `(v ~T0 @X0 0 ef1`Cus ]
 "46864 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46864:     struct {
 [s S2111 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -86,20 +86,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h: 40: void srand (unsigned);
 [v _srand `(v ~T0 @X0 0 ef1`ui ]
 "50 ./mydisplay.h
-[; ;./mydisplay.h: 50: uint8_t set_vterm(uint8_t);
-[v _set_vterm `(uc ~T0 @X0 0 ef1`uc ]
+[; ;./mydisplay.h: 50: uint8_t set_vterm(const uint8_t);
+[v _set_vterm `(uc ~T0 @X0 0 ef1`Cuc ]
 "113 /opt/microchip/xc8/v2.10/pic/include/c99/stdio.h
 [v _sprintf `(i ~T0 @X0 0 e1v`*uc`*Cuc ]
 "51 ./mydisplay.h
-[; ;./mydisplay.h: 51: char * get_vterm_ptr(uint8_t, uint8_t);
-[v _get_vterm_ptr `(*uc ~T0 @X0 0 ef2`uc`uc ]
+[; ;./mydisplay.h: 51: char * get_vterm_ptr(const uint8_t, const uint8_t);
+[v _get_vterm_ptr `(*uc ~T0 @X0 0 ef2`Cuc`Cuc ]
 "49
 [; ;./mydisplay.h: 49: uint8_t update_lcd(uint8_t);
 [v _update_lcd `(uc ~T0 @X0 0 ef1`uc ]
-[v F17098 `(v ~T0 @X0 1 tf2`uc`us ]
 "30 ./timers.h
-[; ;./timers.h: 30: __attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-[v _StartTimer `TF17098 ~T0 @X0 0 e ]
+[; ;./timers.h: 30: void StartTimer(const uint8_t timer, const uint16_t count);
+[v _StartTimer `(v ~T0 @X0 0 ef2`Cuc`Cus ]
 "204 main.c
 [; ;main.c: 204:    StartTimer(TMR_DISPLAY, 250);
 [c E17083 0 1 2 3 4 5 6 7 8 9 10 11 12 .. ]
@@ -114,10 +113,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "142 main.c
 [; ;main.c: 142: extern volatile struct P_data P;
 [v _P `VS2244 ~T0 @X0 0 e ]
-[v F17102 `(a ~T0 @X0 1 tf1`uc ]
 "31 ./timers.h
-[; ;./timers.h: 31: __attribute__((inline)) _Bool TimerDone(uint8_t timer);
-[v _TimerDone `TF17102 ~T0 @X0 0 e ]
+[; ;./timers.h: 31: _Bool TimerDone(const uint8_t timer);
+[v _TimerDone `(a ~T0 @X0 0 ef1`Cuc ]
 "80 ./daq.h
 [; ;./daq.h: 80: _Bool check_adc_scan(void);
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
@@ -135,11 +133,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [c E16623 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
 [n E16623 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
 "82 ./daq.h
-[; ;./daq.h: 82: adc_result_t get_raw_result(adcc_channel_t);
-[v _get_raw_result `(us ~T0 @X0 0 ef1`E16623 ]
+[; ;./daq.h: 82: adc_result_t get_raw_result(const adcc_channel_t);
+[v _get_raw_result `(us ~T0 @X0 0 ef1`CE16623 ]
 "57 ./mydisplay.h
-[; ;./mydisplay.h: 57: void check_help(_Bool);
-[v _check_help `(v ~T0 @X0 0 ef1`a ]
+[; ;./mydisplay.h: 57: void check_help(const _Bool);
+[v _check_help `(v ~T0 @X0 0 ef1`Ca ]
 "101 main.c
 [p n 520 ]
 "102

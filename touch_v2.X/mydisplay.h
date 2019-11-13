@@ -47,14 +47,14 @@ typedef struct D_data { // control data structure
 
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 uint8_t update_lcd(uint8_t);
-uint8_t set_vterm(uint8_t);
-char * get_vterm_ptr(uint8_t, uint8_t);
+uint8_t set_vterm(const uint8_t);
+char * get_vterm_ptr(const uint8_t, const uint8_t);
 void vterm_dump(void);
 void vterm_sequence(void);
 inline D_CODES display_info(void);
 inline D_CODES display_help(void);
 bool help_button(void);
-void check_help(bool);
+void check_help(const bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 

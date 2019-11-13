@@ -69,7 +69,7 @@ void clear_adc_scan(void)
 /*
  * read average value of a channel after scan completion (done)
  */
-adc_result_t get_raw_result(adcc_channel_t index)
+adc_result_t get_raw_result(const adcc_channel_t index)
 {
 	return R.raw_adc[index];
 }
@@ -77,7 +77,7 @@ adc_result_t get_raw_result(adcc_channel_t index)
 /*
  * turn ADC values into standard program values
  */
-float conv_raw_result(adcc_channel_t chan, adc_conv_t to_what)
+float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 {
 	if (!(ADC_SCAN_CHAN >> chan & 0x1))
 		return NAN;

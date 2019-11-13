@@ -27770,9 +27770,9 @@ enum APP_TIMERS {
  TMR_COUNT
 };
 
-__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-__attribute__((inline)) _Bool TimerDone(uint8_t timer);
-void WaitMs(uint16_t numMilliseconds);
+void StartTimer(const uint8_t timer, const uint16_t count);
+_Bool TimerDone(const uint8_t timer);
+void WaitMs(const uint16_t numMilliseconds);
 # 56 "mcc_generated_files/tmr6.c" 2
 
 extern struct V_data V;

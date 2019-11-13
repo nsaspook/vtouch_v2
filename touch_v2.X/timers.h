@@ -27,8 +27,8 @@ enum APP_TIMERS {
 	TMR_COUNT //number of timers - always keep at end of enum!
 };
 
-inline void StartTimer(uint8_t timer, uint16_t count);
-inline bool TimerDone(uint8_t timer);
-void WaitMs(uint16_t numMilliseconds);
+void StartTimer(const uint8_t timer, const uint16_t count);
+bool TimerDone(const uint8_t timer);
+void WaitMs(const uint16_t numMilliseconds);
 
 #endif //TIMERS_H

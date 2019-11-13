@@ -37,7 +37,7 @@ bool help_button(void)
 	return false;
 }
 
-void check_help(bool flipper)
+void check_help(const bool flipper)
 {
 	/*
 	 * show help display
@@ -101,7 +101,7 @@ uint8_t update_lcd(uint8_t vterm)
 /*
  * set terminal window to 0..3
  */
-uint8_t set_vterm(uint8_t vterm)
+uint8_t set_vterm(const uint8_t vterm)
 {
 	D.vterm = vterm & 0x03;
 	return D.vterm;
@@ -110,7 +110,7 @@ uint8_t set_vterm(uint8_t vterm)
 /*
  * return pointer to vterm line buffer
  */
-char * get_vterm_ptr(uint8_t line, uint8_t vterm)
+char * get_vterm_ptr(const uint8_t line, const uint8_t vterm)
 {
 	return D.lcd[vterm & 0x03][line & 0x03];
 }

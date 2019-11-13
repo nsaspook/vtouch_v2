@@ -9,7 +9,7 @@ extern volatile uint16_t tickCount[TMR_COUNT];
 //**********************************************************************************************************************
 // Start one of the software timers
 
-inline void StartTimer(const uint8_t timer, const uint16_t count)
+void StartTimer(const uint8_t timer, const uint16_t count)
 {
 	tickCount[timer] = count << 1; //Interrupt is every 500us but StartTimer() takes multiple of 1ms so multiply by 2
 }
@@ -17,7 +17,7 @@ inline void StartTimer(const uint8_t timer, const uint16_t count)
 //**********************************************************************************************************************
 // Check if one of the software software timers has timed out
 
-inline bool TimerDone(const uint8_t timer)
+bool TimerDone(const uint8_t timer)
 {
 	ClrWdt(); // reset the WDT timer
 	if (tickCount[timer] == 0) { //Check if counted down to zero

@@ -79,8 +79,8 @@ typedef enum {
 bool start_adc_scan(void);
 bool check_adc_scan(void);
 void clear_adc_scan(void);
-adc_result_t get_raw_result(adcc_channel_t);
-float conv_raw_result(adcc_channel_t, adc_conv_t);
+adc_result_t get_raw_result(const adcc_channel_t);
+float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 
 #endif
 

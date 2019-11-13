@@ -27519,9 +27519,9 @@ enum APP_TIMERS {
  TMR_COUNT
 };
 
-__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-__attribute__((inline)) _Bool TimerDone(uint8_t timer);
-void WaitMs(uint16_t numMilliseconds);
+void StartTimer(const uint8_t timer, const uint16_t count);
+_Bool TimerDone(const uint8_t timer);
+void WaitMs(const uint16_t numMilliseconds);
 # 6 "timers.c" 2
 
 extern volatile uint16_t tickCount[TMR_COUNT];
@@ -27529,7 +27529,7 @@ extern volatile uint16_t tickCount[TMR_COUNT];
 
 
 
-__attribute__((inline)) void StartTimer(const uint8_t timer, const uint16_t count)
+void StartTimer(const uint8_t timer, const uint16_t count)
 {
  tickCount[timer] = count << 1;
 }
@@ -27537,7 +27537,7 @@ __attribute__((inline)) void StartTimer(const uint8_t timer, const uint16_t coun
 
 
 
-__attribute__((inline)) _Bool TimerDone(const uint8_t timer)
+_Bool TimerDone(const uint8_t timer)
 {
  __asm(" clrwdt");
  if (tickCount[timer] == 0) {

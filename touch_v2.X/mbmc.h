@@ -73,6 +73,6 @@ typedef struct P_data {
 	uint8_t SYNCSOC : 1;
 } P_data_t;
 
-float lp_filter(float, uint8_t, int8_t);
+float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 #endif

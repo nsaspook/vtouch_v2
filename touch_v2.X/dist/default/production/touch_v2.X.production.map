@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=/opt/microchip/xc8/v2.10/pic/dat/en_msgs.txt -pivt0x8=08h -cs \
   -h+dist/default/production/touch_v2.X.production.sym \
   --cmf=dist/default/production/touch_v2.X.production.cmf -z -Q18F57K42 \
-  -o/tmp/xcXS9Weg4 --defsym=__MPLAB_BUILD=1 \
+  -o/tmp/xcXp5xZun --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/production/touch_v2.X.production.map -E1 -ver=XC8 \
   --acfsm=1493 -ASTACK=06FFh-01FFFh -pstack=STACK -ACODE=00h-01FFFFh \
   -ACONST=00h-01FFFFh -ASMALLCONST=02000h-020FFhx480 \
@@ -31,7 +31,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -pparam0=BANK0 \
-  /tmp/xcX0hZLC0.o dist/default/production/touch_v2.X.production.o 
+  /tmp/xcXAKoSOo.o dist/default/production/touch_v2.X.production.o 
 
 Object code version is 3.11
 
@@ -43,7 +43,7 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-/tmp/xcX0hZLC0.o
+/tmp/xcXAKoSOo.o
                 stack                               6FF      6FF     1901      6FF       2
                 init                                 AE       AE        8        4       0
                 reset_vec                             0        0        4        0       0
@@ -2437,9 +2437,9 @@ Total ram usage:        0 bytes
  Defined at:
 		line 15 in file "mbmc.c"
  Parameters:    Size  Location     Type
-  new             4  [STACK] float 
-  bn              1  [STACK] unsigned char 
-  slow            1  [STACK] char 
+  new             4  [STACK] const float 
+  bn              1  [STACK] const unsigned char 
+  slow            1  [STACK] const char 
  Auto vars:     Size  Location     Type
   lp_speed        4  [STACK] float 
  Return value:  Size  Location     Type
@@ -2471,8 +2471,8 @@ Total ram usage:        0 bytes
  Defined at:
 		line 80 in file "daq.c"
  Parameters:    Size  Location     Type
-  chan            1  [STACK] enum E16136
-  to_what         1  [STACK] enum E16198
+  chan            1  [STACK] const enum E16136
+  to_what         1  [STACK] const enum E16198
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
@@ -2538,7 +2538,7 @@ Total ram usage:        0 bytes
  Defined at:
 		line 72 in file "daq.c"
  Parameters:    Size  Location     Type
-  index           1  [STACK] enum E16136
+  index           1  [STACK] const enum E16136
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
@@ -2631,7 +2631,7 @@ Total ram usage:        0 bytes
  Defined at:
 		line 40 in file "mconfig.c"
  Parameters:    Size  Location     Type
-  flipper         1  [STACK] _Bool 
+  flipper         1  [STACK] const _Bool 
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
@@ -2752,8 +2752,8 @@ Total ram usage:        0 bytes
  Defined at:
 		line 113 in file "mconfig.c"
  Parameters:    Size  Location     Type
-  line            1  [STACK] unsigned char 
-  vterm           1  [STACK] unsigned char 
+  line            1  [STACK] const unsigned char 
+  vterm           1  [STACK] const unsigned char 
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type
@@ -4656,7 +4656,7 @@ Total ram usage:        0 bytes
  Defined at:
 		line 104 in file "mconfig.c"
  Parameters:    Size  Location     Type
-  vterm           1  [STACK] unsigned char 
+  vterm           1  [STACK] const unsigned char 
  Auto vars:     Size  Location     Type
 		None
  Return value:  Size  Location     Type

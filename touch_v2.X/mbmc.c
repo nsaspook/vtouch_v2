@@ -12,7 +12,7 @@ volatile struct P_data P = {
  * floating point low pass filter, 
  * slow/fast select, use (-1) to zero buffer channel and return new
  */
-float lp_filter(float new, uint8_t bn, int8_t slow)
+float lp_filter(const float new, const uint8_t bn, const int8_t slow)
 {
 	static float smooth[ADC_BUFFER_SIZE];
 	float lp_speed;

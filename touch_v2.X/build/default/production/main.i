@@ -28416,9 +28416,9 @@ enum APP_TIMERS {
  TMR_COUNT
 };
 
-__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-__attribute__((inline)) _Bool TimerDone(uint8_t timer);
-void WaitMs(uint16_t numMilliseconds);
+void StartTimer(const uint8_t timer, const uint16_t count);
+_Bool TimerDone(const uint8_t timer);
+void WaitMs(const uint16_t numMilliseconds);
 # 114 "main.c" 2
 
 # 1 "./mconfig.h" 1
@@ -28437,14 +28437,14 @@ typedef struct D_data {
 
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 uint8_t update_lcd(uint8_t);
-uint8_t set_vterm(uint8_t);
-char * get_vterm_ptr(uint8_t, uint8_t);
+uint8_t set_vterm(const uint8_t);
+char * get_vterm_ptr(const uint8_t, const uint8_t);
 void vterm_dump(void);
 void vterm_sequence(void);
 __attribute__((inline)) D_CODES display_info(void);
 __attribute__((inline)) D_CODES display_help(void);
 _Bool help_button(void);
-void check_help(_Bool);
+void check_help(const _Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 # 116 "main.c" 2
@@ -28462,8 +28462,8 @@ typedef enum {
 _Bool start_adc_scan(void);
 _Bool check_adc_scan(void);
 void clear_adc_scan(void);
-adc_result_t get_raw_result(adcc_channel_t);
-float conv_raw_result(adcc_channel_t, adc_conv_t);
+adc_result_t get_raw_result(const adcc_channel_t);
+float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 # 117 "main.c" 2
 
 # 1 "./mbmc.h" 1
@@ -28605,7 +28605,7 @@ typedef struct P_data {
  uint8_t SYNCSOC : 1;
 } P_data_t;
 
-float lp_filter(float, uint8_t, int8_t);
+float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 # 118 "main.c" 2
 
