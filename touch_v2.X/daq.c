@@ -1,5 +1,5 @@
 /*
- * 12-bit analog 32 sample average per channel on ports A and B
+ * 12-bit analog 64 sample average per channel on ports A and B
  * uses the compute burst average mode threshold interrupt to auto change
  * channels during interrupt after a repeat count
  */
@@ -26,7 +26,7 @@ static void adc_int_handler(void);
 static void adc_int_t_handler(void);
 
 /*
- * start computed ADC results: 32 samples per average value per selected channel from
+ * start computed ADC results: 64 samples per average value per selected channel from
  * AN channel zero to LAST_ADC_CHAN
  * check_adc_scan returns true when sequence is complete
  */

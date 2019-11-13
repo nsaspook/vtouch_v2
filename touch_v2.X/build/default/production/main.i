@@ -27531,13 +27531,6 @@ typedef uint32_t uint_fast32_t;
 void INTERRUPT_Initialize (void);
 # 54 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/fvr.h" 1
-# 93 "./mcc_generated_files/fvr.h"
- void FVR_Initialize(void);
-# 127 "./mcc_generated_files/fvr.h"
-_Bool FVR_IsOutputReady(void);
-# 55 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/adcc.h" 1
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
@@ -27620,6 +27613,13 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
 # 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
+# 55 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/fvr.h" 1
+# 93 "./mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "./mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
 # 56 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr5.h" 1
@@ -28687,14 +28687,14 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.91");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.92");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.91");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.92");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
-   StartTimer(TMR_DISPLAY, 100);
+   StartTimer(TMR_DISPLAY, 250);
    StartTimer(TMR_ADC, 500);
    StartTimer(TMR_INFO, 3000);
    StartTimer(TMR_FLIPPER, 1500);
@@ -28740,7 +28740,7 @@ void main(void)
    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
    sprintf(get_vterm_ptr(1, 0), "%d %2.4f   #", get_raw_result(C_PV), C.calc[C_PV]);
    sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
-   StartTimer(TMR_DISPLAY, 100);
+   StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
   }
 
