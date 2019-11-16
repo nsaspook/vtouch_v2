@@ -28,7 +28,7 @@ float lp_filter(const float new, const uint8_t bn, const int8_t slow)
 	if (slow) { // some random filter cutoffs
 		lp_speed = 0.066;
 	} else {
-		lp_speed = 0.333;
+		lp_speed = 0.125;
 	}
 
 	return smooth[bn] = smooth[bn] + ((new - smooth[bn]) * lp_speed);

@@ -61,11 +61,11 @@
 #define C_SCALE		1.25/2.0
 #define V_SCALE		8.250825/2.0
 
-#define C_A200		143.85
-#define C_A100		60.1
+#define C_A200		143.85/1000.0
+#define C_A100		60.1/1000.0
 
-#define C_OFFSET0	2456.0
-#define C_OFFSET1	2485.2
+#define N_OFFSET0	3931
+#define N_OFFSET1	3976
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
