@@ -40,6 +40,6 @@
 #define DEBUG_DAQ2
 #endif
 
-//#define CALIB
+#define CALIB
 #endif	/* XC_HEADER_TEMPLATE_H */
 

@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Sat Nov 16 04:14:59 2019
+                                                                                               Tue Nov 19 01:00:02 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F57K42
@@ -1309,7 +1309,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1295  00FFB5  76                 	db	118	;'v'
   1296  00FFB6  20                 	db	32
   1297  00FFB7  31                 	db	49	;'1'
-  1298  00FFB8  35                 	db	53	;'5'
+  1298  00FFB8  38                 	db	56	;'8'
   1299  00FFB9  20                 	db	32
   1300  00FFBA  32                 	db	50	;'2'
   1301  00FFBB  30                 	db	48	;'0'
@@ -1332,14 +1332,14 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1318  00FFC9                     STR_16:
   1319                           
   1320                           ; BSR set to: 57
-  1321  00FFC9  32                 	db	50	;'2'
-  1322  00FFCA  30                 	db	48	;'0'
+  1321  00FFC9  31                 	db	49	;'1'
+  1322  00FFCA  36                 	db	54	;'6'
   1323  00FFCB  3A                 	db	58	;':'
-  1324  00FFCC  31                 	db	49	;'1'
+  1324  00FFCC  32                 	db	50	;'2'
   1325  00FFCD  34                 	db	52	;'4'
   1326  00FFCE  3A                 	db	58	;':'
-  1327  00FFCF  35                 	db	53	;'5'
-  1328  00FFD0  34                 	db	52	;'4'
+  1327  00FFCF  30                 	db	48	;'0'
+  1328  00FFD0  35                 	db	53	;'5'
   1329  00FFD1  00                 	db	0
   1330  00FFD2                     STR_3:
   1331                           
@@ -3438,15 +3438,15 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3267  017E16  6AE3               	clrf	plusw1,c
   3268  017E18                     l8958:
   3269                           
-  3270                           ;mbmc.c: 45:   C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, 0);
-  3271  017E18  0E00               	movlw	0
+  3270                           ;mbmc.c: 43:   C.calc[i] = lp_filter(conv_raw_result(i, O_CONV), i, 1);
+  3271  017E18  0E01               	movlw	1
   3272  017E1A  6EE6               	movwf	postinc1,c
   3273                           
   3274                           ;stkvar	_i @ sp[(-2)+0]
   3275  017E1C  0EFE               	movlw	-2
   3276  017E1E  50E3               	movf	plusw1,w,c
   3277  017E20  6EE6               	movwf	postinc1,c
-  3278  017E22  0E00               	movlw	0
+  3278  017E22  0E01               	movlw	1
   3279  017E24  6EE6               	movwf	postinc1,c
   3280                           
   3281                           ;stkvar	_i @ sp[(-4)+0]
@@ -33788,7 +33788,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Sat Nov 16 04:14:59 2019
+Symbol Table                                                                                   Tue Nov 19 01:00:02 2019
 
                      _SPI1_Exchange8bit 8CB8                __end_of_set_display_info 8D12  
                                      _C 0200                                       _D 0400  
