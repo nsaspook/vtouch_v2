@@ -53,11 +53,15 @@ void convert_adc_data(void)
 void switch_handler(void)
 {
 #ifdef DEBUG_SWH1
-	DEBUG1_SetLow();
+	DEBUG1_Toggle();
+	DEBUG2_Toggle();
+	
 #endif
 }
 
 void start_switch_handler(void)
 {
+	EXT_INT1_InterruptDisable();
 	INT1_SetInterruptHandler(switch_handler);
+	EXT_INT1_InterruptEnable();
 }

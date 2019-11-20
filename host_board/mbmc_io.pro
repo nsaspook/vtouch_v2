@@ -2,24 +2,24 @@ EAGLE AutoRouter Statistics:
 
 Job           : /fred/pic18_k42/host_board/mbmc_io.brd
 
-Start at      : 15:34:34 (10/23/19)
-End at        : 15:43:05 (10/23/19)
-Elapsed time  : 00:08:29
+Start at      : 15:27:31 (11/20/19)
+End at        : 15:34:13 (11/20/19)
+Elapsed time  : 00:06:40
 
-Signals       :    89   RoutingGrid: 3 mil  Layers: 2
-Connections   :   169   predefined:  0 ( 0 Vias )
+Signals       :    91   RoutingGrid: 3 mil  Layers: 2
+Connections   :   172   predefined:  0 ( 0 Vias )
 
 Router memory :   6824280
 
 Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4 Optimize5 Optimize6 Optimize7 Optimize8 Optimize9Optimize10Optimize11Optimize12
 
-Time per pass     :  00:00:12  00:00:22  00:00:47  00:00:41  00:00:40  00:00:40  00:00:39  00:00:38  00:00:40  00:00:39  00:00:38  00:00:38  00:00:37  00:00:38
+Time per pass     :  00:00:11  00:00:18  00:00:38  00:00:33  00:00:32  00:00:30  00:00:29  00:00:29  00:00:32  00:00:30  00:00:30  00:00:30  00:00:29  00:00:29
 Number of Ripups  :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 max. Level        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 max. Total        :         0         0         0         0         0         0         0         0         0         0         0         0         0         0
 
-Routed            :        84       169       168       169       169       169       169       169       169       169       169       169       169       169
-Vias              :         0        65       131        74        61        56        59        59        61        60        58        58        58        58
-Resolution        :    49.7 %   100.0 %    99.4 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
+Routed            :        89       172       170       172       172       172       172       172       172       172       172       172       172       172
+Vias              :         0        53        94        73        64        60        61        61        62        60        59        58        58        58
+Resolution        :    51.7 %   100.0 %    98.8 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
 Final             : 100.0% finished

@@ -111,8 +111,16 @@ extern "C" {
 		UI_STATE_LOG,
 		UI_STATE_MON,
 		UI_STATE_ERROR
-	} UI_STATES;
-
+	} UI_STATES;	
+	
+	typedef struct rbutton_type {
+		uint8_t ostate : 1;
+		uint8_t nstate : 1;
+		uint8_t pressed : 1;
+		uint8_t released : 1;
+		uint8_t count;
+	} rbutton_type;
+	
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
 		char buf[64], info[64];
@@ -126,11 +134,14 @@ extern "C" {
 		volatile uint8_t ticker;
 		bool flipper;
 		volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
+		volatile rbutton_type button[8];
 	} V_data;
 
 	typedef struct V_help {
 		const char message[18], display[18];
 	} V_help;
+
+
 
 #ifdef	__cplusplus
 }

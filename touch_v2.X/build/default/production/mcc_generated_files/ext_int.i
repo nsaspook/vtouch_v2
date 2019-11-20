@@ -27512,6 +27512,14 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   UI_STATE_ERROR
  } UI_STATES;
 
+ typedef struct rbutton_type {
+  uint8_t ostate : 1;
+  uint8_t nstate : 1;
+  uint8_t pressed : 1;
+  uint8_t released : 1;
+  uint8_t count;
+ } rbutton_type;
+
  typedef struct V_data {
   UI_STATES ui_state;
   char buf[64], info[64];
@@ -27525,6 +27533,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   volatile uint8_t ticker;
   _Bool flipper;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
+  volatile rbutton_type button[8];
  } V_data;
 
  typedef struct V_help {
@@ -27562,8 +27571,7 @@ void INT0_DefaultInterruptHandler(void)
 
 
 }
-
-void __attribute__((picinterrupt(("irq(INT1), base(8)")))) INT1_ISR()
+void __attribute__((picinterrupt(("irq(INT1),base(8),low_priority")))) INT1_ISR()
 {
  (PIR5bits.INT1IF = 0);
 

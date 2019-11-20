@@ -28113,7 +28113,7 @@ void INTERRUPT_Initialize (void)
     IPR3bits.U1TXIP = 1;
     IPR3bits.U1RXIP = 1;
     IPR1bits.INT0IP = 1;
-    IPR5bits.INT1IP = 1;
+    IPR5bits.INT1IP = 0;
     IPR9bits.TMR6IP = 1;
     IPR8bits.TMR5IP = 0;
     IPR1bits.ADIP = 1;

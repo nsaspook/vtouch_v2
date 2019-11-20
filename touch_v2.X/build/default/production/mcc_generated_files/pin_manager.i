@@ -27277,7 +27277,7 @@ void PIN_MANAGER_Initialize(void)
     WPUD = 0x0C;
     WPUF = 0x0F;
     WPUE = 0x00;
-    WPUB = 0x87;
+    WPUB = 0x83;
     WPUA = 0x00;
     WPUC = 0x97;
 

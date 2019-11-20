@@ -59,8 +59,7 @@ void INT0_DefaultInterruptHandler(void)
 	// add your INT0 interrupt custom code
 	// or set custom function using INT0_SetInterruptHandler()
 }
-
-void __interrupt(irq(INT1), base(8)) INT1_ISR()
+void __interrupt(irq(INT1),base(8),low_priority) INT1_ISR()
 {
 	EXT_INT1_InterruptFlagClear();
 
