@@ -1,4 +1,5 @@
 #include "mbmc.h"
+#include "mcc_generated_files/ext_int.h"
 
 extern C_data C;
 
@@ -7,6 +8,8 @@ volatile uint32_t utctime = 0; // utctime set from remote ntp server
 volatile struct P_data P = {
 	.SYSTEM_STABLE = false,
 };
+
+static void switch_handler(void);
 
 /*
  * floating point low pass filter, 
@@ -45,4 +48,16 @@ void convert_adc_data(void)
 		C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, false);
 #endif
 	} while (++i < ADC_BUFFER_SIZE);
+}
+
+void switch_handler(void)
+{
+#ifdef DEBUG_SWH1
+	DEBUG1_SetLow();
+#endif
+}
+
+void start_switch_handler(void)
+{
+	INT1_SetInterruptHandler(switch_handler);
 }

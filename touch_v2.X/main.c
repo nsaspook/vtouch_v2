@@ -208,6 +208,7 @@ void main(void)
 			StartTimer(TMR_HELPDIS, TDELAY);
 
 			start_adc_scan();
+			start_switch_handler();
 
 			break;
 		case UI_STATE_HOST:

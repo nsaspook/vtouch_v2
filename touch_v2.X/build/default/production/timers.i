@@ -27394,6 +27394,26 @@ void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
 # 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
 # 12 "./vconfig.h" 2
+# 1 "./mcc_generated_files/ext_int.h" 1
+# 406 "./mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
+# 434 "./mcc_generated_files/ext_int.h"
+void INT0_CallBack(void);
+# 457 "./mcc_generated_files/ext_int.h"
+void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
+# 481 "./mcc_generated_files/ext_int.h"
+extern void (*INT0_InterruptHandler)(void);
+# 505 "./mcc_generated_files/ext_int.h"
+void INT0_DefaultInterruptHandler(void);
+# 529 "./mcc_generated_files/ext_int.h"
+void INT1_CallBack(void);
+# 552 "./mcc_generated_files/ext_int.h"
+void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
+# 576 "./mcc_generated_files/ext_int.h"
+extern void (*INT1_InterruptHandler)(void);
+# 600 "./mcc_generated_files/ext_int.h"
+void INT1_DefaultInterruptHandler(void);
+# 13 "./vconfig.h" 2
 
 
 
@@ -27415,11 +27435,11 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 19 "./vconfig.h" 2
+# 20 "./vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
 # 824 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
-# 20 "./vconfig.h" 2
+# 21 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
@@ -27441,8 +27461,8 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 21 "./vconfig.h" 2
-# 79 "./vconfig.h"
+# 22 "./vconfig.h" 2
+# 80 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;

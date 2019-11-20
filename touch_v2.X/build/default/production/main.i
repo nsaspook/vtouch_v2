@@ -28289,7 +28289,7 @@ void PMD_Initialize(void);
 # 1 "./eadog.h" 1
 # 26 "./eadog.h"
 # 1 "./vconfig.h" 1
-# 20 "./vconfig.h"
+# 21 "./vconfig.h"
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
@@ -28311,8 +28311,8 @@ void PMD_Initialize(void);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 21 "./vconfig.h" 2
-# 79 "./vconfig.h"
+# 22 "./vconfig.h" 2
+# 80 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28607,6 +28607,7 @@ typedef struct P_data {
 
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
+void start_switch_handler(void);
 # 118 "main.c" 2
 
 
@@ -28701,6 +28702,7 @@ void main(void)
    StartTimer(TMR_HELPDIS, 3000);
 
    start_adc_scan();
+   start_switch_handler();
 
    break;
   case UI_STATE_HOST:

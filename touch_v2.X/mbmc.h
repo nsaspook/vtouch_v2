@@ -75,4 +75,5 @@ typedef struct P_data {
 
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
+void start_switch_handler(void);
 #endif

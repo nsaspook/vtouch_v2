@@ -36,8 +36,10 @@
 #define DEBUG_MBMC	// global application debug switch
 
 #ifdef DEBUG_MBMC
-#define DEBUG_DAQ1 // daq debug switches
-#define DEBUG_DAQ2
+//#define DEBUG_DAQ1 // daq debug switches
+//#define DEBUG_DAQ2
+#define DEBUG_SWH1
+#define DEBUG_SWH2
 #endif
 
 #define CALIB

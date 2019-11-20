@@ -27435,6 +27435,7 @@ void ADCC_DefaultInterruptHandler(void);
 
 
 
+
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
@@ -27450,7 +27451,7 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 19 "mcc_generated_files/../vconfig.h" 2
+# 20 "mcc_generated_files/../vconfig.h" 2
 
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
@@ -27473,8 +27474,8 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 21 "./vconfig.h" 2
-# 79 "./vconfig.h"
+# 22 "./vconfig.h" 2
+# 80 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;

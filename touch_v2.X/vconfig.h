@@ -9,6 +9,7 @@
 #define	VCONFIG_H
 
 #include "mcc_generated_files/adcc.h"
+#include "mcc_generated_files/ext_int.h"
 
 #ifdef	__cplusplus
 extern "C" {
