@@ -7,7 +7,7 @@
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 101 "main.c"
+# 111 "main.c"
 #pragma warning disable 520
 #pragma warning disable 1498
 
@@ -171,7 +171,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 109 "main.c" 2
+# 119 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
@@ -227,7 +227,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 110 "main.c" 2
+# 120 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -28283,7 +28283,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 # 109 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 111 "main.c" 2
+# 121 "main.c" 2
 
 
 # 1 "./eadog.h" 1
@@ -28312,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 80 "./vconfig.h"
+# 81 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28402,7 +28402,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 113 "main.c" 2
+# 123 "main.c" 2
 
 # 1 "./timers.h" 1
 # 11 "./timers.h"
@@ -28428,13 +28428,13 @@ enum APP_TIMERS {
 void StartTimer(const uint8_t timer, const uint16_t count);
 _Bool TimerDone(const uint8_t timer);
 void WaitMs(const uint16_t numMilliseconds);
-# 114 "main.c" 2
+# 124 "main.c" 2
 
 # 1 "./mconfig.h" 1
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
-# 115 "main.c" 2
+# 125 "main.c" 2
 
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
@@ -28456,7 +28456,7 @@ _Bool help_button(void);
 void check_help(const _Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
-# 116 "main.c" 2
+# 126 "main.c" 2
 
 # 1 "./daq.h" 1
 # 33 "./daq.h"
@@ -28473,7 +28473,7 @@ _Bool check_adc_scan(void);
 void clear_adc_scan(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
-# 117 "main.c" 2
+# 127 "main.c" 2
 
 # 1 "./mbmc.h" 1
 # 35 "./mbmc.h"
@@ -28617,7 +28617,7 @@ typedef struct P_data {
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void start_switch_handler(void);
-# 118 "main.c" 2
+# 128 "main.c" 2
 
 
 V_data V = {
@@ -28697,10 +28697,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.93");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.94");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.93");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.94");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
