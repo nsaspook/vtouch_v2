@@ -79,8 +79,18 @@
  * anb4 inverter voltage				R9
  * anb5 spare						R10
  * 
+ * switch MAX debounce inputs
+ * max pin	pic pin		connector pin	name
+ * 1		rf0		spi 9
+ * 2		rf1		spi 10
+ * 3		rf2		PD 9		SELECT
+ * 4		rf3		PD 8		ENTER
+ * 5		rd3		PD 3
+ * 6		rd2		PD 2/misc 2	SW0
+ * 7				misc 3
+ * 8				misc 4
  * 
- * adc_cal[0-3]						current sensors zero offset stored in eeprom 0=a300, 1=a50, 2..3=future
+ * adc_cal[0-3]						current sensors zero offset stored in eeprom 0=a100, 1=a200, 2..3=future
  * 3x16 LCD status panel and led status lights.
  *
  * system variables float
