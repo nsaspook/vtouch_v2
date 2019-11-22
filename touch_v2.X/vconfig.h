@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.94"
+#define VER	"0.95"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -33,6 +33,7 @@ extern "C" {
 	 * 0.9 auto convert bitmaps
 	 * 0.91 start adding 32 utc time code
 	 * 0.94 switch input code
+	 * 0.95	MAX6818 interrupt coding
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

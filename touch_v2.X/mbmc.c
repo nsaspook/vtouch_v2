@@ -2,6 +2,7 @@
 #include "mcc_generated_files/ext_int.h"
 
 extern C_data C;
+extern V_data V;
 
 struct tm t_mbmc; // don't use the xc8 clock function
 volatile uint32_t utctime = 0; // utctime set from remote ntp server
@@ -52,11 +53,17 @@ void convert_adc_data(void)
 
 void switch_handler(void)
 {
+	MAX_EN_SetLow();
+	Nop();
+	Nop();
+	Nop();
+	Nop();
+	// start reading the inputs after the max chip is ready
 #ifdef DEBUG_SWH1
 	DEBUG1_Toggle();
 	DEBUG2_Toggle();
-	
 #endif
+	MAX_EN_SetHigh(); // reset input change interrupt from max chip
 }
 
 void start_switch_handler(void)

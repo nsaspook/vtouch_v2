@@ -34,6 +34,7 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <time.h>
 #include "daq.h"
+#include "vconfig.h"
 
 #define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
 
