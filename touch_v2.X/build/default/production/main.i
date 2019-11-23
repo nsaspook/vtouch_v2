@@ -28366,10 +28366,10 @@ void PMD_Initialize(void);
   SNULL,
  } SW_NAMES;
 
- typedef struct rbutton_type {
-  SW_STATES sw;
-  uint32_t count;
- } rbutton_type;
+
+
+
+
 
  typedef struct V_data {
   UI_STATES ui_state;
@@ -28384,8 +28384,8 @@ void PMD_Initialize(void);
   volatile uint8_t ticker;
   _Bool flipper;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
-  volatile rbutton_type button[8];
-  volatile uint8_t sw_bitmap;
+
+
  } V_data;
 
  typedef struct V_help {
@@ -28594,7 +28594,6 @@ struct tm *getdate (const char *);
 
 
 
-
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
@@ -28633,13 +28632,21 @@ typedef struct P_data {
 
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
-void start_switch_handler(void);
+# 128 "main.c" 2
 
+# 1 "./dio.h" 1
+# 40 "./dio.h"
+typedef struct rbutton_type {
+ SW_STATES sw;
+ uint32_t count;
+} rbutton_type;
+
+void start_switch_handler(void);
 SW_STATES get_switch(uint8_t);
 rbutton_type get_switch_data(uint8_t);
 uint8_t check_switches(void);
 void clear_switch(uint8_t);
-# 128 "main.c" 2
+# 129 "main.c" 2
 
 
 V_data V = {

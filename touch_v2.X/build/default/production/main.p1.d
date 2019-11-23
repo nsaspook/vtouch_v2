@@ -26,4 +26,5 @@ mconfig.h  \
 mydisplay.h  \
 daq.h  \
 tests.h  \
-mbmc.h 
+mbmc.h  \
+dio.h 

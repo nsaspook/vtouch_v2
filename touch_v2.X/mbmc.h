@@ -37,7 +37,6 @@
 #include "vconfig.h"
 
 #define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
-#define NUM_SWITCHES		4
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
@@ -77,10 +76,5 @@ typedef struct P_data {
 
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
-void start_switch_handler(void);
 
-SW_STATES get_switch(uint8_t);
-rbutton_type get_switch_data(uint8_t);
-uint8_t check_switches(void);
-void clear_switch(uint8_t);
 #endif

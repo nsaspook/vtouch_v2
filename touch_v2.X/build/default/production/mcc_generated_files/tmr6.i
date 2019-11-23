@@ -27767,10 +27767,10 @@ void PIN_MANAGER_Initialize (void);
   SNULL,
  } SW_NAMES;
 
- typedef struct rbutton_type {
-  SW_STATES sw;
-  uint32_t count;
- } rbutton_type;
+
+
+
+
 
  typedef struct V_data {
   UI_STATES ui_state;
@@ -27785,8 +27785,8 @@ void PIN_MANAGER_Initialize (void);
   volatile uint8_t ticker;
   _Bool flipper;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
-  volatile rbutton_type button[8];
-  volatile uint8_t sw_bitmap;
+
+
  } V_data;
 
  typedef struct V_help {

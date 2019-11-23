@@ -126,6 +126,7 @@ typedef signed long long int24_t;
 #include "mydisplay.h"
 #include "daq.h"
 #include "mbmc.h"
+#include "dio.h"
 
 V_data V = {
 	.ticker = 45,
