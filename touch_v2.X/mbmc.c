@@ -53,14 +53,52 @@ void convert_adc_data(void)
 
 void switch_handler(void)
 {
+	uint8_t i = 0, sw_value;
+
 	MAX_EN_SetLow();
-	Nop();
-	Nop();
-	Nop();
-	Nop();
-	// start reading the inputs after the max chip is ready
 #ifdef DEBUG_SWH1
-	DEBUG1_Toggle();
+	DEBUG1_SetHigh();
+#endif
+	Nop();
+	Nop();
+	Nop();
+#ifdef DEBUG_SWH1
+	DEBUG1_SetLow();
+#endif
+	// start reading the inputs after the max chip is ready
+
+	do {
+		switch (i) {
+		case SENTER:
+			sw_value = ENTER_B_GetValue();
+			break;
+		case SSELECT:
+			sw_value = SELECT_B_GetValue();
+			break;
+		case S1:
+			sw_value = IO_RF1_GetValue();
+			break;
+		case S0:
+			sw_value = IO_RF0_GetValue();
+			break;
+		default:
+			sw_value = 1;
+			break;
+		}
+
+		if (sw_value) {
+			if (V.button[i].sw == SW_ON) {
+				V.button[i].sw = SW_OFF;
+			}
+		} else {
+			if (V.button[i].sw == SW_OFF) {
+				V.button[i].sw = SW_ON;
+				V.button[i].count = V.timerint_count;
+			}
+		}
+	} while (++i < NUM_SWITCHES);
+
+#ifdef DEBUG_SWH2
 	DEBUG2_Toggle();
 #endif
 	MAX_EN_SetHigh(); // reset input change interrupt from max chip

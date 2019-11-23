@@ -28349,12 +28349,25 @@ void PMD_Initialize(void);
   UI_STATE_ERROR
  } UI_STATES;
 
+ typedef enum {
+  SW_OFF = 0,
+  SW_ON,
+ } SW_STATES;
+
+ typedef enum {
+  S0 = 0,
+  S1 = 1,
+  SSELECT = 2,
+  SENTER = 3,
+  S4,
+  S5,
+  S6,
+  S7,
+ } SW_NAMES;
+
  typedef struct rbutton_type {
-  uint8_t ostate : 1;
-  uint8_t nstate : 1;
-  uint8_t pressed : 1;
-  uint8_t released : 1;
-  uint8_t count;
+  SW_STATES sw;
+  uint32_t count;
  } rbutton_type;
 
  typedef struct V_data {
@@ -28579,6 +28592,7 @@ struct tm *getdate (const char *);
 
 
 
+
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
@@ -28749,8 +28763,8 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
-   sprintf(get_vterm_ptr(0, 0), "%d %2.4f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
-   sprintf(get_vterm_ptr(1, 0), "%d %2.4f   #", get_raw_result(C_PV), C.calc[C_PV]);
+   sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], V.button[SSELECT].sw);
+   sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], V.button[SENTER].sw);
    sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
    StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);

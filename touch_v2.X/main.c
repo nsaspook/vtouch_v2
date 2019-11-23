@@ -80,15 +80,15 @@
  * anb5 spare						R10
  * 
  * switch MAX debounce inputs
- * max pin	pic pin		connector pin	name
- * 1		rf0		spi 9
- * 2		rf1		spi 10
- * 3		rf2		PD 9		SELECT
- * 4		rf3		PD 8		ENTER
- * 5		rd3		PD 3
- * 6		rd2		PD 2/misc 2	SW0
- * 7				misc 3
- * 8				misc 4
+ * max pin	pic pin		connector pin	name	MBMC_IO board input connector pin
+ * 1		rf0		spi 9			10
+ * 2		rf1		spi 10			1
+ * 3		rf2		PD 9		SELECT	2
+ * 4		rf3		PD 8		ENTER	3
+ * 5		rd3		PD 3			4
+ * 6		rd2		PD 2/misc 2	SW0	5
+ * 7				misc 3			6
+ * 8				misc 4			7
  * 
  * adc_cal[0-3]						current sensors zero offset stored in eeprom 0=a100, 1=a200, 2..3=future
  * 3x16 LCD status panel and led status lights.
@@ -255,8 +255,8 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
-			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
-			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   #", get_raw_result(C_PV), C.calc[C_PV]);
+			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], V.button[SSELECT].sw);
+			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], V.button[SENTER].sw);
 			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			update_lcd(0);

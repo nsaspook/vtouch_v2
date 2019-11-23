@@ -37,6 +37,7 @@
 #include "vconfig.h"
 
 #define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
+#define NUM_SWITCHES		4
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];

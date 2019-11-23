@@ -13,16 +13,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./vconfig.h: 100:  typedef struct terminal_type {
 [s S2235 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16986 1 `E16986 1 `us 1 `us 1 ]
 [n S2235 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"118
-[; ;./vconfig.h: 118:  typedef struct rbutton_type {
-[s S2236 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 ]
-[n S2236 rbutton_type ostate nstate pressed released count ]
-"126
-[; ;./vconfig.h: 126:  typedef struct V_data {
+"130 main.c
+[; ;main.c: 130: V_data V = {
+[c E17013 0 1 .. ]
+[n E17013 . SW_OFF SW_ON  ]
+"134 ./vconfig.h
+[; ;./vconfig.h: 134:  typedef struct rbutton_type {
+[s S2236 `E17013 1 `ul 1 ]
+[n S2236 rbutton_type sw count ]
+"139
+[; ;./vconfig.h: 139:  typedef struct V_data {
 [s S2237 `E17005 1 `uc -> 64 `i `uc -> 64 `i `ul 1 `l 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E17005 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 `S2235 1 `Vuc 1 `a 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `VS2236 -> 8 `i ]
 [n S2237 V_data ui_state buf info ticks testing error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id response ticker flipper highint_count lowint_count eeprom_count timerint_count button ]
-"41 ./mbmc.h
-[; ;./mbmc.h: 41: typedef struct C_data {
+"42 ./mbmc.h
+[; ;./mbmc.h: 42: typedef struct C_data {
 [s S2244 `f -> 16 `i `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 ]
 [n S2244 C_data calc c_load c_bat c_pv v_cc v_pc v_bat v_cbus v_bbat v_temp v_inverter t_comp ]
 [p mainexit ]
@@ -105,16 +109,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _StartTimer `(v ~T0 @X0 0 ef2`Cuc`Cus ]
 "214 main.c
 [; ;main.c: 214:    StartTimer(TMR_DISPLAY, 250);
-[c E17091 0 1 2 3 4 5 6 7 8 9 10 11 12 .. ]
-[n E17091 APP_TIMERS TMR_INTERNAL TMR_ADC TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_FLIPPER TMR_COUNT  ]
+[c E17102 0 1 2 3 4 5 6 7 8 9 10 11 12 .. ]
+[n E17102 APP_TIMERS TMR_INTERNAL TMR_ADC TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_FLIPPER TMR_COUNT  ]
 "79 ./daq.h
 [; ;./daq.h: 79: _Bool start_adc_scan(void);
 [v _start_adc_scan `(a ~T0 @X0 0 ef ]
-"79 ./mbmc.h
-[; ;./mbmc.h: 79: void start_switch_handler(void);
+"80 ./mbmc.h
+[; ;./mbmc.h: 80: void start_switch_handler(void);
 [v _start_switch_handler `(v ~T0 @X0 0 ef ]
-"47
-[; ;./mbmc.h: 47: typedef struct P_data {
+"48
+[; ;./mbmc.h: 48: typedef struct P_data {
 [s S2245 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2245 P_data BCHECK TIMERFLAG PRIPOWEROK FORCEOUT WORKERFLAG CHARGEROVERRIDE FAILSAFE MORNING_HELP SYSTEM_STABLE HOLD_PROC POWER_UNSTABLE B2 B3 B4 SET_BATT BLANK_LCD STATIC_SOC SET_CEF D_UPDATE GLITCH_CHECK FORCEDAY COOLING UPDATE_EEP RESET_ZEROS SAVE_DAILY SETBATT_SOC SYNCSOC ]
 "152 main.c
@@ -126,8 +130,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "80 ./daq.h
 [; ;./daq.h: 80: _Bool check_adc_scan(void);
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
-"78 ./mbmc.h
-[; ;./mbmc.h: 78: void convert_adc_data(void);
+"79 ./mbmc.h
+[; ;./mbmc.h: 79: void convert_adc_data(void);
 [v _convert_adc_data `(v ~T0 @X0 0 ef ]
 "81 ./daq.h
 [; ;./daq.h: 81: void clear_adc_scan(void);
@@ -136,12 +140,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./mydisplay.h: 58: D_CODES set_display_info(const D_CODES);
 [v _set_display_info `(E16986 ~T0 @X0 0 ef1`CE16986 ]
 "258 main.c
-[; ;main.c: 258:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
+[; ;main.c: 258:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], V.button[SSELECT].sw);
 [c E16625 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
 [n E16625 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
 "82 ./daq.h
 [; ;./daq.h: 82: adc_result_t get_raw_result(const adcc_channel_t);
 [v _get_raw_result `(us ~T0 @X0 0 ef1`CE16625 ]
+"258 main.c
+[; ;main.c: 258:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], V.button[SSELECT].sw);
+[c E17017 0 1 2 3 4 5 6 7 .. ]
+[n E17017 . S0 S1 SSELECT SENTER S4 S5 S6 S7  ]
 "57 ./mydisplay.h
 [; ;./mydisplay.h: 57: void check_help(const _Bool);
 [v _check_help `(v ~T0 @X0 0 ef1`Ca ]
@@ -2743,19 +2751,19 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _WaitMs (1 -> -> 3000 `i `us ]
 "214
 [; ;main.c: 214:    StartTimer(TMR_DISPLAY, 250);
-[e ( _StartTimer (2 , -> . `E17091 10 `uc -> -> 250 `i `us ]
+[e ( _StartTimer (2 , -> . `E17102 10 `uc -> -> 250 `i `us ]
 "215
 [; ;main.c: 215:    StartTimer(TMR_ADC, 500);
-[e ( _StartTimer (2 , -> . `E17091 1 `uc -> -> 500 `i `us ]
+[e ( _StartTimer (2 , -> . `E17102 1 `uc -> -> 500 `i `us ]
 "216
 [; ;main.c: 216:    StartTimer(TMR_INFO, 3000);
-[e ( _StartTimer (2 , -> . `E17091 7 `uc -> -> 3000 `i `us ]
+[e ( _StartTimer (2 , -> . `E17102 7 `uc -> -> 3000 `i `us ]
 "217
 [; ;main.c: 217:    StartTimer(TMR_FLIPPER, 1500);
-[e ( _StartTimer (2 , -> . `E17091 11 `uc -> -> 1500 `i `us ]
+[e ( _StartTimer (2 , -> . `E17102 11 `uc -> -> 1500 `i `us ]
 "218
 [; ;main.c: 218:    StartTimer(TMR_HELPDIS, 3000);
-[e ( _StartTimer (2 , -> . `E17091 9 `uc -> -> 3000 `i `us ]
+[e ( _StartTimer (2 , -> . `E17102 9 `uc -> -> 3000 `i `us ]
 "220
 [; ;main.c: 220:    start_adc_scan();
 [e ( _start_adc_scan ..  ]
@@ -2812,7 +2820,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2260 ]
 "237
 [; ;main.c: 237:   if (TimerDone(TMR_ADC) && check_adc_scan()) {
-[e $ ! && != -> ( _TimerDone (1 -> . `E17091 1 `uc `i -> 0 `i != -> ( _check_adc_scan ..  `i -> 0 `i 2268  ]
+[e $ ! && != -> ( _TimerDone (1 -> . `E17102 1 `uc `i -> 0 `i != -> ( _check_adc_scan ..  `i -> 0 `i 2268  ]
 {
 "241
 [; ;main.c: 241:    convert_adc_data();
@@ -2825,7 +2833,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _start_adc_scan ..  ]
 "247
 [; ;main.c: 247:    StartTimer(TMR_ADC, 500);
-[e ( _StartTimer (2 , -> . `E17091 1 `uc -> -> 500 `i `us ]
+[e ( _StartTimer (2 , -> . `E17102 1 `uc -> -> 500 `i `us ]
 "248
 [; ;main.c: 248:   }
 }
@@ -2840,11 +2848,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2269 ]
 "254
 [; ;main.c: 254:   if (TimerDone(TMR_DISPLAY)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E17091 10 `uc `i -> 0 `i 2270  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E17102 10 `uc `i -> 0 `i 2270  ]
 {
 "255
 [; ;main.c: 255:    if (TimerDone(TMR_HELPDIS)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E17091 9 `uc `i -> 0 `i 2271  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E17102 9 `uc `i -> 0 `i 2271  ]
 {
 "256
 [; ;main.c: 256:     set_display_info(DIS_STR);
@@ -2854,17 +2862,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2271 ]
 "258
-[; ;main.c: 258:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   #", get_raw_result(C_BATT), C.calc[C_BATT]);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 9C -> ( _get_raw_result (1 . `E16625 0 `ui -> *U + &U . _C 0 * -> . `E16625 0 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
+[; ;main.c: 258:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], V.button[SSELECT].sw);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 9C -> ( _get_raw_result (1 . `E16625 0 `ui -> *U + &U . _C 0 * -> . `E16625 0 `ux -> -> # *U &U . _C 0 `ui `ux `d -> . *U + &U . _V 29 * -> . `E17017 2 `ux -> -> # *U &U . _V 29 `ui `ux 0 `ui ]
 "259
-[; ;main.c: 259:    sprintf(get_vterm_ptr(1, 0), "%d %2.4f   #", get_raw_result(C_PV), C.calc[C_PV]);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 10C -> ( _get_raw_result (1 . `E16625 1 `ui -> *U + &U . _C 0 * -> . `E16625 1 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
+[; ;main.c: 259:    sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], V.button[SENTER].sw);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 10C -> ( _get_raw_result (1 . `E16625 1 `ui -> *U + &U . _C 0 * -> . `E16625 1 `ux -> -> # *U &U . _C 0 `ui `ux `d -> . *U + &U . _V 29 * -> . `E17017 3 `ux -> -> # *U &U . _V 29 `ui `ux 0 `ui ]
 "260
 [; ;main.c: 260:    sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
 [e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 11C -> ( _get_raw_result (1 . `E16625 2 `ui -> *U + &U . _C 0 * -> . `E16625 2 `ux -> -> # *U &U . _C 0 `ui `ux `d . _V 28 ]
 "261
 [; ;main.c: 261:    StartTimer(TMR_DISPLAY, 250);
-[e ( _StartTimer (2 , -> . `E17091 10 `uc -> -> 250 `i `us ]
+[e ( _StartTimer (2 , -> . `E17102 10 `uc -> -> 250 `i `us ]
 "262
 [; ;main.c: 262:    update_lcd(0);
 [e ( _update_lcd (1 -> -> 0 `i `uc ]
@@ -2881,7 +2889,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "274
 [; ;main.c: 274:    if (TimerDone(TMR_INFO)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E17091 7 `uc `i -> 0 `i 2273  ]
+[e $ ! != -> ( _TimerDone (1 -> . `E17102 7 `uc `i -> 0 `i 2273  ]
 {
 "275
 [; ;main.c: 275:     V.set_sequ = 0;
@@ -2923,11 +2931,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2246 ]
 }
 [p f _sprintf 8758416 ]
+[a 9C 37 100 32 37 50 46 52 102 32 32 32 37 100 0 ]
+[a 10C 37 100 32 37 50 46 52 102 32 32 32 37 100 0 ]
 [a 3C 48 46 57 53 0 ]
 [a 7C 48 46 57 53 0 ]
 [a 11C 37 100 32 37 50 46 52 102 44 32 37 108 117 32 32 32 35 0 ]
-[a 9C 37 100 32 37 50 46 52 102 32 32 32 35 0 ]
-[a 10C 37 100 32 37 50 46 52 102 32 32 32 35 0 ]
 [a 5C 32 83 69 81 85 69 78 67 69 32 84 69 83 84 32 32 0 ]
 [a 1C 32 77 66 77 67 32 83 79 76 65 82 77 79 78 32 32 0 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 32 32 32 0 ]

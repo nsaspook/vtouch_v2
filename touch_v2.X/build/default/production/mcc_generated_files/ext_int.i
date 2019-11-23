@@ -27512,12 +27512,25 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   UI_STATE_ERROR
  } UI_STATES;
 
+ typedef enum {
+  SW_OFF = 0,
+  SW_ON,
+ } SW_STATES;
+
+ typedef enum {
+  S0 = 0,
+  S1 = 1,
+  SSELECT = 2,
+  SENTER = 3,
+  S4,
+  S5,
+  S6,
+  S7,
+ } SW_NAMES;
+
  typedef struct rbutton_type {
-  uint8_t ostate : 1;
-  uint8_t nstate : 1;
-  uint8_t pressed : 1;
-  uint8_t released : 1;
-  uint8_t count;
+  SW_STATES sw;
+  uint32_t count;
  } rbutton_type;
 
  typedef struct V_data {
