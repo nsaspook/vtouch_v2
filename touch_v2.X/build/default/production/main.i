@@ -28312,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 82 "./vconfig.h"
+# 83 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28352,6 +28352,7 @@ void PMD_Initialize(void);
  typedef enum {
   SW_OFF = 0,
   SW_ON,
+  SW_INVALID,
  } SW_STATES;
 
  typedef enum {
@@ -28362,7 +28363,7 @@ void PMD_Initialize(void);
   S4,
   S5,
   S6,
-  S7,
+  SNULL,
  } SW_NAMES;
 
  typedef struct rbutton_type {
@@ -28384,6 +28385,7 @@ void PMD_Initialize(void);
   _Bool flipper;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
   volatile rbutton_type button[8];
+  volatile uint8_t sw_bitmap;
  } V_data;
 
  typedef struct V_help {
@@ -28632,6 +28634,11 @@ typedef struct P_data {
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void start_switch_handler(void);
+
+SW_STATES get_switch(uint8_t);
+rbutton_type get_switch_data(uint8_t);
+uint8_t check_switches(void);
+void clear_switch(uint8_t);
 # 128 "main.c" 2
 
 
@@ -28712,10 +28719,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.95");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.96");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.95");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.96");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28763,9 +28770,10 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
-   sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], V.button[SSELECT].sw);
-   sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], V.button[SENTER].sw);
-   sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
+   sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], get_switch(SSELECT));
+   sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], get_switch(SENTER));
+
+   sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(V_CC), C.calc[V_CC], check_switches());
    StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
   }

@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.95"
+#define VER	"0.96"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -78,6 +78,7 @@ extern "C" {
 #define TX_RESERVE	59
 
 #define MAX_LINE	16
+#define MAX_BUTTONS	8
 
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;
@@ -118,6 +119,7 @@ extern "C" {
 	typedef enum {
 		SW_OFF = 0,
 		SW_ON,
+		SW_INVALID,
 	} SW_STATES;
 
 	typedef enum {
@@ -128,7 +130,7 @@ extern "C" {
 		S4,
 		S5,
 		S6,
-		S7,
+		SNULL,
 	} SW_NAMES;
 
 	typedef struct rbutton_type {
@@ -149,7 +151,8 @@ extern "C" {
 		volatile uint8_t ticker;
 		bool flipper;
 		volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
-		volatile rbutton_type button[8];
+		volatile rbutton_type button[MAX_BUTTONS];
+		volatile uint8_t sw_bitmap;
 	} V_data;
 
 	typedef struct V_help {

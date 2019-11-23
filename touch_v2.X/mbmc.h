@@ -78,4 +78,9 @@ typedef struct P_data {
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void start_switch_handler(void);
+
+SW_STATES get_switch(uint8_t);
+rbutton_type get_switch_data(uint8_t);
+uint8_t check_switches(void);
+void clear_switch(uint8_t);
 #endif

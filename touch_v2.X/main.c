@@ -255,9 +255,10 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
-			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], V.button[SSELECT].sw);
-			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], V.button[SENTER].sw);
-			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
+			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], get_switch(SSELECT));
+			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], get_switch(SENTER));
+//			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
+			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(V_CC), C.calc[V_CC], check_switches());
 			StartTimer(TMR_DISPLAY, DDELAY);
 			update_lcd(0);
 		}
