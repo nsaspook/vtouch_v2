@@ -37,7 +37,7 @@
  */
 #define LAST_ADC_CHAN	0XD
 #define ADC_BUFFER_SIZE	16 // MUST BE AT LEAST 1
-#define ADC_SCAN_SPEED	500 // sample timer speed in ms
+#define ADC_SCAN_SPEED	200 // sample timer speed in ms
 #define ADC_SCAN_CHAN	0b0011110001110111 // convert these analog ports bitmap
 /*
  * current sensor configuration
@@ -58,14 +58,14 @@
 /*
  * 13-bit adc result ADRPT 64 samples and a ADCRS of 5 [0..8190] steps
  */
-#define C_SCALE		1.25/2.0
-#define V_SCALE		8.250825/2.0
+#define C_SCALE		0.6250000
+#define V_SCALE		4.1254125
 
-#define C_A200		143.85/1000.0
-#define C_A100		60.1/1000.0
+#define C_A200		0.1438500
+#define C_A100		0.0601000
 
-#define N_OFFSET0	3931
-#define N_OFFSET1	3976
+#define N_OFFSET0	3948
+#define N_OFFSET1	3993
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
