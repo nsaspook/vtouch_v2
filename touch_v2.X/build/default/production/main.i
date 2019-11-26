@@ -28312,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 83 "./vconfig.h"
+# 84 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28672,7 +28672,7 @@ extern volatile struct P_data P;
 void main(void)
 {
  UI_STATES mode;
- uint8_t inp_index = 0,i=C_BATT,j=C_PV,k=V_CC;
+ uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
 
  SYSTEM_Initialize();
 
@@ -28719,10 +28719,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.96");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.97");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.96");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.97");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28784,11 +28784,33 @@ void main(void)
   if (check_help(V.flipper)) {
 
    inp_index += 3;
-   i=V_BAT;
-   j=V_PV;
-   k=V_CBUS;
-   if (inp_index > 12)
+   if (inp_index > 9)
     inp_index = 0;
+   switch (inp_index) {
+   case 0:
+    i = C_BATT;
+    j = C_PV;
+    k = V_CC;
+    break;
+   case 3:
+    i = V_BAT;
+    j = V_PV;
+    k = V_CBUS;
+    break;
+   case 6:
+    i = V_BBAT;
+    j = V_TEMP;
+    k = V_INVERTER;
+    break;
+   case 9:
+    i = channel_ANB5;
+    j = channel_ANB5;
+    k = channel_ANB5;
+    break;
+   default:
+    break;
+   }
+
 
   };
 

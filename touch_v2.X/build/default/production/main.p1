@@ -9,12 +9,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E17005 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
 [c E16986 0 1 2 3 .. ]
 [n E16986 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
-"101 ./vconfig.h
-[; ;./vconfig.h: 101:  typedef struct terminal_type {
+"102 ./vconfig.h
+[; ;./vconfig.h: 102:  typedef struct terminal_type {
 [s S2235 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16986 1 `E16986 1 `us 1 `us 1 ]
 [n S2235 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"136
-[; ;./vconfig.h: 136:  typedef struct V_data {
+"137
+[; ;./vconfig.h: 137:  typedef struct V_data {
 [s S2236 `E17005 1 `uc -> 64 `i `uc -> 64 `i `ul 1 `l 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E17005 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 `S2235 1 `Vuc 1 `a 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
 [n S2236 V_data ui_state buf info ticks testing error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id response ticker flipper highint_count lowint_count eeprom_count timerint_count ]
 "41 ./mbmc.h
@@ -23,7 +23,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S2243 C_data calc c_load c_bat c_pv v_cc v_pc v_bat v_cbus v_bbat v_temp v_inverter t_comp ]
 [p mainexit ]
 "161 main.c
-[; ;main.c: 161:  uint8_t inp_index = 0,i=C_BATT,j=C_PV,k=V_CC;
+[; ;main.c: 161:  uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
 [c E16625 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
 [n E16625 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
 "83 ./mcc_generated_files/mcc.h
@@ -2627,7 +2627,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 160:  UI_STATES mode;
 [v _mode `E17005 ~T0 @X0 1 a ]
 "161
-[; ;main.c: 161:  uint8_t inp_index = 0,i=C_BATT,j=C_PV,k=V_CC;
+[; ;main.c: 161:  uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
 [v _inp_index `uc ~T0 @X0 1 a ]
 [e = _inp_index -> -> 0 `i `uc ]
 [v _i `uc ~T0 @X0 1 a ]
@@ -2738,7 +2738,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 207:    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 1C ]
 "208
-[; ;main.c: 208:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.96");
+[; ;main.c: 208:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.97");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 2C :s 3C ]
 "209
 [; ;main.c: 209:    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
@@ -2747,7 +2747,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 210:    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 2 `i `uc :s 5C ]
 "211
-[; ;main.c: 211:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.96");
+[; ;main.c: 211:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.97");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 2 `i `uc :s 6C :s 7C ]
 "212
 [; ;main.c: 212:    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
@@ -2897,77 +2897,149 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 272:    inp_index += 3;
 [e =+ _inp_index -> -> 3 `i `uc ]
 "273
-[; ;main.c: 273:    i=V_BAT;
-[e = _i -> . `E16625 3 `uc ]
+[; ;main.c: 273:    if (inp_index > 9)
+[e $ ! > -> _inp_index `i -> 9 `i 2273  ]
 "274
-[; ;main.c: 274:    j=V_PV;
-[e = _j -> . `E16625 4 `uc ]
-"275
-[; ;main.c: 275:    k=V_CBUS;
-[e = _k -> . `E16625 5 `uc ]
-"276
-[; ;main.c: 276:    if (inp_index > 12)
-[e $ ! > -> _inp_index `i -> 12 `i 2273  ]
-"277
-[; ;main.c: 277:     inp_index = 0;
+[; ;main.c: 274:     inp_index = 0;
 [e = _inp_index -> -> 0 `i `uc ]
 [e :U 2273 ]
+"275
+[; ;main.c: 275:    switch (inp_index) {
+[e $U 2275  ]
+{
+"276
+[; ;main.c: 276:    case 0:
+[e :U 2276 ]
+"277
+[; ;main.c: 277:     i = C_BATT;
+[e = _i -> . `E16625 0 `uc ]
+"278
+[; ;main.c: 278:     j = C_PV;
+[e = _j -> . `E16625 1 `uc ]
 "279
-[; ;main.c: 279:   };
+[; ;main.c: 279:     k = V_CC;
+[e = _k -> . `E16625 2 `uc ]
+"280
+[; ;main.c: 280:     break;
+[e $U 2274  ]
+"281
+[; ;main.c: 281:    case 3:
+[e :U 2277 ]
+"282
+[; ;main.c: 282:     i = V_BAT;
+[e = _i -> . `E16625 3 `uc ]
+"283
+[; ;main.c: 283:     j = V_PV;
+[e = _j -> . `E16625 4 `uc ]
+"284
+[; ;main.c: 284:     k = V_CBUS;
+[e = _k -> . `E16625 5 `uc ]
+"285
+[; ;main.c: 285:     break;
+[e $U 2274  ]
+"286
+[; ;main.c: 286:    case 6:
+[e :U 2278 ]
+"287
+[; ;main.c: 287:     i = V_BBAT;
+[e = _i -> . `E16625 6 `uc ]
+"288
+[; ;main.c: 288:     j = V_TEMP;
+[e = _j -> . `E16625 7 `uc ]
+"289
+[; ;main.c: 289:     k = V_INVERTER;
+[e = _k -> . `E16625 8 `uc ]
+"290
+[; ;main.c: 290:     break;
+[e $U 2274  ]
+"291
+[; ;main.c: 291:    case 9:
+[e :U 2279 ]
+"292
+[; ;main.c: 292:     i = channel_ANB5;
+[e = _i -> . `E16625 9 `uc ]
+"293
+[; ;main.c: 293:     j = channel_ANB5;
+[e = _j -> . `E16625 9 `uc ]
+"294
+[; ;main.c: 294:     k = channel_ANB5;
+[e = _k -> . `E16625 9 `uc ]
+"295
+[; ;main.c: 295:     break;
+[e $U 2274  ]
+"296
+[; ;main.c: 296:    default:
+[e :U 2280 ]
+"297
+[; ;main.c: 297:     break;
+[e $U 2274  ]
+"298
+[; ;main.c: 298:    }
+}
+[e $U 2274  ]
+[e :U 2275 ]
+[e [\ -> _inp_index `i , $ -> 0 `i 2276
+ , $ -> 3 `i 2277
+ , $ -> 6 `i 2278
+ , $ -> 9 `i 2279
+ 2280 ]
+[e :U 2274 ]
+"301
+[; ;main.c: 301:   };
 }
 [e :U 2272 ]
-"284
-[; ;main.c: 284:   if (V.set_sequ) {
-[e $ ! != -> . _V 17 `i -> 0 `i 2274  ]
+"306
+[; ;main.c: 306:   if (V.set_sequ) {
+[e $ ! != -> . _V 17 `i -> 0 `i 2281  ]
 {
-"285
-[; ;main.c: 285:    if (TimerDone(TMR_INFO)) {
-[e $ ! != -> ( _TimerDone (1 -> . `E17098 7 `uc `i -> 0 `i 2275  ]
+"307
+[; ;main.c: 307:    if (TimerDone(TMR_INFO)) {
+[e $ ! != -> ( _TimerDone (1 -> . `E17098 7 `uc `i -> 0 `i 2282  ]
 {
-"286
-[; ;main.c: 286:     V.set_sequ = 0;
+"308
+[; ;main.c: 308:     V.set_sequ = 0;
 [e = . _V 17 -> -> 0 `i `uc ]
-"287
-[; ;main.c: 287:     set_vterm(0);
+"309
+[; ;main.c: 309:     set_vterm(0);
 [e ( _set_vterm (1 -> -> 0 `i `uc ]
-"288
-[; ;main.c: 288:     update_lcd(0);
+"310
+[; ;main.c: 310:     update_lcd(0);
 [e ( _update_lcd (1 -> -> 0 `i `uc ]
-"289
-[; ;main.c: 289:    } else {
+"311
+[; ;main.c: 311:    } else {
 }
-[e $U 2276  ]
-[e :U 2275 ]
+[e $U 2283  ]
+[e :U 2282 ]
 {
-"290
-[; ;main.c: 290:     set_vterm(2);
+"312
+[; ;main.c: 312:     set_vterm(2);
 [e ( _set_vterm (1 -> -> 2 `i `uc ]
-"291
-[; ;main.c: 291:     update_lcd(2);
+"313
+[; ;main.c: 313:     update_lcd(2);
 [e ( _update_lcd (1 -> -> 2 `i `uc ]
-"292
-[; ;main.c: 292:    }
+"314
+[; ;main.c: 314:    }
 }
-[e :U 2276 ]
-"293
-[; ;main.c: 293:   }
+[e :U 2283 ]
+"315
+[; ;main.c: 315:   }
 }
-[e :U 2274 ]
-"294
-[; ;main.c: 294:  }
+[e :U 2281 ]
+"316
+[; ;main.c: 316:  }
 }
 [e :U 2257 ]
 [e $U 2258  ]
 [e :U 2259 ]
-"295
-[; ;main.c: 295: }
+"317
+[; ;main.c: 317: }
 [e :UE 2246 ]
 }
 [p f _sprintf 8757376 ]
 [a 9C 37 100 32 37 50 46 52 102 32 32 32 37 100 0 ]
 [a 10C 37 100 32 37 50 46 52 102 32 32 32 37 100 0 ]
-[a 3C 48 46 57 54 0 ]
-[a 7C 48 46 57 54 0 ]
+[a 3C 48 46 57 55 0 ]
+[a 7C 48 46 57 55 0 ]
 [a 11C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 0 ]
 [a 5C 32 83 69 81 85 69 78 67 69 32 84 69 83 84 32 32 0 ]
 [a 1C 32 77 66 77 67 32 83 79 76 65 82 77 79 78 32 32 0 ]

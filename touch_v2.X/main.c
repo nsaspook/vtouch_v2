@@ -158,7 +158,7 @@ extern volatile struct P_data P;
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
-	uint8_t inp_index = 0,i=C_BATT,j=C_PV,k=V_CC;
+	uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
 	// Initialize the device
 	SYSTEM_Initialize();
 
@@ -270,11 +270,33 @@ void main(void)
 		if (check_help(V.flipper)) {
 #ifdef CALIB
 			inp_index += 3;
-			i=V_BAT;
-			j=V_PV;
-			k=V_CBUS;
-			if (inp_index > 12)
+			if (inp_index > 9)
 				inp_index = 0;
+			switch (inp_index) {
+			case 0:
+				i = C_BATT;
+				j = C_PV;
+				k = V_CC;
+				break;
+			case 3:
+				i = V_BAT;
+				j = V_PV;
+				k = V_CBUS;
+				break;
+			case 6:
+				i = V_BBAT;
+				j = V_TEMP;
+				k = V_INVERTER;
+				break;
+			case 9:
+				i = channel_ANB5;
+				j = channel_ANB5;
+				k = channel_ANB5;
+				break;
+			default:
+				break;
+			}
+
 #endif
 		};
 
