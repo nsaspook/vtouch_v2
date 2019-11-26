@@ -79,11 +79,12 @@ adc_result_t get_raw_result(const adcc_channel_t index)
  */
 float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 {
-	if (!(ADC_SCAN_CHAN >> chan & 0x1))
-		return NAN;
 
 	switch (to_what) {
 	case CONV:
+		if (!(ADC_SCAN_CHAN >> chan & 0x1))
+			return NAN;
+
 		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
 				return((float) (int16_t) get_raw_result(chan) - R.n_offset[0]) * C_A200;

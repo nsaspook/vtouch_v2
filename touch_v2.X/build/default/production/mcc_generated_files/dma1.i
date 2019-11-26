@@ -27530,11 +27530,6 @@ void PIN_MANAGER_Initialize (void);
   SNULL,
  } SW_NAMES;
 
-
-
-
-
-
  typedef struct V_data {
   UI_STATES ui_state;
   char buf[64], info[64];
@@ -27548,8 +27543,6 @@ void PIN_MANAGER_Initialize (void);
   volatile uint8_t ticker;
   _Bool flipper;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
-
-
  } V_data;
 
  typedef struct V_help {

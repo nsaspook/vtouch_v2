@@ -27309,9 +27309,10 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/tmr6.h" 2
+# 54 "mcc_generated_files/tmr6.h" 2
+
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
-# 56 "mcc_generated_files/tmr6.h" 2
+# 55 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27767,11 +27768,6 @@ void PIN_MANAGER_Initialize (void);
   SNULL,
  } SW_NAMES;
 
-
-
-
-
-
  typedef struct V_data {
   UI_STATES ui_state;
   char buf[64], info[64];
@@ -27785,8 +27781,6 @@ void PIN_MANAGER_Initialize (void);
   volatile uint8_t ticker;
   _Bool flipper;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
-
-
  } V_data;
 
  typedef struct V_help {

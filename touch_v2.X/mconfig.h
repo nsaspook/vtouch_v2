@@ -38,6 +38,5 @@
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
 
-
 #endif
 

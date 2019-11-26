@@ -158,7 +158,7 @@ extern volatile struct P_data P;
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
-
+	uint8_t inp_index = 0,i=C_BATT,j=C_PV,k=V_CC;
 	// Initialize the device
 	SYSTEM_Initialize();
 
@@ -256,10 +256,10 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
-			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(C_BATT), C.calc[C_BATT], get_switch(SSELECT));
-			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(C_PV), C.calc[C_PV], get_switch(SENTER));
-//			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
-			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(V_CC), C.calc[V_CC], check_switches());
+			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(j), C.calc[j], get_switch(SENTER));
+			//			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
+			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			update_lcd(0);
 		}
@@ -267,7 +267,16 @@ void main(void)
 		/*
 		 * show help display if button pressed
 		 */
-		check_help(V.flipper);
+		if (check_help(V.flipper)) {
+#ifdef CALIB
+			inp_index += 3;
+			i=V_BAT;
+			j=V_PV;
+			k=V_CBUS;
+			if (inp_index > 12)
+				inp_index = 0;
+#endif
+		};
 
 		/*
 		 * show command messages if flag is set for timer duration

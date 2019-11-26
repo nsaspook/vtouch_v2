@@ -27529,11 +27529,6 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   SNULL,
  } SW_NAMES;
 
-
-
-
-
-
  typedef struct V_data {
   UI_STATES ui_state;
   char buf[64], info[64];
@@ -27547,8 +27542,6 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   volatile uint8_t ticker;
   _Bool flipper;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
-
-
  } V_data;
 
  typedef struct V_help {

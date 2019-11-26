@@ -133,11 +133,6 @@ extern "C" {
 		SNULL,
 	} SW_NAMES;
 
-//	typedef struct rbutton_type {
-//		SW_STATES sw;
-//		uint32_t count;
-//	} rbutton_type;
-
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
 		char buf[64], info[64];
@@ -151,15 +146,11 @@ extern "C" {
 		volatile uint8_t ticker;
 		bool flipper;
 		volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
-//		volatile rbutton_type button[MAX_BUTTONS];
-//		volatile uint8_t sw_bitmap;
 	} V_data;
 
 	typedef struct V_help {
 		const char message[18], display[18];
 	} V_help;
-
-
 
 #ifdef	__cplusplus
 }

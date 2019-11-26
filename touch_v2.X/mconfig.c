@@ -37,8 +37,9 @@ bool help_button(void)
 	return false;
 }
 
-void check_help(const bool flipper)
+bool check_help(const bool flipper)
 {
+	bool estatus=false;
 	/*
 	 * show help display
 	 */
@@ -62,6 +63,7 @@ void check_help(const bool flipper)
 		StartTimer(TMR_INFO, TDELAY);
 		mode_lamp_bright(); // mode switch indicator lamp 'button' level
 		update_lcd(1);
+		estatus=true;
 	} else {
 		if (TimerDone(TMR_HELPDIS)) {
 			set_vterm(0);
@@ -74,6 +76,7 @@ void check_help(const bool flipper)
 			}
 		}
 	}
+	return estatus;
 }
 
 /*
