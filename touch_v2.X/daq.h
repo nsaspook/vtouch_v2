@@ -64,8 +64,8 @@
 #define C_A200		0.1438500
 #define C_A100		0.0601000
 
-#define N_OFFSET0	3948
-#define N_OFFSET1	3993
+#define N_OFFSET0	3943
+#define N_OFFSET1	3992
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"

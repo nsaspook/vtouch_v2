@@ -256,10 +256,16 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
+#ifdef CALIB
 			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
 			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
 			//			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
 			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
+#else
+			sprintf(get_vterm_ptr(0, 0), "PV %2.2f PC %2.2f ", C.calc[V_PV],C.calc[C_PV]);
+			sprintf(get_vterm_ptr(1, 0), "BV %2.2f BC %2.2f ", C.calc[V_BAT],C.calc[C_BATT]);
+			sprintf(get_vterm_ptr(2, 0), "CV %2.2f IV %2.2f ", C.calc[V_CC],C.calc[V_INVERTER]);
+#endif
 			StartTimer(TMR_DISPLAY, DDELAY);
 			update_lcd(0);
 		}

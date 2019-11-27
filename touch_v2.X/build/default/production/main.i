@@ -28312,7 +28312,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 84 "./vconfig.h"
+# 85 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28719,10 +28719,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.97");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.98");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.97");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.98");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28770,10 +28770,16 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
-   sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-   sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
 
-   sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
+
+
+
+
+
+   sprintf(get_vterm_ptr(0, 0), "PV %2.2f PC %2.2f ", C.calc[V_PV],C.calc[C_PV]);
+   sprintf(get_vterm_ptr(1, 0), "BV %2.2f BC %2.2f ", C.calc[V_BAT],C.calc[C_BATT]);
+   sprintf(get_vterm_ptr(2, 0), "CV %2.2f IV %2.2f ", C.calc[V_CC],C.calc[V_INVERTER]);
+
    StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
   }
@@ -28782,36 +28788,7 @@ void main(void)
 
 
   if (check_help(V.flipper)) {
-
-   inp_index += 3;
-   if (inp_index > 9)
-    inp_index = 0;
-   switch (inp_index) {
-   case 0:
-    i = C_BATT;
-    j = C_PV;
-    k = V_CC;
-    break;
-   case 3:
-    i = V_BAT;
-    j = V_PV;
-    k = V_CBUS;
-    break;
-   case 6:
-    i = V_BBAT;
-    j = V_TEMP;
-    k = V_INVERTER;
-    break;
-   case 9:
-    i = channel_ANB5;
-    j = channel_ANB5;
-    k = channel_ANB5;
-    break;
-   default:
-    break;
-   }
-
-
+# 307 "main.c"
   };
 
 
