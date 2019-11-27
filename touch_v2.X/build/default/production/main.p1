@@ -139,14 +139,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./daq.h: 82: adc_result_t get_raw_result(const adcc_channel_t);
 [v _get_raw_result `(us ~T0 @X0 0 ef1`CE16625 ]
 "259 main.c
-[; ;main.c: 259:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+[; ;main.c: 259:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
 [c E17013 0 1 2 .. ]
 [n E17013 . SW_OFF SW_ON SW_INVALID  ]
 "46 ./dio.h
 [; ;./dio.h: 46: SW_STATES get_switch(uint8_t);
 [v _get_switch `(E17013 ~T0 @X0 0 ef1`uc ]
 "259 main.c
-[; ;main.c: 259:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+[; ;main.c: 259:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
 [c E17018 0 1 2 3 4 5 6 7 .. ]
 [n E17018 . S0 S1 SSELECT SENTER S4 S5 S6 SNULL  ]
 "57 ./mydisplay.h
@@ -2871,10 +2871,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2271 ]
 "259
-[; ;main.c: 259:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+[; ;main.c: 259:    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
 [e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 9C -> ( _get_raw_result (1 -> _i `E16625 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17018 2 `uc `ui ]
 "260
-[; ;main.c: 260:    sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(j), C.calc[j], get_switch(SENTER));
+[; ;main.c: 260:    sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
 [e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 10C -> ( _get_raw_result (1 -> _j `E16625 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17018 3 `uc `ui ]
 "262
 [; ;main.c: 262:    sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
@@ -3036,11 +3036,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2246 ]
 }
 [p f _sprintf 8757376 ]
-[a 9C 37 100 32 37 50 46 52 102 32 32 32 37 100 0 ]
-[a 10C 37 100 32 37 50 46 52 102 32 32 32 37 100 0 ]
 [a 3C 48 46 57 55 0 ]
 [a 7C 48 46 57 55 0 ]
 [a 11C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 0 ]
+[a 9C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
+[a 10C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
 [a 5C 32 83 69 81 85 69 78 67 69 32 84 69 83 84 32 32 0 ]
 [a 1C 32 77 66 77 67 32 83 79 76 65 82 77 79 78 32 32 0 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 32 32 32 0 ]

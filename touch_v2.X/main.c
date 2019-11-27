@@ -256,8 +256,8 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
-			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d", get_raw_result(j), C.calc[j], get_switch(SENTER));
+			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
 			//			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
 			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
 			StartTimer(TMR_DISPLAY, DDELAY);
