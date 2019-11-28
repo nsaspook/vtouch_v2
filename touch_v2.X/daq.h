@@ -61,11 +61,11 @@
 #define C_SCALE		0.6250000
 #define V_SCALE		4.1254125
 
-#define C_A200		0.1438500
-#define C_A100		0.0601000
+#define C_A200		0.0850000 // BATTERY, second line
+#define C_A100		0.0350000 // PV, first line
 
-#define N_OFFSET0	3943
-#define N_OFFSET1	3992
+#define N_OFFSET0	3943 // BATTERY, second line
+#define N_OFFSET1	3983 // PV, first line
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
