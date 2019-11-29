@@ -15,10 +15,10 @@ volatile struct P_data P = {
  */
 float lp_filter(const float new, const uint8_t bn, const int8_t slow)
 {
-	static float smooth[ADC_BUFFER_SIZE];
+	static float smooth[LP_BUFFER_SIZE];
 	float lp_speed;
 
-	if (bn >= ADC_BUFFER_SIZE) // buffer index check
+	if (bn >= LP_BUFFER_SIZE) // buffer index check
 		return new;
 
 	if (slow == (-1)) { // reset smooth buffer and return original value
@@ -27,7 +27,7 @@ float lp_filter(const float new, const uint8_t bn, const int8_t slow)
 	}
 
 	if (slow) { // some random filter cutoffs
-		lp_speed = 0.066;
+		lp_speed = 0.033;
 	} else {
 		lp_speed = 0.125;
 	}
@@ -48,3 +48,18 @@ void convert_adc_data(void)
 	} while (++i < ADC_BUFFER_SIZE);
 }
 
+/*
+ * buffer model data from DAQ
+ */
+void calc_model_data(void)
+{
+	C.c_bat = C.calc[C_BATT];
+	C.c_pv = C.calc[C_PV];
+	C.v_bat = C.calc[V_BAT];
+	C.v_pv = C.calc[V_PV];
+	C.v_inverter = C.calc[V_INVERTER];
+	C.c_load = lp_filter(C.calc[C_PV]+(-(C.calc[C_BATT])), 16, true);
+	C.p_load = lp_filter(C.c_load * C.v_bat, 17, true);
+	C.p_pv = lp_filter(C.c_pv * C.v_pv, 18, true);
+	C.p_inverter = lp_filter(C.c_load * C.v_inverter, 19, true);
+}

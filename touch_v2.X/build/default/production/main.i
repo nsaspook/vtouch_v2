@@ -28587,9 +28587,11 @@ struct tm *getdate (const char *);
 
 
 
+
 typedef struct C_data {
  float calc[16];
- float c_load, c_bat, c_pv, v_cc, v_pc, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
+ float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
+ float p_load, p_inverter, p_pv;
  float t_comp;
 } C_data;
 
@@ -28625,6 +28627,7 @@ typedef struct P_data {
 
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
+void calc_model_data(void);
 # 128 "main.c" 2
 
 # 1 "./dio.h" 1
@@ -28770,15 +28773,22 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
+   calc_model_data();
 
 
 
 
 
 
-   sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV],C.calc[C_PV]);
-   sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT],C.calc[C_BATT]);
-   sprintf(get_vterm_ptr(2, 0), "CV %2.2f IV %2.2f ", C.calc[V_CC],C.calc[V_INVERTER]);
+   if (get_switch(SSELECT)) {
+    sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
+    sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
+    sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
+   } else {
+    sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
+    sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
+    sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
+   }
 
    StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
@@ -28788,7 +28798,7 @@ void main(void)
 
 
   if (check_help(V.flipper)) {
-# 307 "main.c"
+# 314 "main.c"
   };
 
 
