@@ -61,5 +61,10 @@ void calc_model_data(void)
 	C.c_load = lp_filter(C.calc[C_PV]+(-(C.calc[C_BATT])), 16, true);
 	C.p_load = lp_filter(C.c_load * C.v_bat, 17, true);
 	C.p_pv = lp_filter(C.c_pv * C.v_pv, 18, true);
-	C.p_inverter = lp_filter(C.c_load * C.v_inverter, 19, true);
+	C.p_inverter = lp_filter((C.c_load * C.v_inverter)-STATIC_LOAD_POWER, 19, true);
+	/*
+	 * calculation limits
+	 */
+	if (C.p_inverter<0.0)
+		C.p_inverter=0.0;
 }
