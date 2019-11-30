@@ -27,10 +27,17 @@ H_data* hid_display(H_data* h)
 		break;
 	default:
 	case H_STATE_DISPLAY:
+		/*
 		if (h->select_p) {
 			h->hid_display = HID_PWR;
 		} else {
 			h->hid_display = HID_MAIN;
+		}
+		 */
+		if (!h->wait_select && (h->select_p == SW_OFF)) {
+			h->sequence = ++h->sequence & 0x3;
+			h->hid_display = h->sequence;
+			h->wait_select = true;
 		}
 		break;
 	}
@@ -39,12 +46,12 @@ H_data* hid_display(H_data* h)
 
 void clear_hid_pflags(H_data* h)
 {
-	h->select_p=SW_OFF;
-	h->enter_p=SW_OFF;
+	h->select_p = SW_OFF;
+	h->enter_p = SW_OFF;
 }
 
 void clear_hid_wflags(H_data* h)
 {
-	h->wait_enter=true;
-	h->wait_select=true;
+	h->wait_enter = true;
+	h->wait_select = true;
 }

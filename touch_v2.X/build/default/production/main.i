@@ -28592,7 +28592,7 @@ struct tm *getdate (const char *);
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
- float p_load, p_inverter, p_pv;
+ float p_load, p_inverter, p_pv, p_bat;
  float t_comp;
 } C_data;
 
@@ -28668,6 +28668,7 @@ typedef struct H_data {
  H_CODES hid_display;
  H_STATES h_state;
  _Bool wait_select, select_p, wait_enter, enter_p;
+ uint8_t sequence;
 } H_data;
 
 H_data* hid_input(H_data*);
@@ -28695,6 +28696,7 @@ H_data H = {
  .h_state = H_STATE_INIT,
  .wait_enter = 1,
  .wait_select = 1,
+ .sequence = 0,
 };
 
 
@@ -28762,10 +28764,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.992");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.993");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.992");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.993");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28831,6 +28833,16 @@ void main(void)
     sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
     sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
     break;
+   case HID_RUN:
+    sprintf(get_vterm_ptr(0, 0), "BAT   PWR %3.2f   ", C.p_bat);
+    sprintf(get_vterm_ptr(1, 0), "RUN               ");
+    sprintf(get_vterm_ptr(2, 0), "RUN               ");
+    break;
+   case HID_AUX:
+    sprintf(get_vterm_ptr(0, 0), "AUX               ");
+    sprintf(get_vterm_ptr(1, 0), "AUX               ");
+    sprintf(get_vterm_ptr(2, 0), "AUX               ");
+    break;
    default:
     break;
    }
@@ -28844,7 +28856,7 @@ void main(void)
 
 
   if (check_help(V.flipper)) {
-# 329 "main.c"
+# 340 "main.c"
   };
 
 

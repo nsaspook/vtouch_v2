@@ -147,6 +147,7 @@ H_data H = {
 	.h_state = H_STATE_INIT,
 	.wait_enter = true,
 	.wait_select = true,
+	.sequence = 0,
 };
 
 /*
@@ -282,6 +283,16 @@ void main(void)
 				sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
 				sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
 				sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
+				break;
+			case HID_RUN:
+				sprintf(get_vterm_ptr(0, 0), "BAT   PWR %3.2f   ", C.p_bat);
+				sprintf(get_vterm_ptr(1, 0), "RUN               ");
+				sprintf(get_vterm_ptr(2, 0), "RUN               ");
+				break;
+			case HID_AUX:
+				sprintf(get_vterm_ptr(0, 0), "AUX               ");
+				sprintf(get_vterm_ptr(1, 0), "AUX               ");
+				sprintf(get_vterm_ptr(2, 0), "AUX               ");
 				break;
 			default:
 				break;
