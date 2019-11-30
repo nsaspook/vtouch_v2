@@ -286,6 +286,7 @@ void main(void)
 			default:
 				break;
 			}
+			clear_hid_pflags(&H);
 #endif
 			StartTimer(TMR_DISPLAY, DDELAY);
 			update_lcd(0);

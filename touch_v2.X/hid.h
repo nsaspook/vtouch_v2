@@ -59,6 +59,8 @@ typedef struct H_data { // control data structure
 
 H_data* hid_input(H_data*);
 H_data* hid_display(H_data*);
+void clear_hid_pflags(H_data*);
+void clear_hid_wflags(H_data*);
 
 #endif	/* HID_H */
 

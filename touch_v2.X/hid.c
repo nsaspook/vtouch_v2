@@ -36,3 +36,15 @@ H_data* hid_display(H_data* h)
 	}
 	return h;
 }
+
+void clear_hid_pflags(H_data* h)
+{
+	h->select_p=SW_OFF;
+	h->enter_p=SW_OFF;
+}
+
+void clear_hid_wflags(H_data* h)
+{
+	h->wait_enter=true;
+	h->wait_select=true;
+}

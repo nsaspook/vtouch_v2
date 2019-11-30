@@ -28672,6 +28672,8 @@ typedef struct H_data {
 
 H_data* hid_input(H_data*);
 H_data* hid_display(H_data*);
+void clear_hid_pflags(H_data*);
+void clear_hid_wflags(H_data*);
 # 130 "main.c" 2
 
 
@@ -28760,10 +28762,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.991");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.992");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.991");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.992");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28832,6 +28834,7 @@ void main(void)
    default:
     break;
    }
+   clear_hid_pflags(&H);
 
    StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
@@ -28841,7 +28844,7 @@ void main(void)
 
 
   if (check_help(V.flipper)) {
-# 328 "main.c"
+# 329 "main.c"
   };
 
 

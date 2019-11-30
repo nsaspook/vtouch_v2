@@ -151,6 +151,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 282:     sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
 [c E16625 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
 [n E16625 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
+"62 ./hid.h
+[; ;./hid.h: 62: void clear_hid_pflags(H_data*);
+[v _clear_hid_pflags `(v ~T0 @X0 0 ef1`*S2246 ]
 "57 ./mydisplay.h
 [; ;./mydisplay.h: 57: _Bool check_help(const _Bool);
 [v _check_help `(a ~T0 @X0 0 ef1`Ca ]
@@ -2744,7 +2747,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 216:    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 1C ]
 "217
-[; ;main.c: 217:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.991");
+[; ;main.c: 217:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.992");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 2C :s 3C ]
 "218
 [; ;main.c: 218:    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
@@ -2753,7 +2756,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 219:    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 2 `i `uc :s 5C ]
 "220
-[; ;main.c: 220:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.991");
+[; ;main.c: 220:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.992");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 2 `i `uc :s 6C :s 7C ]
 "221
 [; ;main.c: 221:    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
@@ -2931,74 +2934,77 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E17380 0 `ui 2276
  2277 ]
 [e :U 2273 ]
-"290
-[; ;main.c: 290:    StartTimer(TMR_DISPLAY, 250);
-[e ( _StartTimer (2 , -> . `E17098 10 `uc -> -> 250 `i `us ]
+"289
+[; ;main.c: 289:    clear_hid_pflags(&H);
+[e ( _clear_hid_pflags (1 &U _H ]
 "291
-[; ;main.c: 291:    update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 291:    StartTimer(TMR_DISPLAY, 250);
+[e ( _StartTimer (2 , -> . `E17098 10 `uc -> -> 250 `i `us ]
 "292
-[; ;main.c: 292:   }
+[; ;main.c: 292:    update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"293
+[; ;main.c: 293:   }
 }
 [e :U 2271 ]
-"297
-[; ;main.c: 297:   if (check_help(V.flipper)) {
+"298
+[; ;main.c: 298:   if (check_help(V.flipper)) {
 [e $ ! != -> ( _check_help (1 . _V 24 `i -> 0 `i 2278  ]
 {
-"328
-[; ;main.c: 328:   };
+"329
+[; ;main.c: 329:   };
 }
 [e :U 2278 ]
-"333
-[; ;main.c: 333:   if (V.set_sequ) {
+"334
+[; ;main.c: 334:   if (V.set_sequ) {
 [e $ ! != -> . _V 17 `i -> 0 `i 2279  ]
 {
-"334
-[; ;main.c: 334:    if (TimerDone(TMR_INFO)) {
+"335
+[; ;main.c: 335:    if (TimerDone(TMR_INFO)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17098 7 `uc `i -> 0 `i 2280  ]
 {
-"335
-[; ;main.c: 335:     V.set_sequ = 0;
-[e = . _V 17 -> -> 0 `i `uc ]
 "336
-[; ;main.c: 336:     set_vterm(0);
-[e ( _set_vterm (1 -> -> 0 `i `uc ]
+[; ;main.c: 336:     V.set_sequ = 0;
+[e = . _V 17 -> -> 0 `i `uc ]
 "337
-[; ;main.c: 337:     update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 337:     set_vterm(0);
+[e ( _set_vterm (1 -> -> 0 `i `uc ]
 "338
-[; ;main.c: 338:    } else {
+[; ;main.c: 338:     update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"339
+[; ;main.c: 339:    } else {
 }
 [e $U 2281  ]
 [e :U 2280 ]
 {
-"339
-[; ;main.c: 339:     set_vterm(2);
-[e ( _set_vterm (1 -> -> 2 `i `uc ]
 "340
-[; ;main.c: 340:     update_lcd(2);
-[e ( _update_lcd (1 -> -> 2 `i `uc ]
+[; ;main.c: 340:     set_vterm(2);
+[e ( _set_vterm (1 -> -> 2 `i `uc ]
 "341
-[; ;main.c: 341:    }
+[; ;main.c: 341:     update_lcd(2);
+[e ( _update_lcd (1 -> -> 2 `i `uc ]
+"342
+[; ;main.c: 342:    }
 }
 [e :U 2281 ]
-"342
-[; ;main.c: 342:   }
+"343
+[; ;main.c: 343:   }
 }
 [e :U 2279 ]
-"343
-[; ;main.c: 343:  }
+"344
+[; ;main.c: 344:  }
 }
 [e :U 2258 ]
 [e $U 2259  ]
 [e :U 2260 ]
-"344
-[; ;main.c: 344: }
+"345
+[; ;main.c: 345: }
 [e :UE 2247 ]
 }
 [p f _sprintf 8757248 ]
-[a 3C 48 46 57 57 49 0 ]
-[a 7C 48 46 57 57 49 0 ]
+[a 3C 48 46 57 57 50 0 ]
+[a 7C 48 46 57 57 50 0 ]
 [a 12C 80 86 32 37 50 46 50 102 32 80 65 32 37 50 46 50 102 32 0 ]
 [a 14C 67 86 32 37 50 46 50 102 32 76 65 32 37 50 46 50 102 32 0 ]
 [a 13C 66 86 32 37 50 46 50 102 32 66 65 32 37 50 46 50 102 32 0 ]
