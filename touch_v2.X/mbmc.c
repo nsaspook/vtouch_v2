@@ -66,5 +66,5 @@ void calc_model_data(void)
 	 * calculation limits
 	 */
 	if (C.p_inverter<0.0)
-		C.p_inverter=0.0;
+		C.p_inverter=0.0001;
 }

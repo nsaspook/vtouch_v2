@@ -28645,6 +28645,35 @@ uint8_t check_switches(void);
 void clear_switch(uint8_t);
 # 129 "main.c" 2
 
+# 1 "./hid.h" 1
+# 37 "./hid.h"
+typedef enum {
+ HID_MAIN = 0,
+ HID_PWR,
+ HID_RUN,
+ HID_AUX,
+ HID_LAST,
+} H_CODES;
+
+typedef enum {
+ H_STATE_INIT = 0,
+ H_STATE_DISPLAY,
+ H_STATE_WAIT,
+ H_STATE_LOG,
+ H_STATE_COMM,
+ H_STATE_ERROR
+} H_STATES;
+
+typedef struct H_data {
+ H_CODES hid_display;
+ H_STATES h_state;
+ _Bool wait_select, select_p, wait_enter, enter_p;
+} H_data;
+
+H_data* hid_input(H_data*);
+H_data* hid_display(H_data*);
+# 130 "main.c" 2
+
 
 V_data V = {
  .ticker = 45,
@@ -28658,6 +28687,12 @@ V_data V = {
  .highint_count = 0,
  .lowint_count = 0,
  .timerint_count = 0,
+};
+H_data H = {
+ .hid_display = HID_MAIN,
+ .h_state = H_STATE_INIT,
+ .wait_enter = 1,
+ .wait_select = 1,
 };
 
 
@@ -28676,7 +28711,9 @@ extern volatile struct P_data P;
 void main(void)
 {
  UI_STATES mode;
- uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
+
+
+
 
  SYSTEM_Initialize();
 
@@ -28723,10 +28760,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.99");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.991");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.99");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.991");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28780,15 +28817,20 @@ void main(void)
 
 
 
-
-   if (get_switch(SSELECT)) {
+   hid_display(&H);
+   switch (H.hid_display) {
+   case HID_PWR:
     sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
     sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
     sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
-   } else {
+    break;
+   case HID_MAIN:
     sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
     sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
     sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
+    break;
+   default:
+    break;
    }
 
    StartTimer(TMR_DISPLAY, 250);
@@ -28799,7 +28841,7 @@ void main(void)
 
 
   if (check_help(V.flipper)) {
-# 314 "main.c"
+# 328 "main.c"
   };
 
 

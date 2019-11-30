@@ -27,4 +27,5 @@ mydisplay.h  \
 daq.h  \
 tests.h  \
 mbmc.h  \
-dio.h 
+dio.h  \
+hid.h 

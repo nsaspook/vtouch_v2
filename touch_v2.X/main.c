@@ -127,6 +127,7 @@ typedef signed long long int24_t;
 #include "daq.h"
 #include "mbmc.h"
 #include "dio.h"
+#include "hid.h"
 
 V_data V = {
 	.ticker = 45,
@@ -140,6 +141,12 @@ V_data V = {
 	.highint_count = 0,
 	.lowint_count = 0,
 	.timerint_count = 0,
+};
+H_data H = {
+	.hid_display = HID_MAIN,
+	.h_state = H_STATE_INIT,
+	.wait_enter = true,
+	.wait_select = true,
 };
 
 /*
@@ -158,7 +165,9 @@ extern volatile struct P_data P;
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
+#ifdef CALIB
 	uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
+#endif
 	// Initialize the device
 	SYSTEM_Initialize();
 
@@ -260,17 +269,22 @@ void main(void)
 #ifdef CALIB
 			sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
 			sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
-			//			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %lu   #", get_raw_result(V_CC), C.calc[V_CC], V.timerint_count);
 			sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
 #else
-			if (get_switch(SSELECT)) {
+			hid_display(&H);
+			switch (H.hid_display) {
+			case HID_PWR:
 				sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
 				sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
 				sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
-			} else {
+				break;
+			case HID_MAIN:
 				sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
 				sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
 				sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
+				break;
+			default:
+				break;
 			}
 #endif
 			StartTimer(TMR_DISPLAY, DDELAY);
