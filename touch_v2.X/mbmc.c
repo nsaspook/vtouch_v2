@@ -2,6 +2,7 @@
 #include "mcc_generated_files/ext_int.h"
 
 extern C_data C;
+extern V_data V;
 
 struct tm t_mbmc; // don't use the xc8 clock function
 volatile uint32_t utctime = 0; // utctime set from remote ntp server
@@ -40,11 +41,11 @@ void convert_adc_data(void)
 	uint8_t i = 0;
 
 	do {
-#ifdef CALIB
-		C.calc[i] = lp_filter(conv_raw_result(i, O_CONV), i, true);
-#else
-		C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, false);
-#endif
+		if (V.calib) {
+			C.calc[i] = lp_filter(conv_raw_result(i, O_CONV), i, true);
+		} else {
+			C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, false);
+		}
 	} while (++i < ADC_BUFFER_SIZE);
 }
 
@@ -61,11 +62,11 @@ void calc_model_data(void)
 	C.c_load = lp_filter(C.calc[C_PV]+(-(C.calc[C_BATT])), 16, true);
 	C.p_load = lp_filter(C.c_load * C.v_bat, 17, true);
 	C.p_pv = lp_filter(C.c_pv * C.v_pv, 18, true);
-	C.p_inverter = lp_filter((C.c_load * C.v_inverter)-STATIC_LOAD_POWER, 19, true);
+	C.p_inverter = lp_filter((C.c_load * C.v_inverter) - STATIC_LOAD_POWER, 19, true);
 	C.p_bat = lp_filter(C.c_bat * C.v_bat, 20, true);
 	/*
 	 * calculation limits
 	 */
-	if (C.p_inverter<0.0)
-		C.p_inverter=0.0001;
+	if (C.p_inverter < 0.0)
+		C.p_inverter = 0.0001;
 }

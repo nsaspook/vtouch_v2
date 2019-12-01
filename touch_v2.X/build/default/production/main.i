@@ -28377,7 +28377,7 @@ void PMD_Initialize(void);
   uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
   volatile uint8_t ticker;
-  _Bool flipper;
+  _Bool flipper, calib;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
@@ -28690,6 +28690,7 @@ V_data V = {
  .highint_count = 0,
  .lowint_count = 0,
  .timerint_count = 0,
+ .calib = 0,
 };
 H_data H = {
  .hid_display = HID_MAIN,
@@ -28715,8 +28716,7 @@ extern volatile struct P_data P;
 void main(void)
 {
  UI_STATES mode;
-
-
+ uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
 
 
  SYSTEM_Initialize();
@@ -28817,37 +28817,47 @@ void main(void)
    }
    calc_model_data();
 
-
-
-
-
-   hid_display(&H);
-   switch (H.hid_display) {
-   case HID_PWR:
-    sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
-    sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
-    sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
-    break;
-   case HID_MAIN:
-    sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
-    sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
-    sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
-    break;
-   case HID_RUN:
-    sprintf(get_vterm_ptr(0, 0), "BAT  PWR %3.2f    ", C.p_bat);
-    sprintf(get_vterm_ptr(1, 0), "RUN               ");
-    sprintf(get_vterm_ptr(2, 0), "RUN               ");
-    break;
-   case HID_AUX:
-    sprintf(get_vterm_ptr(0, 0), "AUX               ");
-    sprintf(get_vterm_ptr(1, 0), "AUX               ");
-    sprintf(get_vterm_ptr(2, 0), "AUX               ");
-    break;
-   default:
-    break;
+   if (0) {
+    sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+    sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
+    sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
+   } else {
+    hid_display(&H);
+    switch (H.hid_display) {
+    case HID_PWR:
+     V.calib = 0;
+     sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
+     sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
+     sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
+     break;
+    case HID_MAIN:
+     V.calib = 0;
+     sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
+     sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
+     sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
+     break;
+    case HID_RUN:
+     V.calib = 0;
+     sprintf(get_vterm_ptr(0, 0), "BAT  PWR %3.2f    ", C.p_bat);
+     sprintf(get_vterm_ptr(1, 0), "RUN               ");
+     sprintf(get_vterm_ptr(2, 0), "RUN               ");
+     break;
+    case HID_AUX:
+     if (!V.calib) {
+      lp_filter(0.0, i, -1);
+      lp_filter(0.0, j, -1);
+      lp_filter(0.0, k, -1);
+     }
+     V.calib = 1;
+     sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+     sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
+     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
+     break;
+    default:
+     break;
+    }
+    clear_hid_pflags(&H);
    }
-   clear_hid_pflags(&H);
-
    StartTimer(TMR_DISPLAY, 250);
    update_lcd(0);
   }
@@ -28856,7 +28866,34 @@ void main(void)
 
 
   if (check_help(V.flipper)) {
-# 340 "main.c"
+   V.calib = 0;
+   inp_index += 3;
+   if (inp_index > 9)
+    inp_index = 0;
+   switch (inp_index) {
+   case 0:
+    i = C_BATT;
+    j = C_PV;
+    k = V_CC;
+    break;
+   case 3:
+    i = V_BAT;
+    j = V_PV;
+    k = V_CBUS;
+    break;
+   case 6:
+    i = V_BBAT;
+    j = V_TEMP;
+    k = V_INVERTER;
+    break;
+   case 9:
+    i = channel_ANB5;
+    j = channel_ANB5;
+    k = channel_ANB5;
+    break;
+   default:
+    break;
+   }
   };
 
 

@@ -147,7 +147,7 @@ extern "C" {
 		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2;
 		terminal_type response;
 		volatile uint8_t ticker;
-		bool flipper;
+		bool flipper, calib;
 		volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
 	} V_data;
 

@@ -42,6 +42,6 @@
 #define DEBUG_SWH2
 #endif
 
-//#define CALIB
+#define CALIB	false
 #endif	/* XC_HEADER_TEMPLATE_H */
 
