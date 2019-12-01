@@ -28834,7 +28834,7 @@ void main(void)
     sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
     break;
    case HID_RUN:
-    sprintf(get_vterm_ptr(0, 0), "BAT   PWR %3.2f   ", C.p_bat);
+    sprintf(get_vterm_ptr(0, 0), "BAT  PWR %3.2f    ", C.p_bat);
     sprintf(get_vterm_ptr(1, 0), "RUN               ");
     sprintf(get_vterm_ptr(2, 0), "RUN               ");
     break;

@@ -24,16 +24,11 @@ H_data* hid_display(H_data* h)
 		h->hid_display = HID_MAIN;
 		h->wait_enter = true;
 		h->wait_select = true;
+		h->select_p=SW_OFF;
+		h->enter_p=SW_OFF;
 		break;
 	default:
 	case H_STATE_DISPLAY:
-		/*
-		if (h->select_p) {
-			h->hid_display = HID_PWR;
-		} else {
-			h->hid_display = HID_MAIN;
-		}
-		 */
 		if (!h->wait_select && (h->select_p == SW_OFF)) {
 			h->sequence = ++h->sequence & 0x3;
 			h->hid_display = h->sequence;
