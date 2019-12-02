@@ -24,8 +24,8 @@ H_data* hid_display(H_data* h)
 		h->hid_display = HID_MAIN;
 		h->wait_enter = true;
 		h->wait_select = true;
-		h->select_p=SW_OFF;
-		h->enter_p=SW_OFF;
+		h->select_p = SW_OFF;
+		h->enter_p = SW_OFF;
 		break;
 	default:
 	case H_STATE_DISPLAY:
@@ -37,6 +37,15 @@ H_data* hid_display(H_data* h)
 		break;
 	}
 	return h;
+}
+
+bool check_enter_button(H_data* h)
+{
+	if (!h->wait_enter && (h->enter_p == SW_OFF)) {
+		h->wait_enter = true;
+		return true;
+	}
+	return false;
 }
 
 void clear_hid_pflags(H_data* h)

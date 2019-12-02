@@ -28673,6 +28673,7 @@ typedef struct H_data {
 
 H_data* hid_input(H_data*);
 H_data* hid_display(H_data*);
+_Bool check_enter_button(H_data*);
 void clear_hid_pflags(H_data*);
 void clear_hid_wflags(H_data*);
 # 130 "main.c" 2
@@ -28865,7 +28866,9 @@ void main(void)
 
 
 
-  if (check_help(V.flipper)) {
+  check_help(V.flipper);
+
+  if (check_enter_button(&H)) {
    V.calib = 0;
    inp_index += 3;
    if (inp_index > 9)

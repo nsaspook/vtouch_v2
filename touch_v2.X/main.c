@@ -316,7 +316,9 @@ void main(void)
 		/*
 		 * show help display if button pressed
 		 */
-		if (check_help(V.flipper)) {
+		check_help(V.flipper);
+
+		if (check_enter_button(&H)) {
 			V.calib = false;
 			inp_index += 3;
 			if (inp_index > 9)
