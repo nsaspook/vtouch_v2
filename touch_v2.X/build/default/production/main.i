@@ -28851,7 +28851,7 @@ void main(void)
      V.calib = 1;
      sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
      sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
-     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
+     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index + 1);
      break;
     default:
      break;
