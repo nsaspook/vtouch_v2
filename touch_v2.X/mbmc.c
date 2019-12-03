@@ -70,5 +70,19 @@ void calc_model_data(void)
 		 */
 		if (C.p_inverter < 0.0)
 			C.p_inverter = 0.0001;
+		/*
+		 * battery current Ah capacity calculation
+		 */
+		C.dynamic_ah = C.static_ah;
 	}
+}
+
+/*
+ * boot battery condition calculation
+ */
+void static_soc(void)
+{
+	C.static_ah = C.bank_ah;
+	C.runtime = 120;
+	C.soc = 100;
 }

@@ -157,7 +157,9 @@ H_data H = {
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
-C_data C;
+C_data C = {
+	.bank_ah = 225.0,
+};
 
 extern volatile struct P_data P;
 
@@ -230,6 +232,7 @@ void main(void)
 
 			start_adc_scan();
 			start_switch_handler();
+			static_soc();
 
 			break;
 		case UI_STATE_HOST:
@@ -290,8 +293,8 @@ void main(void)
 				case HID_RUN:
 					V.calib = false;
 					sprintf(get_vterm_ptr(0, 0), "BAT  PWR %3.2f    ", C.p_bat);
-					sprintf(get_vterm_ptr(1, 0), "RUN               ");
-					sprintf(get_vterm_ptr(2, 0), "RUN               ");
+					sprintf(get_vterm_ptr(1, 0), "BAT AH   %3.2f    ", C.dynamic_ah);
+					sprintf(get_vterm_ptr(2, 0), "SOC %d RUN %d     ", C.soc, C.runtime);
 					break;
 				case HID_AUX:
 					if (!V.calib) {

@@ -28594,6 +28594,8 @@ typedef struct C_data {
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
  float p_load, p_inverter, p_pv, p_bat;
  float t_comp;
+ float bank_ah, static_ah, dynamic_ah;
+ uint16_t runtime, soc;
 } C_data;
 
 typedef struct P_data {
@@ -28629,6 +28631,7 @@ typedef struct P_data {
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
+void static_soc(void);
 # 128 "main.c" 2
 
 # 1 "./dio.h" 1
@@ -28707,7 +28710,9 @@ H_data H = {
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
-C_data C;
+C_data C = {
+ .bank_ah = 225.0,
+};
 
 extern volatile struct P_data P;
 
@@ -28765,10 +28770,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.994");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.995");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.994");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.995");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28780,6 +28785,7 @@ void main(void)
 
    start_adc_scan();
    start_switch_handler();
+   static_soc();
 
    break;
   case UI_STATE_HOST:
@@ -28840,8 +28846,8 @@ void main(void)
     case HID_RUN:
      V.calib = 0;
      sprintf(get_vterm_ptr(0, 0), "BAT  PWR %3.2f    ", C.p_bat);
-     sprintf(get_vterm_ptr(1, 0), "RUN               ");
-     sprintf(get_vterm_ptr(2, 0), "RUN               ");
+     sprintf(get_vterm_ptr(1, 0), "BAT AH   %3.2f    ", C.dynamic_ah);
+     sprintf(get_vterm_ptr(2, 0), "SOC %d RUN %d     ", C.soc, C.runtime);
      break;
     case HID_AUX:
      if (!V.calib) {

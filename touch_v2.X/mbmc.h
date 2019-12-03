@@ -45,6 +45,8 @@ typedef struct C_data { // real calculated variables
 	float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
 	float p_load, p_inverter, p_pv, p_bat;
 	float t_comp;
+	float bank_ah, static_ah, dynamic_ah;
+	uint16_t runtime, soc;
 } C_data;
 
 typedef struct P_data {
@@ -80,5 +82,6 @@ typedef struct P_data {
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
+void static_soc(void);
 
 #endif
