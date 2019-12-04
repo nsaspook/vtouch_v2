@@ -27465,7 +27465,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 86 "./vconfig.h"
+# 88 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27794,6 +27794,8 @@ void init_display(void)
  ringBufS_init(spi_link.tx1b);
 
  LATEbits.LATE2 = 1;
+
+
  do { LATCbits.LATC2 = 1; } while(0);
  wdtdelay(350000);
  send_lcd_cmd(0x39);
@@ -27810,6 +27812,7 @@ void init_display(void)
  SPI1CON2 = 0x02;
  SPI1CON1 = 0x40;
  SPI1CON0 = 0x83;
+
  SPI1INTFbits.SPI1TXUIF = 0;
  DMA1CON1bits.DMODE = 0;
  DMA1CON1bits.DSTP = 0;

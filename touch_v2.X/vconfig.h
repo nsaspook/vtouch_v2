@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.995"
+#define VER	"0.996"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -55,6 +55,8 @@ extern "C" {
 #define EADOGM_CMD_SELECT_R1     0b00010000
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
+	
+//#define NHD		// 20x4 SPI display
 
 #define T1	500
 #define T2	3000
@@ -79,10 +81,13 @@ extern "C" {
 	 */
 
 #define TX_RESERVE	59
-
+#ifdef  NHD
+#define MAX_LINE	20
+#else
 #define MAX_LINE	16
+#endif
 #define MAX_BUTTONS	8
-
+	
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;
 		uint8_t SPI_AUX : 1;

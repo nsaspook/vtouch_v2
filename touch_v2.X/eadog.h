@@ -27,7 +27,7 @@ extern "C" {
 #include "ringbufs.h"
 
 #define LCD_CMD_MASK	0x01
-#define LCD_CMD_SET		0x100
+#define LCD_CMD_SET	0x100
 #define LCD_CLEAR_HOME	0x04
 
 	void wdtdelay(uint32_t);
