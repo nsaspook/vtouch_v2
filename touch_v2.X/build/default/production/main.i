@@ -7,7 +7,7 @@
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 111 "main.c"
+# 112 "main.c"
 #pragma warning disable 520
 #pragma warning disable 1498
 
@@ -171,7 +171,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 119 "main.c" 2
+# 120 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
@@ -227,7 +227,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 120 "main.c" 2
+# 121 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -27902,6 +27902,33 @@ void TMR6_DefaultInterruptHandler(void);
  void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 59 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/tmr3.h" 1
+# 101 "./mcc_generated_files/tmr3.h"
+void TMR3_Initialize(void);
+# 130 "./mcc_generated_files/tmr3.h"
+void TMR3_StartTimer(void);
+# 162 "./mcc_generated_files/tmr3.h"
+void TMR3_StopTimer(void);
+# 197 "./mcc_generated_files/tmr3.h"
+uint16_t TMR3_ReadTimer(void);
+# 236 "./mcc_generated_files/tmr3.h"
+void TMR3_WriteTimer(uint16_t timerVal);
+# 272 "./mcc_generated_files/tmr3.h"
+void TMR3_Reload(void);
+# 311 "./mcc_generated_files/tmr3.h"
+void TMR3_StartSinglePulseAcquisition(void);
+# 350 "./mcc_generated_files/tmr3.h"
+uint8_t TMR3_CheckGateValueStatus(void);
+# 368 "./mcc_generated_files/tmr3.h"
+void TMR3_CallBack(void);
+# 386 "./mcc_generated_files/tmr3.h"
+ void TMR3_SetInterruptHandler(void (* InterruptHandler)(void));
+# 404 "./mcc_generated_files/tmr3.h"
+extern void (*TMR3_InterruptHandler)(void);
+# 422 "./mcc_generated_files/tmr3.h"
+void TMR3_DefaultInterruptHandler(void);
+# 60 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/tmr2.h" 1
 # 79 "./mcc_generated_files/tmr2.h"
 typedef enum
@@ -28140,27 +28167,6 @@ void TMR2_Period8BitSet(uint8_t periodVal);
 void TMR2_LoadPeriodRegister(uint8_t periodVal);
 # 847 "./mcc_generated_files/tmr2.h"
 _Bool TMR2_HasOverflowOccured(void);
-# 60 "./mcc_generated_files/mcc.h" 2
-
-# 1 "./mcc_generated_files/ext_int.h" 1
-# 406 "./mcc_generated_files/ext_int.h"
-void EXT_INT_Initialize(void);
-# 434 "./mcc_generated_files/ext_int.h"
-void INT0_CallBack(void);
-# 457 "./mcc_generated_files/ext_int.h"
-void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
-# 481 "./mcc_generated_files/ext_int.h"
-extern void (*INT0_InterruptHandler)(void);
-# 505 "./mcc_generated_files/ext_int.h"
-void INT0_DefaultInterruptHandler(void);
-# 529 "./mcc_generated_files/ext_int.h"
-void INT1_CallBack(void);
-# 552 "./mcc_generated_files/ext_int.h"
-void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
-# 576 "./mcc_generated_files/ext_int.h"
-extern void (*INT1_InterruptHandler)(void);
-# 600 "./mcc_generated_files/ext_int.h"
-void INT1_DefaultInterruptHandler(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/memory.h" 1
@@ -28181,6 +28187,27 @@ uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
 void MEMORY_Tasks(void);
 # 62 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/ext_int.h" 1
+# 406 "./mcc_generated_files/ext_int.h"
+void EXT_INT_Initialize(void);
+# 434 "./mcc_generated_files/ext_int.h"
+void INT0_CallBack(void);
+# 457 "./mcc_generated_files/ext_int.h"
+void INT0_SetInterruptHandler(void (* InterruptHandler)(void));
+# 481 "./mcc_generated_files/ext_int.h"
+extern void (*INT0_InterruptHandler)(void);
+# 505 "./mcc_generated_files/ext_int.h"
+void INT0_DefaultInterruptHandler(void);
+# 529 "./mcc_generated_files/ext_int.h"
+void INT1_CallBack(void);
+# 552 "./mcc_generated_files/ext_int.h"
+void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
+# 576 "./mcc_generated_files/ext_int.h"
+extern void (*INT1_InterruptHandler)(void);
+# 600 "./mcc_generated_files/ext_int.h"
+void INT1_DefaultInterruptHandler(void);
+# 63 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/uart2.h" 1
 # 77 "./mcc_generated_files/uart2.h"
@@ -28212,7 +28239,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 445 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 63 "./mcc_generated_files/mcc.h" 2
+# 64 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/uart1.h" 1
 # 77 "./mcc_generated_files/uart1.h"
@@ -28244,17 +28271,17 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
  void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 445 "./mcc_generated_files/uart1.h"
  void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 64 "./mcc_generated_files/mcc.h" 2
+# 65 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/dma1.h" 1
 # 114 "./mcc_generated_files/dma1.h"
 void DMA1_Initialize(void);
-# 65 "./mcc_generated_files/mcc.h" 2
+# 66 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/dma2.h" 1
 # 114 "./mcc_generated_files/dma2.h"
 void DMA2_Initialize(void);
-# 66 "./mcc_generated_files/mcc.h" 2
+# 67 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/spi1.h" 1
 # 55 "./mcc_generated_files/spi1.h"
@@ -28271,19 +28298,19 @@ void SPI1_Initialize(void);
 uint8_t SPI1_Exchange8bit(uint8_t data);
 # 192 "./mcc_generated_files/spi1.h"
 uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 67 "./mcc_generated_files/mcc.h" 2
+# 68 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/clkref.h" 1
 # 92 "./mcc_generated_files/clkref.h"
 void CLKREF_Initialize(void);
-# 68 "./mcc_generated_files/mcc.h" 2
-# 83 "./mcc_generated_files/mcc.h"
+# 69 "./mcc_generated_files/mcc.h" 2
+# 84 "./mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 96 "./mcc_generated_files/mcc.h"
+# 97 "./mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 109 "./mcc_generated_files/mcc.h"
+# 110 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 121 "main.c" 2
+# 122 "main.c" 2
 
 
 # 1 "./eadog.h" 1
@@ -28312,7 +28339,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 88 "./vconfig.h"
+# 91 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28410,7 +28437,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 123 "main.c" 2
+# 124 "main.c" 2
 
 # 1 "./timers.h" 1
 # 11 "./timers.h"
@@ -28436,13 +28463,13 @@ enum APP_TIMERS {
 void StartTimer(const uint8_t timer, const uint16_t count);
 _Bool TimerDone(const uint8_t timer);
 void WaitMs(const uint16_t numMilliseconds);
-# 124 "main.c" 2
+# 125 "main.c" 2
 
 # 1 "./mconfig.h" 1
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
-# 125 "main.c" 2
+# 126 "main.c" 2
 
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
@@ -28464,7 +28491,7 @@ _Bool help_button(void);
 _Bool check_help(const _Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
-# 126 "main.c" 2
+# 127 "main.c" 2
 
 # 1 "./daq.h" 1
 # 33 "./daq.h"
@@ -28481,7 +28508,7 @@ _Bool check_adc_scan(void);
 void clear_adc_scan(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
-# 127 "main.c" 2
+# 128 "main.c" 2
 
 # 1 "./mbmc.h" 1
 # 35 "./mbmc.h"
@@ -28596,6 +28623,7 @@ typedef struct C_data {
  float t_comp;
  float bank_ah, static_ah, dynamic_ah;
  uint16_t runtime, soc;
+ _Bool update;
 } C_data;
 
 typedef struct P_data {
@@ -28632,7 +28660,7 @@ float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
 void static_soc(void);
-# 128 "main.c" 2
+# 129 "main.c" 2
 
 # 1 "./dio.h" 1
 # 40 "./dio.h"
@@ -28646,7 +28674,7 @@ SW_STATES get_switch(uint8_t);
 rbutton_type get_switch_data(uint8_t);
 uint8_t check_switches(void);
 void clear_switch(uint8_t);
-# 129 "main.c" 2
+# 130 "main.c" 2
 
 # 1 "./hid.h" 1
 # 37 "./hid.h"
@@ -28679,7 +28707,15 @@ H_data* hid_display(H_data*);
 _Bool check_enter_button(H_data*);
 void clear_hid_pflags(H_data*);
 void clear_hid_wflags(H_data*);
-# 130 "main.c" 2
+# 131 "main.c" 2
+
+# 1 "./bsoc.h" 1
+# 38 "./bsoc.h"
+void calc_bsoc(void);
+void init_bsoc(void);
+void start_bsoc(void);
+void stop_bsoc(void);
+# 132 "main.c" 2
 
 
 V_data V = {
@@ -28710,7 +28746,7 @@ H_data H = {
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
-C_data C = {
+volatile C_data C = {
  .bank_ah = 225.0,
 };
 
@@ -28770,10 +28806,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.996");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.997");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.996");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.997");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -28786,6 +28822,7 @@ void main(void)
    start_adc_scan();
    start_switch_handler();
    static_soc();
+   init_bsoc();
 
    break;
   case UI_STATE_HOST:

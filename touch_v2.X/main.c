@@ -62,6 +62,7 @@
  * USART2 		Is the client comm port 38400
  * USART1		MBMC host network 38400
  * timer 2 100 us PWM clock, no interrupt
+ * timer 3 one second housekeeping clock for battery state tracking, low priority interrupt
  * timer 5 one second timer, interrupt
  * timer 6 500 us software timer ticker, interrupt
  * 
@@ -128,6 +129,7 @@ typedef signed long long int24_t;
 #include "mbmc.h"
 #include "dio.h"
 #include "hid.h"
+#include "bsoc.h"
 
 V_data V = {
 	.ticker = 45,
@@ -157,7 +159,7 @@ H_data H = {
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
-C_data C = {
+volatile C_data C = {
 	.bank_ah = 225.0,
 };
 
@@ -233,6 +235,7 @@ void main(void)
 			start_adc_scan();
 			start_switch_handler();
 			static_soc();
+			init_bsoc();
 
 			break;
 		case UI_STATE_HOST:

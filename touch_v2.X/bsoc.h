@@ -28,61 +28,17 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef MBMC_H
-#define	MBMC_H
+#ifndef BSOC_H
+#define	BSOC_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
-#include <time.h>
-#include "daq.h"
-#include "vconfig.h"
+#include "mcc_generated_files/tmr3.h"
+#include "mbmc.h"
 
-#define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
-#define LP_BUFFER_SIZE	ADC_BUFFER_SIZE+5
-#define STATIC_LOAD_POWER	14.00
+void calc_bsoc(void);
+void init_bsoc(void);
+void start_bsoc(void);
+void stop_bsoc(void);
 
-typedef struct C_data { // real calculated variables
-	float calc[ADC_BUFFER_SIZE];
-	float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
-	float p_load, p_inverter, p_pv, p_bat;
-	float t_comp;
-	float bank_ah, static_ah, dynamic_ah;
-	uint16_t runtime, soc;
-	bool update;
-} C_data;
+#endif	/* BSOC_H */
 
-typedef struct P_data {
-	uint8_t BCHECK : 1;
-	uint8_t TIMERFLAG : 1;
-	uint8_t PRIPOWEROK : 1;
-	uint8_t FORCEOUT : 1;
-	uint8_t WORKERFLAG : 1;
-	uint8_t CHARGEROVERRIDE : 1;
-	uint8_t FAILSAFE : 1;
-	uint8_t MORNING_HELP : 1;
-	uint8_t SYSTEM_STABLE : 1;
-	uint8_t HOLD_PROC : 1;
-	uint8_t POWER_UNSTABLE : 1;
-	uint8_t B2 : 1;
-	uint8_t B3 : 1;
-	uint8_t B4 : 1;
-	uint8_t SET_BATT : 1;
-	uint8_t BLANK_LCD : 1;
-	uint8_t STATIC_SOC : 1;
-	uint8_t SET_CEF : 1;
-	uint8_t D_UPDATE : 1;
-	uint8_t GLITCH_CHECK : 1;
-	uint8_t FORCEDAY : 1;
-	uint8_t COOLING : 1;
-	uint8_t UPDATE_EEP : 1;
-	uint8_t RESET_ZEROS : 1;
-	uint8_t SAVE_DAILY : 1;
-	uint8_t SETBATT_SOC : 1;
-	uint8_t SYNCSOC : 1;
-} P_data_t;
-
-float lp_filter(const float, const uint8_t, const int8_t);
-void convert_adc_data(void);
-void calc_model_data(void);
-void static_soc(void);
-
-#endif

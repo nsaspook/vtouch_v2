@@ -1,5 +1,6 @@
 #include "mbmc.h"
 #include "mcc_generated_files/ext_int.h"
+#include "bsoc.h"
 
 extern C_data C;
 extern V_data V;
@@ -54,6 +55,8 @@ void convert_adc_data(void)
  */
 void calc_model_data(void)
 {
+	stop_bsoc();
+	C.update = true;
 	if (!V.calib) {
 		C.c_bat = C.calc[C_BATT];
 		C.c_pv = C.calc[C_PV];
@@ -75,6 +78,8 @@ void calc_model_data(void)
 		 */
 		C.dynamic_ah = C.static_ah;
 	}
+	C.update = false;
+	start_bsoc();
 }
 
 /*

@@ -9,9 +9,10 @@ mcc_generated_files/adcc.h  \
 mcc_generated_files/tmr5.h  \
 mcc_generated_files/tmr6.h  \
 mcc_generated_files/pwm8.h  \
+mcc_generated_files/tmr3.h  \
 mcc_generated_files/tmr2.h  \
-mcc_generated_files/ext_int.h  \
 mcc_generated_files/memory.h  \
+mcc_generated_files/ext_int.h  \
 mcc_generated_files/uart2.h  \
 mcc_generated_files/uart1.h  \
 mcc_generated_files/dma1.h  \
@@ -28,4 +29,5 @@ daq.h  \
 tests.h  \
 mbmc.h  \
 dio.h  \
-hid.h 
+hid.h  \
+bsoc.h 
