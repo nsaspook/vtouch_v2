@@ -28616,6 +28616,7 @@ struct tm *getdate (const char *);
 
 
 
+
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
@@ -28748,7 +28749,7 @@ H_data H = {
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 volatile C_data C = {
- .bank_ah = 225.0,
+ .bank_ah = 225.0-100.0,
 };
 
 extern volatile struct P_data P;
@@ -28807,10 +28808,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.997");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.998");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.997");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.998");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

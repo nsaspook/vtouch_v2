@@ -39,6 +39,7 @@
 #define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
 #define LP_BUFFER_SIZE	ADC_BUFFER_SIZE+5
 #define STATIC_LOAD_POWER	14.00
+#define DEGRADE	100.0	// adjust to what the battery bank Ah really is
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];

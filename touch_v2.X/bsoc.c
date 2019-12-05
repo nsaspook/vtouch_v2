@@ -5,13 +5,13 @@ extern C_data C;
 extern V_data V;
 
 void calc_bsoc(void)
-{	
-	C.dynamic_ah += (C.c_bat/360.0);
-	if (C.dynamic_ah>C.bank_ah)
-		C.dynamic_ah=C.bank_ah;
+{
+	C.dynamic_ah += (C.c_bat / 3600.0);
+	if (C.dynamic_ah > (C.bank_ah))
+		C.dynamic_ah = C.bank_ah;
 
 	V.lowint_count++;
-	C.update=false;
+	C.update = false;
 }
 
 void init_bsoc(void)

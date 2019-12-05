@@ -160,7 +160,7 @@ H_data H = {
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 volatile C_data C = {
-	.bank_ah = 225.0,
+	.bank_ah = 225.0-DEGRADE,
 };
 
 extern volatile struct P_data P;

@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Thu Dec  5 03:26:59 2019
+                                                                                               Thu Dec  5 06:15:41 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F57K42
@@ -620,7 +620,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
    606  0178BE  0000               	dw	0
    607  0178C0  0000               	dw	0
    608  0178C2  0000               	dw	0
-   609  0178C4  4361               	dw	17249
+   609  0178C4  42FA               	dw	17146
    610  0178C6  00                 	db	0
    611  0178C7  00                 	db	0
    612  0178C8  00                 	db	0
@@ -1689,14 +1689,14 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1675  00FFD6                     STR_28:
   1676                           
   1677                           ; BSR set to: 57
-  1678  00FFD6  31                 	db	49	;'1'
-  1679  00FFD7  39                 	db	57	;'9'
+  1678  00FFD6  32                 	db	50	;'2'
+  1679  00FFD7  32                 	db	50	;'2'
   1680  00FFD8  3A                 	db	58	;':'
-  1681  00FFD9  32                 	db	50	;'2'
-  1682  00FFDA  32                 	db	50	;'2'
+  1681  00FFD9  31                 	db	49	;'1'
+  1682  00FFDA  31                 	db	49	;'1'
   1683  00FFDB  3A                 	db	58	;':'
-  1684  00FFDC  31                 	db	49	;'1'
-  1685  00FFDD  33                 	db	51	;'3'
+  1684  00FFDC  32                 	db	50	;'2'
+  1685  00FFDD  37                 	db	55	;'7'
   1686  00FFDE  00                 	db	0
   1687  00FFDF                     STR_3:
   1688                           
@@ -1705,7 +1705,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   1691  00FFE0  2E                 	db	46
   1692  00FFE1  39                 	db	57	;'9'
   1693  00FFE2  39                 	db	57	;'9'
-  1694  00FFE3  37                 	db	55	;'7'
+  1694  00FFE3  38                 	db	56	;'8'
   1695  00FFE4  00                 	db	0
   1696  00FFE5                     STR_46:
   1697                           
@@ -2396,7 +2396,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2368  011E46  ECD3  F0B7         	call	_sprintf	;wreg free
   2369                           
   2370                           ; BSR set to: 0
-  2371                           ;main.c: 222:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.997");
+  2371                           ;main.c: 222:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.998");
   2372  011E4A  0EDF               	movlw	low STR_3
   2373  011E4C  6EE6               	movwf	postinc1,c
   2374  011E4E  0EFF               	movlw	high STR_3
@@ -2451,7 +2451,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   2423  011EC6  ECD3  F0B7         	call	_sprintf	;wreg free
   2424                           
   2425                           ; BSR set to: 0
-  2426                           ;main.c: 225:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.997");
+  2426                           ;main.c: 225:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.998");
   2427  011ECA  0EDF               	movlw	low STR_3
   2428  011ECC  6EE6               	movwf	postinc1,c
   2429  011ECE  0EFF               	movlw	high STR_3
@@ -29163,7 +29163,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  27238  01746C                     _calc_bsoc:
  27239                           	opt callstack 11
  27240                           
- 27241                           ;bsoc.c: 9:  C.dynamic_ah += (C.c_bat/360.0);
+ 27241                           ;bsoc.c: 9:  C.dynamic_ah += (C.c_bat / 3600.0);
  27242                           
  27243                           ; autosize = 0, savesize = 0, parsavesize = 0, tempsize = 0 parsize = 0, argsize = 0 var
       +                          gsize = 0, retsize = 0 argfudge = 0
@@ -29172,9 +29172,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  27246  01746E  6EE6               	movwf	postinc1,c
  27247  017470  0E00               	movlw	0
  27248  017472  6EE6               	movwf	postinc1,c
- 27249  017474  0EB4               	movlw	180
+ 27249  017474  0E61               	movlw	97
  27250  017476  6EE6               	movwf	postinc1,c
- 27251  017478  0E43               	movlw	67
+ 27251  017478  0E45               	movlw	69
  27252  01747A  6EE6               	movwf	postinc1,c
  27253  01747C  0060  F513  FFE6   	movff	_C+68,postinc1
  27254  017482  0060  F517  FFE6   	movff	_C+69,postinc1
@@ -29195,7 +29195,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  27269  0174D8  0060  F09C  F186   	movff	btemp+2,_C+134	;volatile
  27270  0174DE  0060  F0A0  F187   	movff	btemp+3,_C+135	;volatile
  27271                           
- 27272                           ;bsoc.c: 10:  if (C.dynamic_ah>C.bank_ah)
+ 27272                           ;bsoc.c: 10:  if (C.dynamic_ah > (C.bank_ah))
  27273  0174E4  0060  F613  FFE6   	movff	_C+132,postinc1
  27274  0174EA  0060  F617  FFE6   	movff	_C+133,postinc1
  27275  0174F0  0060  F61B  FFE6   	movff	_C+134,postinc1
@@ -29208,7 +29208,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  27282  017518  B025               	btfsc	btemp& (0+255),0,c
  27283  01751A  D008               	goto	l9195
  27284                           
- 27285                           ;bsoc.c: 11:   C.dynamic_ah=C.bank_ah;
+ 27285                           ;bsoc.c: 11:   C.dynamic_ah = C.bank_ah;
  27286  01751C  C17C  F184         	movff	_C+124,_C+132	;volatile
  27287  017520  C17D  F185         	movff	_C+125,_C+133	;volatile
  27288  017524  C17E  F186         	movff	_C+126,_C+134	;volatile
@@ -29225,7 +29225,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  27299  017538  23B3               	addwfc	(_V+179)& (0+255),f,b	;volatile
  27300                           
  27301                           ; BSR set to: 2
- 27302                           ;bsoc.c: 14:  C.update=0;
+ 27302                           ;bsoc.c: 14:  C.update = 0;
  27303  01753A  0101               	movlb	1	; () banked
  27304  01753C  6BA0               	clrf	(_C+160)& (0+255),b	;volatile
  27305                           
@@ -35767,7 +35767,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Thu Dec  5 03:26:59 2019
+Symbol Table                                                                                   Thu Dec  5 06:15:41 2019
 
                      _SPI1_Exchange8bit 900E                __end_of_set_display_info 9086  
                                      _C 0100                                       _D 06FF  

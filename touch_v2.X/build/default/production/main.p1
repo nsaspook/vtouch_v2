@@ -27,8 +27,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./hid.h: 54: typedef struct H_data {
 [s S2246 `E17411 1 `E17418 1 `a 1 `a 1 `a 1 `a 1 `uc 1 ]
 [n S2246 H_data hid_display h_state wait_select select_p wait_enter enter_p sequence ]
-"43 ./mbmc.h
-[; ;./mbmc.h: 43: typedef struct C_data {
+"44 ./mbmc.h
+[; ;./mbmc.h: 44: typedef struct C_data {
 [s S2243 `f -> 16 `i `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `us 1 `us 1 `a 1 ]
 [n S2243 C_data calc c_load c_bat c_pv v_cc v_pv v_bat v_cbus v_bbat v_temp v_inverter p_load p_inverter p_pv p_bat t_comp bank_ah static_ah dynamic_ah bkwi bkwo pvkw invkw loadah runtime soc update ]
 [p mainexit ]
@@ -123,14 +123,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "45 ./dio.h
 [; ;./dio.h: 45: void start_switch_handler(void);
 [v _start_switch_handler `(v ~T0 @X0 0 ef ]
-"87 ./mbmc.h
-[; ;./mbmc.h: 87: void static_soc(void);
+"88 ./mbmc.h
+[; ;./mbmc.h: 88: void static_soc(void);
 [v _static_soc `(v ~T0 @X0 0 ef ]
 "39 ./bsoc.h
 [; ;./bsoc.h: 39: void init_bsoc(void);
 [v _init_bsoc `(v ~T0 @X0 0 ef ]
-"54 ./mbmc.h
-[; ;./mbmc.h: 54: typedef struct P_data {
+"55 ./mbmc.h
+[; ;./mbmc.h: 55: typedef struct P_data {
 [s S2244 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2244 P_data BCHECK TIMERFLAG PRIPOWEROK FORCEOUT WORKERFLAG CHARGEROVERRIDE FAILSAFE MORNING_HELP SYSTEM_STABLE HOLD_PROC POWER_UNSTABLE B2 B3 B4 SET_BATT BLANK_LCD STATIC_SOC SET_CEF D_UPDATE GLITCH_CHECK FORCEDAY COOLING UPDATE_EEP RESET_ZEROS SAVE_DAILY SETBATT_SOC SYNCSOC ]
 "166 main.c
@@ -142,8 +142,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "80 ./daq.h
 [; ;./daq.h: 80: _Bool check_adc_scan(void);
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
-"85 ./mbmc.h
-[; ;./mbmc.h: 85: void convert_adc_data(void);
+"86 ./mbmc.h
+[; ;./mbmc.h: 86: void convert_adc_data(void);
 [v _convert_adc_data `(v ~T0 @X0 0 ef ]
 "81 ./daq.h
 [; ;./daq.h: 81: void clear_adc_scan(void);
@@ -151,8 +151,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "58 ./mydisplay.h
 [; ;./mydisplay.h: 58: D_CODES set_display_info(const D_CODES);
 [v _set_display_info `(E17003 ~T0 @X0 0 ef1`CE17003 ]
-"86 ./mbmc.h
-[; ;./mbmc.h: 86: void calc_model_data(void);
+"87 ./mbmc.h
+[; ;./mbmc.h: 87: void calc_model_data(void);
 [v _calc_model_data `(v ~T0 @X0 0 ef ]
 "82 ./daq.h
 [; ;./daq.h: 82: adc_result_t get_raw_result(const adcc_channel_t);
@@ -171,8 +171,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "62 ./hid.h
 [; ;./hid.h: 62: H_data* hid_display(H_data*);
 [v _hid_display `(*S2246 ~T0 @X0 0 ef1`*S2246 ]
-"84 ./mbmc.h
-[; ;./mbmc.h: 84: float lp_filter(const float, const uint8_t, const int8_t);
+"85 ./mbmc.h
+[; ;./mbmc.h: 85: float lp_filter(const float, const uint8_t, const int8_t);
 [v _lp_filter `(f ~T0 @X0 0 ef3`Cf`Cuc`Cc ]
 "64 ./hid.h
 [; ;./hid.h: 64: void clear_hid_pflags(H_data*);
@@ -2698,7 +2698,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `f
 -> -> 0 `i `f
 -> -> 0 `i `f
--> .225.0 `f
+-> - .225.0 .100.0 `f
 ..
 ..
 ]
@@ -2826,7 +2826,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 221:    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 1C ]
 "222
-[; ;main.c: 222:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.997");
+[; ;main.c: 222:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.998");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 2C :s 3C ]
 "223
 [; ;main.c: 223:    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
@@ -2835,7 +2835,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 224:    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 2 `i `uc :s 5C ]
 "225
-[; ;main.c: 225:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.997");
+[; ;main.c: 225:    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.998");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 2 `i `uc :s 6C :s 7C ]
 "226
 [; ;main.c: 226:    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
@@ -3269,8 +3269,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2247 ]
 }
 [p f _sprintf 8757376 ]
-[a 3C 48 46 57 57 55 0 ]
-[a 7C 48 46 57 57 55 0 ]
+[a 3C 48 46 57 57 56 0 ]
+[a 7C 48 46 57 57 56 0 ]
 [a 11C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 0 ]
 [a 23C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 0 ]
 [a 15C 80 86 32 37 50 46 50 102 32 80 65 32 37 50 46 50 102 32 0 ]
