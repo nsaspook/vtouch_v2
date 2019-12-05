@@ -35,10 +35,18 @@
 #include "mcc_generated_files/tmr3.h"
 #include "mbmc.h"
 
+typedef enum {
+	R_CYCLE = 0,
+	R_TOTAL,
+	R_PV,
+	R_BAT,
+} R_CODES;
+
 void calc_bsoc(void);
 void init_bsoc(void);
 void start_bsoc(void);
 void stop_bsoc(void);
+void reset_bsoc(R_CODES);
 
 #endif	/* BSOC_H */
 

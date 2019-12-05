@@ -28609,21 +28609,14 @@ extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
 # 36 "./mbmc.h" 2
-
-
-
-
-
-
-
-
+# 46 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
  float p_load, p_inverter, p_pv, p_bat;
  float t_comp;
- float bank_ah, static_ah, dynamic_ah;
- float bkwi, bkwo, pvkw, invkw, loadah;
+ float bank_ah, static_ah, dynamic_ah, pv_ah, loadah;
+ float bkwi, bkwo, pvkw, invkw;
  uint16_t runtime, soc;
  _Bool update;
 } C_data;
@@ -28713,10 +28706,18 @@ void clear_hid_wflags(H_data*);
 
 # 1 "./bsoc.h" 1
 # 38 "./bsoc.h"
+typedef enum {
+ R_CYCLE = 0,
+ R_TOTAL,
+ R_PV,
+ R_BAT,
+} R_CODES;
+
 void calc_bsoc(void);
 void init_bsoc(void);
 void start_bsoc(void);
 void stop_bsoc(void);
+void reset_bsoc(R_CODES);
 # 132 "main.c" 2
 
 
@@ -28749,7 +28750,7 @@ H_data H = {
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 volatile C_data C = {
- .bank_ah = 225.0-100.0,
+ .bank_ah = 225.0 - 100.0,
 };
 
 extern volatile struct P_data P;
@@ -28884,8 +28885,8 @@ void main(void)
      break;
     case HID_RUN:
      V.calib = 0;
-     sprintf(get_vterm_ptr(0, 0), "BAT  PWR %3.2f    ", C.p_bat);
-     sprintf(get_vterm_ptr(1, 0), "BAT AH   %3.2f    ", C.dynamic_ah);
+     sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f    ", C.p_bat);
+     sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f   ", C.dynamic_ah, C.pv_ah);
      sprintf(get_vterm_ptr(2, 0), "SOC %d RUN %d     ", C.soc, C.runtime);
      break;
     case HID_AUX:

@@ -38,8 +38,10 @@
 #ifdef DEBUG_MBMC
 //#define DEBUG_DAQ1 // daq debug switches
 //#define DEBUG_DAQ2
-#define DEBUG_SWH1
-#define DEBUG_SWH2
+//#define DEBUG_SWH1 // switches
+//#define DEBUG_SWH2
+#define DEBUG_BSOC1 // battery run calculations
+#define DEBUG_BSOC2
 #endif
 
 #define CALIB	false
