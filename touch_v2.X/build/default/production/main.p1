@@ -19,18 +19,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S2236 V_data ui_state buf info ticks testing error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id response ticker flipper calib highint_count lowint_count eeprom_count timerint_count ]
 "148 main.c
 [; ;main.c: 148: H_data H = {
-[c E17406 0 1 2 3 4 .. ]
-[n E17406 . HID_MAIN HID_PWR HID_RUN HID_AUX HID_LAST  ]
-[c E17413 0 1 2 3 4 5 .. ]
-[n E17413 . H_STATE_INIT H_STATE_DISPLAY H_STATE_WAIT H_STATE_LOG H_STATE_COMM H_STATE_ERROR  ]
+[c E17411 0 1 2 3 4 .. ]
+[n E17411 . HID_MAIN HID_PWR HID_RUN HID_AUX HID_LAST  ]
+[c E17418 0 1 2 3 4 5 .. ]
+[n E17418 . H_STATE_INIT H_STATE_DISPLAY H_STATE_WAIT H_STATE_LOG H_STATE_COMM H_STATE_ERROR  ]
 "54 ./hid.h
 [; ;./hid.h: 54: typedef struct H_data {
-[s S2246 `E17406 1 `E17413 1 `a 1 `a 1 `a 1 `a 1 `uc 1 ]
+[s S2246 `E17411 1 `E17418 1 `a 1 `a 1 `a 1 `a 1 `uc 1 ]
 [n S2246 H_data hid_display h_state wait_select select_p wait_enter enter_p sequence ]
 "43 ./mbmc.h
 [; ;./mbmc.h: 43: typedef struct C_data {
-[s S2243 `f -> 16 `i `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `us 1 `us 1 `a 1 ]
-[n S2243 C_data calc c_load c_bat c_pv v_cc v_pv v_bat v_cbus v_bbat v_temp v_inverter p_load p_inverter p_pv p_bat t_comp bank_ah static_ah dynamic_ah runtime soc update ]
+[s S2243 `f -> 16 `i `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `us 1 `us 1 `a 1 ]
+[n S2243 C_data calc c_load c_bat c_pv v_cc v_pv v_bat v_cbus v_bbat v_temp v_inverter p_load p_inverter p_pv p_bat t_comp bank_ah static_ah dynamic_ah bkwi bkwo pvkw invkw loadah runtime soc update ]
 [p mainexit ]
 "174 main.c
 [; ;main.c: 174:  uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
@@ -123,14 +123,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "45 ./dio.h
 [; ;./dio.h: 45: void start_switch_handler(void);
 [v _start_switch_handler `(v ~T0 @X0 0 ef ]
-"86 ./mbmc.h
-[; ;./mbmc.h: 86: void static_soc(void);
+"87 ./mbmc.h
+[; ;./mbmc.h: 87: void static_soc(void);
 [v _static_soc `(v ~T0 @X0 0 ef ]
 "39 ./bsoc.h
 [; ;./bsoc.h: 39: void init_bsoc(void);
 [v _init_bsoc `(v ~T0 @X0 0 ef ]
-"53 ./mbmc.h
-[; ;./mbmc.h: 53: typedef struct P_data {
+"54 ./mbmc.h
+[; ;./mbmc.h: 54: typedef struct P_data {
 [s S2244 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2244 P_data BCHECK TIMERFLAG PRIPOWEROK FORCEOUT WORKERFLAG CHARGEROVERRIDE FAILSAFE MORNING_HELP SYSTEM_STABLE HOLD_PROC POWER_UNSTABLE B2 B3 B4 SET_BATT BLANK_LCD STATIC_SOC SET_CEF D_UPDATE GLITCH_CHECK FORCEDAY COOLING UPDATE_EEP RESET_ZEROS SAVE_DAILY SETBATT_SOC SYNCSOC ]
 "166 main.c
@@ -142,8 +142,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "80 ./daq.h
 [; ;./daq.h: 80: _Bool check_adc_scan(void);
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
-"84 ./mbmc.h
-[; ;./mbmc.h: 84: void convert_adc_data(void);
+"85 ./mbmc.h
+[; ;./mbmc.h: 85: void convert_adc_data(void);
 [v _convert_adc_data `(v ~T0 @X0 0 ef ]
 "81 ./daq.h
 [; ;./daq.h: 81: void clear_adc_scan(void);
@@ -151,8 +151,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "58 ./mydisplay.h
 [; ;./mydisplay.h: 58: D_CODES set_display_info(const D_CODES);
 [v _set_display_info `(E17003 ~T0 @X0 0 ef1`CE17003 ]
-"85 ./mbmc.h
-[; ;./mbmc.h: 85: void calc_model_data(void);
+"86 ./mbmc.h
+[; ;./mbmc.h: 86: void calc_model_data(void);
 [v _calc_model_data `(v ~T0 @X0 0 ef ]
 "82 ./daq.h
 [; ;./daq.h: 82: adc_result_t get_raw_result(const adcc_channel_t);
@@ -171,8 +171,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "62 ./hid.h
 [; ;./hid.h: 62: H_data* hid_display(H_data*);
 [v _hid_display `(*S2246 ~T0 @X0 0 ef1`*S2246 ]
-"83 ./mbmc.h
-[; ;./mbmc.h: 83: float lp_filter(const float, const uint8_t, const int8_t);
+"84 ./mbmc.h
+[; ;./mbmc.h: 84: float lp_filter(const float, const uint8_t, const int8_t);
 [v _lp_filter `(f ~T0 @X0 0 ef3`Cf`Cuc`Cc ]
 "64 ./hid.h
 [; ;./hid.h: 64: void clear_hid_pflags(H_data*);
@@ -2635,8 +2635,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _H
 :U ..
 :U ..
-. `E17406 0
-. `E17413 0
+. `E17411 0
+. `E17418 0
 -> -> 1 `i `a
 -> -> 0 `i `a
 -> -> 1 `i `a
@@ -3043,7 +3043,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 19C -> . _C 18 `d ]
 "300
 [; ;main.c: 300:      sprintf(get_vterm_ptr(2, 0), "SOC %d RUN %d     ", C.soc, C.runtime);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 20C -> . _C 20 `ui -> . _C 19 `ui ]
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 20C -> . _C 25 `ui -> . _C 24 `ui ]
 "301
 [; ;main.c: 301:      break;
 [e $U 2275  ]
@@ -3093,10 +3093,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 2275  ]
 [e :U 2276 ]
-[e [\ -> . _H 0 `ui , $ -> . `E17406 1 `ui 2277
- , $ -> . `E17406 0 `ui 2278
- , $ -> . `E17406 2 `ui 2279
- , $ -> . `E17406 3 `ui 2280
+[e [\ -> . _H 0 `ui , $ -> . `E17411 1 `ui 2277
+ , $ -> . `E17411 0 `ui 2278
+ , $ -> . `E17411 2 `ui 2279
+ , $ -> . `E17411 3 `ui 2280
  2282 ]
 [e :U 2275 ]
 "316

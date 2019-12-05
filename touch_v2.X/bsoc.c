@@ -5,11 +5,11 @@ extern C_data C;
 extern V_data V;
 
 void calc_bsoc(void)
-{
-	if (!C.update)
-		calc_model_data(); // refresh data
+{	
+	C.dynamic_ah += (C.c_bat/360.0);
 
 	V.lowint_count++;
+	C.update=false;
 }
 
 void init_bsoc(void)

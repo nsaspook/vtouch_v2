@@ -56,7 +56,7 @@ void convert_adc_data(void)
 void calc_model_data(void)
 {
 	stop_bsoc();
-	C.update = true;
+
 	if (!V.calib) {
 		C.c_bat = C.calc[C_BATT];
 		C.c_pv = C.calc[C_PV];
@@ -73,13 +73,9 @@ void calc_model_data(void)
 		 */
 		if (C.p_inverter < 0.0)
 			C.p_inverter = 0.0001;
-		/*
-		 * battery current Ah capacity calculation
-		 */
-		C.dynamic_ah = C.static_ah;
 	}
-	C.update = false;
 	start_bsoc();
+	C.update = true;
 }
 
 /*
@@ -90,4 +86,5 @@ void static_soc(void)
 	C.static_ah = C.bank_ah;
 	C.runtime = 120;
 	C.soc = 100;
+	C.dynamic_ah = C.static_ah;
 }

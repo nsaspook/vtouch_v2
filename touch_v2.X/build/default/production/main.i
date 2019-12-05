@@ -28622,6 +28622,7 @@ typedef struct C_data {
  float p_load, p_inverter, p_pv, p_bat;
  float t_comp;
  float bank_ah, static_ah, dynamic_ah;
+ float bkwi, bkwo, pvkw, invkw, loadah;
  uint16_t runtime, soc;
  _Bool update;
 } C_data;

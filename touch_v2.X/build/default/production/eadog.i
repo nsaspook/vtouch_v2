@@ -27794,8 +27794,7 @@ void init_display(void)
  ringBufS_init(spi_link.tx1b);
 
  LATEbits.LATE2 = 1;
-
-
+# 57 "eadog.c"
  do { LATCbits.LATC2 = 1; } while(0);
  wdtdelay(350000);
  send_lcd_cmd(0x39);

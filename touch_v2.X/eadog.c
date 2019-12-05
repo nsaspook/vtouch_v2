@@ -43,6 +43,16 @@ void init_display(void)
 
 	DLED = true;
 #ifdef NHD
+		// mode 3
+		SPI1CON1 = 0x20;
+		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
+		SPI1CON2 = 0x03;
+		// BAUD 0; 
+		SPI1BAUD = 0xFF; // 125kHz
+		// CLKSEL FOSC; 
+		SPI1CLK = 0x00;
+		// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
+		SPI1CON0 = 0x83;
 #else
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
