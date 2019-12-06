@@ -28621,7 +28621,7 @@ typedef struct C_data {
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
  float p_load, p_inverter, p_pv, p_bat;
  float t_comp;
- float bank_ah, static_ah, dynamic_ah, pv_ah, loadah;
+ float bank_ah, dynamic_ah, pv_ah, loadah;
  float bkwi, bkwo, pvkw, invkw;
  uint16_t runtime, soc;
  _Bool update;
@@ -29192,10 +29192,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.998");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.999");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.998");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.999");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);
@@ -29207,6 +29207,7 @@ void main(void)
 
    start_adc_scan();
    start_switch_handler();
+   WaitMs(1000);
    static_soc();
    init_bsoc();
 

@@ -234,8 +234,9 @@ void main(void)
 
 			start_adc_scan();
 			start_switch_handler();
-			static_soc();
-			init_bsoc();
+			WaitMs(1000);
+			static_soc(); // defaults
+			init_bsoc(); // system calculations
 
 			break;
 		case UI_STATE_HOST:

@@ -52,7 +52,7 @@ void calc_bsoc(void)
 		C.bkwi += (C.p_bat / SSLICE);
 	if (C.p_bat < 0.0)
 		C.bkwo += (C.p_bat / SSLICE);
-	//	C.soc = ((uint16_t) ((C.dynamic_ah / C.bank_ah)*100.0) + 1);
+
 	temp = ((uint16_t) ((C.dynamic_ah / C.bank_ah)*100.0) + 1);
 	C.soc = (Volts_to_SOC((uint32_t) C.v_bat * 1000.0) + temp) / 2;
 	if (C.soc > 100)
@@ -75,7 +75,11 @@ void calc_bsoc(void)
 
 void init_bsoc(void)
 {
-	C.soc = Volts_to_SOC((uint32_t) C.v_bat * 1000.0);
+	/*
+	 * use raw battery voltage
+	 */
+	C.soc = Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0);
+	C.dynamic_ah = C.bank_ah * (C.soc / 100.0);
 	TMR3_SetInterruptHandler(calc_bsoc);
 }
 

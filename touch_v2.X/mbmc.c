@@ -79,12 +79,11 @@ void calc_model_data(void)
 }
 
 /*
- * boot battery condition calculation
+ * boot battery condition defaults
  */
 void static_soc(void)
 {
-	C.static_ah = C.bank_ah;
 	C.runtime = 120;
 	C.soc = 100;
-	C.dynamic_ah = C.static_ah;
+	C.dynamic_ah = C.bank_ah;
 }

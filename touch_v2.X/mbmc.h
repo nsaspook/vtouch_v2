@@ -48,7 +48,7 @@ typedef struct C_data { // real calculated variables
 	float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
 	float p_load, p_inverter, p_pv, p_bat;
 	float t_comp;
-	float bank_ah, static_ah, dynamic_ah, pv_ah, loadah;
+	float bank_ah, dynamic_ah, pv_ah, loadah;
 	float bkwi, bkwo, pvkw, invkw;
 	uint16_t runtime, soc;
 	bool update;
