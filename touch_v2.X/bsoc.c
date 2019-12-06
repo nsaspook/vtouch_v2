@@ -26,9 +26,13 @@ void calc_bsoc(void)
 	if (C.soc > 100)
 		C.soc = 100;
 
-	if (C.c_bat != 0.0) {
-		C.runtime = (uint16_t) (C.dynamic_ah / C.c_bat);
+	if (C.c_bat < 0.0) {
+		C.runtime = (uint16_t) (-(C.dynamic_ah / C.c_bat));
+	} else {
+		C.runtime = 120;
 	}
+	if (C.runtime > 120)
+		C.runtime = 120;
 
 	V.lowint_count++;
 	C.update = false;
