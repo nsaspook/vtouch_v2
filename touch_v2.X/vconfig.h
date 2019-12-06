@@ -88,6 +88,8 @@ extern "C" {
 #endif
 #define MAX_BUTTONS	8
 
+#define HPARAM_SIZE     13
+
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;
 		uint8_t SPI_AUX : 1;
@@ -159,6 +161,28 @@ extern "C" {
 	typedef struct V_help {
 		const char message[18], display[18];
 	} V_help;
+
+	/*		hist[x].h[x]
+	 *		h0	Peukert Factor adjusted Ah usage this cycle, MUST BE INTERGER variable type!
+	 *		h1	Lowest discharge ever,
+	 *		h2	current lowest discharge,
+	 *		h3	avg discharge
+	 *		h4	Number of full charge cycles, 
+	 *		h5	Number of full discharge cycles
+	 *		h6	Real Ah usage this cycle, 	MUST BE INTERGER variable type!
+	 *		h7	Min Batt Voltage
+	 *		h8	Max Batt Voltage
+	 *		h9	Lowest ESR Pre
+	 *		h10	Lowest ESR Post
+	 *		h11	Total charge cycles
+	 *		h12	Total kWH in
+	 */
+
+	typedef struct hist_type {
+		float peukert, cef, peukert_adj, cef_calc, cef_save;
+		uint32_t ttg_t;
+		int16_t h[HPARAM_SIZE]; // h[6]=cumulative battery Ah cc and inv (real),h[0]=cumulative battery Ah cc and inv (p_adj)
+	} hist_type;
 
 #ifdef	__cplusplus
 }

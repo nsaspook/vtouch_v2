@@ -52,6 +52,7 @@ typedef struct C_data { // real calculated variables
 	float bkwi, bkwo, pvkw, invkw;
 	uint16_t runtime, soc;
 	bool update;
+	hist_type hist[1];
 } C_data;
 
 typedef struct P_data {
