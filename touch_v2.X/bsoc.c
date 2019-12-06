@@ -10,6 +10,11 @@ void calc_bsoc(void)
 	DEBUG1_SetHigh();
 #endif
 	C.dynamic_ah += (C.c_bat / SSLICE); // Ah
+	if (C.dynamic_ah > (C.bank_ah))
+		C.dynamic_ah = C.bank_ah;
+	if (C.dynamic_ah < 0.1)
+		C.dynamic_ah = 0.1;
+
 	C.pv_ah += (C.c_pv / SSLICE);
 	C.pvkw += (C.p_pv / SSLICE);
 	C.invkw += (C.p_inverter / SSLICE);
@@ -17,9 +22,9 @@ void calc_bsoc(void)
 		C.bkwi += (C.p_bat / SSLICE);
 	if (C.p_bat < 0.0)
 		C.bkwo += (C.p_bat / SSLICE);
-
-	if (C.dynamic_ah > (C.bank_ah))
-		C.dynamic_ah = C.bank_ah;
+	C.soc = ((uint16_t) ((C.dynamic_ah / C.bank_ah)*100.0) + 1);
+	if (C.soc > 100)
+		C.soc = 100;
 
 	V.lowint_count++;
 	C.update = false;
