@@ -267,6 +267,9 @@ void send_port_data_dma(uint16_t dsize)
 	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
 }
 
+/*
+ * return pointer to internal data buffer for DMA
+ */
 uint8_t* port_data_dma_ptr(void)
 {
 	return port_data;

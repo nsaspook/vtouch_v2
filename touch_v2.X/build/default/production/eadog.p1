@@ -3155,109 +3155,109 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;eadog.c: 268: }
 [e :UE 2312 ]
 }
-"270
-[; ;eadog.c: 270: uint8_t* port_data_dma_ptr(void)
+"273
+[; ;eadog.c: 273: uint8_t* port_data_dma_ptr(void)
 [v _port_data_dma_ptr `(*uc ~T0 @X0 1 ef ]
-"271
-[; ;eadog.c: 271: {
+"274
+[; ;eadog.c: 274: {
 {
 [e :U _port_data_dma_ptr ]
 [f ]
-"272
-[; ;eadog.c: 272:  return port_data;
+"275
+[; ;eadog.c: 275:  return port_data;
 [e ) &U _port_data ]
 [e $UE 2314  ]
-"273
-[; ;eadog.c: 273: }
+"276
+[; ;eadog.c: 276: }
 [e :UE 2314 ]
 }
-"275
-[; ;eadog.c: 275: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
+"278
+[; ;eadog.c: 278: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 [v _eaDogM_WriteStringAtPos `(v ~T0 @X0 1 ef3`uc`uc`*uc ]
-"276
-[; ;eadog.c: 276: {
+"279
+[; ;eadog.c: 279: {
 {
 [e :U _eaDogM_WriteStringAtPos ]
-"275
-[; ;eadog.c: 275: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
+"278
+[; ;eadog.c: 278: void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 [v _r `Cuc ~T0 @X0 1 r1 ]
 [v _c `Cuc ~T0 @X0 1 r2 ]
 [v _strPtr `*uc ~T0 @X0 1 r3 ]
-"276
-[; ;eadog.c: 276: {
-[f ]
-"277
-[; ;eadog.c: 277:  send_lcd_cmd_dma((0b10000000 + (r * 16) + c));
-[e ( _send_lcd_cmd_dma (1 -> + + -> 128 `i * -> _r `i -> 16 `i -> _c `i `uc ]
-"278
-[; ;eadog.c: 278:  eaDogM_WriteString(strPtr);
-[e ( _eaDogM_WriteString (1 _strPtr ]
 "279
-[; ;eadog.c: 279: }
+[; ;eadog.c: 279: {
+[f ]
+"280
+[; ;eadog.c: 280:  send_lcd_cmd_dma((0b10000000 + (r * 16) + c));
+[e ( _send_lcd_cmd_dma (1 -> + + -> 128 `i * -> _r `i -> 16 `i -> _c `i `uc ]
+"281
+[; ;eadog.c: 281:  eaDogM_WriteString(strPtr);
+[e ( _eaDogM_WriteString (1 _strPtr ]
+"282
+[; ;eadog.c: 282: }
 [e :UE 2315 ]
 }
-"281
-[; ;eadog.c: 281: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
+"284
+[; ;eadog.c: 284: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
 [v _eaDogM_WriteIntAtPos `(v ~T0 @X0 1 ef3`uc`uc`uc ]
-"282
-[; ;eadog.c: 282: {
+"285
+[; ;eadog.c: 285: {
 {
 [e :U _eaDogM_WriteIntAtPos ]
-"281
-[; ;eadog.c: 281: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
+"284
+[; ;eadog.c: 284: void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
 [v _r `uc ~T0 @X0 1 r1 ]
 [v _c `uc ~T0 @X0 1 r2 ]
 [v _i `uc ~T0 @X0 1 r3 ]
-"282
-[; ;eadog.c: 282: {
-[f ]
-"283
-[; ;eadog.c: 283:  eaDogM_WriteCommand((0b10000000 + (r * 16) + c));
-[e ( _eaDogM_WriteCommand (1 -> + + -> 128 `i * -> _r `i -> 16 `i -> _c `i `uc ]
 "285
-[; ;eadog.c: 285:  eaDogM_WriteChr(i / 10 + '0');
-[e ( _eaDogM_WriteChr (1 -> + -> / -> _i `i -> 10 `i `ui -> 48 `ui `c ]
+[; ;eadog.c: 285: {
+[f ]
 "286
-[; ;eadog.c: 286:  eaDogM_WriteChr(i % 10 + '0');
-[e ( _eaDogM_WriteChr (1 -> + -> % -> _i `i -> 10 `i `ui -> 48 `ui `c ]
+[; ;eadog.c: 286:  eaDogM_WriteCommand((0b10000000 + (r * 16) + c));
+[e ( _eaDogM_WriteCommand (1 -> + + -> 128 `i * -> _r `i -> 16 `i -> _c `i `uc ]
 "288
-[; ;eadog.c: 288: }
+[; ;eadog.c: 288:  eaDogM_WriteChr(i / 10 + '0');
+[e ( _eaDogM_WriteChr (1 -> + -> / -> _i `i -> 10 `i `ui -> 48 `ui `c ]
+"289
+[; ;eadog.c: 289:  eaDogM_WriteChr(i % 10 + '0');
+[e ( _eaDogM_WriteChr (1 -> + -> % -> _i `i -> 10 `i `ui -> 48 `ui `c ]
+"291
+[; ;eadog.c: 291: }
 [e :UE 2316 ]
 }
-"293
-[; ;eadog.c: 293: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
+"296
+[; ;eadog.c: 296: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
 [v _eaDogM_WriteByteToCGRAM `(v ~T0 @X0 1 ef2`uc`uc ]
-"294
-[; ;eadog.c: 294: {
+"297
+[; ;eadog.c: 297: {
 {
 [e :U _eaDogM_WriteByteToCGRAM ]
-"293
-[; ;eadog.c: 293: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
+"296
+[; ;eadog.c: 296: void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
 [v _ndx `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
-"294
-[; ;eadog.c: 294: {
-[f ]
-"295
-[; ;eadog.c: 295:  uint8_t cmd;
-[v _cmd `uc ~T0 @X0 1 a ]
 "297
-[; ;eadog.c: 297:  cmd = ndx & 0b00111111;
-[e = _cmd -> & -> _ndx `i -> 63 `i `uc ]
+[; ;eadog.c: 297: {
+[f ]
 "298
-[; ;eadog.c: 298:  cmd = cmd | 0b01000000;
-[e = _cmd -> | -> _cmd `i -> 64 `i `uc ]
+[; ;eadog.c: 298:  uint8_t cmd;
+[v _cmd `uc ~T0 @X0 1 a ]
 "300
-[; ;eadog.c: 300:  eaDogM_WriteCommand(cmd);
-[e ( _eaDogM_WriteCommand (1 _cmd ]
+[; ;eadog.c: 300:  cmd = ndx & 0b00111111;
+[e = _cmd -> & -> _ndx `i -> 63 `i `uc ]
 "301
-[; ;eadog.c: 301:  eaDogM_WriteChr(data);
-[e ( _eaDogM_WriteChr (1 -> _data `c ]
+[; ;eadog.c: 301:  cmd = cmd | 0b01000000;
+[e = _cmd -> | -> _cmd `i -> 64 `i `uc ]
+"303
+[; ;eadog.c: 303:  eaDogM_WriteCommand(cmd);
+[e ( _eaDogM_WriteCommand (1 _cmd ]
 "304
-[; ;eadog.c: 304:  eaDogM_SetPos(0, 0);
+[; ;eadog.c: 304:  eaDogM_WriteChr(data);
+[e ( _eaDogM_WriteChr (1 -> _data `c ]
+"307
+[; ;eadog.c: 307:  eaDogM_SetPos(0, 0);
 [e ( _eaDogM_SetPos (2 , -> -> 0 `i `uc -> -> 0 `i `uc ]
-"305
-[; ;eadog.c: 305: }
+"308
+[; ;eadog.c: 308: }
 [e :UE 2317 ]
 }
 [p f _printf 9175040 ]

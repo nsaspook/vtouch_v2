@@ -33,6 +33,9 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 	13100 * 2, 90
 };
 
+/*
+ * low-pri interrupt ISR the runs every second for simple coulomb counting
+ */
 void calc_bsoc(void)
 {
 	uint8_t * log_ptr;
