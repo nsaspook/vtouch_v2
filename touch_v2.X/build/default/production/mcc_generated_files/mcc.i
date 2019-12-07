@@ -27328,13 +27328,6 @@ typedef uint32_t uint_fast32_t;
 void INTERRUPT_Initialize (void);
 # 54 "mcc_generated_files/mcc.h" 2
 
-# 1 "mcc_generated_files/fvr.h" 1
-# 93 "mcc_generated_files/fvr.h"
- void FVR_Initialize(void);
-# 127 "mcc_generated_files/fvr.h"
-_Bool FVR_IsOutputReady(void);
-# 55 "mcc_generated_files/mcc.h" 2
-
 # 1 "mcc_generated_files/adcc.h" 1
 # 72 "mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
@@ -27417,6 +27410,13 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
 # 889 "mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
+# 55 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/fvr.h" 1
+# 93 "mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
 # 56 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/tmr5.h" 1
@@ -27692,13 +27692,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 58 "mcc_generated_files/mcc.h" 2
 
-# 1 "mcc_generated_files/pwm8.h" 1
-# 102 "mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 59 "mcc_generated_files/mcc.h" 2
-
 # 1 "mcc_generated_files/tmr3.h" 1
 # 101 "mcc_generated_files/tmr3.h"
 void TMR3_Initialize(void);
@@ -27724,6 +27717,13 @@ void TMR3_CallBack(void);
 extern void (*TMR3_InterruptHandler)(void);
 # 422 "mcc_generated_files/tmr3.h"
 void TMR3_DefaultInterruptHandler(void);
+# 59 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/pwm8.h" 1
+# 102 "mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 60 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/tmr2.h" 1
@@ -28046,28 +28046,20 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
  void UART1_Initialize(void);
 # 154 "mcc_generated_files/uart1.h"
  uint8_t UART1_is_rx_ready(void);
-# 204 "mcc_generated_files/uart1.h"
- uint8_t UART1_is_tx_ready(void);
-# 251 "mcc_generated_files/uart1.h"
+# 202 "mcc_generated_files/uart1.h"
+_Bool UART1_is_tx_ready(void);
+# 249 "mcc_generated_files/uart1.h"
  _Bool UART1_is_tx_done(void);
-# 300 "mcc_generated_files/uart1.h"
+# 298 "mcc_generated_files/uart1.h"
  uint8_t UART1_Read(void);
-
- void UART1_put_buffer(uint8_t);
-# 327 "mcc_generated_files/uart1.h"
+# 323 "mcc_generated_files/uart1.h"
  void UART1_Write(uint8_t txData);
-# 348 "mcc_generated_files/uart1.h"
- void UART1_Transmit_ISR(void);
-# 369 "mcc_generated_files/uart1.h"
+# 345 "mcc_generated_files/uart1.h"
  void UART1_Receive_ISR(void);
-# 389 "mcc_generated_files/uart1.h"
+# 365 "mcc_generated_files/uart1.h"
  void (*UART1_RxInterruptHandler)(void);
-# 407 "mcc_generated_files/uart1.h"
- void (*UART1_TxInterruptHandler)(void);
-# 427 "mcc_generated_files/uart1.h"
+# 386 "mcc_generated_files/uart1.h"
  void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 445 "mcc_generated_files/uart1.h"
- void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 65 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/dma1.h" 1
@@ -28119,8 +28111,8 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     FVR_Initialize();
     ADCC_Initialize();
-    PWM8_Initialize();
     TMR2_Initialize();
+    PWM8_Initialize();
     EXT_INT_Initialize();
     TMR6_Initialize();
     TMR3_Initialize();

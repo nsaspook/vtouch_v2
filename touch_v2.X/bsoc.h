@@ -33,8 +33,11 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <math.h>
+#include <stdio.h>
+#include <string.h>
 #include "mcc_generated_files/tmr3.h"
 #include "mbmc.h"
+#include "eadog.h"
 
 #define	MAXRUNTIME	95.0
 #define MINRUNTIME	0.05

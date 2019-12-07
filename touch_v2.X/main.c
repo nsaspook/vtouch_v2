@@ -60,11 +60,14 @@
  * B: structure, battery parameters
  *
  * USART2 		Is the client comm port 38400
- * USART1		MBMC host network 38400
+ * USART1		MBMC logger channel 
  * timer 2 100 us PWM clock, no interrupt
  * timer 3 one second housekeeping clock for battery state tracking, low priority interrupt
  * timer 5 one second timer, interrupt
  * timer 6 500 us software timer ticker, interrupt
+ * 
+ * dma1 spi transmit
+ * dma2 tx1 transmit
  * 
  * 10 analog channels are active
  * PORTA,PORTB		analog inputs
@@ -207,10 +210,9 @@ void main(void)
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			/*
-			 * DMA I/O testing
+			 * DMA serial uart1 I/O testing
 			 */
-			//			init_port();
-			//			send_port_data_dma();
+			init_port_dma();
 
 			init_display();
 			eaDogM_CursorOff();

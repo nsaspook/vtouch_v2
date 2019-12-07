@@ -155,11 +155,11 @@ extern "C" {
 
 	/**
 	  @Summary
-	    Checks if the UART1 transmitter is ready
+    Checks if the UART1 transmitter is ready to transmit data
 
 	  @Description
-	    This routine checks if UART1 transmitter is empty and ready
-	    for next transmission
+    This routine checks if UART1 transmitter is ready 
+    to accept and transmit data byte
 
 	  @Preconditions
 	    UART1_Initialize() function should have been called
@@ -171,8 +171,9 @@ extern "C" {
 	    None
 
 	  @Returns
-	    The number of available bytes that UART1 has remaining in 
-	    its transmit buffer
+    Status of UART1 transmitter
+    TRUE: UART1 transmitter is ready
+    FALSE: UART1 transmitter is not ready
     
 	  @Example
 	    <code>
@@ -182,9 +183,6 @@ extern "C" {
         
 		// Initialize the device
 		SYSTEM_Initialize();
-        
-		// Enable the Global Interrupts
-		INTERRUPT_GlobalInterruptEnable();
         
 		while(1)
 		{
@@ -201,7 +199,7 @@ extern "C" {
 	    }
 	    </code>
 	 */
-	uint8_t UART1_is_tx_ready(void);
+bool UART1_is_tx_ready(void);
 
 	/**
 	  @Summary
@@ -299,8 +297,6 @@ extern "C" {
 	 */
 	uint8_t UART1_Read(void);
 
-	void UART1_put_buffer(uint8_t);
-
 	/**
 	 @Summary
 	   Writes a byte of data to the UART1.
@@ -326,26 +322,6 @@ extern "C" {
 	 */
 	void UART1_Write(uint8_t txData);
 
-	/**
-	  @Summary
-	    Maintains the driver's transmitter state machine and implements its ISR.
-
-	  @Description
-	    This routine is used to maintain the driver's internal transmitter state
-	    machine.This interrupt service routine is called when the state of the
-	    transmitter needs to be maintained in a non polled manner.
-
-	  @Preconditions
-	    UART1_Initialize() function should have been called
-	    for the ISR to execute correctly.
-
-	  @Param
-	    None
-
-	  @Returns
-	    None
-	 */
-	void UART1_Transmit_ISR(void);
 
 	/**
 	  @Summary
@@ -388,23 +364,6 @@ extern "C" {
 	 */
 	void (*UART1_RxInterruptHandler)(void);
 
-	/**
-	  @Summary
-	    UART1 Transmit Interrupt Handler
-
-	  @Description
-	    This is a pointer to the function that will be called upon UART1 transmit interrupt
-
-	  @Preconditions
-	    Initialize  the UART1 module with transmit interrupt enabled
-
-	  @Param
-	    None
-
-	  @Returns
-	    None
-	 */
-	void (*UART1_TxInterruptHandler)(void);
 
 
 
@@ -426,23 +385,6 @@ extern "C" {
 	 */
 	void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 
-	/**
-	  @Summary
-	    Set UART1 Transmit Interrupt Handler
-
-	  @Description
-	    This API sets the function to be called upon UART1 transmit interrupt
-
-	  @Preconditions
-	    Initialize  the UART1 module with transmit interrupt enabled before calling this API
-
-	  @Param
-	    Address of function to be set as transmit interrupt handler
-
-	  @Returns
-	    None
-	 */
-	void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
 
 

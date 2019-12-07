@@ -35,6 +35,7 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 
 void calc_bsoc(void)
 {
+	uint8_t * log_ptr;
 	uint16_t temp;
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
@@ -67,6 +68,9 @@ void calc_bsoc(void)
 		C.runtime = 120;
 
 	V.lowint_count++;
+	log_ptr = port_data_dma_ptr();
+	sprintf((char*) log_ptr, " %4.3f,%4.3f,%4.3f,%4.3f\r\n", C.v_bat, C.v_pv, C.v_cc, C.v_inverter);
+	send_port_data_dma(strlen((char*) log_ptr));
 	C.update = false;
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetLow();

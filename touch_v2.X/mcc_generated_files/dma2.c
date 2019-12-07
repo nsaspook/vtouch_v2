@@ -65,7 +65,7 @@ void DMA2_Initialize(void)
     DMA2CON1 = 0x03; //set control register1 
     DMA2SSZ = 0x0001; //set source size
     DMA2DSZ = 0x0001; //set destination size
-    DMA2SIRQ = 0x46; //set DMA Transfer Trigger Source
+    DMA2SIRQ = 0x1C; //set DMA Transfer Trigger Source
     DMA2AIRQ = 0x3D; //set DMA Transfer abort Source
     
     PIR5bits.DMA2DCNTIF =0; // clear Destination Count Interrupt Flag bit

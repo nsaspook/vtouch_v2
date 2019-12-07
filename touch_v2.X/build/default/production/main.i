@@ -7,7 +7,7 @@
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 112 "main.c"
+# 115 "main.c"
 #pragma warning disable 520
 #pragma warning disable 1498
 
@@ -171,7 +171,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 120 "main.c" 2
+# 123 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
@@ -227,7 +227,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 121 "main.c" 2
+# 124 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -27531,13 +27531,6 @@ typedef uint32_t uint_fast32_t;
 void INTERRUPT_Initialize (void);
 # 54 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/fvr.h" 1
-# 93 "./mcc_generated_files/fvr.h"
- void FVR_Initialize(void);
-# 127 "./mcc_generated_files/fvr.h"
-_Bool FVR_IsOutputReady(void);
-# 55 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/adcc.h" 1
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
@@ -27620,6 +27613,13 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
 # 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
+# 55 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/fvr.h" 1
+# 93 "./mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "./mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
 # 56 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr5.h" 1
@@ -27895,13 +27895,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 58 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/pwm8.h" 1
-# 102 "./mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "./mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 59 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/tmr3.h" 1
 # 101 "./mcc_generated_files/tmr3.h"
 void TMR3_Initialize(void);
@@ -27927,6 +27920,13 @@ void TMR3_CallBack(void);
 extern void (*TMR3_InterruptHandler)(void);
 # 422 "./mcc_generated_files/tmr3.h"
 void TMR3_DefaultInterruptHandler(void);
+# 59 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/pwm8.h" 1
+# 102 "./mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "./mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 60 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr2.h" 1
@@ -28249,28 +28249,20 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
  void UART1_Initialize(void);
 # 154 "./mcc_generated_files/uart1.h"
  uint8_t UART1_is_rx_ready(void);
-# 204 "./mcc_generated_files/uart1.h"
- uint8_t UART1_is_tx_ready(void);
-# 251 "./mcc_generated_files/uart1.h"
+# 202 "./mcc_generated_files/uart1.h"
+_Bool UART1_is_tx_ready(void);
+# 249 "./mcc_generated_files/uart1.h"
  _Bool UART1_is_tx_done(void);
-# 300 "./mcc_generated_files/uart1.h"
+# 298 "./mcc_generated_files/uart1.h"
  uint8_t UART1_Read(void);
-
- void UART1_put_buffer(uint8_t);
-# 327 "./mcc_generated_files/uart1.h"
+# 323 "./mcc_generated_files/uart1.h"
  void UART1_Write(uint8_t txData);
-# 348 "./mcc_generated_files/uart1.h"
- void UART1_Transmit_ISR(void);
-# 369 "./mcc_generated_files/uart1.h"
+# 345 "./mcc_generated_files/uart1.h"
  void UART1_Receive_ISR(void);
-# 389 "./mcc_generated_files/uart1.h"
+# 365 "./mcc_generated_files/uart1.h"
  void (*UART1_RxInterruptHandler)(void);
-# 407 "./mcc_generated_files/uart1.h"
- void (*UART1_TxInterruptHandler)(void);
-# 427 "./mcc_generated_files/uart1.h"
+# 386 "./mcc_generated_files/uart1.h"
  void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 445 "./mcc_generated_files/uart1.h"
- void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 65 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/dma1.h" 1
@@ -28310,7 +28302,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 # 110 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 122 "main.c" 2
+# 125 "main.c" 2
 
 
 # 1 "./eadog.h" 1
@@ -28427,8 +28419,9 @@ void PMD_Initialize(void);
  void wdtdelay(uint32_t);
 
  void init_display(void);
- void init_port(void);
- void send_port_data_dma(void);
+ void init_port_dma(void);
+ void send_port_data_dma(uint16_t);
+ uint8_t* port_data_dma_ptr(void);
  void send_lcd_data_dma(uint8_t);
  void send_lcd_cmd_dma(uint8_t);
  void start_lcd(void);
@@ -28443,7 +28436,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 124 "main.c" 2
+# 127 "main.c" 2
 
 # 1 "./timers.h" 1
 # 11 "./timers.h"
@@ -28469,13 +28462,13 @@ enum APP_TIMERS {
 void StartTimer(const uint8_t timer, const uint16_t count);
 _Bool TimerDone(const uint8_t timer);
 void WaitMs(const uint16_t numMilliseconds);
-# 125 "main.c" 2
+# 128 "main.c" 2
 
 # 1 "./mconfig.h" 1
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
-# 126 "main.c" 2
+# 129 "main.c" 2
 
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
@@ -28497,7 +28490,7 @@ _Bool help_button(void);
 _Bool check_help(const _Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
-# 127 "main.c" 2
+# 130 "main.c" 2
 
 # 1 "./daq.h" 1
 # 33 "./daq.h"
@@ -28514,7 +28507,7 @@ _Bool check_adc_scan(void);
 void clear_adc_scan(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
-# 128 "main.c" 2
+# 131 "main.c" 2
 
 # 1 "./mbmc.h" 1
 # 35 "./mbmc.h"
@@ -28662,7 +28655,7 @@ float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
 void static_soc(void);
-# 129 "main.c" 2
+# 132 "main.c" 2
 
 # 1 "./dio.h" 1
 # 40 "./dio.h"
@@ -28676,7 +28669,7 @@ SW_STATES get_switch(uint8_t);
 rbutton_type get_switch_data(uint8_t);
 uint8_t check_switches(void);
 void clear_switch(uint8_t);
-# 130 "main.c" 2
+# 133 "main.c" 2
 
 # 1 "./hid.h" 1
 # 37 "./hid.h"
@@ -28709,7 +28702,7 @@ H_data* hid_display(H_data*);
 _Bool check_enter_button(H_data*);
 void clear_hid_pflags(H_data*);
 void clear_hid_wflags(H_data*);
-# 131 "main.c" 2
+# 134 "main.c" 2
 
 # 1 "./bsoc.h" 1
 # 35 "./bsoc.h"
@@ -29086,7 +29079,7 @@ double y0(double);
 double y1(double);
 double yn(int, double);
 # 36 "./bsoc.h" 2
-# 58 "./bsoc.h"
+# 61 "./bsoc.h"
 typedef enum {
  R_CYCLE = 0,
  R_TOTAL,
@@ -29101,7 +29094,7 @@ void stop_bsoc(void);
 void reset_bsoc(R_CODES);
 uint16_t Volts_to_SOC(uint32_t);
 uint32_t peukert(uint16_t, float, float, int16_t);
-# 132 "main.c" 2
+# 135 "main.c" 2
 
 
 V_data V = {
@@ -29182,8 +29175,7 @@ void main(void)
 
 
 
-
-
+   init_port_dma();
 
    init_display();
    eaDogM_WriteCommand(0b00001100);

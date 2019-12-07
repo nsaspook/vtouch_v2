@@ -27549,8 +27549,9 @@ void PIN_MANAGER_Initialize (void);
  void wdtdelay(uint32_t);
 
  void init_display(void);
- void init_port(void);
- void send_port_data_dma(void);
+ void init_port_dma(void);
+ void send_port_data_dma(uint16_t);
+ uint8_t* port_data_dma_ptr(void);
  void send_lcd_data_dma(uint8_t);
  void send_lcd_cmd_dma(uint8_t);
  void start_lcd(void);
@@ -27766,10 +27767,11 @@ void *memccpy (void *restrict, const void *restrict, int, size_t);
 
 
 
+
 struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
 struct ringBufS_t ring_buf2;
-uint8_t port_data[16] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
+static uint8_t port_data[512] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
 
 extern struct V_data V;
 
@@ -27800,7 +27802,7 @@ void init_display(void)
  ringBufS_init(spi_link.tx1b);
 
  LATEbits.LATE2 = 1;
-# 57 "eadog.c"
+# 58 "eadog.c"
  do { LATCbits.LATC2 = 1; } while(0);
  wdtdelay(350000);
  send_lcd_cmd(0x39);
@@ -27833,14 +27835,15 @@ void init_display(void)
 
 
 
-void init_port(void)
+void init_port_dma(void)
 {
  DMA2CON1bits.DMODE = 0;
  DMA2CON1bits.DSTP = 0;
  DMA2CON1bits.SMODE = 1;
  DMA2CON1bits.SMR = 0;
- DMA2CON1bits.SSTP = 0;
- DMA2DSA = 0x3FBB;
+ DMA2CON1bits.SSTP = 1;
+ DMA2CON0bits.SIRQEN = 0;
+ DMA2DSA = 0x3DEA;
  DMA2SSA = (uint32_t) port_data;
  DMA2CON0bits.DGO = 0;
 }
@@ -28000,13 +28003,21 @@ void send_lcd_data_dma(uint8_t strPtr)
 
 
 
-void send_port_data_dma(void)
+void send_port_data_dma(uint16_t dsize)
 {
+ if (dsize > 512)
+  dsize = 512;
+
  DMA2CON0bits.EN = 0;
- DMA2SSZ = 16;
- DMA2DSZ = 16;
+ DMA2SSZ = dsize;
+ DMA2DSZ = 1;
  DMA2CON0bits.EN = 1;
  DMA2CON0bits.DMA2SIRQEN = 1;
+}
+
+uint8_t* port_data_dma_ptr(void)
+{
+ return port_data;
 }
 
 void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)

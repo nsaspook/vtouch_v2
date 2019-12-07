@@ -7,11 +7,12 @@
 
 
 #define max_strlen	64
+#define max_port_data	512
 
 struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
 struct ringBufS_t ring_buf2;
-uint8_t port_data[16] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
+static uint8_t port_data[max_port_data] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
 
 extern struct V_data V;
 
@@ -43,16 +44,16 @@ void init_display(void)
 
 	DLED = true;
 #ifdef NHD
-		// mode 3
-		SPI1CON1 = 0x20;
-		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
-		SPI1CON2 = 0x03;
-		// BAUD 0; 
-		SPI1BAUD = 0xFF; // 125kHz
-		// CLKSEL FOSC; 
-		SPI1CLK = 0x00;
-		// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
-		SPI1CON0 = 0x83;
+	// mode 3
+	SPI1CON1 = 0x20;
+	// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
+	SPI1CON2 = 0x03;
+	// BAUD 0; 
+	SPI1BAUD = 0xFF; // 125kHz
+	// CLKSEL FOSC; 
+	SPI1CLK = 0x00;
+	// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
+	SPI1CON0 = 0x83;
 #else
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
@@ -84,16 +85,17 @@ void init_display(void)
 }
 
 /*
- * channel 2 DMA, TEsting only
+ * channel 2 DMA, serial port 1 transmit
  */
-void init_port(void)
+void init_port_dma(void)
 {
 	DMA2CON1bits.DMODE = 0;
 	DMA2CON1bits.DSTP = 0;
 	DMA2CON1bits.SMODE = 1;
 	DMA2CON1bits.SMR = 0;
-	DMA2CON1bits.SSTP = 0;
-	DMA2DSA = 0x3FBB; // LATB
+	DMA2CON1bits.SSTP = 1;
+	DMA2CON0bits.SIRQEN = 0;
+	DMA2DSA = 0x3DEA; // U1TXB SERIAL PORT 1
 	DMA2SSA = (uint32_t) port_data;
 	DMA2CON0bits.DGO = 0;
 }
@@ -253,13 +255,21 @@ void send_lcd_data_dma(uint8_t strPtr)
 /*
  * uses DMA channel 2 for transfers
  */
-void send_port_data_dma(void)
+void send_port_data_dma(uint16_t dsize)
 {
+	if (dsize > max_port_data)
+		dsize = max_port_data;
+
 	DMA2CON0bits.EN = 0; /* disable DMA to change source count */
-	DMA2SSZ = 16;
-	DMA2DSZ = 16;
+	DMA2SSZ = dsize;
+	DMA2DSZ = 1;
 	DMA2CON0bits.EN = 1; /* enable DMA */
 	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
+}
+
+uint8_t* port_data_dma_ptr(void)
+{
+	return port_data;
 }
 
 void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
