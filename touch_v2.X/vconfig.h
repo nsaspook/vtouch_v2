@@ -74,6 +74,7 @@ extern "C" {
 #define SDELAY	500
 #define BDELAY	300
 #define DDELAY	250  // display update spacing
+#define SOCDELAY 125 // sync SPI and UART dma
 #define DFLIP	1500 // display info flipping spacing
 
 	/*

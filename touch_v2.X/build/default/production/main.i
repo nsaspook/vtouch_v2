@@ -28331,7 +28331,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 93 "./vconfig.h"
+# 94 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28403,7 +28403,7 @@ void PMD_Initialize(void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 181 "./vconfig.h"
+# 182 "./vconfig.h"
  typedef struct hist_type {
   float peukert, cef, peukert_adj, cef_calc, cef_save;
   uint32_t ttg_t;
@@ -29079,7 +29079,7 @@ double y0(double);
 double y1(double);
 double yn(int, double);
 # 36 "./bsoc.h" 2
-# 61 "./bsoc.h"
+# 62 "./bsoc.h"
 typedef enum {
  R_CYCLE = 0,
  R_TOTAL,

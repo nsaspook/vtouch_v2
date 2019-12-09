@@ -38,6 +38,7 @@
 #include "mcc_generated_files/tmr3.h"
 #include "mbmc.h"
 #include "eadog.h"
+#include "timers.h"
 
 #define	MAXRUNTIME	95.0
 #define MINRUNTIME	0.05

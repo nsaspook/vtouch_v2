@@ -27502,7 +27502,7 @@ void PIN_MANAGER_Initialize (void);
 # 21 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 22 "./vconfig.h" 2
-# 93 "./vconfig.h"
+# 94 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27574,7 +27574,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 181 "./vconfig.h"
+# 182 "./vconfig.h"
  typedef struct hist_type {
   float peukert, cef, peukert_adj, cef_calc, cef_save;
   uint32_t ttg_t;
