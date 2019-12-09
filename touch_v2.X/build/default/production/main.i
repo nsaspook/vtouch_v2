@@ -28388,7 +28388,7 @@ void PMD_Initialize(void);
  typedef struct V_data {
   UI_STATES ui_state;
   char buf[64], info[64];
-  uint32_t ticks;
+  volatile uint32_t ticks;
   int32_t testing;
   uint8_t error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -29184,10 +29184,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "0.999");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.0");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "0.999");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.0");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(3000);

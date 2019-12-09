@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"0.999"
+#define VER	"1.0"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -147,7 +147,7 @@ extern "C" {
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
 		char buf[64], info[64];
-		uint32_t ticks;
+		volatile uint32_t ticks;
 		int32_t testing;
 		uint8_t error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;

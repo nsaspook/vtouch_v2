@@ -27522,7 +27522,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_data {
   UI_STATES ui_state;
   char buf[64], info[64];
-  uint32_t ticks;
+  volatile uint32_t ticks;
   int32_t testing;
   uint8_t error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;

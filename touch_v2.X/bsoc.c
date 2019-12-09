@@ -72,7 +72,8 @@ void calc_bsoc(void)
 
 	V.lowint_count++;
 	log_ptr = port_data_dma_ptr();
-	sprintf((char*) log_ptr, " %4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d\r\n",
+	sprintf((char*) log_ptr, " %lu,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d\r\n",
+		V.ticks,
 		C.v_bat, C.v_pv, C.v_cc, C.v_inverter,
 		C.p_bat, C.p_pv, C.p_load, C.p_inverter,
 		C.dynamic_ah, C.pv_ah, C.soc, C.runtime);
