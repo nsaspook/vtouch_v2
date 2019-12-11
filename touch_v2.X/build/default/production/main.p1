@@ -18,13 +18,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S2236 V_data ui_state buf info ticks testing error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id response ticker flipper calib highint_count lowint_count eeprom_count timerint_count ]
 "151 main.c
 [; ;main.c: 151: H_data H = {
-[c E17414 0 1 2 3 4 .. ]
-[n E17414 . HID_MAIN HID_PWR HID_RUN HID_AUX HID_LAST  ]
-[c E17421 0 1 2 3 4 5 .. ]
-[n E17421 . H_STATE_INIT H_STATE_DISPLAY H_STATE_WAIT H_STATE_LOG H_STATE_COMM H_STATE_ERROR  ]
+[c E17418 0 1 2 3 4 .. ]
+[n E17418 . HID_MAIN HID_PWR HID_RUN HID_AUX HID_LAST  ]
+[c E17425 0 1 2 3 4 5 .. ]
+[n E17425 . H_STATE_INIT H_STATE_DISPLAY H_STATE_WAIT H_STATE_LOG H_STATE_COMM H_STATE_ERROR  ]
 "54 ./hid.h
 [; ;./hid.h: 54: typedef struct H_data {
-[s S2247 `E17414 1 `E17421 1 `a 1 `a 1 `a 1 `a 1 `uc 1 ]
+[s S2247 `E17418 1 `E17425 1 `a 1 `a 1 `a 1 `a 1 `uc 1 ]
 [n S2247 H_data hid_display h_state wait_select select_p wait_enter enter_p sequence ]
 "182 ./vconfig.h
 [; ;./vconfig.h: 182:  typedef struct hist_type {
@@ -37,8 +37,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p mainexit ]
 "177 main.c
 [; ;main.c: 177:  uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
-[c E16623 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
-[n E16623 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
+[c E16625 0 1 2 4 5 6 10 11 12 13 59 60 61 62 63 .. ]
+[n E16625 . C_BATT C_PV V_CC V_BAT V_PV V_CBUS V_BBAT V_TEMP V_INVERTER channel_ANB5 channel_VSS channel_Temp channel_DAC1 channel_FVR_Buffer1 channel_FVR_Buffer2  ]
 "84 ./mcc_generated_files/mcc.h
 [; ;./mcc_generated_files/mcc.h: 84: void SYSTEM_Initialize(void);
 [v _SYSTEM_Initialize `(v ~T0 @X0 0 ef ]
@@ -162,7 +162,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _calc_model_data `(v ~T0 @X0 0 ef ]
 "82 ./daq.h
 [; ;./daq.h: 82: adc_result_t get_raw_result(const adcc_channel_t);
-[v _get_raw_result `(us ~T0 @X0 0 ef1`CE16623 ]
+[v _get_raw_result `(us ~T0 @X0 0 ef1`CE16625 ]
 "281 main.c
 [; ;main.c: 281:     sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
 [c E17021 0 1 2 .. ]
@@ -2638,8 +2638,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [i _H
 :U ..
 :U ..
-. `E17414 0
-. `E17421 0
+. `E17418 0
+. `E17425 0
 -> -> 1 `i `a
 -> -> 0 `i `a
 -> -> 1 `i `a
@@ -2722,11 +2722,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _inp_index `uc ~T0 @X0 1 a ]
 [e = _inp_index -> -> 0 `i `uc ]
 [v _i `uc ~T0 @X0 1 a ]
-[e = _i -> . `E16623 0 `uc ]
+[e = _i -> . `E16625 0 `uc ]
 [v _j `uc ~T0 @X0 1 a ]
-[e = _j -> . `E16623 1 `uc ]
+[e = _j -> . `E16625 1 `uc ]
 [v _k `uc ~T0 @X0 1 a ]
-[e = _k -> . `E16623 2 `uc ]
+[e = _k -> . `E16625 2 `uc ]
 "180
 [; ;main.c: 180:  SYSTEM_Initialize();
 [e ( _SYSTEM_Initialize ..  ]
@@ -2982,13 +2982,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 {
 "281
 [; ;main.c: 281:     sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 9C -> ( _get_raw_result (1 -> _i `E16623 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 2 `uc `ui ]
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 9C -> ( _get_raw_result (1 -> _i `E16625 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 2 `uc `ui ]
 "282
 [; ;main.c: 282:     sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 10C -> ( _get_raw_result (1 -> _j `E16623 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 3 `uc `ui ]
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 10C -> ( _get_raw_result (1 -> _j `E16625 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 3 `uc `ui ]
 "283
 [; ;main.c: 283:     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 11C -> ( _get_raw_result (1 -> _k `E16623 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d -> _inp_index `i ]
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 11C -> ( _get_raw_result (1 -> _k `E16625 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d -> _inp_index `i ]
 "284
 [; ;main.c: 284:    } else {
 }
@@ -3028,13 +3028,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _V 25 -> -> 0 `i `a ]
 "295
 [; ;main.c: 295:      sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 15C -> *U + &U . _C 0 * -> . `E16623 4 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16623 1 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 15C -> *U + &U . _C 0 * -> . `E16625 4 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16625 1 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
 "296
 [; ;main.c: 296:      sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 16C -> *U + &U . _C 0 * -> . `E16623 3 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16623 0 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 16C -> *U + &U . _C 0 * -> . `E16625 3 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16625 0 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
 "297
 [; ;main.c: 297:      sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 17C -> *U + &U . _C 0 * -> . `E16623 2 `ux -> -> # *U &U . _C 0 `ui `ux `d -> . _C 1 `d ]
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 17C -> *U + &U . _C 0 * -> . `E16625 2 `ux -> -> # *U &U . _C 0 `ui `ux `d -> . _C 1 `d ]
 "298
 [; ;main.c: 298:      break;
 [e $U 2276  ]
@@ -3081,13 +3081,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _V 25 -> -> 1 `i `a ]
 "312
 [; ;main.c: 312:      sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 21C -> ( _get_raw_result (1 -> _i `E16623 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 2 `uc `ui ]
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 21C -> ( _get_raw_result (1 -> _i `E16625 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 2 `uc `ui ]
 "313
 [; ;main.c: 313:      sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 22C -> ( _get_raw_result (1 -> _j `E16623 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 3 `uc `ui ]
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 22C -> ( _get_raw_result (1 -> _j `E16625 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17026 3 `uc `ui ]
 "314
 [; ;main.c: 314:      sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index + 1);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 23C -> ( _get_raw_result (1 -> _k `E16623 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d + -> _inp_index `i -> 1 `i ]
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 23C -> ( _get_raw_result (1 -> _k `E16625 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d + -> _inp_index `i -> 1 `i ]
 "315
 [; ;main.c: 315:      break;
 [e $U 2276  ]
@@ -3102,10 +3102,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 2276  ]
 [e :U 2277 ]
-[e [\ -> . _H 0 `ui , $ -> . `E17414 1 `ui 2278
- , $ -> . `E17414 0 `ui 2279
- , $ -> . `E17414 2 `ui 2280
- , $ -> . `E17414 3 `ui 2281
+[e [\ -> . _H 0 `ui , $ -> . `E17418 1 `ui 2278
+ , $ -> . `E17418 0 `ui 2279
+ , $ -> . `E17418 2 `ui 2280
+ , $ -> . `E17418 3 `ui 2281
  2283 ]
 [e :U 2276 ]
 "319
@@ -3154,13 +3154,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2288 ]
 "337
 [; ;main.c: 337:     i = C_BATT;
-[e = _i -> . `E16623 0 `uc ]
+[e = _i -> . `E16625 0 `uc ]
 "338
 [; ;main.c: 338:     j = C_PV;
-[e = _j -> . `E16623 1 `uc ]
+[e = _j -> . `E16625 1 `uc ]
 "339
 [; ;main.c: 339:     k = V_CC;
-[e = _k -> . `E16623 2 `uc ]
+[e = _k -> . `E16625 2 `uc ]
 "340
 [; ;main.c: 340:     break;
 [e $U 2286  ]
@@ -3169,13 +3169,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2289 ]
 "342
 [; ;main.c: 342:     i = V_BAT;
-[e = _i -> . `E16623 3 `uc ]
+[e = _i -> . `E16625 3 `uc ]
 "343
 [; ;main.c: 343:     j = V_PV;
-[e = _j -> . `E16623 4 `uc ]
+[e = _j -> . `E16625 4 `uc ]
 "344
 [; ;main.c: 344:     k = V_CBUS;
-[e = _k -> . `E16623 5 `uc ]
+[e = _k -> . `E16625 5 `uc ]
 "345
 [; ;main.c: 345:     break;
 [e $U 2286  ]
@@ -3184,13 +3184,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2290 ]
 "347
 [; ;main.c: 347:     i = V_BBAT;
-[e = _i -> . `E16623 6 `uc ]
+[e = _i -> . `E16625 6 `uc ]
 "348
 [; ;main.c: 348:     j = V_TEMP;
-[e = _j -> . `E16623 7 `uc ]
+[e = _j -> . `E16625 7 `uc ]
 "349
 [; ;main.c: 349:     k = V_INVERTER;
-[e = _k -> . `E16623 8 `uc ]
+[e = _k -> . `E16625 8 `uc ]
 "350
 [; ;main.c: 350:     break;
 [e $U 2286  ]
@@ -3199,13 +3199,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U 2291 ]
 "352
 [; ;main.c: 352:     i = channel_ANB5;
-[e = _i -> . `E16623 9 `uc ]
+[e = _i -> . `E16625 9 `uc ]
 "353
 [; ;main.c: 353:     j = channel_ANB5;
-[e = _j -> . `E16623 9 `uc ]
+[e = _j -> . `E16625 9 `uc ]
 "354
 [; ;main.c: 354:     k = channel_ANB5;
-[e = _k -> . `E16623 9 `uc ]
+[e = _k -> . `E16625 9 `uc ]
 "355
 [; ;main.c: 355:     break;
 [e $U 2286  ]

@@ -71,6 +71,10 @@ void calc_bsoc(void)
 		C.runtime = 120;
 
 	V.lowint_count++;
+
+	set_load_relay_one(V.lowint_count&1);
+	set_load_relay_two(!(V.lowint_count&1));
+
 	log_ptr = port_data_dma_ptr();
 	sprintf((char*) log_ptr, " %lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d\r\n",
 		V.ticks,

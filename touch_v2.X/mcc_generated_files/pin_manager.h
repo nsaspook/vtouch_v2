@@ -511,45 +511,45 @@
 #define IO_RD3_SetAnalogMode()      do { ANSELDbits.ANSELD3 = 1; } while(0)
 #define IO_RD3_SetDigitalMode()     do { ANSELDbits.ANSELD3 = 0; } while(0)
 
-// get/set IO_RD4 aliases
-#define IO_RD4_TRIS                 TRISDbits.TRISD4
-#define IO_RD4_LAT                  LATDbits.LATD4
-#define IO_RD4_PORT                 PORTDbits.RD4
-#define IO_RD4_WPU                  WPUDbits.WPUD4
-#define IO_RD4_OD                   ODCONDbits.ODCD4
-#define IO_RD4_ANS                  ANSELDbits.ANSELD4
-#define IO_RD4_SetHigh()            do { LATDbits.LATD4 = 1; } while(0)
-#define IO_RD4_SetLow()             do { LATDbits.LATD4 = 0; } while(0)
-#define IO_RD4_Toggle()             do { LATDbits.LATD4 = ~LATDbits.LATD4; } while(0)
-#define IO_RD4_GetValue()           PORTDbits.RD4
-#define IO_RD4_SetDigitalInput()    do { TRISDbits.TRISD4 = 1; } while(0)
-#define IO_RD4_SetDigitalOutput()   do { TRISDbits.TRISD4 = 0; } while(0)
-#define IO_RD4_SetPullup()          do { WPUDbits.WPUD4 = 1; } while(0)
-#define IO_RD4_ResetPullup()        do { WPUDbits.WPUD4 = 0; } while(0)
-#define IO_RD4_SetPushPull()        do { ODCONDbits.ODCD4 = 0; } while(0)
-#define IO_RD4_SetOpenDrain()       do { ODCONDbits.ODCD4 = 1; } while(0)
-#define IO_RD4_SetAnalogMode()      do { ANSELDbits.ANSELD4 = 1; } while(0)
-#define IO_RD4_SetDigitalMode()     do { ANSELDbits.ANSELD4 = 0; } while(0)
+// get/set RELAYL1 aliases
+#define RELAYL1_TRIS                 TRISDbits.TRISD4
+#define RELAYL1_LAT                  LATDbits.LATD4
+#define RELAYL1_PORT                 PORTDbits.RD4
+#define RELAYL1_WPU                  WPUDbits.WPUD4
+#define RELAYL1_OD                   ODCONDbits.ODCD4
+#define RELAYL1_ANS                  ANSELDbits.ANSELD4
+#define RELAYL1_SetHigh()            do { LATDbits.LATD4 = 1; } while(0)
+#define RELAYL1_SetLow()             do { LATDbits.LATD4 = 0; } while(0)
+#define RELAYL1_Toggle()             do { LATDbits.LATD4 = ~LATDbits.LATD4; } while(0)
+#define RELAYL1_GetValue()           PORTDbits.RD4
+#define RELAYL1_SetDigitalInput()    do { TRISDbits.TRISD4 = 1; } while(0)
+#define RELAYL1_SetDigitalOutput()   do { TRISDbits.TRISD4 = 0; } while(0)
+#define RELAYL1_SetPullup()          do { WPUDbits.WPUD4 = 1; } while(0)
+#define RELAYL1_ResetPullup()        do { WPUDbits.WPUD4 = 0; } while(0)
+#define RELAYL1_SetPushPull()        do { ODCONDbits.ODCD4 = 0; } while(0)
+#define RELAYL1_SetOpenDrain()       do { ODCONDbits.ODCD4 = 1; } while(0)
+#define RELAYL1_SetAnalogMode()      do { ANSELDbits.ANSELD4 = 1; } while(0)
+#define RELAYL1_SetDigitalMode()     do { ANSELDbits.ANSELD4 = 0; } while(0)
 
-// get/set IO_RD5 aliases
-#define IO_RD5_TRIS                 TRISDbits.TRISD5
-#define IO_RD5_LAT                  LATDbits.LATD5
-#define IO_RD5_PORT                 PORTDbits.RD5
-#define IO_RD5_WPU                  WPUDbits.WPUD5
-#define IO_RD5_OD                   ODCONDbits.ODCD5
-#define IO_RD5_ANS                  ANSELDbits.ANSELD5
-#define IO_RD5_SetHigh()            do { LATDbits.LATD5 = 1; } while(0)
-#define IO_RD5_SetLow()             do { LATDbits.LATD5 = 0; } while(0)
-#define IO_RD5_Toggle()             do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0)
-#define IO_RD5_GetValue()           PORTDbits.RD5
-#define IO_RD5_SetDigitalInput()    do { TRISDbits.TRISD5 = 1; } while(0)
-#define IO_RD5_SetDigitalOutput()   do { TRISDbits.TRISD5 = 0; } while(0)
-#define IO_RD5_SetPullup()          do { WPUDbits.WPUD5 = 1; } while(0)
-#define IO_RD5_ResetPullup()        do { WPUDbits.WPUD5 = 0; } while(0)
-#define IO_RD5_SetPushPull()        do { ODCONDbits.ODCD5 = 0; } while(0)
-#define IO_RD5_SetOpenDrain()       do { ODCONDbits.ODCD5 = 1; } while(0)
-#define IO_RD5_SetAnalogMode()      do { ANSELDbits.ANSELD5 = 1; } while(0)
-#define IO_RD5_SetDigitalMode()     do { ANSELDbits.ANSELD5 = 0; } while(0)
+// get/set RELAYL2 aliases
+#define RELAYL2_TRIS                 TRISDbits.TRISD5
+#define RELAYL2_LAT                  LATDbits.LATD5
+#define RELAYL2_PORT                 PORTDbits.RD5
+#define RELAYL2_WPU                  WPUDbits.WPUD5
+#define RELAYL2_OD                   ODCONDbits.ODCD5
+#define RELAYL2_ANS                  ANSELDbits.ANSELD5
+#define RELAYL2_SetHigh()            do { LATDbits.LATD5 = 1; } while(0)
+#define RELAYL2_SetLow()             do { LATDbits.LATD5 = 0; } while(0)
+#define RELAYL2_Toggle()             do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0)
+#define RELAYL2_GetValue()           PORTDbits.RD5
+#define RELAYL2_SetDigitalInput()    do { TRISDbits.TRISD5 = 1; } while(0)
+#define RELAYL2_SetDigitalOutput()   do { TRISDbits.TRISD5 = 0; } while(0)
+#define RELAYL2_SetPullup()          do { WPUDbits.WPUD5 = 1; } while(0)
+#define RELAYL2_ResetPullup()        do { WPUDbits.WPUD5 = 0; } while(0)
+#define RELAYL2_SetPushPull()        do { ODCONDbits.ODCD5 = 0; } while(0)
+#define RELAYL2_SetOpenDrain()       do { ODCONDbits.ODCD5 = 1; } while(0)
+#define RELAYL2_SetAnalogMode()      do { ANSELDbits.ANSELD5 = 1; } while(0)
+#define RELAYL2_SetDigitalMode()     do { ANSELDbits.ANSELD5 = 0; } while(0)
 
 // get/set IO_RD6 aliases
 #define IO_RD6_TRIS                 TRISDbits.TRISD6

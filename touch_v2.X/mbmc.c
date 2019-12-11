@@ -88,3 +88,13 @@ void static_soc(void)
 	C.soc = 100;
 	C.dynamic_ah = C.bank_ah;
 }
+
+void set_load_relay_one(bool mode)
+{
+	RELAYL1_LAT=mode;
+}
+
+void set_load_relay_two(bool mode)
+{
+	RELAYL2_LAT=mode;
+}

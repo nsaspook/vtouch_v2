@@ -89,5 +89,7 @@ float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
 void static_soc(void);
+void set_load_relay_one(bool);
+void set_load_relay_two(bool);
 
 #endif
