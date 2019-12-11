@@ -39,7 +39,6 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 void calc_bsoc(void)
 {
 	uint8_t * log_ptr;
-	uint16_t temp;
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif
@@ -57,8 +56,7 @@ void calc_bsoc(void)
 	if (C.p_bat < 0.0)
 		C.bkwo += (C.p_bat / SSLICE);
 
-	temp = ((uint16_t) ((C.dynamic_ah / C.bank_ah)*100.0) + 1);
-	C.soc = (Volts_to_SOC((uint32_t) C.v_bat * 1000.0) + temp) / 2;
+	C.soc = ((uint16_t) ((C.dynamic_ah / C.bank_ah)*100.0) + 1);
 	if (C.soc > 100)
 		C.soc = 100;
 
@@ -71,9 +69,6 @@ void calc_bsoc(void)
 		C.runtime = 120;
 
 	V.lowint_count++;
-
-	set_load_relay_one(V.lowint_count&1);
-	set_load_relay_two(!(V.lowint_count&1));
 
 	log_ptr = port_data_dma_ptr();
 	sprintf((char*) log_ptr, " %lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d\r\n",

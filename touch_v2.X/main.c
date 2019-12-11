@@ -216,6 +216,8 @@ void main(void)
 
 			init_display();
 			eaDogM_CursorOff();
+			set_load_relay_one(true);
+			set_load_relay_two(true);
 
 			V.ui_state = mode;
 			srand(1957);
@@ -227,7 +229,7 @@ void main(void)
 			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
 			update_lcd(0);
-			WaitMs(3000);
+			WaitMs(1000);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			StartTimer(TMR_ADC, ADC_SCAN_SPEED);
 			StartTimer(TMR_INFO, TDELAY);
@@ -237,8 +239,23 @@ void main(void)
 			start_adc_scan();
 			start_switch_handler();
 			WaitMs(1000);
+			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   1");
+			update_lcd(0);
+			WaitMs(1000);
+			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   2");
+			update_lcd(0);
+			WaitMs(1000);
+			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   3");
+			update_lcd(0);
+			WaitMs(1000);
+			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   4");
+			update_lcd(0);
+			WaitMs(2000);
 			static_soc(); // defaults
 			init_bsoc(); // system calculations
+			WaitMs(1000);
+			set_load_relay_one(false);
+			set_load_relay_two(false);
 
 			break;
 		case UI_STATE_HOST:
