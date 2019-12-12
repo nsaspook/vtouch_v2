@@ -249,6 +249,7 @@ void main(void)
 			i_ror = 1;
 			do {
 				calc_ror_data();
+				sprintf(get_vterm_ptr(1, 0), "BV %2.4f         ", conv_raw_result(V_BAT, CONV));
 				sprintf(get_vterm_ptr(2, 0), "S SOC %d %2.4f       ", i_ror, C.bv_ror);
 				update_lcd(0);
 				WaitMs(ROR_WAIT); // time between samples
@@ -262,10 +263,19 @@ void main(void)
 			set_load_relay_one(false);
 			set_load_relay_two(false);
 			sprintf(get_vterm_ptr(0, 0), "Static SOC %d        ", C.soc);
-			sprintf(get_vterm_ptr(0, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
+			sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
 			update_lcd(0);
 			WaitMs(2000);
-
+			sprintf(get_vterm_ptr(0, 0), "Battery ESR     ");
+			sprintf(get_vterm_ptr(1, 0), "Calculation     ");
+			sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
+			update_lcd(0);
+			esr_check();
+			sprintf(get_vterm_ptr(0, 0), "ESR  %2.6f           ", C.esr);
+			sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f           ", C.bv_one_load, C.load_i1);
+			sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);
+			update_lcd(0);
+			WaitMs(5000);
 			break;
 		case UI_STATE_HOST:
 			break;

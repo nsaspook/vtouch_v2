@@ -46,12 +46,12 @@
 #define BLOAD1		10.0       	// load resistor in ohms
 #define BLOAD2		2.5       	// ditto
 
-#define ROR_LIMIT_LOW	0.005
-#define ROR_LIMIT_SET	0.0051
-#define ROR_LIMIT_NOISE	0.0001
+#define ROR_LIMIT_LOW	0.0140
+#define ROR_LIMIT_SET	0.0001
+#define ROR_LIMIT_NOISE	0.0051
 
-#define ROR_WAIT	5000
-#define ROR_TIMES	12
+#define ROR_WAIT	2000
+#define ROR_TIMES	30
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];

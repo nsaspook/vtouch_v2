@@ -16,21 +16,21 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 	24646, 53,
 	24700, 55,
 	24750, 57,
-	12400 * 2, 60,
-	12425 * 2, 63,
-	12475 * 2, 67,
-	12500 * 2, 70,
-	12510 * 2, 72,
-	12520 * 2, 75,
-	12525 * 2, 80,
-	12530 * 2, 85,
-	12540 * 2, 90,
-	12548 * 2, 92,
-	12561 * 2, 93,
-	12570 * 2, 95,
-	12580 * 2, 97,
-	12590 * 2, 100,
-	13100 * 2, 90
+	24800, 60,
+	24850, 63,
+	24925, 67,
+	25000, 70,
+	25020, 72,
+	25040, 75,
+	25050, 80,
+	25060, 85,
+	25080, 90,
+	25096, 92,
+	25122, 93,
+	25140, 95,
+	25160, 97,
+	25180, 100,
+	26500, 98 // charging voltage guess
 };
 
 /*
@@ -71,11 +71,12 @@ void calc_bsoc(void)
 	V.lowint_count++;
 
 	log_ptr = port_data_dma_ptr();
-	sprintf((char*) log_ptr, " %lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d\r\n",
+	sprintf((char*) log_ptr, " %lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d,%2.6f\r\n",
 		V.ticks,
 		C.v_bat, C.v_pv, C.v_cc, C.v_inverter,
 		C.p_bat, C.p_pv, C.p_load, C.p_inverter,
-		C.dynamic_ah, C.pv_ah, C.soc, C.runtime);
+		C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
+		C.esr);
 	StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 	send_port_data_dma(strlen((char*) log_ptr));
 	C.update = false;
@@ -163,32 +164,30 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 }
 
 /*
- * check battery esr, returns true when done
+ * check battery ESR, returns ESR value when done
  */
-bool esr_check(void)
+float esr_check(void)
 {
-	static bool done = true;
-
 	set_load_relay_one(false);
 	set_load_relay_two(false);
-	WaitMs(500);
+	WaitMs(10000); // unloaded batter wait
 	update_adc_result();
 	C.bv_noload = conv_raw_result(V_BAT, CONV);
 
 	set_load_relay_one(true);
-	WaitMs(500);
+	WaitMs(10000); // 10 ohm load wait
 	update_adc_result();
 	C.bv_one_load = conv_raw_result(V_BAT, CONV);
-	C.load_i1 = C.bv_one_load / BLOAD1; // find current
+	C.load_i1 = conv_raw_result(C_BATT, CONV); // get current
 
 	set_load_relay_two(true);
+	WaitMs(10000); // 2.5 ohm wait
 	update_adc_result();
 	C.bv_full_load = conv_raw_result(V_BAT, CONV);
-	WaitMs(500);
-	C.load_i2 = C.bv_full_load / ((BLOAD1 * BLOAD2) / (BLOAD1 + BLOAD2)); // find current
+	C.load_i2 = conv_raw_result(C_BATT, CONV); // get current
 
-	C.esr = (C.bv_one_load - C.bv_full_load) / (C.load_i2 - C.load_i1); // find resistance causing voltage drop (sorta)
+	C.esr = fabs((C.bv_one_load - C.bv_full_load) / (C.load_i1 - C.load_i2)); // find internal resistance causing voltage drop (sorta)
 	set_load_relay_one(false);
 	set_load_relay_two(false);
-	return done;
+	return C.esr;
 }

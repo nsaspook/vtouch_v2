@@ -84,15 +84,18 @@ void calc_model_data(void)
 	C.update = true;
 }
 
+/*
+ * find rate of change of battery voltage under load
+ */
 void calc_ror_data(void)
 {
-	static float bvror = 0.0, bcror = 0.0;
+	static float bvror = 0.0, bcror = 0.0; // must remember prior values
 
 	C.bc_ror = fabs(conv_raw_result(C_BATT, CONV) - bcror);
 	bcror = conv_raw_result(C_BATT, CONV);
 	C.bv_ror = fabs(conv_raw_result(V_BAT, CONV) - bvror);
 	if (C.bv_ror < ROR_LIMIT_NOISE) // skip noise values
-		C.bv_ror = ROR_LIMIT_SET; // keep trying value
+		C.bv_ror = ROR_LIMIT_LOW + ROR_LIMIT_SET; // keep trying value
 	bvror = conv_raw_result(V_BAT, CONV);
 }
 
