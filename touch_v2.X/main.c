@@ -174,7 +174,7 @@ extern volatile struct P_data P;
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
-	uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
+	uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC, i_ror;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -239,17 +239,13 @@ void main(void)
 			start_adc_scan();
 			start_switch_handler();
 			WaitMs(1000);
-			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   1");
-			update_lcd(0);
-			WaitMs(1000);
-			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   2");
-			update_lcd(0);
-			WaitMs(1000);
-			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   3");
-			update_lcd(0);
-			WaitMs(1000);
-			sprintf(get_vterm_ptr(2, 0), " STATIC SOC   4");
-			update_lcd(0);
+			i_ror = 1;
+			do {
+				sprintf(get_vterm_ptr(2, 0), "STATIC SOC %d %2.4f   ", i_ror, C.bv_ror);
+				update_lcd(0);
+				WaitMs(1000);
+			} while (i_ror++ < 8);
+
 			WaitMs(2000);
 			static_soc(); // defaults
 			init_bsoc(); // system calculations

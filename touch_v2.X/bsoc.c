@@ -161,3 +161,27 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 
 	return C.soc;
 }
+
+/*
+ * check battery esr, returns true when done
+ */
+bool esr_check(void)
+{
+	static bool done = true;
+	static float load_i1, load_i2, bv_noload;
+
+	set_load_relay_one(false);
+	set_load_relay_two(false);
+	bv_noload = C.v_bat;
+
+	set_load_relay_one(true);
+	load_i1 = C.v_bat / BLOAD1; // find current
+
+	set_load_relay_two(true);
+	load_i2 = C.v_bat / ((BLOAD1 * BLOAD2) / (BLOAD1 + BLOAD2)); // find current
+
+	C.esr = (bv_noload - C.v_bat) / (load_i2 - load_i1); // find resistance causing voltage drop (sorta)
+	set_load_relay_one(false);
+	set_load_relay_two(false);
+	return done;
+}

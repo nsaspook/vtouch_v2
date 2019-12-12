@@ -55,12 +55,17 @@ void convert_adc_data(void)
  */
 void calc_model_data(void)
 {
+	static float bvror = 0.0, bcror = 0.0;
 	stop_bsoc();
 
 	if (!V.calib) {
 		C.c_bat = C.calc[C_BATT];
+		C.bc_ror = C.c_bat - bcror;
+		bcror = C.c_bat;
 		C.c_pv = C.calc[C_PV];
 		C.v_bat = C.calc[V_BAT];
+		C.bv_ror = C.v_bat - bvror;
+		bvror = C.v_bat;
 		C.v_pv = C.calc[V_PV];
 		C.v_cc = C.calc[V_CC];
 		C.v_inverter = C.calc[V_INVERTER];
@@ -91,10 +96,10 @@ void static_soc(void)
 
 void set_load_relay_one(bool mode)
 {
-	RELAYL1_LAT=mode;
+	RELAYL1_LAT = mode;
 }
 
 void set_load_relay_two(bool mode)
 {
-	RELAYL2_LAT=mode;
+	RELAYL2_LAT = mode;
 }

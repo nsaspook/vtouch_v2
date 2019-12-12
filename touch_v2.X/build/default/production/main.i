@@ -28608,12 +28608,12 @@ extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
 # 36 "./mbmc.h" 2
-# 46 "./mbmc.h"
+# 49 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
- float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter;
+ float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
  float p_load, p_inverter, p_pv, p_bat;
- float t_comp;
+ float t_comp, esr;
  float bank_ah, dynamic_ah, pv_ah, loadah;
  float bkwi, bkwo, pvkw, invkw;
  uint16_t runtime, soc;
@@ -29096,6 +29096,7 @@ void stop_bsoc(void);
 void reset_bsoc(R_CODES);
 uint16_t Volts_to_SOC(uint32_t);
 uint32_t peukert(uint16_t, float, float, int16_t);
+_Bool esr_check(void);
 # 135 "main.c" 2
 
 
@@ -29139,7 +29140,7 @@ extern volatile struct P_data P;
 void main(void)
 {
  UI_STATES mode;
- uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC;
+ uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC, i_ror;
 
 
  SYSTEM_Initialize();
@@ -29204,17 +29205,13 @@ void main(void)
    start_adc_scan();
    start_switch_handler();
    WaitMs(1000);
-   sprintf(get_vterm_ptr(2, 0), " STATIC SOC   1");
-   update_lcd(0);
-   WaitMs(1000);
-   sprintf(get_vterm_ptr(2, 0), " STATIC SOC   2");
-   update_lcd(0);
-   WaitMs(1000);
-   sprintf(get_vterm_ptr(2, 0), " STATIC SOC   3");
-   update_lcd(0);
-   WaitMs(1000);
-   sprintf(get_vterm_ptr(2, 0), " STATIC SOC   4");
-   update_lcd(0);
+   i_ror = 1;
+   do {
+    sprintf(get_vterm_ptr(2, 0), "STATIC SOC %d %2.4f   ", i_ror, C.bv_ror);
+    update_lcd(0);
+    WaitMs(1000);
+   } while (i_ror++ < 8);
+
    WaitMs(2000);
    static_soc();
    init_bsoc();

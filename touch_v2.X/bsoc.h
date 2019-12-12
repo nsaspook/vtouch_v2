@@ -73,6 +73,7 @@ void stop_bsoc(void);
 void reset_bsoc(R_CODES);
 uint16_t Volts_to_SOC(uint32_t);
 uint32_t peukert(uint16_t, float, float, int16_t);
+bool esr_check(void);
 
 #endif	/* BSOC_H */
 
