@@ -216,6 +216,9 @@ void main(void)
 
 			init_display();
 			eaDogM_CursorOff();
+			/*
+			 * load the battery to reduce surface charge
+			 */
 			set_load_relay_one(true);
 			set_load_relay_two(true);
 
@@ -239,17 +242,22 @@ void main(void)
 			start_adc_scan();
 			start_switch_handler();
 			WaitMs(1000);
+			/*
+			 * check for quickly changing battery voltage
+			 */
 			i_ror = 1;
 			do {
-				sprintf(get_vterm_ptr(2, 0), "STATIC SOC %d %2.4f   ", i_ror, C.bv_ror);
+				calc_ror_data();
+				sprintf(get_vterm_ptr(2, 0), "S SOC %d %2.4f       ", i_ror, C.bv_ror);
 				update_lcd(0);
+				clear_adc_scan();
+				start_adc_scan();
 				WaitMs(1000);
-			} while (i_ror++ < 8);
+			} while ((i_ror++ < 30) && (C.bv_ror > ROR_LIMIT_LOW));
 
 			WaitMs(2000);
 			static_soc(); // defaults
 			init_bsoc(); // system calculations
-			WaitMs(1000);
 			set_load_relay_one(false);
 			set_load_relay_two(false);
 

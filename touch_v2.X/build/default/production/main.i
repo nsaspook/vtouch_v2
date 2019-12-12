@@ -28608,7 +28608,7 @@ extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
 # 36 "./mbmc.h" 2
-# 49 "./mbmc.h"
+# 53 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
@@ -28654,6 +28654,7 @@ typedef struct P_data {
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
+void calc_ror_data(void);
 void static_soc(void);
 void set_load_relay_one(_Bool);
 void set_load_relay_two(_Bool);
@@ -29182,6 +29183,9 @@ void main(void)
 
    init_display();
    eaDogM_WriteCommand(0b00001100);
+
+
+
    set_load_relay_one(1);
    set_load_relay_two(1);
 
@@ -29189,10 +29193,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.0");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.001");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.0");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.001");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    update_lcd(0);
    WaitMs(1000);
@@ -29205,17 +29209,22 @@ void main(void)
    start_adc_scan();
    start_switch_handler();
    WaitMs(1000);
+
+
+
    i_ror = 1;
    do {
-    sprintf(get_vterm_ptr(2, 0), "STATIC SOC %d %2.4f   ", i_ror, C.bv_ror);
+    calc_ror_data();
+    sprintf(get_vterm_ptr(2, 0), "S SOC %d %2.4f       ", i_ror, C.bv_ror);
     update_lcd(0);
+    clear_adc_scan();
+    start_adc_scan();
     WaitMs(1000);
-   } while (i_ror++ < 8);
+   } while ((i_ror++ < 30) && (C.bv_ror > 0.005));
 
    WaitMs(2000);
    static_soc();
    init_bsoc();
-   WaitMs(1000);
    set_load_relay_one(0);
    set_load_relay_two(0);
 
