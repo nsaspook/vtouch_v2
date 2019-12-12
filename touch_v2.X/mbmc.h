@@ -50,6 +50,9 @@
 #define ROR_LIMIT_SET	0.0051
 #define ROR_LIMIT_NOISE	0.0001
 
+#define ROR_WAIT	5000
+#define ROR_TIMES	12
+
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
 	float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
@@ -60,6 +63,7 @@ typedef struct C_data { // real calculated variables
 	uint16_t runtime, soc;
 	bool update;
 	hist_type hist[1];
+	float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
 } C_data;
 
 typedef struct P_data {

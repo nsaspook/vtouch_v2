@@ -28494,221 +28494,6 @@ D_CODES set_temp_display_help(const D_CODES);
 
 # 1 "./daq.h" 1
 # 33 "./daq.h"
-# 1 "./tests.h" 1
-# 34 "./daq.h" 2
-# 74 "./daq.h"
-typedef enum {
- CONV,
- O_CONV,
-} adc_conv_t;
-
-_Bool start_adc_scan(void);
-_Bool check_adc_scan(void);
-void clear_adc_scan(void);
-adc_result_t get_raw_result(const adcc_channel_t);
-float conv_raw_result(const adcc_channel_t, const adc_conv_t);
-# 131 "main.c" 2
-
-# 1 "./mbmc.h" 1
-# 35 "./mbmc.h"
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 1 3
-# 33 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 76 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long long time_t;
-# 293 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef void * timer_t;
-
-
-
-
-typedef int clockid_t;
-
-
-
-
-typedef long clock_t;
-# 313 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-struct timespec { time_t tv_sec; long tv_nsec; };
-
-
-
-
-
-typedef int pid_t;
-# 34 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 2 3
-
-
-
-
-
-
-struct tm {
- int tm_sec;
- int tm_min;
- int tm_hour;
- int tm_mday;
- int tm_mon;
- int tm_year;
- int tm_wday;
- int tm_yday;
- int tm_isdst;
- long __tm_gmtoff;
- const char *__tm_zone;
-};
-
-clock_t clock (void);
-time_t time (time_t *);
-double difftime (time_t, time_t);
-time_t mktime (struct tm *);
-size_t strftime (char *restrict, size_t, const char *restrict, const struct tm *restrict);
-struct tm *gmtime (const time_t *);
-struct tm *localtime (const time_t *);
-char *asctime (const struct tm *);
-char *ctime (const time_t *);
-int timespec_get(struct timespec *, int);
-# 73 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
-size_t strftime_l (char * restrict, size_t, const char * restrict, const struct tm * restrict, locale_t);
-
-struct tm *gmtime_r (const time_t *restrict, struct tm *restrict);
-struct tm *localtime_r (const time_t *restrict, struct tm *restrict);
-char *asctime_r (const struct tm *restrict, char *restrict);
-char *ctime_r (const time_t *, char *);
-
-void tzset (void);
-
-struct itimerspec {
- struct timespec it_interval;
- struct timespec it_value;
-};
-# 102 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
-int nanosleep (const struct timespec *, struct timespec *);
-int clock_getres (clockid_t, struct timespec *);
-int clock_gettime (clockid_t, struct timespec *);
-int clock_settime (clockid_t, const struct timespec *);
-int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
-int clock_getcpuclockid (pid_t, clockid_t *);
-
-struct sigevent;
-int timer_create (clockid_t, struct sigevent *restrict, timer_t *restrict);
-int timer_delete (timer_t);
-int timer_settime (timer_t, int, const struct itimerspec *restrict, struct itimerspec *restrict);
-int timer_gettime (timer_t, struct itimerspec *);
-int timer_getoverrun (timer_t);
-
-extern char *tzname[2];
-
-
-
-
-
-char *strptime (const char *restrict, const char *restrict, struct tm *restrict);
-extern int daylight;
-extern long timezone;
-extern int getdate_err;
-struct tm *getdate (const char *);
-# 36 "./mbmc.h" 2
-# 53 "./mbmc.h"
-typedef struct C_data {
- float calc[16];
- float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
- float p_load, p_inverter, p_pv, p_bat;
- float t_comp, esr;
- float bank_ah, dynamic_ah, pv_ah, loadah;
- float bkwi, bkwo, pvkw, invkw;
- uint16_t runtime, soc;
- _Bool update;
- hist_type hist[1];
-} C_data;
-
-typedef struct P_data {
- uint8_t BCHECK : 1;
- uint8_t TIMERFLAG : 1;
- uint8_t PRIPOWEROK : 1;
- uint8_t FORCEOUT : 1;
- uint8_t WORKERFLAG : 1;
- uint8_t CHARGEROVERRIDE : 1;
- uint8_t FAILSAFE : 1;
- uint8_t MORNING_HELP : 1;
- uint8_t SYSTEM_STABLE : 1;
- uint8_t HOLD_PROC : 1;
- uint8_t POWER_UNSTABLE : 1;
- uint8_t B2 : 1;
- uint8_t B3 : 1;
- uint8_t B4 : 1;
- uint8_t SET_BATT : 1;
- uint8_t BLANK_LCD : 1;
- uint8_t STATIC_SOC : 1;
- uint8_t SET_CEF : 1;
- uint8_t D_UPDATE : 1;
- uint8_t GLITCH_CHECK : 1;
- uint8_t FORCEDAY : 1;
- uint8_t COOLING : 1;
- uint8_t UPDATE_EEP : 1;
- uint8_t RESET_ZEROS : 1;
- uint8_t SAVE_DAILY : 1;
- uint8_t SETBATT_SOC : 1;
- uint8_t SYNCSOC : 1;
-} P_data_t;
-
-float lp_filter(const float, const uint8_t, const int8_t);
-void convert_adc_data(void);
-void calc_model_data(void);
-void calc_ror_data(void);
-void static_soc(void);
-void set_load_relay_one(_Bool);
-void set_load_relay_two(_Bool);
-# 132 "main.c" 2
-
-# 1 "./dio.h" 1
-# 40 "./dio.h"
-typedef struct rbutton_type {
- SW_STATES sw;
- uint32_t count;
-} rbutton_type;
-
-void start_switch_handler(void);
-SW_STATES get_switch(uint8_t);
-rbutton_type get_switch_data(uint8_t);
-uint8_t check_switches(void);
-void clear_switch(uint8_t);
-# 133 "main.c" 2
-
-# 1 "./hid.h" 1
-# 37 "./hid.h"
-typedef enum {
- HID_MAIN = 0,
- HID_PWR,
- HID_RUN,
- HID_AUX,
- HID_LAST,
-} H_CODES;
-
-typedef enum {
- H_STATE_INIT = 0,
- H_STATE_DISPLAY,
- H_STATE_WAIT,
- H_STATE_LOG,
- H_STATE_COMM,
- H_STATE_ERROR
-} H_STATES;
-
-typedef struct H_data {
- H_CODES hid_display;
- H_STATES h_state;
- _Bool wait_select, select_p, wait_enter, enter_p;
- uint8_t sequence;
-} H_data;
-
-H_data* hid_input(H_data*);
-H_data* hid_display(H_data*);
-_Bool check_enter_button(H_data*);
-void clear_hid_pflags(H_data*);
-void clear_hid_wflags(H_data*);
-# 134 "main.c" 2
-
-# 1 "./bsoc.h" 1
-# 35 "./bsoc.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 1 3
 # 15 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
@@ -29081,7 +28866,224 @@ double jn(int, double);
 double y0(double);
 double y1(double);
 double yn(int, double);
-# 36 "./bsoc.h" 2
+# 34 "./daq.h" 2
+
+# 1 "./tests.h" 1
+# 36 "./daq.h" 2
+# 76 "./daq.h"
+typedef enum {
+ CONV,
+ O_CONV,
+} adc_conv_t;
+
+_Bool start_adc_scan(void);
+_Bool check_adc_scan(void);
+void clear_adc_scan(void);
+_Bool update_adc_result(void);
+adc_result_t get_raw_result(const adcc_channel_t);
+float conv_raw_result(const adcc_channel_t, const adc_conv_t);
+# 131 "main.c" 2
+
+# 1 "./mbmc.h" 1
+# 35 "./mbmc.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 1 3
+# 33 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 76 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long long time_t;
+# 293 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef void * timer_t;
+
+
+
+
+typedef int clockid_t;
+
+
+
+
+typedef long clock_t;
+# 313 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+struct timespec { time_t tv_sec; long tv_nsec; };
+
+
+
+
+
+typedef int pid_t;
+# 34 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 2 3
+
+
+
+
+
+
+struct tm {
+ int tm_sec;
+ int tm_min;
+ int tm_hour;
+ int tm_mday;
+ int tm_mon;
+ int tm_year;
+ int tm_wday;
+ int tm_yday;
+ int tm_isdst;
+ long __tm_gmtoff;
+ const char *__tm_zone;
+};
+
+clock_t clock (void);
+time_t time (time_t *);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
+size_t strftime (char *restrict, size_t, const char *restrict, const struct tm *restrict);
+struct tm *gmtime (const time_t *);
+struct tm *localtime (const time_t *);
+char *asctime (const struct tm *);
+char *ctime (const time_t *);
+int timespec_get(struct timespec *, int);
+# 73 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+size_t strftime_l (char * restrict, size_t, const char * restrict, const struct tm * restrict, locale_t);
+
+struct tm *gmtime_r (const time_t *restrict, struct tm *restrict);
+struct tm *localtime_r (const time_t *restrict, struct tm *restrict);
+char *asctime_r (const struct tm *restrict, char *restrict);
+char *ctime_r (const time_t *, char *);
+
+void tzset (void);
+
+struct itimerspec {
+ struct timespec it_interval;
+ struct timespec it_value;
+};
+# 102 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+int nanosleep (const struct timespec *, struct timespec *);
+int clock_getres (clockid_t, struct timespec *);
+int clock_gettime (clockid_t, struct timespec *);
+int clock_settime (clockid_t, const struct timespec *);
+int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
+int clock_getcpuclockid (pid_t, clockid_t *);
+
+struct sigevent;
+int timer_create (clockid_t, struct sigevent *restrict, timer_t *restrict);
+int timer_delete (timer_t);
+int timer_settime (timer_t, int, const struct itimerspec *restrict, struct itimerspec *restrict);
+int timer_gettime (timer_t, struct itimerspec *);
+int timer_getoverrun (timer_t);
+
+extern char *tzname[2];
+
+
+
+
+
+char *strptime (const char *restrict, const char *restrict, struct tm *restrict);
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+struct tm *getdate (const char *);
+# 36 "./mbmc.h" 2
+# 56 "./mbmc.h"
+typedef struct C_data {
+ float calc[16];
+ float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
+ float p_load, p_inverter, p_pv, p_bat;
+ float t_comp, esr;
+ float bank_ah, dynamic_ah, pv_ah, loadah;
+ float bkwi, bkwo, pvkw, invkw;
+ uint16_t runtime, soc;
+ _Bool update;
+ hist_type hist[1];
+ float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
+} C_data;
+
+typedef struct P_data {
+ uint8_t BCHECK : 1;
+ uint8_t TIMERFLAG : 1;
+ uint8_t PRIPOWEROK : 1;
+ uint8_t FORCEOUT : 1;
+ uint8_t WORKERFLAG : 1;
+ uint8_t CHARGEROVERRIDE : 1;
+ uint8_t FAILSAFE : 1;
+ uint8_t MORNING_HELP : 1;
+ uint8_t SYSTEM_STABLE : 1;
+ uint8_t HOLD_PROC : 1;
+ uint8_t POWER_UNSTABLE : 1;
+ uint8_t B2 : 1;
+ uint8_t B3 : 1;
+ uint8_t B4 : 1;
+ uint8_t SET_BATT : 1;
+ uint8_t BLANK_LCD : 1;
+ uint8_t STATIC_SOC : 1;
+ uint8_t SET_CEF : 1;
+ uint8_t D_UPDATE : 1;
+ uint8_t GLITCH_CHECK : 1;
+ uint8_t FORCEDAY : 1;
+ uint8_t COOLING : 1;
+ uint8_t UPDATE_EEP : 1;
+ uint8_t RESET_ZEROS : 1;
+ uint8_t SAVE_DAILY : 1;
+ uint8_t SETBATT_SOC : 1;
+ uint8_t SYNCSOC : 1;
+} P_data_t;
+
+float lp_filter(const float, const uint8_t, const int8_t);
+void convert_adc_data(void);
+void calc_model_data(void);
+void calc_ror_data(void);
+void static_soc(void);
+void set_load_relay_one(_Bool);
+void set_load_relay_two(_Bool);
+# 132 "main.c" 2
+
+# 1 "./dio.h" 1
+# 40 "./dio.h"
+typedef struct rbutton_type {
+ SW_STATES sw;
+ uint32_t count;
+} rbutton_type;
+
+void start_switch_handler(void);
+SW_STATES get_switch(uint8_t);
+rbutton_type get_switch_data(uint8_t);
+uint8_t check_switches(void);
+void clear_switch(uint8_t);
+# 133 "main.c" 2
+
+# 1 "./hid.h" 1
+# 37 "./hid.h"
+typedef enum {
+ HID_MAIN = 0,
+ HID_PWR,
+ HID_RUN,
+ HID_AUX,
+ HID_LAST,
+} H_CODES;
+
+typedef enum {
+ H_STATE_INIT = 0,
+ H_STATE_DISPLAY,
+ H_STATE_WAIT,
+ H_STATE_LOG,
+ H_STATE_COMM,
+ H_STATE_ERROR
+} H_STATES;
+
+typedef struct H_data {
+ H_CODES hid_display;
+ H_STATES h_state;
+ _Bool wait_select, select_p, wait_enter, enter_p;
+ uint8_t sequence;
+} H_data;
+
+H_data* hid_input(H_data*);
+H_data* hid_display(H_data*);
+_Bool check_enter_button(H_data*);
+void clear_hid_pflags(H_data*);
+void clear_hid_wflags(H_data*);
+# 134 "main.c" 2
+
+# 1 "./bsoc.h" 1
 # 62 "./bsoc.h"
 typedef enum {
  R_CYCLE = 0,
@@ -29193,11 +29195,11 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.001");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.002");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
-   sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "1.001");
-   sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
+   sprintf(get_vterm_ptr(0, 2), "                ");
+   sprintf(get_vterm_ptr(1, 2), "                ");
+   sprintf(get_vterm_ptr(2, 2), "                ");
    update_lcd(0);
    WaitMs(1000);
    StartTimer(TMR_DISPLAY, 250);
@@ -29212,21 +29214,26 @@ void main(void)
 
 
 
+
    i_ror = 1;
    do {
     calc_ror_data();
     sprintf(get_vterm_ptr(2, 0), "S SOC %d %2.4f       ", i_ror, C.bv_ror);
     update_lcd(0);
+    WaitMs(5000);
     clear_adc_scan();
     start_adc_scan();
-    WaitMs(1000);
-   } while ((i_ror++ < 30) && (C.bv_ror > 0.005));
+    WaitMs(500);
+   } while ((i_ror++ < 12) && (C.bv_ror > 0.005));
 
-   WaitMs(2000);
    static_soc();
    init_bsoc();
    set_load_relay_one(0);
    set_load_relay_two(0);
+   sprintf(get_vterm_ptr(0, 0), "Static SOC %d        ", C.soc);
+   sprintf(get_vterm_ptr(0, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
+   update_lcd(0);
+   WaitMs(2000);
 
    break;
   case UI_STATE_HOST:

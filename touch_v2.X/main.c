@@ -228,9 +228,9 @@ void main(void)
 			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
 			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
-			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
+			sprintf(get_vterm_ptr(0, 2), "                ");
+			sprintf(get_vterm_ptr(1, 2), "                ");
+			sprintf(get_vterm_ptr(2, 2), "                ");
 			update_lcd(0);
 			WaitMs(1000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -244,22 +244,27 @@ void main(void)
 			WaitMs(1000);
 			/*
 			 * check for quickly changing battery voltage
+			 * to stabilize as to get a better static SOC value
 			 */
 			i_ror = 1;
 			do {
 				calc_ror_data();
 				sprintf(get_vterm_ptr(2, 0), "S SOC %d %2.4f       ", i_ror, C.bv_ror);
 				update_lcd(0);
+				WaitMs(ROR_WAIT); // time between samples
 				clear_adc_scan();
 				start_adc_scan();
-				WaitMs(1000);
-			} while ((i_ror++ < 30) && (C.bv_ror > ROR_LIMIT_LOW));
+				WaitMs(500); // wait for updated ADC data
+			} while ((i_ror++ < ROR_TIMES) && (C.bv_ror > ROR_LIMIT_LOW));
 
-			WaitMs(2000);
 			static_soc(); // defaults
 			init_bsoc(); // system calculations
 			set_load_relay_one(false);
 			set_load_relay_two(false);
+			sprintf(get_vterm_ptr(0, 0), "Static SOC %d        ", C.soc);
+			sprintf(get_vterm_ptr(0, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
+			update_lcd(0);
+			WaitMs(2000);
 
 			break;
 		case UI_STATE_HOST:

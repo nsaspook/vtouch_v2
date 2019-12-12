@@ -168,19 +168,26 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 bool esr_check(void)
 {
 	static bool done = true;
-	static float load_i1, load_i2, bv_noload;
 
 	set_load_relay_one(false);
 	set_load_relay_two(false);
-	bv_noload = C.v_bat;
+	WaitMs(500);
+	update_adc_result();
+	C.bv_noload = conv_raw_result(V_BAT, CONV);
 
 	set_load_relay_one(true);
-	load_i1 = C.v_bat / BLOAD1; // find current
+	WaitMs(500);
+	update_adc_result();
+	C.bv_one_load = conv_raw_result(V_BAT, CONV);
+	C.load_i1 = C.bv_one_load / BLOAD1; // find current
 
 	set_load_relay_two(true);
-	load_i2 = C.v_bat / ((BLOAD1 * BLOAD2) / (BLOAD1 + BLOAD2)); // find current
+	update_adc_result();
+	C.bv_full_load = conv_raw_result(V_BAT, CONV);
+	WaitMs(500);
+	C.load_i2 = C.bv_full_load / ((BLOAD1 * BLOAD2) / (BLOAD1 + BLOAD2)); // find current
 
-	C.esr = (bv_noload - C.v_bat) / (load_i2 - load_i1); // find resistance causing voltage drop (sorta)
+	C.esr = (C.bv_one_load - C.bv_full_load) / (C.load_i2 - C.load_i1); // find resistance causing voltage drop (sorta)
 	set_load_relay_one(false);
 	set_load_relay_two(false);
 	return done;

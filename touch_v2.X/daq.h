@@ -30,6 +30,8 @@
 #ifndef DAQ_H
 #define	DAQ_H
 
+#include <math.h>
+#include "timers.h"
 #include "tests.h"
 
 /*
@@ -79,6 +81,7 @@ typedef enum {
 bool start_adc_scan(void);
 bool check_adc_scan(void);
 void clear_adc_scan(void);
+bool update_adc_result(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 

@@ -5,7 +5,6 @@
  */
 
 #include "daq.h"
-#include <math.h>
 
 typedef struct R_data { // internal variables
 	adc_result_t raw_adc[ADC_BUFFER_SIZE];
@@ -64,6 +63,22 @@ bool check_adc_scan(void)
 void clear_adc_scan(void)
 {
 	R.done = false;
+}
+
+/*
+ * update the raw adc values
+ */
+bool update_adc_result(void)
+{
+	if (R.done) {
+		clear_adc_scan();
+		start_adc_scan();
+		StartTimer(TMR_ADC, ADC_SCAN_SPEED);
+		while (!TimerDone(TMR_ADC) && !check_adc_scan());
+		return true;
+	} else {
+		return false;
+	}
 }
 
 /*
