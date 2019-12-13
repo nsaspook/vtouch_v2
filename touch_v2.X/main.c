@@ -270,7 +270,11 @@ void main(void)
 			sprintf(get_vterm_ptr(1, 0), "Calculation     ");
 			sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
 			update_lcd(0);
-			esr_check();
+			while (esr_check(false) < 0.0) {
+				i = 1;
+				sprintf(get_vterm_ptr(2, 0), "Checking  %d    ", i++);
+				update_lcd(0);
+			};
 			sprintf(get_vterm_ptr(0, 0), "ESR  %2.6f           ", C.esr);
 			sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f           ", C.bv_one_load, C.load_i1);
 			sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);

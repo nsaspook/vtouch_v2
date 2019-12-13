@@ -164,30 +164,75 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 }
 
 /*
- * check battery ESR, returns ESR value when done
+ * check battery ESR, returns ESR value when done and -1.0 when in FSM sequence (fsm set to true)
  */
-float esr_check(void)
+float esr_check(uint8_t fsm)
 {
-	set_load_relay_one(false);
-	set_load_relay_two(false);
-	WaitMs(10000); // unloaded batter wait
-	update_adc_result();
-	C.bv_noload = conv_raw_result(V_BAT, CONV);
+	static uint8_t esr_state = 0;
 
-	set_load_relay_one(true);
-	WaitMs(10000); // 10 ohm load wait
-	update_adc_result();
-	C.bv_one_load = conv_raw_result(V_BAT, CONV);
-	C.load_i1 = conv_raw_result(C_BATT, CONV); // get current
+	if (!fsm)
+		esr_state = 1;
 
-	set_load_relay_two(true);
-	WaitMs(10000); // 2.5 ohm wait
-	update_adc_result();
-	C.bv_full_load = conv_raw_result(V_BAT, CONV);
-	C.load_i2 = conv_raw_result(C_BATT, CONV); // get current
+	switch (esr_state) {
+	case 0:
+		StartTimer(TMR_ESR, 10000);
+		esr_state++;
+		break;
+	case 1:
+		set_load_relay_one(false);
+		set_load_relay_two(false);
+		if (!fsm) {
+			WaitMs(10000); // unloaded batter wait
+		} else {
+			if (TimerDone(TMR_ESR)) {
+				StartTimer(TMR_ESR, 10000);
+			} else {
+				return -1.0;
+			}
+		}
 
-	C.esr = fabs((C.bv_one_load - C.bv_full_load) / (C.load_i1 - C.load_i2)); // find internal resistance causing voltage drop (sorta)
-	set_load_relay_one(false);
-	set_load_relay_two(false);
-	return C.esr;
+		update_adc_result();
+		C.bv_noload = conv_raw_result(V_BAT, CONV);
+		esr_state++;
+		break;
+	case 2:
+		set_load_relay_one(true);
+		if (!fsm) {
+			WaitMs(10000); // 10 ohm load wait
+		} else {
+			if (TimerDone(TMR_ESR)) {
+				StartTimer(TMR_ESR, 10000);
+			} else {
+				return -1.0;
+			}
+		}
+
+		update_adc_result();
+		C.bv_one_load = conv_raw_result(V_BAT, CONV);
+		C.load_i1 = conv_raw_result(C_BATT, CONV); // get current
+		esr_state++;
+		break;
+	case 3:
+		set_load_relay_two(true);
+		if (!fsm) {
+			WaitMs(10000); // 2.5 ohm wait
+		} else {
+			if (!TimerDone(TMR_ESR))
+				return -1.0;
+		}
+
+		update_adc_result();
+		C.bv_full_load = conv_raw_result(V_BAT, CONV);
+		C.load_i2 = conv_raw_result(C_BATT, CONV); // get current
+
+		C.esr = fabs((C.bv_one_load - C.bv_full_load) / (C.load_i1 - C.load_i2)); // find internal resistance causing voltage drop (sorta)
+		set_load_relay_one(false);
+		set_load_relay_two(false);
+		esr_state = 0;
+		return C.esr;
+		break;
+	default:
+		break;
+	}
+	return -1.0;
 }
