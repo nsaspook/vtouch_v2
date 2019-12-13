@@ -104,4 +104,6 @@ void static_soc(void);
 void set_load_relay_one(bool);
 void set_load_relay_two(bool);
 
+char spinners(uint8_t, uint8_t);
+
 #endif

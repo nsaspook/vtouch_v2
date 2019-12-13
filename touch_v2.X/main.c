@@ -250,7 +250,7 @@ void main(void)
 			do {
 				calc_ror_data();
 				sprintf(get_vterm_ptr(1, 0), "BV %2.4f         ", conv_raw_result(V_BAT, CONV));
-				sprintf(get_vterm_ptr(2, 0), "S SOC %d %2.4f       ", i_ror, C.bv_ror);
+				sprintf(get_vterm_ptr(2, 0), "S SOC %d%c%c %2.4f       ", i_ror, spinners(1, false), spinners(4, false), C.bv_ror);
 				update_lcd(0);
 				WaitMs(ROR_WAIT); // time between samples
 				clear_adc_scan();
@@ -336,7 +336,7 @@ void main(void)
 					V.calib = false;
 					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f    ", C.p_bat);
 					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f   ", C.dynamic_ah, C.pv_ah);
-					sprintf(get_vterm_ptr(2, 0), "SOC %d RUN %d     ", C.soc, C.runtime);
+					sprintf(get_vterm_ptr(2, 0), "SOC %d R%cN %d     ", C.soc, spinners(5, false), C.runtime);
 					break;
 				case HID_AUX:
 					if (!V.calib) {

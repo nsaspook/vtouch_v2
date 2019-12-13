@@ -11,6 +11,17 @@ volatile struct P_data P = {
 	.SYSTEM_STABLE = false,
 };
 
+/* spinner defines */
+#define MAX_SHAPES  6
+const char spin[MAX_SHAPES][20] = {
+	"||//--", // classic LCD version with no \ character
+	"||//--\\\\", // classic
+	"OOOOOO--__-", // eye blink
+	"vv<<^^>>", // point spinner
+	"..**x#x#XX||--", // warp portal
+	"..ooOOoo" // ball bouncer
+};
+
 /*
  * floating point low pass filter, 
  * slow/fast select, use (-1) to zero buffer channel and return new
@@ -117,4 +128,17 @@ void set_load_relay_one(bool mode)
 void set_load_relay_two(bool mode)
 {
 	RELAYL2_LAT = mode;
+}
+
+/* Misc ACSII spinner character generator, stores position for each shape */
+char spinners(uint8_t shape, uint8_t reset)
+{
+	static uint8_t s[MAX_SHAPES];
+	char c;
+
+	if (shape > (MAX_SHAPES - 1)) shape = 0;
+	if (reset) s[shape] = 0;
+	c = spin[shape][s[shape]];
+	if (++s[shape] >= strlen(spin[shape])) s[shape] = 0;
+	return c;
 }
