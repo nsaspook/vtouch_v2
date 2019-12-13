@@ -2922,8 +2922,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 252:     sprintf(get_vterm_ptr(1, 0), "BV %2.4f         ", conv_raw_result(V_BAT, CONV));
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 8C -> ( _conv_raw_result (2 , . `E16625 3 . `E17597 0 `d ]
 "253
-[; ;main.c: 253:     sprintf(get_vterm_ptr(2, 0), "S SOC %d%c%c %2.4f       ", i_ror, spinners(1, 0), spinners(4, 0), C.bv_ror);
-[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 9C -> _i_ror `i -> ( _spinners (2 , -> -> 1 `i `uc -> -> 0 `i `uc `i -> ( _spinners (2 , -> -> 4 `i `uc -> -> 0 `i `uc `i -> . _C 11 `d ]
+[; ;main.c: 253:     sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f       ", spinners(5, 0), i_ror, C.bv_ror);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 9C -> ( _spinners (2 , -> -> 5 `i `uc -> -> 0 `i `uc `i -> _i_ror `i -> . _C 11 `d ]
 "254
 [; ;main.c: 254:     update_lcd(0);
 [e ( _update_lcd (1 -> -> 0 `i `uc ]
@@ -3167,8 +3167,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 338:      sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f   ", C.dynamic_ah, C.pv_ah);
 [e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 28C -> . _C 20 `d -> . _C 21 `d ]
 "339
-[; ;main.c: 339:      sprintf(get_vterm_ptr(2, 0), "SOC %d R%cN %d     ", C.soc, spinners(5, 0), C.runtime);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 29C -> . _C 28 `ui -> ( _spinners (2 , -> -> 5 `i `uc -> -> 0 `i `uc `i -> . _C 27 `ui ]
+[; ;main.c: 339:      sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d     ", spinners(5, 0), C.soc, C.runtime);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 29C -> ( _spinners (2 , -> -> 5 `i `uc -> -> 0 `i `uc `i -> . _C 28 `ui -> . _C 27 `ui ]
 "340
 [; ;main.c: 340:      break;
 [e $U 2279  ]
@@ -3414,9 +3414,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 21C 80 86 32 32 32 80 87 82 32 37 51 46 50 102 32 32 32 32 0 ]
 [a 13C 67 97 108 99 117 108 97 116 105 111 110 32 32 32 32 32 0 ]
 [a 11C 66 97 116 116 101 114 121 32 65 104 32 37 51 46 50 102 32 32 32 32 32 0 ]
-[a 29C 83 79 67 32 37 100 32 82 37 99 78 32 37 100 32 32 32 32 32 0 ]
+[a 29C 83 37 99 67 32 37 100 32 82 85 78 32 37 100 32 32 32 32 32 0 ]
 [a 12C 66 97 116 116 101 114 121 32 69 83 82 32 32 32 32 32 0 ]
-[a 9C 83 32 83 79 67 32 37 100 37 99 37 99 32 37 50 46 52 102 32 32 32 32 32 32 32 0 ]
+[a 9C 83 32 83 37 99 67 32 37 100 32 37 50 46 52 102 32 32 32 32 32 32 32 0 ]
 [a 4C 32 78 83 65 83 80 79 79 75 32 32 32 32 32 32 32 0 ]
 [a 10C 83 116 97 116 105 99 32 83 79 67 32 37 100 32 32 32 32 32 32 32 32 0 ]
 [a 8C 66 86 32 37 50 46 52 102 32 32 32 32 32 32 32 32 32 0 ]
