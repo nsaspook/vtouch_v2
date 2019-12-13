@@ -169,25 +169,25 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 float esr_check(uint8_t fsm)
 {
 	static uint8_t esr_state = 0;
-
-	if (!fsm)
-		esr_state = 1;
+	float esr_value = -1.0;
 
 	switch (esr_state) {
 	case 0:
 		StartTimer(TMR_ESR, 10000);
 		esr_state++;
+		esr_value = -1.0;
 		break;
 	case 1:
 		set_load_relay_one(false);
 		set_load_relay_two(false);
 		if (!fsm) {
-			WaitMs(10000); // unloaded batter wait
+			WaitMs(10000); // unloaded battery wait
+			esr_value = -2.0;
 		} else {
 			if (TimerDone(TMR_ESR)) {
 				StartTimer(TMR_ESR, 10000);
 			} else {
-				return -1.0;
+				return -2.0;
 			}
 		}
 
@@ -199,11 +199,12 @@ float esr_check(uint8_t fsm)
 		set_load_relay_one(true);
 		if (!fsm) {
 			WaitMs(10000); // 10 ohm load wait
+			esr_value = -3.0;
 		} else {
 			if (TimerDone(TMR_ESR)) {
 				StartTimer(TMR_ESR, 10000);
 			} else {
-				return -1.0;
+				return -3.0;
 			}
 		}
 
@@ -218,7 +219,7 @@ float esr_check(uint8_t fsm)
 			WaitMs(10000); // 2.5 ohm wait
 		} else {
 			if (!TimerDone(TMR_ESR))
-				return -1.0;
+				return -4.0;
 		}
 
 		update_adc_result();
@@ -234,5 +235,5 @@ float esr_check(uint8_t fsm)
 	default:
 		break;
 	}
-	return -1.0;
+	return esr_value;
 }
