@@ -136,9 +136,12 @@ char spinners(uint8_t shape, uint8_t reset)
 	static uint8_t s[MAX_SHAPES];
 	char c;
 
-	if (shape > (MAX_SHAPES - 1)) shape = 0;
-	if (reset) s[shape] = 0;
+	if (shape > (MAX_SHAPES - 1))
+		shape = 0;
+	if (reset)
+		s[shape] = 0;
 	c = spin[shape][s[shape]];
-	if (++s[shape] >= strlen(spin[shape])) s[shape] = 0;
+	if (++s[shape] >= strlen(spin[shape]))
+		s[shape] = 0;
 	return c;
 }

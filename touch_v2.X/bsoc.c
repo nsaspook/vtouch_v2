@@ -55,7 +55,7 @@ void calc_bsoc(void)
 	if (C.p_bat > 0.0)
 		C.bkwi += (C.p_bat / SSLICE);
 	if (C.p_bat < 0.0)
-		C.bkwo += (C.p_bat / SSLICE);
+		C.bkwo += fabs(C.p_bat / SSLICE);
 
 	C.soc = ((uint16_t) ((C.dynamic_ah / C.bank_ah)*100.0) + 1);
 	if (C.soc > 100)
@@ -165,37 +165,42 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 }
 
 /*
- * check battery ESR, returns ESR value when done and -1.0 when in FSM sequence (fsm set to true will init the state machine)
+ * check battery ESR, returns positive ESR value when done, 
+ * a negative number code when running the sequence and
+ * -1.0 when each FSM sequence is done 
+ * (fsm 'true' will init the state machine and return the init code)
  */
 float esr_check(uint8_t fsm)
 {
 	static uint8_t esr_state = 0;
-	float esr_value = -1.0;
 
 	if (fsm) {
 		esr_state = 0;
-		esr_value = -10.0;
-		return esr_value;
+		return -10.0;
 	}
 
 	switch (esr_state) {
 	case 0:
-		StartTimer(TMR_ESR, 10000);
-		esr_state++;
-		esr_value = -1.0;
+		StartTimer(TMR_ESR, 10000); // start the sequence timer
+		esr_state++; // move to the next state of the FSM
 		break;
 	case 1:
+		/*
+		 * set the load resistors to all off
+		 */
 		set_load_relay_one(false);
 		set_load_relay_two(false);
-		if (TimerDone(TMR_ESR)) {
-			StartTimer(TMR_ESR, 10000);
+		if (TimerDone(TMR_ESR)) { // check for expired timer
+			StartTimer(TMR_ESR, 10000); // done, restart the timer, complete sequence, return -1.0
 		} else {
-			return -2.0;
+			return -2.0; // nope, return with a progress code
 		}
-
+		/*
+		 * save unloaded battery voltage
+		 */
 		update_adc_result();
 		C.bv_noload = conv_raw_result(V_BAT, CONV);
-		esr_state++;
+		esr_state++; // move to the next state of the FSM
 		break;
 	case 2:
 		set_load_relay_one(true);
@@ -228,5 +233,5 @@ float esr_check(uint8_t fsm)
 	default:
 		break;
 	}
-	return esr_value;
+	return -1.0;
 }

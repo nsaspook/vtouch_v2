@@ -29199,7 +29199,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.004");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.005");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), "                ");
    sprintf(get_vterm_ptr(1, 2), "                ");
@@ -29244,10 +29244,12 @@ void main(void)
    sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
    update_lcd(0);
    uint16_t i_esr = 1;
+   uint8_t shape = 0;
    float esr_temp;
    while ((esr_temp = esr_check(0)) < 0.0) {
-    WaitMs(100);
-    sprintf(get_vterm_ptr(2, 0), "Checking %2.1f %c    ", esr_temp, spinners(0, 0));
+    WaitMs(110);
+    shape = (uint8_t) fabsf(esr_temp);
+    sprintf(get_vterm_ptr(2, 0), "Checking %c %c      ", spinners(0, 0), spinners(shape, 0));
     update_lcd(0);
 
     if (i_esr++ > 512)

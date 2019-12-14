@@ -272,10 +272,12 @@ void main(void)
 			sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
 			update_lcd(0);
 			uint16_t i_esr = 1;
+			uint8_t shape = 0;
 			float esr_temp;
 			while ((esr_temp = esr_check(false)) < 0.0) {
-				WaitMs(100);
-				sprintf(get_vterm_ptr(2, 0), "Checking %2.1f %c    ", esr_temp, spinners(0, false));
+				WaitMs(110); // limit display updates
+				shape = (uint8_t) fabs(esr_temp);
+				sprintf(get_vterm_ptr(2, 0), "Checking %c %c      ", spinners(0, false), spinners(shape, false));
 				update_lcd(0);
 
 				if (i_esr++ > 512)
