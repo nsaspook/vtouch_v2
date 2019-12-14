@@ -147,6 +147,7 @@ V_data V = {
 	.lowint_count = 0,
 	.timerint_count = 0,
 	.calib = CALIB,
+	.screen = 0,
 };
 H_data H = {
 	.hid_display = HID_MAIN,
@@ -272,9 +273,9 @@ void main(void)
 			update_lcd(0);
 			uint16_t i_esr = 1;
 			float esr_temp;
-			while ((esr_temp=esr_check(true)) < 0.0) {
+			while ((esr_temp = esr_check(false)) < 0.0) {
 				WaitMs(100);
-				sprintf(get_vterm_ptr(2, 0), "Checking %2.1f %c    ",esr_temp ,spinners(0, false));
+				sprintf(get_vterm_ptr(2, 0), "Checking %2.1f %c    ", esr_temp, spinners(0, false));
 				update_lcd(0);
 
 				if (i_esr++ > 512)
@@ -334,18 +335,30 @@ void main(void)
 					sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
 					sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
 					sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
+
+					sprintf(get_vterm_ptr(0, 1), "PV   WH %3.2f     ", C.pvkw);
+					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f     ", C.loadkw);
+					sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f     ", C.invkw);
 					break;
 				case HID_MAIN:
 					V.calib = false;
 					sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
 					sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
 					sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
+
+					sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f     ", C.bkwi);
+					sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f     ", C.bkwo);
+					sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f     ", C.bkwi + C.bkwo);
 					break;
 				case HID_RUN:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f    ", C.p_bat);
+					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f     ", C.p_bat);
 					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f   ", C.dynamic_ah, C.pv_ah);
 					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d     ", spinners(5, false), C.soc, C.runtime);
+
+					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f         ", C.esr);
+					sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f     ", C.bv_one_load, C.load_i1);
+					sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f     ", C.bv_full_load, C.load_i2);
 					break;
 				case HID_AUX:
 					if (!V.calib) {
@@ -364,7 +377,11 @@ void main(void)
 				clear_hid_pflags(&H);
 			}
 			StartTimer(TMR_DISPLAY, DDELAY);
-			update_lcd(0);
+			if (check_enter_button(&H) && (H.hid_display != HID_AUX)) {
+				V.screen = ~V.screen;
+			}
+			set_vterm(V.screen);
+			update_lcd(V.screen);
 		}
 
 		/*

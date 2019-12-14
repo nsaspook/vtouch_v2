@@ -51,6 +51,7 @@ void calc_bsoc(void)
 	C.pv_ah += (C.c_pv / SSLICE);
 	C.pvkw += (C.p_pv / SSLICE);
 	C.invkw += (C.p_inverter / SSLICE);
+	C.loadkw += (C.p_load / SSLICE);
 	if (C.p_bat > 0.0)
 		C.bkwi += (C.p_bat / SSLICE);
 	if (C.p_bat < 0.0)
@@ -164,12 +165,18 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 }
 
 /*
- * check battery ESR, returns ESR value when done and -1.0 when in FSM sequence (fsm set to true)
+ * check battery ESR, returns ESR value when done and -1.0 when in FSM sequence (fsm set to true will init the state machine)
  */
 float esr_check(uint8_t fsm)
 {
 	static uint8_t esr_state = 0;
 	float esr_value = -1.0;
+
+	if (fsm) {
+		esr_state = 0;
+		esr_value = -10.0;
+		return esr_value;
+	}
 
 	switch (esr_state) {
 	case 0:
@@ -180,15 +187,10 @@ float esr_check(uint8_t fsm)
 	case 1:
 		set_load_relay_one(false);
 		set_load_relay_two(false);
-		if (!fsm) {
-			WaitMs(10000); // unloaded battery wait
-			esr_value = -2.0;
+		if (TimerDone(TMR_ESR)) {
+			StartTimer(TMR_ESR, 10000);
 		} else {
-			if (TimerDone(TMR_ESR)) {
-				StartTimer(TMR_ESR, 10000);
-			} else {
-				return -2.0;
-			}
+			return -2.0;
 		}
 
 		update_adc_result();
@@ -197,15 +199,10 @@ float esr_check(uint8_t fsm)
 		break;
 	case 2:
 		set_load_relay_one(true);
-		if (!fsm) {
-			WaitMs(10000); // 10 ohm load wait
-			esr_value = -3.0;
+		if (TimerDone(TMR_ESR)) {
+			StartTimer(TMR_ESR, 10000);
 		} else {
-			if (TimerDone(TMR_ESR)) {
-				StartTimer(TMR_ESR, 10000);
-			} else {
-				return -3.0;
-			}
+			return -3.0;
 		}
 
 		update_adc_result();
@@ -215,12 +212,8 @@ float esr_check(uint8_t fsm)
 		break;
 	case 3:
 		set_load_relay_two(true);
-		if (!fsm) {
-			WaitMs(10000); // 2.5 ohm wait
-		} else {
-			if (!TimerDone(TMR_ESR))
-				return -4.0;
-		}
+		if (!TimerDone(TMR_ESR))
+			return -4.0;
 
 		update_adc_result();
 		C.bv_full_load = conv_raw_result(V_BAT, CONV);

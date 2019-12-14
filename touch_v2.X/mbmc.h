@@ -59,7 +59,7 @@ typedef struct C_data { // real calculated variables
 	float p_load, p_inverter, p_pv, p_bat;
 	float t_comp, esr;
 	float bank_ah, dynamic_ah, pv_ah, loadah;
-	float bkwi, bkwo, pvkw, invkw;
+	float bkwi, bkwo, pvkw, invkw, loadkw;
 	uint16_t runtime, soc;
 	bool update;
 	hist_type hist[1];

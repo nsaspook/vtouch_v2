@@ -152,7 +152,7 @@ extern "C" {
 		uint8_t error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
-		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
 		terminal_type response;
 		volatile uint8_t ticker;
 		bool flipper, calib;
