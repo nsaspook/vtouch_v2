@@ -19,25 +19,25 @@
  */
 
 /*
-    (c) 2018 Microchip Technology Inc. and its subsidiaries. 
-    
-    Subject to your compliance with these terms, you may use Microchip software and any 
-    derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
-    license terms applicable to your use of third party software (including open source software) that 
+    (c) 2018 Microchip Technology Inc. and its subsidiaries.
+
+    Subject to your compliance with these terms, you may use Microchip software and any
+    derivatives exclusively with Microchip products. It is your responsibility to comply with third party
+    license terms applicable to your use of third party software (including open source software) that
     may accompany Microchip software.
-    
-    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER 
-    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY 
-    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS 
+
+    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY
+    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS
     FOR A PARTICULAR PURPOSE.
-    
-    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
-    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
-    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP 
-    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO 
-    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL 
-    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
-    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
+
+    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP
+    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO
+    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL
+    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT
+    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS
     SOFTWARE.
  */
 
@@ -60,15 +60,15 @@
  * B: structure, battery parameters
  *
  * USART2 		Is the client comm port 38400
- * USART1		MBMC logger channel 
+ * USART1		MBMC logger channel
  * timer 2 100 us PWM clock, no interrupt
  * timer 3 one second housekeeping clock for battery state tracking, low priority interrupt
  * timer 5 one second timer, interrupt
  * timer 6 500 us software timer ticker, interrupt
- * 
+ *
  * dma1 spi transmit
  * dma2 tx1 transmit
- * 
+ *
  * 10 analog channels are active
  * PORTA,PORTB		analog inputs
  * ana0	battery current					200A hall sensor battery output to inverter 5v R1
@@ -82,7 +82,7 @@
  * anb3 thermo_batt					thermistor input 10K at 25C 5v R8
  * anb4 inverter voltage				R9
  * anb5 spare						R10
- * 
+ *
  * switch MAX debounce inputs
  * max pin	pic pin		connector pin	name	MBMC_IO board input connector pin
  * 1		rf0		spi 9			10
@@ -93,16 +93,16 @@
  * 6		rd2		PD 2/misc 2	SW0	5
  * 7				misc 3			6
  * 8				misc 4			7
- * 
+ *
  * adc_cal[0-3]						current sensors zero offset stored in eeprom 0=a100, 1=a200, 2..3=future
  * 3x16 LCD status panel and led status lights.
  *
  * system variables float
- * 
+ *
  * current_in
  * current_battery
  * current_load
- * 
+ *
  * voltage_pv
  * voltage_cc
  * voltage_battery
@@ -113,7 +113,7 @@
  */
 
 #pragma warning disable 520
-#pragma warning disable 1498 
+#pragma warning disable 1498
 
 #ifndef __DEFINED_int24_t
 typedef signed long long int24_t;
@@ -205,7 +205,7 @@ void main(void)
 		RELAY0_SetLow();
 		V.mode_pwm = 0;
 	}
-	mode_lamp_dim(V.mode_pwm); // 10KHz PWM 
+	mode_lamp_dim(V.mode_pwm); // 10KHz PWM
 
 	while (true) {
 		switch (V.ui_state) {

@@ -165,9 +165,9 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
 }
 
 /*
- * check battery ESR, returns positive ESR value when done, 
+ * check battery ESR, returns positive ESR value when done,
  * a negative number code when running the sequence and
- * -1.0 when each FSM sequence is done 
+ * -1.0 when each FSM sequence is done
  * (fsm 'true' will init the state machine and return the init code)
  */
 float esr_check(uint8_t fsm)
