@@ -751,25 +751,25 @@
 #define IO_RF4_SetAnalogMode()      do { ANSELFbits.ANSELF4 = 1; } while(0)
 #define IO_RF4_SetDigitalMode()     do { ANSELFbits.ANSELF4 = 0; } while(0)
 
-// get/set IO_RF5 aliases
-#define IO_RF5_TRIS                 TRISFbits.TRISF5
-#define IO_RF5_LAT                  LATFbits.LATF5
-#define IO_RF5_PORT                 PORTFbits.RF5
-#define IO_RF5_WPU                  WPUFbits.WPUF5
-#define IO_RF5_OD                   ODCONFbits.ODCF5
-#define IO_RF5_ANS                  ANSELFbits.ANSELF5
-#define IO_RF5_SetHigh()            do { LATFbits.LATF5 = 1; } while(0)
-#define IO_RF5_SetLow()             do { LATFbits.LATF5 = 0; } while(0)
-#define IO_RF5_Toggle()             do { LATFbits.LATF5 = ~LATFbits.LATF5; } while(0)
-#define IO_RF5_GetValue()           PORTFbits.RF5
-#define IO_RF5_SetDigitalInput()    do { TRISFbits.TRISF5 = 1; } while(0)
-#define IO_RF5_SetDigitalOutput()   do { TRISFbits.TRISF5 = 0; } while(0)
-#define IO_RF5_SetPullup()          do { WPUFbits.WPUF5 = 1; } while(0)
-#define IO_RF5_ResetPullup()        do { WPUFbits.WPUF5 = 0; } while(0)
-#define IO_RF5_SetPushPull()        do { ODCONFbits.ODCF5 = 0; } while(0)
-#define IO_RF5_SetOpenDrain()       do { ODCONFbits.ODCF5 = 1; } while(0)
-#define IO_RF5_SetAnalogMode()      do { ANSELFbits.ANSELF5 = 1; } while(0)
-#define IO_RF5_SetDigitalMode()     do { ANSELFbits.ANSELF5 = 0; } while(0)
+// get/set MAX_EN1 aliases
+#define MAX_EN1_TRIS                 TRISFbits.TRISF5
+#define MAX_EN1_LAT                  LATFbits.LATF5
+#define MAX_EN1_PORT                 PORTFbits.RF5
+#define MAX_EN1_WPU                  WPUFbits.WPUF5
+#define MAX_EN1_OD                   ODCONFbits.ODCF5
+#define MAX_EN1_ANS                  ANSELFbits.ANSELF5
+#define MAX_EN1_SetHigh()            do { LATFbits.LATF5 = 1; } while(0)
+#define MAX_EN1_SetLow()             do { LATFbits.LATF5 = 0; } while(0)
+#define MAX_EN1_Toggle()             do { LATFbits.LATF5 = ~LATFbits.LATF5; } while(0)
+#define MAX_EN1_GetValue()           PORTFbits.RF5
+#define MAX_EN1_SetDigitalInput()    do { TRISFbits.TRISF5 = 1; } while(0)
+#define MAX_EN1_SetDigitalOutput()   do { TRISFbits.TRISF5 = 0; } while(0)
+#define MAX_EN1_SetPullup()          do { WPUFbits.WPUF5 = 1; } while(0)
+#define MAX_EN1_ResetPullup()        do { WPUFbits.WPUF5 = 0; } while(0)
+#define MAX_EN1_SetPushPull()        do { ODCONFbits.ODCF5 = 0; } while(0)
+#define MAX_EN1_SetOpenDrain()       do { ODCONFbits.ODCF5 = 1; } while(0)
+#define MAX_EN1_SetAnalogMode()      do { ANSELFbits.ANSELF5 = 1; } while(0)
+#define MAX_EN1_SetDigitalMode()     do { ANSELFbits.ANSELF5 = 0; } while(0)
 
 // get/set IO_RF6 aliases
 #define IO_RF6_TRIS                 TRISFbits.TRISF6
