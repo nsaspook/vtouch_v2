@@ -27475,7 +27475,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 96 "./vconfig.h"
+# 98 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27547,7 +27547,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 184 "./vconfig.h"
+# 186 "./vconfig.h"
  typedef struct hist_type {
   float peukert, cef, peukert_adj, cef_calc, cef_save;
   uint32_t ttg_t;

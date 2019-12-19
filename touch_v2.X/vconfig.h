@@ -79,6 +79,8 @@ extern "C" {
 #define SOCDELAY 125 // sync SPI and UART dma
 #define DFLIP	1500 // display info flipping spacing
 
+#define LOG_WAIT	10 // data logging internval in seconds
+
 	/*
 	 * offsets in bytes
 	 */

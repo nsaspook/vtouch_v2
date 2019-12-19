@@ -39,6 +39,7 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 void calc_bsoc(void)
 {
 	uint8_t * log_ptr;
+	static uint8_t log_update_wait = 0;
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif
@@ -71,15 +72,20 @@ void calc_bsoc(void)
 
 	V.lowint_count++;
 
-	log_ptr = port_data_dma_ptr();
-	sprintf((char*) log_ptr, " %lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d,%2.6f\r\n",
-		V.ticks,
-		C.v_bat, C.v_pv, C.v_cc, C.v_inverter,
-		C.p_bat, C.p_pv, C.p_load, C.p_inverter,
-		C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
-		C.esr);
-	StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
-	send_port_data_dma(strlen((char*) log_ptr));
+	if (!log_update_wait++) {
+		log_ptr = port_data_dma_ptr();
+		sprintf((char*) log_ptr, " %lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d,%2.6f\r\n",
+			V.ticks,
+			C.v_bat, C.v_pv, C.v_cc, C.v_inverter,
+			C.p_bat, C.p_pv, C.p_load, C.p_inverter,
+			C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
+			C.esr);
+		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
+		send_port_data_dma(strlen((char*) log_ptr));
+	}
+	if (log_update_wait >= LOG_WAIT)
+		log_update_wait = 0;
+
 	C.update = false;
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetLow();
