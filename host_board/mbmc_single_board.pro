@@ -2,26 +2,24 @@ EAGLE AutoRouter Statistics:
 
 Job           : /root/MPLABXProjects/vtouch_v2/host_board/mbmc_single_board.brd
 
-Start at      : 09:53:03 (12/19/19)
-End at        : 09:54:54 (12/19/19)
-Elapsed time  : 00:01:47
+Start at      : 10:21:53 (12/19/19)
+End at        : 10:46:08 (12/19/19)
+Elapsed time  : 00:24:12
 
-Signals       :   129   RoutingGrid: 3 mil  Layers: 2
-Connections   :   286   predefined:  0 ( 0 Vias )
+Signals       :   121   RoutingGrid: 3 mil  Layers: 2
+Connections   :   272   predefined:  0 ( 0 Vias )
 
 Router memory :   7377600
 
-Job has been interrupted!
+Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4 Optimize5 Optimize6 Optimize7 Optimize8 Optimize9Optimize10Optimize11Optimize12
 
-Passname          : TopRouter     Route
+Time per pass     :  00:00:20  00:06:47  00:01:28  00:02:00  00:02:02  00:01:26  00:01:22  00:01:14  00:01:12  00:01:11  00:01:07  00:01:15  00:01:30  00:01:18
+Number of Ripups  :         0       121         0         0         0         0         0         0         0         0         0         0         0         0
+max. Level        :         0         4         0         0         0         0         0         0         0         0         0         0         0         0
+max. Total        :         0        92         0         0         0         0         0         0         0         0         0         0         0         0
 
-Time per pass     :  00:00:23  00:01:24
-Number of Ripups  :         0         6
-max. Level        :         0         1
-max. Total        :         0        28
+Routed            :        86       272       270       270       271       272       272       272       272       272       272       272       272       272
+Vias              :         0       533       425       321       299       283       269       259       255       248       243       243       243       243
+Resolution        :    31.6 %   100.0 %    99.3 %    99.3 %    99.6 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
 
-Routed            :        83       235
-Vias              :         0       132
-Resolution        :    29.0 %    82.2 %
-
-Final             : 82.2% finished
+Final             : 100.0% finished
