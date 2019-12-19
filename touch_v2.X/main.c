@@ -379,7 +379,9 @@ void main(void)
 				clear_hid_pflags(&H);
 			}
 			StartTimer(TMR_DISPLAY, DDELAY);
-			if (check_enter_button(&H) && (H.hid_display != HID_AUX)) {
+			V.enter = check_enter_button(&H);
+			if (V.enter && (H.hid_display != HID_AUX)) {
+				V.enter = false;
 				V.screen = ~V.screen;
 			}
 			set_vterm(V.screen);
@@ -391,7 +393,8 @@ void main(void)
 		 */
 		check_help(V.flipper);
 
-		if (check_enter_button(&H)) {
+		if (V.enter) {
+			V.enter = false;
 			V.calib = false;
 			inp_index += 3;
 			if (inp_index > 9)

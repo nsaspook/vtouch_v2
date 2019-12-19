@@ -28396,7 +28396,7 @@ void PMD_Initialize(void);
   uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
   terminal_type response;
   volatile uint8_t ticker;
-  _Bool flipper, calib;
+  _Bool flipper, calib, enter;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
@@ -29351,7 +29351,9 @@ void main(void)
     clear_hid_pflags(&H);
    }
    StartTimer(TMR_DISPLAY, 250);
-   if (check_enter_button(&H) && (H.hid_display != HID_AUX)) {
+   V.enter = check_enter_button(&H);
+   if (V.enter && (H.hid_display != HID_AUX)) {
+    V.enter = 0;
     V.screen = ~V.screen;
    }
    set_vterm(V.screen);
@@ -29363,7 +29365,8 @@ void main(void)
 
   check_help(V.flipper);
 
-  if (check_enter_button(&H)) {
+  if (V.enter) {
+   V.enter = 0;
    V.calib = 0;
    inp_index += 3;
    if (inp_index > 9)
