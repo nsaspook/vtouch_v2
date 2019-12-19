@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.006"
+#define VER	"1.007"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -38,6 +38,7 @@ extern "C" {
 	 * 0.98 last of the hardware bugs fixed
 	 * 0.99 power load calculations
 	 * 1.0+ mainly working code base
+	 * 1.07 move MAX6818 enable pin for board rev 1.1
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
