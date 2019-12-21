@@ -155,7 +155,7 @@ V_data V = {
 	.timerint_count = 0,
 	.calib = CALIB,
 	.screen = 0,
-	.system_stable=false,
+	.system_stable = false,
 };
 H_data H = {
 	.hid_display = HID_MAIN,
@@ -174,6 +174,7 @@ volatile uint8_t mode_sw = false;
 volatile C_data C = {
 	.bank_ah = BANKAH - DEGRADE,
 	.day = false,
+	.hist[0].version = HVER,
 };
 
 extern volatile struct P_data P;
@@ -297,7 +298,7 @@ void main(void)
 			sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);
 			update_lcd(0);
 			WaitMs(5000);
-			V.system_stable=true;
+			V.system_stable = true;
 			break;
 		case UI_STATE_HOST:
 			break;

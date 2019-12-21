@@ -72,14 +72,14 @@ void calc_bsoc(void)
 
 	V.lowint_count++;
 
-	if (!log_update_wait++) {
+	if (!log_update_wait++ && V.system_stable) {
 		log_ptr = port_data_dma_ptr();
-		sprintf((char*) log_ptr, " %lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d,%2.6f\r\n",
-			V.ticks,
+		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d,%2.6f,%4.3f,%d,%lu,%lu\r\n",
+			D_CODE, V.ticks,
 			C.v_bat, C.v_pv, C.v_cc, C.v_inverter,
 			C.p_bat, C.p_pv, C.p_load, C.p_inverter,
 			C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
-			C.esr);
+			C.esr, C.v_sensor, C.day, C.day_start, C.day_end);
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));
 	}

@@ -75,6 +75,7 @@ void calc_model_data(void)
 		bcror = C.c_bat;
 		C.c_pv = C.calc[C_PV];
 		C.v_bat = C.calc[V_BAT];
+		C.v_sensor = C.calc[V_LIGHT_SENSOR];
 		C.bv_ror = C.v_bat - bvror;
 		bvror = C.v_bat;
 		C.v_pv = C.calc[V_PV];

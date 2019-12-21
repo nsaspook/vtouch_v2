@@ -27498,7 +27498,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 98 "./vconfig.h"
+# 101 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27570,11 +27570,14 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 186 "./vconfig.h"
+# 189 "./vconfig.h"
  typedef struct hist_type {
+  uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
   uint32_t ttg_t;
   int16_t h[13];
+  uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
+  int32_t pv_eff, tot_eff;
  } hist_type;
 # 54 "mcc_generated_files/tmr5.c" 2
 
@@ -28098,7 +28101,7 @@ float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 # 61 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {
  float calc[16];
- float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
+ float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
  float p_load, p_inverter, p_pv, p_bat;
  float t_comp, esr;
  float bank_ah, dynamic_ah, pv_ah, loadah;

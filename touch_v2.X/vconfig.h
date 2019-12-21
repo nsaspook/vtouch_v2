@@ -80,6 +80,8 @@ extern "C" {
 #define DFLIP	1500 // display info flipping spacing
 
 #define LOG_WAIT	10 // data logging internval in seconds
+#define D_CODE		'1'  // data logging line code version
+#define I_CODE		'*'  // info logging line code
 
 	/*
 	 * offsets in bytes
@@ -94,6 +96,7 @@ extern "C" {
 #define MAX_BUTTONS	8
 
 #define HPARAM_SIZE     13
+#define HVER		1
 
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;
@@ -184,9 +187,12 @@ extern "C" {
 	 */
 
 	typedef struct hist_type {
+		uint8_t version;
 		float peukert, cef, peukert_adj, cef_calc, cef_save;
 		uint32_t ttg_t;
 		int16_t h[HPARAM_SIZE]; // h[6]=cumulative battery Ah cc and inv (real),h[0]=cumulative battery Ah cc and inv (p_adj)
+		uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
+		int32_t pv_eff, tot_eff; // pv generation eff factor, total system eff factor
 	} hist_type;
 
 #ifdef	__cplusplus
