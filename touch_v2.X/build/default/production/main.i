@@ -27531,6 +27531,13 @@ typedef uint32_t uint_fast32_t;
 void INTERRUPT_Initialize (void);
 # 54 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/fvr.h" 1
+# 93 "./mcc_generated_files/fvr.h"
+ void FVR_Initialize(void);
+# 127 "./mcc_generated_files/fvr.h"
+_Bool FVR_IsOutputReady(void);
+# 55 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/adcc.h" 1
 # 72 "./mcc_generated_files/adcc.h"
 typedef uint16_t adc_result_t;
@@ -27546,7 +27553,7 @@ typedef enum
     V_BBAT = 0xA,
     V_TEMP = 0xB,
     V_INVERTER = 0xC,
-    channel_ANB5 = 0xD,
+    V_LIGHT_SENSOR = 0xD,
     channel_VSS = 0x3B,
     channel_Temp = 0x3C,
     channel_DAC1 = 0x3D,
@@ -27613,13 +27620,6 @@ void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
 void ADCC_SetADTIInterruptHandler(void (* InterruptHandler)(void));
 # 889 "./mcc_generated_files/adcc.h"
 void ADCC_DefaultInterruptHandler(void);
-# 55 "./mcc_generated_files/mcc.h" 2
-
-# 1 "./mcc_generated_files/fvr.h" 1
-# 93 "./mcc_generated_files/fvr.h"
- void FVR_Initialize(void);
-# 127 "./mcc_generated_files/fvr.h"
-_Bool FVR_IsOutputReady(void);
 # 56 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr5.h" 1
@@ -27895,13 +27895,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 58 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/pwm8.h" 1
-# 102 "./mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "./mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 59 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/tmr3.h" 1
 # 101 "./mcc_generated_files/tmr3.h"
 void TMR3_Initialize(void);
@@ -27927,6 +27920,13 @@ void TMR3_CallBack(void);
 extern void (*TMR3_InterruptHandler)(void);
 # 422 "./mcc_generated_files/tmr3.h"
 void TMR3_DefaultInterruptHandler(void);
+# 59 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/pwm8.h" 1
+# 102 "./mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "./mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 60 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr2.h" 1
@@ -28169,6 +28169,25 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal);
 _Bool TMR2_HasOverflowOccured(void);
 # 61 "./mcc_generated_files/mcc.h" 2
 
+# 1 "./mcc_generated_files/memory.h" 1
+# 99 "./mcc_generated_files/memory.h"
+uint8_t FLASH_ReadByte(uint32_t flashAddr);
+# 125 "./mcc_generated_files/memory.h"
+uint16_t FLASH_ReadWord(uint32_t flashAddr);
+# 157 "./mcc_generated_files/memory.h"
+void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+# 193 "./mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+# 218 "./mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t baseAddr);
+# 249 "./mcc_generated_files/memory.h"
+void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
+# 275 "./mcc_generated_files/memory.h"
+uint8_t DATAEE_ReadByte(uint16_t bAdd);
+
+void MEMORY_Tasks(void);
+# 62 "./mcc_generated_files/mcc.h" 2
+
 # 1 "./mcc_generated_files/ext_int.h" 1
 # 406 "./mcc_generated_files/ext_int.h"
 void EXT_INT_Initialize(void);
@@ -28188,25 +28207,6 @@ void INT1_SetInterruptHandler(void (* InterruptHandler)(void));
 extern void (*INT1_InterruptHandler)(void);
 # 600 "./mcc_generated_files/ext_int.h"
 void INT1_DefaultInterruptHandler(void);
-# 62 "./mcc_generated_files/mcc.h" 2
-
-# 1 "./mcc_generated_files/memory.h" 1
-# 99 "./mcc_generated_files/memory.h"
-uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "./mcc_generated_files/memory.h"
-uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "./mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "./mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "./mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "./mcc_generated_files/memory.h"
-void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "./mcc_generated_files/memory.h"
-uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
 # 63 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/uart2.h" 1
@@ -28984,7 +28984,7 @@ extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
 # 36 "./mbmc.h" 2
-# 56 "./mbmc.h"
+# 59 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
@@ -28996,6 +28996,8 @@ typedef struct C_data {
  _Bool update;
  hist_type hist[1];
  float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
+ volatile _Bool day;
+ volatile uint32_t day_start, day_end;
 } C_data;
 
 typedef struct P_data {
@@ -29035,6 +29037,7 @@ void calc_ror_data(void);
 void static_soc(void);
 void set_load_relay_one(_Bool);
 void set_load_relay_two(_Bool);
+_Bool check_day_time(void);
 
 char spinners(uint8_t, uint8_t);
 # 139 "main.c" 2
@@ -29137,6 +29140,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 volatile C_data C = {
  .bank_ah = 225.0 - 100.0,
+ .day=0,
 };
 
 extern volatile struct P_data P;
@@ -29388,9 +29392,9 @@ void main(void)
     k = V_INVERTER;
     break;
    case 9:
-    i = channel_ANB5;
-    j = channel_ANB5;
-    k = channel_ANB5;
+    i = V_LIGHT_SENSOR;
+    j = V_LIGHT_SENSOR;
+    k = V_LIGHT_SENSOR;
     break;
    default:
     break;

@@ -53,6 +53,9 @@
 #define ROR_WAIT	2000
 #define ROR_TIMES	30
 
+#define DAWN_VOLTS	22.0
+#define DUSK_VOLTS	12.0
+
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
 	float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
@@ -64,6 +67,8 @@ typedef struct C_data { // real calculated variables
 	bool update;
 	hist_type hist[1];
 	float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
+	volatile bool day;
+	volatile uint32_t day_start, day_end;
 } C_data;
 
 typedef struct P_data {
@@ -103,6 +108,7 @@ void calc_ror_data(void);
 void static_soc(void);
 void set_load_relay_one(bool);
 void set_load_relay_two(bool);
+bool check_day_time(void);
 
 char spinners(uint8_t, uint8_t);
 

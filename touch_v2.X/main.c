@@ -172,6 +172,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 volatile C_data C = {
 	.bank_ah = BANKAH - DEGRADE,
+	.day=false,
 };
 
 extern volatile struct P_data P;
@@ -423,9 +424,9 @@ void main(void)
 				k = V_INVERTER;
 				break;
 			case 9:
-				i = channel_ANB5;
-				j = channel_ANB5;
-				k = channel_ANB5;
+				i = V_LIGHT_SENSOR;
+				j = V_LIGHT_SENSOR;
+				k = V_LIGHT_SENSOR;
 				break;
 			default:
 				break;

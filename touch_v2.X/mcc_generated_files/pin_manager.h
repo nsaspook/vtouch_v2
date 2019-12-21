@@ -275,25 +275,25 @@
 #define V_INVERTER_SetAnalogMode()      do { ANSELBbits.ANSELB4 = 1; } while(0)
 #define V_INVERTER_SetDigitalMode()     do { ANSELBbits.ANSELB4 = 0; } while(0)
 
-// get/set channel_ANB5 aliases
-#define channel_ANB5_TRIS                 TRISBbits.TRISB5
-#define channel_ANB5_LAT                  LATBbits.LATB5
-#define channel_ANB5_PORT                 PORTBbits.RB5
-#define channel_ANB5_WPU                  WPUBbits.WPUB5
-#define channel_ANB5_OD                   ODCONBbits.ODCB5
-#define channel_ANB5_ANS                  ANSELBbits.ANSELB5
-#define channel_ANB5_SetHigh()            do { LATBbits.LATB5 = 1; } while(0)
-#define channel_ANB5_SetLow()             do { LATBbits.LATB5 = 0; } while(0)
-#define channel_ANB5_Toggle()             do { LATBbits.LATB5 = ~LATBbits.LATB5; } while(0)
-#define channel_ANB5_GetValue()           PORTBbits.RB5
-#define channel_ANB5_SetDigitalInput()    do { TRISBbits.TRISB5 = 1; } while(0)
-#define channel_ANB5_SetDigitalOutput()   do { TRISBbits.TRISB5 = 0; } while(0)
-#define channel_ANB5_SetPullup()          do { WPUBbits.WPUB5 = 1; } while(0)
-#define channel_ANB5_ResetPullup()        do { WPUBbits.WPUB5 = 0; } while(0)
-#define channel_ANB5_SetPushPull()        do { ODCONBbits.ODCB5 = 0; } while(0)
-#define channel_ANB5_SetOpenDrain()       do { ODCONBbits.ODCB5 = 1; } while(0)
-#define channel_ANB5_SetAnalogMode()      do { ANSELBbits.ANSELB5 = 1; } while(0)
-#define channel_ANB5_SetDigitalMode()     do { ANSELBbits.ANSELB5 = 0; } while(0)
+// get/set V_LIGHT_SENSOR aliases
+#define V_LIGHT_SENSOR_TRIS                 TRISBbits.TRISB5
+#define V_LIGHT_SENSOR_LAT                  LATBbits.LATB5
+#define V_LIGHT_SENSOR_PORT                 PORTBbits.RB5
+#define V_LIGHT_SENSOR_WPU                  WPUBbits.WPUB5
+#define V_LIGHT_SENSOR_OD                   ODCONBbits.ODCB5
+#define V_LIGHT_SENSOR_ANS                  ANSELBbits.ANSELB5
+#define V_LIGHT_SENSOR_SetHigh()            do { LATBbits.LATB5 = 1; } while(0)
+#define V_LIGHT_SENSOR_SetLow()             do { LATBbits.LATB5 = 0; } while(0)
+#define V_LIGHT_SENSOR_Toggle()             do { LATBbits.LATB5 = ~LATBbits.LATB5; } while(0)
+#define V_LIGHT_SENSOR_GetValue()           PORTBbits.RB5
+#define V_LIGHT_SENSOR_SetDigitalInput()    do { TRISBbits.TRISB5 = 1; } while(0)
+#define V_LIGHT_SENSOR_SetDigitalOutput()   do { TRISBbits.TRISB5 = 0; } while(0)
+#define V_LIGHT_SENSOR_SetPullup()          do { WPUBbits.WPUB5 = 1; } while(0)
+#define V_LIGHT_SENSOR_ResetPullup()        do { WPUBbits.WPUB5 = 0; } while(0)
+#define V_LIGHT_SENSOR_SetPushPull()        do { ODCONBbits.ODCB5 = 0; } while(0)
+#define V_LIGHT_SENSOR_SetOpenDrain()       do { ODCONBbits.ODCB5 = 1; } while(0)
+#define V_LIGHT_SENSOR_SetAnalogMode()      do { ANSELBbits.ANSELB5 = 1; } while(0)
+#define V_LIGHT_SENSOR_SetDigitalMode()     do { ANSELBbits.ANSELB5 = 0; } while(0)
 
 // get/set RB6 procedures
 #define RB6_SetHigh()            do { LATBbits.LATB6 = 1; } while(0)

@@ -145,3 +145,31 @@ char spinners(uint8_t shape, uint8_t reset)
 		s[shape] = 0;
 	return c;
 }
+
+/*
+ * should be called every second in the time keeper task
+ * returns true at dusk or dawn switch-over
+ */
+bool check_day_time(void)
+{
+	static uint8_t day_delay = 0;
+
+	if (!day_delay++) {
+		if (!C.day) {
+			if (conv_raw_result(V_LIGHT_SENSOR, CONV) > DAWN_VOLTS) {
+				C.day = true;
+				C.day_start = V.ticks;
+				return true;
+			}
+		} else {
+			if (conv_raw_result(V_LIGHT_SENSOR, CONV) < DUSK_VOLTS) {
+				C.day = false;
+				C.day_end = V.ticks;
+				return true;
+			}
+		}
+	}
+	if (day_delay >= 250)
+		day_delay = 0;
+	return false;
+}

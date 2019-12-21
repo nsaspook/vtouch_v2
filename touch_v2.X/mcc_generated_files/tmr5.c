@@ -52,6 +52,7 @@
 #include "tmr5.h"
 #include "interrupt_manager.h"
 #include "../vconfig.h"
+#include "../mbmc.h"
 
 /**
   Section: Global Variables Definitions
@@ -59,6 +60,7 @@
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
 extern V_data V;
+extern C_data C;
 
 /**
   Section: TMR5 APIs
@@ -199,6 +201,7 @@ void TMR5_DefaultInterruptHandler(void)
 	SLED = (uint8_t) ~SLED;
 	V.timerint_count++;
 	V.ticks++;
+	check_day_time();
 }
 
 /**

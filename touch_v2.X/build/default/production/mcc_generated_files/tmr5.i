@@ -27362,7 +27362,7 @@ typedef enum
     V_BBAT = 0xA,
     V_TEMP = 0xB,
     V_INVERTER = 0xC,
-    channel_ANB5 = 0xD,
+    V_LIGHT_SENSOR = 0xD,
     channel_VSS = 0x3B,
     channel_Temp = 0x3C,
     channel_DAC1 = 0x3D,
@@ -27578,6 +27578,581 @@ void PIN_MANAGER_Initialize (void);
  } hist_type;
 # 54 "mcc_generated_files/tmr5.c" 2
 
+# 1 "mcc_generated_files/../mbmc.h" 1
+# 35 "mcc_generated_files/../mbmc.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 1 3
+# 33 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 76 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long long time_t;
+# 293 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef void * timer_t;
+
+
+
+
+typedef int clockid_t;
+
+
+
+
+typedef long clock_t;
+# 313 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+struct timespec { time_t tv_sec; long tv_nsec; };
+
+
+
+
+
+typedef int pid_t;
+# 411 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef struct __locale_struct * locale_t;
+# 34 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 2 3
+
+
+
+
+
+
+struct tm {
+ int tm_sec;
+ int tm_min;
+ int tm_hour;
+ int tm_mday;
+ int tm_mon;
+ int tm_year;
+ int tm_wday;
+ int tm_yday;
+ int tm_isdst;
+ long __tm_gmtoff;
+ const char *__tm_zone;
+};
+
+clock_t clock (void);
+time_t time (time_t *);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
+size_t strftime (char *restrict, size_t, const char *restrict, const struct tm *restrict);
+struct tm *gmtime (const time_t *);
+struct tm *localtime (const time_t *);
+char *asctime (const struct tm *);
+char *ctime (const time_t *);
+int timespec_get(struct timespec *, int);
+# 73 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+size_t strftime_l (char * restrict, size_t, const char * restrict, const struct tm * restrict, locale_t);
+
+struct tm *gmtime_r (const time_t *restrict, struct tm *restrict);
+struct tm *localtime_r (const time_t *restrict, struct tm *restrict);
+char *asctime_r (const struct tm *restrict, char *restrict);
+char *ctime_r (const time_t *, char *);
+
+void tzset (void);
+
+struct itimerspec {
+ struct timespec it_interval;
+ struct timespec it_value;
+};
+# 102 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
+int nanosleep (const struct timespec *, struct timespec *);
+int clock_getres (clockid_t, struct timespec *);
+int clock_gettime (clockid_t, struct timespec *);
+int clock_settime (clockid_t, const struct timespec *);
+int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
+int clock_getcpuclockid (pid_t, clockid_t *);
+
+struct sigevent;
+int timer_create (clockid_t, struct sigevent *restrict, timer_t *restrict);
+int timer_delete (timer_t);
+int timer_settime (timer_t, int, const struct itimerspec *restrict, struct itimerspec *restrict);
+int timer_gettime (timer_t, struct itimerspec *);
+int timer_getoverrun (timer_t);
+
+extern char *tzname[2];
+
+
+
+
+
+char *strptime (const char *restrict, const char *restrict, struct tm *restrict);
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+struct tm *getdate (const char *);
+# 36 "mcc_generated_files/../mbmc.h" 2
+# 1 "./daq.h" 1
+# 33 "./daq.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 1 3
+# 15 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 33 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef float float_t;
+
+
+
+
+typedef double double_t;
+# 16 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 2 3
+# 42 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
+int __fpclassifyf(float);
+
+
+
+
+
+
+
+int __signbitf(float);
+# 59 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
+double acos(double);
+float acosf(float);
+long double acosl(long double);
+
+
+
+double acosh(double);
+float acoshf(float);
+long double acoshl(long double);
+
+
+
+double asin(double);
+float asinf(float);
+long double asinl(long double);
+
+
+
+double asinh(double);
+float asinhf(float);
+long double asinhl(long double);
+
+
+
+double atan(double);
+float atanf(float);
+long double atanl(long double);
+
+
+
+double atan2(double, double);
+float atan2f(float, float);
+long double atan2l(long double, long double);
+
+
+
+double atanh(double);
+float atanhf(float);
+long double atanhl(long double);
+
+
+
+double cbrt(double);
+float cbrtf(float);
+long double cbrtl(long double);
+
+
+
+double ceil(double);
+float ceilf(float);
+long double ceill(long double);
+
+
+
+double copysign(double, double);
+float copysignf(float, float);
+long double copysignl(long double, long double);
+
+
+
+double cos(double);
+float cosf(float);
+long double cosl(long double);
+
+
+
+double cosh(double);
+float coshf(float);
+long double coshl(long double);
+
+
+
+double erf(double);
+float erff(float);
+long double erfl(long double);
+
+
+
+double erfc(double);
+float erfcf(float);
+long double erfcl(long double);
+
+
+
+double exp(double);
+float expf(float);
+long double expl(long double);
+
+
+
+double exp2(double);
+float exp2f(float);
+long double exp2l(long double);
+
+
+
+double expm1(double);
+float expm1f(float);
+long double expm1l(long double);
+
+
+
+double fabs(double);
+float fabsf(float);
+long double fabsl(long double);
+
+
+
+double fdim(double, double);
+float fdimf(float, float);
+long double fdiml(long double, long double);
+
+
+
+double floor(double);
+float floorf(float);
+long double floorl(long double);
+
+
+
+double fma(double, double, double);
+float fmaf(float, float, float);
+long double fmal(long double, long double, long double);
+
+
+
+double fmax(double, double);
+float fmaxf(float, float);
+long double fmaxl(long double, long double);
+
+
+
+double fmin(double, double);
+float fminf(float, float);
+long double fminl(long double, long double);
+
+
+
+double fmod(double, double);
+float fmodf(float, float);
+long double fmodl(long double, long double);
+
+
+
+double frexp(double, int *);
+float frexpf(float, int *);
+long double frexpl(long double, int *);
+
+
+
+double hypot(double, double);
+float hypotf(float, float);
+long double hypotl(long double, long double);
+
+
+
+int ilogb(double);
+int ilogbf(float);
+int ilogbl(long double);
+
+
+
+double ldexp(double, int);
+float ldexpf(float, int);
+long double ldexpl(long double, int);
+
+
+
+double lgamma(double);
+float lgammaf(float);
+long double lgammal(long double);
+
+
+
+long long llrint(double);
+long long llrintf(float);
+long long llrintl(long double);
+
+
+
+long long llround(double);
+long long llroundf(float);
+long long llroundl(long double);
+
+
+
+double log(double);
+float logf(float);
+long double logl(long double);
+
+
+
+double log10(double);
+float log10f(float);
+long double log10l(long double);
+
+
+
+double log1p(double);
+float log1pf(float);
+long double log1pl(long double);
+
+
+
+double log2(double);
+float log2f(float);
+long double log2l(long double);
+
+
+
+double logb(double);
+float logbf(float);
+long double logbl(long double);
+
+
+
+long lrint(double);
+long lrintf(float);
+long lrintl(long double);
+
+
+
+long lround(double);
+long lroundf(float);
+long lroundl(long double);
+
+
+
+double modf(double, double *);
+float modff(float, float *);
+long double modfl(long double, long double *);
+
+
+
+double nan(const char *);
+float nanf(const char *);
+long double nanl(const char *);
+
+
+
+double nearbyint(double);
+float nearbyintf(float);
+long double nearbyintl(long double);
+
+
+
+double nextafter(double, double);
+float nextafterf(float, float);
+long double nextafterl(long double, long double);
+
+
+
+double nexttoward(double, long double);
+float nexttowardf(float, long double);
+long double nexttowardl(long double, long double);
+
+
+
+
+double pow(double, double);
+__attribute__((nonreentrant)) float powf(float, float);
+long double powl(long double, long double);
+
+
+
+double remainder(double, double);
+float remainderf(float, float);
+long double remainderl(long double, long double);
+
+
+
+double remquo(double, double, int *);
+float remquof(float, float, int *);
+long double remquol(long double, long double, int *);
+
+
+
+double rint(double);
+float rintf(float);
+long double rintl(long double);
+
+
+
+double round(double);
+float roundf(float);
+long double roundl(long double);
+
+
+
+double scalbln(double, long);
+float scalblnf(float, long);
+long double scalblnl(long double, long);
+
+
+
+double scalbn(double, int);
+float scalbnf(float, int);
+long double scalbnl(long double, int);
+
+
+
+double sin(double);
+float sinf(float);
+long double sinl(long double);
+
+
+
+double sinh(double);
+float sinhf(float);
+long double sinhl(long double);
+
+
+
+double sqrt(double);
+float sqrtf(float);
+long double sqrtl(long double);
+
+
+
+double tan(double);
+float tanf(float);
+long double tanl(long double);
+
+
+
+double tanh(double);
+float tanhf(float);
+long double tanhl(long double);
+
+
+
+double tgamma(double);
+float tgammaf(float);
+long double tgammal(long double);
+
+
+
+double trunc(double);
+float truncf(float);
+long double truncl(long double);
+# 423 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 3
+extern int signgam;
+
+double j0(double);
+double j1(double);
+double jn(int, double);
+
+double y0(double);
+double y1(double);
+double yn(int, double);
+# 34 "./daq.h" 2
+# 1 "./timers.h" 1
+# 11 "./timers.h"
+enum APP_TIMERS {
+ TMR_INTERNAL = 0,
+ TMR_ADC,
+ TMR_T2,
+ TMR_T3,
+ TMR_T4,
+ TMR_MC_TX,
+ TMR_HBIO,
+ TMR_INFO,
+ TMR_HELP,
+ TMR_HELPDIS,
+ TMR_DISPLAY,
+ TMR_FLIPPER,
+ TMR_ESR,
+
+
+
+ TMR_COUNT
+};
+
+void StartTimer(const uint8_t timer, const uint16_t count);
+_Bool TimerDone(const uint8_t timer);
+void WaitMs(const uint16_t numMilliseconds);
+# 35 "./daq.h" 2
+# 1 "./tests.h" 1
+# 36 "./daq.h" 2
+# 76 "./daq.h"
+typedef enum {
+ CONV,
+ O_CONV,
+} adc_conv_t;
+
+_Bool start_adc_scan(void);
+_Bool check_adc_scan(void);
+void clear_adc_scan(void);
+_Bool update_adc_result(void);
+adc_result_t get_raw_result(const adcc_channel_t);
+float conv_raw_result(const adcc_channel_t, const adc_conv_t);
+# 37 "mcc_generated_files/../mbmc.h" 2
+# 59 "mcc_generated_files/../mbmc.h"
+typedef struct C_data {
+ float calc[16];
+ float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
+ float p_load, p_inverter, p_pv, p_bat;
+ float t_comp, esr;
+ float bank_ah, dynamic_ah, pv_ah, loadah;
+ float bkwi, bkwo, pvkw, invkw, loadkw;
+ uint16_t runtime, soc;
+ _Bool update;
+ hist_type hist[1];
+ float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
+ volatile _Bool day;
+ volatile uint32_t day_start, day_end;
+} C_data;
+
+typedef struct P_data {
+ uint8_t BCHECK : 1;
+ uint8_t TIMERFLAG : 1;
+ uint8_t PRIPOWEROK : 1;
+ uint8_t FORCEOUT : 1;
+ uint8_t WORKERFLAG : 1;
+ uint8_t CHARGEROVERRIDE : 1;
+ uint8_t FAILSAFE : 1;
+ uint8_t MORNING_HELP : 1;
+ uint8_t SYSTEM_STABLE : 1;
+ uint8_t HOLD_PROC : 1;
+ uint8_t POWER_UNSTABLE : 1;
+ uint8_t B2 : 1;
+ uint8_t B3 : 1;
+ uint8_t B4 : 1;
+ uint8_t SET_BATT : 1;
+ uint8_t BLANK_LCD : 1;
+ uint8_t STATIC_SOC : 1;
+ uint8_t SET_CEF : 1;
+ uint8_t D_UPDATE : 1;
+ uint8_t GLITCH_CHECK : 1;
+ uint8_t FORCEDAY : 1;
+ uint8_t COOLING : 1;
+ uint8_t UPDATE_EEP : 1;
+ uint8_t RESET_ZEROS : 1;
+ uint8_t SAVE_DAILY : 1;
+ uint8_t SETBATT_SOC : 1;
+ uint8_t SYNCSOC : 1;
+} P_data_t;
+
+float lp_filter(const float, const uint8_t, const int8_t);
+void convert_adc_data(void);
+void calc_model_data(void);
+void calc_ror_data(void);
+void static_soc(void);
+void set_load_relay_one(_Bool);
+void set_load_relay_two(_Bool);
+_Bool check_day_time(void);
+
+char spinners(uint8_t, uint8_t);
+# 55 "mcc_generated_files/tmr5.c" 2
+
 
 
 
@@ -27585,6 +28160,7 @@ void PIN_MANAGER_Initialize (void);
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
 extern V_data V;
+extern C_data C;
 
 
 
@@ -27725,4 +28301,5 @@ void TMR5_DefaultInterruptHandler(void)
  LATEbits.LATE0 = (uint8_t) ~LATEbits.LATE0;
  V.timerint_count++;
  V.ticks++;
+ check_day_time();
 }

@@ -8,4 +8,8 @@ mcc_generated_files/ext_int.h  \
 mcc_generated_files/spi1.h  \
 mcc_generated_files/pin_manager.h  \
 ringbufs.h  \
-vconfig.h 
+vconfig.h  \
+mcc_generated_files/../mbmc.h  \
+daq.h  \
+timers.h  \
+tests.h 

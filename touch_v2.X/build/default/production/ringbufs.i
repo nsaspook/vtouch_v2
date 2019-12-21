@@ -27386,7 +27386,7 @@ typedef enum
     V_BBAT = 0xA,
     V_TEMP = 0xB,
     V_INVERTER = 0xC,
-    channel_ANB5 = 0xD,
+    V_LIGHT_SENSOR = 0xD,
     channel_VSS = 0x3B,
     channel_Temp = 0x3C,
     channel_DAC1 = 0x3D,
