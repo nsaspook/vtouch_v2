@@ -27563,7 +27563,7 @@ void PIN_MANAGER_Initialize (void);
   uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
   terminal_type response;
   volatile uint8_t ticker;
-  _Bool flipper, calib, enter;
+  _Bool flipper, calib, enter,system_stable;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
@@ -28095,7 +28095,7 @@ _Bool update_adc_result(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 # 37 "mcc_generated_files/../mbmc.h" 2
-# 59 "mcc_generated_files/../mbmc.h"
+# 61 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
@@ -28148,6 +28148,8 @@ void calc_ror_data(void);
 void static_soc(void);
 void set_load_relay_one(_Bool);
 void set_load_relay_two(_Bool);
+void set_ac_charger_relay(_Bool);
+_Bool get_ac_charger_relay(void);
 _Bool check_day_time(void);
 
 char spinners(uint8_t, uint8_t);

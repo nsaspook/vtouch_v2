@@ -83,7 +83,7 @@
  * anb4 inverter voltage				R9
  * anb5 spare						R10
  *
- * switch MAX debounce inputs INP
+ * switch MAX debounce inputs INP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
  * max pin	pic pin		connector pin	name	MBMC_IO board input connector pin
  * 1		rf0		spi 9			10
  * 2		rf1		spi 10			1
@@ -155,6 +155,7 @@ V_data V = {
 	.timerint_count = 0,
 	.calib = CALIB,
 	.screen = 0,
+	.system_stable=false,
 };
 H_data H = {
 	.hid_display = HID_MAIN,
@@ -296,6 +297,7 @@ void main(void)
 			sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);
 			update_lcd(0);
 			WaitMs(5000);
+			V.system_stable=true;
 			break;
 		case UI_STATE_HOST:
 			break;

@@ -55,6 +55,8 @@
 
 #define DAWN_VOLTS	22.0
 #define DUSK_VOLTS	12.0
+#define DAY_DELAY	240
+#define SOC_TOO_LOW	10
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
@@ -108,6 +110,8 @@ void calc_ror_data(void);
 void static_soc(void);
 void set_load_relay_one(bool);
 void set_load_relay_two(bool);
+void set_ac_charger_relay(bool);
+bool get_ac_charger_relay(void);
 bool check_day_time(void);
 
 char spinners(uint8_t, uint8_t);

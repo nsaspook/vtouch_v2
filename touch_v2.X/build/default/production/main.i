@@ -28396,7 +28396,7 @@ void PMD_Initialize(void);
   uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
   terminal_type response;
   volatile uint8_t ticker;
-  _Bool flipper, calib, enter;
+  _Bool flipper, calib, enter,system_stable;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
@@ -28984,7 +28984,7 @@ extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
 # 36 "./mbmc.h" 2
-# 59 "./mbmc.h"
+# 61 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, bv_ror, bc_ror;
@@ -29037,6 +29037,8 @@ void calc_ror_data(void);
 void static_soc(void);
 void set_load_relay_one(_Bool);
 void set_load_relay_two(_Bool);
+void set_ac_charger_relay(_Bool);
+_Bool get_ac_charger_relay(void);
 _Bool check_day_time(void);
 
 char spinners(uint8_t, uint8_t);
@@ -29123,6 +29125,7 @@ V_data V = {
  .timerint_count = 0,
  .calib = 0,
  .screen = 0,
+ .system_stable=0,
 };
 H_data H = {
  .hid_display = HID_MAIN,
@@ -29203,7 +29206,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.007");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.0070");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), "                ");
    sprintf(get_vterm_ptr(1, 2), "                ");
@@ -29264,6 +29267,7 @@ void main(void)
    sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);
    update_lcd(0);
    WaitMs(5000);
+   V.system_stable=1;
    break;
   case UI_STATE_HOST:
    break;

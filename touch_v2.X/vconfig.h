@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.007"
+#define VER	"1.0070"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -159,7 +159,7 @@ extern "C" {
 		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
 		terminal_type response;
 		volatile uint8_t ticker;
-		bool flipper, calib, enter;
+		bool flipper, calib, enter,system_stable;
 		volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
 	} V_data;
 

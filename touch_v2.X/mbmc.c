@@ -130,6 +130,16 @@ void set_load_relay_two(bool mode)
 	RELAYL2_LAT = mode;
 }
 
+void set_ac_charger_relay(bool mode)
+{
+	AC_CHARGER_LAT = mode;
+}
+
+bool get_ac_charger_relay(void)
+{
+	return AC_CHARGER_LAT;
+}
+
 /* Misc ACSII spinner character generator, stores position for each shape */
 char spinners(uint8_t shape, uint8_t reset)
 {
@@ -159,17 +169,26 @@ bool check_day_time(void)
 			if (conv_raw_result(V_LIGHT_SENSOR, CONV) > DAWN_VOLTS) {
 				C.day = true;
 				C.day_start = V.ticks;
+				if (get_ac_charger_relay() && V.system_stable) { // try PV charging during the day
+					set_ac_charger_relay(false);
+				}
 				return true;
 			}
 		} else {
 			if (conv_raw_result(V_LIGHT_SENSOR, CONV) < DUSK_VOLTS) {
 				C.day = false;
 				C.day_end = V.ticks;
+				/*
+				 * at low battery condition charge with AC at night
+				 */
+				if (!get_ac_charger_relay() && V.system_stable && (C.soc < SOC_TOO_LOW)) {
+					set_ac_charger_relay(true);
+				}
 				return true;
 			}
 		}
 	}
-	if (day_delay >= 250)
+	if (day_delay >= DAY_DELAY)
 		day_delay = 0;
 	return false;
 }
