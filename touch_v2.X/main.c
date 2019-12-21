@@ -83,7 +83,7 @@
  * anb4 inverter voltage				R9
  * anb5 spare						R10
  *
- * switch MAX debounce inputs
+ * switch MAX debounce inputs INP
  * max pin	pic pin		connector pin	name	MBMC_IO board input connector pin
  * 1		rf0		spi 9			10
  * 2		rf1		spi 10			1
@@ -97,6 +97,13 @@
  * adc_cal[0-3]						current sensors zero offset stored in eeprom 0=a100, 1=a200, 2..3=future
  * 3x16 LCD status panel and led status lights.
  *
+ * uln2802 port output pins OUTP
+ * i/o  port	function
+ * 0	RD4	load relay 1
+ * 1	RD5	load relay 2
+ * 2	RD6	PV/AC Charger DC charge-controller source relay
+ * 4	RF4	spare
+ * 
  * system variables float
  *
  * current_in

@@ -551,25 +551,25 @@
 #define RELAYL2_SetAnalogMode()      do { ANSELDbits.ANSELD5 = 1; } while(0)
 #define RELAYL2_SetDigitalMode()     do { ANSELDbits.ANSELD5 = 0; } while(0)
 
-// get/set IO_RD6 aliases
-#define IO_RD6_TRIS                 TRISDbits.TRISD6
-#define IO_RD6_LAT                  LATDbits.LATD6
-#define IO_RD6_PORT                 PORTDbits.RD6
-#define IO_RD6_WPU                  WPUDbits.WPUD6
-#define IO_RD6_OD                   ODCONDbits.ODCD6
-#define IO_RD6_ANS                  ANSELDbits.ANSELD6
-#define IO_RD6_SetHigh()            do { LATDbits.LATD6 = 1; } while(0)
-#define IO_RD6_SetLow()             do { LATDbits.LATD6 = 0; } while(0)
-#define IO_RD6_Toggle()             do { LATDbits.LATD6 = ~LATDbits.LATD6; } while(0)
-#define IO_RD6_GetValue()           PORTDbits.RD6
-#define IO_RD6_SetDigitalInput()    do { TRISDbits.TRISD6 = 1; } while(0)
-#define IO_RD6_SetDigitalOutput()   do { TRISDbits.TRISD6 = 0; } while(0)
-#define IO_RD6_SetPullup()          do { WPUDbits.WPUD6 = 1; } while(0)
-#define IO_RD6_ResetPullup()        do { WPUDbits.WPUD6 = 0; } while(0)
-#define IO_RD6_SetPushPull()        do { ODCONDbits.ODCD6 = 0; } while(0)
-#define IO_RD6_SetOpenDrain()       do { ODCONDbits.ODCD6 = 1; } while(0)
-#define IO_RD6_SetAnalogMode()      do { ANSELDbits.ANSELD6 = 1; } while(0)
-#define IO_RD6_SetDigitalMode()     do { ANSELDbits.ANSELD6 = 0; } while(0)
+// get/set AC_CHARGER aliases
+#define AC_CHARGER_TRIS                 TRISDbits.TRISD6
+#define AC_CHARGER_LAT                  LATDbits.LATD6
+#define AC_CHARGER_PORT                 PORTDbits.RD6
+#define AC_CHARGER_WPU                  WPUDbits.WPUD6
+#define AC_CHARGER_OD                   ODCONDbits.ODCD6
+#define AC_CHARGER_ANS                  ANSELDbits.ANSELD6
+#define AC_CHARGER_SetHigh()            do { LATDbits.LATD6 = 1; } while(0)
+#define AC_CHARGER_SetLow()             do { LATDbits.LATD6 = 0; } while(0)
+#define AC_CHARGER_Toggle()             do { LATDbits.LATD6 = ~LATDbits.LATD6; } while(0)
+#define AC_CHARGER_GetValue()           PORTDbits.RD6
+#define AC_CHARGER_SetDigitalInput()    do { TRISDbits.TRISD6 = 1; } while(0)
+#define AC_CHARGER_SetDigitalOutput()   do { TRISDbits.TRISD6 = 0; } while(0)
+#define AC_CHARGER_SetPullup()          do { WPUDbits.WPUD6 = 1; } while(0)
+#define AC_CHARGER_ResetPullup()        do { WPUDbits.WPUD6 = 0; } while(0)
+#define AC_CHARGER_SetPushPull()        do { ODCONDbits.ODCD6 = 0; } while(0)
+#define AC_CHARGER_SetOpenDrain()       do { ODCONDbits.ODCD6 = 1; } while(0)
+#define AC_CHARGER_SetAnalogMode()      do { ANSELDbits.ANSELD6 = 1; } while(0)
+#define AC_CHARGER_SetDigitalMode()     do { ANSELDbits.ANSELD6 = 0; } while(0)
 
 // get/set MAX_EN aliases
 #define MAX_EN_TRIS                 TRISDbits.TRISD7

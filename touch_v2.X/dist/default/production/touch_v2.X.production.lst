@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Fri Dec 20 03:28:33 2019
+                                                                                               Sat Dec 21 00:48:06 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F57K42
@@ -3229,8 +3229,8 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3215  00FFB2  65                 	db	101	;'e'
   3216  00FFB3  63                 	db	99	;'c'
   3217  00FFB4  20                 	db	32
-  3218  00FFB5  31                 	db	49	;'1'
-  3219  00FFB6  39                 	db	57	;'9'
+  3218  00FFB5  32                 	db	50	;'2'
+  3219  00FFB6  30                 	db	48	;'0'
   3220  00FFB7  20                 	db	32
   3221  00FFB8  32                 	db	50	;'2'
   3222  00FFB9  30                 	db	48	;'0'
@@ -3254,13 +3254,13 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3240                           
   3241                           ; BSR set to: 57
   3242  00FFC7  31                 	db	49	;'1'
-  3243  00FFC8  39                 	db	57	;'9'
+  3243  00FFC8  36                 	db	54	;'6'
   3244  00FFC9  3A                 	db	58	;':'
-  3245  00FFCA  32                 	db	50	;'2'
-  3246  00FFCB  38                 	db	56	;'8'
+  3245  00FFCA  34                 	db	52	;'4'
+  3246  00FFCB  35                 	db	53	;'5'
   3247  00FFCC  3A                 	db	58	;':'
-  3248  00FFCD  31                 	db	49	;'1'
-  3249  00FFCE  39                 	db	57	;'9'
+  3248  00FFCD  32                 	db	50	;'2'
+  3249  00FFCE  34                 	db	52	;'4'
   3250  00FFCF  00                 	db	0
   3251  00FFD0                     STR_3:
   3252                           
@@ -3772,7 +3772,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3758 ;;
   3759 ;; *************** function _main *****************
   3760 ;; Defined at:
-  3761 ;;		line 175 in file "main.c"
+  3761 ;;		line 182 in file "main.c"
   3762 ;; Parameters:    Size  Location     Type
   3763 ;;		None
   3764 ;; Auto vars:     Size  Location     Type
@@ -3870,7 +3870,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3843  011248  0E00               	movlw	0
   3844  01124A  22E2               	addwfc	fsr1h,f,c
   3845                           
-  3846                           ;main.c: 177:  UI_STATES mode;;main.c: 178:  uint8_t inp_index = 0, i = C_BATT, j = C_PV
+  3846                           ;main.c: 184:  UI_STATES mode;;main.c: 185:  uint8_t inp_index = 0, i = C_BATT, j = C_PV
       +                          , k = V_CC, i_ror;
   3847                           ;stkvar	_inp_index @ sp[(-13)+10]
   3848                           
@@ -3892,45 +3892,45 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3864  01125C  6AE3               	clrf	plusw1,c
   3865  01125E  82E3               	bsf	plusw1,1,c
   3866                           
-  3867                           ;main.c: 181:  SYSTEM_Initialize();
+  3867                           ;main.c: 188:  SYSTEM_Initialize();
   3868  011260  ECDD  F0D4         	call	_SYSTEM_Initialize	;wreg free
   3869                           
   3870                           ; BSR set to: 60
-  3871                           ;main.c: 184:  (INTCON0bits.GIEH = 1);
+  3871                           ;main.c: 191:  (INTCON0bits.GIEH = 1);
   3872  011264  8ED2               	bsf	210,7,c	;volatile
   3873                           
   3874                           ; BSR set to: 60
-  3875                           ;main.c: 187:  (INTCON0bits.GIEL = 1);
+  3875                           ;main.c: 194:  (INTCON0bits.GIEL = 1);
   3876  011266  8CD2               	bsf	210,6,c	;volatile
   3877                           
   3878                           ; BSR set to: 60
-  3879                           ;main.c: 189:  V.ui_state = UI_STATE_INIT;
+  3879                           ;main.c: 196:  V.ui_state = UI_STATE_INIT;
   3880  011268  0102               	movlb	2	; () banked
   3881  01126A  6B00               	clrf	_V& (0+255),b	;volatile
   3882                           
   3883                           ; BSR set to: 2
-  3884                           ;main.c: 194:  WaitMs(300);
+  3884                           ;main.c: 201:  WaitMs(300);
   3885  01126C  0E2C               	movlw	44
   3886  01126E  6EE6               	movwf	postinc1,c
   3887  011270  0E01               	movlw	1
   3888  011272  6EE6               	movwf	postinc1,c
   3889  011274  EC0D  F0D7         	call	_WaitMs	;wreg free
   3890                           
-  3891                           ;main.c: 195:  if (PORTBbits.RB0) {
+  3891                           ;main.c: 202:  if (PORTBbits.RB0) {
   3892  011278  A0CB               	btfss	203,0,c	;volatile
   3893  01127A  D004               	goto	l12586
   3894                           
-  3895                           ;main.c: 196:   mode = UI_STATE_HOST;
+  3895                           ;main.c: 203:   mode = UI_STATE_HOST;
   3896                           ;stkvar	_mode @ sp[(-13)+11]
   3897  01127C  0EFE               	movlw	-2
   3898  01127E  6AE3               	clrf	plusw1,c
   3899  011280  2AE3               	incf	plusw1,f,c
   3900                           
-  3901                           ;main.c: 197:  } else {
+  3901                           ;main.c: 204:  } else {
   3902  011282  D004               	goto	l12588
   3903  011284                     l12586:
   3904                           
-  3905                           ;main.c: 198:   mode = UI_STATE_LOG;
+  3905                           ;main.c: 205:   mode = UI_STATE_LOG;
   3906                           ;stkvar	_mode @ sp[(-13)+11]
   3907  011284  0EFE               	movlw	-2
   3908  011286  6AE3               	clrf	plusw1,c
@@ -3938,36 +3938,36 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3910  01128A  82E3               	bsf	plusw1,1,c	;indir
   3911  01128C                     l12588:
   3912                           
-  3913                           ;main.c: 201:  if (mode == UI_STATE_HOST) {
+  3913                           ;main.c: 208:  if (mode == UI_STATE_HOST) {
   3914                           ;stkvar	_mode @ sp[(-13)+11]
   3915  01128C  0EFE               	movlw	-2
   3916  01128E  04E3               	decf	plusw1,w,c
   3917  011290  A4D8               	btfss	status,2,c
   3918  011292  D007               	goto	l1322
   3919                           
-  3920                           ;main.c: 202:   do { LATDbits.LATD0 = 1; } while(0);
+  3920                           ;main.c: 209:   do { LATDbits.LATD0 = 1; } while(0);
   3921  011294  80BD               	bsf	189,0,c	;volatile
   3922                           
-  3923                           ;main.c: 203:   V.mode_pwm = 70;
+  3923                           ;main.c: 210:   V.mode_pwm = 70;
   3924  011296  0E00               	movlw	0
   3925  011298  0102               	movlb	2	; () banked
   3926  01129A  6F96               	movwf	(_V+150)& (0+255),b	;volatile
   3927  01129C  0E46               	movlw	70
   3928  01129E  6F95               	movwf	(_V+149)& (0+255),b	;volatile
   3929                           
-  3930                           ;main.c: 204:  } else {
+  3930                           ;main.c: 211:  } else {
   3931  0112A0  D004               	goto	l12592
   3932  0112A2                     l1322:
   3933  0112A2  90BD               	bcf	189,0,c	;volatile
   3934                           
-  3935                           ;main.c: 206:   V.mode_pwm = 0;
+  3935                           ;main.c: 213:   V.mode_pwm = 0;
   3936  0112A4  0102               	movlb	2	; () banked
   3937  0112A6  6B95               	clrf	(_V+149)& (0+255),b	;volatile
   3938  0112A8  6B96               	clrf	(_V+150)& (0+255),b	;volatile
   3939  0112AA                     l12592:
   3940                           
   3941                           ; BSR set to: 2
-  3942                           ;main.c: 208:  mode_lamp_dim(V.mode_pwm);
+  3942                           ;main.c: 215:  mode_lamp_dim(V.mode_pwm);
   3943  0112AA  0060  FA57  FFE6   	movff	_V+149,postinc1
   3944  0112B0  0060  FA5B  FFE6   	movff	_V+150,postinc1
   3945  0112B6  ECD5  F0DA         	call	_mode_lamp_dim	;wreg free
@@ -3975,36 +3975,36 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3947  0112BC                     l12594:
   3948                           
   3949                           ; BSR set to: 2
-  3950                           ;main.c: 216:    init_port_dma();
+  3950                           ;main.c: 223:    init_port_dma();
   3951  0112BC  EC91  F0D7         	call	_init_port_dma	;wreg free
   3952                           
   3953                           ; BSR set to: 59
-  3954                           ;main.c: 218:    init_display();
+  3954                           ;main.c: 225:    init_display();
   3955  0112C0  EC92  F0CB         	call	_init_display	;wreg free
   3956                           
   3957                           ; BSR set to: 61
-  3958                           ;main.c: 219:    eaDogM_WriteCommand(0b00001100);
+  3958                           ;main.c: 226:    eaDogM_WriteCommand(0b00001100);
   3959  0112C4  0E0C               	movlw	12
   3960  0112C6  6EE6               	movwf	postinc1,c
   3961  0112C8  EC39  F0DB         	call	_eaDogM_WriteCommand	;wreg free
   3962                           
   3963                           ; BSR set to: 0
-  3964                           ;main.c: 223:    set_load_relay_one(1);
+  3964                           ;main.c: 230:    set_load_relay_one(1);
   3965  0112CC  0E01               	movlw	1
   3966  0112CE  6EE6               	movwf	postinc1,c
   3967  0112D0  EC29  F0DB         	call	_set_load_relay_one	;wreg free
   3968                           
-  3969                           ;main.c: 224:    set_load_relay_two(1);
+  3969                           ;main.c: 231:    set_load_relay_two(1);
   3970  0112D4  0E01               	movlw	1
   3971  0112D6  6EE6               	movwf	postinc1,c
   3972  0112D8  EC21  F0DB         	call	_set_load_relay_two	;wreg free
   3973                           
-  3974                           ;main.c: 226:    V.ui_state = mode;
+  3974                           ;main.c: 233:    V.ui_state = mode;
   3975                           ;stkvar	_mode @ sp[(-13)+11]
   3976  0112DC  0EFE               	movlw	-2
   3977  0112DE  006F FF8C  F200    	movff	plusw1,_V	;volatile
   3978                           
-  3979                           ;main.c: 227:    srand(1957);
+  3979                           ;main.c: 234:    srand(1957);
   3980  0112E4  0EA5               	movlw	165
   3981  0112E6  6EE6               	movwf	postinc1,c
   3982  0112E8  0E07               	movlw	7
@@ -4012,12 +4012,12 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3984  0112EC  EC43  F0D7         	call	_srand	;wreg free
   3985                           
   3986                           ; BSR set to: 1
-  3987                           ;main.c: 228:    set_vterm(0);
+  3987                           ;main.c: 235:    set_vterm(0);
   3988  0112F0  0E00               	movlw	0
   3989  0112F2  6EE6               	movwf	postinc1,c
   3990  0112F4  EC62  F0DA         	call	_set_vterm	;wreg free
   3991                           
-  3992                           ;main.c: 229:    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
+  3992                           ;main.c: 236:    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
   3993  0112F8  0E50               	movlw	low STR_1
   3994  0112FA  6EE6               	movwf	postinc1,c
   3995  0112FC  0EFF               	movlw	high STR_1
@@ -4034,7 +4034,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4006  01131C  EC10  F0CA         	call	_sprintf	;wreg free
   4007                           
   4008                           ; BSR set to: 0
-  4009                           ;main.c: 230:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.007");
+  4009                           ;main.c: 237:    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.007");
   4010  011320  0ED0               	movlw	low STR_3
   4011  011322  6EE6               	movwf	postinc1,c
   4012  011324  0EFF               	movlw	high STR_3
@@ -4055,7 +4055,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4027  01134C  EC10  F0CA         	call	_sprintf	;wreg free
   4028                           
   4029                           ; BSR set to: 0
-  4030                           ;main.c: 231:    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
+  4030                           ;main.c: 238:    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
   4031  011350  0E1D               	movlw	low STR_4
   4032  011352  6EE6               	movwf	postinc1,c
   4033  011354  0EFF               	movlw	high STR_4
@@ -4072,7 +4072,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4044  011374  EC10  F0CA         	call	_sprintf	;wreg free
   4045                           
   4046                           ; BSR set to: 0
-  4047                           ;main.c: 232:    sprintf(get_vterm_ptr(0, 2), "                ");
+  4047                           ;main.c: 239:    sprintf(get_vterm_ptr(0, 2), "                ");
   4048  011378  0EF0               	movlw	low (STR_58+2)
   4049  01137A  6EE6               	movwf	postinc1,c
   4050  01137C  0EFD               	movlw	high (STR_58+2)
@@ -4089,7 +4089,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4061  01139C  EC10  F0CA         	call	_sprintf	;wreg free
   4062                           
   4063                           ; BSR set to: 0
-  4064                           ;main.c: 233:    sprintf(get_vterm_ptr(1, 2), "                ");
+  4064                           ;main.c: 240:    sprintf(get_vterm_ptr(1, 2), "                ");
   4065  0113A0  0EF0               	movlw	low (STR_58+2)
   4066  0113A2  6EE6               	movwf	postinc1,c
   4067  0113A4  0EFD               	movlw	high (STR_58+2)
@@ -4106,7 +4106,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4078  0113C4  EC10  F0CA         	call	_sprintf	;wreg free
   4079                           
   4080                           ; BSR set to: 0
-  4081                           ;main.c: 234:    sprintf(get_vterm_ptr(2, 2), "                ");
+  4081                           ;main.c: 241:    sprintf(get_vterm_ptr(2, 2), "                ");
   4082  0113C8  0EF0               	movlw	low (STR_58+2)
   4083  0113CA  6EE6               	movwf	postinc1,c
   4084  0113CC  0EFD               	movlw	high (STR_58+2)
@@ -4123,19 +4123,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4095  0113EC  EC10  F0CA         	call	_sprintf	;wreg free
   4096                           
   4097                           ; BSR set to: 0
-  4098                           ;main.c: 235:    update_lcd(0);
+  4098                           ;main.c: 242:    update_lcd(0);
   4099  0113F0  0E00               	movlw	0
   4100  0113F2  6EE6               	movwf	postinc1,c
   4101  0113F4  EC01  F0C9         	call	_update_lcd	;wreg free
   4102                           
-  4103                           ;main.c: 236:    WaitMs(1000);
+  4103                           ;main.c: 243:    WaitMs(1000);
   4104  0113F8  0EE8               	movlw	232
   4105  0113FA  6EE6               	movwf	postinc1,c
   4106  0113FC  0E03               	movlw	3
   4107  0113FE  6EE6               	movwf	postinc1,c
   4108  011400  EC0D  F0D7         	call	_WaitMs	;wreg free
   4109                           
-  4110                           ;main.c: 237:    StartTimer(TMR_DISPLAY, 250);
+  4110                           ;main.c: 244:    StartTimer(TMR_DISPLAY, 250);
   4111  011404  0EFA               	movlw	250
   4112  011406  6EE6               	movwf	postinc1,c
   4113  011408  0E00               	movlw	0
@@ -4144,7 +4144,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4116  01140E  6EE6               	movwf	postinc1,c
   4117  011410  EC19  F0D6         	call	_StartTimer	;wreg free
   4118                           
-  4119                           ;main.c: 238:    StartTimer(TMR_ADC, 200);
+  4119                           ;main.c: 245:    StartTimer(TMR_ADC, 200);
   4120  011414  0EC8               	movlw	200
   4121  011416  6EE6               	movwf	postinc1,c
   4122  011418  0E00               	movlw	0
@@ -4153,7 +4153,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4125  01141E  6EE6               	movwf	postinc1,c
   4126  011420  EC19  F0D6         	call	_StartTimer	;wreg free
   4127                           
-  4128                           ;main.c: 239:    StartTimer(TMR_INFO, 3000);
+  4128                           ;main.c: 246:    StartTimer(TMR_INFO, 3000);
   4129  011424  0EB8               	movlw	184
   4130  011426  6EE6               	movwf	postinc1,c
   4131  011428  0E0B               	movlw	11
@@ -4162,7 +4162,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4134  01142E  6EE6               	movwf	postinc1,c
   4135  011430  EC19  F0D6         	call	_StartTimer	;wreg free
   4136                           
-  4137                           ;main.c: 240:    StartTimer(TMR_FLIPPER, 1500);
+  4137                           ;main.c: 247:    StartTimer(TMR_FLIPPER, 1500);
   4138  011434  0EDC               	movlw	220
   4139  011436  6EE6               	movwf	postinc1,c
   4140  011438  0E05               	movlw	5
@@ -4171,7 +4171,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4143  01143E  6EE6               	movwf	postinc1,c
   4144  011440  EC19  F0D6         	call	_StartTimer	;wreg free
   4145                           
-  4146                           ;main.c: 241:    StartTimer(TMR_HELPDIS, 3000);
+  4146                           ;main.c: 248:    StartTimer(TMR_HELPDIS, 3000);
   4147  011444  0EB8               	movlw	184
   4148  011446  6EE6               	movwf	postinc1,c
   4149  011448  0E0B               	movlw	11
@@ -4180,31 +4180,31 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4152  01144E  6EE6               	movwf	postinc1,c
   4153  011450  EC19  F0D6         	call	_StartTimer	;wreg free
   4154                           
-  4155                           ;main.c: 243:    start_adc_scan();
+  4155                           ;main.c: 250:    start_adc_scan();
   4156  011454  ECF0  F0D2         	call	_start_adc_scan	;wreg free
   4157                           
-  4158                           ;main.c: 244:    start_switch_handler();
+  4158                           ;main.c: 251:    start_switch_handler();
   4159  011458  EC43  F0DA         	call	_start_switch_handler	;wreg free
   4160                           
   4161                           ; BSR set to: 57
-  4162                           ;main.c: 245:    WaitMs(1000);
+  4162                           ;main.c: 252:    WaitMs(1000);
   4163  01145C  0EE8               	movlw	232
   4164  01145E  6EE6               	movwf	postinc1,c
   4165  011460  0E03               	movlw	3
   4166  011462  6EE6               	movwf	postinc1,c
   4167  011464  EC0D  F0D7         	call	_WaitMs	;wreg free
   4168                           
-  4169                           ;main.c: 250:    i_ror = 1;
+  4169                           ;main.c: 257:    i_ror = 1;
   4170                           ;stkvar	_i_ror @ sp[(-13)+12]
   4171  011468  0EFF               	movlw	-1
   4172  01146A  6AE3               	clrf	plusw1,c
   4173  01146C  2AE3               	incf	plusw1,f,c
   4174  01146E                     l12644:
   4175                           
-  4176                           ;main.c: 252:     calc_ror_data();
+  4176                           ;main.c: 259:     calc_ror_data();
   4177  01146E  EC4D  F0C1         	call	_calc_ror_data	;wreg free
   4178                           
-  4179                           ;main.c: 253:     sprintf(get_vterm_ptr(1, 0), "BV %2.4f         ", conv_raw_result(V_BA
+  4179                           ;main.c: 260:     sprintf(get_vterm_ptr(1, 0), "BV %2.4f         ", conv_raw_result(V_BA
       +                          T, CONV));
   4180  011472  0E00               	movlw	0
   4181  011474  6EE6               	movwf	postinc1,c
@@ -4231,7 +4231,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4202  0114BA  EC10  F0CA         	call	_sprintf	;wreg free
   4203                           
   4204                           ; BSR set to: 0
-  4205                           ;main.c: 254:     sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f       ", spinners(5, 0),
+  4205                           ;main.c: 261:     sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f       ", spinners(5, 0),
       +                           i_ror, C.bv_ror);
   4206  0114BE  0060  F5A3  FFE6   	movff	_C+104,postinc1
   4207  0114C4  0060  F5A7  FFE6   	movff	_C+105,postinc1
@@ -4269,33 +4269,33 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4239  011518  EC10  F0CA         	call	_sprintf	;wreg free
   4240                           
   4241                           ; BSR set to: 0
-  4242                           ;main.c: 255:     update_lcd(0);
+  4242                           ;main.c: 262:     update_lcd(0);
   4243  01151C  0E00               	movlw	0
   4244  01151E  6EE6               	movwf	postinc1,c
   4245  011520  EC01  F0C9         	call	_update_lcd	;wreg free
   4246                           
-  4247                           ;main.c: 256:     WaitMs(2000);
+  4247                           ;main.c: 263:     WaitMs(2000);
   4248  011524  0ED0               	movlw	208
   4249  011526  6EE6               	movwf	postinc1,c
   4250  011528  0E07               	movlw	7
   4251  01152A  6EE6               	movwf	postinc1,c
   4252  01152C  EC0D  F0D7         	call	_WaitMs	;wreg free
   4253                           
-  4254                           ;main.c: 257:     clear_adc_scan();
+  4254                           ;main.c: 264:     clear_adc_scan();
   4255  011530  EC87  F0DB         	call	_clear_adc_scan	;wreg free
   4256                           
   4257                           ; BSR set to: 0
-  4258                           ;main.c: 258:     start_adc_scan();
+  4258                           ;main.c: 265:     start_adc_scan();
   4259  011534  ECF0  F0D2         	call	_start_adc_scan	;wreg free
   4260                           
-  4261                           ;main.c: 259:     WaitMs(500);
+  4261                           ;main.c: 266:     WaitMs(500);
   4262  011538  0EF4               	movlw	244
   4263  01153A  6EE6               	movwf	postinc1,c
   4264  01153C  0E01               	movlw	1
   4265  01153E  6EE6               	movwf	postinc1,c
   4266  011540  EC0D  F0D7         	call	_WaitMs	;wreg free
   4267                           
-  4268                           ;main.c: 260:    } while ((i_ror++ < 30) && (C.bv_ror > 0.0140));
+  4268                           ;main.c: 267:    } while ((i_ror++ < 30) && (C.bv_ror > 0.0140));
   4269                           ;stkvar	_i_ror @ sp[(-13)+12]
   4270  011544  0EFF               	movlw	-1
   4271  011546  006F FF8C  F033    	movff	plusw1,btemp+11
@@ -4322,24 +4322,24 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4292  01158A  D771               	goto	l12644
   4293  01158C                     u12150:
   4294                           
-  4295                           ;main.c: 262:    static_soc();
+  4295                           ;main.c: 269:    static_soc();
   4296  01158C  ECB4  F0D9         	call	_static_soc	;wreg free
   4297                           
   4298                           ; BSR set to: 1
-  4299                           ;main.c: 263:    init_bsoc();
+  4299                           ;main.c: 270:    init_bsoc();
   4300  011590  ECC0  F0C2         	call	_init_bsoc	;wreg free
   4301                           
-  4302                           ;main.c: 264:    set_load_relay_one(0);
+  4302                           ;main.c: 271:    set_load_relay_one(0);
   4303  011594  0E00               	movlw	0
   4304  011596  6EE6               	movwf	postinc1,c
   4305  011598  EC29  F0DB         	call	_set_load_relay_one	;wreg free
   4306                           
-  4307                           ;main.c: 265:    set_load_relay_two(0);
+  4307                           ;main.c: 272:    set_load_relay_two(0);
   4308  01159C  0E00               	movlw	0
   4309  01159E  6EE6               	movwf	postinc1,c
   4310  0115A0  EC21  F0DB         	call	_set_load_relay_two	;wreg free
   4311                           
-  4312                           ;main.c: 266:    sprintf(get_vterm_ptr(0, 0), "Static SOC %d        ", C.soc);
+  4312                           ;main.c: 273:    sprintf(get_vterm_ptr(0, 0), "Static SOC %d        ", C.soc);
   4313  0115A4  0060  F6BB  FFE6   	movff	_C+174,postinc1
   4314  0115AA  0060  F6BF  FFE6   	movff	_C+175,postinc1
   4315  0115B0  0E35               	movlw	low STR_10
@@ -4358,7 +4358,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4328  0115D4  EC10  F0CA         	call	_sprintf	;wreg free
   4329                           
   4330                           ; BSR set to: 0
-  4331                           ;main.c: 267:    sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
+  4331                           ;main.c: 274:    sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
   4332  0115D8  0060  F633  FFE6   	movff	_C+140,postinc1
   4333  0115DE  0060  F637  FFE6   	movff	_C+141,postinc1
   4334  0115E4  0060  F63B  FFE6   	movff	_C+142,postinc1
@@ -4379,19 +4379,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4349  011614  EC10  F0CA         	call	_sprintf	;wreg free
   4350                           
   4351                           ; BSR set to: 0
-  4352                           ;main.c: 268:    update_lcd(0);
+  4352                           ;main.c: 275:    update_lcd(0);
   4353  011618  0E00               	movlw	0
   4354  01161A  6EE6               	movwf	postinc1,c
   4355  01161C  EC01  F0C9         	call	_update_lcd	;wreg free
   4356                           
-  4357                           ;main.c: 269:    WaitMs(2000);
+  4357                           ;main.c: 276:    WaitMs(2000);
   4358  011620  0ED0               	movlw	208
   4359  011622  6EE6               	movwf	postinc1,c
   4360  011624  0E07               	movlw	7
   4361  011626  6EE6               	movwf	postinc1,c
   4362  011628  EC0D  F0D7         	call	_WaitMs	;wreg free
   4363                           
-  4364                           ;main.c: 270:    sprintf(get_vterm_ptr(0, 0), "Battery ESR     ");
+  4364                           ;main.c: 277:    sprintf(get_vterm_ptr(0, 0), "Battery ESR     ");
   4365  01162C  0E2E               	movlw	low STR_12
   4366  01162E  6EE6               	movwf	postinc1,c
   4367  011630  0EFF               	movlw	high STR_12
@@ -4408,7 +4408,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4378  011650  EC10  F0CA         	call	_sprintf	;wreg free
   4379                           
   4380                           ; BSR set to: 0
-  4381                           ;main.c: 271:    sprintf(get_vterm_ptr(1, 0), "Calculation     ");
+  4381                           ;main.c: 278:    sprintf(get_vterm_ptr(1, 0), "Calculation     ");
   4382  011654  0E3F               	movlw	low STR_13
   4383  011656  6EE6               	movwf	postinc1,c
   4384  011658  0EFF               	movlw	high STR_13
@@ -4425,7 +4425,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4395  011678  EC10  F0CA         	call	_sprintf	;wreg free
   4396                           
   4397                           ; BSR set to: 0
-  4398                           ;main.c: 272:    sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
+  4398                           ;main.c: 279:    sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
   4399  01167C  0E72               	movlw	low STR_14
   4400  01167E  6EE6               	movwf	postinc1,c
   4401  011680  0EFF               	movlw	high STR_14
@@ -4442,12 +4442,12 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4412  0116A0  EC10  F0CA         	call	_sprintf	;wreg free
   4413                           
   4414                           ; BSR set to: 0
-  4415                           ;main.c: 273:    update_lcd(0);
+  4415                           ;main.c: 280:    update_lcd(0);
   4416  0116A4  0E00               	movlw	0
   4417  0116A6  6EE6               	movwf	postinc1,c
   4418  0116A8  EC01  F0C9         	call	_update_lcd	;wreg free
   4419                           
-  4420                           ;main.c: 274:    uint16_t i_esr = 1;
+  4420                           ;main.c: 281:    uint16_t i_esr = 1;
   4421  0116AC  0E01               	movlw	1
   4422  0116AE  6E32               	movwf	(btemp+10)^0,c
   4423  0116B0  0E00               	movlw	0
@@ -4459,19 +4459,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4429  0116BC  0EF8               	movlw	-8
   4430  0116BE  0060  F0CF  FFE3   	movff	btemp+11,plusw1
   4431                           
-  4432                           ;main.c: 276:    float esr_temp;;main.c: 277:    while ((esr_temp = esr_check(0)) < 0.0)
+  4432                           ;main.c: 283:    float esr_temp;;main.c: 284:    while ((esr_temp = esr_check(0)) < 0.0)
       +                           {
   4433  0116C4  D06D               	goto	l12704
   4434  0116C6                     l12692:
   4435                           
-  4436                           ;main.c: 278:     WaitMs(110);
+  4436                           ;main.c: 285:     WaitMs(110);
   4437  0116C6  0E6E               	movlw	110
   4438  0116C8  6EE6               	movwf	postinc1,c
   4439  0116CA  0E00               	movlw	0
   4440  0116CC  6EE6               	movwf	postinc1,c
   4441  0116CE  EC0D  F0D7         	call	_WaitMs	;wreg free
   4442                           
-  4443                           ;main.c: 279:     shape = (uint8_t) fabsf(esr_temp);
+  4443                           ;main.c: 286:     shape = (uint8_t) fabsf(esr_temp);
   4444                           ;stkvar	_esr_temp @ sp[(-13)+0]
   4445  0116D2  0EF3               	movlw	-13
   4446  0116D4  006F FF8F FFE6     	movff	plusw1,postinc1
@@ -4490,7 +4490,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4459  011712  0EF9               	movlw	-7
   4460  011714  0060  F0CF  FFE3   	movff	btemp+11,plusw1
   4461                           
-  4462                           ;main.c: 280:     sprintf(get_vterm_ptr(2, 0), "Checking %c %c      ", spinners(0, 0), s
+  4462                           ;main.c: 287:     sprintf(get_vterm_ptr(2, 0), "Checking %c %c      ", spinners(0, 0), s
       +                          pinners(shape, 0));
   4463  01171A  0E00               	movlw	0
   4464  01171C  6EE6               	movwf	postinc1,c
@@ -4529,12 +4529,12 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4497  011768  EC10  F0CA         	call	_sprintf	;wreg free
   4498                           
   4499                           ; BSR set to: 0
-  4500                           ;main.c: 281:     update_lcd(0);
+  4500                           ;main.c: 288:     update_lcd(0);
   4501  01176C  0E00               	movlw	0
   4502  01176E  6EE6               	movwf	postinc1,c
   4503  011770  EC01  F0C9         	call	_update_lcd	;wreg free
   4504                           
-  4505                           ;main.c: 283:     if (i_esr++ > 512)
+  4505                           ;main.c: 290:     if (i_esr++ > 512)
   4506                           ;stkvar	_i_esr @ sp[(-13)+4]
   4507  011774  50E1               	movf	fsr1l,w,c
   4508  011776  0FF7               	addlw	-9
@@ -4556,7 +4556,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4524  01179E  D017               	goto	u12170
   4525  0117A0                     l12704:
   4526                           
-  4527                           ;main.c: 277:    while ((esr_temp = esr_check(0)) < 0.0) {
+  4527                           ;main.c: 284:    while ((esr_temp = esr_check(0)) < 0.0) {
   4528  0117A0  0E00               	movlw	0
   4529  0117A2  6EE6               	movwf	postinc1,c
   4530  0117A4  EC70  F0B4         	call	_esr_check	;wreg free
@@ -4575,7 +4575,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4543  0117CC  D77C               	goto	l12692
   4544  0117CE                     u12170:
   4545                           
-  4546                           ;main.c: 286:    sprintf(get_vterm_ptr(0, 0), "ESR  %2.6f           ", C.esr);
+  4546                           ;main.c: 293:    sprintf(get_vterm_ptr(0, 0), "ESR  %2.6f           ", C.esr);
   4547  0117CE  0060  F613  FFE6   	movff	_C+132,postinc1
   4548  0117D4  0060  F617  FFE6   	movff	_C+133,postinc1
   4549  0117DA  0060  F61B  FFE6   	movff	_C+134,postinc1
@@ -4595,7 +4595,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4563  011808  6EE6               	movwf	postinc1,c
   4564  01180A  EC10  F0CA         	call	_sprintf	;wreg free
   4565                           
-  4566                           ;main.c: 287:    sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f           ", C.bv_one_load
+  4566                           ;main.c: 294:    sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f           ", C.bv_one_load
       +                          , C.load_i1);
   4567  01180E  0060  F78F  FFE6   	movff	_C+227,postinc1
   4568  011814  0060  F793  FFE6   	movff	_C+228,postinc1
@@ -4620,7 +4620,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4587  011860  6EE6               	movwf	postinc1,c
   4588  011862  EC10  F0CA         	call	_sprintf	;wreg free
   4589                           
-  4590                           ;main.c: 288:    sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_loa
+  4590                           ;main.c: 295:    sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_loa
       +                          d, C.load_i2);
   4591  011866  0060  F79F  FFE6   	movff	_C+231,postinc1
   4592  01186C  0060  F7A3  FFE6   	movff	_C+232,postinc1
@@ -4645,36 +4645,36 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4611  0118B8  6EE6               	movwf	postinc1,c
   4612  0118BA  EC10  F0CA         	call	_sprintf	;wreg free
   4613                           
-  4614                           ;main.c: 289:    update_lcd(0);
+  4614                           ;main.c: 296:    update_lcd(0);
   4615  0118BE  0E00               	movlw	0
   4616  0118C0  6EE6               	movwf	postinc1,c
   4617  0118C2  EC01  F0C9         	call	_update_lcd	;wreg free
   4618                           
-  4619                           ;main.c: 290:    WaitMs(5000);
+  4619                           ;main.c: 297:    WaitMs(5000);
   4620  0118C6  0E88               	movlw	136
   4621  0118C8  6EE6               	movwf	postinc1,c
   4622  0118CA  0E13               	movlw	19
   4623  0118CC  6EE6               	movwf	postinc1,c
   4624  0118CE  EC0D  F0D7         	call	_WaitMs	;wreg free
   4625                           
-  4626                           ;main.c: 291:    break;
+  4626                           ;main.c: 298:    break;
   4627  0118D2  D01C               	goto	l12714
   4628  0118D4                     l1338:
   4629                           
   4630                           ; BSR set to: 2
-  4631                           ;main.c: 297:    P.SYSTEM_STABLE = 1;
+  4631                           ;main.c: 304:    P.SYSTEM_STABLE = 1;
   4632  0118D4  0100               	movlb	0	; () banked
   4633  0118D6  819F               	bsf	(_P+1)& (0+255),0,b	;volatile
   4634                           
-  4635                           ;main.c: 298:    break;
+  4635                           ;main.c: 305:    break;
   4636  0118D8  D019               	goto	l12714
   4637  0118DA                     l1340:
   4638                           
   4639                           ; BSR set to: 2
-  4640                           ;main.c: 301:    V.ui_state = UI_STATE_INIT;
+  4640                           ;main.c: 308:    V.ui_state = UI_STATE_INIT;
   4641  0118DA  6B00               	clrf	_V& (0+255),b	;volatile
   4642                           
-  4643                           ;main.c: 302:    break;
+  4643                           ;main.c: 309:    break;
   4644  0118DC  D017               	goto	l12714
   4645  0118DE                     l12712:
   4646  0118DE  0102               	movlb	2	; () banked
@@ -4719,7 +4719,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4684  01190A  D7E7               	goto	l1340
   4685  01190C                     l12714:
   4686                           
-  4687                           ;main.c: 305:   if (TimerDone(TMR_ADC) && check_adc_scan()) {
+  4687                           ;main.c: 312:   if (TimerDone(TMR_ADC) && check_adc_scan()) {
   4688  01190C  0E01               	movlw	1
   4689  01190E  6EE6               	movwf	postinc1,c
   4690  011910  EC9B  F0D8         	call	_TimerDone	;wreg free
@@ -4731,17 +4731,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4696  011920  B4D8               	btfsc	status,2,c
   4697  011922  D00E               	goto	l12726
   4698                           
-  4699                           ;main.c: 309:    convert_adc_data();
+  4699                           ;main.c: 316:    convert_adc_data();
   4700  011924  ECA5  F0CD         	call	_convert_adc_data	;wreg free
   4701                           
-  4702                           ;main.c: 313:    clear_adc_scan();
+  4702                           ;main.c: 320:    clear_adc_scan();
   4703  011928  EC87  F0DB         	call	_clear_adc_scan	;wreg free
   4704                           
   4705                           ; BSR set to: 0
-  4706                           ;main.c: 314:    start_adc_scan();
+  4706                           ;main.c: 321:    start_adc_scan();
   4707  01192C  ECF0  F0D2         	call	_start_adc_scan	;wreg free
   4708                           
-  4709                           ;main.c: 315:    StartTimer(TMR_ADC, 200);
+  4709                           ;main.c: 322:    StartTimer(TMR_ADC, 200);
   4710  011930  0EC8               	movlw	200
   4711  011932  6EE6               	movwf	postinc1,c
   4712  011934  0E00               	movlw	0
@@ -4751,9 +4751,9 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4716  01193C  EC19  F0D6         	call	_StartTimer	;wreg free
   4717  011940                     l12726:
   4718                           
-  4719                           ;main.c: 322:   if (TimerDone(TMR_DISPLAY)) {
+  4719                           ;main.c: 329:   if (TimerDone(TMR_DISPLAY)) {
   4720                           
-  4721                           ;main.c: 318:   if (V.ticks) {
+  4721                           ;main.c: 325:   if (V.ticks) {
   4722  011940  0E0A               	movlw	10
   4723  011942  6EE6               	movwf	postinc1,c
   4724  011944  EC9B  F0D8         	call	_TimerDone	;wreg free
@@ -4761,7 +4761,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4726  01194A  B4D8               	btfsc	status,2,c
   4727  01194C  EFAE  F090         	goto	l12780
   4728                           
-  4729                           ;main.c: 323:    if (TimerDone(TMR_HELPDIS)) {
+  4729                           ;main.c: 330:    if (TimerDone(TMR_HELPDIS)) {
   4730  011950  0E09               	movlw	9
   4731  011952  6EE6               	movwf	postinc1,c
   4732  011954  EC9B  F0D8         	call	_TimerDone	;wreg free
@@ -4769,34 +4769,34 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4734  01195A  B4D8               	btfsc	status,2,c
   4735  01195C  D004               	goto	l12734
   4736                           
-  4737                           ;main.c: 324:     set_display_info(DIS_STR);
+  4737                           ;main.c: 331:     set_display_info(DIS_STR);
   4738  01195E  0E00               	movlw	0
   4739  011960  6EE6               	movwf	postinc1,c
   4740  011962  EC71  F0DA         	call	_set_display_info	;wreg free
   4741  011966                     l12734:
   4742                           
-  4743                           ;main.c: 326:    calc_model_data();
+  4743                           ;main.c: 333:    calc_model_data();
   4744  011966  ECD3  F0AD         	call	_calc_model_data	;wreg free
   4745                           
   4746                           ; BSR set to: 1
-  4747                           ;main.c: 333:     hid_display(&H);
+  4747                           ;main.c: 340:     hid_display(&H);
   4748                           
-  4749                           ;main.c: 328:    if (0) {
+  4749                           ;main.c: 335:    if (0) {
   4750  01196A  0EF5               	movlw	_H& (0+255)
   4751  01196C  6EE6               	movwf	postinc1,c
   4752  01196E  EC95  F0CA         	call	_hid_display	;wreg free
   4753                           
-  4754                           ;main.c: 334:     switch (H.hid_display) {
+  4754                           ;main.c: 341:     switch (H.hid_display) {
   4755  011972  D3A4               	goto	l12760
   4756  011974                     l1348:
   4757                           
   4758                           ; BSR set to: 0
-  4759                           ;main.c: 336:      V.calib = 0;
+  4759                           ;main.c: 343:      V.calib = 0;
   4760  011974  0102               	movlb	2	; () banked
   4761  011976  6BAC               	clrf	(_V+172)& (0+255),b	;volatile
   4762                           
   4763                           ; BSR set to: 2
-  4764                           ;main.c: 337:      sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
+  4764                           ;main.c: 344:      sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
   4765  011978  0060  F5E3  FFE6   	movff	_C+120,postinc1
   4766  01197E  0060  F5E7  FFE6   	movff	_C+121,postinc1
   4767  011984  0060  F5EB  FFE6   	movff	_C+122,postinc1
@@ -4816,7 +4816,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4781  0119B2  6EE6               	movwf	postinc1,c
   4782  0119B4  EC10  F0CA         	call	_sprintf	;wreg free
   4783                           
-  4784                           ;main.c: 338:      sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
+  4784                           ;main.c: 345:      sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
   4785  0119B8  0060  F5C3  FFE6   	movff	_C+112,postinc1
   4786  0119BE  0060  F5C7  FFE6   	movff	_C+113,postinc1
   4787  0119C4  0060  F5CB  FFE6   	movff	_C+114,postinc1
@@ -4836,7 +4836,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4801  0119F2  6EE6               	movwf	postinc1,c
   4802  0119F4  EC10  F0CA         	call	_sprintf	;wreg free
   4803                           
-  4804                           ;main.c: 339:      sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
+  4804                           ;main.c: 346:      sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
   4805  0119F8  0060  F5D3  FFE6   	movff	_C+116,postinc1
   4806  0119FE  0060  F5D7  FFE6   	movff	_C+117,postinc1
   4807  011A04  0060  F5DB  FFE6   	movff	_C+118,postinc1
@@ -4856,7 +4856,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4821  011A32  6EE6               	movwf	postinc1,c
   4822  011A34  EC10  F0CA         	call	_sprintf	;wreg free
   4823                           
-  4824                           ;main.c: 341:      sprintf(get_vterm_ptr(0, 1), "PV   WH %3.2f     ", C.pvkw);
+  4824                           ;main.c: 348:      sprintf(get_vterm_ptr(0, 1), "PV   WH %3.2f     ", C.pvkw);
   4825  011A38  0060  F683  FFE6   	movff	_C+160,postinc1
   4826  011A3E  0060  F687  FFE6   	movff	_C+161,postinc1
   4827  011A44  0060  F68B  FFE6   	movff	_C+162,postinc1
@@ -4876,7 +4876,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4841  011A72  6EE6               	movwf	postinc1,c
   4842  011A74  EC10  F0CA         	call	_sprintf	;wreg free
   4843                           
-  4844                           ;main.c: 342:      sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f     ", C.loadkw);
+  4844                           ;main.c: 349:      sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f     ", C.loadkw);
   4845  011A78  0060  F6A3  FFE6   	movff	_C+168,postinc1
   4846  011A7E  0060  F6A7  FFE6   	movff	_C+169,postinc1
   4847  011A84  0060  F6AB  FFE6   	movff	_C+170,postinc1
@@ -4896,7 +4896,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4861  011AB2  6EE6               	movwf	postinc1,c
   4862  011AB4  EC10  F0CA         	call	_sprintf	;wreg free
   4863                           
-  4864                           ;main.c: 343:      sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f     ", C.invkw);
+  4864                           ;main.c: 350:      sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f     ", C.invkw);
   4865  011AB8  0060  F693  FFE6   	movff	_C+164,postinc1
   4866  011ABE  0060  F697  FFE6   	movff	_C+165,postinc1
   4867  011AC4  0060  F69B  FFE6   	movff	_C+166,postinc1
@@ -4916,17 +4916,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4881  011AF2  6EE6               	movwf	postinc1,c
   4882  011AF4  EC10  F0CA         	call	_sprintf	;wreg free
   4883                           
-  4884                           ;main.c: 344:      break;
+  4884                           ;main.c: 351:      break;
   4885  011AF8  D2F6               	goto	l12762
   4886  011AFA                     l1350:
   4887                           
   4888                           ; BSR set to: 0
-  4889                           ;main.c: 346:      V.calib = 0;
+  4889                           ;main.c: 353:      V.calib = 0;
   4890  011AFA  0102               	movlb	2	; () banked
   4891  011AFC  6BAC               	clrf	(_V+172)& (0+255),b	;volatile
   4892                           
   4893                           ; BSR set to: 2
-  4894                           ;main.c: 347:      sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.ca
+  4894                           ;main.c: 354:      sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.ca
       +                          lc[C_PV]);
   4895  011AFE  0060  F413  FFE6   	movff	_C+4,postinc1
   4896  011B04  0060  F417  FFE6   	movff	_C+5,postinc1
@@ -4951,7 +4951,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4915  011B50  6EE6               	movwf	postinc1,c
   4916  011B52  EC10  F0CA         	call	_sprintf	;wreg free
   4917                           
-  4918                           ;main.c: 348:      sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.c
+  4918                           ;main.c: 355:      sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.c
       +                          alc[C_BATT]);
   4919  011B56  0060  F403  FFE6   	movff	_C,postinc1
   4920  011B5C  0060  F407  FFE6   	movff	_C+1,postinc1
@@ -4976,7 +4976,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4939  011BA8  6EE6               	movwf	postinc1,c
   4940  011BAA  EC10  F0CA         	call	_sprintf	;wreg free
   4941                           
-  4942                           ;main.c: 349:      sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_
+  4942                           ;main.c: 356:      sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_
       +                          load);
   4943  011BAE  0060  F503  FFE6   	movff	_C+64,postinc1
   4944  011BB4  0060  F507  FFE6   	movff	_C+65,postinc1
@@ -5001,7 +5001,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4963  011C00  6EE6               	movwf	postinc1,c
   4964  011C02  EC10  F0CA         	call	_sprintf	;wreg free
   4965                           
-  4966                           ;main.c: 351:      sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f     ", C.bkwi);
+  4966                           ;main.c: 358:      sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f     ", C.bkwi);
   4967  011C06  0060  F663  FFE6   	movff	_C+152,postinc1
   4968  011C0C  0060  F667  FFE6   	movff	_C+153,postinc1
   4969  011C12  0060  F66B  FFE6   	movff	_C+154,postinc1
@@ -5021,7 +5021,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   4983  011C40  6EE6               	movwf	postinc1,c
   4984  011C42  EC10  F0CA         	call	_sprintf	;wreg free
   4985                           
-  4986                           ;main.c: 352:      sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f     ", C.bkwo);
+  4986                           ;main.c: 359:      sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f     ", C.bkwo);
   4987  011C46  0060  F673  FFE6   	movff	_C+156,postinc1
   4988  011C4C  0060  F677  FFE6   	movff	_C+157,postinc1
   4989  011C52  0060  F67B  FFE6   	movff	_C+158,postinc1
@@ -5041,7 +5041,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5003  011C80  6EE6               	movwf	postinc1,c
   5004  011C82  EC10  F0CA         	call	_sprintf	;wreg free
   5005                           
-  5006                           ;main.c: 353:      sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f     ", C.bkwi + C.bkwo);
+  5006                           ;main.c: 360:      sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f     ", C.bkwi + C.bkwo);
   5007  011C86  0060  F673  FFE6   	movff	_C+156,postinc1
   5008  011C8C  0060  F677  FFE6   	movff	_C+157,postinc1
   5009  011C92  0060  F67B  FFE6   	movff	_C+158,postinc1
@@ -5070,17 +5070,17 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5032  011CF4  6EE6               	movwf	postinc1,c
   5033  011CF6  EC10  F0CA         	call	_sprintf	;wreg free
   5034                           
-  5035                           ;main.c: 354:      break;
+  5035                           ;main.c: 361:      break;
   5036  011CFA  D1F5               	goto	l12762
   5037  011CFC                     l1351:
   5038                           
   5039                           ; BSR set to: 0
-  5040                           ;main.c: 356:      V.calib = 0;
+  5040                           ;main.c: 363:      V.calib = 0;
   5041  011CFC  0102               	movlb	2	; () banked
   5042  011CFE  6BAC               	clrf	(_V+172)& (0+255),b	;volatile
   5043                           
   5044                           ; BSR set to: 2
-  5045                           ;main.c: 357:      sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f     ", C.p_bat);
+  5045                           ;main.c: 364:      sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f     ", C.p_bat);
   5046  011D00  0060  F5F3  FFE6   	movff	_C+124,postinc1
   5047  011D06  0060  F5F7  FFE6   	movff	_C+125,postinc1
   5048  011D0C  0060  F5FB  FFE6   	movff	_C+126,postinc1
@@ -5100,7 +5100,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5062  011D3A  6EE6               	movwf	postinc1,c
   5063  011D3C  EC10  F0CA         	call	_sprintf	;wreg free
   5064                           
-  5065                           ;main.c: 358:      sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f   ", C.dynamic_ah, C.p
+  5065                           ;main.c: 365:      sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f   ", C.dynamic_ah, C.p
       +                          v_ah);
   5066  011D40  0060  F643  FFE6   	movff	_C+144,postinc1
   5067  011D46  0060  F647  FFE6   	movff	_C+145,postinc1
@@ -5125,7 +5125,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5086  011D92  6EE6               	movwf	postinc1,c
   5087  011D94  EC10  F0CA         	call	_sprintf	;wreg free
   5088                           
-  5089                           ;main.c: 359:      sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d     ", spinners(5, 0), C
+  5089                           ;main.c: 366:      sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d     ", spinners(5, 0), C
       +                          .soc, C.runtime);
   5090  011D98  0060  F6B3  FFE6   	movff	_C+172,postinc1
   5091  011D9E  0060  F6B7  FFE6   	movff	_C+173,postinc1
@@ -5155,7 +5155,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5115  011DE6  6EE6               	movwf	postinc1,c
   5116  011DE8  EC10  F0CA         	call	_sprintf	;wreg free
   5117                           
-  5118                           ;main.c: 361:      sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f         ", C.esr);
+  5118                           ;main.c: 368:      sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f         ", C.esr);
   5119  011DEC  0060  F613  FFE6   	movff	_C+132,postinc1
   5120  011DF2  0060  F617  FFE6   	movff	_C+133,postinc1
   5121  011DF8  0060  F61B  FFE6   	movff	_C+134,postinc1
@@ -5175,7 +5175,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5135  011E26  6EE6               	movwf	postinc1,c
   5136  011E28  EC10  F0CA         	call	_sprintf	;wreg free
   5137                           
-  5138                           ;main.c: 362:      sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f     ", C.bv_one_load, C.
+  5138                           ;main.c: 369:      sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f     ", C.bv_one_load, C.
       +                          load_i1);
   5139  011E2C  0060  F78F  FFE6   	movff	_C+227,postinc1
   5140  011E32  0060  F793  FFE6   	movff	_C+228,postinc1
@@ -5200,7 +5200,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5159  011E7E  6EE6               	movwf	postinc1,c
   5160  011E80  EC10  F0CA         	call	_sprintf	;wreg free
   5161                           
-  5162                           ;main.c: 363:      sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f     ", C.bv_full_load, C
+  5162                           ;main.c: 370:      sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f     ", C.bv_full_load, C
       +                          .load_i2);
   5163  011E84  0060  F79F  FFE6   	movff	_C+231,postinc1
   5164  011E8A  0060  F7A3  FFE6   	movff	_C+232,postinc1
@@ -5225,19 +5225,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5183  011ED6  6EE6               	movwf	postinc1,c
   5184  011ED8  EC10  F0CA         	call	_sprintf	;wreg free
   5185                           
-  5186                           ;main.c: 364:      break;
+  5186                           ;main.c: 371:      break;
   5187  011EDC  D104               	goto	l12762
   5188  011EDE                     l12746:
   5189                           
   5190                           ; BSR set to: 0
-  5191                           ;main.c: 366:      if (!V.calib) {
+  5191                           ;main.c: 373:      if (!V.calib) {
   5192  011EDE  0102               	movlb	2	; () banked
   5193  011EE0  51AC               	movf	(_V+172)& (0+255),w,b	;volatile
   5194  011EE2  A4D8               	btfss	status,2,c
   5195  011EE4  D02D               	goto	l12750
   5196                           
   5197                           ; BSR set to: 2
-  5198                           ;main.c: 367:       lp_filter(0.0, i, -1);
+  5198                           ;main.c: 374:       lp_filter(0.0, i, -1);
   5199  011EE6  0EFF               	movlw	255
   5200  011EE8  6EE6               	movwf	postinc1,c
   5201                           
@@ -5255,7 +5255,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5213  011EFE  6EE6               	movwf	postinc1,c
   5214  011F00  ECE4  F0BE         	call	_lp_filter	;wreg free
   5215                           
-  5216                           ;main.c: 368:       lp_filter(0.0, j, -1);
+  5216                           ;main.c: 375:       lp_filter(0.0, j, -1);
   5217  011F04  0EFF               	movlw	255
   5218  011F06  6EE6               	movwf	postinc1,c
   5219                           
@@ -5273,7 +5273,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5231  011F1C  6EE6               	movwf	postinc1,c
   5232  011F1E  ECE4  F0BE         	call	_lp_filter	;wreg free
   5233                           
-  5234                           ;main.c: 369:       lp_filter(0.0, k, -1);
+  5234                           ;main.c: 376:       lp_filter(0.0, k, -1);
   5235  011F22  0EFF               	movlw	255
   5236  011F24  6EE6               	movwf	postinc1,c
   5237                           
@@ -5292,13 +5292,13 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5250  011F3C  ECE4  F0BE         	call	_lp_filter	;wreg free
   5251  011F40                     l12750:
   5252                           
-  5253                           ;main.c: 371:      V.calib = 1;
+  5253                           ;main.c: 378:      V.calib = 1;
   5254  011F40  0E01               	movlw	1
   5255  011F42  0102               	movlb	2	; () banked
   5256  011F44  6FAC               	movwf	(_V+172)& (0+255),b	;volatile
   5257                           
   5258                           ; BSR set to: 2
-  5259                           ;main.c: 372:      sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.
+  5259                           ;main.c: 379:      sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.
       +                          calc[i], get_switch(SSELECT));
   5260  011F46  0E02               	movlw	2
   5261  011F48  6EE6               	movwf	postinc1,c
@@ -5346,7 +5346,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5303  011FBA  EC10  F0CA         	call	_sprintf	;wreg free
   5304                           
   5305                           ; BSR set to: 0
-  5306                           ;main.c: 373:      sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.
+  5306                           ;main.c: 380:      sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.
       +                          calc[j], get_switch(SENTER));
   5307  011FBE  0E03               	movlw	3
   5308  011FC0  6EE6               	movwf	postinc1,c
@@ -5394,7 +5394,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5350  012032  EC10  F0CA         	call	_sprintf	;wreg free
   5351                           
   5352                           ; BSR set to: 0
-  5353                           ;main.c: 374:      sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C
+  5353                           ;main.c: 381:      sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C
       +                          .calc[k], inp_index + 1);
   5354                           ;stkvar	_inp_index @ sp[(-13)+10]
   5355  012036  0EFD               	movlw	-3
@@ -5445,7 +5445,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5400  0120B4  6EE6               	movwf	postinc1,c
   5401  0120B6  EC10  F0CA         	call	_sprintf	;wreg free
   5402                           
-  5403                           ;main.c: 375:      break;
+  5403                           ;main.c: 382:      break;
   5404  0120BA  D015               	goto	l12762
   5405  0120BC                     l12760:
   5406  0120BC  0100               	movlb	0	; () banked
@@ -5489,12 +5489,12 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5443  0120E6                     l12762:
   5444                           
   5445                           ; BSR set to: 0
-  5446                           ;main.c: 379:     clear_hid_pflags(&H);
+  5446                           ;main.c: 386:     clear_hid_pflags(&H);
   5447  0120E6  0EF5               	movlw	_H& (0+255)
   5448  0120E8  6EE6               	movwf	postinc1,c
   5449  0120EA  ECC6  F0D9         	call	_clear_hid_pflags	;wreg free
   5450                           
-  5451                           ;main.c: 381:    StartTimer(TMR_DISPLAY, 250);
+  5451                           ;main.c: 388:    StartTimer(TMR_DISPLAY, 250);
   5452  0120EE  0EFA               	movlw	250
   5453  0120F0  6EE6               	movwf	postinc1,c
   5454  0120F2  0E00               	movlw	0
@@ -5503,7 +5503,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5457  0120F8  6EE6               	movwf	postinc1,c
   5458  0120FA  EC19  F0D6         	call	_StartTimer	;wreg free
   5459                           
-  5460                           ;main.c: 382:    V.enter = check_enter_button(&H);
+  5460                           ;main.c: 389:    V.enter = check_enter_button(&H);
   5461  0120FE  0EF5               	movlw	_H& (0+255)
   5462  012100  6EE6               	movwf	postinc1,c
   5463  012102  EC39  F0D6         	call	_check_enter_button	;wreg free
@@ -5512,7 +5512,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5466  01210A  6FAD               	movwf	(_V+173)& (0+255),b	;volatile
   5467                           
   5468                           ; BSR set to: 2
-  5469                           ;main.c: 383:    if (V.enter && (H.hid_display != HID_AUX)) {
+  5469                           ;main.c: 390:    if (V.enter && (H.hid_display != HID_AUX)) {
   5470  01210C  51AD               	movf	(_V+173)& (0+255),w,b	;volatile
   5471  01210E  B4D8               	btfsc	status,2,c
   5472  012110  D013               	goto	l12776
@@ -5525,12 +5525,12 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5479  01211A  D00E               	goto	l12776
   5480                           
   5481                           ; BSR set to: 0
-  5482                           ;main.c: 384:     V.enter = 0;
+  5482                           ;main.c: 391:     V.enter = 0;
   5483  01211C  0102               	movlb	2	; () banked
   5484  01211E  6BAD               	clrf	(_V+173)& (0+255),b	;volatile
   5485                           
   5486                           ; BSR set to: 2
-  5487                           ;main.c: 385:     V.screen = ~V.screen;
+  5487                           ;main.c: 392:     V.screen = ~V.screen;
   5488  012120  A19C               	btfss	(_V+156)& (0+255),0,b	;volatile
   5489  012122  D002               	goto	u12250
   5490  012124  0E01               	movlw	1
@@ -5547,7 +5547,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5501  012136  6F9C               	movwf	(_V+156)& (0+255),b	;volatile
   5502  012138                     l12776:
   5503                           
-  5504                           ;main.c: 387:    set_vterm(V.screen);
+  5504                           ;main.c: 394:    set_vterm(V.screen);
   5505  012138  0102               	movlb	2	; () banked
   5506  01213A  A19C               	btfss	(_V+156)& (0+255),0,b	;volatile
   5507  01213C  D002               	goto	u12260
@@ -5559,7 +5559,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5513  012144  6EE6               	movwf	postinc1,c
   5514  012146  EC62  F0DA         	call	_set_vterm	;wreg free
   5515                           
-  5516                           ;main.c: 388:    update_lcd(V.screen);
+  5516                           ;main.c: 395:    update_lcd(V.screen);
   5517  01214A  0102               	movlb	2	; () banked
   5518  01214C  A19C               	btfss	(_V+156)& (0+255),0,b	;volatile
   5519  01214E  D002               	goto	u12270
@@ -5572,27 +5572,27 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5526  012158  EC01  F0C9         	call	_update_lcd	;wreg free
   5527  01215C                     l12780:
   5528                           
-  5529                           ;main.c: 394:   check_help(V.flipper);
+  5529                           ;main.c: 401:   check_help(V.flipper);
   5530  01215C  0102               	movlb	2	; () banked
   5531  01215E  51AB               	movf	(_V+171)& (0+255),w,b	;volatile
   5532  012160  6EE6               	movwf	postinc1,c
   5533  012162  ECD9  F0BB         	call	_check_help	;wreg free
   5534                           
-  5535                           ;main.c: 396:   if (V.enter) {
+  5535                           ;main.c: 403:   if (V.enter) {
   5536  012166  0102               	movlb	2	; () banked
   5537  012168  51AD               	movf	(_V+173)& (0+255),w,b	;volatile
   5538  01216A  B4D8               	btfsc	status,2,c
   5539  01216C  D062               	goto	l1356
   5540                           
   5541                           ; BSR set to: 2
-  5542                           ;main.c: 397:    V.enter = 0;
+  5542                           ;main.c: 404:    V.enter = 0;
   5543  01216E  6BAD               	clrf	(_V+173)& (0+255),b	;volatile
   5544                           
-  5545                           ;main.c: 398:    V.calib = 0;
+  5545                           ;main.c: 405:    V.calib = 0;
   5546  012170  6BAC               	clrf	(_V+172)& (0+255),b	;volatile
   5547                           
   5548                           ; BSR set to: 2
-  5549                           ;main.c: 399:    inp_index += 3;
+  5549                           ;main.c: 406:    inp_index += 3;
   5550                           ;stkvar	_inp_index @ sp[(-13)+10]
   5551  012172  0EFD               	movlw	-3
   5552  012174  006F FF8C  F028    	movff	plusw1,btemp
@@ -5601,7 +5601,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5555  01217E  0EFD               	movlw	-3
   5556  012180  0060  F0A3  FFE3   	movff	btemp,plusw1
   5557                           
-  5558                           ;main.c: 400:    if (inp_index > 9)
+  5558                           ;main.c: 407:    if (inp_index > 9)
   5559                           ;stkvar	_inp_index @ sp[(-13)+10]
   5560  012186  0EFD               	movlw	-3
   5561  012188  006F FF8C  F028    	movff	plusw1,btemp
@@ -5610,7 +5610,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5564  012192  D03A               	goto	l12808
   5565                           
   5566                           ; BSR set to: 2
-  5567                           ;main.c: 401:     inp_index = 0;
+  5567                           ;main.c: 408:     inp_index = 0;
   5568                           ;stkvar	_inp_index @ sp[(-13)+10]
   5569  012194  0EFD               	movlw	-3
   5570  012196  6AE3               	clrf	plusw1,c
@@ -5618,56 +5618,56 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5572  01219A                     l12790:
   5573                           
   5574                           ; BSR set to: 2
-  5575                           ;main.c: 404:     i = C_BATT;
+  5575                           ;main.c: 411:     i = C_BATT;
   5576                           ;stkvar	_i @ sp[(-13)+9]
   5577  01219A  0EFC               	movlw	-4
   5578  01219C  6AE3               	clrf	plusw1,c
   5579                           
   5580                           ; BSR set to: 2
-  5581                           ;main.c: 405:     j = C_PV;
+  5581                           ;main.c: 412:     j = C_PV;
   5582                           ;stkvar	_j @ sp[(-13)+8]
   5583  01219E  0EFB               	movlw	-5
   5584  0121A0  6AE3               	clrf	plusw1,c
   5585  0121A2  2AE3               	incf	plusw1,f,c
   5586                           
   5587                           ; BSR set to: 2
-  5588                           ;main.c: 406:     k = V_CC;
+  5588                           ;main.c: 413:     k = V_CC;
   5589                           ;stkvar	_k @ sp[(-13)+7]
   5590  0121A4  0EFA               	movlw	-6
   5591  0121A6  6AE3               	clrf	plusw1,c
   5592  0121A8  82E3               	bsf	plusw1,1,c
   5593                           
-  5594                           ;main.c: 407:     break;
+  5594                           ;main.c: 414:     break;
   5595  0121AA  D043               	goto	l1356
   5596  0121AC                     l12796:
   5597                           
   5598                           ; BSR set to: 2
-  5599                           ;main.c: 409:     i = V_BAT;
+  5599                           ;main.c: 416:     i = V_BAT;
   5600                           ;stkvar	_i @ sp[(-13)+9]
   5601  0121AC  0EFC               	movlw	-4
   5602  0121AE  6AE3               	clrf	plusw1,c
   5603  0121B0  84E3               	bsf	plusw1,2,c
   5604                           
-  5605                           ;main.c: 410:     j = V_PV;
+  5605                           ;main.c: 417:     j = V_PV;
   5606                           ;stkvar	_j @ sp[(-13)+8]
   5607  0121B2  0EFB               	movlw	-5
   5608  0121B4  6AE3               	clrf	plusw1,c
   5609  0121B6  80E3               	bsf	plusw1,0,c
   5610  0121B8  84E3               	bsf	plusw1,2,c	;indir
   5611                           
-  5612                           ;main.c: 411:     k = V_CBUS;
+  5612                           ;main.c: 418:     k = V_CBUS;
   5613                           ;stkvar	_k @ sp[(-13)+7]
   5614  0121BA  0EFA               	movlw	-6
   5615  0121BC  6AE3               	clrf	plusw1,c
   5616  0121BE  82E3               	bsf	plusw1,1,c
   5617  0121C0  84E3               	bsf	plusw1,2,c	;indir
   5618                           
-  5619                           ;main.c: 412:     break;
+  5619                           ;main.c: 419:     break;
   5620  0121C2  D037               	goto	l1356
   5621  0121C4                     l12798:
   5622                           
   5623                           ; BSR set to: 2
-  5624                           ;main.c: 414:     i = V_BBAT;
+  5624                           ;main.c: 421:     i = V_BBAT;
   5625                           ;stkvar	_i @ sp[(-13)+9]
   5626  0121C4  0EFC               	movlw	-4
   5627  0121C6  6AE3               	clrf	plusw1,c
@@ -5675,7 +5675,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5629  0121CA  86E3               	bsf	plusw1,3,c	;indir
   5630                           
   5631                           ; BSR set to: 2
-  5632                           ;main.c: 415:     j = V_TEMP;
+  5632                           ;main.c: 422:     j = V_TEMP;
   5633  0121CC  0E0B               	movlw	11
   5634  0121CE  6E33               	movwf	(btemp+11)^0,c
   5635                           
@@ -5684,19 +5684,19 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5638  0121D2  0060  F0CF  FFE3   	movff	btemp+11,plusw1
   5639                           
   5640                           ; BSR set to: 2
-  5641                           ;main.c: 416:     k = V_INVERTER;
+  5641                           ;main.c: 423:     k = V_INVERTER;
   5642                           ;stkvar	_k @ sp[(-13)+7]
   5643  0121D8  0EFA               	movlw	-6
   5644  0121DA  6AE3               	clrf	plusw1,c
   5645  0121DC  84E3               	bsf	plusw1,2,c
   5646  0121DE  86E3               	bsf	plusw1,3,c	;indir
   5647                           
-  5648                           ;main.c: 417:     break;
+  5648                           ;main.c: 424:     break;
   5649  0121E0  D028               	goto	l1356
   5650  0121E2                     l12804:
   5651                           
   5652                           ; BSR set to: 2
-  5653                           ;main.c: 419:     i = channel_ANB5;
+  5653                           ;main.c: 426:     i = channel_ANB5;
   5654  0121E2  0E0D               	movlw	13
   5655  0121E4  6E33               	movwf	(btemp+11)^0,c
   5656                           
@@ -5704,7 +5704,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5658  0121E6  0EFC               	movlw	-4
   5659  0121E8  0060  F0CF  FFE3   	movff	btemp+11,plusw1
   5660                           
-  5661                           ;main.c: 420:     j = channel_ANB5;
+  5661                           ;main.c: 427:     j = channel_ANB5;
   5662  0121EE  0E0D               	movlw	13
   5663  0121F0  6E33               	movwf	(btemp+11)^0,c
   5664                           
@@ -5712,7 +5712,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5666  0121F2  0EFB               	movlw	-5
   5667  0121F4  0060  F0CF  FFE3   	movff	btemp+11,plusw1
   5668                           
-  5669                           ;main.c: 421:     k = channel_ANB5;
+  5669                           ;main.c: 428:     k = channel_ANB5;
   5670  0121FA  0E0D               	movlw	13
   5671  0121FC  6E33               	movwf	(btemp+11)^0,c
   5672                           
@@ -5720,7 +5720,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5674  0121FE  0EFA               	movlw	-6
   5675  012200  0060  F0CF  FFE3   	movff	btemp+11,plusw1
   5676                           
-  5677                           ;main.c: 422:     break;
+  5677                           ;main.c: 429:     break;
   5678  012206  D015               	goto	l1356
   5679  012208                     l12808:
   5680                           
@@ -5767,12 +5767,12 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5720  012232                     l1356:
   5721                           
   5722                           ; BSR set to: 2
-  5723                           ;main.c: 431:   if (V.set_sequ) {
+  5723                           ;main.c: 438:   if (V.set_sequ) {
   5724  012232  A19B               	btfss	(_V+155)& (0+255),0,b	;volatile
   5725  012234  EF6F  F08C         	goto	l12712
   5726                           
   5727                           ; BSR set to: 2
-  5728                           ;main.c: 432:    if (TimerDone(TMR_INFO)) {
+  5728                           ;main.c: 439:    if (TimerDone(TMR_INFO)) {
   5729  012238  0E07               	movlw	7
   5730  01223A  6EE6               	movwf	postinc1,c
   5731  01223C  EC9B  F0D8         	call	_TimerDone	;wreg free
@@ -5780,31 +5780,31 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   5733  012242  B4D8               	btfsc	status,2,c
   5734  012244  D00C               	goto	l12818
   5735                           
-  5736                           ;main.c: 433:     V.set_sequ = 0;
+  5736                           ;main.c: 440:     V.set_sequ = 0;
   5737  012246  0102               	movlb	2	; () banked
   5738  012248  919B               	bcf	(_V+155)& (0+255),0,b	;volatile
   5739                           
   5740                           ; BSR set to: 2
-  5741                           ;main.c: 434:     set_vterm(0);
+  5741                           ;main.c: 441:     set_vterm(0);
   5742  01224A  0E00               	movlw	0
   5743  01224C  6EE6               	movwf	postinc1,c
   5744  01224E  EC62  F0DA         	call	_set_vterm	;wreg free
   5745                           
-  5746                           ;main.c: 435:     update_lcd(0);
+  5746                           ;main.c: 442:     update_lcd(0);
   5747  012252  0E00               	movlw	0
   5748  012254  6EE6               	movwf	postinc1,c
   5749  012256  EC01  F0C9         	call	_update_lcd	;wreg free
   5750                           
-  5751                           ;main.c: 436:    } else {
+  5751                           ;main.c: 443:    } else {
   5752  01225A  EF6F  F08C         	goto	l12712
   5753  01225E                     l12818:
   5754                           
-  5755                           ;main.c: 437:     set_vterm(2);
+  5755                           ;main.c: 444:     set_vterm(2);
   5756  01225E  0E02               	movlw	2
   5757  012260  6EE6               	movwf	postinc1,c
   5758  012262  EC62  F0DA         	call	_set_vterm	;wreg free
   5759                           
-  5760                           ;main.c: 438:     update_lcd(2);
+  5760                           ;main.c: 445:     update_lcd(2);
   5761  012266  0E02               	movlw	2
   5762  012268  6EE6               	movwf	postinc1,c
   5763  01226A  EC01  F0C9         	call	_update_lcd	;wreg free
@@ -32157,16 +32157,16 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  30342  01A5D4  9D88               	bcf	136,6,b	;volatile
  30343                           
  30344                           ; BSR set to: 57
- 30345                           ;mcc_generated_files/interrupt_manager.c: 83:     IPR1bits.ADIP = 1;
- 30346  01A5D6  8581               	bsf	129,2,b	;volatile
+ 30345                           ;mcc_generated_files/interrupt_manager.c: 83:     IPR6bits.TMR3IP = 0;
+ 30346  01A5D6  9D86               	bcf	134,6,b	;volatile
  30347                           
  30348                           ; BSR set to: 57
- 30349                           ;mcc_generated_files/interrupt_manager.c: 84:     IPR1bits.ADTIP = 1;
- 30350  01A5D8  8781               	bsf	129,3,b	;volatile
+ 30349                           ;mcc_generated_files/interrupt_manager.c: 84:     IPR1bits.ADIP = 1;
+ 30350  01A5D8  8581               	bsf	129,2,b	;volatile
  30351                           
  30352                           ; BSR set to: 57
- 30353                           ;mcc_generated_files/interrupt_manager.c: 85:     IPR6bits.TMR3IP = 0;
- 30354  01A5DA  9D86               	bcf	134,6,b	;volatile
+ 30353                           ;mcc_generated_files/interrupt_manager.c: 85:     IPR1bits.ADTIP = 1;
+ 30354  01A5DA  8781               	bsf	129,3,b	;volatile
  30355                           
  30356                           ; BSR set to: 57
  30357                           ; _INTERRUPT_Initialize: autosize = 1, savesize = 0, parsavesize = 0, tempsize = 0 parsi
@@ -42004,7 +42004,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Fri Dec 20 03:28:33 2019
+Symbol Table                                                                                   Sat Dec 21 00:48:06 2019
 
                      _SPI1_Exchange8bit B4A6                __end_of_set_display_info B500  
                                      _C 0100                                       _D 07FF  
