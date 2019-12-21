@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Sat Dec 21 18:36:25 2019
+                                                                                               Sat Dec 21 19:55:50 2019
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F57K42
@@ -34283,7 +34283,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32227  019752  C28B  F1FF         	movff	_V+132,_C+255	;volatile
  32228                           
  32229                           ; BSR set to: 1
- 32230                           ;mbmc.c: 184:     if (!get_ac_charger_relay() && V.system_stable && (C.soc < 10)) {
+ 32230                           ;mbmc.c: 184:     if (!get_ac_charger_relay() && V.system_stable && (C.soc < 50)) {
  32231  019756  EC45  F0DC         	call	_get_ac_charger_relay	;wreg free
  32232  01975A  5026               	movf	btemp^0,w,c
  32233  01975C  A4D8               	btfss	status,2,c
@@ -34297,7 +34297,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32241  019768  0101               	movlb	1	; () banked
  32242  01976A  51AF               	movf	(_C+175)& (0+255),w,b	;volatile
  32243  01976C  E10D               	bnz	l1894
- 32244  01976E  0E0A               	movlw	10
+ 32244  01976E  0E32               	movlw	50
  32245  019770  5DAE               	subwf	(_C+174)& (0+255),w,b	;volatile
  32246  019772  B0D8               	btfsc	status,0,c
  32247  019774  0012               	return	
@@ -42445,7 +42445,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Sat Dec 21 18:36:25 2019
+Symbol Table                                                                                   Sat Dec 21 19:55:50 2019
 
                      _SPI1_Exchange8bit B6B0                __end_of_set_display_info B70A  
                                      _C 0100                                       _D 07FF  
