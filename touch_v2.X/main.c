@@ -172,7 +172,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 volatile C_data C = {
 	.bank_ah = BANKAH - DEGRADE,
-	.day=false,
+	.day = false,
 };
 
 extern volatile struct P_data P;
@@ -342,11 +342,11 @@ void main(void)
 				switch (H.hid_display) {
 				case HID_PWR:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV   PWR %3.2f    ", C.p_pv);
+					sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f    ", (C.day) ? 'D' : ' ', C.p_pv);
 					sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
 					sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
 
-					sprintf(get_vterm_ptr(0, 1), "PV   WH %3.2f     ", C.pvkw);
+					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f     ", (C.day) ? 'D' : ' ', C.pvkw);
 					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f     ", C.loadkw);
 					sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f     ", C.invkw);
 					break;
