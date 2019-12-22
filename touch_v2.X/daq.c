@@ -102,9 +102,9 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 
 		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
-				return((float) (int16_t) get_raw_result(chan) - R.n_offset[0]) * C_A200;
+				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[0]) * C_A200;
 			} else {
-				return((float) (int16_t) get_raw_result(chan) - R.n_offset[1]) * C_A100;
+				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[1]) * C_A100;
 			}
 		} else {
 			if (ADC_T_CHAN >> chan & 0x1) { // temp conversion
