@@ -165,12 +165,12 @@ bool check_day_time(void)
 {
 	static uint8_t day_delay = 0;
 
-	if (!day_delay++) {
+	if (!day_delay++ && V.system_stable) {
 		if (!C.day) {
 			if (conv_raw_result(V_LIGHT_SENSOR, CONV) > DAWN_VOLTS) {
 				C.day = true;
 				C.day_start = V.ticks;
-				if (get_ac_charger_relay() && V.system_stable) { // try PV charging during the day
+				if (get_ac_charger_relay()) { // USE PV charging during the day
 					set_ac_charger_relay(false);
 				}
 				return true;
@@ -182,7 +182,7 @@ bool check_day_time(void)
 				/*
 				 * at low battery condition charge with AC at night
 				 */
-				if (!get_ac_charger_relay() && V.system_stable && (C.soc < SOC_TOO_LOW)) {
+				if ((C.soc < SOC_TOO_LOW)) {
 					set_ac_charger_relay(true);
 				}
 				return true;

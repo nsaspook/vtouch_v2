@@ -69,8 +69,8 @@ typedef struct C_data { // real calculated variables
 	bool update;
 	hist_type hist[1];
 	float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
-	volatile bool day;
-	volatile uint32_t day_start, day_end;
+	bool day;
+	uint32_t day_start, day_end;
 } C_data;
 
 typedef struct P_data {

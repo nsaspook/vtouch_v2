@@ -74,12 +74,12 @@ void calc_bsoc(void)
 
 	if (!log_update_wait++ && V.system_stable) {
 		log_ptr = port_data_dma_ptr();
-		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3d,%4.3d,%2.6f,%4.3f,%d,%lu,%lu\r\n",
+		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu\r\n",
 			D_CODE, V.ticks,
 			C.v_bat, C.v_pv, C.v_cc, C.v_inverter,
 			C.p_bat, C.p_pv, C.p_load, C.p_inverter,
 			C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
-			C.esr, C.v_sensor, C.day, C.day_start, C.day_end);
+			C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end);
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));
 	}
@@ -98,7 +98,7 @@ void init_bsoc(void)
 	 * use raw battery voltage
 	 */
 	C.soc = Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0);
-	C.dynamic_ah = C.bank_ah * (C.soc / 100.0);
+	C.dynamic_ah = C.bank_ah * (Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0) / 100.0);
 	TMR3_SetInterruptHandler(calc_bsoc);
 }
 
@@ -158,16 +158,15 @@ uint32_t peukert(uint16_t brate, float bcurrent, float peukert, int16_t bsoc)
 
 uint16_t Volts_to_SOC(uint32_t cvoltage)
 {
-	static uint8_t slot;
+	uint8_t slot;
+	float soc = 0;
 
-	C.soc = 0;
 	for (slot = 0; slot < BVSOC_SLOTS; slot++) {
 		if (cvoltage > BVSOC_TABLE[slot][0]) {
-			C.soc = BVSOC_TABLE[slot][1];
+			soc = BVSOC_TABLE[slot][1];
 		}
 	}
-
-	return C.soc;
+	return soc;
 }
 
 /*

@@ -27530,14 +27530,15 @@ void PIN_MANAGER_Initialize (void);
   uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
   terminal_type response;
   volatile uint8_t ticker;
-  _Bool flipper, calib, enter,system_stable;
+  _Bool flipper, calib, enter;
+  volatile _Bool system_stable;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 189 "./vconfig.h"
+# 190 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;

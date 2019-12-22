@@ -173,7 +173,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
 volatile C_data C = {
 	.bank_ah = BANKAH - DEGRADE,
-	.day = false,
+	.day = true,
 	.hist[0].version = HVER,
 };
 

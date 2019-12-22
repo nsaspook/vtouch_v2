@@ -28396,14 +28396,15 @@ void PMD_Initialize(void);
   uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
   terminal_type response;
   volatile uint8_t ticker;
-  _Bool flipper, calib, enter,system_stable;
+  _Bool flipper, calib, enter;
+  volatile _Bool system_stable;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
 
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 189 "./vconfig.h"
+# 190 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -28999,8 +29000,8 @@ typedef struct C_data {
  _Bool update;
  hist_type hist[1];
  float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
- volatile _Bool day;
- volatile uint32_t day_start, day_end;
+ _Bool day;
+ uint32_t day_start, day_end;
 } C_data;
 
 typedef struct P_data {
@@ -29146,7 +29147,7 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
 volatile C_data C = {
  .bank_ah = 225.0 - 100.0,
- .day = 0,
+ .day = 1,
  .hist[0].version = 1,
 };
 
@@ -29210,7 +29211,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.0070");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.008");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
    sprintf(get_vterm_ptr(0, 2), "                ");
    sprintf(get_vterm_ptr(1, 2), "                ");
