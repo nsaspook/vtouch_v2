@@ -57,6 +57,7 @@
 #define DUSK_VOLTS	12.0
 #define DAY_DELAY	240
 #define SOC_TOO_LOW	50
+#define SOC_CRITICAL	15
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];

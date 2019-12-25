@@ -164,28 +164,39 @@ char spinners(uint8_t shape, uint8_t reset)
 bool check_day_time(void)
 {
 	static uint8_t day_delay = 0;
+	float light;
+
+	light = conv_raw_result(V_LIGHT_SENSOR, CONV);
 
 	if (!day_delay++ && V.system_stable) {
-		if (!C.day) {
-			if (conv_raw_result(V_LIGHT_SENSOR, CONV) > DAWN_VOLTS) {
-				C.day = true;
-				C.day_start = V.ticks;
-				if (get_ac_charger_relay()) { // USE PV charging during the day
-					set_ac_charger_relay(false);
+		if (C.soc > SOC_CRITICAL) {
+			if (!C.day) {
+				if (light > DAWN_VOLTS) {
+					C.day = true;
+					C.day_start = V.ticks;
+					if (get_ac_charger_relay()) { // USE PV charging during the day
+						set_ac_charger_relay(false);
+					}
+					return true;
 				}
-				return true;
+			} else {
+				if (light < DUSK_VOLTS) {
+					C.day = false;
+					C.day_end = V.ticks;
+					/*
+					 * at low battery condition charge with AC at night
+					 */
+					if ((C.soc < SOC_TOO_LOW)) {
+						set_ac_charger_relay(true);
+					}
+					return true;
+				}
 			}
 		} else {
-			if (conv_raw_result(V_LIGHT_SENSOR, CONV) < DUSK_VOLTS) {
-				C.day = false;
-				C.day_end = V.ticks;
-				/*
-				 * at low battery condition charge with AC at night
-				 */
-				if ((C.soc < SOC_TOO_LOW)) {
+			if (C.p_pv < C.p_inverter) { // see if PV can raise SOC
+				if (!get_ac_charger_relay()) { // USE AC charger
 					set_ac_charger_relay(true);
 				}
-				return true;
 			}
 		}
 	}
