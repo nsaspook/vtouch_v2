@@ -9,6 +9,7 @@
 typedef struct R_data { // internal variables
 	adc_result_t raw_adc[ADC_BUFFER_SIZE];
 	int16_t n_offset[NUM_C_SENSORS];
+	float n_zero[NUM_C_SENSORS];
 	uint8_t scan_index;
 	uint16_t scan_select;
 	bool done;
@@ -19,6 +20,8 @@ static volatile R_data R = {
 	.scan_index = 0,
 	.n_offset[0] = N_OFFSET0,
 	.n_offset[1] = N_OFFSET1,
+	.n_zero[0] = 0.0,
+	.n_zero[1] = 0.0,
 };
 
 static void adc_int_handler(void);
@@ -102,9 +105,9 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 
 		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
-				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[0]) * C_A200;
+				return R.n_zero[0]+((float) ((int16_t) get_raw_result(chan)) - R.n_offset[0]) * C_A200;
 			} else {
-				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[1]) * C_A100;
+				return R.n_zero[1]+((float) ((int16_t) get_raw_result(chan)) - R.n_offset[1]) * C_A100;
 			}
 		} else {
 			if (ADC_T_CHAN >> chan & 0x1) { // temp conversion
