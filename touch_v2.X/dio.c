@@ -73,6 +73,9 @@ void switch_handler(void)
 	Nop();
 	Nop();
 	Nop();
+	Nop();
+	Nop();
+	Nop();
 	// start reading the various pic port input bits after the max chip is ready
 	do {
 		switch (i) {
