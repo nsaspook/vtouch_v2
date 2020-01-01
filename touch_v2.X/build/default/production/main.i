@@ -28988,13 +28988,13 @@ extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
 # 36 "./mbmc.h" 2
-# 62 "./mbmc.h"
+# 65 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
  float p_load, p_inverter, p_pv, p_bat;
  float t_comp, esr;
- float bank_ah, dynamic_ah, pv_ah, loadah;
+ float bank_ah, dynamic_ah, pv_ah, loadah, dynamic_ah_adj;
  float bkwi, bkwo, pvkw, invkw, loadkw;
  uint16_t runtime, soc;
  _Bool update;
@@ -29149,6 +29149,8 @@ volatile C_data C = {
  .bank_ah = 225.0 - 100.0,
  .day = 1,
  .hist[0].version = 1,
+ .hist[0].cef=1.0,
+ .hist[0].peukert=1.0,
 };
 
 extern volatile struct P_data P;

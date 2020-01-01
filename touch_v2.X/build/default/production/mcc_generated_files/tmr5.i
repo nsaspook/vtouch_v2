@@ -28099,13 +28099,13 @@ _Bool update_adc_result(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 # 37 "mcc_generated_files/../mbmc.h" 2
-# 62 "mcc_generated_files/../mbmc.h"
+# 65 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
  float p_load, p_inverter, p_pv, p_bat;
  float t_comp, esr;
- float bank_ah, dynamic_ah, pv_ah, loadah;
+ float bank_ah, dynamic_ah, pv_ah, loadah, dynamic_ah_adj;
  float bkwi, bkwo, pvkw, invkw, loadkw;
  uint16_t runtime, soc;
  _Bool update;

@@ -175,6 +175,8 @@ volatile C_data C = {
 	.bank_ah = BANKAH - DEGRADE,
 	.day = true,
 	.hist[0].version = HVER,
+	.hist[0].cef=CEF,
+	.hist[0].peukert=PEUKERT,
 };
 
 extern volatile struct P_data P;

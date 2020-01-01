@@ -59,12 +59,15 @@
 #define SOC_TOO_LOW	40
 #define SOC_CRITICAL	15
 
+#define CEF		1.0
+#define PEUKERT		1.0
+
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
 	float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
 	float p_load, p_inverter, p_pv, p_bat;
 	float t_comp, esr;
-	float bank_ah, dynamic_ah, pv_ah, loadah;
+	float bank_ah, dynamic_ah, pv_ah, loadah, dynamic_ah_adj;
 	float bkwi, bkwo, pvkw, invkw, loadkw;
 	uint16_t runtime, soc;
 	bool update;

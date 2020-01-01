@@ -119,6 +119,7 @@ void static_soc(void)
 	C.runtime = 120;
 	C.soc = 100;
 	C.dynamic_ah = C.bank_ah;
+	C.dynamic_ah_adj = C.dynamic_ah;
 }
 
 void set_load_relay_one(bool mode)

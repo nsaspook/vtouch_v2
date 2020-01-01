@@ -40,6 +40,7 @@ void calc_bsoc(void)
 {
 	uint8_t * log_ptr;
 	static uint8_t log_update_wait = 0;
+	float adj = 1.0;
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif
@@ -48,6 +49,17 @@ void calc_bsoc(void)
 		C.dynamic_ah = C.bank_ah;
 	if (C.dynamic_ah < 0.1)
 		C.dynamic_ah = 0.1;
+
+	if (C.c_bat > 0.01)
+		adj = C.hist[0].cef;
+	if (C.c_bat < 0.01)
+		adj = C.hist[0].peukert;
+	C.dynamic_ah += ((C.c_bat * adj) / SSLICE); // Ah
+	if (C.dynamic_ah_adj > (C.bank_ah))
+		C.dynamic_ah_adj = C.bank_ah;
+	if (C.dynamic_ah_adj < 0.1)
+		C.dynamic_ah_adj = 0.1;
+
 
 	C.pv_ah += (C.c_pv / SSLICE);
 	C.pvkw += (C.p_pv / SSLICE);
@@ -58,12 +70,12 @@ void calc_bsoc(void)
 	if (C.p_bat < 0.0)
 		C.bkwo += fabs(C.p_bat / SSLICE);
 
-	C.soc = ((uint16_t) ((C.dynamic_ah / C.bank_ah)*100.0) + 1);
+	C.soc = ((uint16_t) ((C.dynamic_ah_adj / C.bank_ah)*100.0) + 1);
 	if (C.soc > 100)
 		C.soc = 100;
 
 	if (C.c_bat < 0.0) {
-		C.runtime = (uint16_t) (-(C.dynamic_ah / C.c_bat));
+		C.runtime = (uint16_t) (-(C.dynamic_ah_adj / C.c_bat));
 	} else {
 		C.runtime = 120;
 	}
@@ -74,12 +86,12 @@ void calc_bsoc(void)
 
 	if (!log_update_wait++ && V.system_stable) {
 		log_ptr = port_data_dma_ptr();
-		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu\r\n",
+		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f\r\n",
 			D_CODE, V.ticks,
 			C.v_bat, C.v_pv, C.v_cc, C.v_inverter,
 			C.p_bat, C.p_pv, C.p_load, C.p_inverter,
 			C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
-			C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end);
+			C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end, C.dynamic_ah_adj, C.hist[0].cef, C.hist[0].peukert);
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));
 	}
@@ -99,6 +111,7 @@ void init_bsoc(void)
 	 */
 	C.soc = Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0);
 	C.dynamic_ah = C.bank_ah * (Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0) / 100.0);
+	C.dynamic_ah_adj = C.dynamic_ah;
 	TMR3_SetInterruptHandler(calc_bsoc);
 }
 
