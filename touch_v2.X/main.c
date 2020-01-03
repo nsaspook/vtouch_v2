@@ -348,33 +348,33 @@ void main(void)
 				switch (H.hid_display) {
 				case HID_PWR:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f    ", (C.day) ? 'D' : ' ', C.p_pv);
-					sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f    ", C.p_load);
-					sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f    ", C.p_inverter);
+					sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f      ", (C.day) ? 'D' : ' ', C.p_pv);
+					sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f       ", C.p_load);
+					sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f       ", C.p_inverter);
 
-					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f     ", (C.day) ? 'D' : ' ', C.pvkw);
-					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f     ", C.loadkw);
-					sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f     ", C.invkw);
+					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f       ", (C.day) ? 'D' : ' ', C.pvkw);
+					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f        ", C.loadkw);
+					sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f        ", C.invkw);
 					break;
 				case HID_MAIN:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f ", C.calc[V_PV], C.calc[C_PV]);
-					sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f ", C.calc[V_BAT], C.calc[C_BATT]);
-					sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f ", C.calc[V_CC], C.c_load);
+					sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f    ", C.calc[V_PV], C.calc[C_PV]);
+					sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f    ", C.calc[V_BAT], C.calc[C_BATT]);
+					sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f    ", C.calc[V_CC], C.c_load);
 
-					sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f     ", C.bkwi);
-					sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f     ", C.bkwo);
-					sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f     ", C.bkwi + C.bkwo);
+					sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f        ", C.bkwi);
+					sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f        ", C.bkwo);
+					sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f        ", C.bkwi + C.bkwo);
 					break;
 				case HID_RUN:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f     ", C.p_bat);
-					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f   ", C.dynamic_ah, C.pv_ah);
-					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d     ", spinners(5, false), C.soc, C.runtime);
+					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f        ", C.p_bat);
+					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f      ", C.dynamic_ah, C.pv_ah);
+					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d        ", spinners(5, false), C.soc, C.runtime);
 
-					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f         ", C.esr);
-					sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f     ", C.bv_one_load, C.load_i1);
-					sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f     ", C.bv_full_load, C.load_i2);
+					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f            ", C.esr);
+					sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f        ", C.bv_one_load, C.load_i1);
+					sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f        ", C.bv_full_load, C.load_i2);
 					break;
 				case HID_AUX:
 					if (!V.calib) {
@@ -383,9 +383,9 @@ void main(void)
 						lp_filter(0.0, k, -1);
 					}
 					V.calib = true;
-					sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-					sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
-					sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index + 1);
+					sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index + 1);
+					sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 2);
+					sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 3);
 					break;
 				default:
 					break;
