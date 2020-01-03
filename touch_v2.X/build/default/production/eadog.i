@@ -27465,7 +27465,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 101 "./vconfig.h"
+# 102 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27538,7 +27538,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 190 "./vconfig.h"
+# 191 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -27549,7 +27549,7 @@ void PIN_MANAGER_Initialize (void);
  } hist_type;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1
-# 33 "./eadog.h"
+# 34 "./eadog.h"
  void wdtdelay(uint32_t);
 
  void init_display(void);
@@ -27800,30 +27800,44 @@ void wdtdelay(const uint32_t delay)
 
 void init_display(void)
 {
+ uint8_t z = 1;
  spi_link.tx1a = &ring_buf1;
  spi_link.tx1b = &ring_buf2;
  ringBufS_init(spi_link.tx1a);
  ringBufS_init(spi_link.tx1b);
 
  LATEbits.LATE2 = 1;
-# 58 "eadog.c"
- do { LATCbits.LATC2 = 1; } while(0);
- wdtdelay(350000);
- send_lcd_cmd(0x39);
- send_lcd_cmd(0x1d);
- send_lcd_cmd(0x50);
- send_lcd_cmd(0x6c);
- send_lcd_cmd(0x76);
- send_lcd_cmd_long(0x38);
- send_lcd_cmd(0x0f);
- send_lcd_cmd_long(0x01);
- send_lcd_cmd(0x02);
- send_lcd_cmd(0x06);
- wdtdelay(30);
- SPI1CON2 = 0x02;
- SPI1CON1 = 0x40;
- SPI1CON0 = 0x83;
 
+ SPI1CON0bits.EN = 0;
+
+ SPI1CON1 = 0x20;
+
+ SPI1CON2 = 0x03;
+
+ SPI1BAUD = 0x04;
+
+ SPI1CLK = 0x02;
+
+ SPI1CON0 = 0x83;
+ SPI1CON0bits.EN = 1;
+
+ wdtdelay(350000);
+ send_lcd_cmd_long(0x46);
+ send_lcd_cmd(0x41);
+ wdtdelay(80);
+ send_lcd_cmd(0x53);
+ send_lcd_data(8);
+ wdtdelay(80);
+ do {
+  send_lcd_data('0' + (z & 0x07));
+ } while (z++);
+ wdtdelay(250000);
+
+ send_lcd_cmd_long(0x51);
+ SPI1CON0bits.EN = 0;
+ SPI1CON2 = 0x02;
+ SPI1CON0bits.EN = 1;
+# 95 "eadog.c"
  SPI1INTFbits.SPI1TXUIF = 0;
  DMA1CON1bits.DMODE = 0;
  DMA1CON1bits.DSTP = 0;
@@ -27855,94 +27869,32 @@ void init_port_dma(void)
 
 
 
+
+
+
 static void send_lcd_data(const uint8_t data)
 {
- do { LATCbits.LATC1 = 1; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
  SPI1_Exchange8bit(data);
  wdtdelay(8);
 }
 
-
-
-
 static void send_lcd_cmd(const uint8_t cmd)
 {
- do { LATCbits.LATC1 = 0; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
+ SPI1_Exchange8bit(0xFE);
+ wdtdelay(8);
  SPI1_Exchange8bit(cmd);
- wdtdelay(30);
- do { LATCbits.LATC1 = 1; } while(0);
+ wdtdelay(8);
 }
-
-
-
 
 static void send_lcd_cmd_long(const uint8_t cmd)
 {
- do { LATCbits.LATC1 = 0; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
+ SPI1_Exchange8bit(0xFE);
+ wdtdelay(8);
  SPI1_Exchange8bit(cmd);
  wdtdelay(800);
- do { LATCbits.LATC1 = 1; } while(0);
-}
-
-
-
-
-void start_lcd(void)
-{
- DMA1CON0bits.DMA1SIRQEN = 1;
-}
-
-void wait_lcd_set(void)
-{
- spi_link.LCD_DATA = 1;
-}
-
-_Bool wait_lcd_check(void)
-{
- return spi_link.LCD_DATA;
-}
-
-void wait_lcd_done(void)
-{
- while (spi_link.LCD_DATA);
- wdtdelay(50);
-}
-
-void eaDogM_WriteChr(const int8_t value)
-{
- send_lcd_data_dma((uint8_t) value);
-}
-
-
-
-
-void putch(char c)
-{
- ringBufS_put_dma(spi_link.tx1a, c);
-}
-
-void eaDogM_WriteCommand(const uint8_t cmd)
-{
- send_lcd_cmd_dma(cmd);
-}
-
-void eaDogM_SetPos(const uint8_t r, const uint8_t c)
-{
- uint8_t cmdPos;
- cmdPos = (uint8_t) 0b10000000 + (uint8_t) ((uint8_t) r * (uint8_t) 16) + (uint8_t) c;
- eaDogM_WriteCommand(cmdPos);
-}
-
-void eaDogM_ClearRow(const uint8_t r)
-{
- uint8_t i;
- eaDogM_SetPos(r, 0);
- for (i = 0; i < 16; i++) {
-  eaDogM_WriteChr(' ');
- }
 }
 
 
@@ -27950,7 +27902,6 @@ void eaDogM_ClearRow(const uint8_t r)
 
 void eaDogM_WriteString(char *strPtr)
 {
-
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
@@ -27971,19 +27922,10 @@ void eaDogM_WriteString(char *strPtr)
 
 void send_lcd_cmd_dma(uint8_t strPtr)
 {
-
- wait_lcd_set();
-
- ringBufS_flush(spi_link.tx1a, 0);
- do { LATCbits.LATC1 = 0; } while(0);
- do { LATCbits.LATC2 = 0; } while(0);
- DMA1CON0bits.EN = 0;
- DMA1SSZ = 1;
- DMA1CON0bits.EN = 1;
- printf("%c", strPtr);
- start_lcd();
+ send_lcd_data_dma(0xFE);
  wait_lcd_done();
- do { LATCbits.LATC1 = 1; } while(0);
+ send_lcd_data_dma(strPtr);
+ wait_lcd_done();
 }
 
 
@@ -27991,17 +27933,73 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 
 void send_lcd_data_dma(uint8_t strPtr)
 {
-
  wait_lcd_set();
 
  ringBufS_flush(spi_link.tx1a, 0);
- do { LATCbits.LATC1 = 1; } while(0);
  do { LATCbits.LATC2 = 0; } while(0);
  DMA1CON0bits.EN = 0;
  DMA1SSZ = 1;
  DMA1CON0bits.EN = 1;
  printf("%c", strPtr);
  start_lcd();
+}
+
+void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
+{
+ uint8_t row;
+
+ switch (r) {
+ case 0:
+  row = 0x54;
+  break;
+ case 1:
+  row = 0x40;
+  break;
+ case 2:
+  row = 0x14;
+  break;
+ case 3:
+  row = 0x1;
+  break;
+ default:
+  row = 0x00;
+  break;
+ }
+ send_lcd_cmd_dma(0x45);
+ send_lcd_data_dma(row + c);
+ wait_lcd_done();
+ wdtdelay(80);
+ eaDogM_WriteString(strPtr);
+}
+
+void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
+{
+
+}
+
+void eaDogM_SetPos(const uint8_t r, const uint8_t c)
+{
+
+}
+
+void eaDogM_ClearRow(const uint8_t r)
+{
+
+}
+
+void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
+{
+
+}
+# 391 "eadog.c"
+void eaDogM_WriteCommand(const uint8_t cmd)
+{
+ send_lcd_cmd_dma(cmd);
+}
+
+void eaDogM_WriteChr(const int8_t value)
+{
+ send_lcd_data_dma((uint8_t) value);
 }
 
 
@@ -28027,34 +28025,34 @@ uint8_t* port_data_dma_ptr(void)
  return port_data;
 }
 
-void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
+
+
+
+void putch(char c)
 {
- send_lcd_cmd_dma((0b10000000 + (r * 16) + c));
- eaDogM_WriteString(strPtr);
-}
-
-void eaDogM_WriteIntAtPos(uint8_t r, uint8_t c, uint8_t i)
-{
- eaDogM_WriteCommand((0b10000000 + (r * 16) + c));
-
- eaDogM_WriteChr(i / 10 + '0');
- eaDogM_WriteChr(i % 10 + '0');
-
+ ringBufS_put_dma(spi_link.tx1a, c);
 }
 
 
 
 
-void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
+void start_lcd(void)
 {
- uint8_t cmd;
+ DMA1CON0bits.DMA1SIRQEN = 1;
+}
 
- cmd = ndx & 0b00111111;
- cmd = cmd | 0b01000000;
+void wait_lcd_set(void)
+{
+ spi_link.LCD_DATA = 1;
+}
 
- eaDogM_WriteCommand(cmd);
- eaDogM_WriteChr(data);
+_Bool wait_lcd_check(void)
+{
+ return spi_link.LCD_DATA;
+}
 
-
- eaDogM_SetPos(0, 0);
+void wait_lcd_done(void)
+{
+ while (spi_link.LCD_DATA);
+ wdtdelay(50);
 }

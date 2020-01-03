@@ -238,12 +238,12 @@ void main(void)
 			V.ui_state = mode;
 			srand(1957);
 			set_vterm(0); // set to buffer 0
-			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
-			sprintf(get_vterm_ptr(0, 2), "                ");
-			sprintf(get_vterm_ptr(1, 2), "                ");
-			sprintf(get_vterm_ptr(2, 2), "                ");
+			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
+			sprintf(get_vterm_ptr(1, 0), " Version %s         ", VER);
+			sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
+			sprintf(get_vterm_ptr(0, 2), "                    ");
+			sprintf(get_vterm_ptr(1, 2), "                    ");
+			sprintf(get_vterm_ptr(2, 2), "                    ");
 			update_lcd(0);
 			WaitMs(1000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -262,8 +262,8 @@ void main(void)
 			i_ror = 1;
 			do {
 				calc_ror_data();
-				sprintf(get_vterm_ptr(1, 0), "BV %2.4f         ", conv_raw_result(V_BAT, CONV));
-				sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f       ", spinners(5, false), i_ror, C.bv_ror);
+				sprintf(get_vterm_ptr(1, 0), "BV %2.4f            ", conv_raw_result(V_BAT, CONV));
+				sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f          ", spinners(5, false), i_ror, C.bv_ror);
 				update_lcd(0);
 				WaitMs(ROR_WAIT); // time between samples
 				clear_adc_scan();
@@ -279,9 +279,9 @@ void main(void)
 			sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
 			update_lcd(0);
 			WaitMs(2000);
-			sprintf(get_vterm_ptr(0, 0), "Battery ESR     ");
-			sprintf(get_vterm_ptr(1, 0), "Calculation     ");
-			sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
+			sprintf(get_vterm_ptr(0, 0), "Battery ESR         ");
+			sprintf(get_vterm_ptr(1, 0), "Calculation         ");
+			sprintf(get_vterm_ptr(2, 0), "Check 30 seconds    ");
 			update_lcd(0);
 			uint16_t i_esr = 1;
 			uint8_t shape = 0;

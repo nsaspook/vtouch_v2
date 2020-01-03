@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.0072"
+#define VER	"1.08"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -39,6 +39,7 @@ extern "C" {
 	 * 0.99 power load calculations
 	 * 1.0+ mainly working code base
 	 * 1.07 move MAX6818 enable pin for board rev 1.1
+	 * 1.08 NHD 4x20 display
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -58,7 +59,7 @@ extern "C" {
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
 
-	//#define NHD		// 20x4 SPI display
+#define NHD		// 4x20 SPI display
 
 #define T1	500
 #define T2	3000

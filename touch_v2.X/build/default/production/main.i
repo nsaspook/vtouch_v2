@@ -28331,7 +28331,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 101 "./vconfig.h"
+# 102 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28404,7 +28404,7 @@ void PMD_Initialize(void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 190 "./vconfig.h"
+# 191 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -28414,6 +28414,7 @@ void PMD_Initialize(void);
   int32_t pv_eff, tot_eff;
  } hist_type;
 # 27 "./eadog.h" 2
+
 
 
 
@@ -29212,12 +29213,12 @@ void main(void)
    V.ui_state = mode;
    srand(1957);
    set_vterm(0);
-   sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON  ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "1.0072");
-   sprintf(get_vterm_ptr(2, 0), " NSASPOOK       ");
-   sprintf(get_vterm_ptr(0, 2), "                ");
-   sprintf(get_vterm_ptr(1, 2), "                ");
-   sprintf(get_vterm_ptr(2, 2), "                ");
+   sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.08");
+   sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
+   sprintf(get_vterm_ptr(0, 2), "                    ");
+   sprintf(get_vterm_ptr(1, 2), "                    ");
+   sprintf(get_vterm_ptr(2, 2), "                    ");
    update_lcd(0);
    WaitMs(1000);
    StartTimer(TMR_DISPLAY, 250);
@@ -29236,8 +29237,8 @@ void main(void)
    i_ror = 1;
    do {
     calc_ror_data();
-    sprintf(get_vterm_ptr(1, 0), "BV %2.4f         ", conv_raw_result(V_BAT, CONV));
-    sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f       ", spinners(5, 0), i_ror, C.bv_ror);
+    sprintf(get_vterm_ptr(1, 0), "BV %2.4f            ", conv_raw_result(V_BAT, CONV));
+    sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f          ", spinners(5, 0), i_ror, C.bv_ror);
     update_lcd(0);
     WaitMs(2000);
     clear_adc_scan();
@@ -29253,9 +29254,9 @@ void main(void)
    sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
    update_lcd(0);
    WaitMs(2000);
-   sprintf(get_vterm_ptr(0, 0), "Battery ESR     ");
-   sprintf(get_vterm_ptr(1, 0), "Calculation     ");
-   sprintf(get_vterm_ptr(2, 0), "Check 30 seconds");
+   sprintf(get_vterm_ptr(0, 0), "Battery ESR         ");
+   sprintf(get_vterm_ptr(1, 0), "Calculation         ");
+   sprintf(get_vterm_ptr(2, 0), "Check 30 seconds    ");
    update_lcd(0);
    uint16_t i_esr = 1;
    uint8_t shape = 0;
