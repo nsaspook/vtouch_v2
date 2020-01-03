@@ -175,8 +175,8 @@ volatile C_data C = {
 	.bank_ah = BANKAH - DEGRADE,
 	.day = true,
 	.hist[0].version = HVER,
-	.hist[0].cef=CEF,
-	.hist[0].peukert=PEUKERT,
+	.hist[0].cef = CEF,
+	.hist[0].peukert = PEUKERT,
 };
 
 extern volatile struct P_data P;
@@ -265,10 +265,11 @@ void main(void)
 				sprintf(get_vterm_ptr(1, 0), "BV %2.4f            ", conv_raw_result(V_BAT, CONV));
 				sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f          ", spinners(5, false), i_ror, C.bv_ror);
 				update_lcd(0);
-				WaitMs(ROR_WAIT); // time between samples
 				clear_adc_scan();
 				start_adc_scan();
-				WaitMs(500); // wait for updated ADC data
+				WaitMs(ROR_WAIT); // time between samples
+
+				//WaitMs(500); // wait for updated ADC data
 			} while ((i_ror++ < ROR_TIMES) && (C.bv_ror > ROR_LIMIT_LOW));
 
 			static_soc(); // defaults

@@ -571,25 +571,25 @@
 #define AC_CHARGER_SetAnalogMode()      do { ANSELDbits.ANSELD6 = 1; } while(0)
 #define AC_CHARGER_SetDigitalMode()     do { ANSELDbits.ANSELD6 = 0; } while(0)
 
-// get/set MAX_EN aliases
-#define MAX_EN_TRIS                 TRISDbits.TRISD7
-#define MAX_EN_LAT                  LATDbits.LATD7
-#define MAX_EN_PORT                 PORTDbits.RD7
-#define MAX_EN_WPU                  WPUDbits.WPUD7
-#define MAX_EN_OD                   ODCONDbits.ODCD7
-#define MAX_EN_ANS                  ANSELDbits.ANSELD7
-#define MAX_EN_SetHigh()            do { LATDbits.LATD7 = 1; } while(0)
-#define MAX_EN_SetLow()             do { LATDbits.LATD7 = 0; } while(0)
-#define MAX_EN_Toggle()             do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0)
-#define MAX_EN_GetValue()           PORTDbits.RD7
-#define MAX_EN_SetDigitalInput()    do { TRISDbits.TRISD7 = 1; } while(0)
-#define MAX_EN_SetDigitalOutput()   do { TRISDbits.TRISD7 = 0; } while(0)
-#define MAX_EN_SetPullup()          do { WPUDbits.WPUD7 = 1; } while(0)
-#define MAX_EN_ResetPullup()        do { WPUDbits.WPUD7 = 0; } while(0)
-#define MAX_EN_SetPushPull()        do { ODCONDbits.ODCD7 = 0; } while(0)
-#define MAX_EN_SetOpenDrain()       do { ODCONDbits.ODCD7 = 1; } while(0)
-#define MAX_EN_SetAnalogMode()      do { ANSELDbits.ANSELD7 = 1; } while(0)
-#define MAX_EN_SetDigitalMode()     do { ANSELDbits.ANSELD7 = 0; } while(0)
+// get/set OUTP_3 aliases
+#define OUTP_3_TRIS                 TRISDbits.TRISD7
+#define OUTP_3_LAT                  LATDbits.LATD7
+#define OUTP_3_PORT                 PORTDbits.RD7
+#define OUTP_3_WPU                  WPUDbits.WPUD7
+#define OUTP_3_OD                   ODCONDbits.ODCD7
+#define OUTP_3_ANS                  ANSELDbits.ANSELD7
+#define OUTP_3_SetHigh()            do { LATDbits.LATD7 = 1; } while(0)
+#define OUTP_3_SetLow()             do { LATDbits.LATD7 = 0; } while(0)
+#define OUTP_3_Toggle()             do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0)
+#define OUTP_3_GetValue()           PORTDbits.RD7
+#define OUTP_3_SetDigitalInput()    do { TRISDbits.TRISD7 = 1; } while(0)
+#define OUTP_3_SetDigitalOutput()   do { TRISDbits.TRISD7 = 0; } while(0)
+#define OUTP_3_SetPullup()          do { WPUDbits.WPUD7 = 1; } while(0)
+#define OUTP_3_ResetPullup()        do { WPUDbits.WPUD7 = 0; } while(0)
+#define OUTP_3_SetPushPull()        do { ODCONDbits.ODCD7 = 0; } while(0)
+#define OUTP_3_SetOpenDrain()       do { ODCONDbits.ODCD7 = 1; } while(0)
+#define OUTP_3_SetAnalogMode()      do { ANSELDbits.ANSELD7 = 1; } while(0)
+#define OUTP_3_SetDigitalMode()     do { ANSELDbits.ANSELD7 = 0; } while(0)
 
 // get/set LED0 aliases
 #define LED0_TRIS                 TRISEbits.TRISE0

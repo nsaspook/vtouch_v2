@@ -27549,7 +27549,7 @@ void PIN_MANAGER_Initialize (void);
  } hist_type;
 # 2 "eadog.c" 2
 # 1 "./eadog.h" 1
-# 34 "./eadog.h"
+# 37 "./eadog.h"
  void wdtdelay(uint32_t);
 
  void init_display(void);
@@ -27800,7 +27800,6 @@ void wdtdelay(const uint32_t delay)
 
 void init_display(void)
 {
- uint8_t z = 1;
  spi_link.tx1a = &ring_buf1;
  spi_link.tx1b = &ring_buf2;
  ringBufS_init(spi_link.tx1a);
@@ -27826,18 +27825,13 @@ void init_display(void)
  send_lcd_cmd(0x41);
  wdtdelay(80);
  send_lcd_cmd(0x53);
- send_lcd_data(8);
+ send_lcd_data(2);
  wdtdelay(80);
- do {
-  send_lcd_data('0' + (z & 0x07));
- } while (z++);
- wdtdelay(250000);
-
  send_lcd_cmd_long(0x51);
  SPI1CON0bits.EN = 0;
  SPI1CON2 = 0x02;
  SPI1CON0bits.EN = 1;
-# 95 "eadog.c"
+# 89 "eadog.c"
  SPI1INTFbits.SPI1TXUIF = 0;
  DMA1CON1bits.DMODE = 0;
  DMA1CON1bits.DSTP = 0;
@@ -27950,25 +27944,25 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 
  switch (r) {
  case 0:
-  row = 0x54;
-  break;
- case 1:
   row = 0x40;
   break;
- case 2:
+ case 1:
   row = 0x14;
+  break;
+ case 2:
+  row = 0x54;
   break;
  case 3:
   row = 0x1;
   break;
  default:
-  row = 0x00;
+  row = 0x40;
   break;
  }
  send_lcd_cmd_dma(0x45);
  send_lcd_data_dma(row + c);
  wait_lcd_done();
- wdtdelay(80);
+ wdtdelay(8);
  eaDogM_WriteString(strPtr);
 }
 
@@ -27991,7 +27985,7 @@ void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
 {
 
 }
-# 391 "eadog.c"
+# 385 "eadog.c"
 void eaDogM_WriteCommand(const uint8_t cmd)
 {
  send_lcd_cmd_dma(cmd);

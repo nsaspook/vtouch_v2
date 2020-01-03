@@ -30,6 +30,9 @@ extern "C" {
 #define LCD_CMD_SET	0x100
 #define LCD_CLEAR_HOME	0x04
 #define NHD_CMD		0xFE
+#define NHD_BL_OFF	1
+#define NHD_BL_LOW	2
+#define NHD_BL_HIGH	8
 
 	void wdtdelay(uint32_t);
 

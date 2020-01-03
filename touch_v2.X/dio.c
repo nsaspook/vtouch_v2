@@ -62,7 +62,7 @@ void switch_handler(void)
 	/*
 	 * enable the outputs for reading and reset MAX Change-of-State pin
 	 */
-	MAX_EN_SetLow(); // rev 1.0 board, wire patch
+//	MAX_EN_SetLow(); // rev 1.0 board, wire patch
 	MAX_EN1_SetLow(); // rev 1.1+ board
 
 #ifdef DEBUG_SWH1
@@ -117,7 +117,7 @@ void switch_handler(void)
 	DEBUG2_Toggle();
 #endif
 
-	MAX_EN_SetHigh(); // disable MAX output pins
+//	MAX_EN_SetHigh(); // disable MAX output pins
 	MAX_EN1_SetHigh(); // disable MAX output pins
 }
 
