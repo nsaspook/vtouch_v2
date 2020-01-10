@@ -1,7 +1,7 @@
 
 
 Microchip MPLAB XC8 Assembler V2.10 build 88905656 
-                                                                                               Fri Jan  3 19:20:29 2020
+                                                                                               Wed Jan  8 23:58:21 2020
 
 Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9 
      1                           	processor	18F57K42
@@ -3420,7 +3420,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3406  00FFB5  6E                 	db	110	;'n'
   3407  00FFB6  20                 	db	32
   3408  00FFB7  20                 	db	32
-  3409  00FFB8  33                 	db	51	;'3'
+  3409  00FFB8  38                 	db	56	;'8'
   3410  00FFB9  20                 	db	32
   3411  00FFBA  32                 	db	50	;'2'
   3412  00FFBB  30                 	db	48	;'0'
@@ -3444,13 +3444,13 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   3430                           
   3431                           ; BSR set to: 57
   3432  00FFC9  31                 	db	49	;'1'
-  3433  00FFCA  31                 	db	49	;'1'
+  3433  00FFCA  35                 	db	53	;'5'
   3434  00FFCB  3A                 	db	58	;':'
-  3435  00FFCC  32                 	db	50	;'2'
-  3436  00FFCD  30                 	db	48	;'0'
+  3435  00FFCC  35                 	db	53	;'5'
+  3436  00FFCD  38                 	db	56	;'8'
   3437  00FFCE  3A                 	db	58	;':'
   3438  00FFCF  31                 	db	49	;'1'
-  3439  00FFD0  35                 	db	53	;'5'
+  3439  00FFD0  30                 	db	48	;'0'
   3440  00FFD1  00                 	db	0
   3441  00FFD2                     STR_3:
   3442                           
@@ -6156,7 +6156,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6094                           
   6095 ;; *************** function _start_switch_handler *****************
   6096 ;; Defined at:
-  6097 ;;		line 124 in file "dio.c"
+  6097 ;;		line 122 in file "dio.c"
   6098 ;; Parameters:    Size  Location     Type
   6099 ;;		None
   6100 ;; Auto vars:     Size  Location     Type
@@ -6200,7 +6200,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6128  01BED8                     _start_switch_handler:
   6129                           	opt callstack 14
   6130                           
-  6131                           ;dio.c: 126:  (PIE5bits.INT1IE = 0);
+  6131                           ;dio.c: 124:  (PIE5bits.INT1IE = 0);
   6132                           
   6133                           ; autosize = 0, savesize = 0, parsavesize = 0, tempsize = 0 parsize = 0, argsize = 0 var
       +                          gsize = 0, retsize = 0 argfudge = 0
@@ -6209,7 +6209,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6136  01BEDA  9195               	bcf	149,0,b	;volatile
   6137                           
   6138                           ; BSR set to: 57
-  6139                           ;dio.c: 127:  INT1_SetInterruptHandler(switch_handler);
+  6139                           ;dio.c: 125:  INT1_SetInterruptHandler(switch_handler);
   6140  01BEDC  0EE0               	movlw	low _switch_handler
   6141  01BEDE  6EE6               	movwf	postinc1,c
   6142  01BEE0  0E93               	movlw	high _switch_handler
@@ -6218,13 +6218,13 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
   6145  01BEE6  6EE6               	movwf	postinc1,c
   6146  01BEE8  EC3F  F0DE         	call	_INT1_SetInterruptHandler	;wreg free
   6147                           
-  6148                           ;dio.c: 128:  S.button[SNULL].sw = SW_INVALID;
+  6148                           ;dio.c: 126:  S.button[SNULL].sw = SW_INVALID;
   6149  01BEEC  0E02               	movlw	2
   6150  01BEEE  0102               	movlb	2	; () banked
   6151  01BEF0  6F77               	movwf	(_S+35)& (0+255),b	;volatile
   6152                           
   6153                           ; BSR set to: 2
-  6154                           ;dio.c: 129:  (PIE5bits.INT1IE = 1);
+  6154                           ;dio.c: 127:  (PIE5bits.INT1IE = 1);
   6155  01BEF2  0139               	movlb	57	; () banked
   6156  01BEF4  8195               	bsf	149,0,b	;volatile
   6157                           
@@ -34194,27 +34194,27 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32170  0193E6  6AE3               	clrf	plusw1,c
  32171  0193E8  9ABF               	bcf	191,5,c	;volatile
  32172                           
- 32173                           ;dio.c: 73:  __nop();
+ 32173                           ;dio.c: 72:  __nop();
  32174  0193EA  F000               	nop	
  32175                           
- 32176                           ;dio.c: 74:  __nop();
+ 32176                           ;dio.c: 73:  __nop();
  32177  0193EC  F000               	nop	
  32178                           
- 32179                           ;dio.c: 75:  __nop();
+ 32179                           ;dio.c: 74:  __nop();
  32180  0193EE  F000               	nop	
  32181                           
- 32182                           ;dio.c: 76:  __nop();
+ 32182                           ;dio.c: 75:  __nop();
  32183  0193F0  F000               	nop	
  32184                           
- 32185                           ;dio.c: 77:  __nop();
+ 32185                           ;dio.c: 76:  __nop();
  32186  0193F2  F000               	nop	
  32187                           
- 32188                           ;dio.c: 78:  __nop();
+ 32188                           ;dio.c: 77:  __nop();
  32189  0193F4  F000               	nop	
  32190  0193F6  D019               	goto	l10542
  32191  0193F8                     l10530:
  32192                           
- 32193                           ;dio.c: 83:    sw_value = PORTFbits.RF3;
+ 32193                           ;dio.c: 82:    sw_value = PORTFbits.RF3;
  32194  0193F8  A6CF               	btfss	207,3,c	;volatile
  32195  0193FA  D011               	goto	u968_20
  32196  0193FC  D00D               	goto	u968_21
@@ -34224,23 +34224,23 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32200  0193FE  0EFF               	movlw	-1
  32201  019400  0060  F033  FFE3   	movff	btemp+11,plusw1
  32202                           
- 32203                           ;dio.c: 84:    break;
+ 32203                           ;dio.c: 83:    break;
  32204  019406  D027               	goto	l10544
  32205  019408                     l10532:
  32206                           
- 32207                           ;dio.c: 86:    sw_value = PORTFbits.RF2;
+ 32207                           ;dio.c: 85:    sw_value = PORTFbits.RF2;
  32208  019408  A4CF               	btfss	207,2,c	;volatile
  32209  01940A  D009               	goto	u968_20
  32210  01940C  D005               	goto	u968_21
  32211  01940E                     l10534:
  32212                           
- 32213                           ;dio.c: 89:    sw_value = PORTFbits.RF1;
+ 32213                           ;dio.c: 88:    sw_value = PORTFbits.RF1;
  32214  01940E  A2CF               	btfss	207,1,c	;volatile
  32215  019410  D006               	goto	u968_20
  32216  019412  D002               	goto	u968_21
  32217  019414                     l10536:
  32218                           
- 32219                           ;dio.c: 92:    sw_value = PORTFbits.RF0;
+ 32219                           ;dio.c: 91:    sw_value = PORTFbits.RF0;
  32220  019414  A0CF               	btfss	207,0,c	;volatile
  32221  019416  D003               	goto	u968_20
  32222  019418                     u968_21:
@@ -34252,13 +34252,13 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32228  019420  D7EE               	goto	u965_28
  32229  019422                     l10538:
  32230                           
- 32231                           ;dio.c: 95:    sw_value = 1;
+ 32231                           ;dio.c: 94:    sw_value = 1;
  32232                           ;stkvar	_sw_value @ sp[(-2)+1]
  32233  019422  0EFF               	movlw	-1
  32234  019424  6AE3               	clrf	plusw1,c
  32235  019426  2AE3               	incf	plusw1,f,c
  32236                           
- 32237                           ;dio.c: 96:    break;
+ 32237                           ;dio.c: 95:    break;
  32238  019428  D016               	goto	l10544
  32239  01942A                     l10542:
  32240                           
@@ -34303,14 +34303,14 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32278  019454  D7E6               	goto	l10538
  32279  019456                     l10544:
  32280                           
- 32281                           ;dio.c: 100:   if (sw_value) {
+ 32281                           ;dio.c: 99:   if (sw_value) {
  32282                           ;stkvar	_sw_value @ sp[(-2)+1]
  32283  019456  0EFF               	movlw	-1
  32284  019458  50E3               	movf	plusw1,w,c
  32285  01945A  B4D8               	btfsc	status,2,c
  32286  01945C  D018               	goto	l10550
  32287                           
- 32288                           ;dio.c: 101:    if (S.button[i].sw == SW_ON) {
+ 32288                           ;dio.c: 100:    if (S.button[i].sw == SW_ON) {
  32289                           ;stkvar	_i @ sp[(-2)+0]
  32290  01945E  0EFE               	movlw	-2
  32291  019460  50E3               	movf	plusw1,w,c
@@ -34325,7 +34325,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32300  019472  A4D8               	btfss	status,2,c
  32301  019474  D049               	goto	l10558
  32302                           
- 32303                           ;dio.c: 102:     S.button[i].sw = SW_OFF;
+ 32303                           ;dio.c: 101:     S.button[i].sw = SW_OFF;
  32304                           ;stkvar	_i @ sp[(-2)+0]
  32305  019476  0EFE               	movlw	-2
  32306  019478  50E3               	movf	plusw1,w,c
@@ -34341,7 +34341,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32316  01948C  D03D               	goto	l10558
  32317  01948E                     l10550:
  32318                           
- 32319                           ;dio.c: 105:    if (S.button[i].sw == SW_OFF) {
+ 32319                           ;dio.c: 104:    if (S.button[i].sw == SW_OFF) {
  32320                           ;stkvar	_i @ sp[(-2)+0]
  32321  01948E  0EFE               	movlw	-2
  32322  019490  50E3               	movf	plusw1,w,c
@@ -34356,7 +34356,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32331  0194A2  A4D8               	btfss	status,2,c
  32332  0194A4  D031               	goto	l10558
  32333                           
- 32334                           ;dio.c: 106:     S.button[i].sw = SW_ON;
+ 32334                           ;dio.c: 105:     S.button[i].sw = SW_ON;
  32335                           ;stkvar	_i @ sp[(-2)+0]
  32336  0194A6  0EFE               	movlw	-2
  32337  0194A8  50E3               	movf	plusw1,w,c
@@ -34370,7 +34370,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32345  0194B8  0E01               	movlw	1
  32346  0194BA  6EDF               	movwf	indf2,c
  32347                           
- 32348                           ;dio.c: 107:     S.button[i].count = V.timerint_count;
+ 32348                           ;dio.c: 106:     S.button[i].count = V.timerint_count;
  32349  0194BC  EE20  F1EB         	lfsr	2,_V+187	;volatile
  32350                           
  32351                           ;stkvar	_i @ sp[(-2)+0]
@@ -34388,7 +34388,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32363  0194DE  006F FF7B FFEE     	movff	postinc2,postinc0
  32364  0194E4  006F FF7B FFEE     	movff	postinc2,postinc0
  32365                           
- 32366                           ;dio.c: 108:     S.sw_bitmap |= 1 << i;
+ 32366                           ;dio.c: 107:     S.sw_bitmap |= 1 << i;
  32367                           ;stkvar	_i @ sp[(-2)+0]
  32368  0194EA  0EFE               	movlw	-2
  32369  0194EC  006F FF8C  F00C    	movff	plusw1,btemp+11
@@ -34407,7 +34407,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32382  019506  137C               	iorwf	(_S+40)& (0+255),f,b	;volatile
  32383  019508                     l10558:
  32384                           
- 32385                           ;dio.c: 111:  } while (++i < 4);
+ 32385                           ;dio.c: 110:  } while (++i < 4);
  32386                           ;stkvar	_i @ sp[(-2)+0]
  32387  019508  0EFE               	movlw	-2
  32388  01950A  2AE3               	incf	plusw1,f,c
@@ -34417,7 +34417,7 @@ Microchip MPLAB XC8 C Compiler v2.10 (Free license) build 20190730164152 Og9
  32392  019516  6401               	cpfsgt	btemp^0,c
  32393  019518  D788               	goto	l10542
  32394                           
- 32395                           ;dio.c: 121:  do { LATFbits.LATF5 = 1; } while(0);
+ 32395                           ;dio.c: 119:  do { LATFbits.LATF5 = 1; } while(0);
  32396  01951A  8ABF               	bsf	191,5,c	;volatile
  32397                           
  32398                           ; _switch_handler: autosize = 2, savesize = 0, parsavesize = 0, tempsize = 0 parsize = 0
@@ -43882,7 +43882,7 @@ CODE                 0      0       0       0        0.0%
 
 
 Microchip Technology PIC18 Macro Assembler V2.10 build 88905656 
-Symbol Table                                                                                   Fri Jan  3 19:20:29 2020
+Symbol Table                                                                                   Wed Jan  8 23:58:21 2020
 
                      _SPI1_Exchange8bit BF18                __end_of_set_display_info BF90  
                                      _C 06FF                                       _D 082A  
