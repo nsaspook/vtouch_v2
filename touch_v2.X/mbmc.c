@@ -122,17 +122,17 @@ void static_soc(void)
 	C.dynamic_ah_adj = C.dynamic_ah;
 }
 
-void set_load_relay_one(bool mode)
+void set_load_relay_one(const bool mode)
 {
 	RELAYL1_LAT = mode;
 }
 
-void set_load_relay_two(bool mode)
+void set_load_relay_two(const bool mode)
 {
 	RELAYL2_LAT = mode;
 }
 
-void set_ac_charger_relay(bool mode)
+void set_ac_charger_relay(const bool mode)
 {
 	AC_CHARGER_LAT = mode;
 }
@@ -143,7 +143,7 @@ bool get_ac_charger_relay(void)
 }
 
 /* Misc ACSII spinner character generator, stores position for each shape */
-char spinners(uint8_t shape, uint8_t reset)
+char spinners(uint8_t shape, const uint8_t reset)
 {
 	static uint8_t s[MAX_SHAPES];
 	char c;

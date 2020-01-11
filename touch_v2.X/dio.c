@@ -15,7 +15,7 @@ static void switch_handler(void);
  * return the current actual state of x switch
  * the actual current state of a switch is ONLY changed in the interrupt handler
  */
-SW_STATES get_switch(uint8_t i)
+SW_STATES get_switch(const uint8_t i)
 {
 	if (i >= NUM_SWITCHES)
 		return SW_OFF;
@@ -27,7 +27,7 @@ SW_STATES get_switch(uint8_t i)
  * return the x switch structure
  * mainly for testing
  */
-rbutton_type get_switch_data(uint8_t i)
+rbutton_type get_switch_data(const uint8_t i)
 {
 	if (i >= NUM_SWITCHES)
 		return S.button[SNULL];
@@ -46,7 +46,7 @@ uint8_t check_switches(void)
 /*
  * clear X switch pressed and time pressed data
  */
-void clear_switch(uint8_t i)
+void clear_switch(const uint8_t i)
 {
 	if (i >= NUM_SWITCHES)
 		return;

@@ -55,6 +55,8 @@ void calc_bsoc(void)
 	if (C.c_bat < 0.01)
 		adj = C.hist[0].peukert;
 	C.dynamic_ah += ((C.c_bat * adj) / SSLICE); // Ah
+	
+	C.dynamic_ah_adj=C.dynamic_ah; // need to add peukert factor here
 	if (C.dynamic_ah_adj > (C.bank_ah))
 		C.dynamic_ah_adj = C.bank_ah;
 	if (C.dynamic_ah_adj < 0.1)
@@ -130,7 +132,7 @@ void stop_bsoc(void)
 	PIE6bits.TMR3IE = 0;
 }
 
-void reset_bsoc(R_CODES rmode)
+void reset_bsoc(const R_CODES rmode)
 {
 	switch (rmode) {
 	default:
@@ -169,7 +171,7 @@ uint32_t peukert(uint16_t brate, float bcurrent, float peukert, int16_t bsoc)
 	return(uint32_t) t6;
 }
 
-uint16_t Volts_to_SOC(uint32_t cvoltage)
+uint16_t Volts_to_SOC(const uint32_t cvoltage)
 {
 	uint8_t slot;
 	float soc = 0;
@@ -188,7 +190,7 @@ uint16_t Volts_to_SOC(uint32_t cvoltage)
  * -1.0 when each FSM sequence is done
  * (fsm 'true' will init the state machine and return the init code)
  */
-float esr_check(uint8_t fsm)
+float esr_check(const uint8_t fsm)
 {
 	static uint8_t esr_state = 0;
 

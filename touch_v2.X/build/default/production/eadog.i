@@ -27914,7 +27914,7 @@ void eaDogM_WriteString(char *strPtr)
 
 
 
-void send_lcd_cmd_dma(uint8_t strPtr)
+void send_lcd_cmd_dma(const uint8_t strPtr)
 {
  send_lcd_data_dma(0xFE);
  wait_lcd_done();
@@ -27925,7 +27925,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 
 
 
-void send_lcd_data_dma(uint8_t strPtr)
+void send_lcd_data_dma(const uint8_t strPtr)
 {
  wait_lcd_set();
 

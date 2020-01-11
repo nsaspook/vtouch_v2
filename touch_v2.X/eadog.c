@@ -168,7 +168,7 @@ void eaDogM_WriteString(char *strPtr)
 /*
  * uses DMA channel 1 for transfers
  */
-void send_lcd_cmd_dma(uint8_t strPtr)
+void send_lcd_cmd_dma(const uint8_t strPtr)
 {
 	send_lcd_data_dma(NHD_CMD); //prefix
 	wait_lcd_done();
@@ -179,7 +179,7 @@ void send_lcd_cmd_dma(uint8_t strPtr)
 /*
  * uses DMA channel 1 for transfers
  */
-void send_lcd_data_dma(uint8_t strPtr)
+void send_lcd_data_dma(const uint8_t strPtr)
 {
 	wait_lcd_set();
 	/* reset buffer for DMA */
