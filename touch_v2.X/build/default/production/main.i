@@ -29208,7 +29208,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.09");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.10");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
