@@ -85,10 +85,10 @@ void switch_handler(void)
 			sw_value = SELECT_B_GetValue();
 			break;
 		case S1:
-			sw_value = IO_RF1_GetValue();
+			sw_value = 1;
 			break;
 		case S0:
-			sw_value = IO_RF0_GetValue();
+			sw_value = 1;
 			break;
 		default:
 			sw_value = 1;

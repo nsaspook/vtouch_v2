@@ -18256,8 +18256,8 @@ SMD chip inductor</description>
 <attribute name="VALUE" x="180.34" y="111.76" size="1.778" layer="96" rot="R270"/>
 <attribute name="NAME" x="196.342" y="111.76" size="1.778" layer="95" rot="R270"/>
 </instance>
-<instance part="VSS38" gate="G$1" x="182.88" y="101.6" smashed="yes" rot="R270">
-<attribute name="VALUE" x="177.8" y="104.14" size="1.778" layer="96"/>
+<instance part="VSS38" gate="G$1" x="177.8" y="101.6" smashed="yes" rot="R270">
+<attribute name="VALUE" x="172.72" y="104.14" size="1.778" layer="96"/>
 </instance>
 <instance part="VDD10" gate="G$1" x="187.96" y="99.06" smashed="yes" rot="R180"/>
 <instance part="REF12V" gate="G$1" x="-38.1" y="-2.54" smashed="yes">
@@ -18958,7 +18958,7 @@ SMD chip inductor</description>
 <segment>
 <pinref part="SL4" gate="G$1" pin="1"/>
 <pinref part="VSS38" gate="G$1" pin="VSS"/>
-<junction x="185.42" y="101.6"/>
+<wire x1="180.34" y1="101.6" x2="185.42" y2="101.6" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="SV7" gate="1" pin="3"/>

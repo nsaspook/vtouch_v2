@@ -651,25 +651,25 @@
 #define DEBUG2_SetAnalogMode()      do { ANSELEbits.ANSELE2 = 1; } while(0)
 #define DEBUG2_SetDigitalMode()     do { ANSELEbits.ANSELE2 = 0; } while(0)
 
-// get/set IO_RF0 aliases
-#define IO_RF0_TRIS                 TRISFbits.TRISF0
-#define IO_RF0_LAT                  LATFbits.LATF0
-#define IO_RF0_PORT                 PORTFbits.RF0
-#define IO_RF0_WPU                  WPUFbits.WPUF0
-#define IO_RF0_OD                   ODCONFbits.ODCF0
-#define IO_RF0_ANS                  ANSELFbits.ANSELF0
-#define IO_RF0_SetHigh()            do { LATFbits.LATF0 = 1; } while(0)
-#define IO_RF0_SetLow()             do { LATFbits.LATF0 = 0; } while(0)
-#define IO_RF0_Toggle()             do { LATFbits.LATF0 = ~LATFbits.LATF0; } while(0)
-#define IO_RF0_GetValue()           PORTFbits.RF0
-#define IO_RF0_SetDigitalInput()    do { TRISFbits.TRISF0 = 1; } while(0)
-#define IO_RF0_SetDigitalOutput()   do { TRISFbits.TRISF0 = 0; } while(0)
-#define IO_RF0_SetPullup()          do { WPUFbits.WPUF0 = 1; } while(0)
-#define IO_RF0_ResetPullup()        do { WPUFbits.WPUF0 = 0; } while(0)
-#define IO_RF0_SetPushPull()        do { ODCONFbits.ODCF0 = 0; } while(0)
-#define IO_RF0_SetOpenDrain()       do { ODCONFbits.ODCF0 = 1; } while(0)
-#define IO_RF0_SetAnalogMode()      do { ANSELFbits.ANSELF0 = 1; } while(0)
-#define IO_RF0_SetDigitalMode()     do { ANSELFbits.ANSELF0 = 0; } while(0)
+// get/set DAC_CS0 aliases
+#define DAC_CS0_TRIS                 TRISFbits.TRISF0
+#define DAC_CS0_LAT                  LATFbits.LATF0
+#define DAC_CS0_PORT                 PORTFbits.RF0
+#define DAC_CS0_WPU                  WPUFbits.WPUF0
+#define DAC_CS0_OD                   ODCONFbits.ODCF0
+#define DAC_CS0_ANS                  ANSELFbits.ANSELF0
+#define DAC_CS0_SetHigh()            do { LATFbits.LATF0 = 1; } while(0)
+#define DAC_CS0_SetLow()             do { LATFbits.LATF0 = 0; } while(0)
+#define DAC_CS0_Toggle()             do { LATFbits.LATF0 = ~LATFbits.LATF0; } while(0)
+#define DAC_CS0_GetValue()           PORTFbits.RF0
+#define DAC_CS0_SetDigitalInput()    do { TRISFbits.TRISF0 = 1; } while(0)
+#define DAC_CS0_SetDigitalOutput()   do { TRISFbits.TRISF0 = 0; } while(0)
+#define DAC_CS0_SetPullup()          do { WPUFbits.WPUF0 = 1; } while(0)
+#define DAC_CS0_ResetPullup()        do { WPUFbits.WPUF0 = 0; } while(0)
+#define DAC_CS0_SetPushPull()        do { ODCONFbits.ODCF0 = 0; } while(0)
+#define DAC_CS0_SetOpenDrain()       do { ODCONFbits.ODCF0 = 1; } while(0)
+#define DAC_CS0_SetAnalogMode()      do { ANSELFbits.ANSELF0 = 1; } while(0)
+#define DAC_CS0_SetDigitalMode()     do { ANSELFbits.ANSELF0 = 0; } while(0)
 
 // get/set IO_RF1 aliases
 #define IO_RF1_TRIS                 TRISFbits.TRISF1
