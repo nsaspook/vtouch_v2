@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.5.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -4836,6 +4836,153 @@ Source: AVX .. aphvc.pdf</description>
 </deviceset>
 </devicesets>
 </library>
+<library name="MAX5322EAI+">
+<description>&lt;Maxim MAX5322EAI+, 2-channel 12 bit Serial DAC, 28-Pin SSOP&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by SamacSys&lt;/author&gt;</description>
+<packages>
+<package name="SOP65P778X199-28N">
+<description>&lt;b&gt;MAX 28 SSOP&lt;/b&gt;&lt;br&gt;
+</description>
+<smd name="1" x="-3.498" y="4.225" dx="1.705" dy="0.45" layer="1"/>
+<smd name="2" x="-3.498" y="3.575" dx="1.705" dy="0.45" layer="1"/>
+<smd name="3" x="-3.498" y="2.925" dx="1.705" dy="0.45" layer="1"/>
+<smd name="4" x="-3.498" y="2.275" dx="1.705" dy="0.45" layer="1"/>
+<smd name="5" x="-3.498" y="1.625" dx="1.705" dy="0.45" layer="1"/>
+<smd name="6" x="-3.498" y="0.975" dx="1.705" dy="0.45" layer="1"/>
+<smd name="7" x="-3.498" y="0.325" dx="1.705" dy="0.45" layer="1"/>
+<smd name="8" x="-3.498" y="-0.325" dx="1.705" dy="0.45" layer="1"/>
+<smd name="9" x="-3.498" y="-0.975" dx="1.705" dy="0.45" layer="1"/>
+<smd name="10" x="-3.498" y="-1.625" dx="1.705" dy="0.45" layer="1"/>
+<smd name="11" x="-3.498" y="-2.275" dx="1.705" dy="0.45" layer="1"/>
+<smd name="12" x="-3.498" y="-2.925" dx="1.705" dy="0.45" layer="1"/>
+<smd name="13" x="-3.498" y="-3.575" dx="1.705" dy="0.45" layer="1"/>
+<smd name="14" x="-3.498" y="-4.225" dx="1.705" dy="0.45" layer="1"/>
+<smd name="15" x="3.498" y="-4.225" dx="1.705" dy="0.45" layer="1"/>
+<smd name="16" x="3.498" y="-3.575" dx="1.705" dy="0.45" layer="1"/>
+<smd name="17" x="3.498" y="-2.925" dx="1.705" dy="0.45" layer="1"/>
+<smd name="18" x="3.498" y="-2.275" dx="1.705" dy="0.45" layer="1"/>
+<smd name="19" x="3.498" y="-1.625" dx="1.705" dy="0.45" layer="1"/>
+<smd name="20" x="3.498" y="-0.975" dx="1.705" dy="0.45" layer="1"/>
+<smd name="21" x="3.498" y="-0.325" dx="1.705" dy="0.45" layer="1"/>
+<smd name="22" x="3.498" y="0.325" dx="1.705" dy="0.45" layer="1"/>
+<smd name="23" x="3.498" y="0.975" dx="1.705" dy="0.45" layer="1"/>
+<smd name="24" x="3.498" y="1.625" dx="1.705" dy="0.45" layer="1"/>
+<smd name="25" x="3.498" y="2.275" dx="1.705" dy="0.45" layer="1"/>
+<smd name="26" x="3.498" y="2.925" dx="1.705" dy="0.45" layer="1"/>
+<smd name="27" x="3.498" y="3.575" dx="1.705" dy="0.45" layer="1"/>
+<smd name="28" x="3.498" y="4.225" dx="1.705" dy="0.45" layer="1"/>
+<text x="0" y="0" size="1.27" layer="25" align="center">&gt;NAME</text>
+<text x="0" y="0" size="1.27" layer="27" align="center">&gt;VALUE</text>
+<wire x1="-4.6" y1="5.415" x2="4.6" y2="5.415" width="0.05" layer="51"/>
+<wire x1="4.6" y1="5.415" x2="4.6" y2="-5.415" width="0.05" layer="51"/>
+<wire x1="4.6" y1="-5.415" x2="-4.6" y2="-5.415" width="0.05" layer="51"/>
+<wire x1="-4.6" y1="-5.415" x2="-4.6" y2="5.415" width="0.05" layer="51"/>
+<wire x1="-2.645" y1="5.1" x2="2.645" y2="5.1" width="0.1" layer="51"/>
+<wire x1="2.645" y1="5.1" x2="2.645" y2="-5.1" width="0.1" layer="51"/>
+<wire x1="2.645" y1="-5.1" x2="-2.645" y2="-5.1" width="0.1" layer="51"/>
+<wire x1="-2.645" y1="-5.1" x2="-2.645" y2="5.1" width="0.1" layer="51"/>
+<wire x1="-2.645" y1="4.45" x2="-1.995" y2="5.1" width="0.1" layer="51"/>
+<wire x1="-2.295" y1="5.1" x2="2.295" y2="5.1" width="0.2" layer="21"/>
+<wire x1="2.295" y1="5.1" x2="2.295" y2="-5.1" width="0.2" layer="21"/>
+<wire x1="2.295" y1="-5.1" x2="-2.295" y2="-5.1" width="0.2" layer="21"/>
+<wire x1="-2.295" y1="-5.1" x2="-2.295" y2="5.1" width="0.2" layer="21"/>
+<wire x1="-4.35" y1="4.8" x2="-2.645" y2="4.8" width="0.2" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="MAX5322EAI+">
+<wire x1="5.08" y1="2.54" x2="35.56" y2="2.54" width="0.254" layer="94"/>
+<wire x1="35.56" y1="-35.56" x2="35.56" y2="2.54" width="0.254" layer="94"/>
+<wire x1="35.56" y1="-35.56" x2="5.08" y2="-35.56" width="0.254" layer="94"/>
+<wire x1="5.08" y1="2.54" x2="5.08" y2="-35.56" width="0.254" layer="94"/>
+<text x="36.83" y="7.62" size="1.778" layer="95" align="center-left">&gt;NAME</text>
+<text x="36.83" y="5.08" size="1.778" layer="96" align="center-left">&gt;VALUE</text>
+<pin name="N.C._1" x="0" y="0" length="middle"/>
+<pin name="N.C._2" x="0" y="-2.54" length="middle"/>
+<pin name="UNI/!BIPB" x="0" y="-5.08" length="middle"/>
+<pin name="!SHDN" x="0" y="-7.62" length="middle"/>
+<pin name="!LDAC" x="0" y="-10.16" length="middle"/>
+<pin name="!CLR" x="0" y="-12.7" length="middle"/>
+<pin name="DGND" x="0" y="-15.24" length="middle"/>
+<pin name="VCC" x="0" y="-17.78" length="middle"/>
+<pin name="DOUT" x="0" y="-20.32" length="middle"/>
+<pin name="SCLK" x="0" y="-22.86" length="middle"/>
+<pin name="DIN" x="0" y="-25.4" length="middle"/>
+<pin name="!CS" x="0" y="-27.94" length="middle"/>
+<pin name="N.C._3" x="0" y="-30.48" length="middle"/>
+<pin name="N.C._4" x="0" y="-33.02" length="middle"/>
+<pin name="N.C._8" x="40.64" y="0" length="middle" rot="R180"/>
+<pin name="N.C._7" x="40.64" y="-2.54" length="middle" rot="R180"/>
+<pin name="VSS" x="40.64" y="-5.08" length="middle" rot="R180"/>
+<pin name="OUTB" x="40.64" y="-7.62" length="middle" rot="R180"/>
+<pin name="SGNDB" x="40.64" y="-10.16" length="middle" rot="R180"/>
+<pin name="AGND" x="40.64" y="-12.7" length="middle" rot="R180"/>
+<pin name="REFB" x="40.64" y="-15.24" length="middle" rot="R180"/>
+<pin name="VDD" x="40.64" y="-17.78" length="middle" rot="R180"/>
+<pin name="REFA" x="40.64" y="-20.32" length="middle" rot="R180"/>
+<pin name="SGNDA" x="40.64" y="-22.86" length="middle" rot="R180"/>
+<pin name="OUTA" x="40.64" y="-25.4" length="middle" rot="R180"/>
+<pin name="UNI/!BIPA" x="40.64" y="-27.94" length="middle" rot="R180"/>
+<pin name="N.C._6" x="40.64" y="-30.48" length="middle" rot="R180"/>
+<pin name="N.C._5" x="40.64" y="-33.02" length="middle" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="MAX5322EAI+" prefix="IC">
+<description>&lt;b&gt;Maxim MAX5322EAI+, 2-channel 12 bit Serial DAC, 28-Pin SSOP&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="https://componentsearchengine.com/Datasheets/2/MAX5322EAI .pdf"&gt; Datasheet &lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="MAX5322EAI+" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOP65P778X199-28N">
+<connects>
+<connect gate="G$1" pin="!CLR" pad="6"/>
+<connect gate="G$1" pin="!CS" pad="12"/>
+<connect gate="G$1" pin="!LDAC" pad="5"/>
+<connect gate="G$1" pin="!SHDN" pad="4"/>
+<connect gate="G$1" pin="AGND" pad="23"/>
+<connect gate="G$1" pin="DGND" pad="7"/>
+<connect gate="G$1" pin="DIN" pad="11"/>
+<connect gate="G$1" pin="DOUT" pad="9"/>
+<connect gate="G$1" pin="N.C._1" pad="1"/>
+<connect gate="G$1" pin="N.C._2" pad="2"/>
+<connect gate="G$1" pin="N.C._3" pad="13"/>
+<connect gate="G$1" pin="N.C._4" pad="14"/>
+<connect gate="G$1" pin="N.C._5" pad="15"/>
+<connect gate="G$1" pin="N.C._6" pad="16"/>
+<connect gate="G$1" pin="N.C._7" pad="27"/>
+<connect gate="G$1" pin="N.C._8" pad="28"/>
+<connect gate="G$1" pin="OUTA" pad="18"/>
+<connect gate="G$1" pin="OUTB" pad="25"/>
+<connect gate="G$1" pin="REFA" pad="20"/>
+<connect gate="G$1" pin="REFB" pad="22"/>
+<connect gate="G$1" pin="SCLK" pad="10"/>
+<connect gate="G$1" pin="SGNDA" pad="19"/>
+<connect gate="G$1" pin="SGNDB" pad="24"/>
+<connect gate="G$1" pin="UNI/!BIPA" pad="17"/>
+<connect gate="G$1" pin="UNI/!BIPB" pad="3"/>
+<connect gate="G$1" pin="VCC" pad="8"/>
+<connect gate="G$1" pin="VDD" pad="21"/>
+<connect gate="G$1" pin="VSS" pad="26"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DESCRIPTION" value="Maxim MAX5322EAI+, 2-channel 12 bit Serial DAC, 28-Pin SSOP" constant="no"/>
+<attribute name="HEIGHT" value="1.99mm" constant="no"/>
+<attribute name="MANUFACTURER_NAME" value="Maxim Integrated" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="MAX5322EAI+" constant="no"/>
+<attribute name="MOUSER_PART_NUMBER" value="700-MAX5322EAI" constant="no"/>
+<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.com/Search/Refine.aspx?Keyword=700-MAX5322EAI" constant="no"/>
+<attribute name="RS_PART_NUMBER" value="7997645P" constant="no"/>
+<attribute name="RS_PRICE-STOCK" value="http://uk.rs-online.com/web/p/products/7997645P" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -4867,6 +5014,11 @@ Source: AVX .. aphvc.pdf</description>
 <part name="PAD2" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="2,15/1,0" device="" package3d_urn="urn:adsk.eagle:package:30831/1"/>
 <part name="SUPPLY10" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 <part name="SUPPLY11" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
+<part name="C3" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="22uf"/>
+<part name="SUPPLY12" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
+<part name="C4" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0805" package3d_urn="urn:adsk.eagle:package:23617/2" value="2.2uf"/>
+<part name="SUPPLY13" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
+<part name="IC3" library="MAX5322EAI+" deviceset="MAX5322EAI+" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -4950,6 +5102,24 @@ Source: AVX .. aphvc.pdf</description>
 <instance part="SUPPLY11" gate="GND" x="88.9" y="20.32" smashed="yes">
 <attribute name="VALUE" x="86.995" y="17.145" size="1.778" layer="96"/>
 </instance>
+<instance part="C3" gate="G$1" x="17.78" y="76.2" smashed="yes">
+<attribute name="NAME" x="18.796" y="76.835" size="1.778" layer="95"/>
+<attribute name="VALUE" x="18.796" y="72.009" size="1.778" layer="96"/>
+</instance>
+<instance part="SUPPLY12" gate="GND" x="17.78" y="68.58" smashed="yes">
+<attribute name="VALUE" x="15.875" y="65.405" size="1.778" layer="96"/>
+</instance>
+<instance part="C4" gate="G$1" x="81.28" y="53.34" smashed="yes">
+<attribute name="NAME" x="82.296" y="53.975" size="1.778" layer="95"/>
+<attribute name="VALUE" x="82.296" y="49.149" size="1.778" layer="96"/>
+</instance>
+<instance part="SUPPLY13" gate="GND" x="81.28" y="45.72" smashed="yes">
+<attribute name="VALUE" x="79.375" y="42.545" size="1.778" layer="96"/>
+</instance>
+<instance part="IC3" gate="G$1" x="27.94" y="116.84" smashed="yes">
+<attribute name="NAME" x="64.77" y="124.46" size="1.778" layer="95" align="center-left"/>
+<attribute name="VALUE" x="64.77" y="121.92" size="1.778" layer="96" align="center-left"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -5001,6 +5171,16 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="PAD2" gate="1" pin="P"/>
 <pinref part="SUPPLY11" gate="GND" pin="GND"/>
 </segment>
+<segment>
+<pinref part="C3" gate="G$1" pin="2"/>
+<pinref part="SUPPLY12" gate="GND" pin="GND"/>
+<junction x="17.78" y="71.12"/>
+</segment>
+<segment>
+<pinref part="C4" gate="G$1" pin="2"/>
+<pinref part="SUPPLY13" gate="GND" pin="GND"/>
+<junction x="81.28" y="48.26"/>
+</segment>
 </net>
 <net name="+12V" class="1">
 <segment>
@@ -5011,10 +5191,13 @@ Source: AVX .. aphvc.pdf</description>
 <segment>
 <pinref part="IC1" gate="G$1" pin="V-IN"/>
 <pinref part="SUPPLY5" gate="+12V" pin="+12V"/>
-<wire x1="86.36" y1="55.88" x2="78.74" y2="55.88" width="0.1524" layer="91"/>
+<wire x1="86.36" y1="55.88" x2="81.28" y2="55.88" width="0.1524" layer="91"/>
 <pinref part="C2" gate="G$1" pin="1"/>
 <junction x="86.36" y="55.88"/>
 <junction x="78.74" y="55.88"/>
+<pinref part="C4" gate="G$1" pin="1"/>
+<wire x1="81.28" y1="55.88" x2="78.74" y2="55.88" width="0.1524" layer="91"/>
+<junction x="81.28" y="55.88"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -5039,7 +5222,8 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="IC2" gate="G$1" pin="VS_(+)"/>
 <wire x1="0" y1="55.88" x2="0" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="0" y1="78.74" x2="7.62" y2="78.74" width="0.1524" layer="91"/>
-<wire x1="7.62" y1="78.74" x2="81.28" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="7.62" y1="78.74" x2="17.78" y2="78.74" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="78.74" x2="81.28" y2="78.74" width="0.1524" layer="91"/>
 <wire x1="81.28" y1="78.74" x2="81.28" y2="63.5" width="0.1524" layer="91"/>
 <pinref part="IC1" gate="G$1" pin="V-OUT"/>
 <wire x1="81.28" y1="63.5" x2="78.74" y2="63.5" width="0.1524" layer="91"/>
@@ -5058,6 +5242,8 @@ Source: AVX .. aphvc.pdf</description>
 <pinref part="U$1" gate="G$1" pin="VCC"/>
 <wire x1="-5.08" y1="25.4" x2="5.08" y2="25.4" width="0.1524" layer="91"/>
 <junction x="5.08" y="25.4"/>
+<pinref part="C3" gate="G$1" pin="1"/>
+<junction x="17.78" y="78.74"/>
 </segment>
 </net>
 </nets>
