@@ -28871,7 +28871,7 @@ double yn(int, double);
 
 # 1 "./tests.h" 1
 # 37 "./daq.h" 2
-# 87 "./daq.h"
+# 88 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28885,6 +28885,8 @@ adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 void dac_spi_control(_Bool);
 void set_dac(void);
+uint16_t set_dac_a(float);
+uint16_t set_dac_b(float);
 # 138 "main.c" 2
 
 # 1 "./mbmc.h" 1
@@ -29374,6 +29376,8 @@ void main(void)
    update_lcd(V.screen);
 
    wait_lcd_done();
+   set_dac_a(1.00);
+   set_dac_b(2.00);
    set_dac();
   }
 

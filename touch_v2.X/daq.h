@@ -64,6 +64,7 @@
 #define DAC_LOAD_B	0b0101
 #define DCHAN_A		0
 #define DCHAN_B		1
+#define DAC_SCALE	0.002442 // 10 vdc @ 12-bits resulution per bit
 
 /*
  * conversion constants
@@ -97,5 +98,7 @@ adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 void dac_spi_control(bool);
 void set_dac(void);
+uint16_t set_dac_a(float);
+uint16_t set_dac_b(float);
 #endif
 

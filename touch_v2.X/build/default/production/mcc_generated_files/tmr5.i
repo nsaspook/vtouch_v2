@@ -28087,7 +28087,7 @@ void WaitMs(const uint16_t numMilliseconds);
 # 36 "./daq.h" 2
 # 1 "./tests.h" 1
 # 37 "./daq.h" 2
-# 87 "./daq.h"
+# 88 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28101,6 +28101,8 @@ adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 void dac_spi_control(_Bool);
 void set_dac(void);
+uint16_t set_dac_a(float);
+uint16_t set_dac_b(float);
 # 37 "mcc_generated_files/../mbmc.h" 2
 # 65 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {

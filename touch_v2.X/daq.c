@@ -255,3 +255,30 @@ void set_dac(void)
 	DAC_CS0_SetHigh();
 	dac_spi_control(false);
 }
+
+static uint16_t convert_dac_raw(float voltage)
+{
+	/*
+	 * check limits
+	 */
+	if (voltage < 0.0)
+		voltage=0.0;
+	if (voltage >10.0)
+		voltage=10.0;
+	/*
+	 * scale to DAC units
+	 */
+	return(uint16_t) (voltage / DAC_SCALE);
+}
+
+uint16_t set_dac_a(float voltage)
+{
+	R.raw_dac[DCHAN_A] = convert_dac_raw(voltage);
+	return R.raw_dac[DCHAN_A];
+}
+
+uint16_t set_dac_b(float voltage)
+{
+	R.raw_dac[DCHAN_B] = convert_dac_raw(voltage);
+	return R.raw_dac[DCHAN_B];
+}
