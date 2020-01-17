@@ -31,6 +31,7 @@
 #define	DAQ_H
 
 #include <math.h>
+#include "mcc_generated_files/spi1.h"
 #include "timers.h"
 #include "tests.h"
 
@@ -53,6 +54,16 @@
 #define NUM_T_SENSORS	1
 #define ADC_T_CHAN	0b0000100000000000 // 5 volt temp sensor bitmap
 #define ADC_T_CHAN_TYPE	0b0000100000000000 // type bitmap
+
+/*
+ * dac channel configuration
+ */
+#define LAST_DAC_CHAN	0X1
+#define DAC_BUFFER_SIZE	2 // MUST BE AT LEAST 1
+#define DAC_LOAD_A	0b0100
+#define DAC_LOAD_B	0b0101
+#define DCHAN_A		0
+#define DCHAN_B		1
 
 /*
  * conversion constants
@@ -84,6 +95,7 @@ void clear_adc_scan(void);
 bool update_adc_result(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
-
+void dac_spi_control(bool);
+void set_dac(void);
 #endif
 

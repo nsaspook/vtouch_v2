@@ -6,8 +6,27 @@
 
 #include "daq.h"
 
+typedef struct D_data {
+	uint8_t dac0 : 8;
+	uint8_t dac1 : 4;
+	uint8_t cont : 4;
+} D_data;
+
+union bytes2 {
+	uint16_t ld;
+	uint8_t bd[2];
+};
+
+union dac_buf_type {
+	uint16_t ld;
+	uint8_t bd[2];
+	struct D_data map;
+};
+
 typedef struct R_data { // internal variables
 	adc_result_t raw_adc[ADC_BUFFER_SIZE];
+	adc_result_t raw_dac[DAC_BUFFER_SIZE];
+	union dac_buf_type max5322_cmd;
 	int16_t n_offset[NUM_C_SENSORS];
 	float n_zero[NUM_C_SENSORS];
 	uint8_t scan_index;
@@ -22,6 +41,9 @@ static volatile R_data R = {
 	.n_offset[1] = N_OFFSET1,
 	.n_zero[0] = 0.0,
 	.n_zero[1] = 0.0,
+	.raw_dac[0] = 0xfff,
+	.raw_dac[1] = 0x777,
+
 };
 
 static void adc_int_handler(void);
@@ -163,4 +185,73 @@ static void adc_int_t_handler(void)
 #ifdef DEBUG_DAQ1
 	DEBUG1_Toggle();
 #endif
+}
+
+/*
+ * set == true, set dac spi
+ * set == false restore default spi
+ */
+void dac_spi_control(bool set)
+{
+	static bool init = false;
+	static uint8_t S0, S1, S2, SC, SB;
+
+	if (set) {
+		SPI1CON0bits.EN = 0;
+		if (!init) {
+			init = true;
+			S0 = SPI1CON0;
+			S1 = SPI1CON1;
+			S2 = SPI1CON2;
+			SC = SPI1CLK;
+			SB = SPI1BAUD;
+		}
+		/*
+		 * set DAC SPI mode
+		 */
+		// mode 0
+		SPI1CON1 = 0x00;
+		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
+		SPI1CON2 = 0x03;
+		// BAUD 0; 
+		SPI1BAUD = 0x0f; // 2MHz SCK
+		// CLKSEL FOSC; 
+		SPI1CLK = 0x00;
+		// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
+		SPI1CON0 = 0x83;
+		SPI1CON0bits.EN = 1;
+	} else {
+		if (init) {
+			/*
+			 * restore default SPI mode
+			 */
+			SPI1CON0bits.EN = 0;
+			SPI1CON1 = S1;
+			SPI1CON2 = S2;
+			SPI1CLK = SC;
+			SPI1BAUD = SB;
+			SPI1CON0 = S0;
+			SPI1CON0bits.EN = 1;
+		}
+	}
+}
+
+void set_dac(void)
+{
+	dac_spi_control(true);
+	R.max5322_cmd.map.dac0 = R.raw_dac[DCHAN_A]&0xff;
+	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_A] > 8) &0xf;
+	R.max5322_cmd.map.cont = DAC_LOAD_A; // update DAC A @ registers
+	DAC_CS0_SetLow();
+	SPI1_Exchange8bit(R.max5322_cmd.bd[1]);
+	SPI1_Exchange8bit(R.max5322_cmd.bd[0]);
+	DAC_CS0_SetHigh();
+	R.max5322_cmd.map.dac0 = R.raw_dac[DCHAN_B]&0xff;
+	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_B] > 8) &0xf;
+	R.max5322_cmd.map.cont = DAC_LOAD_B; // update DAC B @ registers
+	DAC_CS0_SetLow();
+	SPI1_Exchange8bit(R.max5322_cmd.bd[1]);
+	SPI1_Exchange8bit(R.max5322_cmd.bd[0]);
+	DAC_CS0_SetHigh();
+	dac_spi_control(false);
 }

@@ -400,6 +400,9 @@ void main(void)
 			}
 			set_vterm(V.screen);
 			update_lcd(V.screen);
+			
+			wait_lcd_done();
+			set_dac();
 		}
 
 		/*

@@ -28058,6 +28058,7 @@ double y0(double);
 double y1(double);
 double yn(int, double);
 # 34 "./daq.h" 2
+
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 enum APP_TIMERS {
@@ -28083,10 +28084,10 @@ enum APP_TIMERS {
 void StartTimer(const uint8_t timer, const uint16_t count);
 _Bool TimerDone(const uint8_t timer);
 void WaitMs(const uint16_t numMilliseconds);
-# 35 "./daq.h" 2
-# 1 "./tests.h" 1
 # 36 "./daq.h" 2
-# 76 "./daq.h"
+# 1 "./tests.h" 1
+# 37 "./daq.h" 2
+# 87 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28098,6 +28099,8 @@ void clear_adc_scan(void);
 _Bool update_adc_result(void);
 adc_result_t get_raw_result(const adcc_channel_t);
 float conv_raw_result(const adcc_channel_t, const adc_conv_t);
+void dac_spi_control(_Bool);
+void set_dac(void);
 # 37 "mcc_generated_files/../mbmc.h" 2
 # 65 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {

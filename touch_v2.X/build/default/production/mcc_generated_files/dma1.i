@@ -27612,6 +27612,9 @@ void __attribute__((picinterrupt(("irq(DMA1SCNT), base(8)")))) DMA1_DMASCNT_ISR(
  PIR2bits.DMA1SCNTIF = 0;
 
  spi_link.LCD_DATA = 0;
+
+
+
  do { LATCbits.LATC2 = 1; } while(0);
  do { LATCbits.LATC0 = 1; } while(0);
  do { LATFbits.LATF0 = 1; } while(0);
