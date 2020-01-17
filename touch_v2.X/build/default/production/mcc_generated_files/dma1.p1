@@ -81,6 +81,36 @@ Version 4.0 HI-TECH Software Intermediate Code
 "60 mcc_generated_files/dma1.c
 [; ;mcc_generated_files/dma1.c: 60: extern struct spi_link_type spi_link;
 [v _spi_link `S2231 ~T0 @X0 0 e ]
+"46050 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46050:     struct {
+[s S2081 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2081 . LATC0 LATC1 LATC2 LATC3 LATC4 LATC5 LATC6 LATC7 ]
+"46060
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46060:     struct {
+[s S2082 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2082 . LC0 LC1 LC2 LC3 LC4 LC5 LC6 LC7 ]
+"46049
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46049: typedef union {
+[u S2080 `S2081 1 `S2082 1 ]
+[n S2080 . . . ]
+"46071
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46071: extern volatile LATCbits_t LATCbits __attribute__((address(0x3FBC)));
+[v _LATCbits `VS2080 ~T0 @X0 0 e@16316 ]
+"46326
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46326:     struct {
+[s S2090 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2090 . LATF0 LATF1 LATF2 LATF3 LATF4 LATF5 LATF6 LATF7 ]
+"46336
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46336:     struct {
+[s S2091 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2091 . LF0 LF1 LF2 LF3 LF4 LF5 LF6 LF7 ]
+"46325
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46325: typedef union {
+[u S2089 `S2090 1 `S2091 1 ]
+[n S2089 . . . ]
+"46347
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46347: extern volatile LATFbits_t LATFbits __attribute__((address(0x3FBF)));
+[v _LATFbits `VS2089 ~T0 @X0 0 e@16319 ]
 [t T2 __interrupt irq ( DMA1DCNT ) base ( 8 ) ]
 [t T3 __interrupt irq ( DMA1A ) base ( 8 ) ]
 [t T4 __interrupt irq ( DMA1OR ) base ( 8 ) ]
@@ -2446,54 +2476,75 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;mcc_generated_files/dma1.c: 130:  spi_link.LCD_DATA = 0;
 [e = . _spi_link 3 -> -> 0 `i `uc ]
 "131
-[; ;mcc_generated_files/dma1.c: 131: }
+[; ;mcc_generated_files/dma1.c: 131:  do { LATCbits.LATC2 = 1; } while(0);
+[e :U 2240 ]
+{
+[e = . . _LATCbits 0 2 -> -> 1 `i `uc ]
+}
+[e :U 2239 ]
+"132
+[; ;mcc_generated_files/dma1.c: 132:  do { LATCbits.LATC0 = 1; } while(0);
+[e :U 2243 ]
+{
+[e = . . _LATCbits 0 0 -> -> 1 `i `uc ]
+}
+[e :U 2242 ]
+"133
+[; ;mcc_generated_files/dma1.c: 133:  do { LATFbits.LATF0 = 1; } while(0);
+[e :U 2246 ]
+{
+[e = . . _LATFbits 0 0 -> -> 1 `i `uc ]
+}
+[e :U 2245 ]
+"134
+[; ;mcc_generated_files/dma1.c: 134: }
 [e :UE 2237 ]
 }
 [v $root$_DMA1_DMADCNT_ISR `(v ~T0 @X0 0 e ]
-"133
-[; ;mcc_generated_files/dma1.c: 133: void __attribute__((picinterrupt(("irq(DMA1DCNT), base(8)")))) DMA1_DMADCNT_ISR()
+"136
+[; ;mcc_generated_files/dma1.c: 136: void __attribute__((picinterrupt(("irq(DMA1DCNT), base(8)")))) DMA1_DMADCNT_ISR()
 [v _DMA1_DMADCNT_ISR `(v ~T2 @X0 1 ef ]
-"134
-[; ;mcc_generated_files/dma1.c: 134: {
+"137
+[; ;mcc_generated_files/dma1.c: 137: {
 {
 [e :U _DMA1_DMADCNT_ISR ]
 [f ]
-"135
-[; ;mcc_generated_files/dma1.c: 135:  PIR2bits.DMA1DCNTIF = 0;
+"138
+[; ;mcc_generated_files/dma1.c: 138:  PIR2bits.DMA1DCNTIF = 0;
 [e = . . _PIR2bits 0 1 -> -> 0 `i `uc ]
-"137
-[; ;mcc_generated_files/dma1.c: 137: }
-[e :UE 2238 ]
+"140
+[; ;mcc_generated_files/dma1.c: 140: }
+[e :UE 2247 ]
 }
 [v $root$_DMA1_DMAA_ISR `(v ~T0 @X0 0 e ]
-"143
-[; ;mcc_generated_files/dma1.c: 143: void __attribute__((picinterrupt(("irq(DMA1A), base(8)")))) DMA1_DMAA_ISR()
+"146
+[; ;mcc_generated_files/dma1.c: 146: void __attribute__((picinterrupt(("irq(DMA1A), base(8)")))) DMA1_DMAA_ISR()
 [v _DMA1_DMAA_ISR `(v ~T3 @X0 1 ef ]
-"145
-[; ;mcc_generated_files/dma1.c: 145: {
+"148
+[; ;mcc_generated_files/dma1.c: 148: {
 {
 [e :U _DMA1_DMAA_ISR ]
 [f ]
-"146
-[; ;mcc_generated_files/dma1.c: 146:  PIR2bits.DMA1AIF = 0;
+"149
+[; ;mcc_generated_files/dma1.c: 149:  PIR2bits.DMA1AIF = 0;
 [e = . . _PIR2bits 0 3 -> -> 0 `i `uc ]
-"148
-[; ;mcc_generated_files/dma1.c: 148: }
-[e :UE 2239 ]
+"151
+[; ;mcc_generated_files/dma1.c: 151: }
+[e :UE 2248 ]
 }
 [v $root$_DMA1_DMAOR_ISR `(v ~T0 @X0 0 e ]
-"154
-[; ;mcc_generated_files/dma1.c: 154: void __attribute__((picinterrupt(("irq(DMA1OR), base(8)")))) DMA1_DMAOR_ISR()
+"157
+[; ;mcc_generated_files/dma1.c: 157: void __attribute__((picinterrupt(("irq(DMA1OR), base(8)")))) DMA1_DMAOR_ISR()
 [v _DMA1_DMAOR_ISR `(v ~T4 @X0 1 ef ]
-"156
-[; ;mcc_generated_files/dma1.c: 156: {
+"159
+[; ;mcc_generated_files/dma1.c: 159: {
 {
 [e :U _DMA1_DMAOR_ISR ]
 [f ]
-"157
-[; ;mcc_generated_files/dma1.c: 157:  PIR2bits.DMA1ORIF = 0;
+"160
+[; ;mcc_generated_files/dma1.c: 160:  PIR2bits.DMA1ORIF = 0;
 [e = . . _PIR2bits 0 2 -> -> 0 `i `uc ]
-"159
-[; ;mcc_generated_files/dma1.c: 159: }
-[e :UE 2240 ]
+"162
+[; ;mcc_generated_files/dma1.c: 162: }
+[e :UE 2249 ]
 }
