@@ -55,8 +55,8 @@ void calc_bsoc(void)
 	if (C.c_bat < 0.01)
 		adj = C.hist[0].peukert;
 	C.dynamic_ah += ((C.c_bat * adj) / SSLICE); // Ah
-	
-	C.dynamic_ah_adj=C.dynamic_ah; // need to add peukert factor here
+
+	C.dynamic_ah_adj = C.dynamic_ah; // need to add peukert factor here
 	if (C.dynamic_ah_adj > (C.bank_ah))
 		C.dynamic_ah_adj = C.bank_ah;
 	if (C.dynamic_ah_adj < 0.1)
@@ -174,8 +174,11 @@ uint32_t peukert(uint16_t brate, float bcurrent, float peukert, int16_t bsoc)
 uint16_t Volts_to_SOC(const uint32_t cvoltage)
 {
 	uint8_t slot;
-	float soc = 0;
+	uint16_t soc = 0;
 
+	/*
+	 * walk up the table
+	 */
 	for (slot = 0; slot < BVSOC_SLOTS; slot++) {
 		if (cvoltage > BVSOC_TABLE[slot][0]) {
 			soc = BVSOC_TABLE[slot][1];
