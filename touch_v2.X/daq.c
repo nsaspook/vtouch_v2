@@ -238,6 +238,8 @@ void dac_spi_control(bool set)
 
 void set_dac(void)
 {
+	CSB_SetHigh();
+	CS_SDCARD_SetHigh();
 	dac_spi_control(true);
 	R.max5322_cmd.map.dac0 = R.raw_dac[DCHAN_A]&0xff;
 	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_A] > 8) &0xf;
@@ -262,9 +264,9 @@ static uint16_t convert_dac_raw(float voltage)
 	 * check limits
 	 */
 	if (voltage < 0.0)
-		voltage=0.0;
-	if (voltage >10.0)
-		voltage=10.0;
+		voltage = 0.0;
+	if (voltage > 10.0)
+		voltage = 10.0;
 	/*
 	 * scale to DAC units
 	 */

@@ -193,6 +193,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 "31 ./ringbufs.h
 [; ;./ringbufs.h: 31:  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
 [v _ringBufS_put_dma `(v ~T0 @X0 0 ef2`*S2230`Cuc ]
+"23430 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 23430:     struct {
+[s S1021 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1021 . RXBF . CLRBF RXRE . TXBE . TXWE ]
+"23440
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 23440:     struct {
+[s S1022 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1022 . SPI1RXBF . SPI1CLRBF SPI1RXRE . SPI1TXBE . SPI1TXWE ]
+"23429
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 23429: typedef union {
+[u S1020 `S1021 1 `S1022 1 ]
+[n S1020 . . . ]
+"23451
+[; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 23451: extern volatile SPI1STATUSbits_t SPI1STATUSbits __attribute__((address(0x3D17)));
+[v _SPI1STATUSbits `VS1020 ~T0 @X0 0 e@15639 ]
 "250 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 250: __asm("STATUS_CSHAD equ 03880h");
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -3235,10 +3250,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e $ != -> . _spi_link 3 `i -> 0 `i 2290  ]
 [e :U 2291 ]
 "447
-[; ;eadog.c: 447:  wdtdelay(50);
-[e ( _wdtdelay (1 -> -> -> 50 `i `l `ul ]
+[; ;eadog.c: 447:  while (!SPI1STATUSbits.TXBE);
+[e $U 2292  ]
+[e :U 2293 ]
+[e :U 2292 ]
+[e $ ! != -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 2293  ]
+[e :U 2294 ]
 "448
-[; ;eadog.c: 448: }
+[; ;eadog.c: 448:  wdtdelay(50);
+[e ( _wdtdelay (1 -> -> -> 50 `i `l `ul ]
+"449
+[; ;eadog.c: 449: }
 [e :UE 2288 ]
 }
 [p f _printf 9175040 ]

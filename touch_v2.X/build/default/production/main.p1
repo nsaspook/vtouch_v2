@@ -2908,7 +2908,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 241:    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 1C ]
 "242
-[; ;main.c: 242:    sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.11");
+[; ;main.c: 242:    sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.13");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 2C :s 3C ]
 "243
 [; ;main.c: 243:    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
@@ -3269,8 +3269,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 372:      sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f      ", C.dynamic_ah, C.pv_ah);
 [e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 35C -> . _C 21 `d -> . _C 22 `d ]
 "373
-[; ;main.c: 373:      sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d        ", spinners(5, 0), C.soc, C.runtime);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 36C -> ( _spinners (2 , -> -> 5 `i `uc -> -> 0 `i `uc `i -> . _C 31 `ui -> . _C 30 `ui ]
+[; ;main.c: 373:      sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f       ", spinners(5, 0), C.soc, C.runtime, C.calc[V_BAT]);
+[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 36C -> ( _spinners (2 , -> -> 5 `i `uc -> -> 0 `i `uc `i -> . _C 31 `ui -> . _C 30 `ui -> *U + &U . _C 0 * -> . `E16625 3 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
 "375
 [; ;main.c: 375:      sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f            ", C.esr);
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc :s 37C -> . _C 19 `d ]
@@ -3540,7 +3540,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2248 ]
 }
 [p f _sprintf 9281664 ]
-[a 3C 49 46 49 49 0 ]
+[a 3C 49 46 49 51 0 ]
 [a 21C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 0 ]
 [a 19C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
 [a 20C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
@@ -3559,6 +3559,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 23C 76 79 65 68 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 24C 73 78 86 32 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 25C 80 86 32 37 99 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
+[a 36C 83 37 99 67 32 37 100 32 82 85 78 32 37 100 32 86 37 50 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 39C 82 50 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 0 ]
 [a 38C 82 49 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 0 ]
 [a 34C 66 65 84 84 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
@@ -3567,7 +3568,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 33C 66 65 84 32 84 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
 [a 32C 66 65 84 32 79 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
 [a 31C 66 65 84 32 73 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
-[a 36C 83 37 99 67 32 37 100 32 82 85 78 32 37 100 32 32 32 32 32 32 32 32 0 ]
 [a 10C 83 116 97 116 105 99 32 83 79 67 32 37 100 32 32 32 32 32 32 32 32 0 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 32 32 32 32 32 32 32 32 32 0 ]
 [a 13C 67 97 108 99 117 108 97 116 105 111 110 32 32 32 32 32 32 32 32 32 0 ]

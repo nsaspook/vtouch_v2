@@ -128,12 +128,6 @@ void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
 	PIR2bits.DMA1SCNTIF = 0; // clear Source Count Interrupt Flag 
 	// add your DMA channel 1 source count 0 interrupt custom code
 	spi_link.LCD_DATA = 0;
-	/*
-	 * deselect all SPI devices
-	 */
-	CSB_SetHigh();
-	CS_SDCARD_SetHigh();
-	DAC_CS0_SetHigh();
 }
 
 void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()

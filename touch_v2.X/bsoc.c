@@ -79,10 +79,10 @@ void calc_bsoc(void)
 	if (C.c_bat < 0.0) {
 		C.runtime = (uint16_t) (-(C.dynamic_ah_adj / C.c_bat));
 	} else {
-		C.runtime = 120;
+		C.runtime = 99;
 	}
-	if (C.runtime > 120)
-		C.runtime = 120;
+	if (C.runtime > 99)
+		C.runtime = 99;
 
 	V.lowint_count++;
 

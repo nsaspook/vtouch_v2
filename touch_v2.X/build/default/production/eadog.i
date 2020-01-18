@@ -28048,5 +28048,6 @@ _Bool wait_lcd_check(void)
 void wait_lcd_done(void)
 {
  while (spi_link.LCD_DATA);
+ while (!SPI1STATUSbits.TXBE);
  wdtdelay(50);
 }

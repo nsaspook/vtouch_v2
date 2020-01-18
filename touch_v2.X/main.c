@@ -370,7 +370,7 @@ void main(void)
 					V.calib = false;
 					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f        ", C.p_bat);
 					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f      ", C.dynamic_ah, C.pv_ah);
-					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d        ", spinners(5, false), C.soc, C.runtime);
+					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f       ", spinners(5, false), C.soc, C.runtime, C.calc[V_BAT]);
 
 					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f            ", C.esr);
 					sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f        ", C.bv_one_load, C.load_i1);
