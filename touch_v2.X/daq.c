@@ -188,13 +188,13 @@ static void adc_int_t_handler(void)
 }
 
 /*
- * set == true, set dac spi
- * set == false restore default spi
+ * set == true, set dac spi params
+ * set == false restore default spi params
  */
 void dac_spi_control(bool set)
 {
 	static bool init = false;
-	static uint8_t S0, S1, S2, SC, SB;
+	static uint8_t S0, S1, S2, SC, SB; // SPI device status backup
 
 	if (set) {
 		SPI1CON0bits.EN = 0;
@@ -238,6 +238,7 @@ void dac_spi_control(bool set)
 
 void set_dac(void)
 {
+	while (!SPI1STATUSbits.TXBE); // wait until TX buffer is empty
 	CSB_SetHigh();
 	CS_SDCARD_SetHigh();
 	dac_spi_control(true);
@@ -263,8 +264,8 @@ static uint16_t convert_dac_raw(float voltage)
 	/*
 	 * check limits
 	 */
-	if (voltage < 0.0)
-		voltage = 0.0;
+	if (voltage < 0.001)
+		voltage = 0.001;
 	if (voltage > 10.0)
 		voltage = 10.0;
 	/*
@@ -273,13 +274,19 @@ static uint16_t convert_dac_raw(float voltage)
 	return(uint16_t) (voltage / DAC_SCALE);
 }
 
-uint16_t set_dac_a(float voltage)
+/*
+ * 0.0 to 10.0 volts
+ */
+uint16_t set_dac_a(const float voltage)
 {
 	R.raw_dac[DCHAN_A] = convert_dac_raw(voltage);
 	return R.raw_dac[DCHAN_A];
 }
 
-uint16_t set_dac_b(float voltage)
+/*
+ * 0.0 to 10.0 volts
+ */
+uint16_t set_dac_b(const float voltage)
 {
 	R.raw_dac[DCHAN_B] = convert_dac_raw(voltage);
 	return R.raw_dac[DCHAN_B];

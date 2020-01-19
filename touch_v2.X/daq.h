@@ -64,7 +64,7 @@
 #define DAC_LOAD_B	0b0101
 #define DCHAN_A		0
 #define DCHAN_B		1
-#define DAC_SCALE	0.002442 // 10 vdc @ 12-bits resulution per bit
+#define DAC_SCALE	0.002442 // 10 vdc @ 12-bits resolution per bit
 
 /*
  * conversion constants
