@@ -209,9 +209,9 @@ void dac_spi_control(bool set)
 			SB = SPI1BAUD;
 		}
 		/*
-		 * set DAC SPI mode
+		 * set DAC SPI mode, speed and fifo 
 		 */
-		// mode 0
+		// mode 1
 		SPI1CON1 = 0x00;
 		SPI1CON1bits.CKE=1;
 		SPI1CON1bits.CKP=0;
