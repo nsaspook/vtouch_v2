@@ -4,6 +4,8 @@
  * channels during interrupt after a repeat count
  */
 
+#include <pic18f57k42.h>
+
 #include "daq.h"
 
 typedef struct D_data {
@@ -211,6 +213,9 @@ void dac_spi_control(bool set)
 		 */
 		// mode 0
 		SPI1CON1 = 0x00;
+		SPI1CON1bits.CKE=1;
+		SPI1CON1bits.CKP=0;
+		SPI1CON1bits.SMP=0;
 		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
 		SPI1CON2 = 0x03;
 		// BAUD 0; 
@@ -243,14 +248,14 @@ void set_dac(void)
 	CS_SDCARD_SetHigh();
 	dac_spi_control(true);
 	R.max5322_cmd.map.dac0 = R.raw_dac[DCHAN_A]&0xff;
-	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_A] > 8) &0xf;
+	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_A] >> 8) &0xf;
 	R.max5322_cmd.map.cont = DAC_LOAD_A; // update DAC A @ registers
 	DAC_CS0_SetLow();
 	SPI1_Exchange8bit(R.max5322_cmd.bd[1]);
 	SPI1_Exchange8bit(R.max5322_cmd.bd[0]);
 	DAC_CS0_SetHigh();
 	R.max5322_cmd.map.dac0 = R.raw_dac[DCHAN_B]&0xff;
-	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_B] > 8) &0xf;
+	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_B] >> 8) &0xf;
 	R.max5322_cmd.map.cont = DAC_LOAD_B; // update DAC B @ registers
 	DAC_CS0_SetLow();
 	SPI1_Exchange8bit(R.max5322_cmd.bd[1]);
