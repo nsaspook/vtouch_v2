@@ -260,6 +260,7 @@ void set_dac(void)
 	DAC_CS0_SetLow();
 	SPI1_Exchange8bit(R.max5322_cmd.bd[1]);
 	SPI1_Exchange8bit(R.max5322_cmd.bd[0]);
+	while (!SPI1STATUSbits.TXBE); // wait until TX buffer is empty
 	DAC_CS0_SetHigh();
 	dac_spi_control(false);
 }
