@@ -56,8 +56,8 @@
 #define DAWN_VOLTS	22.0
 #define DUSK_VOLTS	12.0
 #define DAY_DELAY	240
-#define SOC_TOO_LOW	40
-#define SOC_CRITICAL	15
+#define SOC_TOO_LOW	20
+#define SOC_CRITICAL	3
 
 #define CEF		1.0
 #define PEUKERT		1.0
