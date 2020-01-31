@@ -28331,7 +28331,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 102 "./vconfig.h"
+# 103 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28404,7 +28404,7 @@ void PMD_Initialize(void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 191 "./vconfig.h"
+# 192 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -29213,7 +29213,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.15");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.16");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
