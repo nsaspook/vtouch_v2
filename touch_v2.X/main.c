@@ -402,8 +402,8 @@ void main(void)
 			update_lcd(V.screen);
 
 			wait_lcd_done();
-			set_dac_a(3.33);
-			set_dac_b(6.66);
+			set_dac_a(3.333);
+			set_dac_b(6.666);
 			set_dac();
 		}
 
