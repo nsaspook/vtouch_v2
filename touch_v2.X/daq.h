@@ -75,10 +75,10 @@
 #define C_SCALE		0.6250000
 #define V_SCALE		4.1254125
 
-#define C_A200		0.0859000 // BATTERY, second line
+#define C_A200		0.0870000 // BATTERY, second line
 #define C_A100		0.0361000 // PV, first line
 
-#define N_OFFSET0	3939 // BATTERY, second line
+#define N_OFFSET0	3938 // BATTERY, second line
 #define N_OFFSET1	4004 // PV, first line
 
 #include <xc.h> // include processor files - each processor file is guarded.  
