@@ -27523,7 +27523,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   S1 = 1,
   SSELECT = 2,
   SENTER = 3,
-  S4,
+  SCALIB = 4,
   S5,
   S6,
   SNULL,

@@ -30,7 +30,7 @@ typedef struct R_data { // internal variables
 	adc_result_t raw_dac[DAC_BUFFER_SIZE];
 	union dac_buf_type max5322_cmd;
 	int16_t n_offset[NUM_C_SENSORS];
-	float n_zero[NUM_C_SENSORS];
+	float n_scalar[NUM_C_SENSORS];
 	uint8_t scan_index;
 	uint16_t scan_select;
 	bool done;
@@ -39,17 +39,18 @@ typedef struct R_data { // internal variables
 static volatile R_data R = {
 	.done = false,
 	.scan_index = 0,
-	.n_offset[0] = N_OFFSET0,
-	.n_offset[1] = N_OFFSET1,
-	.n_zero[0] = 0.0,
-	.n_zero[1] = 0.0,
-	.raw_dac[0] = 0xfff,
-	.raw_dac[1] = 0x777,
+	.n_offset[A200] = C_OFFSET200,
+	.n_offset[A100] = C_OFFSET100,
+	.n_scalar[A200] = C_A200,
+	.n_scalar[A100] = C_A100,
+	.raw_dac[DCHAN_A] = 0x0,
+	.raw_dac[DCHAN_B] = 0x0,
 
 };
 
 static void adc_int_handler(void);
 static void adc_int_t_handler(void);
+static bool check_range(int16_t, int16_t, int16_t);
 
 /*
  * start computed ADC results: 64 samples per average value per selected channel from
@@ -129,9 +130,9 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 
 		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
-				return R.n_zero[0]+((float) ((int16_t) get_raw_result(chan)) - R.n_offset[0]) * C_A200;
+				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A200]) * R.n_scalar[A200];
 			} else {
-				return R.n_zero[1]+((float) ((int16_t) get_raw_result(chan)) - R.n_offset[1]) * C_A100;
+				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100]) * R.n_scalar[A100];
 			}
 		} else {
 			if (ADC_T_CHAN >> chan & 0x1) { // temp conversion
@@ -213,9 +214,9 @@ void dac_spi_control(bool set)
 		 */
 		// mode 1
 		SPI1CON1 = 0x00;
-		SPI1CON1bits.CKE=1;
-		SPI1CON1bits.CKP=0;
-		SPI1CON1bits.SMP=0;
+		SPI1CON1bits.CKE = 1;
+		SPI1CON1bits.CKP = 0;
+		SPI1CON1bits.SMP = 0;
 		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
 		SPI1CON2 = 0x03;
 		// BAUD 0; 
@@ -297,3 +298,43 @@ uint16_t set_dac_b(const float voltage)
 	R.raw_dac[DCHAN_B] = convert_dac_raw(voltage);
 	return R.raw_dac[DCHAN_B];
 }
+
+/*
+ * sanity check values in a range
+ */
+static bool check_range(int16_t value, int16_t window, int16_t standard)
+{
+	if (value > (standard + window))
+		return false;
+	if (value < (standard - window))
+		return false;
+	return true;
+}
+
+/*
+ * mode set to false for check values only, do not update
+ */
+bool cal_current_zero(uint8_t mode)
+{
+	int16_t a100, a200;
+
+	a100 = get_raw_result(C_PV);
+	if (!check_range(a100, 100, C_CAL_ZERO))
+		return false;
+	a200 = get_raw_result(C_BATT);
+	if (!check_range(a200, 100, C_CAL_ZERO))
+		return false;
+
+	if (!mode)
+		return true;
+
+	R.n_offset[A100] = a100;
+	R.n_offset[A200] = a200;
+	return true;
+}
+
+bool cal_current_10A(uint8_t mode)
+{
+	return true;
+}
+

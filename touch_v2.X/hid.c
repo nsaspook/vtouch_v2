@@ -11,6 +11,11 @@ H_data* hid_input(H_data* h)
 		h->wait_enter = false;
 		h->enter_p = get_switch(SENTER);
 	}
+
+	if (get_switch(SCALIB)) {
+		h->wait_calib = false;
+		h->calib_p = get_switch(SCALIB);
+	}
 	return h;
 }
 
@@ -24,8 +29,10 @@ H_data* hid_display(H_data* h)
 		h->hid_display = HID_MAIN;
 		h->wait_enter = true;
 		h->wait_select = true;
+		h->wait_calib = true;
 		h->select_p = SW_OFF;
 		h->enter_p = SW_OFF;
+		h->calib_p = SW_OFF;
 		break;
 	default:
 	case H_STATE_DISPLAY:
@@ -48,14 +55,25 @@ bool check_enter_button(H_data* h)
 	return false;
 }
 
+bool check_calib_button(H_data* h)
+{
+	if (!h->wait_calib && (h->calib_p == SW_OFF)) {
+		h->wait_calib = true;
+		return true;
+	}
+	return false;
+}
+
 void clear_hid_pflags(H_data* h)
 {
 	h->select_p = SW_OFF;
 	h->enter_p = SW_OFF;
+	h->calib_p = SW_OFF;
 }
 
 void clear_hid_wflags(H_data* h)
 {
 	h->wait_enter = true;
 	h->wait_select = true;
+	h->wait_calib = true;
 }

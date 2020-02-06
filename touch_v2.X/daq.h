@@ -75,11 +75,21 @@
 #define C_SCALE		0.6250000
 #define V_SCALE		4.1254125
 
-#define C_A200		0.0870000 // BATTERY, second line
-#define C_A100		0.0361000 // PV, first line
+#define A200		0 // BATTERY, second adc line
+#define A100		1 // PV, first adc line
 
-#define N_OFFSET0	3938 // BATTERY, second line
-#define N_OFFSET1	4004 // PV, first line
+#define C_A200		0.0870000 // BATTERY Amp scalar, second line [1]
+#define C_A100		0.0361000 // PV Amp scalar, first line [0]
+
+#define C_OFFSET200	3938 // BATTERY sensor adc zero Amp counts, second line
+#define C_OFFSET100	4004 // PV sensor adc zero Amp counts, first line
+
+/*
+ * sanity check values for current calibration routines
+ */
+#define C_CAL_ZERO	4000
+#define C_CAL_A200	4500 // fixme with real values
+#define C_CAL_A100	4200 // ..
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
@@ -100,5 +110,7 @@ void dac_spi_control(bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
+bool cal_current_zero(uint8_t);
+bool cal_current_10A(uint8_t);
 #endif
 

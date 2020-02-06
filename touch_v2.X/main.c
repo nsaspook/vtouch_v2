@@ -89,13 +89,12 @@
  * 2		rf1		spi 10			1
  * 3		rf2		PD 9		SELECT	2
  * 4		rf3		PD 8		ENTER	3
- * 5		rd3		PD 3			4
+ * 5		rd3		PD 3		CALIB	4
  * 6		rd2		PD 2/misc 2	SW0	5
  * 7				misc 3			6
  * 8				misc 4			7
  *
- * adc_cal[0-3]						current sensors zero offset stored in eeprom 0=a100, 1=a200, 2..3=future
- * 3x16 LCD status panel and led status lights.
+ * 4x20 LCD status panel and led status lights.
  *
  * uln2802 port output pins OUTP
  * i/o  port	function
@@ -229,6 +228,7 @@ void main(void)
 
 			init_display();
 			eaDogM_CursorOff();
+			set_dac(); // set both channels to zero volts
 			/*
 			 * load the battery to reduce surface charge
 			 */

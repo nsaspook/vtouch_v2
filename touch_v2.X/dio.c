@@ -84,6 +84,9 @@ void switch_handler(void)
 		case SSELECT:
 			sw_value = SELECT_B_GetValue();
 			break;
+		case SCALIB:
+			sw_value = CALIB_GetValue();
+			break;
 		case S1:
 			sw_value = 1;
 			break;

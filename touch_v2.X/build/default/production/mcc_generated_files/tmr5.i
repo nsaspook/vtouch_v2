@@ -27546,7 +27546,7 @@ void PIN_MANAGER_Initialize (void);
   S1 = 1,
   SSELECT = 2,
   SENTER = 3,
-  S4,
+  SCALIB = 4,
   S5,
   S6,
   SNULL,
@@ -28087,7 +28087,7 @@ void WaitMs(const uint16_t numMilliseconds);
 # 36 "./daq.h" 2
 # 1 "./tests.h" 1
 # 37 "./daq.h" 2
-# 88 "./daq.h"
+# 98 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28103,6 +28103,8 @@ void dac_spi_control(_Bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
+_Bool cal_current_zero(uint8_t);
+_Bool cal_current_10A(uint8_t);
 # 37 "mcc_generated_files/../mbmc.h" 2
 # 65 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {

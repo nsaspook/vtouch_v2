@@ -147,7 +147,7 @@ extern "C" {
 		S1 = 1,
 		SSELECT = 2,
 		SENTER = 3,
-		S4,
+		SCALIB = 4,
 		S5,
 		S6,
 		SNULL,

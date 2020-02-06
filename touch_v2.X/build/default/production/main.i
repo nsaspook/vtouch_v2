@@ -7,7 +7,7 @@
 # 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 122 "main.c"
+# 121 "main.c"
 #pragma warning disable 520
 #pragma warning disable 1498
 
@@ -171,7 +171,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 130 "main.c" 2
+# 129 "main.c" 2
 
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v2.10/pic/include/c99/string.h" 3
@@ -227,7 +227,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 131 "main.c" 2
+# 130 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
@@ -28302,7 +28302,7 @@ void SYSTEM_Initialize(void);
 void OSCILLATOR_Initialize(void);
 # 110 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 132 "main.c" 2
+# 131 "main.c" 2
 
 
 # 1 "./eadog.h" 1
@@ -28379,7 +28379,7 @@ void PMD_Initialize(void);
   S1 = 1,
   SSELECT = 2,
   SENTER = 3,
-  S4,
+  SCALIB = 4,
   S5,
   S6,
   SNULL,
@@ -28435,7 +28435,7 @@ void PMD_Initialize(void);
  void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
  void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
  void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 134 "main.c" 2
+# 133 "main.c" 2
 
 # 1 "./timers.h" 1
 # 11 "./timers.h"
@@ -28462,13 +28462,13 @@ enum APP_TIMERS {
 void StartTimer(const uint8_t timer, const uint16_t count);
 _Bool TimerDone(const uint8_t timer);
 void WaitMs(const uint16_t numMilliseconds);
-# 135 "main.c" 2
+# 134 "main.c" 2
 
 # 1 "./mconfig.h" 1
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
-# 136 "main.c" 2
+# 135 "main.c" 2
 
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
@@ -28490,7 +28490,7 @@ _Bool help_button(void);
 _Bool check_help(const _Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
-# 137 "main.c" 2
+# 136 "main.c" 2
 
 # 1 "./daq.h" 1
 # 33 "./daq.h"
@@ -28871,7 +28871,7 @@ double yn(int, double);
 
 # 1 "./tests.h" 1
 # 37 "./daq.h" 2
-# 88 "./daq.h"
+# 98 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28887,7 +28887,9 @@ void dac_spi_control(_Bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
-# 138 "main.c" 2
+_Bool cal_current_zero(uint8_t);
+_Bool cal_current_10A(uint8_t);
+# 137 "main.c" 2
 
 # 1 "./mbmc.h" 1
 # 35 "./mbmc.h"
@@ -29046,7 +29048,7 @@ _Bool get_ac_charger_relay(void);
 _Bool check_day_time(void);
 
 char spinners(uint8_t, uint8_t);
-# 139 "main.c" 2
+# 138 "main.c" 2
 
 # 1 "./dio.h" 1
 # 40 "./dio.h"
@@ -29060,7 +29062,7 @@ SW_STATES get_switch(uint8_t);
 rbutton_type get_switch_data(uint8_t);
 uint8_t check_switches(void);
 void clear_switch(uint8_t);
-# 140 "main.c" 2
+# 139 "main.c" 2
 
 # 1 "./hid.h" 1
 # 37 "./hid.h"
@@ -29084,16 +29086,17 @@ typedef enum {
 typedef struct H_data {
  H_CODES hid_display;
  H_STATES h_state;
- _Bool wait_select, select_p, wait_enter, enter_p;
+ _Bool wait_select, select_p, wait_enter, enter_p, wait_calib, calib_p;
  uint8_t sequence;
 } H_data;
 
 H_data* hid_input(H_data*);
 H_data* hid_display(H_data*);
 _Bool check_enter_button(H_data*);
+_Bool check_calib_button(H_data*);
 void clear_hid_pflags(H_data*);
 void clear_hid_wflags(H_data*);
-# 141 "main.c" 2
+# 140 "main.c" 2
 
 # 1 "./bsoc.h" 1
 # 62 "./bsoc.h"
@@ -29112,7 +29115,7 @@ void reset_bsoc(R_CODES);
 uint16_t Volts_to_SOC(uint32_t);
 uint32_t peukert(uint16_t, float, float, int16_t);
 float esr_check(uint8_t);
-# 142 "main.c" 2
+# 141 "main.c" 2
 
 
 V_data V = {
@@ -29203,6 +29206,7 @@ void main(void)
 
    init_display();
    eaDogM_WriteCommand(0b00001100);
+   set_dac();
 
 
 

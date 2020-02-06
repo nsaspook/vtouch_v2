@@ -54,13 +54,14 @@ typedef enum {
 typedef struct H_data { // control data structure 
 	H_CODES hid_display;
 	H_STATES h_state;
-	bool wait_select, select_p, wait_enter, enter_p; // buttons pressed should clean
+	bool wait_select, select_p, wait_enter, enter_p, wait_calib, calib_p; // buttons pressed should clean
 	uint8_t sequence;
 } H_data;
 
 H_data* hid_input(H_data*);
 H_data* hid_display(H_data*);
 bool check_enter_button(H_data*);
+bool check_calib_button(H_data*);
 void clear_hid_pflags(H_data*);
 void clear_hid_wflags(H_data*);
 
