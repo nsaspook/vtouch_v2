@@ -161,6 +161,7 @@ H_data H = {
 	.h_state = H_STATE_INIT,
 	.wait_enter = true,
 	.wait_select = true,
+	.wait_calib = true,
 	.sequence = 0,
 };
 
@@ -179,6 +180,8 @@ volatile C_data C = {
 };
 
 extern volatile struct P_data P;
+
+static bool current_sensor_cal(void);
 
 /*
  * Main application
@@ -300,7 +303,14 @@ void main(void)
 			sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f           ", C.bv_one_load, C.load_i1);
 			sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);
 			update_lcd(0);
-			WaitMs(5000);
+			WaitMs(4000);
+			V.sensor_set = get_switch(SCALIB);
+			WaitMs(1000);
+			if (V.sensor_set && get_switch(SCALIB)) {
+				current_sensor_cal();
+				WaitMs(4000);
+			}
+			V.sensor_set = false;
 			V.system_stable = true;
 			break;
 		case UI_STATE_HOST:
@@ -383,9 +393,9 @@ void main(void)
 						lp_filter(0.0, k, -1);
 					}
 					V.calib = true;
-					sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index + 1);
-					sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 2);
-					sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 3);
+					sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index);
+					sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 1);
+					sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 2);
 					break;
 				default:
 					break;
@@ -458,6 +468,15 @@ void main(void)
 			}
 		}
 	}
+}
+
+static bool current_sensor_cal(void)
+{
+	sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+	sprintf(get_vterm_ptr(1, 0), "Sensor              ");
+	sprintf(get_vterm_ptr(2, 0), "Calibration         ");
+	update_lcd(0);
+	return true;
 }
 
 /**

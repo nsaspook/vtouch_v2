@@ -28331,7 +28331,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 103 "./vconfig.h"
+# 104 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28396,7 +28396,7 @@ void PMD_Initialize(void);
   uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
   terminal_type response;
   volatile uint8_t ticker;
-  _Bool flipper, calib, enter;
+  _Bool flipper, calib, enter, sensor_set;
   volatile _Bool system_stable;
   volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
  } V_data;
@@ -28404,7 +28404,7 @@ void PMD_Initialize(void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 192 "./vconfig.h"
+# 193 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -29139,6 +29139,7 @@ H_data H = {
  .h_state = H_STATE_INIT,
  .wait_enter = 1,
  .wait_select = 1,
+ .wait_calib = 1,
  .sequence = 0,
 };
 
@@ -29157,6 +29158,8 @@ volatile C_data C = {
 };
 
 extern volatile struct P_data P;
+
+static _Bool current_sensor_cal(void);
 
 
 
@@ -29217,7 +29220,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.16");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.17");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
@@ -29278,7 +29281,14 @@ void main(void)
    sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f           ", C.bv_one_load, C.load_i1);
    sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);
    update_lcd(0);
-   WaitMs(5000);
+   WaitMs(4000);
+   V.sensor_set = get_switch(SCALIB);
+   WaitMs(1000);
+   if (V.sensor_set && get_switch(SCALIB)) {
+    current_sensor_cal();
+    WaitMs(4000);
+   }
+   V.sensor_set = 0;
    V.system_stable = 1;
    break;
   case UI_STATE_HOST:
@@ -29361,9 +29371,9 @@ void main(void)
       lp_filter(0.0, k, -1);
      }
      V.calib = 1;
-     sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index + 1);
-     sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 2);
-     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 3);
+     sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index);
+     sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 1);
+     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 2);
      break;
     default:
      break;
@@ -29436,4 +29446,13 @@ void main(void)
    }
   }
  }
+}
+
+static _Bool current_sensor_cal(void)
+{
+ sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+ sprintf(get_vterm_ptr(1, 0), "Sensor              ");
+ sprintf(get_vterm_ptr(2, 0), "Calibration         ");
+ update_lcd(0);
+ return 1;
 }

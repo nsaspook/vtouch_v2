@@ -75,14 +75,14 @@
 #define C_SCALE		0.6250000
 #define V_SCALE		4.1254125
 
-#define A200		0 // BATTERY, second adc line
-#define A100		1 // PV, first adc line
+#define A200		0 // BATTERY,  adc line 0
+#define A100		1 // PV,       adc line 1
 
-#define C_A200		0.0870000 // BATTERY Amp scalar, second line [1]
-#define C_A100		0.0361000 // PV Amp scalar, first line [0]
+#define C_A200		0.0870000 // BATTERY Amp scalar, second line [0]
+#define C_A100		0.0361000 // PV Amp scalar, first line [1]
 
-#define C_OFFSET200	3938 // BATTERY sensor adc zero Amp counts, second line
-#define C_OFFSET100	4004 // PV sensor adc zero Amp counts, first line
+#define C_OFFSET200	3938 // BATTERY sensor adc zero Amp counts, line 0
+#define C_OFFSET100	4004 // PV sensor adc zero Amp counts,      line 1
 
 /*
  * sanity check values for current calibration routines

@@ -35,7 +35,7 @@
 #include "vconfig.h"
 #include "tests.h"
 
-#define NUM_SWITCHES		4
+#define NUM_SWITCHES		6
 
 typedef struct rbutton_type {
 	SW_STATES sw;
