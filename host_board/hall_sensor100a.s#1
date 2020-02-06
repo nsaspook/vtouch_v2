@@ -11189,6 +11189,8 @@ Source: www.kingbright.com</description>
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="M0805" package3d_urn="urn:adsk.eagle:package:23556/2" value="4.7k"/>
 <part name="LED2" library="led" library_urn="urn:adsk.eagle:library:259" deviceset="LED" device="CHIPLED_1206" package3d_urn="urn:adsk.eagle:package:15823/2" value="5v_led"/>
 <part name="SUPPLY23" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="DGND" device=""/>
+<part name="PAD3" library="wirepad" library_urn="urn:adsk.eagle:library:412" deviceset="2,15/1,0" device="" package3d_urn="urn:adsk.eagle:package:30831/1" value="DUD"/>
+<part name="SUPPLY24" library="supply2" library_urn="urn:adsk.eagle:library:372" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11434,6 +11436,13 @@ Source: www.kingbright.com</description>
 <instance part="SUPPLY23" gate="G$1" x="-25.4" y="104.14" smashed="yes">
 <attribute name="VALUE" x="-28.067" y="100.965" size="1.778" layer="96"/>
 </instance>
+<instance part="PAD3" gate="1" x="99.06" y="22.86" smashed="yes">
+<attribute name="NAME" x="97.917" y="24.7142" size="1.778" layer="95"/>
+<attribute name="VALUE" x="97.917" y="19.558" size="1.778" layer="96"/>
+</instance>
+<instance part="SUPPLY24" gate="GND" x="101.6" y="20.32" smashed="yes">
+<attribute name="VALUE" x="99.695" y="17.145" size="1.778" layer="96"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -11542,6 +11551,10 @@ Source: www.kingbright.com</description>
 <pinref part="LED1" gate="G$1" pin="C"/>
 <pinref part="SUPPLY21" gate="GND" pin="GND"/>
 <junction x="-20.32" y="38.1"/>
+</segment>
+<segment>
+<pinref part="PAD3" gate="1" pin="P"/>
+<pinref part="SUPPLY24" gate="GND" pin="GND"/>
 </segment>
 </net>
 <net name="+12V" class="1">
