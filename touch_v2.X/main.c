@@ -498,7 +498,7 @@ static bool current_sensor_cal(void)
 		WaitMs(2000);
 	} else {
 		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
-		sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(0), get_raw_result(1));
 		sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
 		update_lcd(0);
 		WaitMs(2000);
