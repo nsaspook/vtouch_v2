@@ -115,7 +115,7 @@ void dac_spi_control(bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
-bool cal_current_zero(bool);
+bool cal_current_zero(bool, int16_t, int16_t);
 bool cal_current_10A(uint8_t);
 bool read_cal_data(void);
 void write_cal_data(void);

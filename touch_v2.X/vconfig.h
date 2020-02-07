@@ -87,7 +87,7 @@ extern "C" {
 #define D_CODE		'2'  // data logging line code version
 #define I_CODE		'*'  // info logging line code
 	
-#define CAL_DELAY	50
+#define CAL_DELAY	64
 
 	/*
 	 * offsets in bytes

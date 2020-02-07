@@ -290,6 +290,7 @@ void main(void)
 			set_load_relay_two(false);
 			sprintf(get_vterm_ptr(0, 0), "Static SOC %d        ", C.soc);
 			sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
+			sprintf(get_vterm_ptr(2, 0), "                     ");
 			update_lcd(0);
 			WaitMs(2000);
 			sprintf(get_vterm_ptr(0, 0), "Battery ESR         ");
@@ -482,6 +483,7 @@ void main(void)
 static bool current_sensor_cal(void)
 {
 	uint8_t x = 0;
+	uint32_t cb = 0, cp = 0;
 
 	sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
 	sprintf(get_vterm_ptr(1, 0), "Sensor              ");
@@ -500,6 +502,8 @@ static bool current_sensor_cal(void)
 
 	x = 0;
 	do {
+		cb += get_raw_result(C_BATT);
+		cp += get_raw_result(C_PV);
 		sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
 		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
 		sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
@@ -508,18 +512,20 @@ static bool current_sensor_cal(void)
 		start_adc_scan();
 		WaitMs(100);
 	} while (++x < CAL_DELAY);
+	cb = cb >> 6;
+	cp = cp >> 6;
 
-	if (cal_current_zero(false)) {
-		cal_current_zero(true);
+	if (cal_current_zero(false, cb, cp)) {
+		cal_current_zero(true, cb, cp);
 		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
-		sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", cb, cp);
 		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
 		update_lcd(0);
 		WaitMs(2000);
 		write_cal_data();
 	} else {
 		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
-		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
 		sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
 		update_lcd(0);
 		WaitMs(2000);

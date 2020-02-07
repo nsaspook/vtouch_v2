@@ -28122,7 +28122,7 @@ void dac_spi_control(_Bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
-_Bool cal_current_zero(_Bool);
+_Bool cal_current_zero(_Bool, int16_t, int16_t);
 _Bool cal_current_10A(uint8_t);
 _Bool read_cal_data(void);
 void write_cal_data(void);

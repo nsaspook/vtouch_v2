@@ -318,22 +318,21 @@ static bool check_range(int16_t value, int16_t window, int16_t standard)
 /*
  * mode set to false for check values only, do not update
  */
-bool cal_current_zero(bool mode)
+bool cal_current_zero(bool mode, int16_t cb, int16_t cp)
 {
-	int16_t a100, a200;
 
-	a100 = get_raw_result(C_PV);
-	if (!check_range(a100, ZERO_RANGE, C_CAL_ZERO))
+	if (!check_range(cb, ZERO_RANGE, C_CAL_ZERO))
 		return false;
-	a200 = get_raw_result(C_BATT);
-	if (!check_range(a200, ZERO_RANGE, C_CAL_ZERO))
+
+	if (!check_range(cp, ZERO_RANGE, C_CAL_ZERO))
 		return false;
 
 	if (!mode)
 		return true;
 
-	R.n_offset[A100] = a100;
-	R.n_offset[A200] = a200;
+	R.n_offset[A200] = cb;
+	R.n_offset[A100] = cp;
+
 	return true;
 }
 
@@ -376,7 +375,7 @@ void write_cal_data(void)
 	uint8_t *r_cal_ptr;
 
 	y = sizeof(R);
-	r_cal_ptr = (uint8_t*) &R;
+	r_cal_ptr = (uint8_t*) & R;
 	R.checkmark = EE_CHECKMARK;
 
 	do {
