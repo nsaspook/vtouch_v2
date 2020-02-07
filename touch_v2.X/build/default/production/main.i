@@ -29471,8 +29471,10 @@ static _Bool current_sensor_cal(void)
  do {
   sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
   sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(0), get_raw_result(1));
-  sprintf(get_vterm_ptr(2, 0), " Time %d            ", x);
+  sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
   update_lcd(0);
+  clear_adc_scan();
+  start_adc_scan();
   WaitMs(100);
  } while (++x < 50);
 
