@@ -29467,6 +29467,15 @@ static _Bool current_sensor_cal(void)
   WaitMs(100);
  } while (get_switch(SCALIB));
 
+ x = 0;
+ do {
+  sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
+  sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(0), get_raw_result(1));
+  sprintf(get_vterm_ptr(2, 0), " Time %d            ", x);
+  update_lcd(0);
+  WaitMs(100);
+ } while (++x < 50);
+
  if (cal_current_zero(0)) {
   cal_current_zero(1);
   sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
