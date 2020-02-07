@@ -28887,7 +28887,7 @@ void dac_spi_control(_Bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
-_Bool cal_current_zero(uint8_t);
+_Bool cal_current_zero(_Bool);
 _Bool cal_current_10A(uint8_t);
 # 137 "main.c" 2
 
@@ -29450,9 +29450,37 @@ void main(void)
 
 static _Bool current_sensor_cal(void)
 {
+ uint8_t x = 0;
+
  sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
  sprintf(get_vterm_ptr(1, 0), "Sensor              ");
  sprintf(get_vterm_ptr(2, 0), "Calibration         ");
  update_lcd(0);
+ WaitMs(2000);
+ sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, 0));
+ update_lcd(0);
+ do {
+  if (++x > 50)
+   return 0;
+  sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, 0));
+  update_lcd(0);
+  WaitMs(100);
+ } while (get_switch(SCALIB));
+
+ if (cal_current_zero(0)) {
+  cal_current_zero(1);
+  sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+  sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+  sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
+  update_lcd(0);
+  WaitMs(2000);
+ } else {
+  sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+  sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+  sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
+  update_lcd(0);
+  WaitMs(2000);
+  return 0;
+ }
  return 1;
 }

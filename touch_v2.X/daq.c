@@ -314,7 +314,7 @@ static bool check_range(int16_t value, int16_t window, int16_t standard)
 /*
  * mode set to false for check values only, do not update
  */
-bool cal_current_zero(uint8_t mode)
+bool cal_current_zero(bool mode)
 {
 	int16_t a100, a200;
 

@@ -229,6 +229,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "57 ./mydisplay.h
 [; ;./mydisplay.h: 57: _Bool check_help(const _Bool);
 [v _check_help `(a ~T0 @X0 0 ef1`Ca ]
+"113 ./daq.h
+[; ;./daq.h: 113: _Bool cal_current_zero(_Bool);
+[v _cal_current_zero `(a ~T0 @X0 0 ef1`a ]
 "121 main.c
 [p n 520 ]
 "122
@@ -3580,23 +3583,113 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :U _current_sensor_cal ]
 [f ]
 "475
-[; ;main.c: 475:  sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 43C ]
-"476
-[; ;main.c: 476:  sprintf(get_vterm_ptr(1, 0), "Sensor              ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 44C ]
+[; ;main.c: 475:  uint8_t x = 0;
+[v _x `uc ~T0 @X0 1 a ]
+[e = _x -> -> 0 `i `uc ]
 "477
-[; ;main.c: 477:  sprintf(get_vterm_ptr(2, 0), "Calibration         ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 45C ]
+[; ;main.c: 477:  sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 43C ]
 "478
-[; ;main.c: 478:  update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 478:  sprintf(get_vterm_ptr(1, 0), "Sensor              ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 44C ]
 "479
-[; ;main.c: 479:  return 1;
+[; ;main.c: 479:  sprintf(get_vterm_ptr(2, 0), "Calibration         ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 45C ]
+"480
+[; ;main.c: 480:  update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"481
+[; ;main.c: 481:  WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
+"482
+[; ;main.c: 482:  sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, 0));
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 46C -> ( _spinners (2 , -> -> 4 `i `uc -> -> 0 `i `uc `i ]
+"483
+[; ;main.c: 483:  update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"484
+[; ;main.c: 484:  do {
+[e :U 2308 ]
+{
+"485
+[; ;main.c: 485:   if (++x > 50)
+[e $ ! > -> =+ _x -> -> 1 `i `uc `i -> 50 `i 2309  ]
+"486
+[; ;main.c: 486:    return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2305  ]
+[e :U 2309 ]
+"487
+[; ;main.c: 487:   sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, 0));
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 47C -> ( _spinners (2 , -> -> 4 `i `uc -> -> 0 `i `uc `i ]
+"488
+[; ;main.c: 488:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"489
+[; ;main.c: 489:   WaitMs(100);
+[e ( _WaitMs (1 -> -> 100 `i `us ]
+"490
+[; ;main.c: 490:  } while (get_switch(SCALIB));
+}
+[e $ != -> ( _get_switch (1 -> . `E17026 4 `uc `ui -> -> 0 `i `ui 2308  ]
+[e :U 2307 ]
+"492
+[; ;main.c: 492:  if (cal_current_zero(0)) {
+[e $ ! != -> ( _cal_current_zero (1 -> -> 0 `i `a `i -> 0 `i 2310  ]
+{
+"493
+[; ;main.c: 493:   cal_current_zero(1);
+[e ( _cal_current_zero (1 -> -> 1 `i `a ]
+"494
+[; ;main.c: 494:   sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 48C ]
+"495
+[; ;main.c: 495:   sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 49C ]
+"496
+[; ;main.c: 496:   sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 50C ]
+"497
+[; ;main.c: 497:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"498
+[; ;main.c: 498:   WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
+"499
+[; ;main.c: 499:  } else {
+}
+[e $U 2311  ]
+[e :U 2310 ]
+{
+"500
+[; ;main.c: 500:   sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 51C ]
+"501
+[; ;main.c: 501:   sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 52C ]
+"502
+[; ;main.c: 502:   sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 53C ]
+"503
+[; ;main.c: 503:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"504
+[; ;main.c: 504:   WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
+"505
+[; ;main.c: 505:   return 0;
+[e ) -> -> 0 `i `a ]
+[e $UE 2305  ]
+"506
+[; ;main.c: 506:  }
+}
+[e :U 2311 ]
+"507
+[; ;main.c: 507:  return 1;
 [e ) -> -> 1 `i `a ]
 [e $UE 2305  ]
-"480
-[; ;main.c: 480: }
+"508
+[; ;main.c: 508: }
 [e :UE 2305 ]
 }
 [p f _sprintf 9281664 ]
@@ -3604,6 +3697,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 21C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 0 ]
 [a 19C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
 [a 20C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
+[a 46C 82 101 108 101 97 115 101 32 98 117 116 116 111 110 32 37 99 32 32 0 ]
+[a 47C 82 101 108 101 97 115 101 32 98 117 116 116 111 110 32 37 99 32 32 0 ]
 [a 40C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
 [a 41C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
 [a 42C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
@@ -3616,11 +3711,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 22C 80 86 32 37 99 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 0 ]
 [a 15C 67 104 101 99 107 105 110 103 32 37 99 32 37 99 32 32 32 32 32 32 0 ]
 [a 43C 80 86 32 97 110 100 32 66 65 84 84 69 82 89 32 32 32 32 32 32 0 ]
+[a 48C 80 86 32 97 110 100 32 66 65 84 84 69 82 89 32 32 32 32 32 32 0 ]
+[a 51C 80 86 32 97 110 100 32 66 65 84 84 69 82 89 32 32 32 32 32 32 0 ]
 [a 1C 32 77 66 77 67 32 83 79 76 65 82 77 79 78 32 32 32 32 32 32 0 ]
 [a 23C 76 79 65 68 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 24C 73 78 86 32 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 25C 80 86 32 37 99 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 36C 83 37 99 67 32 37 100 32 82 85 78 32 37 100 32 86 37 50 46 50 102 32 32 32 32 32 32 32 0 ]
+[a 50C 90 101 114 111 32 67 97 108 32 83 101 116 32 32 32 32 32 32 32 32 0 ]
 [a 39C 82 50 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 0 ]
 [a 38C 82 49 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 0 ]
 [a 34C 66 65 84 84 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
@@ -3629,6 +3727,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 33C 66 65 84 32 84 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
 [a 32C 66 65 84 32 79 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
 [a 31C 66 65 84 32 73 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
+[a 53C 79 117 116 32 79 102 32 82 97 110 103 101 32 32 32 32 32 32 32 32 0 ]
 [a 10C 83 116 97 116 105 99 32 83 79 67 32 37 100 32 32 32 32 32 32 32 32 0 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 32 32 32 32 32 32 32 32 32 0 ]
 [a 45C 67 97 108 105 98 114 97 116 105 111 110 32 32 32 32 32 32 32 32 32 0 ]
@@ -3641,6 +3740,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 4C 32 78 83 65 83 80 79 79 75 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 37C 69 83 82 32 32 37 50 46 54 102 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 8C 66 86 32 37 50 46 52 102 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 49C 83 101 110 115 111 114 115 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 52C 83 101 110 115 111 114 115 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 44C 83 101 110 115 111 114 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 5C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 6C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]

@@ -28103,7 +28103,7 @@ void dac_spi_control(_Bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
-_Bool cal_current_zero(uint8_t);
+_Bool cal_current_zero(_Bool);
 _Bool cal_current_10A(uint8_t);
 # 37 "mcc_generated_files/../mbmc.h" 2
 # 65 "mcc_generated_files/../mbmc.h"

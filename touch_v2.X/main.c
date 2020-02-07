@@ -472,10 +472,38 @@ void main(void)
 
 static bool current_sensor_cal(void)
 {
+	uint8_t x = 0;
+
 	sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
 	sprintf(get_vterm_ptr(1, 0), "Sensor              ");
 	sprintf(get_vterm_ptr(2, 0), "Calibration         ");
 	update_lcd(0);
+	WaitMs(2000);
+	sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, false));
+	update_lcd(0);
+	do {
+		if (++x > 50)
+			return false;
+		sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, false));
+		update_lcd(0);
+		WaitMs(100);
+	} while (get_switch(SCALIB));
+
+	if (cal_current_zero(false)) {
+		cal_current_zero(true);
+		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+		sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
+		update_lcd(0);
+		WaitMs(2000);
+	} else {
+		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+		sprintf(get_vterm_ptr(1, 0), "Sensors             ");
+		sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
+		update_lcd(0);
+		WaitMs(2000);
+		return false;
+	}
 	return true;
 }
 
