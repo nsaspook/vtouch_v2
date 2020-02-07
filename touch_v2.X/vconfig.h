@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.17"
+#define VER	"1.18"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -42,6 +42,7 @@ extern "C" {
 	 * 1.08 NHD 4x20 display
 	 * 1.16 update logging format
 	 * 1.17 current sensor calibration functions
+	 * 1.18 EEPROM routines
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -85,6 +86,8 @@ extern "C" {
 #define LOG_WAIT	10 // data logging internval in seconds
 #define D_CODE		'2'  // data logging line code version
 #define I_CODE		'*'  // info logging line code
+	
+#define CAL_DELAY	50
 
 	/*
 	 * offsets in bytes

@@ -262,6 +262,15 @@ void main(void)
 			 * check for quickly changing battery voltage
 			 * to stabilize as to get a better static SOC value
 			 */
+			if (read_cal_data()) {
+				update_cal_data();
+				sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
+			} else {
+				sprintf(get_vterm_ptr(2, 0), "Invalid EEPROM DATA ");
+			}
+			update_lcd(0);
+			WaitMs(2000);
+
 			i_ror = 1;
 			do {
 				calc_ror_data();
@@ -482,7 +491,7 @@ static bool current_sensor_cal(void)
 	sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, false));
 	update_lcd(0);
 	do {
-		if (++x > 50)
+		if (++x > CAL_DELAY)
 			return false;
 		sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, false));
 		update_lcd(0);
@@ -492,13 +501,13 @@ static bool current_sensor_cal(void)
 	x = 0;
 	do {
 		sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
-		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(0), get_raw_result(1));
+		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
 		sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
 		update_lcd(0);
 		clear_adc_scan();
 		start_adc_scan();
 		WaitMs(100);
-	} while (++x < 50);
+	} while (++x < CAL_DELAY);
 
 	if (cal_current_zero(false)) {
 		cal_current_zero(true);
@@ -507,9 +516,10 @@ static bool current_sensor_cal(void)
 		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
 		update_lcd(0);
 		WaitMs(2000);
+		write_cal_data();
 	} else {
 		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
-		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(0), get_raw_result(1));
+		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
 		sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
 		update_lcd(0);
 		WaitMs(2000);

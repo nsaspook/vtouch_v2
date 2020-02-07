@@ -12,4 +12,5 @@ vconfig.h  \
 mcc_generated_files/../mbmc.h  \
 daq.h  \
 timers.h  \
-tests.h 
+tests.h  \
+mcc_generated_files/memory.h 

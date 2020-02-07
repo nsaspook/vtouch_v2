@@ -28331,7 +28331,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 104 "./vconfig.h"
+# 107 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28404,7 +28404,7 @@ void PMD_Initialize(void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 193 "./vconfig.h"
+# 196 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -28871,7 +28871,7 @@ double yn(int, double);
 
 # 1 "./tests.h" 1
 # 37 "./daq.h" 2
-# 98 "./daq.h"
+# 103 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28889,6 +28889,9 @@ uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
 _Bool cal_current_zero(_Bool);
 _Bool cal_current_10A(uint8_t);
+_Bool read_cal_data(void);
+void write_cal_data(void);
+void update_cal_data(void);
 # 137 "main.c" 2
 
 # 1 "./mbmc.h" 1
@@ -29220,7 +29223,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.17");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.18");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
@@ -29239,6 +29242,15 @@ void main(void)
 
 
 
+
+   if (read_cal_data()) {
+    update_cal_data();
+    sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
+   } else {
+    sprintf(get_vterm_ptr(2, 0), "Invalid EEPROM DATA ");
+   }
+   update_lcd(0);
+   WaitMs(2000);
 
    i_ror = 1;
    do {
@@ -29470,7 +29482,7 @@ static _Bool current_sensor_cal(void)
  x = 0;
  do {
   sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
-  sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(0), get_raw_result(1));
+  sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
   sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
   update_lcd(0);
   clear_adc_scan();
@@ -29485,9 +29497,10 @@ static _Bool current_sensor_cal(void)
   sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
   update_lcd(0);
   WaitMs(2000);
+  write_cal_data();
  } else {
   sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
-  sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(0), get_raw_result(1));
+  sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
   sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
   update_lcd(0);
   WaitMs(2000);

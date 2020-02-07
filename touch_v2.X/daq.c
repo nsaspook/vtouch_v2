@@ -34,6 +34,7 @@ typedef struct R_data { // internal variables
 	uint8_t scan_index;
 	uint16_t scan_select;
 	bool done;
+	uint16_t checkmark, crc;
 } R_data;
 
 static volatile R_data R = {
@@ -45,12 +46,15 @@ static volatile R_data R = {
 	.n_scalar[A100] = C_A100,
 	.raw_dac[DCHAN_A] = 0x0,
 	.raw_dac[DCHAN_B] = 0x0,
-
+	.checkmark = 0x1957,
+	.crc = 0x4242,
 };
 
 static void adc_int_handler(void);
 static void adc_int_t_handler(void);
 static bool check_range(int16_t, int16_t, int16_t);
+
+static R_data r_cal;
 
 /*
  * start computed ADC results: 64 samples per average value per selected channel from
@@ -319,10 +323,10 @@ bool cal_current_zero(bool mode)
 	int16_t a100, a200;
 
 	a100 = get_raw_result(C_PV);
-	if (!check_range(a100, 100, C_CAL_ZERO))
+	if (!check_range(a100, ZERO_RANGE, C_CAL_ZERO))
 		return false;
 	a200 = get_raw_result(C_BATT);
-	if (!check_range(a200, 100, C_CAL_ZERO))
+	if (!check_range(a200, ZERO_RANGE, C_CAL_ZERO))
 		return false;
 
 	if (!mode)
@@ -333,8 +337,58 @@ bool cal_current_zero(bool mode)
 	return true;
 }
 
+/*
+ * update internal current scaling using a calibrated 10A flow in both sensors
+ */
 bool cal_current_10A(uint8_t mode)
 {
 	return true;
 }
 
+/*
+ * read eeprom into program variable buffer
+ */
+bool read_cal_data(void)
+{
+	uint16_t x = 0, y;
+	uint8_t *r_cal_ptr;
+
+	y = sizeof(r_cal);
+	r_cal_ptr = (uint8_t*) & r_cal;
+
+	do {
+		r_cal_ptr[x] = DATAEE_ReadByte(x);
+	} while (++x < y);
+
+	if (r_cal.checkmark == EE_CHECKMARK) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/*
+ * write program variables to eeprom
+ */
+void write_cal_data(void)
+{
+	uint16_t x = 0, y;
+	uint8_t *r_cal_ptr;
+
+	y = sizeof(R);
+	r_cal_ptr = (uint8_t*) &R;
+	R.checkmark = EE_CHECKMARK;
+
+	do {
+		DATAEE_WriteByte(x, r_cal_ptr[x]);
+	} while (++x < y);
+
+}
+
+/*
+ * copy program variable buffer into active variable
+ */
+void update_cal_data(void)
+{
+	R = r_cal;
+}

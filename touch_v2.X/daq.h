@@ -66,6 +66,10 @@
 #define DCHAN_B		1
 #define DAC_SCALE	0.002442 // 10 vdc @ 12-bits resolution per bit
 
+#define ZERO_RANGE	100
+
+#define EE_CHECKMARK	0x1957
+
 /*
  * conversion constants
  */
@@ -94,6 +98,7 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
 #include "mcc_generated_files/pin_manager.h"
+#include "mcc_generated_files/memory.h"
 
 typedef enum {
 	CONV, // auto system conversion
@@ -112,5 +117,8 @@ uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
 bool cal_current_zero(bool);
 bool cal_current_10A(uint8_t);
+bool read_cal_data(void);
+void write_cal_data(void);
+void update_cal_data(void);
 #endif
 
