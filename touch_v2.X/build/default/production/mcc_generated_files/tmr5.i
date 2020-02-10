@@ -28059,6 +28059,28 @@ double y1(double);
 double yn(int, double);
 # 34 "./daq.h" 2
 
+# 1 "./mcc_generated_files/crc.h" 1
+# 123 "./mcc_generated_files/crc.h"
+void CRC_Initialize(void);
+# 164 "./mcc_generated_files/crc.h"
+void CRC_Start(void);
+# 203 "./mcc_generated_files/crc.h"
+_Bool CRC_8BitDataWrite(uint8_t data);
+# 241 "./mcc_generated_files/crc.h"
+uint16_t CRC_CalculatedResultGet(_Bool reverse, uint16_t xorValue);
+# 280 "./mcc_generated_files/crc.h"
+_Bool CRC_IsBusy(void);
+# 320 "./mcc_generated_files/crc.h"
+void CRC_SCAN_StartScanner(void);
+# 360 "./mcc_generated_files/crc.h"
+void CRC_SCAN_StopScanner(void);
+# 401 "./mcc_generated_files/crc.h"
+void CRC_SCAN_SetAddressLimit(uint32_t startAddr, uint32_t endAddr);
+# 445 "./mcc_generated_files/crc.h"
+_Bool CRC_SCAN_IsScannerBusy(void);
+# 486 "./mcc_generated_files/crc.h"
+_Bool CRC_SCAN_HasScanCompleted(void);
+# 36 "./daq.h" 2
 # 1 "./timers.h" 1
 # 11 "./timers.h"
 enum APP_TIMERS {
@@ -28084,10 +28106,10 @@ enum APP_TIMERS {
 void StartTimer(const uint8_t timer, const uint16_t count);
 _Bool TimerDone(const uint8_t timer);
 void WaitMs(const uint16_t numMilliseconds);
-# 36 "./daq.h" 2
-# 1 "./tests.h" 1
 # 37 "./daq.h" 2
-# 101 "./daq.h"
+# 1 "./tests.h" 1
+# 38 "./daq.h" 2
+# 103 "./daq.h"
 # 1 "./mcc_generated_files/memory.h" 1
 # 99 "./mcc_generated_files/memory.h"
 uint8_t FLASH_ReadByte(uint32_t flashAddr);
@@ -28105,7 +28127,7 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
 void MEMORY_Tasks(void);
-# 102 "./daq.h" 2
+# 104 "./daq.h" 2
 
 typedef enum {
  CONV,

@@ -32,6 +32,7 @@
 
 #include <math.h>
 #include "mcc_generated_files/spi1.h"
+#include "mcc_generated_files/crc.h"
 #include "timers.h"
 #include "tests.h"
 
@@ -69,6 +70,7 @@
 #define ZERO_RANGE	100
 
 #define EE_CHECKMARK	0x1957
+#define TATE		0x42
 
 /*
  * conversion constants

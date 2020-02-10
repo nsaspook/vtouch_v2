@@ -34,7 +34,8 @@ typedef struct R_data { // internal variables
 	uint8_t scan_index;
 	uint16_t scan_select;
 	bool done;
-	uint16_t checkmark, crc;
+	uint16_t checkmark;
+	uint8_t crc;
 } R_data;
 
 static volatile R_data R = {
@@ -47,7 +48,7 @@ static volatile R_data R = {
 	.raw_dac[DCHAN_A] = 0x0,
 	.raw_dac[DCHAN_B] = 0x0,
 	.checkmark = 0x1957,
-	.crc = 0x4242,
+	.crc = TATE,
 };
 
 static void adc_int_handler(void);
@@ -350,20 +351,34 @@ bool cal_current_10A(uint8_t mode)
 bool read_cal_data(void)
 {
 	uint16_t x = 0, y;
-	uint8_t *r_cal_ptr;
+	uint8_t *r_cal_ptr, crcVal_save;
 
 	y = sizeof(r_cal);
 	r_cal_ptr = (uint8_t*) & r_cal;
+	// Initialize the CRC module
+	CRC_Initialize();
+
+	// Start CRC
+	CRC_Start();
 
 	do {
 		r_cal_ptr[x] = DATAEE_ReadByte(x);
 	} while (++x < y);
+	crcVal_save = r_cal.crc;
+	r_cal.crc = TATE;
 
 	if (r_cal.checkmark == EE_CHECKMARK) {
-		return true;
+		x = 0;
+
+		do {
+			CRC_8BitDataWrite(r_cal_ptr[x]);
+		} while (++x < y);
+		if (crcVal_save == CRC_CalculatedResultGet(NORMAL, 0x00))
+			return true;
 	} else {
 		return false;
 	}
+	return false;
 }
 
 /*
@@ -372,16 +387,25 @@ bool read_cal_data(void)
 void write_cal_data(void)
 {
 	uint16_t x = 0, y;
-	uint8_t *r_cal_ptr;
+	uint8_t *r_cal_ptr, crcVal;
 
 	y = sizeof(R);
+	R.crc = TATE;
 	r_cal_ptr = (uint8_t*) & R;
 	R.checkmark = EE_CHECKMARK;
+	// Initialize the CRC module
+	CRC_Initialize();
+
+	// Start CRC
+	CRC_Start();
 
 	do {
 		DATAEE_WriteByte(x, r_cal_ptr[x]);
+		CRC_8BitDataWrite(r_cal_ptr[x]);
+		while (CRC_IsBusy());
 	} while (++x < y);
-
+	// Read CRC check value
+	crcVal = CRC_CalculatedResultGet(NORMAL, 0x00);
 }
 
 /*

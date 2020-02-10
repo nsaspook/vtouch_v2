@@ -11,6 +11,7 @@ ringbufs.h  \
 vconfig.h  \
 mcc_generated_files/../mbmc.h  \
 daq.h  \
+mcc_generated_files/crc.h  \
 timers.h  \
 tests.h  \
 mcc_generated_files/memory.h 

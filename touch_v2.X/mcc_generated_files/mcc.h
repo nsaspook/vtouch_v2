@@ -52,6 +52,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "interrupt_manager.h"
+#include "crc.h"
 #include "fvr.h"
 #include "adcc.h"
 #include "tmr5.h"
