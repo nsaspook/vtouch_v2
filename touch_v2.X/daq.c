@@ -372,13 +372,14 @@ bool read_cal_data(void)
 
 		do {
 			CRC_8BitDataWrite(r_cal_ptr[x]);
+			while (CRC_IsBusy());
 		} while (++x < y);
-		if (crcVal_save == CRC_CalculatedResultGet(NORMAL, 0x00))
-			return true;
+		if (CRC_CalculatedResultGet(NORMAL, 0x00) != crcVal_save)
+			return false;
 	} else {
 		return false;
 	}
-	return false;
+	return true;
 }
 
 /*
@@ -406,6 +407,8 @@ void write_cal_data(void)
 	} while (++x < y);
 	// Read CRC check value
 	crcVal = CRC_CalculatedResultGet(NORMAL, 0x00);
+	// store crc in EEPROM
+	DATAEE_WriteByte(crcVal, r_cal_ptr[x - 1]);
 }
 
 /*
