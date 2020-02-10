@@ -47,7 +47,7 @@ static volatile R_data R = {
 	.n_scalar[A100] = C_A100,
 	.raw_dac[DCHAN_A] = 0x0,
 	.raw_dac[DCHAN_B] = 0x0,
-	.checkmark = 0x1957,
+	.checkmark = EE_CHECKMARK,
 	.crc = TATE,
 };
 
@@ -346,7 +346,7 @@ bool cal_current_10A(uint8_t mode)
 }
 
 /*
- * read eeprom into program variable buffer
+ * read eeprom into temp program variable buffer
  */
 bool read_cal_data(void)
 {
@@ -365,9 +365,9 @@ bool read_cal_data(void)
 		r_cal_ptr[x] = DATAEE_ReadByte(x);
 	} while (++x < y);
 	crcVal_save = r_cal.crc;
-	r_cal.crc = TATE;
 
 	if (r_cal.checkmark == EE_CHECKMARK) {
+		r_cal.crc = TATE; // standard CRC filler code
 		x = 0;
 
 		do {
@@ -379,6 +379,7 @@ bool read_cal_data(void)
 	} else {
 		return false;
 	}
+	r_cal.crc = crcVal_save; // reload actual eeprom CRC 
 	return true;
 }
 
@@ -408,7 +409,7 @@ void write_cal_data(void)
 	// Read CRC check value
 	crcVal = CRC_CalculatedResultGet(NORMAL, 0x00);
 	// store crc in EEPROM
-	DATAEE_WriteByte(crcVal, r_cal_ptr[x - 1]);
+	DATAEE_WriteByte(sizeof(R) - 1, crcVal);
 }
 
 /*
