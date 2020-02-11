@@ -28354,7 +28354,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 108 "./vconfig.h"
+# 109 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28427,7 +28427,7 @@ void PMD_Initialize(void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 197 "./vconfig.h"
+# 198 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -28895,7 +28895,7 @@ double yn(int, double);
 
 # 1 "./tests.h" 1
 # 38 "./daq.h" 2
-# 105 "./daq.h"
+# 108 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28912,7 +28912,7 @@ void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
 _Bool cal_current_zero(_Bool, int16_t, int16_t);
-_Bool cal_current_10A(uint8_t);
+_Bool cal_current_10A(_Bool, int16_t, int16_t, float, float);
 _Bool read_cal_data(void);
 void write_cal_data(void);
 void update_cal_data(void);
@@ -29247,7 +29247,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.19");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.20");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
@@ -29490,13 +29490,11 @@ static _Bool current_sensor_cal(void)
  uint8_t x = 0;
  uint32_t cb = 0, cp = 0;
 
- sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
- sprintf(get_vterm_ptr(1, 0), "Sensor              ");
+ sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+ sprintf(get_vterm_ptr(1, 0), "Sensor Zero         ");
  sprintf(get_vterm_ptr(2, 0), "Calibration         ");
  update_lcd(0);
  WaitMs(2000);
- sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, 0));
- update_lcd(0);
  do {
   if (++x > 64)
    return 0;
@@ -29522,19 +29520,75 @@ static _Bool current_sensor_cal(void)
 
  if (cal_current_zero(0, cb, cp)) {
   cal_current_zero(1, cb, cp);
-  sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+  sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
   sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", cb, cp);
   sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
   update_lcd(0);
   WaitMs(2000);
   write_cal_data();
  } else {
-  sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+  sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
   sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
-  sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
+  sprintf(get_vterm_ptr(2, 0), "Zero Out Of Range   ");
   update_lcd(0);
   WaitMs(2000);
   return 0;
  }
+
+
+ uint32_t cbz, cpz;
+
+ clear_switch(SCALIB);
+ sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+ sprintf(get_vterm_ptr(1, 0), "10 Amp Sensor       ");
+ sprintf(get_vterm_ptr(2, 0), "Calibration         ");
+ update_lcd(0);
+ WaitMs(2000);
+ x = 0;
+ do {
+  if (++x > 64)
+   return 0;
+  sprintf(get_vterm_ptr(2, 0), "Press button %c  ", spinners(4, 0));
+  update_lcd(0);
+  WaitMs(100);
+ } while (!get_switch(SCALIB));
+
+ x = 0;
+ cbz = cb;
+ cpz = cp;
+ cb = 0;
+ cp = 0;
+ do {
+  cb += get_raw_result(C_BATT);
+  cp += get_raw_result(C_PV);
+  sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
+  sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
+  sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
+  update_lcd(0);
+  clear_adc_scan();
+  start_adc_scan();
+  WaitMs(100);
+ } while (++x < 64);
+ cb = cb >> 6;
+ cp = cp >> 6;
+
+ if (cal_current_10A(0, cb, cp, 0.0, 0.0)) {
+  cal_current_10A(1, cb, cp, 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+  sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+  sprintf(get_vterm_ptr(1, 0), " %f %f              ", 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+  sprintf(get_vterm_ptr(2, 0), "10A Cal Set         ");
+  update_lcd(0);
+  WaitMs(5000);
+  write_cal_data();
+ } else {
+  sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+  sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
+  sprintf(get_vterm_ptr(2, 0), "10A Out Of Range    ");
+  update_lcd(0);
+  WaitMs(2000);
+  return 0;
+ }
+
+
  return 1;
 }

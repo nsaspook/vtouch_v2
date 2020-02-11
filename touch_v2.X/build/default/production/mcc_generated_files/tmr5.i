@@ -27498,7 +27498,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 108 "./vconfig.h"
+# 109 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27571,7 +27571,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 197 "./vconfig.h"
+# 198 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -28109,7 +28109,7 @@ void WaitMs(const uint16_t numMilliseconds);
 # 37 "./daq.h" 2
 # 1 "./tests.h" 1
 # 38 "./daq.h" 2
-# 103 "./daq.h"
+# 106 "./daq.h"
 # 1 "./mcc_generated_files/memory.h" 1
 # 99 "./mcc_generated_files/memory.h"
 uint8_t FLASH_ReadByte(uint32_t flashAddr);
@@ -28127,7 +28127,7 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
 void MEMORY_Tasks(void);
-# 104 "./daq.h" 2
+# 107 "./daq.h" 2
 
 typedef enum {
  CONV,
@@ -28145,7 +28145,7 @@ void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
 _Bool cal_current_zero(_Bool, int16_t, int16_t);
-_Bool cal_current_10A(uint8_t);
+_Bool cal_current_10A(_Bool, int16_t, int16_t, float, float);
 _Bool read_cal_data(void);
 void write_cal_data(void);
 void update_cal_data(void);

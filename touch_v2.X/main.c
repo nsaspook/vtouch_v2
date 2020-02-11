@@ -485,13 +485,11 @@ static bool current_sensor_cal(void)
 	uint8_t x = 0;
 	uint32_t cb = 0, cp = 0;
 
-	sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
-	sprintf(get_vterm_ptr(1, 0), "Sensor              ");
+	sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+	sprintf(get_vterm_ptr(1, 0), "Sensor Zero         ");
 	sprintf(get_vterm_ptr(2, 0), "Calibration         ");
 	update_lcd(0);
 	WaitMs(2000);
-	sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, false));
-	update_lcd(0);
 	do {
 		if (++x > CAL_DELAY)
 			return false;
@@ -517,20 +515,76 @@ static bool current_sensor_cal(void)
 
 	if (cal_current_zero(false, cb, cp)) {
 		cal_current_zero(true, cb, cp);
-		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
 		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", cb, cp);
 		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
 		update_lcd(0);
 		WaitMs(2000);
 		write_cal_data();
 	} else {
-		sprintf(get_vterm_ptr(0, 0), "PV and BATTERY      ");
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
 		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
-		sprintf(get_vterm_ptr(2, 0), "Out Of Range        ");
+		sprintf(get_vterm_ptr(2, 0), "Zero Out Of Range   ");
 		update_lcd(0);
 		WaitMs(2000);
 		return false;
 	}
+
+#ifdef CAL_10A
+	uint32_t cbz, cpz;
+
+	clear_switch(SCALIB);
+	sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+	sprintf(get_vterm_ptr(1, 0), "10 Amp Sensor       ");
+	sprintf(get_vterm_ptr(2, 0), "Calibration         ");
+	update_lcd(0);
+	WaitMs(2000);
+	x = 0;
+	do {
+		if (++x > CAL_DELAY)
+			return false;
+		sprintf(get_vterm_ptr(2, 0), "Press button %c  ", spinners(4, false));
+		update_lcd(0);
+		WaitMs(100);
+	} while (!get_switch(SCALIB));
+
+	x = 0;
+	cbz = cb;
+	cpz = cp;
+	cb = 0;
+	cp = 0;
+	do {
+		cb += get_raw_result(C_BATT);
+		cp += get_raw_result(C_PV);
+		sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
+		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
+		update_lcd(0);
+		clear_adc_scan();
+		start_adc_scan();
+		WaitMs(100);
+	} while (++x < CAL_DELAY);
+	cb = cb >> 6;
+	cp = cp >> 6;
+
+	if (cal_current_10A(false, cb, cp, 0.0, 0.0)) {
+		cal_current_10A(true, cb, cp, 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+		sprintf(get_vterm_ptr(1, 0), " %f %f              ", 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+		sprintf(get_vterm_ptr(2, 0), "10A Cal Set         ");
+		update_lcd(0);
+		WaitMs(5000);
+		write_cal_data();
+	} else {
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(2, 0), "10A Out Of Range    ");
+		update_lcd(0);
+		WaitMs(2000);
+		return false;
+	}
+#endif
+
 	return true;
 }
 

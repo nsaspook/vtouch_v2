@@ -340,8 +340,19 @@ bool cal_current_zero(bool mode, int16_t cb, int16_t cp)
 /*
  * update internal current scaling using a calibrated 10A flow in both sensors
  */
-bool cal_current_10A(uint8_t mode)
+bool cal_current_10A(bool mode, int16_t cb, int16_t cp, float scaleb, float scalep)
 {
+	if (!check_range(cb, TEN_A_RANGE, C_CAL_A200))
+		return false;
+
+	if (!check_range(cp, TEN_A_RANGE, C_CAL_A100))
+		return false;
+
+	if (!mode)
+		return true;
+
+	R.n_scalar[A200] = scaleb;
+	R.n_scalar[A100] = scalep;
 	return true;
 }
 

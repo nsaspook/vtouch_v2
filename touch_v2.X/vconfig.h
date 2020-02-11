@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.19"
+#define VER	"1.20"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -44,6 +44,7 @@ extern "C" {
 	 * 1.17 current sensor calibration functions
 	 * 1.18 EEPROM routines
 	 * 1.19 8-bit crc for EEPROM change detection
+	 * 1.20 optional 10A calibration
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

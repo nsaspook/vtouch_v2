@@ -68,9 +68,12 @@
 #define DAC_SCALE	0.002442 // 10 vdc @ 12-bits resolution per bit
 
 #define ZERO_RANGE	100
+#define TEN_A_RANGE	100
 
 #define EE_CHECKMARK	0x1957
 #define TATE		0x42
+
+#define CAL_10A
 
 /*
  * conversion constants
@@ -84,8 +87,8 @@
 #define A200		0 // BATTERY,  adc line 0
 #define A100		1 // PV,       adc line 1
 
-#define C_A200		0.0870000 // BATTERY Amp scalar, second line [0]
-#define C_A100		0.0361000 // PV Amp scalar, first line [1]
+#define C_A200		0.0862000 // BATTERY Amp scalar, second line [0]
+#define C_A100		0.0361010 // PV Amp scalar, first line [1]
 
 #define C_OFFSET200	3938 // BATTERY sensor adc zero Amp counts, line 0
 #define C_OFFSET100	4004 // PV sensor adc zero Amp counts,      line 1
@@ -94,8 +97,8 @@
  * sanity check values for current calibration routines
  */
 #define C_CAL_ZERO	4000
-#define C_CAL_A200	4500 // fixme with real values
-#define C_CAL_A100	4200 // ..
+#define C_CAL_A200	4050 // fixme with real values
+#define C_CAL_A100	4278 // ..
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"
@@ -118,7 +121,7 @@ void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
 bool cal_current_zero(bool, int16_t, int16_t);
-bool cal_current_10A(uint8_t);
+bool cal_current_10A(bool, int16_t, int16_t, float, float);
 bool read_cal_data(void);
 void write_cal_data(void);
 void update_cal_data(void);
