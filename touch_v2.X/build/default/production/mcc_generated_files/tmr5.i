@@ -27498,7 +27498,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 109 "./vconfig.h"
+# 110 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27571,7 +27571,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 198 "./vconfig.h"
+# 199 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -27683,6 +27683,7 @@ extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
 # 36 "mcc_generated_files/../mbmc.h" 2
+
 # 1 "./daq.h" 1
 # 33 "./daq.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 1 3
@@ -28109,7 +28110,7 @@ void WaitMs(const uint16_t numMilliseconds);
 # 37 "./daq.h" 2
 # 1 "./tests.h" 1
 # 38 "./daq.h" 2
-# 106 "./daq.h"
+# 107 "./daq.h"
 # 1 "./mcc_generated_files/memory.h" 1
 # 99 "./mcc_generated_files/memory.h"
 uint8_t FLASH_ReadByte(uint32_t flashAddr);
@@ -28127,7 +28128,7 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 
 void MEMORY_Tasks(void);
-# 107 "./daq.h" 2
+# 108 "./daq.h" 2
 
 typedef enum {
  CONV,
@@ -28149,7 +28150,8 @@ _Bool cal_current_10A(_Bool, int16_t, int16_t, float, float);
 _Bool read_cal_data(void);
 void write_cal_data(void);
 void update_cal_data(void);
-# 37 "mcc_generated_files/../mbmc.h" 2
+void update_hist_data(_Bool, volatile hist_type*);
+# 38 "mcc_generated_files/../mbmc.h" 2
 # 65 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {
  float calc[16];

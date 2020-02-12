@@ -27462,7 +27462,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 109 "./vconfig.h"
+# 110 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27535,7 +27535,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 198 "./vconfig.h"
+# 199 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;

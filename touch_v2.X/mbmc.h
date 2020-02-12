@@ -33,8 +33,8 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <time.h>
-#include "daq.h"
 #include "vconfig.h"
+#include "daq.h"
 
 #define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
 #define LP_BUFFER_SIZE	ADC_BUFFER_SIZE+5

@@ -4,8 +4,6 @@
  * channels during interrupt after a repeat count
  */
 
-#include <pic18f57k42.h>
-
 #include "daq.h"
 
 typedef struct D_data {
@@ -34,6 +32,10 @@ typedef struct R_data { // internal variables
 	uint8_t scan_index;
 	uint16_t scan_select;
 	bool done;
+	hist_type H;
+	uint8_t hist_save : 1;
+	uint8_t c_zero_cal : 1;
+	uint8_t c_scale_cal : 1;
 	uint16_t checkmark;
 	uint8_t crc;
 } R_data;
@@ -49,6 +51,9 @@ static volatile R_data R = {
 	.raw_dac[DCHAN_B] = 0x0,
 	.checkmark = EE_CHECKMARK,
 	.crc = TATE,
+	.c_scale_cal = false,
+	.c_zero_cal = false,
+	.hist_save = false,
 };
 
 static void adc_int_handler(void);
@@ -333,7 +338,7 @@ bool cal_current_zero(bool mode, int16_t cb, int16_t cp)
 
 	R.n_offset[A200] = cb;
 	R.n_offset[A100] = cp;
-
+	R.c_zero_cal = true;
 	return true;
 }
 
@@ -353,6 +358,7 @@ bool cal_current_10A(bool mode, int16_t cb, int16_t cp, float scaleb, float scal
 
 	R.n_scalar[A200] = scaleb;
 	R.n_scalar[A100] = scalep;
+	R.c_scale_cal = true;
 	return true;
 }
 
@@ -429,4 +435,30 @@ void write_cal_data(void)
 void update_cal_data(void)
 {
 	R = r_cal;
+	if (!R.c_zero_cal) {
+		R.n_offset[A200] = C_OFFSET200;
+		R.n_offset[A100] = C_OFFSET100;
+
+	}
+
+	if (!R.c_scale_cal) {
+		R.n_scalar[A200] = C_A200;
+		R.n_scalar[A100] = C_A100;
+	}
+}
+
+/*
+ * mode true: copy local hist data to operational history
+ * mode false: copy operational history to local buffer
+ */
+void update_hist_data(bool mode, volatile hist_type *hist)
+{
+	if (mode) {
+		if (R.hist_save)
+			R.H = *hist;
+	} else {
+		*hist = R.H;
+		R.hist_save = true;
+	}
+
 }

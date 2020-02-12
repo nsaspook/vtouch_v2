@@ -1,5 +1,5 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F17141 `(v ~T0 @X0 0 tf ]
+[v F17144 `(v ~T0 @X0 0 tf ]
 "41690 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 41690: extern volatile unsigned char T5GCON __attribute__((address(0x3F9B)));
 [v _T5GCON `Vuc ~T0 @X0 0 e@16283 ]
@@ -101,12 +101,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E16293 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
 [c E16274 0 1 2 3 .. ]
 [n E16274 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
-"127 ./vconfig.h
-[; ;./vconfig.h: 127:  typedef struct terminal_type {
+"128 ./vconfig.h
+[; ;./vconfig.h: 128:  typedef struct terminal_type {
 [s S2232 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16274 1 `E16274 1 `us 1 `us 1 ]
 [n S2232 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"162
-[; ;./vconfig.h: 162:  typedef struct V_data {
+"163
+[; ;./vconfig.h: 163:  typedef struct V_data {
 [s S2233 `E16293 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `l 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16293 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2232 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
 [n S2233 V_data ui_state buf info ticks testing error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker flipper calib enter sensor_set system_stable highint_count lowint_count eeprom_count timerint_count ]
 "62 mcc_generated_files/tmr5.c
@@ -115,9 +115,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "368 mcc_generated_files/tmr5.h
 [; ;mcc_generated_files/tmr5.h: 368: void TMR5_CallBack(void);
 [v _TMR5_CallBack `(v ~T0 @X0 0 ef ]
-[v F17160 `(v ~T0 @X0 0 tf ]
-[v F17162 `(v ~T0 @X0 0 tf ]
-[v F17164 `(v ~T0 @X0 0 tf ]
+[v F17163 `(v ~T0 @X0 0 tf ]
+[v F17165 `(v ~T0 @X0 0 tf ]
+[v F17167 `(v ~T0 @X0 0 tf ]
 "46274 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h: 46274:     struct {
 [s S2087 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -2388,7 +2388,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _timer5ReloadVal `Vus ~T0 @X0 1 e ]
 "61
 [; ;mcc_generated_files/tmr5.c: 61: void (*TMR5_InterruptHandler)(void);
-[v _TMR5_InterruptHandler `*F17141 ~T0 @X0 1 e ]
+[v _TMR5_InterruptHandler `*F17144 ~T0 @X0 1 e ]
 "69
 [; ;mcc_generated_files/tmr5.c: 69: void TMR5_Initialize(void)
 [v _TMR5_Initialize `(v ~T0 @X0 1 ef ]
@@ -2604,8 +2604,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "168
 [; ;mcc_generated_files/tmr5.c: 168:  static volatile unsigned int CountCallBack = 0;
-[v F17158 `Vui ~T0 @X0 1 s CountCallBack ]
-[i F17158
+[v F17161 `Vui ~T0 @X0 1 s CountCallBack ]
+[i F17161
 -> -> 0 `i `ui
 ]
 "171
@@ -2616,14 +2616,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _TMR5_WriteTimer (1 _timer5ReloadVal ]
 "175
 [; ;mcc_generated_files/tmr5.c: 175:  if (++CountCallBack >= (5 +V.ticker)) {
-[e $ ! >= =+ F17158 -> -> 1 `i `Vui -> + -> 5 `i -> . _V 24 `i `ui 2254  ]
+[e $ ! >= =+ F17161 -> -> 1 `i `Vui -> + -> 5 `i -> . _V 24 `i `ui 2254  ]
 {
 "177
 [; ;mcc_generated_files/tmr5.c: 177:   TMR5_CallBack();
 [e ( _TMR5_CallBack ..  ]
 "180
 [; ;mcc_generated_files/tmr5.c: 180:   CountCallBack = 0;
-[e = F17158 -> -> 0 `i `ui ]
+[e = F17161 -> -> 0 `i `ui ]
 "181
 [; ;mcc_generated_files/tmr5.c: 181:  }
 }
@@ -2642,7 +2642,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "187
 [; ;mcc_generated_files/tmr5.c: 187:  if (TMR5_InterruptHandler) {
-[e $ ! != _TMR5_InterruptHandler -> -> 0 `i `*F17160 2256  ]
+[e $ ! != _TMR5_InterruptHandler -> -> 0 `i `*F17163 2256  ]
 {
 "188
 [; ;mcc_generated_files/tmr5.c: 188:   TMR5_InterruptHandler();
@@ -2657,14 +2657,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 "192
 [; ;mcc_generated_files/tmr5.c: 192: void TMR5_SetInterruptHandler(void (* InterruptHandler)(void))
-[v _TMR5_SetInterruptHandler `(v ~T0 @X0 1 ef1`*F17162 ]
+[v _TMR5_SetInterruptHandler `(v ~T0 @X0 1 ef1`*F17165 ]
 "193
 [; ;mcc_generated_files/tmr5.c: 193: {
 {
 [e :U _TMR5_SetInterruptHandler ]
 "192
 [; ;mcc_generated_files/tmr5.c: 192: void TMR5_SetInterruptHandler(void (* InterruptHandler)(void))
-[v _InterruptHandler `*F17164 ~T0 @X0 1 r1 ]
+[v _InterruptHandler `*F17167 ~T0 @X0 1 r1 ]
 "193
 [; ;mcc_generated_files/tmr5.c: 193: {
 [f ]

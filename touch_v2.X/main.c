@@ -264,6 +264,7 @@ void main(void)
 			 */
 			if (read_cal_data()) {
 				update_cal_data();
+				update_hist_data(true, &C.hist[0]); // load EEPROM history
 				sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
 			} else {
 				sprintf(get_vterm_ptr(2, 0), "Invalid EEPROM DATA ");

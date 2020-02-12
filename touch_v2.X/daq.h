@@ -35,6 +35,7 @@
 #include "mcc_generated_files/crc.h"
 #include "timers.h"
 #include "tests.h"
+#include "vconfig.h"
 
 /*
  * adc channel configuration
@@ -125,5 +126,6 @@ bool cal_current_10A(bool, int16_t, int16_t, float, float);
 bool read_cal_data(void);
 void write_cal_data(void);
 void update_cal_data(void);
+void update_hist_data(bool, volatile hist_type*);
 #endif
 

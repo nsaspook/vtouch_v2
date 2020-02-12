@@ -28354,7 +28354,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 22 "./vconfig.h" 2
-# 109 "./vconfig.h"
+# 110 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28427,7 +28427,7 @@ void PMD_Initialize(void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 198 "./vconfig.h"
+# 199 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
@@ -28895,7 +28895,7 @@ double yn(int, double);
 
 # 1 "./tests.h" 1
 # 38 "./daq.h" 2
-# 108 "./daq.h"
+# 109 "./daq.h"
 typedef enum {
  CONV,
  O_CONV,
@@ -28916,6 +28916,7 @@ _Bool cal_current_10A(_Bool, int16_t, int16_t, float, float);
 _Bool read_cal_data(void);
 void write_cal_data(void);
 void update_cal_data(void);
+void update_hist_data(_Bool, volatile hist_type*);
 # 137 "main.c" 2
 
 # 1 "./mbmc.h" 1
@@ -29247,7 +29248,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.20");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.21");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
@@ -29269,6 +29270,7 @@ void main(void)
 
    if (read_cal_data()) {
     update_cal_data();
+    update_hist_data(1, &C.hist[0]);
     sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
    } else {
     sprintf(get_vterm_ptr(2, 0), "Invalid EEPROM DATA ");
