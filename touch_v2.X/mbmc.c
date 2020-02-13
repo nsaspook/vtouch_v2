@@ -5,7 +5,7 @@
 extern C_data C;
 extern V_data V;
 
-struct tm t_mbmc; // don't use the xc8 clock function
+//struct tm t_mbmc; // don't use the xc8 clock function, time will be save in the history structure
 volatile uint32_t utctime = 0; // utctime set from remote ntp server
 volatile struct P_data P = {
 	.SYSTEM_STABLE = false,

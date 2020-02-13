@@ -27456,134 +27456,6 @@ void INT1_DefaultInterruptHandler(void);
 
 
 
-# 1 "./mcc_generated_files/spi1.h" 1
-# 55 "./mcc_generated_files/spi1.h"
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
-# 19 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 3
-# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
-# 132 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
-typedef long ptrdiff_t;
-# 20 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 2 3
-# 55 "./mcc_generated_files/spi1.h" 2
-# 117 "./mcc_generated_files/spi1.h"
-void SPI1_Initialize(void);
-# 152 "./mcc_generated_files/spi1.h"
-uint8_t SPI1_Exchange8bit(uint8_t data);
-# 192 "./mcc_generated_files/spi1.h"
-uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 20 "mcc_generated_files/../vconfig.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 824 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 21 "mcc_generated_files/../vconfig.h" 2
-# 1 "./ringbufs.h" 1
-# 15 "./ringbufs.h"
-# 1 "./vconfig.h" 1
-# 16 "./ringbufs.h" 2
-
-
-
- typedef struct ringBufS_t {
-  uint8_t buf[64];
-  uint8_t head;
-  uint8_t tail;
-  uint8_t count;
- } ringBufS_t;
-
- void ringBufS_init(volatile ringBufS_t *_this);
- int8_t ringBufS_empty(ringBufS_t *_this);
- int8_t ringBufS_full(ringBufS_t *_this);
- uint8_t ringBufS_get(ringBufS_t *_this);
- void ringBufS_put(ringBufS_t *_this, const uint8_t c);
- void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
- void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 22 "./vconfig.h" 2
-# 110 "./vconfig.h"
- struct spi_link_type {
-  uint8_t SPI_LCD : 1;
-  uint8_t SPI_AUX : 1;
-  uint8_t LCD_TIMER : 1;
-  volatile uint8_t LCD_DATA : 1;
-  uint16_t delay;
-  uint8_t config;
-  struct ringBufS_t *tx1b, *tx1a;
-  volatile int32_t int_count;
- };
-
- typedef enum {
-  DIS_STR = 0,
-  DIS_HELP,
-  DIS_ERR,
-  DIS_CLEAR,
- } D_CODES;
-
- typedef struct terminal_type {
-  uint8_t mesgid;
-  uint8_t TID, mcode, mparm, cmdlen, log_seq;
-  uint8_t host_display_ack : 1;
-  D_CODES info, help_temp;
-  uint16_t ceid;
-  uint16_t log_num;
- } terminal_type;
-
- typedef enum {
-  UI_STATE_INIT = 0,
-  UI_STATE_HOST,
-  UI_STATE_DEBUG,
-  UI_STATE_LOG,
-  UI_STATE_MON,
-  UI_STATE_ERROR
- } UI_STATES;
-
- typedef enum {
-  SW_OFF = 0,
-  SW_ON,
-  SW_INVALID,
- } SW_STATES;
-
- typedef enum {
-  S0 = 0,
-  S1 = 1,
-  SSELECT = 2,
-  SENTER = 3,
-  SCALIB = 4,
-  S5,
-  S6,
-  SNULL,
- } SW_NAMES;
-
- typedef struct V_data {
-  UI_STATES ui_state;
-  char buf[64], info[64];
-  volatile uint32_t ticks;
-  int32_t testing;
-  uint8_t error, abort, msg_error, msg_ret, alarm;
-  UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
-  uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
-  terminal_type response;
-  volatile uint8_t ticker;
-  _Bool flipper, calib, enter, sensor_set;
-  volatile _Bool system_stable;
-  volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
- } V_data;
-
- typedef struct V_help {
-  const char message[18], display[18];
- } V_help;
-# 199 "./vconfig.h"
- typedef struct hist_type {
-  uint8_t version;
-  float peukert, cef, peukert_adj, cef_calc, cef_save;
-  uint32_t ttg_t;
-  int16_t h[13];
-  uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
-  int32_t pv_eff, tot_eff;
- } hist_type;
-# 54 "mcc_generated_files/tmr5.c" 2
-
-# 1 "mcc_generated_files/../mbmc.h" 1
-# 35 "mcc_generated_files/../mbmc.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 1 3
 # 33 "/opt/microchip/xc8/v2.10/pic/include/c99/time.h" 3
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
@@ -27682,8 +27554,136 @@ extern int daylight;
 extern long timezone;
 extern int getdate_err;
 struct tm *getdate (const char *);
-# 36 "mcc_generated_files/../mbmc.h" 2
+# 20 "mcc_generated_files/../vconfig.h" 2
+# 1 "./mcc_generated_files/spi1.h" 1
+# 55 "./mcc_generated_files/spi1.h"
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 1 3
+# 19 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 3
+# 1 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 1 3
+# 132 "/opt/microchip/xc8/v2.10/pic/include/c99/bits/alltypes.h" 3
+typedef long ptrdiff_t;
+# 20 "/opt/microchip/xc8/v2.10/pic/include/c99/stddef.h" 2 3
+# 55 "./mcc_generated_files/spi1.h" 2
+# 117 "./mcc_generated_files/spi1.h"
+void SPI1_Initialize(void);
+# 152 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bit(uint8_t data);
+# 192 "./mcc_generated_files/spi1.h"
+uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
+# 21 "mcc_generated_files/../vconfig.h" 2
+# 1 "./mcc_generated_files/pin_manager.h" 1
+# 824 "./mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+# 22 "mcc_generated_files/../vconfig.h" 2
+# 1 "./ringbufs.h" 1
+# 15 "./ringbufs.h"
+# 1 "./vconfig.h" 1
+# 16 "./ringbufs.h" 2
 
+
+
+ typedef struct ringBufS_t {
+  uint8_t buf[64];
+  uint8_t head;
+  uint8_t tail;
+  uint8_t count;
+ } ringBufS_t;
+
+ void ringBufS_init(volatile ringBufS_t *_this);
+ int8_t ringBufS_empty(ringBufS_t *_this);
+ int8_t ringBufS_full(ringBufS_t *_this);
+ uint8_t ringBufS_get(ringBufS_t *_this);
+ void ringBufS_put(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
+ void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+# 23 "./vconfig.h" 2
+# 111 "./vconfig.h"
+ struct spi_link_type {
+  uint8_t SPI_LCD : 1;
+  uint8_t SPI_AUX : 1;
+  uint8_t LCD_TIMER : 1;
+  volatile uint8_t LCD_DATA : 1;
+  uint16_t delay;
+  uint8_t config;
+  struct ringBufS_t *tx1b, *tx1a;
+  volatile int32_t int_count;
+ };
+
+ typedef enum {
+  DIS_STR = 0,
+  DIS_HELP,
+  DIS_ERR,
+  DIS_CLEAR,
+ } D_CODES;
+
+ typedef struct terminal_type {
+  uint8_t mesgid;
+  uint8_t TID, mcode, mparm, cmdlen, log_seq;
+  uint8_t host_display_ack : 1;
+  D_CODES info, help_temp;
+  uint16_t ceid;
+  uint16_t log_num;
+ } terminal_type;
+
+ typedef enum {
+  UI_STATE_INIT = 0,
+  UI_STATE_HOST,
+  UI_STATE_DEBUG,
+  UI_STATE_LOG,
+  UI_STATE_MON,
+  UI_STATE_ERROR
+ } UI_STATES;
+
+ typedef enum {
+  SW_OFF = 0,
+  SW_ON,
+  SW_INVALID,
+ } SW_STATES;
+
+ typedef enum {
+  S0 = 0,
+  S1 = 1,
+  SSELECT = 2,
+  SENTER = 3,
+  SCALIB = 4,
+  S5,
+  S6,
+  SNULL,
+ } SW_NAMES;
+
+ typedef struct V_data {
+  UI_STATES ui_state;
+  char buf[64], info[64];
+  volatile uint32_t ticks;
+  int32_t testing;
+  uint8_t error, abort, msg_error, msg_ret, alarm;
+  UI_STATES ui_sw;
+  uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
+  uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
+  terminal_type response;
+  volatile uint8_t ticker;
+  _Bool flipper, calib, enter, sensor_set;
+  volatile _Bool system_stable;
+  volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
+ } V_data;
+
+ typedef struct V_help {
+  const char message[18], display[18];
+ } V_help;
+# 200 "./vconfig.h"
+ typedef struct hist_type {
+  uint8_t version;
+  struct tm t_mbmc;
+  float peukert, cef, peukert_adj, cef_calc, cef_save;
+  uint32_t ttg_t;
+  int16_t h[13];
+  uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
+  int32_t pv_eff, tot_eff;
+ } hist_type;
+# 54 "mcc_generated_files/tmr5.c" 2
+
+# 1 "mcc_generated_files/../mbmc.h" 1
+# 37 "mcc_generated_files/../mbmc.h"
 # 1 "./daq.h" 1
 # 33 "./daq.h"
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/math.h" 1 3

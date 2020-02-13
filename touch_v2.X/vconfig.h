@@ -16,6 +16,7 @@ extern "C" {
 #endif
 
 #include <xc.h>
+#include <time.h>
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
@@ -89,7 +90,7 @@ extern "C" {
 #define LOG_WAIT	10 // data logging internval in seconds
 #define D_CODE		'2'  // data logging line code version
 #define I_CODE		'*'  // info logging line code
-	
+
 #define CAL_DELAY	64
 
 	/*
@@ -198,6 +199,7 @@ extern "C" {
 
 	typedef struct hist_type {
 		uint8_t version;
+		struct tm t_mbmc;
 		float peukert, cef, peukert_adj, cef_calc, cef_save;
 		uint32_t ttg_t;
 		int16_t h[HPARAM_SIZE]; // h[6]=cumulative battery Ah cc and inv (real),h[0]=cumulative battery Ah cc and inv (p_adj)

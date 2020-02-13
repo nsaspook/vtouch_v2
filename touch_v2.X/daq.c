@@ -312,7 +312,7 @@ uint16_t set_dac_b(const float voltage)
 /*
  * sanity check values in a range
  */
-static bool check_range(int16_t value, int16_t window, int16_t standard)
+static bool check_range(const int16_t value, const int16_t window, const int16_t standard)
 {
 	if (value > (standard + window))
 		return false;
@@ -324,7 +324,7 @@ static bool check_range(int16_t value, int16_t window, int16_t standard)
 /*
  * mode set to false for check values only, do not update
  */
-bool cal_current_zero(bool mode, int16_t cb, int16_t cp)
+bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp)
 {
 
 	if (!check_range(cb, ZERO_RANGE, C_CAL_ZERO))
@@ -345,7 +345,7 @@ bool cal_current_zero(bool mode, int16_t cb, int16_t cp)
 /*
  * update internal current scaling using a calibrated 10A flow in both sensors
  */
-bool cal_current_10A(bool mode, int16_t cb, int16_t cp, float scaleb, float scalep)
+bool cal_current_10A(const bool mode, const int16_t cb, const int16_t cp, const float scaleb, const float scalep)
 {
 	if (!check_range(cb, TEN_A_RANGE, C_CAL_A200))
 		return false;
@@ -451,8 +451,11 @@ void update_cal_data(void)
  * mode true: copy local hist data to operational history
  * mode false: copy operational history to local buffer
  */
-void update_hist_data(bool mode, volatile hist_type *hist)
+void update_hist_data(const bool mode, volatile hist_type *hist)
 {
+	if (hist == NULL)
+		return;
+
 	if (mode) {
 		if (R.hist_save)
 			R.H = *hist;
