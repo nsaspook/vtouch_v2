@@ -248,12 +248,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "127
 [; ;./daq.h: 127: void write_cal_data(void);
 [v _write_cal_data `(v ~T0 @X0 0 ef ]
-"49 ./dio.h
-[; ;./dio.h: 49: void clear_switch(uint8_t);
-[v _clear_switch `(v ~T0 @X0 0 ef1`uc ]
-"125 ./daq.h
-[; ;./daq.h: 125: _Bool cal_current_10A(_Bool, int16_t, int16_t, float, float);
-[v _cal_current_10A `(a ~T0 @X0 0 ef5`a`s`s`f`f ]
 "121 main.c
 [p n 520 ]
 "122
@@ -3804,168 +3798,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 532:  }
 }
 [e :U 2316 ]
-"535
-[; ;main.c: 535:  uint32_t cbz, cpz;
-[v _cbz `ul ~T0 @X0 1 a ]
-[v _cpz `ul ~T0 @X0 1 a ]
-"537
-[; ;main.c: 537:  clear_switch(SCALIB);
-[e ( _clear_switch (1 -> . `E17192 4 `uc ]
-"538
-[; ;main.c: 538:  sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 59C ]
-"539
-[; ;main.c: 539:  sprintf(get_vterm_ptr(1, 0), "10 Amp Sensor       ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 60C ]
-"540
-[; ;main.c: 540:  sprintf(get_vterm_ptr(2, 0), "Calibration         ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 61C ]
-"541
-[; ;main.c: 541:  update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
-"542
-[; ;main.c: 542:  WaitMs(2000);
-[e ( _WaitMs (1 -> -> 2000 `i `us ]
-"543
-[; ;main.c: 543:  x = 0;
-[e = _x -> -> 0 `i `uc ]
-"544
-[; ;main.c: 544:  do {
-[e :U 2319 ]
-{
-"545
-[; ;main.c: 545:   if (++x > 64)
-[e $ ! > -> =+ _x -> -> 1 `i `uc `i -> 64 `i 2320  ]
-"546
-[; ;main.c: 546:    return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2307  ]
-[e :U 2320 ]
-"547
-[; ;main.c: 547:   sprintf(get_vterm_ptr(2, 0), "Press button %c  ", spinners(4, 0));
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 62C -> ( _spinners (2 , -> -> 4 `i `uc -> -> 0 `i `uc `i ]
-"548
-[; ;main.c: 548:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
-"549
-[; ;main.c: 549:   WaitMs(100);
-[e ( _WaitMs (1 -> -> 100 `i `us ]
-"550
-[; ;main.c: 550:  } while (!get_switch(SCALIB));
-}
-[e $ ! != -> ( _get_switch (1 -> . `E17192 4 `uc `ui -> -> 0 `i `ui 2319  ]
-[e :U 2318 ]
-"552
-[; ;main.c: 552:  x = 0;
-[e = _x -> -> 0 `i `uc ]
-"553
-[; ;main.c: 553:  cbz = cb;
-[e = _cbz _cb ]
-"554
-[; ;main.c: 554:  cpz = cp;
-[e = _cpz _cp ]
-"555
-[; ;main.c: 555:  cb = 0;
-[e = _cb -> -> -> 0 `i `l `ul ]
-"556
-[; ;main.c: 556:  cp = 0;
-[e = _cp -> -> -> 0 `i `l `ul ]
-"557
-[; ;main.c: 557:  do {
-[e :U 2323 ]
-{
-"558
-[; ;main.c: 558:   cb += get_raw_result(C_BATT);
-[e =+ _cb -> ( _get_raw_result (1 . `E16640 0 `ul ]
-"559
-[; ;main.c: 559:   cp += get_raw_result(C_PV);
-[e =+ _cp -> ( _get_raw_result (1 . `E16640 1 `ul ]
-"560
-[; ;main.c: 560:   sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 63C ]
-"561
-[; ;main.c: 561:   sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 64C -> ( _get_raw_result (1 . `E16640 0 `ui -> ( _get_raw_result (1 . `E16640 1 `ui ]
-"562
-[; ;main.c: 562:   sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 65C -> _x `i ]
-"563
-[; ;main.c: 563:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
-"564
-[; ;main.c: 564:   clear_adc_scan();
-[e ( _clear_adc_scan ..  ]
-"565
-[; ;main.c: 565:   start_adc_scan();
-[e ( _start_adc_scan ..  ]
-"566
-[; ;main.c: 566:   WaitMs(100);
-[e ( _WaitMs (1 -> -> 100 `i `us ]
-"567
-[; ;main.c: 567:  } while (++x < 64);
-}
-[e $ < -> =+ _x -> -> 1 `i `uc `i -> 64 `i 2323  ]
-[e :U 2322 ]
-"568
-[; ;main.c: 568:  cb = cb >> 6;
-[e = _cb >> _cb -> 6 `i ]
-"569
-[; ;main.c: 569:  cp = cp >> 6;
-[e = _cp >> _cp -> 6 `i ]
-"571
-[; ;main.c: 571:  if (cal_current_10A(0, cb, cp, 0.0, 0.0)) {
-[e $ ! != -> ( _cal_current_10A (4 , , , , -> -> 0 `i `a -> _cb `s -> _cp `s -> .0.0 `f -> .0.0 `f `i -> 0 `i 2324  ]
-{
-"572
-[; ;main.c: 572:   cal_current_10A(1, cb, cp, 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
-[e ( _cal_current_10A (4 , , , , -> -> 1 `i `a -> _cb `s -> _cp `s -> / .10.0 -> -> - _cb _cbz `f `d `f -> / .10.0 -> -> - _cp _cpz `f `d `f ]
-"573
-[; ;main.c: 573:   sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 66C ]
-"574
-[; ;main.c: 574:   sprintf(get_vterm_ptr(1, 0), " %f %f              ", 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 67C / .10.0 -> -> - _cb _cbz `f `d / .10.0 -> -> - _cp _cpz `f `d ]
-"575
-[; ;main.c: 575:   sprintf(get_vterm_ptr(2, 0), "10A Cal Set         ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 68C ]
-"576
-[; ;main.c: 576:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
-"577
-[; ;main.c: 577:   WaitMs(5000);
-[e ( _WaitMs (1 -> -> 5000 `i `us ]
-"578
-[; ;main.c: 578:   write_cal_data();
-[e ( _write_cal_data ..  ]
-"579
-[; ;main.c: 579:  } else {
-}
-[e $U 2325  ]
-[e :U 2324 ]
-{
-"580
-[; ;main.c: 580:   sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 69C ]
-"581
-[; ;main.c: 581:   sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 70C -> ( _get_raw_result (1 . `E16640 0 `ui -> ( _get_raw_result (1 . `E16640 1 `ui ]
-"582
-[; ;main.c: 582:   sprintf(get_vterm_ptr(2, 0), "10A Out Of Range    ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 71C ]
-"583
-[; ;main.c: 583:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
-"584
-[; ;main.c: 584:   WaitMs(2000);
-[e ( _WaitMs (1 -> -> 2000 `i `us ]
-"585
-[; ;main.c: 585:   return 0;
-[e ) -> -> 0 `i `a ]
-[e $UE 2307  ]
-"586
-[; ;main.c: 586:  }
-}
-[e :U 2325 ]
 "589
 [; ;main.c: 589:  return 1;
 [e ) -> -> 1 `i `a ]
@@ -3979,10 +3811,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 24C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 0 ]
 [a 9C 73 110 118 97 108 105 100 32 69 69 80 82 79 77 32 68 65 84 65 32 0 ]
 [a 52C 83 116 97 98 105 108 105 116 121 32 99 108 111 99 107 32 37 100 32 32 0 ]
-[a 65C 83 116 97 98 105 108 105 116 121 32 99 108 111 99 107 32 37 100 32 32 0 ]
 [a 22C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
 [a 23C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 0 ]
-[a 62C 80 114 101 115 115 32 98 117 116 116 111 110 32 37 99 32 32 0 ]
 [a 49C 82 101 108 101 97 115 101 32 98 117 116 116 111 110 32 37 99 32 32 0 ]
 [a 58C 90 101 114 111 32 79 117 116 32 79 102 32 82 97 110 103 101 32 32 32 0 ]
 [a 43C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
@@ -3992,10 +3822,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 31C 80 86 32 37 50 46 50 102 32 80 65 32 37 50 46 50 102 32 32 32 32 0 ]
 [a 33C 67 86 32 37 50 46 50 102 32 76 65 32 37 50 46 50 102 32 32 32 32 0 ]
 [a 32C 66 86 32 37 50 46 50 102 32 66 65 32 37 50 46 50 102 32 32 32 32 0 ]
-[a 71C 49 48 65 32 79 117 116 32 79 102 32 82 97 110 103 101 32 32 32 32 0 ]
 [a 8C 82 101 97 100 32 69 69 80 82 79 77 32 68 65 84 65 32 32 32 32 0 ]
 [a 50C 83 101 110 115 111 114 32 82 101 97 100 105 110 103 115 32 32 32 32 32 0 ]
-[a 63C 83 101 110 115 111 114 32 82 101 97 100 105 110 103 115 32 32 32 32 32 0 ]
 [a 13C 66 97 116 116 101 114 121 32 65 104 32 37 51 46 50 102 32 32 32 32 32 0 ]
 [a 38C 66 65 72 32 37 51 46 50 102 32 80 37 51 46 50 102 32 32 32 32 32 32 0 ]
 [a 25C 80 86 32 37 99 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 0 ]
@@ -4003,11 +3831,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 46C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 0 ]
 [a 53C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 0 ]
 [a 56C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 0 ]
-[a 59C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 0 ]
-[a 66C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 0 ]
-[a 69C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 0 ]
 [a 1C 32 77 66 77 67 32 83 79 76 65 82 77 79 78 32 32 32 32 32 32 0 ]
-[a 60C 49 48 32 65 109 112 32 83 101 110 115 111 114 32 32 32 32 32 32 32 0 ]
 [a 26C 76 79 65 68 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 27C 73 78 86 32 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 28C 80 86 32 37 99 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
@@ -4022,11 +3846,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 35C 66 65 84 32 79 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
 [a 34C 66 65 84 32 73 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 0 ]
 [a 12C 83 116 97 116 105 99 32 83 79 67 32 37 100 32 32 32 32 32 32 32 32 0 ]
-[a 68C 49 48 65 32 67 97 108 32 83 101 116 32 32 32 32 32 32 32 32 32 0 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 32 32 32 32 32 32 32 32 32 0 ]
 [a 47C 83 101 110 115 111 114 32 90 101 114 111 32 32 32 32 32 32 32 32 32 0 ]
 [a 48C 67 97 108 105 98 114 97 116 105 111 110 32 32 32 32 32 32 32 32 32 0 ]
-[a 61C 67 97 108 105 98 114 97 116 105 111 110 32 32 32 32 32 32 32 32 32 0 ]
 [a 16C 67 97 108 99 117 108 97 116 105 111 110 32 32 32 32 32 32 32 32 32 0 ]
 [a 15C 66 97 116 116 101 114 121 32 69 83 82 32 32 32 32 32 32 32 32 32 0 ]
 [a 11C 83 32 83 37 99 67 32 37 100 32 37 50 46 52 102 32 32 32 32 32 32 32 32 32 32 0 ]
@@ -4038,10 +3860,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 10C 66 86 32 37 50 46 52 102 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 54C 32 37 108 100 32 37 108 100 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 57C 32 37 108 100 32 37 108 100 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 70C 32 37 108 100 32 37 108 100 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 67C 32 37 102 32 37 102 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 51C 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 64C 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 14C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 5C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 6C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
