@@ -42,6 +42,7 @@
 #define BANKAH	225.0	// baatery bank label Ah
 #define DEGRADE	100.0	// adjust to what the battery bank Ah really is
 #define SSLICE	3600.0	// samples per hour
+#define DUPDATE 14400 // after dark update time offset
 
 #define BLOAD1		10.0       	// load resistor in ohms
 #define BLOAD2		2.5       	// ditto
@@ -73,8 +74,8 @@ typedef struct C_data { // real calculated variables
 	bool update;
 	hist_type hist[1];
 	float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
-	bool day;
-	uint32_t day_start, day_end;
+	bool day, dupdate;
+	uint32_t day_start, day_end, day_update, updates;
 } C_data;
 
 typedef struct P_data {
@@ -117,6 +118,7 @@ void set_load_relay_two(bool);
 void set_ac_charger_relay(bool);
 bool get_ac_charger_relay(void);
 bool check_day_time(void);
+void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
 

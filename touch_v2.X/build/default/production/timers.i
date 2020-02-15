@@ -27639,7 +27639,7 @@ void PIN_MANAGER_Initialize (void);
   uint8_t version;
   struct tm t_mbmc;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
-  uint32_t ttg_t;
+  uint32_t ttg_t, updates;
   int16_t h[13];
   uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
   int32_t pv_eff, tot_eff;

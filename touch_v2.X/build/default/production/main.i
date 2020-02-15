@@ -28531,7 +28531,7 @@ struct tm *getdate (const char *);
   uint8_t version;
   struct tm t_mbmc;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
-  uint32_t ttg_t;
+  uint32_t ttg_t, updates;
   int16_t h[13];
   uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
   int32_t pv_eff, tot_eff;
@@ -29020,7 +29020,7 @@ void update_hist_data(_Bool, volatile hist_type*);
 # 137 "main.c" 2
 
 # 1 "./mbmc.h" 1
-# 65 "./mbmc.h"
+# 66 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
@@ -29032,8 +29032,8 @@ typedef struct C_data {
  _Bool update;
  hist_type hist[1];
  float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
- _Bool day;
- uint32_t day_start, day_end;
+ _Bool day, dupdate;
+ uint32_t day_start, day_end, day_update, updates;
 } C_data;
 
 typedef struct P_data {
@@ -29076,6 +29076,7 @@ void set_load_relay_two(_Bool);
 void set_ac_charger_relay(_Bool);
 _Bool get_ac_charger_relay(void);
 _Bool check_day_time(void);
+void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
 # 138 "main.c" 2
@@ -29185,6 +29186,12 @@ volatile C_data C = {
  .hist[0].version = 1,
  .hist[0].cef = 1.0,
  .hist[0].peukert = 1.0,
+ .hist[0].updates = 0,
+ .day_start = 0,
+ .day_end = 0,
+ .day_update = 0,
+ .dupdate = 0,
+ .updates = 0,
 };
 
 extern volatile struct P_data P;
@@ -29367,6 +29374,17 @@ void main(void)
     set_display_info(DIS_STR);
    }
    calc_model_data();
+   if (C.dupdate) {
+    C.dupdate = 0;
+    load_hist_data();
+    update_hist_data(0, &C.hist[0]);
+    write_cal_data();
+    sprintf(get_vterm_ptr(0, 0), "History Data  Saved ");
+    sprintf(get_vterm_ptr(1, 0), "To EEPROM           ");
+    sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu      ", V.ticks, C.hist[0].updates);
+    update_lcd(0);
+    WaitMs(2000);
+   }
 
    if (0) {
     sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
@@ -29538,6 +29556,6 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 589 "main.c"
+# 606 "main.c"
  return 1;
 }

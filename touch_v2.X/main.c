@@ -177,6 +177,12 @@ volatile C_data C = {
 	.hist[0].version = HVER,
 	.hist[0].cef = CEF,
 	.hist[0].peukert = PEUKERT,
+	.hist[0].updates = 0,
+	.day_start = 0,
+	.day_end = 0,
+	.day_update = 0,
+	.dupdate = false,
+	.updates = 0,
 };
 
 extern volatile struct P_data P;
@@ -359,6 +365,17 @@ void main(void)
 				set_display_info(DIS_STR);
 			}
 			calc_model_data();
+			if (C.dupdate) {
+				C.dupdate = false;
+				load_hist_data(); // calculate history data
+				update_hist_data(false, &C.hist[0]); // load EEPROM history buffer
+				write_cal_data(); // save updated history to EEPROM
+				sprintf(get_vterm_ptr(0, 0), "History Data  Saved ");
+				sprintf(get_vterm_ptr(1, 0), "To EEPROM           ");
+				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu      ", V.ticks, C.hist[0].updates);
+				update_lcd(0);
+				WaitMs(2000);
+			}
 
 			if (false) {
 				sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));

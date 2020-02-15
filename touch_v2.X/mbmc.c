@@ -70,6 +70,7 @@ void calc_model_data(void)
 	stop_bsoc();
 
 	if (!V.calib) {
+		C.updates++;
 		C.c_bat = C.calc[C_BATT];
 		C.bc_ror = C.c_bat - bcror;
 		bcror = C.c_bat;
@@ -161,6 +162,7 @@ char spinners(uint8_t shape, const uint8_t reset)
 /*
  * should be called every second in the time keeper task
  * returns true at dusk or dawn switch-over
+ * checks for EEPROM updates with 24hr history
  */
 bool check_day_time(void)
 {
@@ -168,6 +170,15 @@ bool check_day_time(void)
 	float light;
 
 	light = conv_raw_result(V_LIGHT_SENSOR, CONV);
+	/*
+	 * history eeprom update
+	 */
+	if (C.day_update) {
+		if (V.ticks >= C.day_update) {
+			C.day_update = 0; // set to trigger time to false
+			C.dupdate = true; // trigger a EEPROM history write
+		}
+	}
 
 	if (!day_delay++ && V.system_stable) {
 		if (C.soc > SOC_CRITICAL) {
@@ -184,6 +195,7 @@ bool check_day_time(void)
 				if (light < DUSK_VOLTS) {
 					C.day = false;
 					C.day_end = V.ticks;
+					C.day_update = C.day_end + DUPDATE; // set up trigger time
 					/*
 					 * at low battery condition charge with AC at night
 					 */
@@ -204,4 +216,14 @@ bool check_day_time(void)
 	if (day_delay >= DAY_DELAY)
 		day_delay = 0;
 	return false;
+}
+
+/*
+ * calculate history data buffer from current program data
+ */
+void load_hist_data(void)
+{
+	stop_bsoc();
+	C.hist[0].updates++;
+	start_bsoc();
 }
