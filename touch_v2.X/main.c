@@ -141,6 +141,7 @@ typedef signed long long int24_t;
 #include "bsoc.h"
 
 V_data V = {
+	.ticks = DEF_TIME,
 	.ticker = 45,
 	.checksum_error = 0,
 	.all_errors = 0,
@@ -186,8 +187,10 @@ volatile C_data C = {
 };
 
 extern volatile struct P_data P;
+struct tm *t_mbmc;
 
 static bool current_sensor_cal(void);
+static bool display_history(void);
 
 /*
  * Main application
@@ -438,6 +441,7 @@ void main(void)
 			}
 			set_vterm(V.screen);
 			update_lcd(V.screen);
+			display_history();
 
 			wait_lcd_done();
 			set_dac_a(3.333);
@@ -604,6 +608,28 @@ static bool current_sensor_cal(void)
 #endif
 
 	return true;
+}
+
+static bool display_history(void)
+{
+	static uint8_t bwait = 0;
+	time_t clock = V.ticks;
+
+	if (get_switch(SCALIB) && (++bwait > 5)) {
+		t_mbmc = localtime(&clock);
+		sprintf(get_vterm_ptr(0, 0), "History 3           ");
+		sprintf(get_vterm_ptr(1, 0), "History 3           ");
+		sprintf(get_vterm_ptr(2, 0), "History 3           ");
+		sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
+		update_lcd(0);
+		WaitMs(2000);
+		bwait = 0;
+		return true;
+	} else {
+		if (!get_switch(SCALIB))
+			bwait = 0;
+		return false;
+	}
 }
 
 /**

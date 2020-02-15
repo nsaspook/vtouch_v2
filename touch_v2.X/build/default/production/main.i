@@ -28453,7 +28453,7 @@ struct tm *getdate (const char *);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 112 "./vconfig.h"
+# 113 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28526,7 +28526,7 @@ struct tm *getdate (const char *);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 201 "./vconfig.h"
+# 202 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   struct tm t_mbmc;
@@ -29150,6 +29150,7 @@ float esr_check(uint8_t);
 
 
 V_data V = {
+ .ticks = 1581777306,
  .ticker = 45,
  .checksum_error = 0,
  .all_errors = 0,
@@ -29195,8 +29196,10 @@ volatile C_data C = {
 };
 
 extern volatile struct P_data P;
+struct tm *t_mbmc;
 
 static _Bool current_sensor_cal(void);
+static _Bool display_history(void);
 
 
 
@@ -29447,6 +29450,7 @@ void main(void)
    }
    set_vterm(V.screen);
    update_lcd(V.screen);
+   display_history();
 
    wait_lcd_done();
    set_dac_a(3.333);
@@ -29556,6 +29560,28 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 606 "main.c"
+# 610 "main.c"
  return 1;
+}
+
+static _Bool display_history(void)
+{
+ static uint8_t bwait = 0;
+ time_t clock = V.ticks;
+
+ if (get_switch(SCALIB) && (++bwait > 5)) {
+  t_mbmc = localtime(&clock);
+  sprintf(get_vterm_ptr(0, 0), "History 3           ");
+  sprintf(get_vterm_ptr(1, 0), "History 3           ");
+  sprintf(get_vterm_ptr(2, 0), "History 3           ");
+  sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
+  update_lcd(0);
+  WaitMs(2000);
+  bwait = 0;
+  return 1;
+ } else {
+  if (!get_switch(SCALIB))
+   bwait = 0;
+  return 0;
+ }
 }

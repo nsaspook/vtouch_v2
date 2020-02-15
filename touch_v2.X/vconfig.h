@@ -51,6 +51,7 @@ extern "C" {
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
+#define DEF_TIME	1581777306
 
 #define SLED	LED0_LAT
 #define DLED	DEBUG2_LAT
