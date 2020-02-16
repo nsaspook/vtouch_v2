@@ -150,7 +150,6 @@ V_data V = {
 	.help_id = 0,
 	.sequences = 0,
 	.set_sequ = false,
-	.highint_count = 0,
 	.lowint_count = 0,
 	.timerint_count = 0,
 	.calib = CALIB,
@@ -361,10 +360,6 @@ void main(void)
 			StartTimer(TMR_ADC, ADC_SCAN_SPEED);
 		}
 
-		if (V.ticks) {
-
-		}
-
 		if (TimerDone(TMR_DISPLAY)) { // limit update rate
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
@@ -377,7 +372,7 @@ void main(void)
 				write_cal_data(); // save updated history to EEPROM
 				sprintf(get_vterm_ptr(0, 0), "History Data  Saved ");
 				sprintf(get_vterm_ptr(1, 0), "To EEPROM           ");
-				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu      ", V.ticks, C.hist[0].updates);
+				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu      ", time(NULL), C.hist[0].updates);
 				update_lcd(0);
 				WaitMs(2000);
 			}

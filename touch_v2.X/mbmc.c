@@ -174,7 +174,7 @@ bool check_day_time(void)
 	 * history eeprom update
 	 */
 	if (C.day_update) {
-		if (V.ticks >= C.day_update) {
+		if (time(NULL) >= C.day_update) {
 			C.day_update = 0; // set to trigger time to false
 			C.dupdate = true; // trigger a EEPROM history write
 		}
@@ -185,7 +185,7 @@ bool check_day_time(void)
 			if (!C.day) {
 				if (light > DAWN_VOLTS) {
 					C.day = true;
-					C.day_start = V.ticks;
+					C.day_start = time(NULL);
 					if (get_ac_charger_relay()) { // USE PV charging during the day
 						set_ac_charger_relay(false);
 					}
@@ -194,7 +194,7 @@ bool check_day_time(void)
 			} else {
 				if (light < DUSK_VOLTS) {
 					C.day = false;
-					C.day_end = V.ticks;
+					C.day_end = time(NULL);
 					C.day_update = C.day_end + DUPDATE; // set up trigger time
 					/*
 					 * at low battery condition charge with AC at night

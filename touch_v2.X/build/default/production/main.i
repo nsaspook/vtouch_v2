@@ -28511,7 +28511,7 @@ struct tm *getdate (const char *);
   UI_STATES ui_state;
   char buf[64], info[64];
   volatile uint32_t ticks;
-  int32_t testing;
+  volatile int8_t testing;
   uint8_t error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
@@ -28520,11 +28520,11 @@ struct tm *getdate (const char *);
   volatile uint8_t ticker;
   _Bool flipper, calib, enter, sensor_set;
   volatile _Bool system_stable;
-  volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
+  volatile uint32_t lowint_count, timerint_count;
  } V_data;
 
  typedef struct V_help {
-  const char message[18], display[18];
+  const char message[22], display[22];
  } V_help;
 # 204 "./vconfig.h"
  typedef struct hist_type {
@@ -29160,7 +29160,6 @@ V_data V = {
  .help_id = 0,
  .sequences = 0,
  .set_sequ = 0,
- .highint_count = 0,
  .lowint_count = 0,
  .timerint_count = 0,
  .calib = 0,
@@ -29371,10 +29370,6 @@ void main(void)
    StartTimer(TMR_ADC, 200);
   }
 
-  if (V.ticks) {
-
-  }
-
   if (TimerDone(TMR_DISPLAY)) {
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
@@ -29387,7 +29382,7 @@ void main(void)
     write_cal_data();
     sprintf(get_vterm_ptr(0, 0), "History Data  Saved ");
     sprintf(get_vterm_ptr(1, 0), "To EEPROM           ");
-    sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu      ", V.ticks, C.hist[0].updates);
+    sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu      ", time(((void*)0)), C.hist[0].updates);
     update_lcd(0);
     WaitMs(2000);
    }
@@ -29563,7 +29558,7 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 612 "main.c"
+# 607 "main.c"
  return 1;
 }
 

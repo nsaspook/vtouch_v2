@@ -27632,7 +27632,7 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   UI_STATES ui_state;
   char buf[64], info[64];
   volatile uint32_t ticks;
-  int32_t testing;
+  volatile int8_t testing;
   uint8_t error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
@@ -27641,11 +27641,11 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
   volatile uint8_t ticker;
   _Bool flipper, calib, enter, sensor_set;
   volatile _Bool system_stable;
-  volatile uint32_t highint_count, lowint_count, eeprom_count, timerint_count;
+  volatile uint32_t lowint_count, timerint_count;
  } V_data;
 
  typedef struct V_help {
-  const char message[18], display[18];
+  const char message[22], display[22];
  } V_help;
 # 204 "./vconfig.h"
  typedef struct hist_type {
