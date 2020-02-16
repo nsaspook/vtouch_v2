@@ -27918,13 +27918,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 59 "./mcc_generated_files/mcc.h" 2
 
-# 1 "./mcc_generated_files/pwm8.h" 1
-# 102 "./mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "./mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 60 "./mcc_generated_files/mcc.h" 2
-
 # 1 "./mcc_generated_files/tmr3.h" 1
 # 101 "./mcc_generated_files/tmr3.h"
 void TMR3_Initialize(void);
@@ -27950,6 +27943,13 @@ void TMR3_CallBack(void);
 extern void (*TMR3_InterruptHandler)(void);
 # 422 "./mcc_generated_files/tmr3.h"
 void TMR3_DefaultInterruptHandler(void);
+# 60 "./mcc_generated_files/mcc.h" 2
+
+# 1 "./mcc_generated_files/pwm8.h" 1
+# 102 "./mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "./mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 61 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr2.h" 1
@@ -28453,7 +28453,7 @@ struct tm *getdate (const char *);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 113 "./vconfig.h"
+# 115 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28526,7 +28526,7 @@ struct tm *getdate (const char *);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 202 "./vconfig.h"
+# 204 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   struct tm t_mbmc;
@@ -28596,7 +28596,7 @@ void mode_lamp_bright(void);
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
 typedef struct D_data {
-    char lcd[4][3][40];
+    char lcd[4][4][40];
     uint8_t vterm : 1;
     D_CODES last_info;
 } D_data;
@@ -29079,6 +29079,7 @@ _Bool check_day_time(void);
 void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
+time_t time (time_t *);
 # 138 "main.c" 2
 
 # 1 "./dio.h" 1
@@ -29260,11 +29261,13 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.22");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.23");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
+   sprintf(get_vterm_ptr(3, 0), "                    ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
    sprintf(get_vterm_ptr(2, 2), "                    ");
+   sprintf(get_vterm_ptr(3, 2), "                    ");
    update_lcd(0);
    WaitMs(1000);
    StartTimer(TMR_DISPLAY, 250);
@@ -29560,14 +29563,14 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 610 "main.c"
+# 612 "main.c"
  return 1;
 }
 
 static _Bool display_history(void)
 {
  static uint8_t bwait = 0;
- time_t clock = V.ticks;
+ time_t clock = time(((void*)0));
 
  if (get_switch(SCALIB) && (++bwait > 5)) {
   t_mbmc = localtime(&clock);

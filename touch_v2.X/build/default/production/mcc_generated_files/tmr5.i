@@ -27597,7 +27597,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 113 "./vconfig.h"
+# 115 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27670,7 +27670,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[18], display[18];
  } V_help;
-# 202 "./vconfig.h"
+# 204 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   struct tm t_mbmc;
@@ -28211,6 +28211,7 @@ _Bool check_day_time(void);
 void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
+time_t time (time_t *);
 # 55 "mcc_generated_files/tmr5.c" 2
 
 

@@ -27715,13 +27715,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 59 "mcc_generated_files/mcc.h" 2
 
-# 1 "mcc_generated_files/pwm8.h" 1
-# 102 "mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 60 "mcc_generated_files/mcc.h" 2
-
 # 1 "mcc_generated_files/tmr3.h" 1
 # 101 "mcc_generated_files/tmr3.h"
 void TMR3_Initialize(void);
@@ -27747,6 +27740,13 @@ void TMR3_CallBack(void);
 extern void (*TMR3_InterruptHandler)(void);
 # 422 "mcc_generated_files/tmr3.h"
 void TMR3_DefaultInterruptHandler(void);
+# 60 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/pwm8.h" 1
+# 102 "mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 61 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/tmr2.h" 1
@@ -28135,8 +28135,8 @@ void SYSTEM_Initialize(void)
     FVR_Initialize();
     CRC_Initialize();
     ADCC_Initialize();
-    PWM8_Initialize();
     TMR2_Initialize();
+    PWM8_Initialize();
     EXT_INT_Initialize();
     TMR6_Initialize();
     TMR3_Initialize();

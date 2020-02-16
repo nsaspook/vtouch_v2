@@ -39,7 +39,7 @@ bool help_button(void)
 
 bool check_help(const bool flipper)
 {
-	bool estatus=false;
+	bool estatus = false;
 	/*
 	 * show help display
 	 */
@@ -63,7 +63,7 @@ bool check_help(const bool flipper)
 		StartTimer(TMR_INFO, TDELAY);
 		mode_lamp_bright(); // mode switch indicator lamp 'button' level
 		update_lcd(1);
-		estatus=true;
+		estatus = true;
 	} else {
 		if (TimerDone(TMR_HELPDIS)) {
 			set_vterm(0);
@@ -92,12 +92,15 @@ uint8_t update_lcd(uint8_t vterm)
 	D.lcd[vterm][0][MAX_LINE] = 0;
 	D.lcd[vterm][1][MAX_LINE] = 0;
 	D.lcd[vterm][2][MAX_LINE] = 0;
+	D.lcd[vterm][3][MAX_LINE] = 0;
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(0, 0, D.lcd[vterm][0]);
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(1, 0, D.lcd[vterm][1]);
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(2, 0, D.lcd[vterm][2]);
+	wait_lcd_done();
+	eaDogM_WriteStringAtPos(3, 0, D.lcd[vterm][3]);
 	return D.vterm;
 }
 
@@ -129,6 +132,9 @@ void vterm_dump(void)
 	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(2, 0), get_vterm_ptr(2, 1));
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(2, 0, V.buf);
+	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(3, 0), get_vterm_ptr(3, 1));
+	wait_lcd_done();
+	eaDogM_WriteStringAtPos(3, 0, V.buf);
 	WaitMs(3000);
 }
 

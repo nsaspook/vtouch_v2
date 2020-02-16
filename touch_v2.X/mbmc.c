@@ -227,3 +227,15 @@ void load_hist_data(void)
 	C.hist[0].updates++;
 	start_bsoc();
 }
+
+time_t time(time_t * t)
+{
+	static time_t current_time;
+	PIE8bits.TMR5IE = 0;
+	current_time = V.ticks;
+	PIE8bits.TMR5IE = 1;
+	if (t) {
+		t = &current_time;
+	}
+	return current_time;
+}

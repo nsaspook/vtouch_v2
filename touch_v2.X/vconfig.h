@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.22"
+#define VER	"1.23"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -48,6 +48,8 @@ extern "C" {
 	 * 1.20 optional 10A calibration
 	 * 1.21 history tracking in EEPROM
 	 * 1.21 history update in EEPROM
+	 * 1.23 line 4 display issues with history display functions, temp fix is to set MAX_LINE to 19
+	 *      need to work on this for a correct fix. review LCD_addressing.pdf in host_board folder
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -101,7 +103,7 @@ extern "C" {
 
 #define TX_RESERVE	59
 #ifdef  NHD
-#define MAX_LINE	20
+#define MAX_LINE	19 // setting this to 20 causes 20*4 LCD display problems
 #else
 #define MAX_LINE	16
 #endif

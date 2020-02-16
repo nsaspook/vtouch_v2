@@ -40,7 +40,7 @@
 #include "timers.h"
 
 typedef struct D_data { // control data structure 
-    char lcd[4][3][40];
+    char lcd[4][4][40];
     uint8_t vterm : 1;
     D_CODES last_info;
 } D_data;

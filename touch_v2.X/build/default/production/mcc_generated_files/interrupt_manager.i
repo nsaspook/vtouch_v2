@@ -27716,13 +27716,6 @@ extern void (*TMR6_InterruptHandler)(void);
 void TMR6_DefaultInterruptHandler(void);
 # 59 "mcc_generated_files/mcc.h" 2
 
-# 1 "mcc_generated_files/pwm8.h" 1
-# 102 "mcc_generated_files/pwm8.h"
- void PWM8_Initialize(void);
-# 129 "mcc_generated_files/pwm8.h"
- void PWM8_LoadDutyValue(uint16_t dutyValue);
-# 60 "mcc_generated_files/mcc.h" 2
-
 # 1 "mcc_generated_files/tmr3.h" 1
 # 101 "mcc_generated_files/tmr3.h"
 void TMR3_Initialize(void);
@@ -27748,6 +27741,13 @@ void TMR3_CallBack(void);
 extern void (*TMR3_InterruptHandler)(void);
 # 422 "mcc_generated_files/tmr3.h"
 void TMR3_DefaultInterruptHandler(void);
+# 60 "mcc_generated_files/mcc.h" 2
+
+# 1 "mcc_generated_files/pwm8.h" 1
+# 102 "mcc_generated_files/pwm8.h"
+ void PWM8_Initialize(void);
+# 129 "mcc_generated_files/pwm8.h"
+ void PWM8_LoadDutyValue(uint16_t dutyValue);
 # 61 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/tmr2.h" 1
@@ -28157,9 +28157,9 @@ void INTERRUPT_Initialize (void)
     IPR5bits.INT1IP = 0;
     IPR9bits.TMR6IP = 1;
     IPR8bits.TMR5IP = 0;
-    IPR6bits.TMR3IP = 0;
     IPR1bits.ADIP = 1;
     IPR1bits.ADTIP = 1;
+    IPR6bits.TMR3IP = 0;
 }
 
 void __attribute__((picinterrupt(("irq(default),base(8)")))) Default_ISR()

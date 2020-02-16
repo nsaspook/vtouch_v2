@@ -121,5 +121,5 @@ bool check_day_time(void);
 void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
-
+time_t time (time_t *);
 #endif

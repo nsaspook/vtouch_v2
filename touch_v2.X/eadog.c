@@ -207,7 +207,7 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 		row = 0x54;
 		break;
 	case 3:
-		row = 0x1;
+		row = 0x01;
 		break;
 	default:
 		row = 0x40;

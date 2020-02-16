@@ -253,9 +253,11 @@ void main(void)
 			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
 			sprintf(get_vterm_ptr(1, 0), " Version %s         ", VER);
 			sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
+			sprintf(get_vterm_ptr(3, 0), "                    ");
 			sprintf(get_vterm_ptr(0, 2), "                    ");
 			sprintf(get_vterm_ptr(1, 2), "                    ");
 			sprintf(get_vterm_ptr(2, 2), "                    ");
+			sprintf(get_vterm_ptr(3, 2), "                    ");
 			update_lcd(0);
 			WaitMs(1000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -613,7 +615,7 @@ static bool current_sensor_cal(void)
 static bool display_history(void)
 {
 	static uint8_t bwait = 0;
-	time_t clock = V.ticks;
+	time_t clock = time(NULL);
 
 	if (get_switch(SCALIB) && (++bwait > 5)) {
 		t_mbmc = localtime(&clock);
