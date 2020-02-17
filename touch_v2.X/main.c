@@ -277,7 +277,7 @@ void main(void)
 				update_cal_data();
 				if (update_hist_data(true, &C.hist[0]))
 					set_time(C.hist[0].pclock); // load EEPROM time history
-				
+
 				sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
 			} else {
 				sprintf(get_vterm_ptr(2, 0), "Invalid EEPROM DATA ");
@@ -288,7 +288,7 @@ void main(void)
 			i_ror = 1;
 			do {
 				calc_ror_data();
-				sprintf(get_vterm_ptr(1, 0), "BV %2.4f            ", conv_raw_result(V_BAT, CONV));
+				sprintf(get_vterm_ptr(1, 0), "BV %2.4f             ", conv_raw_result(V_BAT, CONV));
 				sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f          ", spinners(5, false), i_ror, C.bv_ror);
 				update_lcd(0);
 				clear_adc_scan();
@@ -302,14 +302,14 @@ void main(void)
 			init_bsoc(); // system calculations
 			set_load_relay_one(false);
 			set_load_relay_two(false);
-			sprintf(get_vterm_ptr(0, 0), "Static SOC %d        ", C.soc);
-			sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f     ", C.dynamic_ah);
-			sprintf(get_vterm_ptr(2, 0), "                     ");
+			sprintf(get_vterm_ptr(0, 0), "Static SOC %d         ", C.soc);
+			sprintf(get_vterm_ptr(1, 0), "Battery Ah %3.2f      ", C.dynamic_ah);
+			sprintf(get_vterm_ptr(2, 0), "                      ");
 			update_lcd(0);
 			WaitMs(2000);
-			sprintf(get_vterm_ptr(0, 0), "Battery ESR         ");
-			sprintf(get_vterm_ptr(1, 0), "Calculation         ");
-			sprintf(get_vterm_ptr(2, 0), "Check 30 seconds    ");
+			sprintf(get_vterm_ptr(0, 0), "Battery ESR          ");
+			sprintf(get_vterm_ptr(1, 0), "Calculation          ");
+			sprintf(get_vterm_ptr(2, 0), "Check 30 seconds     ");
 			update_lcd(0);
 			uint16_t i_esr = 1;
 			uint8_t shape = 0;
@@ -317,15 +317,15 @@ void main(void)
 			while ((esr_temp = esr_check(false)) < 0.0) {
 				WaitMs(110); // limit display updates
 				shape = (uint8_t) fabs(esr_temp);
-				sprintf(get_vterm_ptr(2, 0), "Checking %c %c      ", spinners(0, false), spinners(shape, false));
+				sprintf(get_vterm_ptr(2, 0), "Checking %c %c       ", spinners(0, false), spinners(shape, false));
 				update_lcd(0);
 
 				if (i_esr++ > 512)
 					break;
 			};
-			sprintf(get_vterm_ptr(0, 0), "ESR  %2.6f           ", C.esr);
-			sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f           ", C.bv_one_load, C.load_i1);
-			sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f           ", C.bv_full_load, C.load_i2);
+			sprintf(get_vterm_ptr(0, 0), "ESR  %2.6f            ", C.esr);
+			sprintf(get_vterm_ptr(1, 0), "R1 %2.3f %3.4f            ", C.bv_one_load, C.load_i1);
+			sprintf(get_vterm_ptr(2, 0), "R2 %2.3f %3.4f            ", C.bv_full_load, C.load_i2);
 			update_lcd(0);
 			WaitMs(4000);
 			V.sensor_set = get_switch(SCALIB);
@@ -377,49 +377,49 @@ void main(void)
 				load_hist_data(); // calculate history data
 				update_hist_data(false, &C.hist[0]); // load EEPROM history buffer
 				write_cal_data(); // save updated history to EEPROM
-				sprintf(get_vterm_ptr(0, 0), "History Data  Saved ");
-				sprintf(get_vterm_ptr(1, 0), "To EEPROM           ");
-				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu      ", time(NULL), C.hist[0].updates);
+				sprintf(get_vterm_ptr(0, 0), "History Data  Saved  ");
+				sprintf(get_vterm_ptr(1, 0), "To EEPROM            ");
+				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu       ", time(NULL), C.hist[0].updates);
 				update_lcd(0);
 				WaitMs(2000);
 			}
 
 			if (false) {
-				sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d  ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-				sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d  ", get_raw_result(j), C.calc[j], get_switch(SENTER));
-				sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   #", get_raw_result(k), C.calc[k], inp_index);
+				sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d   ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+				sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d   ", get_raw_result(j), C.calc[j], get_switch(SENTER));
+				sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   # ", get_raw_result(k), C.calc[k], inp_index);
 			} else {
 				hid_display(&H);
 				switch (H.hid_display) {
 				case HID_PWR:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f      ", (C.day) ? 'D' : ' ', C.p_pv);
-					sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f       ", C.p_load);
-					sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f       ", C.p_inverter);
+					sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
+					sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f        ", C.p_load);
+					sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f        ", C.p_inverter);
 
-					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f       ", (C.day) ? 'D' : ' ', C.pvkw);
-					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f        ", C.loadkw);
-					sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f        ", C.invkw);
+					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f        ", (C.day) ? 'D' : ' ', C.pvkw);
+					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f         ", C.loadkw);
+					sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f         ", C.invkw);
 					break;
 				case HID_MAIN:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f    ", C.calc[V_PV], C.calc[C_PV]);
-					sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f    ", C.calc[V_BAT], C.calc[C_BATT]);
-					sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f    ", C.calc[V_CC], C.c_load);
+					sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f     ", C.calc[V_PV], C.calc[C_PV]);
+					sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f     ", C.calc[V_BAT], C.calc[C_BATT]);
+					sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f     ", C.calc[V_CC], C.c_load);
 
-					sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f        ", C.bkwi);
-					sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f        ", C.bkwo);
-					sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f        ", C.bkwi + C.bkwo);
+					sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f         ", C.bkwi);
+					sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f         ", C.bkwo);
+					sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f         ", C.bkwi + C.bkwo);
 					break;
 				case HID_RUN:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f        ", C.p_bat);
-					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f      ", C.dynamic_ah, C.pv_ah);
-					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f       ", spinners(5, false), C.soc, C.runtime, C.calc[V_BAT]);
+					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f         ", C.p_bat);
+					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f       ", C.dynamic_ah, C.pv_ah);
+					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f        ", spinners(5, false), C.soc, C.runtime, C.calc[V_BAT]);
 
-					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f            ", C.esr);
-					sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f        ", C.bv_one_load, C.load_i1);
-					sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f        ", C.bv_full_load, C.load_i2);
+					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f             ", C.esr);
+					sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f         ", C.bv_one_load, C.load_i1);
+					sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f         ", C.bv_full_load, C.load_i2);
 					break;
 				case HID_AUX:
 					if (!V.calib) {
@@ -511,15 +511,15 @@ static bool current_sensor_cal(void)
 	uint8_t x = 0;
 	uint32_t cb = 0, cp = 0;
 
-	sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-	sprintf(get_vterm_ptr(1, 0), "Sensor Zero         ");
-	sprintf(get_vterm_ptr(2, 0), "Calibration         ");
+	sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+	sprintf(get_vterm_ptr(1, 0), "Sensor Zero          ");
+	sprintf(get_vterm_ptr(2, 0), "Calibration          ");
 	update_lcd(0);
 	WaitMs(2000);
 	do {
 		if (++x > CAL_DELAY)
 			return false;
-		sprintf(get_vterm_ptr(2, 0), "Release button %c  ", spinners(4, false));
+		sprintf(get_vterm_ptr(2, 0), "Release button %c   ", spinners(4, false));
 		update_lcd(0);
 		WaitMs(100);
 	} while (get_switch(SCALIB));
@@ -528,9 +528,9 @@ static bool current_sensor_cal(void)
 	do {
 		cb += get_raw_result(C_BATT);
 		cp += get_raw_result(C_PV);
-		sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
-		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
-		sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
+		sprintf(get_vterm_ptr(0, 0), "Sensor Readings      ");
+		sprintf(get_vterm_ptr(1, 0), " %d %d               ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(2, 0), "Stability clock %d   ", x);
 		update_lcd(0);
 		clear_adc_scan();
 		start_adc_scan();
@@ -541,16 +541,16 @@ static bool current_sensor_cal(void)
 
 	if (cal_current_zero(false, cb, cp)) {
 		cal_current_zero(true, cb, cp);
-		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", cb, cp);
-		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set        ");
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", cb, cp);
+		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set         ");
 		update_lcd(0);
 		WaitMs(2000);
 		write_cal_data();
 	} else {
-		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
-		sprintf(get_vterm_ptr(2, 0), "Zero Out Of Range   ");
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(2, 0), "Zero Out Of Range    ");
 		update_lcd(0);
 		WaitMs(2000);
 		return false;
@@ -569,7 +569,7 @@ static bool current_sensor_cal(void)
 	do {
 		if (++x > CAL_DELAY)
 			return false;
-		sprintf(get_vterm_ptr(2, 0), "Press button %c  ", spinners(4, false));
+		sprintf(get_vterm_ptr(2, 0), "Press button %c   ", spinners(4, false));
 		update_lcd(0);
 		WaitMs(100);
 	} while (!get_switch(SCALIB));
@@ -582,9 +582,9 @@ static bool current_sensor_cal(void)
 	do {
 		cb += get_raw_result(C_BATT);
 		cp += get_raw_result(C_PV);
-		sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
-		sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
-		sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
+		sprintf(get_vterm_ptr(0, 0), "Sensor Readings      ");
+		sprintf(get_vterm_ptr(1, 0), " %d %d               ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(2, 0), "Stability clock %d   ", x);
 		update_lcd(0);
 		clear_adc_scan();
 		start_adc_scan();
@@ -595,16 +595,16 @@ static bool current_sensor_cal(void)
 
 	if (cal_current_10A(false, cb, cp, 0.0, 0.0)) {
 		cal_current_10A(true, cb, cp, 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
-		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-		sprintf(get_vterm_ptr(1, 0), " %f %f              ", 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
-		sprintf(get_vterm_ptr(2, 0), "10A Cal Set         ");
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+		sprintf(get_vterm_ptr(1, 0), " %f %f               ", 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+		sprintf(get_vterm_ptr(2, 0), "10A Cal Set          ");
 		update_lcd(0);
 		WaitMs(5000);
 		write_cal_data();
 	} else {
-		sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
-		sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
-		sprintf(get_vterm_ptr(2, 0), "10A Out Of Range    ");
+		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(2, 0), "10A Out Of Range     ");
 		update_lcd(0);
 		WaitMs(2000);
 		return false;
