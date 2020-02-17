@@ -27564,7 +27564,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 115 "./vconfig.h"
+# 116 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27637,7 +27637,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[22], display[22];
  } V_help;
-# 204 "./vconfig.h"
+# 205 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   struct tm t_mbmc;
@@ -28032,7 +28032,7 @@ void send_lcd_data_dma(const uint8_t strPtr)
  DMA1CON0bits.EN = 0;
  DMA1SSZ = 1;
  DMA1CON0bits.EN = 1;
- printf("%c", strPtr);
+ ringBufS_put_dma(spi_link.tx1a, strPtr);
  start_lcd();
 }
 
@@ -28051,7 +28051,7 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
   row = 0x54;
   break;
  case 3:
-  row = 0x01;
+  row = 0x00;
   break;
  default:
   row = 0x40;
@@ -28060,7 +28060,6 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
  send_lcd_cmd_dma(0x45);
  send_lcd_data_dma(row + c);
  wait_lcd_done();
- wdtdelay(8);
  eaDogM_WriteString(strPtr);
 }
 
@@ -28083,7 +28082,7 @@ void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
 {
 
 }
-# 385 "eadog.c"
+# 384 "eadog.c"
 void eaDogM_WriteCommand(const uint8_t cmd)
 {
  send_lcd_cmd_dma(cmd);

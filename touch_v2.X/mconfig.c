@@ -140,18 +140,18 @@ void vterm_dump(void)
 
 void vterm_sequence(void)
 {
-	sprintf(get_vterm_ptr(2, 2), " Mesg %d Stack %d      ", V.msg_error, V.stack);
+	sprintf(get_vterm_ptr(2, 2), " Mesg %d Stack %d        ", V.msg_error, V.stack);
 	switch (V.response.info) {
 	case DIS_HELP:
-		sprintf(get_vterm_ptr(0, 1), "HELP %s           ", build_date);
-		sprintf(get_vterm_ptr(1, 1), "DISPLAY %s        ", build_time);
+		sprintf(get_vterm_ptr(0, 1), "HELP %s             ", build_date);
+		sprintf(get_vterm_ptr(1, 1), "DISPLAY %s          ", build_time);
 		break;
 	case DIS_CLEAR:
 	default:
-		sprintf(get_vterm_ptr(0, 0), "                  ");
-		sprintf(get_vterm_ptr(1, 0), "                  ");
-		sprintf(get_vterm_ptr(0, 2), "                  ");
-		sprintf(get_vterm_ptr(1, 2), "                  ");
+		sprintf(get_vterm_ptr(0, 0), "                    ");
+		sprintf(get_vterm_ptr(1, 0), "                    ");
+		sprintf(get_vterm_ptr(0, 2), "                    ");
+		sprintf(get_vterm_ptr(1, 2), "                    ");
 		break;
 	}
 }

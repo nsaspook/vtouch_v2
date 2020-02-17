@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.23"
+#define VER	"1.24"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -50,6 +50,7 @@ extern "C" {
 	 * 1.21 history update in EEPROM
 	 * 1.23 line 4 display issues with history display functions, temp fix is to set MAX_LINE to 19
 	 *      need to work on this for a correct fix. review LCD_addressing.pdf in host_board folder
+	 * 1.24 fix lcd problems, was trying to send a 0x00 using printf
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -103,7 +104,7 @@ extern "C" {
 
 #define TX_RESERVE	59
 #ifdef  NHD
-#define MAX_LINE	19 // setting this to 20 causes 20*4 LCD display problems
+#define MAX_LINE	20
 #else
 #define MAX_LINE	16
 #endif
@@ -186,17 +187,17 @@ extern "C" {
 	} V_help;
 
 	/*		hist[x].h[x]
-	 *		h0	Peukert Factor adjusted Ah usage this cycle, MUST BE INTERGER variable type!
+	 *		h0	Peukert Factor adjusted Ah usage this cycle
 	 *		h1	Lowest discharge ever,
 	 *		h2	current lowest discharge,
 	 *		h3	avg discharge
 	 *		h4	Number of full charge cycles, 
 	 *		h5	Number of full discharge cycles
-	 *		h6	Real Ah usage this cycle, 	MUST BE INTERGER variable type!
+	 *		h6	Real Ah usage this cycle
 	 *		h7	Min Batt Voltage
 	 *		h8	Max Batt Voltage
-	 *		h9	Lowest ESR Pre
-	 *		h10	Lowest ESR Post
+	 *		h9	Highest ESR
+	 *		h10	Lowest ESR
 	 *		h11	Total charge cycles
 	 *		h12	Total kWH in
 	 */

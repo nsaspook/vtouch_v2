@@ -188,7 +188,7 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
 	DMA1SSZ = 1;
 	DMA1CON0bits.EN = 1; /* enable DMA */
-	printf("%c", strPtr); // testing copy method using STDIO redirect to buffer
+	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
 	start_lcd();
 }
 
@@ -207,7 +207,7 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 		row = 0x54;
 		break;
 	case 3:
-		row = 0x01;
+		row = 0x00;
 		break;
 	default:
 		row = 0x40;
@@ -216,7 +216,6 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 	send_lcd_cmd_dma(0x45);
 	send_lcd_data_dma(row + c);
 	wait_lcd_done();
-	wdtdelay(8);
 	eaDogM_WriteString(strPtr);
 }
 
@@ -444,6 +443,6 @@ bool wait_lcd_check(void)
 void wait_lcd_done(void)
 {
 	while (spi_link.LCD_DATA);
-	while (!SPI1STATUSbits.TXBE); 
+	while (!SPI1STATUSbits.TXBE);
 	wdtdelay(50);
 }

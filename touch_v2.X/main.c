@@ -187,6 +187,7 @@ volatile C_data C = {
 
 extern volatile struct P_data P;
 struct tm *t_mbmc;
+time_t pclock;
 
 static bool current_sensor_cal(void);
 static bool display_history(void);
@@ -364,6 +365,9 @@ void main(void)
 			if (TimerDone(TMR_HELPDIS)) {
 				set_display_info(DIS_STR);
 			}
+			pclock = time(NULL);
+			t_mbmc = localtime(&pclock);
+			sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
 			calc_model_data();
 			if (C.dupdate) {
 				C.dupdate = false;
@@ -610,13 +614,13 @@ static bool current_sensor_cal(void)
 static bool display_history(void)
 {
 	static uint8_t bwait = 0;
-	time_t clock = time(NULL);
 
 	if (get_switch(SCALIB) && (++bwait > 5)) {
-		t_mbmc = localtime(&clock);
-		sprintf(get_vterm_ptr(0, 0), "History 3           ");
-		sprintf(get_vterm_ptr(1, 0), "History 3           ");
-		sprintf(get_vterm_ptr(2, 0), "History 3           ");
+		pclock = time(NULL);
+		t_mbmc = localtime(&pclock);
+		sprintf(get_vterm_ptr(0, 0), "%d %d %d %d                ", C.hist[0].h[0], C.hist[0].h[1], C.hist[0].h[2], C.hist[0].h[3]);
+		sprintf(get_vterm_ptr(1, 0), "%d %d %d %d                ", C.hist[0].h[4], C.hist[0].h[5], C.hist[0].h[6], C.hist[0].h[7]);
+		sprintf(get_vterm_ptr(2, 0), "%d %d %d %d                ", C.hist[0].h[8], C.hist[0].h[9], C.hist[0].h[10], C.hist[0].h[12]);
 		sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
 		update_lcd(0);
 		WaitMs(2000);

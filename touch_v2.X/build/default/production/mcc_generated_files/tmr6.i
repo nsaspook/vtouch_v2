@@ -27309,9 +27309,10 @@ typedef int32_t int_fast32_t;
 typedef uint32_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
 # 140 "/opt/microchip/xc8/v2.10/pic/include/c99/stdint.h" 2 3
-# 55 "mcc_generated_files/tmr6.h" 2
+# 54 "mcc_generated_files/tmr6.h" 2
+
 # 1 "/opt/microchip/xc8/v2.10/pic/include/c99/stdbool.h" 1 3
-# 56 "mcc_generated_files/tmr6.h" 2
+# 55 "mcc_generated_files/tmr6.h" 2
 # 79 "mcc_generated_files/tmr6.h"
 typedef enum
 {
@@ -27812,7 +27813,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 115 "./vconfig.h"
+# 116 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27885,7 +27886,7 @@ void PIN_MANAGER_Initialize (void);
  typedef struct V_help {
   const char message[22], display[22];
  } V_help;
-# 204 "./vconfig.h"
+# 205 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   struct tm t_mbmc;

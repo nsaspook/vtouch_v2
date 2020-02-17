@@ -28453,7 +28453,7 @@ struct tm *getdate (const char *);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 23 "./vconfig.h" 2
-# 115 "./vconfig.h"
+# 116 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28526,7 +28526,7 @@ struct tm *getdate (const char *);
  typedef struct V_help {
   const char message[22], display[22];
  } V_help;
-# 204 "./vconfig.h"
+# 205 "./vconfig.h"
  typedef struct hist_type {
   uint8_t version;
   struct tm t_mbmc;
@@ -29197,6 +29197,7 @@ volatile C_data C = {
 
 extern volatile struct P_data P;
 struct tm *t_mbmc;
+time_t pclock;
 
 static _Bool current_sensor_cal(void);
 static _Bool display_history(void);
@@ -29260,7 +29261,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.23");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.24");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(3, 0), "                    ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
@@ -29374,6 +29375,9 @@ void main(void)
    if (TimerDone(TMR_HELPDIS)) {
     set_display_info(DIS_STR);
    }
+   pclock = time(((void*)0));
+   t_mbmc = localtime(&pclock);
+   sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
    calc_model_data();
    if (C.dupdate) {
     C.dupdate = 0;
@@ -29558,20 +29562,75 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 607 "main.c"
+
+
+ uint32_t cbz, cpz;
+
+ clear_switch(SCALIB);
+ sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+ sprintf(get_vterm_ptr(1, 0), "10 Amp Sensor       ");
+ sprintf(get_vterm_ptr(2, 0), "Calibration         ");
+ update_lcd(0);
+ WaitMs(2000);
+ x = 0;
+ do {
+  if (++x > 64)
+   return 0;
+  sprintf(get_vterm_ptr(2, 0), "Press button %c  ", spinners(4, 0));
+  update_lcd(0);
+  WaitMs(100);
+ } while (!get_switch(SCALIB));
+
+ x = 0;
+ cbz = cb;
+ cpz = cp;
+ cb = 0;
+ cp = 0;
+ do {
+  cb += get_raw_result(C_BATT);
+  cp += get_raw_result(C_PV);
+  sprintf(get_vterm_ptr(0, 0), "Sensor Readings     ");
+  sprintf(get_vterm_ptr(1, 0), " %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV));
+  sprintf(get_vterm_ptr(2, 0), "Stability clock %d  ", x);
+  update_lcd(0);
+  clear_adc_scan();
+  start_adc_scan();
+  WaitMs(100);
+ } while (++x < 64);
+ cb = cb >> 6;
+ cp = cp >> 6;
+
+ if (cal_current_10A(0, cb, cp, 0.0, 0.0)) {
+  cal_current_10A(1, cb, cp, 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+  sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+  sprintf(get_vterm_ptr(1, 0), " %f %f              ", 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+  sprintf(get_vterm_ptr(2, 0), "10A Cal Set         ");
+  update_lcd(0);
+  WaitMs(5000);
+  write_cal_data();
+ } else {
+  sprintf(get_vterm_ptr(0, 0), "Battery and PV      ");
+  sprintf(get_vterm_ptr(1, 0), " %ld %ld            ", get_raw_result(C_BATT), get_raw_result(C_PV));
+  sprintf(get_vterm_ptr(2, 0), "10A Out Of Range    ");
+  update_lcd(0);
+  WaitMs(2000);
+  return 0;
+ }
+
+
  return 1;
 }
 
 static _Bool display_history(void)
 {
  static uint8_t bwait = 0;
- time_t clock = time(((void*)0));
 
  if (get_switch(SCALIB) && (++bwait > 5)) {
-  t_mbmc = localtime(&clock);
-  sprintf(get_vterm_ptr(0, 0), "History 3           ");
-  sprintf(get_vterm_ptr(1, 0), "History 3           ");
-  sprintf(get_vterm_ptr(2, 0), "History 3           ");
+  pclock = time(((void*)0));
+  t_mbmc = localtime(&pclock);
+  sprintf(get_vterm_ptr(0, 0), "%d %d %d %d                ", C.hist[0].h[0], C.hist[0].h[1], C.hist[0].h[2], C.hist[0].h[3]);
+  sprintf(get_vterm_ptr(1, 0), "%d %d %d %d                ", C.hist[0].h[4], C.hist[0].h[5], C.hist[0].h[6], C.hist[0].h[7]);
+  sprintf(get_vterm_ptr(2, 0), "%d %d %d %d                ", C.hist[0].h[8], C.hist[0].h[9], C.hist[0].h[10], C.hist[0].h[12]);
   sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
   update_lcd(0);
   WaitMs(2000);

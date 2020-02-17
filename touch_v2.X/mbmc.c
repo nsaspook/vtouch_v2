@@ -5,7 +5,7 @@
 extern C_data C;
 extern V_data V;
 
-struct tm *t_mbmc; // don't use the xc8 clock function, time will be save in the history structure
+struct tm *t_mbmc; // don't use the xc8 clock function, time will be saved in the history structure
 volatile uint32_t utctime = 0; // utctime set from remote ntp server
 volatile struct P_data P = {
 	.SYSTEM_STABLE = false,
@@ -223,8 +223,19 @@ bool check_day_time(void)
  */
 void load_hist_data(void)
 {
+	int16_t esr_rescale;
+
 	stop_bsoc();
+	esr_rescale = (int16_t) (C.esr * 1000.0);
 	C.hist[0].updates++;
+	C.hist[0].h[12] += (int16_t) (C.pvkw / 10.0);
+	C.hist[0].h[11]++;
+	C.hist[10].h[10] = esr_rescale;
+	C.hist[10].h[9] = esr_rescale;
+	C.hist[0].h[6] = C.dynamic_ah;
+	C.hist[0].h[0] = C.dynamic_ah_adj;
+	C.dynamic_ah = 0.0;
+	C.dynamic_ah_adj = 0.0;
 	start_bsoc();
 }
 
