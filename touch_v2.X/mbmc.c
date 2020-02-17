@@ -234,6 +234,7 @@ void load_hist_data(void)
 	C.hist[10].h[9] = esr_rescale;
 	C.hist[0].h[6] = C.dynamic_ah;
 	C.hist[0].h[0] = C.dynamic_ah_adj;
+	C.hist[0].pclock = time(NULL);
 	C.dynamic_ah = 0.0;
 	C.dynamic_ah_adj = 0.0;
 	start_bsoc();
@@ -249,4 +250,11 @@ time_t time(time_t * t)
 		t = &current_time;
 	}
 	return current_time;
+}
+
+void set_time(time_t t)
+{
+	PIE8bits.TMR5IE = 0;
+	V.ticks=t;
+	PIE8bits.TMR5IE = 1;
 }

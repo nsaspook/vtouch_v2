@@ -275,7 +275,9 @@ void main(void)
 			 */
 			if (read_cal_data()) {
 				update_cal_data();
-				update_hist_data(true, &C.hist[0]); // load EEPROM history
+				if (update_hist_data(true, &C.hist[0]))
+					set_time(C.hist[0].pclock); // load EEPROM time history
+				
 				sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
 			} else {
 				sprintf(get_vterm_ptr(2, 0), "Invalid EEPROM DATA ");
@@ -371,6 +373,7 @@ void main(void)
 			calc_model_data();
 			if (C.dupdate) {
 				C.dupdate = false;
+				set_hist_flag();
 				load_hist_data(); // calculate history data
 				update_hist_data(false, &C.hist[0]); // load EEPROM history buffer
 				write_cal_data(); // save updated history to EEPROM

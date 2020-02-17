@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.24"
+#define VER	"1.25"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -50,7 +50,8 @@ extern "C" {
 	 * 1.21 history update in EEPROM
 	 * 1.23 line 4 display issues with history display functions, temp fix is to set MAX_LINE to 19
 	 *      need to work on this for a correct fix. review LCD_addressing.pdf in host_board folder
-	 * 1.24 fix lcd problems, was trying to send a 0x00 using printf
+	 * 1.24 fix LCD problems, was trying to send a 0x00 using printf
+	 * 1.25 load time_t date from saved EEPROM history if valid
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -204,7 +205,7 @@ extern "C" {
 
 	typedef struct hist_type {
 		uint8_t version;
-		struct tm t_mbmc;
+		time_t pclock;
 		float peukert, cef, peukert_adj, cef_calc, cef_save;
 		uint32_t ttg_t, updates;
 		int16_t h[HPARAM_SIZE]; // h[6]=cumulative battery Ah cc and inv (real),h[0]=cumulative battery Ah cc and inv (p_adj)

@@ -34,6 +34,7 @@ typedef struct R_data { // internal variables
 	bool done;
 	hist_type H;
 	uint8_t hist_save : 1;
+	uint8_t hist_update : 1;
 	uint8_t c_zero_cal : 1;
 	uint8_t c_scale_cal : 1;
 	uint16_t checkmark;
@@ -54,6 +55,7 @@ static volatile R_data R = {
 	.c_scale_cal = false,
 	.c_zero_cal = false,
 	.hist_save = false,
+	.hist_update = false,
 };
 
 static void adc_int_handler(void);
@@ -451,17 +453,26 @@ void update_cal_data(void)
  * mode true: copy local hist data to operational history
  * mode false: copy operational history to local buffer
  */
-void update_hist_data(const bool mode, volatile hist_type *hist)
+bool update_hist_data(const bool mode, volatile hist_type *hist)
 {
 	if (hist == NULL)
-		return;
+		return false;
 
 	if (mode) {
-		if (R.hist_save)
+		if (R.hist_save) {
 			R.H = *hist;
+			if (R.hist_update) { // we should have a valid history time to load
+				return true;
+			}
+		}
 	} else {
 		*hist = R.H;
 		R.hist_save = true;
 	}
+	return false;
+}
 
+void set_hist_flag(void)
+{
+	R.hist_update=true;
 }

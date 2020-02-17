@@ -74,7 +74,7 @@
 #define EE_CHECKMARK	0x1957
 #define TATE		0x42
 
-#define CAL_10A
+//#define CAL_10A
 
 /*
  * conversion constants
@@ -126,6 +126,7 @@ bool cal_current_10A(bool, int16_t, int16_t, float, float);
 bool read_cal_data(void);
 void write_cal_data(void);
 void update_cal_data(void);
-void update_hist_data(bool, volatile hist_type*);
+bool update_hist_data(bool, volatile hist_type*);
+void set_hist_flag(void);
 #endif
 
