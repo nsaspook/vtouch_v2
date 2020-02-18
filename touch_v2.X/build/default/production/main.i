@@ -29287,7 +29287,7 @@ void main(void)
 
    if (read_cal_data()) {
     update_cal_data();
-    if (update_hist_data(1, &C.hist[0]))
+    if (update_hist_data(1, &C.hist[0]) && (C.hist[0].pclock > time(((void*)0))))
      set_time(C.hist[0].pclock);
 
     sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
@@ -29511,6 +29511,7 @@ void main(void)
     set_vterm(0);
     update_lcd(0);
    } else {
+
     set_vterm(2);
     update_lcd(2);
    }
@@ -29619,6 +29620,7 @@ static _Bool current_sensor_cal(void)
   sprintf(get_vterm_ptr(2, 0), "10A Out Of Range     ");
   update_lcd(0);
   WaitMs(2000);
+
   return 0;
  }
 
