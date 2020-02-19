@@ -42,6 +42,7 @@
 //#define DEBUG_SWH2
 #define DEBUG_BSOC1 // battery run calculations
 #define DEBUG_BSOC2
+#define DEBUG_HIST1
 #endif
 
 #define CALIB	false

@@ -460,13 +460,13 @@ bool update_hist_data(const bool mode, volatile hist_type *hist)
 
 	if (mode) {
 		if (R.hist_save) {
-			R.H = *hist;
+			*hist = R.H;
 			if (R.hist_update) { // we should have a valid history time to load
 				return true;
 			}
 		}
 	} else {
-		*hist = R.H;
+		R.H = *hist;
 		R.hist_save = true;
 	}
 	return false;
@@ -474,5 +474,5 @@ bool update_hist_data(const bool mode, volatile hist_type *hist)
 
 void set_hist_flag(void)
 {
-	R.hist_update=true;
+	R.hist_update = true;
 }

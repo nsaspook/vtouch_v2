@@ -42,7 +42,12 @@
 #define BANKAH	225.0	// baatery bank label Ah
 #define DEGRADE	100.0	// adjust to what the battery bank Ah really is
 #define SSLICE	3600.0	// samples per hour
+
+#ifdef DEBUG_HIST1
+#define DUPDATE 600 // after dark update time offset
+#else
 #define DUPDATE 14400 // after dark update time offset
+#endif
 
 #define BLOAD1		10.0       	// load resistor in ohms
 #define BLOAD2		2.5       	// ditto
@@ -121,6 +126,6 @@ bool check_day_time(void);
 void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
-time_t time (time_t *);
+time_t time(time_t *);
 void set_time(time_t t);
 #endif

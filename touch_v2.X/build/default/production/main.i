@@ -29021,7 +29021,7 @@ void set_hist_flag(void);
 # 137 "main.c" 2
 
 # 1 "./mbmc.h" 1
-# 66 "./mbmc.h"
+# 71 "./mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
@@ -29080,7 +29080,7 @@ _Bool check_day_time(void);
 void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
-time_t time (time_t *);
+time_t time(time_t *);
 void set_time(time_t t);
 # 138 "main.c" 2
 
@@ -29153,7 +29153,7 @@ float esr_check(uint8_t);
 
 
 V_data V = {
- .ticks = 1581777306,
+ .ticks = 1582073758,
  .ticker = 45,
  .checksum_error = 0,
  .all_errors = 0,
@@ -29263,7 +29263,7 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.25");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.26");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(3, 0), "                    ");
    sprintf(get_vterm_ptr(0, 2), "                    ");

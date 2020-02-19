@@ -28153,7 +28153,7 @@ void update_cal_data(void);
 _Bool update_hist_data(_Bool, volatile hist_type*);
 void set_hist_flag(void);
 # 38 "mcc_generated_files/../mbmc.h" 2
-# 66 "mcc_generated_files/../mbmc.h"
+# 71 "mcc_generated_files/../mbmc.h"
 typedef struct C_data {
  float calc[16];
  float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
@@ -28212,7 +28212,7 @@ _Bool check_day_time(void);
 void load_hist_data(void);
 
 char spinners(uint8_t, uint8_t);
-time_t time (time_t *);
+time_t time(time_t *);
 void set_time(time_t t);
 # 55 "mcc_generated_files/tmr5.c" 2
 

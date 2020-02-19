@@ -30,8 +30,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./vconfig.h: 206:  typedef struct hist_type {
 [s S2242 `uc 1 `o 1 `f 1 `f 1 `f 1 `f 1 `f 1 `ul 1 `ul 1 `s -> 13 `i `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `l 1 `l 1 ]
 [n S2242 hist_type version pclock peukert cef peukert_adj cef_calc cef_save ttg_t updates h rate udod bsoc bound_rate bound_factor samplei sampleo ah drate esr rest_rate rest_factor esrp pv_eff tot_eff ]
-"66 ./mbmc.h
-[; ;./mbmc.h: 66: typedef struct C_data {
+"71 ./mbmc.h
+[; ;./mbmc.h: 71: typedef struct C_data {
 [s S2244 `f -> 16 `i `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `f 1 `us 1 `us 1 `a 1 `S2242 -> -> 1 `i `ux `f 1 `f 1 `f 1 `f 1 `f 1 `a 1 `a 1 `ul 1 `ul 1 `ul 1 `ul 1 ]
 [n S2244 C_data calc c_load c_bat c_pv v_cc v_pv v_bat v_cbus v_bbat v_temp v_inverter v_sensor bv_ror bc_ror p_load p_inverter p_pv p_bat t_comp esr bank_ah dynamic_ah pv_ah loadah dynamic_ah_adj bkwi bkwo pvkw invkw loadkw runtime soc update hist load_i1 load_i2 bv_noload bv_one_load bv_full_load day dupdate day_start day_end day_update updates ]
 "40 /opt/microchip/xc8/v2.10/pic/include/c99/time.h
@@ -109,11 +109,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 "121 ./daq.h
 [; ;./daq.h: 121: void set_dac(void);
 [v _set_dac `(v ~T0 @X0 0 ef ]
-"116 ./mbmc.h
-[; ;./mbmc.h: 116: void set_load_relay_one(_Bool);
+"121 ./mbmc.h
+[; ;./mbmc.h: 121: void set_load_relay_one(_Bool);
 [v _set_load_relay_one `(v ~T0 @X0 0 ef1`a ]
-"117
-[; ;./mbmc.h: 117: void set_load_relay_two(_Bool);
+"122
+[; ;./mbmc.h: 122: void set_load_relay_two(_Bool);
 [v _set_load_relay_two `(v ~T0 @X0 0 ef1`a ]
 "40 /opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h
 [; ;/opt/microchip/xc8/v2.10/pic/include/c99/stdlib.h: 40: void srand (unsigned);
@@ -151,14 +151,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "129
 [; ;./daq.h: 129: _Bool update_hist_data(_Bool, volatile hist_type*);
 [v _update_hist_data `(a ~T0 @X0 0 ef2`a`*VS2242 ]
-"124 ./mbmc.h
-[; ;./mbmc.h: 124: time_t time (time_t *);
+"129 ./mbmc.h
+[; ;./mbmc.h: 129: time_t time(time_t *);
 [v _time `(o ~T0 @X0 0 ef1`*o ]
-"125
-[; ;./mbmc.h: 125: void set_time(time_t t);
+"130
+[; ;./mbmc.h: 130: void set_time(time_t t);
 [v _set_time `(v ~T0 @X0 0 ef1`o ]
-"114
-[; ;./mbmc.h: 114: void calc_ror_data(void);
+"119
+[; ;./mbmc.h: 119: void calc_ror_data(void);
 [v _calc_ror_data `(v ~T0 @X0 0 ef ]
 "291 main.c
 [; ;main.c: 291:     sprintf(get_vterm_ptr(1, 0), "BV %2.4f             ", conv_raw_result(V_BAT, CONV));
@@ -167,14 +167,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "119 ./daq.h
 [; ;./daq.h: 119: float conv_raw_result(const adcc_channel_t, const adc_conv_t);
 [v _conv_raw_result `(f ~T0 @X0 0 ef2`CE16640`CE17784 ]
-"123 ./mbmc.h
-[; ;./mbmc.h: 123: char spinners(uint8_t, uint8_t);
+"128 ./mbmc.h
+[; ;./mbmc.h: 128: char spinners(uint8_t, uint8_t);
 [v _spinners `(uc ~T0 @X0 0 ef2`uc`uc ]
 "116 ./daq.h
 [; ;./daq.h: 116: void clear_adc_scan(void);
 [v _clear_adc_scan `(v ~T0 @X0 0 ef ]
-"115 ./mbmc.h
-[; ;./mbmc.h: 115: void static_soc(void);
+"120 ./mbmc.h
+[; ;./mbmc.h: 120: void static_soc(void);
 [v _static_soc `(v ~T0 @X0 0 ef ]
 "70 ./bsoc.h
 [; ;./bsoc.h: 70: void init_bsoc(void);
@@ -199,8 +199,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "192
 [; ;main.c: 192: static _Bool current_sensor_cal(void);
 [v _current_sensor_cal `(a ~T0 @X0 0 sf ]
-"81 ./mbmc.h
-[; ;./mbmc.h: 81: typedef struct P_data {
+"86 ./mbmc.h
+[; ;./mbmc.h: 86: typedef struct P_data {
 [s S2245 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
 [n S2245 P_data BCHECK TIMERFLAG PRIPOWEROK FORCEOUT WORKERFLAG CHARGEROVERRIDE FAILSAFE MORNING_HELP SYSTEM_STABLE HOLD_PROC POWER_UNSTABLE B2 B3 B4 SET_BATT BLANK_LCD STATIC_SOC SET_CEF D_UPDATE GLITCH_CHECK FORCEDAY COOLING UPDATE_EEP RESET_ZEROS SAVE_DAILY SETBATT_SOC SYNCSOC ]
 "188 main.c
@@ -212,8 +212,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "115 ./daq.h
 [; ;./daq.h: 115: _Bool check_adc_scan(void);
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
-"112 ./mbmc.h
-[; ;./mbmc.h: 112: void convert_adc_data(void);
+"117 ./mbmc.h
+[; ;./mbmc.h: 117: void convert_adc_data(void);
 [v _convert_adc_data `(v ~T0 @X0 0 ef ]
 "58 ./mydisplay.h
 [; ;./mydisplay.h: 58: D_CODES set_display_info(const D_CODES);
@@ -224,14 +224,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "61
 [; ;/opt/microchip/xc8/v2.10/pic/include/c99/time.h: 61: char *asctime (const struct tm *);
 [v _asctime `(*uc ~T0 @X0 0 ef1`*CS2234 ]
-"113 ./mbmc.h
-[; ;./mbmc.h: 113: void calc_model_data(void);
+"118 ./mbmc.h
+[; ;./mbmc.h: 118: void calc_model_data(void);
 [v _calc_model_data `(v ~T0 @X0 0 ef ]
 "130 ./daq.h
 [; ;./daq.h: 130: void set_hist_flag(void);
 [v _set_hist_flag `(v ~T0 @X0 0 ef ]
-"121 ./mbmc.h
-[; ;./mbmc.h: 121: void load_hist_data(void);
+"126 ./mbmc.h
+[; ;./mbmc.h: 126: void load_hist_data(void);
 [v _load_hist_data `(v ~T0 @X0 0 ef ]
 "127 ./daq.h
 [; ;./daq.h: 127: void write_cal_data(void);
@@ -242,8 +242,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "62 ./hid.h
 [; ;./hid.h: 62: H_data* hid_display(H_data*);
 [v _hid_display `(*S2247 ~T0 @X0 0 ef1`*S2247 ]
-"111 ./mbmc.h
-[; ;./mbmc.h: 111: float lp_filter(const float, const uint8_t, const int8_t);
+"116 ./mbmc.h
+[; ;./mbmc.h: 116: float lp_filter(const float, const uint8_t, const int8_t);
 [v _lp_filter `(f ~T0 @X0 0 ef3`Cf`Cuc`Cc ]
 "65 ./hid.h
 [; ;./hid.h: 65: void clear_hid_pflags(H_data*);
@@ -2674,7 +2674,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 -> -> 0 `i `uc
 ..
--> -> 1581777306 `l `ul
+-> -> 1582073758 `l `ul
 -> -> 0 `i `Vc
 -> -> 0 `i `uc
 -> -> 0 `i `uc
@@ -2978,7 +2978,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 253:    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
 [e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 1C ]
 "254
-[; ;main.c: 254:    sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.25");
+[; ;main.c: 254:    sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.26");
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 2C :s 3C ]
 "255
 [; ;main.c: 255:    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
@@ -4122,7 +4122,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2327 ]
 }
 [p f _sprintf 9282704 ]
-[a 3C 49 46 50 53 0 ]
+[a 3C 49 46 50 54 0 ]
 [a 11C 73 110 118 97 108 105 100 32 69 69 80 82 79 77 32 68 65 84 65 32 0 ]
 [a 30C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 32 0 ]
 [a 25C 72 105 115 116 111 114 121 32 68 97 116 97 32 32 83 97 118 101 100 32 32 0 ]
