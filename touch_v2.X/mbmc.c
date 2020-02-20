@@ -228,15 +228,23 @@ void load_hist_data(void)
 	stop_bsoc();
 	esr_rescale = (int16_t) (C.esr * 1000.0);
 	C.hist[0].updates++;
-	C.hist[0].h[12] += (int16_t) (C.pvkw / 10.0);
+	C.hist[0].h[12] += C.pvkw;
 	C.hist[0].h[11]++;
-	C.hist[10].h[10] = esr_rescale;
-	C.hist[10].h[9] = esr_rescale;
+	if (esr_rescale > C.hist[0].h[10])
+		C.hist[0].h[10] = esr_rescale;
+	if (esr_rescale < C.hist[0].h[9])
+		C.hist[0].h[9] = esr_rescale;
+	C.hist[0].h[8] = C.bv_one_load * 100.0;
+	C.hist[0].h[7] = C.bv_full_load * 100.0;
 	C.hist[0].h[6] = C.dynamic_ah;
+	C.hist[0].h[5] = C.bkwi;
+	C.hist[0].h[4] = C.bkwo;
+	C.hist[0].h[3] = C.pv_ah;
 	C.hist[0].h[0] = C.dynamic_ah_adj;
 	C.hist[0].pclock = time(NULL);
 	C.dynamic_ah = 0.0;
 	C.dynamic_ah_adj = 0.0;
+	C.pvkw = 0.0;
 	start_bsoc();
 }
 
@@ -255,6 +263,6 @@ time_t time(time_t * t)
 void set_time(time_t t)
 {
 	PIE8bits.TMR5IE = 0;
-	V.ticks=t;
+	V.ticks = t;
 	PIE8bits.TMR5IE = 1;
 }

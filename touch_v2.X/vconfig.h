@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.26"
+#define VER	"1.27"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -191,12 +191,12 @@ extern "C" {
 	 *		h0	Peukert Factor adjusted Ah usage this cycle
 	 *		h1	Lowest discharge ever,
 	 *		h2	current lowest discharge,
-	 *		h3	avg discharge
-	 *		h4	Number of full charge cycles, 
-	 *		h5	Number of full discharge cycles
+	 *		h3	PV ah total
+	 *		h4	Batt W out 
+	 *		h5	Batt W in
 	 *		h6	Real Ah usage this cycle
-	 *		h7	Min Batt Voltage
-	 *		h8	Max Batt Voltage
+	 *		h7	Batt Voltage full load
+	 *		h8	Batt Voltage one load
 	 *		h9	Highest ESR
 	 *		h10	Lowest ESR
 	 *		h11	Total charge cycles
@@ -204,13 +204,13 @@ extern "C" {
 	 */
 
 	typedef struct hist_type {
-		uint8_t version;
+		int32_t pv_eff, tot_eff; // pv generation eff factor, total system eff factor
+		uint32_t ttg_t, updates;
 		time_t pclock;
 		float peukert, cef, peukert_adj, cef_calc, cef_save;
-		uint32_t ttg_t, updates;
 		int16_t h[HPARAM_SIZE]; // h[6]=cumulative battery Ah cc and inv (real),h[0]=cumulative battery Ah cc and inv (p_adj)
 		uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
-		int32_t pv_eff, tot_eff; // pv generation eff factor, total system eff factor
+		uint8_t version;
 	} hist_type;
 
 #ifdef	__cplusplus

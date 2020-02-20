@@ -27636,13 +27636,13 @@ void PIN_MANAGER_Initialize (void);
  } V_help;
 # 206 "./vconfig.h"
  typedef struct hist_type {
-  uint8_t version;
+  int32_t pv_eff, tot_eff;
+  uint32_t ttg_t, updates;
   time_t pclock;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
-  uint32_t ttg_t, updates;
   int16_t h[13];
   uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
-  int32_t pv_eff, tot_eff;
+  uint8_t version;
  } hist_type;
 # 5 "timers.c" 2
 # 1 "./timers.h" 1

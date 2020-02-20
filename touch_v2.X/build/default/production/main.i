@@ -28528,13 +28528,13 @@ struct tm *getdate (const char *);
  } V_help;
 # 206 "./vconfig.h"
  typedef struct hist_type {
-  uint8_t version;
+  int32_t pv_eff, tot_eff;
+  uint32_t ttg_t, updates;
   time_t pclock;
   float peukert, cef, peukert_adj, cef_calc, cef_save;
-  uint32_t ttg_t, updates;
   int16_t h[13];
   uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
-  int32_t pv_eff, tot_eff;
+  uint8_t version;
  } hist_type;
 # 27 "./eadog.h" 2
 # 37 "./eadog.h"
@@ -29190,6 +29190,8 @@ volatile C_data C = {
  .hist[0].cef = 1.0,
  .hist[0].peukert = 1.0,
  .hist[0].updates = 0,
+ .hist[0].h[10] = 0,
+ .hist[0].h[9] = 15000,
  .day_start = 0,
  .day_end = 0,
  .day_update = 0,
@@ -29263,9 +29265,13 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
-   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.26");
+   sprintf(get_vterm_ptr(1, 0), " Version %s         ", "1.27");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
    sprintf(get_vterm_ptr(3, 0), "                    ");
+   sprintf(get_vterm_ptr(0, 1), "                    ");
+   sprintf(get_vterm_ptr(1, 1), "                    ");
+   sprintf(get_vterm_ptr(2, 1), "                    ");
+   sprintf(get_vterm_ptr(3, 1), "                    ");
    sprintf(get_vterm_ptr(0, 2), "                    ");
    sprintf(get_vterm_ptr(1, 2), "                    ");
    sprintf(get_vterm_ptr(2, 2), "                    ");
@@ -29568,7 +29574,7 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 616 "main.c"
+# 622 "main.c"
  return 1;
 }
 

@@ -178,6 +178,8 @@ volatile C_data C = {
 	.hist[0].cef = CEF,
 	.hist[0].peukert = PEUKERT,
 	.hist[0].updates = 0,
+	.hist[0].h[10] = 0,
+	.hist[0].h[9] = 15000, // highest possible ESR
 	.day_start = 0,
 	.day_end = 0,
 	.day_update = 0,
@@ -254,6 +256,10 @@ void main(void)
 			sprintf(get_vterm_ptr(1, 0), " Version %s         ", VER);
 			sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
 			sprintf(get_vterm_ptr(3, 0), "                    ");
+			sprintf(get_vterm_ptr(0, 1), "                    ");
+			sprintf(get_vterm_ptr(1, 1), "                    ");
+			sprintf(get_vterm_ptr(2, 1), "                    ");
+			sprintf(get_vterm_ptr(3, 1), "                    ");
 			sprintf(get_vterm_ptr(0, 2), "                    ");
 			sprintf(get_vterm_ptr(1, 2), "                    ");
 			sprintf(get_vterm_ptr(2, 2), "                    ");
