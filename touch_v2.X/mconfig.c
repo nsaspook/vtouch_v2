@@ -3,7 +3,7 @@
 #include "msg_text.h"
 
 extern V_data V;
-static D_data D = {0};
+static D_data D = {' '};
 
 static const char *build_date = __DATE__, *build_time = __TIME__;
 
