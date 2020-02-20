@@ -3347,196 +3347,199 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 378:    sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
 [e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 3 `i `uc -> -> 0 `i `uc :s 28C ( _asctime (1 -> _t_mbmc `*CS2234 ]
 "379
-[; ;main.c: 379:    calc_model_data();
-[e ( _calc_model_data ..  ]
+[; ;main.c: 379:    sprintf(get_vterm_ptr(3, 1), "%s           ", asctime(t_mbmc));
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 3 `i `uc -> -> 1 `i `uc :s 29C ( _asctime (1 -> _t_mbmc `*CS2234 ]
 "380
-[; ;main.c: 380:    if (C.dupdate) {
+[; ;main.c: 380:    calc_model_data();
+[e ( _calc_model_data ..  ]
+"381
+[; ;main.c: 381:    if (C.dupdate) {
 [e $ ! != -> . _C 40 `i -> 0 `i 2284  ]
 {
-"381
-[; ;main.c: 381:     C.dupdate = 0;
-[e = . _C 40 -> -> 0 `i `a ]
 "382
-[; ;main.c: 382:     set_hist_flag();
-[e ( _set_hist_flag ..  ]
+[; ;main.c: 382:     C.dupdate = 0;
+[e = . _C 40 -> -> 0 `i `a ]
 "383
-[; ;main.c: 383:     load_hist_data();
-[e ( _load_hist_data ..  ]
+[; ;main.c: 383:     set_hist_flag();
+[e ( _set_hist_flag ..  ]
 "384
-[; ;main.c: 384:     update_hist_data(0, &C.hist[0]);
-[e ( _update_hist_data (2 , -> -> 0 `i `a &U *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux ]
+[; ;main.c: 384:     load_hist_data();
+[e ( _load_hist_data ..  ]
 "385
-[; ;main.c: 385:     write_cal_data();
-[e ( _write_cal_data ..  ]
+[; ;main.c: 385:     update_hist_data(0, &C.hist[0]);
+[e ( _update_hist_data (2 , -> -> 0 `i `a &U *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux ]
 "386
-[; ;main.c: 386:     sprintf(get_vterm_ptr(0, 0), "History Data  Saved  ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 29C ]
+[; ;main.c: 386:     write_cal_data();
+[e ( _write_cal_data ..  ]
 "387
-[; ;main.c: 387:     sprintf(get_vterm_ptr(1, 0), "To EEPROM            ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 30C ]
+[; ;main.c: 387:     sprintf(get_vterm_ptr(0, 0), "History Data  Saved  ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 30C ]
 "388
-[; ;main.c: 388:     sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu       ", time(((void*)0)), C.hist[0].updates);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 31C ( _time (1 -> -> -> 0 `i `*v `*o . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 3 ]
+[; ;main.c: 388:     sprintf(get_vterm_ptr(1, 0), "To EEPROM            ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 31C ]
 "389
-[; ;main.c: 389:     update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 389:     sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu       ", time(((void*)0)), C.hist[0].updates);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 32C ( _time (1 -> -> -> 0 `i `*v `*o . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 3 ]
 "390
-[; ;main.c: 390:     WaitMs(2000);
-[e ( _WaitMs (1 -> -> 2000 `i `us ]
+[; ;main.c: 390:     update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
 "391
-[; ;main.c: 391:    }
+[; ;main.c: 391:     WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
+"392
+[; ;main.c: 392:    }
 }
 [e :U 2284 ]
-"393
-[; ;main.c: 393:    if (0) {
+"394
+[; ;main.c: 394:    if (0) {
 [e $ ! != -> 0 `i -> 0 `i 2285  ]
 {
-"394
-[; ;main.c: 394:     sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d   ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 32C -> ( _get_raw_result (1 -> _i `E16640 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17192 2 `uc `ui ]
 "395
-[; ;main.c: 395:     sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d   ", get_raw_result(j), C.calc[j], get_switch(SENTER));
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 33C -> ( _get_raw_result (1 -> _j `E16640 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17192 3 `uc `ui ]
+[; ;main.c: 395:     sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d   ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 33C -> ( _get_raw_result (1 -> _i `E16640 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17192 2 `uc `ui ]
 "396
-[; ;main.c: 396:     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   # ", get_raw_result(k), C.calc[k], inp_index);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 34C -> ( _get_raw_result (1 -> _k `E16640 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d -> _inp_index `i ]
+[; ;main.c: 396:     sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d   ", get_raw_result(j), C.calc[j], get_switch(SENTER));
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 34C -> ( _get_raw_result (1 -> _j `E16640 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d -> ( _get_switch (1 -> . `E17192 3 `uc `ui ]
 "397
-[; ;main.c: 397:    } else {
+[; ;main.c: 397:     sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   # ", get_raw_result(k), C.calc[k], inp_index);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 35C -> ( _get_raw_result (1 -> _k `E16640 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d -> _inp_index `i ]
+"398
+[; ;main.c: 398:    } else {
 }
 [e $U 2286  ]
 [e :U 2285 ]
 {
-"398
-[; ;main.c: 398:     hid_display(&H);
-[e ( _hid_display (1 &U _H ]
 "399
-[; ;main.c: 399:     switch (H.hid_display) {
+[; ;main.c: 399:     hid_display(&H);
+[e ( _hid_display (1 &U _H ]
+"400
+[; ;main.c: 400:     switch (H.hid_display) {
 [e $U 2288  ]
 {
-"400
-[; ;main.c: 400:     case HID_PWR:
-[e :U 2289 ]
 "401
-[; ;main.c: 401:      V.calib = 0;
-[e = . _V 26 -> -> 0 `i `a ]
+[; ;main.c: 401:     case HID_PWR:
+[e :U 2289 ]
 "402
-[; ;main.c: 402:      sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 35C ? != -> . _C 39 `i -> 0 `i : -> 68 `ui -> 32 `ui -> . _C 16 `d ]
+[; ;main.c: 402:      V.calib = 0;
+[e = . _V 26 -> -> 0 `i `a ]
 "403
-[; ;main.c: 403:      sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f        ", C.p_load);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 36C -> . _C 14 `d ]
+[; ;main.c: 403:      sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 36C ? != -> . _C 39 `i -> 0 `i : -> 68 `ui -> 32 `ui -> . _C 16 `d ]
 "404
-[; ;main.c: 404:      sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f        ", C.p_inverter);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 37C -> . _C 15 `d ]
-"406
-[; ;main.c: 406:      sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f        ", (C.day) ? 'D' : ' ', C.pvkw);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc :s 38C ? != -> . _C 39 `i -> 0 `i : -> 68 `ui -> 32 `ui -> . _C 27 `d ]
+[; ;main.c: 404:      sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f        ", C.p_load);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 37C -> . _C 14 `d ]
+"405
+[; ;main.c: 405:      sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f        ", C.p_inverter);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 38C -> . _C 15 `d ]
 "407
-[; ;main.c: 407:      sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f         ", C.loadkw);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 1 `i `uc :s 39C -> . _C 29 `d ]
+[; ;main.c: 407:      sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f        ", (C.day) ? 'D' : ' ', C.pvkw);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc :s 39C ? != -> . _C 39 `i -> 0 `i : -> 68 `ui -> 32 `ui -> . _C 27 `d ]
 "408
-[; ;main.c: 408:      sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f         ", C.invkw);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 1 `i `uc :s 40C -> . _C 28 `d ]
+[; ;main.c: 408:      sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f         ", C.loadkw);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 1 `i `uc :s 40C -> . _C 29 `d ]
 "409
-[; ;main.c: 409:      break;
-[e $U 2287  ]
+[; ;main.c: 409:      sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f         ", C.invkw);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 1 `i `uc :s 41C -> . _C 28 `d ]
 "410
-[; ;main.c: 410:     case HID_MAIN:
-[e :U 2290 ]
+[; ;main.c: 410:      break;
+[e $U 2287  ]
 "411
-[; ;main.c: 411:      V.calib = 0;
-[e = . _V 26 -> -> 0 `i `a ]
+[; ;main.c: 411:     case HID_MAIN:
+[e :U 2290 ]
 "412
-[; ;main.c: 412:      sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f     ", C.calc[V_PV], C.calc[C_PV]);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 41C -> *U + &U . _C 0 * -> . `E16640 4 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16640 1 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
-"413
-[; ;main.c: 413:      sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f     ", C.calc[V_BAT], C.calc[C_BATT]);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 42C -> *U + &U . _C 0 * -> . `E16640 3 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16640 0 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
-"414
-[; ;main.c: 414:      sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f     ", C.calc[V_CC], C.c_load);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 43C -> *U + &U . _C 0 * -> . `E16640 2 `ux -> -> # *U &U . _C 0 `ui `ux `d -> . _C 1 `d ]
-"416
-[; ;main.c: 416:      sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f         ", C.bkwi);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc :s 44C -> . _C 25 `d ]
-"417
-[; ;main.c: 417:      sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f         ", C.bkwo);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 1 `i `uc :s 45C -> . _C 26 `d ]
-"418
-[; ;main.c: 418:      sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f         ", C.bkwi + C.bkwo);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 1 `i `uc :s 46C -> + . _C 25 . _C 26 `d ]
-"419
-[; ;main.c: 419:      break;
-[e $U 2287  ]
-"420
-[; ;main.c: 420:     case HID_RUN:
-[e :U 2291 ]
-"421
-[; ;main.c: 421:      V.calib = 0;
+[; ;main.c: 412:      V.calib = 0;
 [e = . _V 26 -> -> 0 `i `a ]
-"422
-[; ;main.c: 422:      sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f         ", C.p_bat);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 47C -> . _C 17 `d ]
-"423
-[; ;main.c: 423:      sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f       ", C.dynamic_ah, C.pv_ah);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 48C -> . _C 21 `d -> . _C 22 `d ]
-"424
-[; ;main.c: 424:      sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f        ", spinners(5, 0), C.soc, C.runtime, C.calc[V_BAT]);
-[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 49C -> ( _spinners (2 , -> -> 5 `i `uc -> -> 0 `i `uc `i -> . _C 31 `ui -> . _C 30 `ui -> *U + &U . _C 0 * -> . `E16640 3 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
-"426
-[; ;main.c: 426:      sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f             ", C.esr);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc :s 50C -> . _C 19 `d ]
-"427
-[; ;main.c: 427:      sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f         ", C.bv_one_load, C.load_i1);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 1 `i `uc :s 51C -> . _C 37 `d -> . _C 34 `d ]
-"428
-[; ;main.c: 428:      sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f         ", C.bv_full_load, C.load_i2);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 1 `i `uc :s 52C -> . _C 38 `d -> . _C 35 `d ]
-"429
-[; ;main.c: 429:      break;
+"413
+[; ;main.c: 413:      sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f     ", C.calc[V_PV], C.calc[C_PV]);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 42C -> *U + &U . _C 0 * -> . `E16640 4 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16640 1 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
+"414
+[; ;main.c: 414:      sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f     ", C.calc[V_BAT], C.calc[C_BATT]);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 43C -> *U + &U . _C 0 * -> . `E16640 3 `ux -> -> # *U &U . _C 0 `ui `ux `d -> *U + &U . _C 0 * -> . `E16640 0 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
+"415
+[; ;main.c: 415:      sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f     ", C.calc[V_CC], C.c_load);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 44C -> *U + &U . _C 0 * -> . `E16640 2 `ux -> -> # *U &U . _C 0 `ui `ux `d -> . _C 1 `d ]
+"417
+[; ;main.c: 417:      sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f         ", C.bkwi);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc :s 45C -> . _C 25 `d ]
+"418
+[; ;main.c: 418:      sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f         ", C.bkwo);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 1 `i `uc :s 46C -> . _C 26 `d ]
+"419
+[; ;main.c: 419:      sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f         ", C.bkwi + C.bkwo);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 1 `i `uc :s 47C -> + . _C 25 . _C 26 `d ]
+"420
+[; ;main.c: 420:      break;
 [e $U 2287  ]
+"421
+[; ;main.c: 421:     case HID_RUN:
+[e :U 2291 ]
+"422
+[; ;main.c: 422:      V.calib = 0;
+[e = . _V 26 -> -> 0 `i `a ]
+"423
+[; ;main.c: 423:      sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f         ", C.p_bat);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 48C -> . _C 17 `d ]
+"424
+[; ;main.c: 424:      sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f       ", C.dynamic_ah, C.pv_ah);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 49C -> . _C 21 `d -> . _C 22 `d ]
+"425
+[; ;main.c: 425:      sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f        ", spinners(5, 0), C.soc, C.runtime, C.calc[V_BAT]);
+[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 50C -> ( _spinners (2 , -> -> 5 `i `uc -> -> 0 `i `uc `i -> . _C 31 `ui -> . _C 30 `ui -> *U + &U . _C 0 * -> . `E16640 3 `ux -> -> # *U &U . _C 0 `ui `ux `d ]
+"427
+[; ;main.c: 427:      sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f             ", C.esr);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc :s 51C -> . _C 19 `d ]
+"428
+[; ;main.c: 428:      sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f         ", C.bv_one_load, C.load_i1);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 1 `i `uc :s 52C -> . _C 37 `d -> . _C 34 `d ]
+"429
+[; ;main.c: 429:      sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f         ", C.bv_full_load, C.load_i2);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 1 `i `uc :s 53C -> . _C 38 `d -> . _C 35 `d ]
 "430
-[; ;main.c: 430:     case HID_AUX:
-[e :U 2292 ]
+[; ;main.c: 430:      break;
+[e $U 2287  ]
 "431
-[; ;main.c: 431:      if (!V.calib) {
+[; ;main.c: 431:     case HID_AUX:
+[e :U 2292 ]
+"432
+[; ;main.c: 432:      if (!V.calib) {
 [e $ ! ! != -> . _V 26 `i -> 0 `i 2293  ]
 {
-"432
-[; ;main.c: 432:       lp_filter(0.0, i, -1);
-[e ( _lp_filter (3 , , -> .0.0 `f _i -> -U -> 1 `i `c ]
 "433
-[; ;main.c: 433:       lp_filter(0.0, j, -1);
-[e ( _lp_filter (3 , , -> .0.0 `f _j -> -U -> 1 `i `c ]
+[; ;main.c: 433:       lp_filter(0.0, i, -1);
+[e ( _lp_filter (3 , , -> .0.0 `f _i -> -U -> 1 `i `c ]
 "434
-[; ;main.c: 434:       lp_filter(0.0, k, -1);
-[e ( _lp_filter (3 , , -> .0.0 `f _k -> -U -> 1 `i `c ]
+[; ;main.c: 434:       lp_filter(0.0, j, -1);
+[e ( _lp_filter (3 , , -> .0.0 `f _j -> -U -> 1 `i `c ]
 "435
-[; ;main.c: 435:      }
+[; ;main.c: 435:       lp_filter(0.0, k, -1);
+[e ( _lp_filter (3 , , -> .0.0 `f _k -> -U -> 1 `i `c ]
+"436
+[; ;main.c: 436:      }
 }
 [e :U 2293 ]
-"436
-[; ;main.c: 436:      V.calib = 1;
-[e = . _V 26 -> -> 1 `i `a ]
 "437
-[; ;main.c: 437:      sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 53C -> ( _get_raw_result (1 -> _i `E16640 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> _inp_index `i ]
+[; ;main.c: 437:      V.calib = 1;
+[e = . _V 26 -> -> 1 `i `a ]
 "438
-[; ;main.c: 438:      sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 1);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 54C -> ( _get_raw_result (1 -> _j `E16640 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d + -> _inp_index `i -> 1 `i ]
+[; ;main.c: 438:      sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 54C -> ( _get_raw_result (1 -> _i `E16640 `ui -> *U + &U . _C 0 * -> _i `ux -> -> # *U &U . _C 0 `ui `ux `d -> _inp_index `i ]
 "439
-[; ;main.c: 439:      sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 2);
-[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 55C -> ( _get_raw_result (1 -> _k `E16640 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d + -> _inp_index `i -> 2 `i ]
+[; ;main.c: 439:      sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 1);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 55C -> ( _get_raw_result (1 -> _j `E16640 `ui -> *U + &U . _C 0 * -> _j `ux -> -> # *U &U . _C 0 `ui `ux `d + -> _inp_index `i -> 1 `i ]
 "440
-[; ;main.c: 440:      break;
-[e $U 2287  ]
+[; ;main.c: 440:      sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 2);
+[e ( _sprintf (1 , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 56C -> ( _get_raw_result (1 -> _k `E16640 `ui -> *U + &U . _C 0 * -> _k `ux -> -> # *U &U . _C 0 `ui `ux `d + -> _inp_index `i -> 2 `i ]
 "441
-[; ;main.c: 441:     default:
-[e :U 2294 ]
-"442
-[; ;main.c: 442:      break;
+[; ;main.c: 441:      break;
 [e $U 2287  ]
+"442
+[; ;main.c: 442:     default:
+[e :U 2294 ]
 "443
-[; ;main.c: 443:     }
+[; ;main.c: 443:      break;
+[e $U 2287  ]
+"444
+[; ;main.c: 444:     }
 }
 [e $U 2287  ]
 [e :U 2288 ]
@@ -3546,153 +3549,153 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> . `E17933 3 `ui 2292
  2294 ]
 [e :U 2287 ]
-"444
-[; ;main.c: 444:     clear_hid_pflags(&H);
-[e ( _clear_hid_pflags (1 &U _H ]
 "445
-[; ;main.c: 445:    }
+[; ;main.c: 445:     clear_hid_pflags(&H);
+[e ( _clear_hid_pflags (1 &U _H ]
+"446
+[; ;main.c: 446:    }
 }
 [e :U 2286 ]
-"446
-[; ;main.c: 446:    StartTimer(TMR_DISPLAY, 250);
-[e ( _StartTimer (2 , -> . `E17304 10 `uc -> -> 250 `i `us ]
 "447
-[; ;main.c: 447:    V.enter = check_enter_button(&H);
-[e = . _V 27 ( _check_enter_button (1 &U _H ]
+[; ;main.c: 447:    StartTimer(TMR_DISPLAY, 250);
+[e ( _StartTimer (2 , -> . `E17304 10 `uc -> -> 250 `i `us ]
 "448
-[; ;main.c: 448:    if (V.enter && (H.hid_display != HID_AUX)) {
+[; ;main.c: 448:    V.enter = check_enter_button(&H);
+[e = . _V 27 ( _check_enter_button (1 &U _H ]
+"449
+[; ;main.c: 449:    if (V.enter && (H.hid_display != HID_AUX)) {
 [e $ ! && != -> . _V 27 `i -> 0 `i != -> . _H 0 `ui -> . `E17933 3 `ui 2295  ]
 {
-"449
-[; ;main.c: 449:     V.enter = 0;
-[e = . _V 27 -> -> 0 `i `a ]
 "450
-[; ;main.c: 450:     V.screen = ~V.screen;
-[e = . _V 22 -> ~ -> . _V 22 `i `uc ]
+[; ;main.c: 450:     V.enter = 0;
+[e = . _V 27 -> -> 0 `i `a ]
 "451
-[; ;main.c: 451:    }
+[; ;main.c: 451:     V.screen = ~V.screen;
+[e = . _V 22 -> ~ -> . _V 22 `i `uc ]
+"452
+[; ;main.c: 452:    }
 }
 [e :U 2295 ]
-"452
-[; ;main.c: 452:    set_vterm(V.screen);
-[e ( _set_vterm (1 . _V 22 ]
 "453
-[; ;main.c: 453:    update_lcd(V.screen);
-[e ( _update_lcd (1 . _V 22 ]
+[; ;main.c: 453:    set_vterm(V.screen);
+[e ( _set_vterm (1 . _V 22 ]
 "454
-[; ;main.c: 454:    display_history();
+[; ;main.c: 454:    update_lcd(V.screen);
+[e ( _update_lcd (1 . _V 22 ]
+"455
+[; ;main.c: 455:    display_history();
 [e ( _display_history ..  ]
-"456
-[; ;main.c: 456:    wait_lcd_done();
-[e ( _wait_lcd_done ..  ]
 "457
-[; ;main.c: 457:    set_dac_a(3.333);
-[e ( _set_dac_a (1 -> .3.333 `f ]
+[; ;main.c: 457:    wait_lcd_done();
+[e ( _wait_lcd_done ..  ]
 "458
-[; ;main.c: 458:    set_dac_b(6.666);
-[e ( _set_dac_b (1 -> .6.666 `f ]
+[; ;main.c: 458:    set_dac_a(3.333);
+[e ( _set_dac_a (1 -> .3.333 `f ]
 "459
-[; ;main.c: 459:    set_dac();
-[e ( _set_dac ..  ]
+[; ;main.c: 459:    set_dac_b(6.666);
+[e ( _set_dac_b (1 -> .6.666 `f ]
 "460
-[; ;main.c: 460:   }
+[; ;main.c: 460:    set_dac();
+[e ( _set_dac ..  ]
+"461
+[; ;main.c: 461:   }
 }
 [e :U 2282 ]
-"465
-[; ;main.c: 465:   check_help(V.flipper);
+"466
+[; ;main.c: 466:   check_help(V.flipper);
 [e ( _check_help (1 . _V 25 ]
-"467
-[; ;main.c: 467:   if (V.enter) {
+"468
+[; ;main.c: 468:   if (V.enter) {
 [e $ ! != -> . _V 27 `i -> 0 `i 2296  ]
 {
-"468
-[; ;main.c: 468:    V.enter = 0;
-[e = . _V 27 -> -> 0 `i `a ]
 "469
-[; ;main.c: 469:    V.calib = 0;
-[e = . _V 26 -> -> 0 `i `a ]
+[; ;main.c: 469:    V.enter = 0;
+[e = . _V 27 -> -> 0 `i `a ]
 "470
-[; ;main.c: 470:    inp_index += 3;
-[e =+ _inp_index -> -> 3 `i `uc ]
+[; ;main.c: 470:    V.calib = 0;
+[e = . _V 26 -> -> 0 `i `a ]
 "471
-[; ;main.c: 471:    if (inp_index > 9)
-[e $ ! > -> _inp_index `i -> 9 `i 2297  ]
+[; ;main.c: 471:    inp_index += 3;
+[e =+ _inp_index -> -> 3 `i `uc ]
 "472
-[; ;main.c: 472:     inp_index = 0;
+[; ;main.c: 472:    if (inp_index > 9)
+[e $ ! > -> _inp_index `i -> 9 `i 2297  ]
+"473
+[; ;main.c: 473:     inp_index = 0;
 [e = _inp_index -> -> 0 `i `uc ]
 [e :U 2297 ]
-"473
-[; ;main.c: 473:    switch (inp_index) {
+"474
+[; ;main.c: 474:    switch (inp_index) {
 [e $U 2299  ]
 {
-"474
-[; ;main.c: 474:    case 0:
-[e :U 2300 ]
 "475
-[; ;main.c: 475:     i = C_BATT;
-[e = _i -> . `E16640 0 `uc ]
+[; ;main.c: 475:    case 0:
+[e :U 2300 ]
 "476
-[; ;main.c: 476:     j = C_PV;
-[e = _j -> . `E16640 1 `uc ]
+[; ;main.c: 476:     i = C_BATT;
+[e = _i -> . `E16640 0 `uc ]
 "477
-[; ;main.c: 477:     k = V_CC;
-[e = _k -> . `E16640 2 `uc ]
+[; ;main.c: 477:     j = C_PV;
+[e = _j -> . `E16640 1 `uc ]
 "478
-[; ;main.c: 478:     break;
-[e $U 2298  ]
+[; ;main.c: 478:     k = V_CC;
+[e = _k -> . `E16640 2 `uc ]
 "479
-[; ;main.c: 479:    case 3:
-[e :U 2301 ]
+[; ;main.c: 479:     break;
+[e $U 2298  ]
 "480
-[; ;main.c: 480:     i = V_BAT;
-[e = _i -> . `E16640 3 `uc ]
+[; ;main.c: 480:    case 3:
+[e :U 2301 ]
 "481
-[; ;main.c: 481:     j = V_PV;
-[e = _j -> . `E16640 4 `uc ]
+[; ;main.c: 481:     i = V_BAT;
+[e = _i -> . `E16640 3 `uc ]
 "482
-[; ;main.c: 482:     k = V_CBUS;
-[e = _k -> . `E16640 5 `uc ]
+[; ;main.c: 482:     j = V_PV;
+[e = _j -> . `E16640 4 `uc ]
 "483
-[; ;main.c: 483:     break;
-[e $U 2298  ]
+[; ;main.c: 483:     k = V_CBUS;
+[e = _k -> . `E16640 5 `uc ]
 "484
-[; ;main.c: 484:    case 6:
-[e :U 2302 ]
+[; ;main.c: 484:     break;
+[e $U 2298  ]
 "485
-[; ;main.c: 485:     i = V_BBAT;
-[e = _i -> . `E16640 6 `uc ]
+[; ;main.c: 485:    case 6:
+[e :U 2302 ]
 "486
-[; ;main.c: 486:     j = V_TEMP;
-[e = _j -> . `E16640 7 `uc ]
+[; ;main.c: 486:     i = V_BBAT;
+[e = _i -> . `E16640 6 `uc ]
 "487
-[; ;main.c: 487:     k = V_INVERTER;
-[e = _k -> . `E16640 8 `uc ]
+[; ;main.c: 487:     j = V_TEMP;
+[e = _j -> . `E16640 7 `uc ]
 "488
-[; ;main.c: 488:     break;
-[e $U 2298  ]
+[; ;main.c: 488:     k = V_INVERTER;
+[e = _k -> . `E16640 8 `uc ]
 "489
-[; ;main.c: 489:    case 9:
-[e :U 2303 ]
+[; ;main.c: 489:     break;
+[e $U 2298  ]
 "490
-[; ;main.c: 490:     i = V_LIGHT_SENSOR;
-[e = _i -> . `E16640 9 `uc ]
+[; ;main.c: 490:    case 9:
+[e :U 2303 ]
 "491
-[; ;main.c: 491:     j = V_LIGHT_SENSOR;
-[e = _j -> . `E16640 9 `uc ]
+[; ;main.c: 491:     i = V_LIGHT_SENSOR;
+[e = _i -> . `E16640 9 `uc ]
 "492
-[; ;main.c: 492:     k = V_LIGHT_SENSOR;
-[e = _k -> . `E16640 9 `uc ]
+[; ;main.c: 492:     j = V_LIGHT_SENSOR;
+[e = _j -> . `E16640 9 `uc ]
 "493
-[; ;main.c: 493:     break;
-[e $U 2298  ]
+[; ;main.c: 493:     k = V_LIGHT_SENSOR;
+[e = _k -> . `E16640 9 `uc ]
 "494
-[; ;main.c: 494:    default:
-[e :U 2304 ]
-"495
-[; ;main.c: 495:     break;
+[; ;main.c: 494:     break;
 [e $U 2298  ]
+"495
+[; ;main.c: 495:    default:
+[e :U 2304 ]
 "496
-[; ;main.c: 496:    }
+[; ;main.c: 496:     break;
+[e $U 2298  ]
+"497
+[; ;main.c: 497:    }
 }
 [e $U 2298  ]
 [e :U 2299 ]
@@ -3702,360 +3705,361 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 9 `i 2303
  2304 ]
 [e :U 2298 ]
-"497
-[; ;main.c: 497:   };
+"498
+[; ;main.c: 498:   };
 }
 [e :U 2296 ]
-"502
-[; ;main.c: 502:   if (V.set_sequ) {
+"503
+[; ;main.c: 503:   if (V.set_sequ) {
 [e $ ! != -> . _V 17 `i -> 0 `i 2305  ]
 {
-"503
-[; ;main.c: 503:    if (TimerDone(TMR_INFO)) {
+"504
+[; ;main.c: 504:    if (TimerDone(TMR_INFO)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E17304 7 `uc `i -> 0 `i 2306  ]
 {
-"504
-[; ;main.c: 504:     V.set_sequ = 0;
-[e = . _V 17 -> -> 0 `i `uc ]
 "505
-[; ;main.c: 505:     set_vterm(0);
-[e ( _set_vterm (1 -> -> 0 `i `uc ]
+[; ;main.c: 505:     V.set_sequ = 0;
+[e = . _V 17 -> -> 0 `i `uc ]
 "506
-[; ;main.c: 506:     update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 506:     set_vterm(0);
+[e ( _set_vterm (1 -> -> 0 `i `uc ]
 "507
-[; ;main.c: 507:    } else {
+[; ;main.c: 507:     update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
+"508
+[; ;main.c: 508:    } else {
 }
 [e $U 2307  ]
 [e :U 2306 ]
 {
-"509
-[; ;main.c: 509:     set_vterm(2);
-[e ( _set_vterm (1 -> -> 2 `i `uc ]
 "510
-[; ;main.c: 510:     update_lcd(2);
-[e ( _update_lcd (1 -> -> 2 `i `uc ]
+[; ;main.c: 510:     set_vterm(2);
+[e ( _set_vterm (1 -> -> 2 `i `uc ]
 "511
-[; ;main.c: 511:    }
+[; ;main.c: 511:     update_lcd(2);
+[e ( _update_lcd (1 -> -> 2 `i `uc ]
+"512
+[; ;main.c: 512:    }
 }
 [e :U 2307 ]
-"512
-[; ;main.c: 512:   }
+"513
+[; ;main.c: 513:   }
 }
 [e :U 2305 ]
-"513
-[; ;main.c: 513:  }
+"514
+[; ;main.c: 514:  }
 }
 [e :U 2259 ]
 [e $U 2260  ]
 [e :U 2261 ]
-"514
-[; ;main.c: 514: }
+"515
+[; ;main.c: 515: }
 [e :UE 2248 ]
 }
-"516
-[; ;main.c: 516: static _Bool current_sensor_cal(void)
-[v _current_sensor_cal `(a ~T0 @X0 1 sf ]
 "517
-[; ;main.c: 517: {
+[; ;main.c: 517: static _Bool current_sensor_cal(void)
+[v _current_sensor_cal `(a ~T0 @X0 1 sf ]
+"518
+[; ;main.c: 518: {
 {
 [e :U _current_sensor_cal ]
 [f ]
-"518
-[; ;main.c: 518:  uint8_t x = 0;
+"519
+[; ;main.c: 519:  uint8_t x = 0;
 [v _x `uc ~T0 @X0 1 a ]
 [e = _x -> -> 0 `i `uc ]
-"519
-[; ;main.c: 519:  uint32_t cb = 0, cp = 0;
+"520
+[; ;main.c: 520:  uint32_t cb = 0, cp = 0;
 [v _cb `ul ~T0 @X0 1 a ]
 [e = _cb -> -> -> 0 `i `l `ul ]
 [v _cp `ul ~T0 @X0 1 a ]
 [e = _cp -> -> -> 0 `i `l `ul ]
-"521
-[; ;main.c: 521:  sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 56C ]
 "522
-[; ;main.c: 522:  sprintf(get_vterm_ptr(1, 0), "Sensor Zero          ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 57C ]
+[; ;main.c: 522:  sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 57C ]
 "523
-[; ;main.c: 523:  sprintf(get_vterm_ptr(2, 0), "Calibration          ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 58C ]
+[; ;main.c: 523:  sprintf(get_vterm_ptr(1, 0), "Sensor Zero          ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 58C ]
 "524
-[; ;main.c: 524:  update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 524:  sprintf(get_vterm_ptr(2, 0), "Calibration          ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 59C ]
 "525
-[; ;main.c: 525:  WaitMs(2000);
-[e ( _WaitMs (1 -> -> 2000 `i `us ]
+[; ;main.c: 525:  update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
 "526
-[; ;main.c: 526:  do {
+[; ;main.c: 526:  WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
+"527
+[; ;main.c: 527:  do {
 [e :U 2311 ]
 {
-"527
-[; ;main.c: 527:   if (++x > 64)
-[e $ ! > -> =+ _x -> -> 1 `i `uc `i -> 64 `i 2312  ]
 "528
-[; ;main.c: 528:    return 0;
+[; ;main.c: 528:   if (++x > 64)
+[e $ ! > -> =+ _x -> -> 1 `i `uc `i -> 64 `i 2312  ]
+"529
+[; ;main.c: 529:    return 0;
 [e ) -> -> 0 `i `a ]
 [e $UE 2308  ]
 [e :U 2312 ]
-"529
-[; ;main.c: 529:   sprintf(get_vterm_ptr(2, 0), "Release button %c   ", spinners(4, 0));
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 59C -> ( _spinners (2 , -> -> 4 `i `uc -> -> 0 `i `uc `i ]
 "530
-[; ;main.c: 530:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 530:   sprintf(get_vterm_ptr(2, 0), "Release button %c   ", spinners(4, 0));
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 60C -> ( _spinners (2 , -> -> 4 `i `uc -> -> 0 `i `uc `i ]
 "531
-[; ;main.c: 531:   WaitMs(100);
-[e ( _WaitMs (1 -> -> 100 `i `us ]
+[; ;main.c: 531:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
 "532
-[; ;main.c: 532:  } while (get_switch(SCALIB));
+[; ;main.c: 532:   WaitMs(100);
+[e ( _WaitMs (1 -> -> 100 `i `us ]
+"533
+[; ;main.c: 533:  } while (get_switch(SCALIB));
 }
 [e $ != -> ( _get_switch (1 -> . `E17192 4 `uc `ui -> -> 0 `i `ui 2311  ]
 [e :U 2310 ]
-"534
-[; ;main.c: 534:  x = 0;
-[e = _x -> -> 0 `i `uc ]
 "535
-[; ;main.c: 535:  do {
+[; ;main.c: 535:  x = 0;
+[e = _x -> -> 0 `i `uc ]
+"536
+[; ;main.c: 536:  do {
 [e :U 2315 ]
 {
-"536
-[; ;main.c: 536:   cb += get_raw_result(C_BATT);
-[e =+ _cb -> ( _get_raw_result (1 . `E16640 0 `ul ]
 "537
-[; ;main.c: 537:   cp += get_raw_result(C_PV);
-[e =+ _cp -> ( _get_raw_result (1 . `E16640 1 `ul ]
+[; ;main.c: 537:   cb += get_raw_result(C_BATT);
+[e =+ _cb -> ( _get_raw_result (1 . `E16640 0 `ul ]
 "538
-[; ;main.c: 538:   sprintf(get_vterm_ptr(0, 0), "Sensor Readings      ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 60C ]
+[; ;main.c: 538:   cp += get_raw_result(C_PV);
+[e =+ _cp -> ( _get_raw_result (1 . `E16640 1 `ul ]
 "539
-[; ;main.c: 539:   sprintf(get_vterm_ptr(1, 0), " %d %d               ", get_raw_result(C_BATT), get_raw_result(C_PV));
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 61C -> ( _get_raw_result (1 . `E16640 0 `ui -> ( _get_raw_result (1 . `E16640 1 `ui ]
+[; ;main.c: 539:   sprintf(get_vterm_ptr(0, 0), "Sensor Readings      ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 61C ]
 "540
-[; ;main.c: 540:   sprintf(get_vterm_ptr(2, 0), "Stability clock %d   ", x);
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 62C -> _x `i ]
+[; ;main.c: 540:   sprintf(get_vterm_ptr(1, 0), " %d %d               ", get_raw_result(C_BATT), get_raw_result(C_PV));
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 62C -> ( _get_raw_result (1 . `E16640 0 `ui -> ( _get_raw_result (1 . `E16640 1 `ui ]
 "541
-[; ;main.c: 541:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 541:   sprintf(get_vterm_ptr(2, 0), "Stability clock %d   ", x);
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 63C -> _x `i ]
 "542
-[; ;main.c: 542:   clear_adc_scan();
-[e ( _clear_adc_scan ..  ]
+[; ;main.c: 542:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
 "543
-[; ;main.c: 543:   start_adc_scan();
-[e ( _start_adc_scan ..  ]
+[; ;main.c: 543:   clear_adc_scan();
+[e ( _clear_adc_scan ..  ]
 "544
-[; ;main.c: 544:   WaitMs(100);
-[e ( _WaitMs (1 -> -> 100 `i `us ]
+[; ;main.c: 544:   start_adc_scan();
+[e ( _start_adc_scan ..  ]
 "545
-[; ;main.c: 545:  } while (++x < 64);
+[; ;main.c: 545:   WaitMs(100);
+[e ( _WaitMs (1 -> -> 100 `i `us ]
+"546
+[; ;main.c: 546:  } while (++x < 64);
 }
 [e $ < -> =+ _x -> -> 1 `i `uc `i -> 64 `i 2315  ]
 [e :U 2314 ]
-"546
-[; ;main.c: 546:  cb = cb >> 6;
-[e = _cb >> _cb -> 6 `i ]
 "547
-[; ;main.c: 547:  cp = cp >> 6;
+[; ;main.c: 547:  cb = cb >> 6;
+[e = _cb >> _cb -> 6 `i ]
+"548
+[; ;main.c: 548:  cp = cp >> 6;
 [e = _cp >> _cp -> 6 `i ]
-"549
-[; ;main.c: 549:  if (cal_current_zero(0, cb, cp)) {
+"550
+[; ;main.c: 550:  if (cal_current_zero(0, cb, cp)) {
 [e $ ! != -> ( _cal_current_zero (3 , , -> -> 0 `i `a -> _cb `s -> _cp `s `i -> 0 `i 2316  ]
 {
-"550
-[; ;main.c: 550:   cal_current_zero(1, cb, cp);
-[e ( _cal_current_zero (3 , , -> -> 1 `i `a -> _cb `s -> _cp `s ]
 "551
-[; ;main.c: 551:   sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 63C ]
+[; ;main.c: 551:   cal_current_zero(1, cb, cp);
+[e ( _cal_current_zero (3 , , -> -> 1 `i `a -> _cb `s -> _cp `s ]
 "552
-[; ;main.c: 552:   sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", cb, cp);
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 64C _cb _cp ]
+[; ;main.c: 552:   sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 64C ]
 "553
-[; ;main.c: 553:   sprintf(get_vterm_ptr(2, 0), "Zero Cal Set         ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 65C ]
+[; ;main.c: 553:   sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", cb, cp);
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 65C _cb _cp ]
 "554
-[; ;main.c: 554:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 554:   sprintf(get_vterm_ptr(2, 0), "Zero Cal Set         ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 66C ]
 "555
-[; ;main.c: 555:   WaitMs(2000);
-[e ( _WaitMs (1 -> -> 2000 `i `us ]
+[; ;main.c: 555:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
 "556
-[; ;main.c: 556:   write_cal_data();
-[e ( _write_cal_data ..  ]
+[; ;main.c: 556:   WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
 "557
-[; ;main.c: 557:  } else {
+[; ;main.c: 557:   write_cal_data();
+[e ( _write_cal_data ..  ]
+"558
+[; ;main.c: 558:  } else {
 }
 [e $U 2317  ]
 [e :U 2316 ]
 {
-"558
-[; ;main.c: 558:   sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 66C ]
 "559
-[; ;main.c: 559:   sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", get_raw_result(C_BATT), get_raw_result(C_PV));
-[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 67C -> ( _get_raw_result (1 . `E16640 0 `ui -> ( _get_raw_result (1 . `E16640 1 `ui ]
+[; ;main.c: 559:   sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 67C ]
 "560
-[; ;main.c: 560:   sprintf(get_vterm_ptr(2, 0), "Zero Out Of Range    ");
-[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 68C ]
+[; ;main.c: 560:   sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", get_raw_result(C_BATT), get_raw_result(C_PV));
+[e ( _sprintf (1 , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 68C -> ( _get_raw_result (1 . `E16640 0 `ui -> ( _get_raw_result (1 . `E16640 1 `ui ]
 "561
-[; ;main.c: 561:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 561:   sprintf(get_vterm_ptr(2, 0), "Zero Out Of Range    ");
+[e ( _sprintf (1 , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 69C ]
 "562
-[; ;main.c: 562:   WaitMs(2000);
-[e ( _WaitMs (1 -> -> 2000 `i `us ]
+[; ;main.c: 562:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
 "563
-[; ;main.c: 563:   return 0;
+[; ;main.c: 563:   WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
+"564
+[; ;main.c: 564:   return 0;
 [e ) -> -> 0 `i `a ]
 [e $UE 2308  ]
-"564
-[; ;main.c: 564:  }
+"565
+[; ;main.c: 565:  }
 }
 [e :U 2317 ]
-"622
-[; ;main.c: 622:  return 1;
+"623
+[; ;main.c: 623:  return 1;
 [e ) -> -> 1 `i `a ]
 [e $UE 2308  ]
-"623
-[; ;main.c: 623: }
+"624
+[; ;main.c: 624: }
 [e :UE 2308 ]
 }
-"625
-[; ;main.c: 625: static _Bool display_history(void)
-[v _display_history `(a ~T0 @X0 1 sf ]
 "626
-[; ;main.c: 626: {
+[; ;main.c: 626: static _Bool display_history(void)
+[v _display_history `(a ~T0 @X0 1 sf ]
+"627
+[; ;main.c: 627: {
 {
 [e :U _display_history ]
 [f ]
-"627
-[; ;main.c: 627:  static uint8_t bwait = 0;
+"628
+[; ;main.c: 628:  static uint8_t bwait = 0;
 [v F18017 `uc ~T0 @X0 1 s bwait ]
 [i F18017
 -> -> 0 `i `uc
 ]
-"629
-[; ;main.c: 629:  if (get_switch(SCALIB) && (++bwait > 5)) {
+"630
+[; ;main.c: 630:  if (get_switch(SCALIB) && (++bwait > 5)) {
 [e $ ! && != -> ( _get_switch (1 -> . `E17192 4 `uc `ui -> -> 0 `i `ui > -> =+ F18017 -> -> 1 `i `uc `i -> 5 `i 2319  ]
 {
-"630
-[; ;main.c: 630:   pclock = time(((void*)0));
-[e = _pclock ( _time (1 -> -> -> 0 `i `*v `*o ]
 "631
-[; ;main.c: 631:   t_mbmc = localtime(&pclock);
-[e = _t_mbmc ( _localtime (1 -> &U _pclock `*Co ]
+[; ;main.c: 631:   pclock = time(((void*)0));
+[e = _pclock ( _time (1 -> -> -> 0 `i `*v `*o ]
 "632
-[; ;main.c: 632:   sprintf(get_vterm_ptr(0, 0), "%d %d %d %d                ", C.hist[0].h[0], C.hist[0].h[1], C.hist[0].h[2], C.hist[0].h[3]);
-[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 69C -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 3 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i ]
+[; ;main.c: 632:   t_mbmc = localtime(&pclock);
+[e = _t_mbmc ( _localtime (1 -> &U _pclock `*Co ]
 "633
-[; ;main.c: 633:   sprintf(get_vterm_ptr(1, 0), "%d %d %d %d                ", C.hist[0].h[4], C.hist[0].h[5], C.hist[0].h[6], C.hist[0].h[7]);
-[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 70C -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 4 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 5 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 6 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 7 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i ]
+[; ;main.c: 633:   sprintf(get_vterm_ptr(0, 0), "%d %d %d %d                ", C.hist[0].h[0], C.hist[0].h[1], C.hist[0].h[2], C.hist[0].h[3]);
+[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 0 `i `uc :s 70C -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 0 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 1 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 2 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 3 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i ]
 "634
-[; ;main.c: 634:   sprintf(get_vterm_ptr(2, 0), "%d %d %d %d                ", C.hist[0].h[8], C.hist[0].h[9], C.hist[0].h[10], C.hist[0].h[12]);
-[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 71C -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 8 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 9 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 10 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 12 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i ]
+[; ;main.c: 634:   sprintf(get_vterm_ptr(1, 0), "%d %d %d %d                ", C.hist[0].h[4], C.hist[0].h[5], C.hist[0].h[6], C.hist[0].h[7]);
+[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 0 `i `uc :s 71C -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 4 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 5 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 6 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 7 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i ]
 "635
-[; ;main.c: 635:   sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
-[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 3 `i `uc -> -> 0 `i `uc :s 72C ( _asctime (1 -> _t_mbmc `*CS2234 ]
+[; ;main.c: 635:   sprintf(get_vterm_ptr(2, 0), "%d %d %d %d                ", C.hist[0].h[8], C.hist[0].h[9], C.hist[0].h[10], C.hist[0].h[12]);
+[e ( _sprintf (1 , , , , (. , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 0 `i `uc :s 72C -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 8 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 9 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 10 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i -> *U + &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 * -> -> -> 12 `i `ui `ux -> -> # *U &U . *U + &U . _C 33 * -> -> -> 0 `i `ui `ux -> -> # *U &U . _C 33 `ui `ux 10 `ui `ux `i ]
 "636
-[; ;main.c: 636:   update_lcd(0);
-[e ( _update_lcd (1 -> -> 0 `i `uc ]
+[; ;main.c: 636:   sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
+[e ( _sprintf (1 , (. , ( _get_vterm_ptr (2 , -> -> 3 `i `uc -> -> 0 `i `uc :s 73C ( _asctime (1 -> _t_mbmc `*CS2234 ]
 "637
-[; ;main.c: 637:   WaitMs(2000);
-[e ( _WaitMs (1 -> -> 2000 `i `us ]
+[; ;main.c: 637:   update_lcd(0);
+[e ( _update_lcd (1 -> -> 0 `i `uc ]
 "638
-[; ;main.c: 638:   bwait = 0;
-[e = F18017 -> -> 0 `i `uc ]
+[; ;main.c: 638:   WaitMs(2000);
+[e ( _WaitMs (1 -> -> 2000 `i `us ]
 "639
-[; ;main.c: 639:   return 1;
+[; ;main.c: 639:   bwait = 0;
+[e = F18017 -> -> 0 `i `uc ]
+"640
+[; ;main.c: 640:   return 1;
 [e ) -> -> 1 `i `a ]
 [e $UE 2318  ]
-"640
-[; ;main.c: 640:  } else {
+"641
+[; ;main.c: 641:  } else {
 }
 [e $U 2320  ]
 [e :U 2319 ]
 {
-"641
-[; ;main.c: 641:   if (!get_switch(SCALIB))
-[e $ ! ! != -> ( _get_switch (1 -> . `E17192 4 `uc `ui -> -> 0 `i `ui 2321  ]
 "642
-[; ;main.c: 642:    bwait = 0;
+[; ;main.c: 642:   if (!get_switch(SCALIB))
+[e $ ! ! != -> ( _get_switch (1 -> . `E17192 4 `uc `ui -> -> 0 `i `ui 2321  ]
+"643
+[; ;main.c: 643:    bwait = 0;
 [e = F18017 -> -> 0 `i `uc ]
 [e :U 2321 ]
-"643
-[; ;main.c: 643:   return 0;
+"644
+[; ;main.c: 644:   return 0;
 [e ) -> -> 0 `i `a ]
 [e $UE 2318  ]
-"644
-[; ;main.c: 644:  }
+"645
+[; ;main.c: 645:  }
 }
 [e :U 2320 ]
-"645
-[; ;main.c: 645: }
+"646
+[; ;main.c: 646: }
 [e :UE 2318 ]
 }
 [p f _sprintf 9282704 ]
 [a 3C 49 46 50 55 0 ]
 [a 15C 73 110 118 97 108 105 100 32 69 69 80 82 79 77 32 68 65 84 65 32 0 ]
-[a 34C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 32 0 ]
-[a 29C 72 105 115 116 111 114 121 32 68 97 116 97 32 32 83 97 118 101 100 32 32 0 ]
-[a 62C 83 116 97 98 105 108 105 116 121 32 99 108 111 99 107 32 37 100 32 32 32 0 ]
-[a 32C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 32 0 ]
+[a 35C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 32 0 ]
+[a 30C 72 105 115 116 111 114 121 32 68 97 116 97 32 32 83 97 118 101 100 32 32 0 ]
+[a 63C 83 116 97 98 105 108 105 116 121 32 99 108 111 99 107 32 37 100 32 32 32 0 ]
 [a 33C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 32 0 ]
-[a 59C 82 101 108 101 97 115 101 32 98 117 116 116 111 110 32 37 99 32 32 32 0 ]
-[a 53C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
+[a 34C 37 100 32 37 50 46 52 102 32 32 32 37 100 32 32 32 0 ]
+[a 60C 82 101 108 101 97 115 101 32 98 117 116 116 111 110 32 37 99 32 32 32 0 ]
 [a 54C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
 [a 55C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
-[a 68C 90 101 114 111 32 79 117 116 32 79 102 32 82 97 110 103 101 32 32 32 32 0 ]
+[a 56C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 84 82 73 77 32 32 32 0 ]
+[a 69C 90 101 114 111 32 79 117 116 32 79 102 32 82 97 110 103 101 32 32 32 32 0 ]
 [a 14C 82 101 97 100 32 69 69 80 82 79 77 32 68 65 84 65 32 32 32 32 0 ]
 [a 23C 67 104 101 99 107 32 51 48 32 115 101 99 111 110 100 115 32 32 32 32 32 0 ]
-[a 41C 80 86 32 37 50 46 50 102 32 80 65 32 37 50 46 50 102 32 32 32 32 32 0 ]
-[a 43C 67 86 32 37 50 46 50 102 32 76 65 32 37 50 46 50 102 32 32 32 32 32 0 ]
-[a 42C 66 86 32 37 50 46 50 102 32 66 65 32 37 50 46 50 102 32 32 32 32 32 0 ]
-[a 60C 83 101 110 115 111 114 32 82 101 97 100 105 110 103 115 32 32 32 32 32 32 0 ]
+[a 42C 80 86 32 37 50 46 50 102 32 80 65 32 37 50 46 50 102 32 32 32 32 32 0 ]
+[a 44C 67 86 32 37 50 46 50 102 32 76 65 32 37 50 46 50 102 32 32 32 32 32 0 ]
+[a 43C 66 86 32 37 50 46 50 102 32 66 65 32 37 50 46 50 102 32 32 32 32 32 0 ]
+[a 61C 83 101 110 115 111 114 32 82 101 97 100 105 110 103 115 32 32 32 32 32 32 0 ]
 [a 19C 66 97 116 116 101 114 121 32 65 104 32 37 51 46 50 102 32 32 32 32 32 32 0 ]
 [a 1C 32 77 66 77 67 32 83 79 76 65 82 77 79 78 32 32 32 32 32 32 0 ]
-[a 31C 32 84 105 109 101 32 37 108 117 44 32 37 108 117 32 32 32 32 32 32 32 0 ]
-[a 48C 66 65 72 32 37 51 46 50 102 32 80 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
-[a 35C 80 86 32 37 99 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
+[a 32C 32 84 105 109 101 32 37 108 117 44 32 37 108 117 32 32 32 32 32 32 32 0 ]
+[a 49C 66 65 72 32 37 51 46 50 102 32 80 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
+[a 36C 80 86 32 37 99 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 0 ]
 [a 24C 67 104 101 99 107 105 110 103 32 37 99 32 37 99 32 32 32 32 32 32 32 0 ]
-[a 56C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 32 0 ]
-[a 63C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 32 0 ]
-[a 66C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 32 0 ]
-[a 36C 76 79 65 68 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
-[a 37C 73 78 86 32 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
-[a 38C 80 86 32 37 99 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
-[a 49C 83 37 99 67 32 37 100 32 82 85 78 32 37 100 32 86 37 50 46 50 102 32 32 32 32 32 32 32 32 0 ]
-[a 65C 90 101 114 111 32 67 97 108 32 83 101 116 32 32 32 32 32 32 32 32 32 0 ]
+[a 57C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 32 0 ]
+[a 64C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 32 0 ]
+[a 67C 66 97 116 116 101 114 121 32 97 110 100 32 80 86 32 32 32 32 32 32 32 0 ]
+[a 37C 76 79 65 68 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
+[a 38C 73 78 86 32 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
+[a 39C 80 86 32 37 99 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 32 0 ]
+[a 50C 83 37 99 67 32 37 100 32 82 85 78 32 37 100 32 86 37 50 46 50 102 32 32 32 32 32 32 32 32 0 ]
+[a 66C 90 101 114 111 32 67 97 108 32 83 101 116 32 32 32 32 32 32 32 32 32 0 ]
 [a 2C 32 86 101 114 115 105 111 110 32 37 115 32 32 32 32 32 32 32 32 32 0 ]
-[a 52C 82 50 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 32 0 ]
-[a 51C 82 49 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 32 0 ]
-[a 47C 66 65 84 84 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 32 0 ]
-[a 39C 76 79 65 68 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 32 32 0 ]
-[a 40C 73 78 86 32 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 32 32 0 ]
-[a 46C 66 65 84 32 84 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 32 0 ]
-[a 45C 66 65 84 32 79 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 32 0 ]
-[a 44C 66 65 84 32 73 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 53C 82 50 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 52C 82 49 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 48C 66 65 84 84 32 80 87 82 32 37 51 46 50 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 40C 76 79 65 68 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 41C 73 78 86 32 32 87 72 32 37 51 46 50 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 47C 66 65 84 32 84 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 46C 66 65 84 32 79 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 32 0 ]
+[a 45C 66 65 84 32 73 87 72 32 37 52 46 49 102 32 32 32 32 32 32 32 32 32 0 ]
 [a 18C 83 116 97 116 105 99 32 83 79 67 32 37 100 32 32 32 32 32 32 32 32 32 0 ]
-[a 57C 83 101 110 115 111 114 32 90 101 114 111 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 58C 67 97 108 105 98 114 97 116 105 111 110 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 58C 83 101 110 115 111 114 32 90 101 114 111 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 59C 67 97 108 105 98 114 97 116 105 111 110 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 22C 67 97 108 99 117 108 97 116 105 111 110 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 17C 83 32 83 37 99 67 32 37 100 32 37 50 46 52 102 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 21C 66 97 116 116 101 114 121 32 69 83 82 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 28C 37 115 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 72C 37 115 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 29C 37 115 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 73C 37 115 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 4C 32 78 83 65 83 80 79 79 75 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 25C 69 83 82 32 32 37 50 46 54 102 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 27C 82 50 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 26C 82 49 32 37 50 46 51 102 32 37 51 46 52 102 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 30C 84 111 32 69 69 80 82 79 77 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 50C 69 83 82 32 32 37 50 46 54 102 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 31C 84 111 32 69 69 80 82 79 77 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 51C 69 83 82 32 32 37 50 46 54 102 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 16C 66 86 32 37 50 46 52 102 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 64C 32 37 108 100 32 37 108 100 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 67C 32 37 108 100 32 37 108 100 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 61C 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
-[a 69C 37 100 32 37 100 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 65C 32 37 108 100 32 37 108 100 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 68C 32 37 108 100 32 37 108 100 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 62C 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 70C 37 100 32 37 100 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 71C 37 100 32 37 100 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
+[a 72C 37 100 32 37 100 32 37 100 32 37 100 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 20C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 5C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]
 [a 6C 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 32 0 ]

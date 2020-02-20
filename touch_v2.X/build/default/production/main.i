@@ -29388,6 +29388,7 @@ void main(void)
    pclock = time(((void*)0));
    t_mbmc = localtime(&pclock);
    sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
+   sprintf(get_vterm_ptr(3, 1), "%s           ", asctime(t_mbmc));
    calc_model_data();
    if (C.dupdate) {
     C.dupdate = 0;
@@ -29574,7 +29575,7 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 622 "main.c"
+# 623 "main.c"
  return 1;
 }
 

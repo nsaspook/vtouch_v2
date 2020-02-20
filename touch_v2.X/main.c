@@ -376,6 +376,7 @@ void main(void)
 			pclock = time(NULL);
 			t_mbmc = localtime(&pclock);
 			sprintf(get_vterm_ptr(3, 0), "%s           ", asctime(t_mbmc));
+			sprintf(get_vterm_ptr(3, 1), "%s           ", asctime(t_mbmc));
 			calc_model_data();
 			if (C.dupdate) {
 				C.dupdate = false;
