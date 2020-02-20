@@ -381,6 +381,14 @@ void main(void)
 			if (C.dupdate) {
 				C.dupdate = false;
 				set_hist_flag();
+
+				uint16_t i_esr = 1;
+				esr_check(true); // init FSM
+				while (esr_check(false) < 0.0) {
+					WaitMs(110);
+					if (i_esr++ > 512)
+						break;
+				};
 				load_hist_data(); // calculate history data
 				update_hist_data(false, &C.hist[0]); // load EEPROM history buffer
 				write_cal_data(); // save updated history to EEPROM

@@ -29393,6 +29393,14 @@ void main(void)
    if (C.dupdate) {
     C.dupdate = 0;
     set_hist_flag();
+
+    uint16_t i_esr = 1;
+    esr_check(1);
+    while (esr_check(0) < 0.0) {
+     WaitMs(110);
+     if (i_esr++ > 512)
+      break;
+    };
     load_hist_data();
     update_hist_data(0, &C.hist[0]);
     write_cal_data();
@@ -29575,7 +29583,7 @@ static _Bool current_sensor_cal(void)
   WaitMs(2000);
   return 0;
  }
-# 623 "main.c"
+# 631 "main.c"
  return 1;
 }
 
