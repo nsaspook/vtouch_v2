@@ -4,6 +4,8 @@
  * channels during interrupt after a repeat count
  */
 
+#include <pic18f57k42.h>
+
 #include "daq.h"
 
 typedef struct D_data {
@@ -126,7 +128,15 @@ bool update_adc_result(void)
  */
 adc_result_t get_raw_result(const adcc_channel_t index)
 {
-	return R.raw_adc[index];
+	static adc_result_t raw_result;
+
+	PIE1bits.ADIE = 0; // stop ADC interrupt value updates
+	PIE1bits.ADTIE = 0; // while getting raw values
+	raw_result = R.raw_adc[index];
+	PIE1bits.ADIE = 1; // restore ADC enables
+	PIE1bits.ADTIE = 1;
+
+	return raw_result;
 }
 
 /*
