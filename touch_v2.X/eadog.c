@@ -11,7 +11,7 @@
 
 struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
-struct ringBufS_t ring_buf2;
+//struct ringBufS_t ring_buf2;
 static uint8_t port_data[max_port_data] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
 
 extern struct V_data V;
@@ -38,9 +38,9 @@ void wdtdelay(const uint32_t delay)
 void init_display(void)
 {
 	spi_link.tx1a = &ring_buf1;
-	spi_link.tx1b = &ring_buf2;
+//	spi_link.tx1b = &ring_buf2;
 	ringBufS_init(spi_link.tx1a);
-	ringBufS_init(spi_link.tx1b);
+//	ringBufS_init(spi_link.tx1b);
 
 	DLED = true;
 #ifdef NHD

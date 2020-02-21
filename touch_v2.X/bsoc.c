@@ -1,7 +1,7 @@
 #include "bsoc.h"
 #include "mcc_generated_files/interrupt_manager.h"
 
-extern C_data C;
+extern volatile C_data C;
 extern V_data V;
 
 const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {

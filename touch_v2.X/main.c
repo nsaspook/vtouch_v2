@@ -83,7 +83,7 @@
  * anb4 inverter voltage				R9
  * anb5 spare						R10
  *
- * switch MAX debounce inputs INP                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+ * switch MAX debounce inputs INP, uses external interrupt 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
  * max pin	pic pin		connector pin	name	MBMC_IO board input connector pin
  * 1		rf0		spi 9			10
  * 2		rf1		spi 10			1
