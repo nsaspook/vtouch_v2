@@ -130,10 +130,10 @@ adc_result_t get_raw_result(const adcc_channel_t index)
 {
 	static adc_result_t raw_result;
 
-	PIE1bits.ADIE = 0; // stop ADC interrupt value updates
+	// stop ADC interrupt value updates
 	PIE1bits.ADTIE = 0; // while getting raw values
 	raw_result = R.raw_adc[index];
-	PIE1bits.ADIE = 1; // restore ADC enables
+	// restore ADC enables
 	PIE1bits.ADTIE = 1;
 
 	return raw_result;
@@ -208,7 +208,7 @@ static void adc_int_t_handler(void)
 	ADCC_DischargeSampleCapacitor(); // short ADC sample cap before next channel sampling
 	ADCC_StartConversion(R.scan_index & 0xf);
 #ifdef DEBUG_DAQ1
-	DEBUG1_Toggle();
+	DEBUG1_SetHigh();
 #endif
 }
 
