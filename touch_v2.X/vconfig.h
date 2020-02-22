@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.28"
+#define VER	"1.29"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -52,6 +52,7 @@ extern "C" {
 	 *      need to work on this for a correct fix. review LCD_addressing.pdf in host_board folder
 	 * 1.24 fix LCD problems, was trying to send a 0x00 using printf
 	 * 1.25 load time_t date from saved EEPROM history if valid
+	 * 1.29 fine tuning the ADC configuration
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

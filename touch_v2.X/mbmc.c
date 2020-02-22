@@ -40,7 +40,7 @@ float lp_filter(const float new, const uint8_t bn, const int8_t slow)
 	}
 
 	if (slow) { // some random filter cutoffs beta values
-		lp_speed = 0.033;
+		lp_speed = 0.06;
 	} else {
 		lp_speed = 0.1;
 	}
