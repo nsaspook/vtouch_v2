@@ -40,7 +40,7 @@ float lp_filter(const float new, const uint8_t bn, const int8_t slow)
 	}
 
 	if (slow) { // some random filter cutoffs beta values
-		lp_speed = 0.06;
+		lp_speed = 0.033;
 	} else {
 		lp_speed = 0.1;
 	}
@@ -56,7 +56,11 @@ void convert_adc_data(void)
 		if (V.calib) {
 			C.calc[i] = lp_filter(conv_raw_result(i, O_CONV), i, true);
 		} else {
-			C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, false);
+			if (i == C_BATT || i == C_PV) { // smooth PWM effects
+				C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, true);
+			} else {
+				C.calc[i] = lp_filter(conv_raw_result(i, CONV), i, false);
+			}
 		}
 	} while (++i < ADC_BUFFER_SIZE);
 }
