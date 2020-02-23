@@ -87,6 +87,8 @@ bool start_adc_scan(void)
 #endif
 #ifdef DEBUG_DAQ2
 	DEBUG2_SetHigh();
+#else
+	PIE1bits.ADIE = 0;
 #endif
 	return true;
 }
