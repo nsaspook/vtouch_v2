@@ -44,6 +44,12 @@
 #define ADC_BUFFER_SIZE	16 // MUST BE AT LEAST 1
 #define ADC_SCAN_SPEED	200 // sample timer speed in ms
 #define ADC_SCAN_CHAN	0b0011110001110111 // convert these analog ports bitmap
+
+/*
+ * Normal or high volt channels (bit set)
+ */
+#define ADC_V_CHAN_TYPE 0b0010000000100000
+
 /*
  * current sensor configuration
  */
@@ -84,6 +90,7 @@
  */
 #define C_SCALE		0.6250000
 #define V_SCALE		4.1254125
+#define V_SCALE_H	8.2000000
 
 #define A200		0 // BATTERY,  adc line 0
 #define A100		1 // PV,       adc line 1

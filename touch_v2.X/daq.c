@@ -162,7 +162,11 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 			if (ADC_T_CHAN >> chan & 0x1) { // temp conversion
 				return 25.0; // filler until sensor is selected
 			} else { // voltage conversion
-				return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+				if (ADC_V_CHAN_TYPE >> chan & 01) {
+					return((float) get_raw_result(chan) * V_SCALE_H) / 1000.0;
+				} else {
+					return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+				}
 			}
 		}
 		break;
@@ -170,7 +174,12 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 		if (ADC_C_CHAN >> chan & 0x1 || ADC_T_CHAN >> chan & 0x1)
 			return((float) get_raw_result(chan) * C_SCALE) / 1000.0;
 
-		return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+		if (ADC_V_CHAN_TYPE >> chan & 01) {
+			return((float) get_raw_result(chan) * V_SCALE_H) / 1000.0;
+		} else {
+			return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+		}
+
 		break;
 	default:
 		return 0.0;

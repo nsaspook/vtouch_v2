@@ -76,12 +76,12 @@
  * ana2	charge controller output voltage		R3
  * ana3  PLUS VREF					Using a external 4.095 volt reference IC from TI/BB
  * ana4	battery voltage					Voltage a primary inverter battery R4
- * ana5	pv voltage					R5
+ * ana5	pv voltage					R5 ~60 v max
  * ana6 controller buss voltage				R6
  * anb2 backup battery voltage				R7
  * anb3 thermo_batt					thermistor input 10K at 25C 5v R8
  * anb4 inverter voltage				R9
- * anb5 spare						R10
+ * anb5 light sensor voltage				R10 ~60 v max
  *
  * switch MAX debounce inputs INP, uses external interrupt 1                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
  * max pin	pic pin		connector pin	name	MBMC_IO board input connector pin

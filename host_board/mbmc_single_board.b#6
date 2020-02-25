@@ -2197,6 +2197,44 @@ chip 0805</description>
 </package3d>
 </packages3d>
 </library>
+<library name="diode" urn="urn:adsk.eagle:library:210">
+<description>&lt;b&gt;Diodes&lt;/b&gt;&lt;p&gt;
+Based on the following sources:
+&lt;ul&gt;
+&lt;li&gt;Motorola : www.onsemi.com
+&lt;li&gt;Fairchild : www.fairchildsemi.com
+&lt;li&gt;Philips : www.semiconductors.com
+&lt;li&gt;Vishay : www.vishay.de
+&lt;/ul&gt;
+&lt;author&gt;Created by librarian@cadsoft.de&lt;/author&gt;</description>
+<packages>
+<package name="ZDIO-2.5" urn="urn:adsk.eagle:footprint:43185/1" library_version="8">
+<description>&lt;b&gt;Z DIODE&lt;/b&gt;</description>
+<wire x1="-0.254" y1="0.762" x2="-0.508" y2="0.762" width="0.254" layer="21"/>
+<wire x1="-0.508" y1="0" x2="0.762" y2="0.762" width="0.254" layer="21"/>
+<wire x1="0.762" y1="-0.762" x2="-0.508" y2="0" width="0.254" layer="21"/>
+<wire x1="-0.508" y1="0.762" x2="-0.508" y2="0" width="0.254" layer="21"/>
+<wire x1="0.762" y1="0.762" x2="0.762" y2="-0.762" width="0.254" layer="51"/>
+<wire x1="-0.508" y1="0" x2="-0.508" y2="-0.762" width="0.254" layer="21"/>
+<wire x1="-0.508" y1="-0.762" x2="-0.762" y2="-0.762" width="0.254" layer="21"/>
+<wire x1="0.508" y1="0.254" x2="0.508" y2="0" width="0.6096" layer="51"/>
+<wire x1="0.508" y1="0" x2="0.508" y2="-0.254" width="0.6096" layer="51"/>
+<wire x1="0.508" y1="0" x2="-0.254" y2="0" width="0.6096" layer="51"/>
+<pad name="A" x="1.27" y="0" drill="0.8128" shape="octagon"/>
+<pad name="C" x="-1.27" y="0" drill="0.8128" shape="octagon"/>
+<text x="-1.3462" y="1.0668" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-1.27" y="-2.286" size="1.27" layer="27" ratio="10">&gt;VALUE</text>
+</package>
+</packages>
+<packages3d>
+<package3d name="ZDIO-2.5" urn="urn:adsk.eagle:package:43407/1" type="box" library_version="8">
+<description>Z DIODE</description>
+<packageinstances>
+<packageinstance name="ZDIO-2.5"/>
+</packageinstances>
+</package3d>
+</packages3d>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -3047,6 +3085,11 @@ design rules under a new name.</description>
 <attribute name="TP_SIGNAL_NAME" value="" x="38.1" y="20.32" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="37.465" y="19.558" size="0.0254" layer="27"/>
 </element>
+<element name="D1" library="diode" library_urn="urn:adsk.eagle:library:210" package="ZDIO-2.5" package3d_urn="urn:adsk.eagle:package:43407/1" value="5.6v" x="2.54" y="-10.16" smashed="yes">
+<attribute name="NAME" x="1.1938" y="-9.0932" size="1.27" layer="25" ratio="10"/>
+<attribute name="POPULARITY" value="4" x="2.54" y="-10.16" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="1.27" y="-12.446" size="1.27" layer="27" ratio="10"/>
+</element>
 </elements>
 <signals>
 <signal name="N$1">
@@ -3717,6 +3760,8 @@ design rules under a new name.</description>
 <via x="57.0738" y="8.3058" extent="1-16" drill="0.35"/>
 <via x="82.6008" y="20.1168" extent="1-16" drill="0.35"/>
 <via x="57.531" y="48.3108" extent="1-16" drill="0.35"/>
+<contactref element="D1" pad="A"/>
+<wire x1="3.81" y1="-10.16" x2="17.78" y2="3.81" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$24">
 <contactref element="J1" pad="2"/>
@@ -3945,6 +3990,8 @@ design rules under a new name.</description>
 <via x="70.7136" y="42.2148" extent="1-16" drill="0.35"/>
 <via x="94.488" y="40.6908" extent="1-16" drill="0.35"/>
 <via x="73.152" y="42.4434" extent="1-16" drill="0.35"/>
+<contactref element="D1" pad="C"/>
+<wire x1="1.27" y1="-10.16" x2="24.26" y2="10.16" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$37">
 <contactref element="IC2" pad="5"/>
@@ -5054,6 +5101,8 @@ design rules under a new name.</description>
 <wire x1="54.1782" y1="24.3078" x2="52.959" y2="24.3078" width="0.1524" layer="1"/>
 <wire x1="38.1" y1="20.3454" x2="38.1" y2="20.32" width="0.1524" layer="1"/>
 <wire x1="54.1782" y1="24.3078" x2="54.182" y2="24.38" width="0.1524" layer="1"/>
+<contactref element="IC2" pad="4"/>
+<wire x1="54.182" y1="24.38" x2="106.68" y2="27.94" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$257">
 <contactref element="IC15" pad="47"/>
