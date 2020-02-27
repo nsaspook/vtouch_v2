@@ -408,9 +408,9 @@ void main(void)
 				switch (H.hid_display) {
 				case HID_PWR:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %c PWR %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
-					sprintf(get_vterm_ptr(1, 0), "LOAD PWR %3.2f        ", C.p_load);
-					sprintf(get_vterm_ptr(2, 0), "INV  PWR %3.2f        ", C.p_inverter);
+					sprintf(get_vterm_ptr(0, 0), "PV %c PW %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
+					sprintf(get_vterm_ptr(1, 0), "LOAD PW %3.2f LA %2.2f      ", C.p_load, C.c_load);
+					sprintf(get_vterm_ptr(2, 0), "MPPT PW %3.2f        ", C.p_mppt);
 
 					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f        ", (C.day) ? 'D' : ' ', C.pvkw);
 					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f         ", C.loadkw);
@@ -418,9 +418,9 @@ void main(void)
 					break;
 				case HID_MAIN:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %2.2f CA %2.2f     ", C.calc[V_PV], C.calc[C_PV]);
+					sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f     ", C.calc[V_PV], C.calc[C_MPPT]);
 					sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f     ", C.calc[V_BAT], C.calc[C_BATT]);
-					sprintf(get_vterm_ptr(2, 0), "CV %2.2f LA %2.2f     ", C.calc[V_CC], C.c_load);
+					sprintf(get_vterm_ptr(2, 0), "CV %2.2f CA %2.2f     ", C.calc[V_CC], C.calc[C_PV]);
 
 					sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f         ", C.bkwi);
 					sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f         ", C.bkwo);
@@ -492,7 +492,7 @@ void main(void)
 				break;
 			case 6:
 				i = V_BBAT;
-				j = V_TEMP;
+				j = C_MPPT;
 				k = V_INVERTER;
 				break;
 			case 9:

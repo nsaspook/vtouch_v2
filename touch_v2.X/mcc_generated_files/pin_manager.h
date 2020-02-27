@@ -235,25 +235,25 @@
 #define V_BBAT_SetAnalogMode()      do { ANSELBbits.ANSELB2 = 1; } while(0)
 #define V_BBAT_SetDigitalMode()     do { ANSELBbits.ANSELB2 = 0; } while(0)
 
-// get/set V_TEMP aliases
-#define V_TEMP_TRIS                 TRISBbits.TRISB3
-#define V_TEMP_LAT                  LATBbits.LATB3
-#define V_TEMP_PORT                 PORTBbits.RB3
-#define V_TEMP_WPU                  WPUBbits.WPUB3
-#define V_TEMP_OD                   ODCONBbits.ODCB3
-#define V_TEMP_ANS                  ANSELBbits.ANSELB3
-#define V_TEMP_SetHigh()            do { LATBbits.LATB3 = 1; } while(0)
-#define V_TEMP_SetLow()             do { LATBbits.LATB3 = 0; } while(0)
-#define V_TEMP_Toggle()             do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0)
-#define V_TEMP_GetValue()           PORTBbits.RB3
-#define V_TEMP_SetDigitalInput()    do { TRISBbits.TRISB3 = 1; } while(0)
-#define V_TEMP_SetDigitalOutput()   do { TRISBbits.TRISB3 = 0; } while(0)
-#define V_TEMP_SetPullup()          do { WPUBbits.WPUB3 = 1; } while(0)
-#define V_TEMP_ResetPullup()        do { WPUBbits.WPUB3 = 0; } while(0)
-#define V_TEMP_SetPushPull()        do { ODCONBbits.ODCB3 = 0; } while(0)
-#define V_TEMP_SetOpenDrain()       do { ODCONBbits.ODCB3 = 1; } while(0)
-#define V_TEMP_SetAnalogMode()      do { ANSELBbits.ANSELB3 = 1; } while(0)
-#define V_TEMP_SetDigitalMode()     do { ANSELBbits.ANSELB3 = 0; } while(0)
+// get/set C_MPPT aliases
+#define C_MPPT_TRIS                 TRISBbits.TRISB3
+#define C_MPPT_LAT                  LATBbits.LATB3
+#define C_MPPT_PORT                 PORTBbits.RB3
+#define C_MPPT_WPU                  WPUBbits.WPUB3
+#define C_MPPT_OD                   ODCONBbits.ODCB3
+#define C_MPPT_ANS                  ANSELBbits.ANSELB3
+#define C_MPPT_SetHigh()            do { LATBbits.LATB3 = 1; } while(0)
+#define C_MPPT_SetLow()             do { LATBbits.LATB3 = 0; } while(0)
+#define C_MPPT_Toggle()             do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0)
+#define C_MPPT_GetValue()           PORTBbits.RB3
+#define C_MPPT_SetDigitalInput()    do { TRISBbits.TRISB3 = 1; } while(0)
+#define C_MPPT_SetDigitalOutput()   do { TRISBbits.TRISB3 = 0; } while(0)
+#define C_MPPT_SetPullup()          do { WPUBbits.WPUB3 = 1; } while(0)
+#define C_MPPT_ResetPullup()        do { WPUBbits.WPUB3 = 0; } while(0)
+#define C_MPPT_SetPushPull()        do { ODCONBbits.ODCB3 = 0; } while(0)
+#define C_MPPT_SetOpenDrain()       do { ODCONBbits.ODCB3 = 1; } while(0)
+#define C_MPPT_SetAnalogMode()      do { ANSELBbits.ANSELB3 = 1; } while(0)
+#define C_MPPT_SetDigitalMode()     do { ANSELBbits.ANSELB3 = 0; } while(0)
 
 // get/set V_INVERTER aliases
 #define V_INVERTER_TRIS                 TRISBbits.TRISB4

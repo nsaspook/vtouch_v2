@@ -53,11 +53,11 @@ extern "C" {
 	 * 1.24 fix LCD problems, was trying to send a 0x00 using printf
 	 * 1.25 load time_t date from saved EEPROM history if valid
 	 * 1.29 fine tuning the ADC configuration
-	 * 1.31 add third amp-meter for actual PV current instead of CC current for MPPT VI conversion tracking
+	 * 1.31 add third hall-sensor for actual PV current and CC current for MPPT VI conversion tracking
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
-#define DEF_TIME	1582073758
+#define DEF_TIME	1582841053
 
 #define SLED	LED0_LAT
 #define DLED	DEBUG2_LAT

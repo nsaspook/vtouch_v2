@@ -79,6 +79,7 @@ void calc_model_data(void)
 		C.bc_ror = C.c_bat - bcror;
 		bcror = C.c_bat;
 		C.c_pv = C.calc[C_PV];
+		C.c_mppt = C.calc[C_MPPT];
 		C.v_bat = C.calc[V_BAT];
 		C.v_sensor = C.calc[V_LIGHT_SENSOR];
 		C.bv_ror = C.v_bat - bvror;
@@ -91,6 +92,7 @@ void calc_model_data(void)
 		C.p_pv = lp_filter(C.c_pv * C.v_cc, 18, true);
 		C.p_inverter = lp_filter((C.c_load * C.v_inverter) - STATIC_LOAD_POWER, 19, true);
 		C.p_bat = lp_filter(C.c_bat * C.v_bat, 20, true);
+		C.p_mppt = lp_filter(C.c_mppt * C.v_pv, 21, true);
 		/*
 		 * calculation limits
 		 */

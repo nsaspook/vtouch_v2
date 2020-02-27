@@ -95,7 +95,7 @@ typedef enum
     V_PV =  0x5,
     V_CBUS =  0x6,
     V_BBAT =  0xA,
-    V_TEMP =  0xB,
+    C_MPPT =  0xB,
     V_INVERTER =  0xC,
     V_LIGHT_SENSOR =  0xD,
     channel_VSS =  0x3B,

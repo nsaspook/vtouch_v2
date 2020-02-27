@@ -37,7 +37,7 @@
 #include "daq.h"
 
 #define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
-#define LP_BUFFER_SIZE	ADC_BUFFER_SIZE+5
+#define LP_BUFFER_SIZE	ADC_BUFFER_SIZE+8
 #define STATIC_LOAD_POWER	14.00
 #define BANKAH	225.0	// baatery bank label Ah
 #define DEGRADE	100.0	// adjust to what the battery bank Ah really is
@@ -70,8 +70,8 @@
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
-	float c_load, c_bat, c_pv, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
-	float p_load, p_inverter, p_pv, p_bat;
+	float c_load, c_bat, c_pv, c_mppt, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
+	float p_load, p_inverter, p_pv, p_bat, p_mppt;
 	float t_comp, esr;
 	float bank_ah, dynamic_ah, pv_ah, loadah, dynamic_ah_adj;
 	float bkwi, bkwo, pvkw, invkw, loadkw;

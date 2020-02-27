@@ -53,15 +53,15 @@
 /*
  * current sensor configuration
  */
-#define NUM_C_SENSORS	2
-#define ADC_C_CHAN	0b0000000000000011 // 5 volt hall current sensor bitmap
+#define NUM_C_SENSORS	3
+#define ADC_C_CHAN	0b0000100000000011 // 5 volt hall current sensor bitmap
 #define ADC_C_CHAN_TYPE	0b0000000000000001 // 0 - 100A, 1=200A
 /*
  * temp sensor configuration
  */
-#define NUM_T_SENSORS	1
-#define ADC_T_CHAN	0b0000100000000000 // 5 volt temp sensor bitmap
-#define ADC_T_CHAN_TYPE	0b0000100000000000 // type bitmap
+#define NUM_T_SENSORS	0
+#define ADC_T_CHAN	0b0000000000000000 // 5 volt temp sensor bitmap
+#define ADC_T_CHAN_TYPE	0b0000000000000000 // type bitmap
 
 /*
  * dac channel configuration
@@ -93,7 +93,8 @@
 #define V_SCALE_H	8.2000000
 
 #define A200		0 // BATTERY,  adc line 0
-#define A100		1 // PV,       adc line 1
+#define A100		1 // CV,       adc line 1
+#define A100M		2 // PV,       adc line 1
 
 #define C_A200		0.0862000 // BATTERY Amp scalar, second line [0]
 #define C_A100		0.0361010 // PV Amp scalar, first line [1]

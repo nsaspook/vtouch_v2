@@ -48,8 +48,10 @@ static volatile R_data R = {
 	.scan_index = 0,
 	.n_offset[A200] = C_OFFSET200,
 	.n_offset[A100] = C_OFFSET100,
+	.n_offset[A100M] = C_OFFSET100,
 	.n_scalar[A200] = C_A200,
 	.n_scalar[A100] = C_A100,
+	.n_scalar[A100M] = C_A100,
 	.raw_dac[DCHAN_A] = 0x0,
 	.raw_dac[DCHAN_B] = 0x0,
 	.checkmark = EE_CHECKMARK,
@@ -361,6 +363,7 @@ bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp)
 
 	R.n_offset[A200] = cb;
 	R.n_offset[A100] = cp;
+	R.n_offset[A100M] = cp;
 	R.c_zero_cal = true;
 	return true;
 }
@@ -381,6 +384,7 @@ bool cal_current_10A(const bool mode, const int16_t cb, const int16_t cp, const 
 
 	R.n_scalar[A200] = scaleb;
 	R.n_scalar[A100] = scalep;
+	R.n_scalar[A100M] = scalep;
 	R.c_scale_cal = true;
 	return true;
 }
@@ -461,12 +465,13 @@ void update_cal_data(void)
 	if (!R.c_zero_cal) {
 		R.n_offset[A200] = C_OFFSET200;
 		R.n_offset[A100] = C_OFFSET100;
-
+		R.n_offset[A100M] = C_OFFSET100;
 	}
 
 	if (!R.c_scale_cal) {
 		R.n_scalar[A200] = C_A200;
 		R.n_scalar[A100] = C_A100;
+		R.n_scalar[A100M] = C_A100;
 	}
 }
 
