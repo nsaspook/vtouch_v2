@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.30"
+#define VER	"1.31"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -53,6 +53,7 @@ extern "C" {
 	 * 1.24 fix LCD problems, was trying to send a 0x00 using printf
 	 * 1.25 load time_t date from saved EEPROM history if valid
 	 * 1.29 fine tuning the ADC configuration
+	 * 1.31 add third amp-meter for actual PV current instead of CC current for MPPT VI conversion tracking
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
