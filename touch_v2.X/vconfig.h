@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.31"
+#define VER	"1.32"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -54,6 +54,7 @@ extern "C" {
 	 * 1.25 load time_t date from saved EEPROM history if valid
 	 * 1.29 fine tuning the ADC configuration
 	 * 1.31 add third hall-sensor for actual PV current and CC current for MPPT VI conversion tracking
+	 * 1.32 data number fixups for display and calculations
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -180,7 +181,7 @@ extern "C" {
 		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
 		terminal_type response;
 		volatile uint8_t ticker;
-		bool flipper, calib, enter, sensor_set;
+		bool flipper, calib, enter, sensor_set, fixup;
 		volatile bool system_stable;
 		volatile uint32_t lowint_count, timerint_count;
 	} V_data;

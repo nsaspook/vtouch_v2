@@ -113,6 +113,12 @@ typedef struct P_data {
 	uint8_t SYNCSOC : 1;
 } P_data_t;
 
+typedef enum {
+	WIDE_ZERO = 1,
+	NO_NEG = 2,
+	SKIP = 8,
+} FIX_CODES;
+
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
@@ -124,6 +130,7 @@ void set_ac_charger_relay(bool);
 bool get_ac_charger_relay(void);
 bool check_day_time(void);
 void load_hist_data(void);
+float calc_fixups(float data, FIX_CODES fixup);
 
 char spinners(uint8_t, uint8_t);
 time_t time(time_t *);

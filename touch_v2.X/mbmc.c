@@ -272,3 +272,22 @@ void set_time(time_t t)
 	V.ticks = t;
 	PIE8bits.TMR5IE = 1;
 }
+
+/*
+ * cleanup mainly noise values
+ */
+float calc_fixups(float data, FIX_CODES fixup)
+{
+	if ((fixup & SKIP) || (!V.fixup))
+		return data;
+
+	if (fixup & WIDE_ZERO) {
+		if ((fixup > 0.05) && (fixup >-0.05))
+			data = 0.0;
+	}
+	if (fixup & NO_NEG) {
+		if (data < 0.0)
+			data = 0.0;
+	}
+	return data;
+}
