@@ -409,9 +409,9 @@ void main(void)
 				switch (H.hid_display) {
 				case HID_PWR:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %c PW %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
-					sprintf(get_vterm_ptr(1, 0), "LOAD PW %3.2f LA %2.2f      ", C.p_load, C.c_load);
-					sprintf(get_vterm_ptr(2, 0), "MPPT PW %3.2f        ", C.p_mppt);
+					sprintf(get_vterm_ptr(0, 0), "PV %c W %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
+					sprintf(get_vterm_ptr(1, 0), "LOAD W %3.2f LA %2.2f      ", C.p_load, C.c_load);
+					sprintf(get_vterm_ptr(2, 0), "MPPT W %3.2f        ", C.p_mppt);
 
 					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f        ", (C.day) ? 'D' : ' ', C.pvkw);
 					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f         ", C.loadkw);
@@ -429,7 +429,7 @@ void main(void)
 					break;
 				case HID_RUN:
 					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "BATT PWR %3.2f         ", C.p_bat);
+					sprintf(get_vterm_ptr(0, 0), "BATT W %3.2f            ", C.p_bat);
 					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f       ", C.dynamic_ah, C.pv_ah);
 					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f        ", spinners(5, false), C.soc, C.runtime, C.calc[V_BAT]);
 

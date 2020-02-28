@@ -46,6 +46,6 @@
 #endif
 
 #define CALIB	false
-#define FIXUPS	true
+#define FIXUPS	false
 #endif	/* XC_HEADER_TEMPLATE_H */
 
