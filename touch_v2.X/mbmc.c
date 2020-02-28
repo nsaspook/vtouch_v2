@@ -282,7 +282,7 @@ float calc_fixups(float data, FIX_CODES fixup)
 		return data;
 
 	if (fixup & WIDE_ZERO) {
-		if ((fixup > 0.05) && (fixup >-0.05))
+		if ((data < 0.05) && (data >-0.05))
 			data = 0.0;
 	}
 	if (fixup & NO_NEG) {
