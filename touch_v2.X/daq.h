@@ -56,6 +56,7 @@
 #define NUM_C_SENSORS	3
 #define ADC_C_CHAN	0b0000100000000011 // 5 volt hall current sensor bitmap
 #define ADC_C_CHAN_TYPE	0b0000000000000001 // 0 - 100A, 1=200A
+#define ADC_C_CHAN_MPPT	0b0000100000000001 // 0 - 100A mppt channel
 /*
  * temp sensor configuration
  */
@@ -98,9 +99,11 @@
 
 #define C_A200		0.0862000 // BATTERY Amp scalar, second line [0]
 #define C_A100		0.0361010 // PV Amp scalar, first line [1]
+#define C_A100M		0.0361010 // MPPT Amp scalar, first line [2]
 
 #define C_OFFSET200	3938 // BATTERY sensor adc zero Amp counts, line 0
 #define C_OFFSET100	4004 // PV sensor adc zero Amp counts,      line 1
+#define C_OFFSET100M	3995 // MPPT sensor adc zero Amp counts,      line 2
 
 /*
  * sanity check values for current calibration routines

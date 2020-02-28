@@ -48,10 +48,10 @@ static volatile R_data R = {
 	.scan_index = 0,
 	.n_offset[A200] = C_OFFSET200,
 	.n_offset[A100] = C_OFFSET100,
-	.n_offset[A100M] = C_OFFSET100,
+	.n_offset[A100M] = C_OFFSET100M,
 	.n_scalar[A200] = C_A200,
 	.n_scalar[A100] = C_A100,
-	.n_scalar[A100M] = C_A100,
+	.n_scalar[A100M] = C_A100M,
 	.raw_dac[DCHAN_A] = 0x0,
 	.raw_dac[DCHAN_B] = 0x0,
 	.checkmark = EE_CHECKMARK,
@@ -158,7 +158,11 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
 				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A200]) * R.n_scalar[A200];
 			} else {
-				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100]) * R.n_scalar[A100];
+				if (ADC_C_CHAN_MPPT >> chan & 0x1) {
+					return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100M]) * R.n_scalar[A100M];
+				} else {
+					return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100]) * R.n_scalar[A100];
+				}
 			}
 		} else {
 			if (ADC_T_CHAN >> chan & 0x1) { // temp conversion
@@ -363,7 +367,7 @@ bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp)
 
 	R.n_offset[A200] = cb;
 	R.n_offset[A100] = cp;
-	R.n_offset[A100M] = cp;
+	R.n_offset[A100M] = C_OFFSET100M; //fixme for real value
 	R.c_zero_cal = true;
 	return true;
 }
@@ -465,13 +469,13 @@ void update_cal_data(void)
 	if (!R.c_zero_cal) {
 		R.n_offset[A200] = C_OFFSET200;
 		R.n_offset[A100] = C_OFFSET100;
-		R.n_offset[A100M] = C_OFFSET100;
+		R.n_offset[A100M] = C_OFFSET100M;
 	}
 
 	if (!R.c_scale_cal) {
 		R.n_scalar[A200] = C_A200;
 		R.n_scalar[A100] = C_A100;
-		R.n_scalar[A100M] = C_A100;
+		R.n_scalar[A100M] = C_A100M;
 	}
 }
 
