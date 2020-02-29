@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.32"
+#define VER	"1.33"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -55,6 +55,7 @@ extern "C" {
 	 * 1.29 fine tuning the ADC configuration
 	 * 1.31 add third hall-sensor for actual PV current and CC current for MPPT VI conversion tracking
 	 * 1.32 data number fixups for display and calculations
+	 * 1.33 reorder logging data format
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
