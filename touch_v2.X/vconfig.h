@@ -98,7 +98,7 @@ extern "C" {
 #define DFLIP	1500 // display info flipping spacing
 
 #define LOG_WAIT	10 // data logging internval in seconds
-#define D_CODE		'2'  // data logging line code version
+#define D_CODE		'3'  // data logging line code version
 #define I_CODE		'*'  // info logging line code
 
 #define CAL_DELAY	64
