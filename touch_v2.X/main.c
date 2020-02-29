@@ -438,7 +438,7 @@ void main(void)
 					sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f         ", C.bv_full_load, C.load_i2);
 					break;
 				case HID_AUX:
-					if (!V.calib) {
+					if (!V.calib) { // clear buffer and start from zero
 						lp_filter(0.0, i, -1);
 						lp_filter(0.0, j, -1);
 						lp_filter(0.0, k, -1);
