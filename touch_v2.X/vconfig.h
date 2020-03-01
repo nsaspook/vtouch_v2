@@ -174,7 +174,7 @@ extern "C" {
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
 		char buf[64], info[64];
-		volatile uint32_t ticks;
+		volatile uint32_t ticks, blight;
 		volatile int8_t testing;
 		uint8_t error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
@@ -183,7 +183,7 @@ extern "C" {
 		terminal_type response;
 		volatile uint8_t ticker;
 		bool flipper, calib, enter, sensor_set, fixup;
-		volatile bool system_stable;
+		volatile bool system_stable, blight_off;
 		volatile uint32_t lowint_count, timerint_count;
 	} V_data;
 

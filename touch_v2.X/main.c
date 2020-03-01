@@ -156,6 +156,8 @@ V_data V = {
 	.screen = 0,
 	.system_stable = false,
 	.fixup = FIXUPS,
+	.blight_off = false,
+	.blight = 0,
 };
 H_data H = {
 	.hid_display = HID_MAIN,
@@ -341,6 +343,7 @@ void main(void)
 				current_sensor_cal();
 				WaitMs(4000);
 			}
+			V.blight = time(NULL) + 600;
 			V.sensor_set = false;
 			V.system_stable = true;
 			break;
@@ -398,6 +401,17 @@ void main(void)
 				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu       ", time(NULL), C.hist[0].updates);
 				update_lcd(0);
 				WaitMs(2000);
+			}
+
+			if (set_back_light_off(true)) {
+				send_lcd_cmd_dma(0x53); // light off
+				send_lcd_data_dma(1);
+				wait_lcd_done();
+			}
+			if (set_back_light_off(false)) {
+				send_lcd_cmd_dma(0x53); // light on
+				send_lcd_data_dma(8);
+				wait_lcd_done();
 			}
 
 			if (false) {

@@ -186,6 +186,13 @@ bool check_day_time(void)
 		}
 	}
 
+	if (V.blight) {
+		if (time(NULL) >= V.blight) {
+			V.blight = 0; // set to trigger time to false
+			V.blight_off = true; // trigger a display back-light off command
+		}
+	}
+
 	if (!day_delay++ && V.system_stable) {
 		if (C.soc > SOC_CRITICAL) {
 			if (!C.day) {

@@ -37,6 +37,7 @@
 
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
+bool set_back_light_off(bool);
 
 #endif
 
