@@ -7,10 +7,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E17179 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
 [c E17160 0 1 2 3 .. ]
 [n E17160 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
-"139 ./vconfig.h
+"141 ./vconfig.h
 [s S2239 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E17160 1 `E17160 1 `us 1 `us 1 ]
 [n S2239 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"174
+"176
 [s S2240 `E17179 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E17179 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2239 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Vul 1 `Vul 1 ]
 [n S2240 V_data ui_state buf info ticks blight testing error abort msg_error msg_ret alarm ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker flipper calib enter sensor_set fixup system_stable blight_off lowint_count timerint_count ]
 "162 main.c
@@ -21,7 +21,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "54 ./hid.h
 [s S2247 `E17948 1 `E17955 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `uc 1 ]
 [n S2247 H_data hid_display h_state wait_select select_p wait_enter enter_p wait_calib calib_p sequence ]
-"210 ./vconfig.h
+"212 ./vconfig.h
 [s S2242 `l 1 `l 1 `ul 1 `ul 1 `o 1 `f 1 `f 1 `f 1 `f 1 `f 1 `s -> 13 `i `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `uc 1 ]
 [n S2242 hist_type pv_eff tot_eff ttg_t updates pclock peukert cef peukert_adj cef_calc cef_save h rate udod bsoc bound_rate bound_factor samplei sampleo ah drate esr rest_rate rest_factor esrp version ]
 "71 ./mbmc.h
@@ -73,11 +73,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _LATDbits `VS2086 ~T0 @X0 0 e@16317 ]
 "38 ./mconfig.h
 [v _mode_lamp_dim `(v ~T0 @X0 0 ef1`us ]
-"40 ./eadog.h
+"41 ./eadog.h
 [v _init_port_dma `(v ~T0 @X0 0 ef ]
-"39
+"40
 [v _init_display `(v ~T0 @X0 0 ef ]
-"50
+"51
 [v _eaDogM_WriteCommand `(v ~T0 @X0 0 ef1`uc ]
 "132 ./daq.h
 [v _set_dac `(v ~T0 @X0 0 ef ]
@@ -170,11 +170,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _write_cal_data `(v ~T0 @X0 0 ef ]
 "40 ./mconfig.h
 [v _set_back_light_off `(a ~T0 @X0 0 ef1`a ]
-"44 ./eadog.h
+"45 ./eadog.h
 [v _send_lcd_cmd_dma `(v ~T0 @X0 0 ef1`uc ]
-"43
+"44
 [v _send_lcd_data_dma `(v ~T0 @X0 0 ef1`uc ]
-"48
+"49
 [v _wait_lcd_done `(v ~T0 @X0 0 ef ]
 "129 ./daq.h
 [v _get_raw_result `(us ~T0 @X0 0 ef1`CE16640 ]
@@ -2439,24 +2439,24 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2284 ]
 "406
-[e $ ! != -> ( _set_back_light_off (1 -> -> 1 `i `a `i -> 0 `i 2289  ]
+[e $ ! != -> ( _set_back_light_off (1 -> -> 0 `i `a `i -> 0 `i 2289  ]
 {
 "407
 [e ( _send_lcd_cmd_dma (1 -> -> 83 `i `uc ]
 "408
-[e ( _send_lcd_data_dma (1 -> -> 1 `i `uc ]
+[e ( _send_lcd_data_dma (1 -> -> 5 `i `uc ]
 "409
 [e ( _wait_lcd_done ..  ]
 "410
 }
 [e :U 2289 ]
 "411
-[e $ ! != -> ( _set_back_light_off (1 -> -> 0 `i `a `i -> 0 `i 2290  ]
+[e $ ! != -> ( _set_back_light_off (1 -> -> 1 `i `a `i -> 0 `i 2290  ]
 {
 "412
 [e ( _send_lcd_cmd_dma (1 -> -> 83 `i `uc ]
 "413
-[e ( _send_lcd_data_dma (1 -> -> 8 `i `uc ]
+[e ( _send_lcd_data_dma (1 -> -> 1 `i `uc ]
 "414
 [e ( _wait_lcd_done ..  ]
 "415

@@ -38,9 +38,9 @@ void wdtdelay(const uint32_t delay)
 void init_display(void)
 {
 	spi_link.tx1a = &ring_buf1;
-//	spi_link.tx1b = &ring_buf2;
+	//	spi_link.tx1b = &ring_buf2;
 	ringBufS_init(spi_link.tx1a);
-//	ringBufS_init(spi_link.tx1b);
+	//	ringBufS_init(spi_link.tx1b);
 
 	DLED = true;
 #ifdef NHD
@@ -170,6 +170,7 @@ void eaDogM_WriteString(char *strPtr)
  */
 void send_lcd_cmd_dma(const uint8_t strPtr)
 {
+	wait_lcd_done();
 	send_lcd_data_dma(NHD_CMD); //prefix
 	wait_lcd_done();
 	send_lcd_data_dma(strPtr); // cmd code
@@ -444,5 +445,5 @@ void wait_lcd_done(void)
 {
 	while (spi_link.LCD_DATA);
 	while (!SPI1STATUSbits.TXBE);
-//	wdtdelay(50);
+	//	wdtdelay(50);
 }

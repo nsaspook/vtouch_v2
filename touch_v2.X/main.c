@@ -343,7 +343,7 @@ void main(void)
 				current_sensor_cal();
 				WaitMs(4000);
 			}
-			V.blight = time(NULL) + 600;
+			V.blight = time(NULL) + BL_TIME;
 			V.sensor_set = false;
 			V.system_stable = true;
 			break;
@@ -403,14 +403,14 @@ void main(void)
 				WaitMs(2000);
 			}
 
-			if (set_back_light_off(true)) {
-				send_lcd_cmd_dma(0x53); // light off
-				send_lcd_data_dma(1);
+			if (set_back_light_off(false)) {
+				send_lcd_cmd_dma(0x53); // back-light command
+				send_lcd_data_dma(NHD_BL_MED); // light on
 				wait_lcd_done();
 			}
-			if (set_back_light_off(false)) {
-				send_lcd_cmd_dma(0x53); // light on
-				send_lcd_data_dma(8);
+			if (set_back_light_off(true)) {
+				send_lcd_cmd_dma(0x53);
+				send_lcd_data_dma(NHD_BL_OFF); // light off
 				wait_lcd_done();
 			}
 

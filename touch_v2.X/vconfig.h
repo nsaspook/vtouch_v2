@@ -117,6 +117,8 @@ extern "C" {
 
 #define HPARAM_SIZE     13
 #define HVER		1
+	
+#define BL_TIME		600
 
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;

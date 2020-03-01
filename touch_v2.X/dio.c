@@ -63,7 +63,7 @@ void switch_handler(void)
 	 * enable the outputs for reading and reset MAX Change-of-State pin
 	 */
 	MAX_EN1_SetLow(); // rev 1.1+ board
-	V.blight=V.ticks+600;
+	V.blight=V.ticks+BL_TIME;
 	V.blight_off=false;
 
 #ifdef DEBUG_SWH1

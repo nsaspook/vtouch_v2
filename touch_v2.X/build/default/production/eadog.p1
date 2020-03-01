@@ -2,7 +2,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "19 ./ringbufs.h
 [s S2235 `uc -> 64 `i `uc 1 `uc 1 `uc 1 ]
 [n S2235 ringBufS_t buf head tail count ]
-"121 ./vconfig.h
+"123 ./vconfig.h
 [s S2236 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `us 1 `uc 1 `*S2235 1 `*S2235 1 `Vl 1 ]
 [n S2236 spi_link_type SPI_LCD SPI_AUX LCD_TIMER LCD_DATA delay config tx1b tx1a int_count ]
 "50 /opt/microchip/xc8/v2.10/pic/include/pic18.h
@@ -116,7 +116,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _LATCbits `VS2080 ~T0 @X0 0 e@16316 ]
 "152 ./mcc_generated_files/spi1.h
 [v _SPI1_Exchange8bit `(uc ~T0 @X0 0 ef1`uc ]
-"46 ./eadog.h
+"47 ./eadog.h
 [v _wait_lcd_set `(v ~T0 @X0 0 ef ]
 "32 ./ringbufs.h
 [v _ringBufS_flush `(v ~T0 @X0 0 ef2`*S2235`Cc ]
@@ -126,12 +126,12 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _DMA1SSZ `Vus ~T0 @X0 0 e@15351 ]
 "111 /opt/microchip/xc8/v2.10/pic/include/c99/stdio.h
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
-"45 ./eadog.h
+"46 ./eadog.h
 [v _start_lcd `(v ~T0 @X0 0 ef ]
-"43
-[v _send_lcd_data_dma `(v ~T0 @X0 0 ef1`uc ]
-"48
+"49
 [v _wait_lcd_done `(v ~T0 @X0 0 ef ]
+"44
+[v _send_lcd_data_dma `(v ~T0 @X0 0 ef1`uc ]
 "31 ./ringbufs.h
 [v _ringBufS_put_dma `(v ~T0 @X0 0 ef2`*S2235`Cuc ]
 "14165 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
@@ -1922,95 +1922,97 @@ Version 4.0 HI-TECH Software Intermediate Code
 "172
 [f ]
 "173
-[e ( _send_lcd_data_dma (1 -> -> 254 `i `uc ]
+[e ( _wait_lcd_done ..  ]
 "174
-[e ( _wait_lcd_done ..  ]
+[e ( _send_lcd_data_dma (1 -> -> 254 `i `uc ]
 "175
-[e ( _send_lcd_data_dma (1 _strPtr ]
-"176
 [e ( _wait_lcd_done ..  ]
+"176
+[e ( _send_lcd_data_dma (1 _strPtr ]
 "177
+[e ( _wait_lcd_done ..  ]
+"178
 [e :UE 2266 ]
 }
-"182
-[v _send_lcd_data_dma `(v ~T0 @X0 1 ef1`uc ]
 "183
+[v _send_lcd_data_dma `(v ~T0 @X0 1 ef1`uc ]
+"184
 {
 [e :U _send_lcd_data_dma ]
-"182
-[v _strPtr `Cuc ~T0 @X0 1 r1 ]
 "183
-[f ]
+[v _strPtr `Cuc ~T0 @X0 1 r1 ]
 "184
+[f ]
+"185
 [e ( _wait_lcd_set ..  ]
-"186
-[e ( _ringBufS_flush (2 , . _spi_link 7 -> -> 0 `i `c ]
 "187
+[e ( _ringBufS_flush (2 , . _spi_link 7 -> -> 0 `i `c ]
+"188
 [e :U 2270 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2269 ]
-"188
-[e = . . _DMA1CON0bits 0 6 -> -> 0 `i `uc ]
 "189
-[e = _DMA1SSZ -> -> 1 `i `us ]
+[e = . . _DMA1CON0bits 0 6 -> -> 0 `i `uc ]
 "190
-[e = . . _DMA1CON0bits 0 6 -> -> 1 `i `uc ]
+[e = _DMA1SSZ -> -> 1 `i `us ]
 "191
-[e ( _ringBufS_put_dma (2 , . _spi_link 7 _strPtr ]
+[e = . . _DMA1CON0bits 0 6 -> -> 1 `i `uc ]
 "192
-[e ( _start_lcd ..  ]
+[e ( _ringBufS_put_dma (2 , . _spi_link 7 _strPtr ]
 "193
+[e ( _start_lcd ..  ]
+"194
 [e :UE 2267 ]
 }
-"195
-[v _eaDogM_WriteStringAtPos `(v ~T0 @X0 1 ef3`uc`uc`*uc ]
 "196
+[v _eaDogM_WriteStringAtPos `(v ~T0 @X0 1 ef3`uc`uc`*uc ]
+"197
 {
 [e :U _eaDogM_WriteStringAtPos ]
-"195
+"196
 [v _r `Cuc ~T0 @X0 1 r1 ]
 [v _c `Cuc ~T0 @X0 1 r2 ]
 [v _strPtr `*uc ~T0 @X0 1 r3 ]
-"196
-[f ]
 "197
+[f ]
+"198
 [v _row `uc ~T0 @X0 1 a ]
-"199
+"200
 [e $U 2273  ]
 {
-"200
-[e :U 2274 ]
 "201
-[e = _row -> -> 64 `i `uc ]
+[e :U 2274 ]
 "202
-[e $U 2272  ]
-"203
-[e :U 2275 ]
-"204
-[e = _row -> -> 20 `i `uc ]
-"205
-[e $U 2272  ]
-"206
-[e :U 2276 ]
-"207
-[e = _row -> -> 84 `i `uc ]
-"208
-[e $U 2272  ]
-"209
-[e :U 2277 ]
-"210
-[e = _row -> -> 0 `i `uc ]
-"211
-[e $U 2272  ]
-"212
-[e :U 2278 ]
-"213
 [e = _row -> -> 64 `i `uc ]
-"214
+"203
 [e $U 2272  ]
+"204
+[e :U 2275 ]
+"205
+[e = _row -> -> 20 `i `uc ]
+"206
+[e $U 2272  ]
+"207
+[e :U 2276 ]
+"208
+[e = _row -> -> 84 `i `uc ]
+"209
+[e $U 2272  ]
+"210
+[e :U 2277 ]
+"211
+[e = _row -> -> 0 `i `uc ]
+"212
+[e $U 2272  ]
+"213
+[e :U 2278 ]
+"214
+[e = _row -> -> 64 `i `uc ]
 "215
+[e $U 2272  ]
+"216
 }
 [e $U 2272  ]
 [e :U 2273 ]
@@ -2020,203 +2022,203 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 3 `i 2277
  2278 ]
 [e :U 2272 ]
-"216
-[e ( _send_lcd_cmd_dma (1 -> -> 69 `i `uc ]
 "217
-[e ( _send_lcd_data_dma (1 -> + -> _row `i -> _c `i `uc ]
+[e ( _send_lcd_cmd_dma (1 -> -> 69 `i `uc ]
 "218
-[e ( _wait_lcd_done ..  ]
+[e ( _send_lcd_data_dma (1 -> + -> _row `i -> _c `i `uc ]
 "219
-[e ( _eaDogM_WriteString (1 _strPtr ]
+[e ( _wait_lcd_done ..  ]
 "220
+[e ( _eaDogM_WriteString (1 _strPtr ]
+"221
 [e :UE 2271 ]
 }
-"222
-[v _eaDogM_WriteIntAtPos `(v ~T0 @X0 1 ef3`uc`uc`uc ]
 "223
+[v _eaDogM_WriteIntAtPos `(v ~T0 @X0 1 ef3`uc`uc`uc ]
+"224
 {
 [e :U _eaDogM_WriteIntAtPos ]
-"222
+"223
 [v _r `uc ~T0 @X0 1 r1 ]
 [v _c `uc ~T0 @X0 1 r2 ]
 [v _i `uc ~T0 @X0 1 r3 ]
-"223
+"224
 [f ]
-"225
+"226
 [e :UE 2279 ]
 }
-"227
-[v _eaDogM_SetPos `(v ~T0 @X0 1 ef2`uc`uc ]
 "228
+[v _eaDogM_SetPos `(v ~T0 @X0 1 ef2`uc`uc ]
+"229
 {
 [e :U _eaDogM_SetPos ]
-"227
+"228
 [v _r `Cuc ~T0 @X0 1 r1 ]
 [v _c `Cuc ~T0 @X0 1 r2 ]
-"228
+"229
 [f ]
-"230
+"231
 [e :UE 2280 ]
 }
-"232
-[v _eaDogM_ClearRow `(v ~T0 @X0 1 ef1`uc ]
 "233
+[v _eaDogM_ClearRow `(v ~T0 @X0 1 ef1`uc ]
+"234
 {
 [e :U _eaDogM_ClearRow ]
-"232
-[v _r `Cuc ~T0 @X0 1 r1 ]
 "233
+[v _r `Cuc ~T0 @X0 1 r1 ]
+"234
 [f ]
-"235
+"236
 [e :UE 2281 ]
 }
-"237
-[v _eaDogM_WriteByteToCGRAM `(v ~T0 @X0 1 ef2`uc`uc ]
 "238
+[v _eaDogM_WriteByteToCGRAM `(v ~T0 @X0 1 ef2`uc`uc ]
+"239
 {
 [e :U _eaDogM_WriteByteToCGRAM ]
-"237
+"238
 [v _ndx `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
-"238
+"239
 [f ]
-"240
+"241
 [e :UE 2282 ]
 }
-"384
-[v _eaDogM_WriteCommand `(v ~T0 @X0 1 ef1`uc ]
 "385
+[v _eaDogM_WriteCommand `(v ~T0 @X0 1 ef1`uc ]
+"386
 {
 [e :U _eaDogM_WriteCommand ]
-"384
-[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "385
-[f ]
+[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "386
-[e ( _send_lcd_cmd_dma (1 _cmd ]
+[f ]
 "387
+[e ( _send_lcd_cmd_dma (1 _cmd ]
+"388
 [e :UE 2283 ]
 }
-"389
-[v _eaDogM_WriteChr `(v ~T0 @X0 1 ef1`c ]
 "390
+[v _eaDogM_WriteChr `(v ~T0 @X0 1 ef1`c ]
+"391
 {
 [e :U _eaDogM_WriteChr ]
-"389
-[v _value `Cc ~T0 @X0 1 r1 ]
 "390
-[f ]
+[v _value `Cc ~T0 @X0 1 r1 ]
 "391
-[e ( _send_lcd_data_dma (1 -> _value `uc ]
+[f ]
 "392
+[e ( _send_lcd_data_dma (1 -> _value `uc ]
+"393
 [e :UE 2284 ]
 }
-"397
-[v _send_port_data_dma `(v ~T0 @X0 1 ef1`us ]
 "398
+[v _send_port_data_dma `(v ~T0 @X0 1 ef1`us ]
+"399
 {
 [e :U _send_port_data_dma ]
-"397
-[v _dsize `us ~T0 @X0 1 r1 ]
 "398
-[f ]
+[v _dsize `us ~T0 @X0 1 r1 ]
 "399
-[e $ ! > -> _dsize `ui -> -> 512 `i `ui 2286  ]
+[f ]
 "400
+[e $ ! > -> _dsize `ui -> -> 512 `i `ui 2286  ]
+"401
 [e = _dsize -> -> 512 `i `us ]
 [e :U 2286 ]
-"402
-[e = . . _DMA2CON0bits 0 6 -> -> 0 `i `uc ]
 "403
-[e = _DMA2SSZ _dsize ]
+[e = . . _DMA2CON0bits 0 6 -> -> 0 `i `uc ]
 "404
-[e = _DMA2DSZ -> -> 1 `i `us ]
+[e = _DMA2SSZ _dsize ]
 "405
-[e = . . _DMA2CON0bits 0 6 -> -> 1 `i `uc ]
+[e = _DMA2DSZ -> -> 1 `i `us ]
 "406
-[e = . . _DMA2CON0bits 1 5 -> -> 1 `i `uc ]
+[e = . . _DMA2CON0bits 0 6 -> -> 1 `i `uc ]
 "407
+[e = . . _DMA2CON0bits 1 5 -> -> 1 `i `uc ]
+"408
 [e :UE 2285 ]
 }
-"412
-[v _port_data_dma_ptr `(*uc ~T0 @X0 1 ef ]
 "413
+[v _port_data_dma_ptr `(*uc ~T0 @X0 1 ef ]
+"414
 {
 [e :U _port_data_dma_ptr ]
 [f ]
-"414
+"415
 [e ) &U _port_data ]
 [e $UE 2287  ]
-"415
+"416
 [e :UE 2287 ]
 }
-"420
-[v _putch `(v ~T0 @X0 1 ef1`uc ]
 "421
+[v _putch `(v ~T0 @X0 1 ef1`uc ]
+"422
 {
 [e :U _putch ]
-"420
-[v _c `uc ~T0 @X0 1 r1 ]
 "421
-[f ]
+[v _c `uc ~T0 @X0 1 r1 ]
 "422
-[e ( _ringBufS_put_dma (2 , . _spi_link 7 -> _c `uc ]
+[f ]
 "423
+[e ( _ringBufS_put_dma (2 , . _spi_link 7 -> _c `uc ]
+"424
 [e :UE 2288 ]
 }
-"428
-[v _start_lcd `(v ~T0 @X0 1 ef ]
 "429
+[v _start_lcd `(v ~T0 @X0 1 ef ]
+"430
 {
 [e :U _start_lcd ]
 [f ]
-"430
-[e = . . _DMA1CON0bits 1 5 -> -> 1 `i `uc ]
 "431
+[e = . . _DMA1CON0bits 1 5 -> -> 1 `i `uc ]
+"432
 [e :UE 2289 ]
 }
-"433
-[v _wait_lcd_set `(v ~T0 @X0 1 ef ]
 "434
+[v _wait_lcd_set `(v ~T0 @X0 1 ef ]
+"435
 {
 [e :U _wait_lcd_set ]
 [f ]
-"435
-[e = . _spi_link 3 -> -> 1 `i `uc ]
 "436
+[e = . _spi_link 3 -> -> 1 `i `uc ]
+"437
 [e :UE 2290 ]
 }
-"438
-[v _wait_lcd_check `(a ~T0 @X0 1 ef ]
 "439
+[v _wait_lcd_check `(a ~T0 @X0 1 ef ]
+"440
 {
 [e :U _wait_lcd_check ]
 [f ]
-"440
+"441
 [e ) -> . _spi_link 3 `a ]
 [e $UE 2291  ]
-"441
+"442
 [e :UE 2291 ]
 }
-"443
-[v _wait_lcd_done `(v ~T0 @X0 1 ef ]
 "444
+[v _wait_lcd_done `(v ~T0 @X0 1 ef ]
+"445
 {
 [e :U _wait_lcd_done ]
 [f ]
-"445
+"446
 [e $U 2293  ]
 [e :U 2294 ]
 [e :U 2293 ]
 [e $ != -> . _spi_link 3 `i -> 0 `i 2294  ]
 [e :U 2295 ]
-"446
+"447
 [e $U 2296  ]
 [e :U 2297 ]
 [e :U 2296 ]
 [e $ ! != -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 2297  ]
 [e :U 2298 ]
-"448
+"449
 [e :UE 2292 ]
 }
 [p f _printf 8650752 ]
