@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -D_TTY_POSIX_ -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../qmodbus -I. -I../qmodbus/3rdparty/libmodbus -I../qmodbus/3rdparty/libmodbus/src -I../qmodbus/3rdparty/qextserialport -I../qmodbus/src -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I../qmodbus -I. -I../qmodbus/3rdparty/qextserialport -I../qmodbus/src -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -55,10 +55,15 @@ OBJECTS_DIR   = ./
 SOURCES       = ../qmodbus/src/main.cpp \
 		../qmodbus/src/mainwindow.cpp \
 		../qmodbus/src/BatchProcessor.cpp \
+		/ \
 		../qmodbus/3rdparty/qextserialport/qextserialport.cpp \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus.c \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus-data.c \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.c \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.c \
 		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.c \
 		../qmodbus/src/asciisettingswidget.cpp \
@@ -80,10 +85,15 @@ SOURCES       = ../qmodbus/src/main.cpp \
 OBJECTS       = main.o \
 		mainwindow.o \
 		BatchProcessor.o \
+		.o \
 		qextserialport.o \
+		.o \
 		modbus.o \
+		.o \
 		modbus-data.o \
+		.o \
 		modbus-rtu.o \
+		.o \
 		modbus-tcp.o \
 		modbus-ascii.o \
 		asciisettingswidget.o \
@@ -164,6 +174,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		../qmodbus/.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -188,6 +199,7 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../qmodbus/src/BatchProcessor.h \
 		../qmodbus/3rdparty/qextserialport/qextserialport.h \
 		../qmodbus/3rdparty/qextserialport/qextserialenumerator.h \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus.h \
 		../qmodbus/src/serialsettingswidget.h \
 		../qmodbus/src/imodbus.h \
@@ -196,10 +208,15 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		../qmodbus/src/iplineedit.h ../qmodbus/src/main.cpp \
 		../qmodbus/src/mainwindow.cpp \
 		../qmodbus/src/BatchProcessor.cpp \
+		/ \
 		../qmodbus/3rdparty/qextserialport/qextserialport.cpp \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus.c \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus-data.c \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.c \
+		/ \
 		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.c \
 		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.c \
 		../qmodbus/src/asciisettingswidget.cpp \
@@ -282,6 +299,7 @@ Makefile: ../qmodbus/qmodbus.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf \
@@ -366,6 +384,7 @@ Makefile: ../qmodbus/qmodbus.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/qt_config.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exclusive_builds.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/toolchain.prf:
 /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/default_pre.prf:
@@ -404,8 +423,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../qmodbus/data/qmodbus.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../qmodbus/src/mainwindow.h ../qmodbus/src/BatchProcessor.h ../qmodbus/3rdparty/qextserialport/qextserialport.h ../qmodbus/3rdparty/qextserialport/qextserialenumerator.h ../qmodbus/3rdparty/libmodbus/src/modbus.h ../qmodbus/src/serialsettingswidget.h ../qmodbus/src/imodbus.h ../qmodbus/src/tcpipsettingswidget.h ../qmodbus/src/ipaddressctrl.h ../qmodbus/src/iplineedit.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../qmodbus/src/main.cpp ../qmodbus/src/mainwindow.cpp ../qmodbus/src/BatchProcessor.cpp ../qmodbus/3rdparty/qextserialport/qextserialport.cpp ../qmodbus/3rdparty/libmodbus/src/modbus.c ../qmodbus/3rdparty/libmodbus/src/modbus-data.c ../qmodbus/3rdparty/libmodbus/src/modbus-rtu.c ../qmodbus/3rdparty/libmodbus/src/modbus-tcp.c ../qmodbus/3rdparty/libmodbus/src/modbus-ascii.c ../qmodbus/src/asciisettingswidget.cpp ../qmodbus/src/rtusettingswidget.cpp ../qmodbus/src/serialsettingswidget.cpp ../qmodbus/src/tcpipsettingswidget.cpp ../qmodbus/src/ipaddressctrl.cpp ../qmodbus/src/iplineedit.cpp ../qmodbus/3rdparty/qextserialport/posix_qextserialport.cpp ../qmodbus/3rdparty/qextserialport/qextserialenumerator_unix.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../qmodbus/src/mainwindow.h ../qmodbus/src/BatchProcessor.h ../qmodbus/3rdparty/qextserialport/qextserialport.h ../qmodbus/3rdparty/qextserialport/qextserialenumerator.h / ../qmodbus/3rdparty/libmodbus/src/modbus.h ../qmodbus/src/serialsettingswidget.h ../qmodbus/src/imodbus.h ../qmodbus/src/tcpipsettingswidget.h ../qmodbus/src/ipaddressctrl.h ../qmodbus/src/iplineedit.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../qmodbus/src/main.cpp ../qmodbus/src/mainwindow.cpp ../qmodbus/src/BatchProcessor.cpp / ../qmodbus/3rdparty/qextserialport/qextserialport.cpp / ../qmodbus/3rdparty/libmodbus/src/modbus.c / ../qmodbus/3rdparty/libmodbus/src/modbus-data.c / ../qmodbus/3rdparty/libmodbus/src/modbus-rtu.c / ../qmodbus/3rdparty/libmodbus/src/modbus-tcp.c ../qmodbus/3rdparty/libmodbus/src/modbus-ascii.c ../qmodbus/src/asciisettingswidget.cpp ../qmodbus/src/rtusettingswidget.cpp ../qmodbus/src/serialsettingswidget.cpp ../qmodbus/src/tcpipsettingswidget.cpp ../qmodbus/src/ipaddressctrl.cpp ../qmodbus/src/iplineedit.cpp ../qmodbus/3rdparty/qextserialport/posix_qextserialport.cpp ../qmodbus/3rdparty/qextserialport/qextserialenumerator_unix.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../qmodbus/forms/mainwindow.ui ../qmodbus/forms/about.ui ../qmodbus/forms/BatchProcessor.ui ../qmodbus/forms/serialsettingswidget.ui ../qmodbus/forms/tcpipsettingswidget.ui ../qmodbus/forms/ipaddressctrl.ui $(DISTDIR)/
 
 
@@ -448,70 +467,50 @@ compiler_moc_header_make_all: moc_mainwindow.cpp moc_BatchProcessor.cpp moc_qext
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp moc_BatchProcessor.cpp moc_qextserialport.cpp moc_qextserialenumerator.cpp moc_serialsettingswidget.cpp moc_tcpipsettingswidget.cpp moc_ipaddressctrl.cpp moc_iplineedit.cpp
 moc_mainwindow.cpp: ../qmodbus/src/mainwindow.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		ui_about.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/mainwindow.h -o moc_mainwindow.cpp
 
 moc_BatchProcessor.cpp: ../qmodbus/src/BatchProcessor.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/BatchProcessor.h -o moc_BatchProcessor.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/BatchProcessor.h -o moc_BatchProcessor.cpp
 
 moc_qextserialport.cpp: ../qmodbus/3rdparty/qextserialport/qextserialport.h \
 		../qmodbus/3rdparty/qextserialport/qextserialport_global.h \
 		../qmodbus/3rdparty/qextserialport/qwineventnotifier_p.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/3rdparty/qextserialport/qextserialport.h -o moc_qextserialport.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/3rdparty/qextserialport/qextserialport.h -o moc_qextserialport.cpp
 
 moc_qextserialenumerator.cpp: ../qmodbus/3rdparty/qextserialport/qextserialenumerator.h \
 		../qmodbus/3rdparty/qextserialport/qextserialport_global.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/3rdparty/qextserialport/qextserialenumerator.h -o moc_qextserialenumerator.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/3rdparty/qextserialport/qextserialenumerator.h -o moc_qextserialenumerator.cpp
 
 moc_serialsettingswidget.cpp: ../qmodbus/src/serialsettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/serialsettingswidget.h -o moc_serialsettingswidget.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/serialsettingswidget.h -o moc_serialsettingswidget.cpp
 
 moc_tcpipsettingswidget.cpp: ../qmodbus/src/tcpipsettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/tcpipsettingswidget.h -o moc_tcpipsettingswidget.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/tcpipsettingswidget.h -o moc_tcpipsettingswidget.cpp
 
 moc_ipaddressctrl.cpp: ../qmodbus/src/ipaddressctrl.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/ipaddressctrl.h -o moc_ipaddressctrl.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/ipaddressctrl.h -o moc_ipaddressctrl.cpp
 
 moc_iplineedit.cpp: ../qmodbus/src/iplineedit.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/libmodbus/src -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/iplineedit.h -o moc_iplineedit.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /root/MPLABXProjects/vtouch_v2/build-qmodbus-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/root/MPLABXProjects/vtouch_v2/qmodbus -I/root/MPLABXProjects/vtouch_v2/qmodbus/3rdparty/qextserialport -I/root/MPLABXProjects/vtouch_v2/qmodbus/src -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/9/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include ../qmodbus/src/iplineedit.h -o moc_iplineedit.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -526,24 +525,9 @@ ui_mainwindow.h: ../qmodbus/forms/mainwindow.ui \
 		../qmodbus/src/tcpipsettingswidget.h \
 		../qmodbus/src/asciisettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		../qmodbus/src/serialsettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		../qmodbus/src/serialsettingswidget.h
 	/usr/lib/qt5/bin/uic ../qmodbus/forms/mainwindow.ui -o ui_mainwindow.h
 
@@ -580,51 +564,40 @@ compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_heade
 ####### Compile
 
 main.o: ../qmodbus/src/main.cpp ../qmodbus/src/mainwindow.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		ui_about.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../qmodbus/src/main.cpp
 
 mainwindow.o: ../qmodbus/src/mainwindow.cpp ../qmodbus/src/mainwindow.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		ui_about.h \
 		../qmodbus/src/BatchProcessor.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-private.h \
-		../qmodbus/3rdparty/libmodbus/config.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../qmodbus/src/mainwindow.cpp
 
 BatchProcessor.o: ../qmodbus/src/BatchProcessor.cpp ../qmodbus/src/BatchProcessor.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-private.h \
-		../qmodbus/3rdparty/libmodbus/config.h \
 		ui_BatchProcessor.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o BatchProcessor.o ../qmodbus/src/BatchProcessor.cpp
+
+.o: / 
+	$(CC) -c $(CFLAGS) $(INCPATH) -o .o /
 
 qextserialport.o: ../qmodbus/3rdparty/qextserialport/qextserialport.cpp ../qmodbus/3rdparty/qextserialport/qextserialport.h \
 		../qmodbus/3rdparty/qextserialport/qextserialport_global.h \
 		../qmodbus/3rdparty/qextserialport/qwineventnotifier_p.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qextserialport.o ../qmodbus/3rdparty/qextserialport/qextserialport.cpp
 
-modbus.o: ../qmodbus/3rdparty/libmodbus/src/modbus.c ../qmodbus/3rdparty/libmodbus/config.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
+.o: / 
+	$(CC) -c $(CFLAGS) $(INCPATH) -o .o /
+
+modbus.o: ../qmodbus/3rdparty/libmodbus/src/modbus.c ../qmodbus/3rdparty/libmodbus/src/modbus.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-private.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o modbus.o ../qmodbus/3rdparty/libmodbus/src/modbus.c
+
+.o: / 
+	$(CC) -c $(CFLAGS) $(INCPATH) -o .o /
 
 modbus-data.o: ../qmodbus/3rdparty/libmodbus/src/modbus-data.c ../qmodbus/3rdparty/libmodbus/src/modbus.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
@@ -633,8 +606,10 @@ modbus-data.o: ../qmodbus/3rdparty/libmodbus/src/modbus-data.c ../qmodbus/3rdpar
 		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o modbus-data.o ../qmodbus/3rdparty/libmodbus/src/modbus-data.c
 
+.o: / 
+	$(CC) -c $(CFLAGS) $(INCPATH) -o .o /
+
 modbus-rtu.o: ../qmodbus/3rdparty/libmodbus/src/modbus-rtu.c ../qmodbus/3rdparty/libmodbus/src/modbus-private.h \
-		../qmodbus/3rdparty/libmodbus/config.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
@@ -643,8 +618,10 @@ modbus-rtu.o: ../qmodbus/3rdparty/libmodbus/src/modbus-rtu.c ../qmodbus/3rdparty
 		../qmodbus/3rdparty/libmodbus/src/modbus-rtu-private.h
 	$(CC) -c $(CFLAGS) $(INCPATH) -o modbus-rtu.o ../qmodbus/3rdparty/libmodbus/src/modbus-rtu.c
 
+.o: / 
+	$(CC) -c $(CFLAGS) $(INCPATH) -o .o /
+
 modbus-tcp.o: ../qmodbus/3rdparty/libmodbus/src/modbus-tcp.c ../qmodbus/3rdparty/libmodbus/src/modbus-private.h \
-		../qmodbus/3rdparty/libmodbus/config.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
@@ -654,7 +631,6 @@ modbus-tcp.o: ../qmodbus/3rdparty/libmodbus/src/modbus-tcp.c ../qmodbus/3rdparty
 	$(CC) -c $(CFLAGS) $(INCPATH) -o modbus-tcp.o ../qmodbus/3rdparty/libmodbus/src/modbus-tcp.c
 
 modbus-ascii.o: ../qmodbus/3rdparty/libmodbus/src/modbus-ascii.c ../qmodbus/3rdparty/libmodbus/src/modbus-private.h \
-		../qmodbus/3rdparty/libmodbus/config.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
 		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
@@ -665,22 +641,12 @@ modbus-ascii.o: ../qmodbus/3rdparty/libmodbus/src/modbus-ascii.c ../qmodbus/3rdp
 
 asciisettingswidget.o: ../qmodbus/src/asciisettingswidget.cpp ../qmodbus/src/serialsettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		../qmodbus/src/asciisettingswidget.h \
 		ui_serialsettingswidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o asciisettingswidget.o ../qmodbus/src/asciisettingswidget.cpp
 
 rtusettingswidget.o: ../qmodbus/src/rtusettingswidget.cpp ../qmodbus/src/serialsettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		../qmodbus/src/rtusettingswidget.h \
 		ui_serialsettingswidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o rtusettingswidget.o ../qmodbus/src/rtusettingswidget.cpp
@@ -689,21 +655,11 @@ serialsettingswidget.o: ../qmodbus/src/serialsettingswidget.cpp ../qmodbus/3rdpa
 		../qmodbus/3rdparty/qextserialport/qextserialport_global.h \
 		../qmodbus/src/serialsettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		ui_serialsettingswidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o serialsettingswidget.o ../qmodbus/src/serialsettingswidget.cpp
 
 tcpipsettingswidget.o: ../qmodbus/src/tcpipsettingswidget.cpp ../qmodbus/src/tcpipsettingswidget.h \
 		../qmodbus/src/imodbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-version.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-tcp.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-rtu.h \
-		../qmodbus/3rdparty/libmodbus/src/modbus-ascii.h \
 		ui_tcpipsettingswidget.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tcpipsettingswidget.o ../qmodbus/src/tcpipsettingswidget.cpp
 
