@@ -7,8 +7,6 @@
 #include <modbus/modbus-rtu.h>
 #include <sys/ioctl.h>
 
-#define FAST_RTS_DELAY 5000
-
 const int EXCEPTION_RC = 2;
 
 enum {
@@ -16,19 +14,6 @@ enum {
 };
 
 #define SERVER_ID 1
-
-static void _modbus_rtu_ioctl_rts(int fd, int on)
-{
-    int RTS_flag;
-
-    RTS_flag = TIOCM_RTS;
-
-    if (on) {
-        ioctl(fd,TIOCMBIS,&RTS_flag);//Set RTS pin
-    } else {
-        ioctl(fd,TIOCMBIC,&RTS_flag);//Clear RTS pin
-    }
-}
 
 int main(int argc, char *argv[])
 {
