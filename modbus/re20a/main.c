@@ -5,6 +5,9 @@
 #include <errno.h>
 #include <modbus/modbus.h>
 #include <modbus/modbus-rtu.h>
+#include <sys/ioctl.h>
+
+#define FAST_RTS_DELAY 5000
 
 const int EXCEPTION_RC = 2;
 
@@ -13,6 +16,19 @@ enum {
 };
 
 #define SERVER_ID 1
+
+static void _modbus_rtu_ioctl_rts(int fd, int on)
+{
+    int RTS_flag;
+
+    RTS_flag = TIOCM_RTS;
+
+    if (on) {
+        ioctl(fd,TIOCMBIS,&RTS_flag);//Set RTS pin
+    } else {
+        ioctl(fd,TIOCMBIC,&RTS_flag);//Clear RTS pin
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -47,14 +63,12 @@ int main(int argc, char *argv[])
 	modbus_set_debug(ctx, TRUE);
 	// Not needed for USB-RS485 adapters
 	// See: https://github.com/stephane/libmodbus/issues/316
-	/* rc = modbus_rtu_set_serial_mode(ctx, MODBUS_RTU_RS485);
+	rc = modbus_rtu_set_rts(ctx, 1);
 	if (rc == -1) {
 	    fprintf(stderr, "server_id=%d Failed to set serial mode: %s\n", server_id, modbus_strerror(errno));
-	    // modbus_free(ctx);
-	    // return -1;
-	    server_id++;
-	    goto retry_slave;
-	} */
+	    modbus_free(ctx);
+	    return -1;
+	}
 	modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
 
 	modbus_get_response_timeout(ctx, &old_response_to_sec, &old_response_to_usec);
@@ -78,8 +92,8 @@ int main(int argc, char *argv[])
 			/* modbus_free(ctx);
 			return -1; */
 		}
-
-		printf("server_id=%d rc=%d temp=%f \n", rc, server_id, (double) (tab_rp_bits[0] / 100.0));
+		
+		printf("server_id=%d rc=%d Charge Controller mode=%x \n", rc, server_id, tab_rp_bits[0]);
 		sleep(1);
 	}
 
