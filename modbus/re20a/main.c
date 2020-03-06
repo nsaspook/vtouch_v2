@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <modbus/modbus.h>
-#include <modbus/modbus-rtu.h>
-#include <sys/ioctl.h>
 
 const int EXCEPTION_RC = 2;
 
@@ -19,14 +17,8 @@ int main(int argc, char *argv[])
 {
 	modbus_t *ctx = NULL;
 	uint16_t *tab_rp_bits = NULL;
-	struct timeval old_response;
-	struct timeval new_response;
 	uint32_t old_response_to_sec;
 	uint32_t old_response_to_usec;
-	uint32_t new_response_to_sec;
-	uint32_t new_response_to_usec;
-	uint32_t old_byte_to_sec;
-	uint32_t old_byte_to_usec;
 	int rc;
 	int server_id = SERVER_ID;
 
@@ -48,11 +40,11 @@ int main(int argc, char *argv[])
 	modbus_set_debug(ctx, TRUE);
 	// Not needed for USB-RS485 adapters
 	// See: https://github.com/stephane/libmodbus/issues/316
-	rc = modbus_rtu_set_rts(ctx, 1);
+	rc = modbus_rtu_set_rts(ctx, MODBUS_RTU_RTS_UP);
 	if (rc == -1) {
-	    fprintf(stderr, "server_id=%d Failed to set serial mode: %s\n", server_id, modbus_strerror(errno));
-	    modbus_free(ctx);
-	    return -1;
+		fprintf(stderr, "server_id=%d Failed to set serial mode: %s\n", server_id, modbus_strerror(errno));
+		modbus_free(ctx);
+		return -1;
 	}
 	modbus_set_error_recovery(ctx, MODBUS_ERROR_RECOVERY_LINK | MODBUS_ERROR_RECOVERY_PROTOCOL);
 
@@ -62,7 +54,7 @@ int main(int argc, char *argv[])
 		modbus_free(ctx);
 		return -1;
 	}
-	modbus_get_response_timeout(ctx, &new_response_to_sec, &new_response_to_usec);
+	printf("timeout values sec %d, usec %d\n", old_response_to_sec, old_response_to_usec);
 
 	tab_rp_bits = (uint16_t *) malloc(2 * sizeof(uint16_t));
 	memset(tab_rp_bits, 0, 2 * sizeof(uint16_t));
@@ -77,12 +69,11 @@ int main(int argc, char *argv[])
 			/* modbus_free(ctx);
 			return -1; */
 		}
-		
+
 		printf("server_id=%d rc=%d Charge Controller mode=%x \n", rc, server_id, tab_rp_bits[0]);
 		sleep(1);
 	}
 
-close:
 	/* Free the memory */
 	free(tab_rp_bits);
 	// free(tab_rp_registers);
