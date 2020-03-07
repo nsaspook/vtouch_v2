@@ -54,7 +54,7 @@ int main(int argc, char *argv[])
 		modbus_free(ctx);
 		return -1;
 	}
-	printf("timeout values sec %d, usec %d\n", old_response_to_sec, old_response_to_usec);
+	printf("MODBUS lib version %s, timeout values sec %d, usec %d\n", LIBMODBUS_VERSION_STRING, old_response_to_sec, old_response_to_usec);
 
 	tab_rp_bits = (uint16_t *) malloc(2 * sizeof(uint16_t));
 	memset(tab_rp_bits, 0, 2 * sizeof(uint16_t));
