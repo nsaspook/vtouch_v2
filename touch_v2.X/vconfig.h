@@ -1,5 +1,4 @@
-/* 
- * File:   vconfig.h
+/*  * File:   vconfig.h
  * Author: root
  *
  * Created on February 19, 2019, 4:41 PM
