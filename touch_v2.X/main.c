@@ -503,7 +503,7 @@ void main(void)
 			case 3:
 				i = V_BAT;
 				j = V_PV;
-				k = V_CBUS;
+				k = V_CMODE;
 				break;
 			case 6:
 				i = V_BBAT;

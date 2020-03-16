@@ -53,8 +53,8 @@
 #include <stdbool.h>
 #include "interrupt_manager.h"
 #include "crc.h"
-#include "fvr.h"
 #include "adcc.h"
+#include "fvr.h"
 #include "tmr5.h"
 #include "tmr6.h"
 #include "pwm8.h"

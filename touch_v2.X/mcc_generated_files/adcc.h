@@ -93,7 +93,7 @@ typedef enum
     V_CC =  0x2,
     V_BAT =  0x4,
     V_PV =  0x5,
-    V_CBUS =  0x6,
+    V_CMODE =  0x6,
     V_BBAT =  0xA,
     C_MPPT =  0xB,
     V_INVERTER =  0xC,

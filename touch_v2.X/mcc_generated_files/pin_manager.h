@@ -171,25 +171,25 @@
 #define V_PV_SetAnalogMode()      do { ANSELAbits.ANSELA5 = 1; } while(0)
 #define V_PV_SetDigitalMode()     do { ANSELAbits.ANSELA5 = 0; } while(0)
 
-// get/set V_CBUS aliases
-#define V_CBUS_TRIS                 TRISAbits.TRISA6
-#define V_CBUS_LAT                  LATAbits.LATA6
-#define V_CBUS_PORT                 PORTAbits.RA6
-#define V_CBUS_WPU                  WPUAbits.WPUA6
-#define V_CBUS_OD                   ODCONAbits.ODCA6
-#define V_CBUS_ANS                  ANSELAbits.ANSELA6
-#define V_CBUS_SetHigh()            do { LATAbits.LATA6 = 1; } while(0)
-#define V_CBUS_SetLow()             do { LATAbits.LATA6 = 0; } while(0)
-#define V_CBUS_Toggle()             do { LATAbits.LATA6 = ~LATAbits.LATA6; } while(0)
-#define V_CBUS_GetValue()           PORTAbits.RA6
-#define V_CBUS_SetDigitalInput()    do { TRISAbits.TRISA6 = 1; } while(0)
-#define V_CBUS_SetDigitalOutput()   do { TRISAbits.TRISA6 = 0; } while(0)
-#define V_CBUS_SetPullup()          do { WPUAbits.WPUA6 = 1; } while(0)
-#define V_CBUS_ResetPullup()        do { WPUAbits.WPUA6 = 0; } while(0)
-#define V_CBUS_SetPushPull()        do { ODCONAbits.ODCA6 = 0; } while(0)
-#define V_CBUS_SetOpenDrain()       do { ODCONAbits.ODCA6 = 1; } while(0)
-#define V_CBUS_SetAnalogMode()      do { ANSELAbits.ANSELA6 = 1; } while(0)
-#define V_CBUS_SetDigitalMode()     do { ANSELAbits.ANSELA6 = 0; } while(0)
+// get/set V_CMODE aliases
+#define V_CMODE_TRIS                 TRISAbits.TRISA6
+#define V_CMODE_LAT                  LATAbits.LATA6
+#define V_CMODE_PORT                 PORTAbits.RA6
+#define V_CMODE_WPU                  WPUAbits.WPUA6
+#define V_CMODE_OD                   ODCONAbits.ODCA6
+#define V_CMODE_ANS                  ANSELAbits.ANSELA6
+#define V_CMODE_SetHigh()            do { LATAbits.LATA6 = 1; } while(0)
+#define V_CMODE_SetLow()             do { LATAbits.LATA6 = 0; } while(0)
+#define V_CMODE_Toggle()             do { LATAbits.LATA6 = ~LATAbits.LATA6; } while(0)
+#define V_CMODE_GetValue()           PORTAbits.RA6
+#define V_CMODE_SetDigitalInput()    do { TRISAbits.TRISA6 = 1; } while(0)
+#define V_CMODE_SetDigitalOutput()   do { TRISAbits.TRISA6 = 0; } while(0)
+#define V_CMODE_SetPullup()          do { WPUAbits.WPUA6 = 1; } while(0)
+#define V_CMODE_ResetPullup()        do { WPUAbits.WPUA6 = 0; } while(0)
+#define V_CMODE_SetPushPull()        do { ODCONAbits.ODCA6 = 0; } while(0)
+#define V_CMODE_SetOpenDrain()       do { ODCONAbits.ODCA6 = 1; } while(0)
+#define V_CMODE_SetAnalogMode()      do { ANSELAbits.ANSELA6 = 1; } while(0)
+#define V_CMODE_SetDigitalMode()     do { ANSELAbits.ANSELA6 = 0; } while(0)
 
 // get/set RB0 procedures
 #define RB0_SetHigh()            do { LATBbits.LATB0 = 1; } while(0)
