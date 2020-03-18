@@ -264,3 +264,33 @@ float esr_check(const uint8_t fsm)
 	}
 	return -1.0;
 }
+
+/*
+ * read analog signal from RS485 interface for charge controller status
+ */
+uint8_t cc_state(float cc_signal)
+{
+	uint8_t state = 255; // offline
+
+	if (cc_signal > 4.75 && cc_signal < 0.75)
+		return state; // dead signal range
+
+	if (cc_signal > 4.25 && cc_signal < 4.75) // 4.5
+		return state; //offline
+
+	if (cc_signal > 3.75 && cc_signal < 4.25) // 4.0
+		state = 6;
+	if (cc_signal > 3.25 && cc_signal < 3.75) // 3.5
+		state = 5;
+	if (cc_signal > 2.75 && cc_signal < 3.25) // 3.0
+		state = 4;
+	if (cc_signal > 2.25 && cc_signal < 2.75) // 2.5
+		state = 3;
+	if (cc_signal > 1.75 && cc_signal < 2.25) // 2.0
+		state = 2;
+	if (cc_signal > 1.25 && cc_signal < 1.75) // 1.5
+		state = 1;
+	if (cc_signal > .75 && cc_signal < 1.25) // 1.0
+		state = 0;
+	return state;
+}
