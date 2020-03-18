@@ -118,6 +118,15 @@ extern "C" {
 #define HVER		1
 	
 #define BL_TIME		600
+	
+#define CC_DEACT	74	// 1.10
+#define CC_ACT		100	// 1.43
+#define CC_MPPT		120	// 1.75
+#define CC_EQUAL	140	// 2.10
+#define CC_BOOST	160	// 2.45
+#define CC_FLOAT	180	// 2.82
+#define CC_LIMIT	200	// 3.20
+#define CC_OFFLINE	240	// 4.00
 
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;
