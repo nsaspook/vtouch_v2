@@ -275,7 +275,7 @@ uint8_t cc_state(float cc_signal)
 	if (cc_signal > 4.75 && cc_signal < 0.75)
 		return state; // dead signal range
 
-	if (cc_signal > 4.25 && cc_signal < 4.75) // 4.5
+	if (cc_signal > 4.25 && cc_signal < 4.65) // 4.4
 		return state; //offline
 
 	if (cc_signal > 3.75 && cc_signal < 4.25) // 4.0
