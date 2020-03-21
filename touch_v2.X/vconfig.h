@@ -117,9 +117,9 @@ extern "C" {
 
 #define HPARAM_SIZE     13
 #define HVER		1
-	
+
 #define BL_TIME		600
-	
+
 #define CC_DEACT	74	// 1.10
 #define CC_ACT		100	// 1.43
 #define CC_MPPT		120	// 1.75
@@ -192,7 +192,7 @@ extern "C" {
 		uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
 		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
 		terminal_type response;
-		volatile uint8_t ticker;
+		volatile uint8_t ticker, cc_state;
 		bool flipper, calib, enter, sensor_set, fixup;
 		volatile bool system_stable, blight_off;
 		volatile uint32_t lowint_count, timerint_count;

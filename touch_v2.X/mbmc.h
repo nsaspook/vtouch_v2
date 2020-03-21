@@ -70,7 +70,7 @@
 
 typedef struct C_data { // real calculated variables
 	float calc[ADC_BUFFER_SIZE];
-	float c_load, c_bat, c_pv, c_mppt, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, bv_ror, bc_ror;
+	float c_load, c_bat, c_pv, c_mppt, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, v_cmode, bv_ror, bc_ror;
 	float p_load, p_inverter, p_pv, p_bat, p_mppt;
 	float t_comp, esr;
 	float bank_ah, dynamic_ah, pv_ah, loadah, dynamic_ah_adj;

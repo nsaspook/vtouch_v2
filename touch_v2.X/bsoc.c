@@ -270,7 +270,7 @@ float esr_check(const uint8_t fsm)
  */
 uint8_t cc_state(float cc_signal)
 {
-	uint8_t state = 255; // offline
+	uint8_t state = M_OFFLINE; // offline
 
 	if (cc_signal > 4.75 && cc_signal < 0.75)
 		return state; // dead signal range
@@ -279,18 +279,18 @@ uint8_t cc_state(float cc_signal)
 		return state; //offline
 
 	if (cc_signal > 3.75 && cc_signal < 4.25) // 4.0
-		state = 6;
+		state = M_LIMIT;
 	if (cc_signal > 3.25 && cc_signal < 3.75) // 3.5
-		state = 5;
+		state = M_FLOAT;
 	if (cc_signal > 2.75 && cc_signal < 3.25) // 3.0
-		state = 4;
+		state = M_BOOST;
 	if (cc_signal > 2.25 && cc_signal < 2.75) // 2.5
-		state = 3;
+		state = M_EQUAL;
 	if (cc_signal > 1.75 && cc_signal < 2.25) // 2.0
-		state = 2;
+		state = M_MPPT;
 	if (cc_signal > 1.25 && cc_signal < 1.75) // 1.5
-		state = 1;
+		state = M_ACT;
 	if (cc_signal > .75 && cc_signal < 1.25) // 1.0
-		state = 0;
+		state = M_DEACT;
 	return state;
 }

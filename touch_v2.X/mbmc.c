@@ -82,6 +82,7 @@ void calc_model_data(void)
 		C.c_mppt = C.calc[C_MPPT];
 		C.v_bat = C.calc[V_BAT];
 		C.v_sensor = C.calc[V_LIGHT_SENSOR];
+		C.v_cmode = C.calc[V_CMODE];
 		C.bv_ror = C.v_bat - bvror;
 		bvror = C.v_bat;
 		C.v_pv = C.calc[V_PV];

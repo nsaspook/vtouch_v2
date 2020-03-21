@@ -66,6 +66,17 @@ typedef enum {
 	R_BAT,
 } R_CODES;
 
+typedef enum {
+	M_DEACT = 0,
+	M_ACT = 1,
+	M_MPPT = 2,
+	M_EQUAL = 3,
+	M_BOOST = 4,
+	M_FLOAT = 5,
+	M_LIMIT = 6,
+	M_OFFLINE = 255,
+} M_CODES;
+
 void calc_bsoc(void);
 void init_bsoc(void);
 void start_bsoc(void);
