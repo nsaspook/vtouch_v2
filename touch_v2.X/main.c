@@ -158,6 +158,9 @@ V_data V = {
 	.fixup = FIXUPS,
 	.blight_off = false,
 	.blight = 0,
+	.float_ticks = 0,
+	.in_float = false,
+	.ac_time = 0,
 };
 H_data H = {
 	.hid_display = HID_MAIN,

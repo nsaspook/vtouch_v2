@@ -61,6 +61,8 @@
 
 #define DAWN_VOLTS	22.0
 #define DUSK_VOLTS	12.0
+#define BRIGHT_VOLTS	50.0
+#define MAX_AC_TIME	60*60*4 // AC charger max runtime per trigger
 #define DAY_DELAY	240
 #define SOC_TOO_LOW	20
 #define SOC_CRITICAL	3

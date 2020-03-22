@@ -46,6 +46,14 @@ void calc_bsoc(void)
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif
+	
+	if (cc_state(C.v_cmode)==M_FLOAT)
+	{
+		if (!V.in_float && ++V.float_ticks>FLOAT_TIME)
+			V.in_float=true;
+	} else {
+		V.float_ticks=0;
+	}
 	C.dynamic_ah += (C.c_bat / SSLICE); // Ah
 	if (C.dynamic_ah > (C.bank_ah))
 		C.dynamic_ah = C.bank_ah;

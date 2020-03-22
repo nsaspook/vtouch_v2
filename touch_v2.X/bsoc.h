@@ -59,6 +59,8 @@
 
 #define BVSOC_SLOTS     26      // Battery to SOC data table slots
 
+#define FLOAT_TIME	60	// cc in float mode delay time before flag set
+
 typedef enum {
 	R_CYCLE = 0,
 	R_TOTAL,

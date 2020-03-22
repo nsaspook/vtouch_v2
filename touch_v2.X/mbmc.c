@@ -178,12 +178,24 @@ bool check_day_time(void)
 
 	light = conv_raw_result(V_LIGHT_SENSOR, CONV);
 	/*
+	 * limit AC charger time per trigger
+	 */
+	if (V.ac_time++>MAX_AC_TIME && get_ac_charger_relay()) {
+		V.ac_time = 0;
+		set_ac_charger_relay(false);
+	}
+	/*
 	 * history eeprom update
 	 */
 	if (C.day_update) {
 		if (time(NULL) >= C.day_update) {
 			C.day_update = 0; // set to trigger time to false
 			C.dupdate = true; // trigger a EEPROM history write
+			if (V.in_float) {
+				V.in_float = false;
+				V.float_ticks = 0;
+				C.hist[0].h[11]++; //increase the battery cycles count
+			}
 		}
 	}
 
@@ -202,6 +214,7 @@ bool check_day_time(void)
 					C.day_start = time(NULL);
 					if (get_ac_charger_relay()) { // USE PV charging during the day
 						set_ac_charger_relay(false);
+						V.ac_time = 0;
 					}
 					return true;
 				}
@@ -215,14 +228,16 @@ bool check_day_time(void)
 					 */
 					if ((C.soc < SOC_TOO_LOW)) {
 						set_ac_charger_relay(true);
+						V.ac_time = 0;
 					}
 					return true;
 				}
 			}
 		} else {
-			if (C.p_pv < C.p_inverter) { // see if PV can raise SOC
-				if (!get_ac_charger_relay()) { // USE AC charger
+			if ((C.p_pv < C.p_inverter) && (light < BRIGHT_VOLTS)) { // see if PV can raise SOC
+				if (!get_ac_charger_relay()) { // USE AC charger if PV power will be lower
 					set_ac_charger_relay(true);
+					V.ac_time = 0;
 				}
 			}
 		}
@@ -243,7 +258,6 @@ void load_hist_data(void)
 	esr_rescale = (int16_t) (C.esr * 1000.0);
 	C.hist[0].updates++;
 	C.hist[0].h[12] += C.pvkw;
-	C.hist[0].h[11]++;
 	if (esr_rescale > C.hist[0].h[10])
 		C.hist[0].h[10] = esr_rescale;
 	if (esr_rescale < C.hist[0].h[9])

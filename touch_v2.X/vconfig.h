@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.34"
+#define VER	"1.35"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -56,6 +56,7 @@ extern "C" {
 	 * 1.32 data number fixups for display and calculations
 	 * 1.33 reorder logging data format
 	 * 1.34 CC mode to voltage decoding routines
+	 * 1.35 AC charger limits and float cycle counts for H[11]
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -185,16 +186,16 @@ extern "C" {
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
 		char buf[64], info[64];
-		volatile uint32_t ticks, blight;
+		volatile uint32_t ticks, blight, ac_time;
 		volatile int8_t testing;
-		uint8_t error, abort, msg_error, msg_ret, alarm;
+		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
 		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
 		terminal_type response;
 		volatile uint8_t ticker, cc_state;
 		bool flipper, calib, enter, sensor_set, fixup;
-		volatile bool system_stable, blight_off;
+		volatile bool system_stable, blight_off, in_float;
 		volatile uint32_t lowint_count, timerint_count;
 	} V_data;
 
