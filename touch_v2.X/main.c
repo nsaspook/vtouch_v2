@@ -297,10 +297,15 @@ void main(void)
 			update_lcd(0);
 			WaitMs(2000);
 
+			V.cc_state = cc_state(C.v_cmode);
+			if (V.cc_state) {
+				V.cc_active = true;
+			}
+
 			i_ror = 1;
 			do {
 				calc_ror_data();
-				sprintf(get_vterm_ptr(1, 0), "BV %2.4f             ", conv_raw_result(V_BAT, CONV));
+				sprintf(get_vterm_ptr(1, 0), "BV %2.4f CC%d            ", conv_raw_result(V_BAT, CONV), V.cc_state);
 				sprintf(get_vterm_ptr(2, 0), "S S%cC %d %2.4f          ", spinners(5, false), i_ror, C.bv_ror);
 				update_lcd(0);
 				clear_adc_scan();
