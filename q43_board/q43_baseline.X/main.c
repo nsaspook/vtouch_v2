@@ -48,7 +48,7 @@
  */
 void main(void)
 {
-	uint16_t flip = 0;
+	uint32_t flip = 0;
 	// Initialize the device
 	SYSTEM_Initialize();
 
