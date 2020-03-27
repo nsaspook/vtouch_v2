@@ -46,13 +46,12 @@ void calc_bsoc(void)
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif
-	
-	if (cc_state(C.v_cmode)==M_FLOAT)
-	{
-		if (!V.in_float && ++V.float_ticks>FLOAT_TIME)
-			V.in_float=true;
+
+	if (cc_state(C.v_cmode) == M_FLOAT) {
+		if (!V.in_float && ++V.float_ticks > FLOAT_TIME)
+			V.in_float = true;
 	} else {
-		V.float_ticks=0;
+		V.float_ticks = 0;
 	}
 	C.dynamic_ah += (C.c_bat / SSLICE); // Ah
 	if (C.dynamic_ah > (C.bank_ah))
@@ -101,13 +100,14 @@ void calc_bsoc(void)
 		if (H.sequence == HID_AUX)
 			lcode = I_CODE;
 
-		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f\r\n",
+		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f,%d\r\n",
 			lcode, V.ticks,
 			C.v_pv, C.v_cc, C.v_bat, C.v_inverter,
 			C.c_mppt, C.c_pv, C.c_bat,
 			C.p_mppt, C.p_pv, C.p_bat, C.p_load, C.p_inverter,
 			C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
-			C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end, C.dynamic_ah_adj, C.hist[0].cef, C.hist[0].peukert);
+			C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end, C.dynamic_ah_adj, C.hist[0].cef, C.hist[0].peukert,
+			V.cc_state);
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));
 	}
@@ -127,6 +127,10 @@ void init_bsoc(void)
 	 */
 	C.soc = Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0);
 	C.dynamic_ah = C.bank_ah * (Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0) / 100.0);
+	if (V.cc_active) { // charge controller online FIXUP
+		C.dynamic_ah += 10.0;
+		C.soc += 10;
+	}
 	C.dynamic_ah_adj = C.dynamic_ah;
 	TMR3_SetInterruptHandler(calc_bsoc);
 }

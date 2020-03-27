@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.35"
+#define VER	"1.36"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -57,10 +57,11 @@ extern "C" {
 	 * 1.33 reorder logging data format
 	 * 1.34 CC mode to voltage decoding routines
 	 * 1.35 AC charger limits and float cycle counts for H[11]
+	 * 1.36 Charge controller op mode FIXUPS
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
-#define DEF_TIME	1584820657
+#define DEF_TIME	1585268628
 
 #define SLED	LED0_LAT
 #define DLED	DEBUG2_LAT
@@ -99,7 +100,7 @@ extern "C" {
 #define DFLIP	1500 // display info flipping spacing
 
 #define LOG_WAIT	10 // data logging internval in seconds
-#define D_CODE		'3'  // data logging line code version
+#define D_CODE		'4'  // data logging line code version
 #define I_CODE		'*'  // info logging line code
 
 #define CAL_DELAY	64

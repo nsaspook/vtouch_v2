@@ -295,11 +295,15 @@ void main(void)
 				sprintf(get_vterm_ptr(2, 0), "Invalid EEPROM DATA ");
 			}
 			update_lcd(0);
+			clear_adc_scan();
+			start_adc_scan();
 			WaitMs(2000);
 
-			V.cc_state = cc_state(C.v_cmode);
-			if (V.cc_state) {
+			V.cc_state = cc_state(conv_raw_result(V_CMODE, CONV));
+			if (V.cc_state && (V.cc_state != M_OFFLINE)) {
 				V.cc_active = true;
+			} else {
+				V.cc_active = false;
 			}
 
 			i_ror = 1;
