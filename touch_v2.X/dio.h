@@ -43,7 +43,8 @@ typedef struct rbutton_type {
 } rbutton_type;
 
 void start_switch_handler(void);
-SW_STATES get_switch(uint8_t);
+SW_STATES get_switch(const uint8_t);
+SW_STATES get_switch_bm(const uint8_t);
 rbutton_type get_switch_data(uint8_t);
 uint8_t check_switches(void);
 void clear_switch(uint8_t);

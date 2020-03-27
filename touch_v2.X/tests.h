@@ -36,10 +36,10 @@
 #define DEBUG_MBMC	// global application debug switch
 
 #ifdef DEBUG_MBMC
-#define DEBUG_DAQ1 // daq debug switches : SCANNER
-#define DEBUG_DAQ2 // ADC conversion
-//#define DEBUG_SWH1 // switches
-//#define DEBUG_SWH2
+//#define DEBUG_DAQ1 // daq debug switches : SCANNER
+//#define DEBUG_DAQ2 // ADC conversion
+#define DEBUG_SWH1 // switches
+#define DEBUG_SWH2
 //#define DEBUG_BSOC1 // battery run calculations
 //#define DEBUG_BSOC2
 //#define DEBUG_HIST1

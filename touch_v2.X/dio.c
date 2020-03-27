@@ -24,6 +24,18 @@ SW_STATES get_switch(const uint8_t i)
 }
 
 /*
+ * return the bitmap state of x switch
+ * the actual current state of a switch is ONLY changed in the interrupt handler
+ */
+SW_STATES get_switch_bm(const uint8_t i)
+{
+	if (i >= NUM_SWITCHES)
+		return SW_OFF;
+
+	return(S.sw_bitmap >> i)&0x01;
+}
+
+/*
  * return the x switch structure
  * mainly for testing
  */
@@ -63,8 +75,8 @@ void switch_handler(void)
 	 * enable the outputs for reading and reset MAX Change-of-State pin
 	 */
 	MAX_EN1_SetLow(); // rev 1.1+ board
-	V.blight=V.ticks+BL_TIME;
-	V.blight_off=false;
+	V.blight = V.ticks + BL_TIME;
+	V.blight_off = false;
 
 #ifdef DEBUG_SWH1
 	DEBUG1_SetHigh();

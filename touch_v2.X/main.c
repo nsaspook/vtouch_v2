@@ -428,8 +428,8 @@ void main(void)
 			}
 
 			if (false) {
-				sprintf(get_vterm_ptr(0, 0), "%d %2.4f   %d   ", get_raw_result(i), C.calc[i], get_switch(SSELECT));
-				sprintf(get_vterm_ptr(1, 0), "%d %2.4f   %d   ", get_raw_result(j), C.calc[j], get_switch(SENTER));
+				sprintf(get_vterm_ptr(0, 0), "%d %2.4f  %d %x  ", get_raw_result(i), C.calc[i], get_switch_bm(SSELECT), check_switches());
+				sprintf(get_vterm_ptr(1, 0), "%d %2.4f  %d   ", get_raw_result(j), C.calc[j], get_switch_bm(SENTER));
 				sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   # ", get_raw_result(k), C.calc[k], inp_index);
 			} else {
 				hid_display(&H);
@@ -485,6 +485,7 @@ void main(void)
 			if (V.enter && (H.hid_display != HID_AUX)) {
 				V.enter = false;
 				V.screen = ~V.screen;
+				inp_index = 0;
 			}
 			set_vterm(V.screen);
 			update_lcd(V.screen);

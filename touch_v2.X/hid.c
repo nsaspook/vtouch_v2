@@ -2,19 +2,22 @@
 
 H_data* hid_input(H_data* h)
 {
-	if (get_switch(SSELECT)) {
+	if (get_switch_bm(SSELECT)) {
 		h->wait_select = false;
-		h->select_p = get_switch(SSELECT);
+		h->select_p = get_switch_bm(SSELECT);
+		clear_switch(SSELECT);
 	}
 
-	if (get_switch(SENTER)) {
+	if (get_switch_bm(SENTER)) {
 		h->wait_enter = false;
-		h->enter_p = get_switch(SENTER);
+		h->enter_p = get_switch_bm(SENTER);
+		clear_switch(SENTER);
 	}
 
-	if (get_switch(SCALIB)) {
+	if (get_switch_bm(SCALIB)) {
 		h->wait_calib = false;
-		h->calib_p = get_switch(SCALIB);
+		h->calib_p = get_switch_bm(SCALIB);
+		clear_switch(SCALIB);
 	}
 	return h;
 }
