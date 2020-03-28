@@ -7,6 +7,8 @@
 #include <pic18f57k42.h>
 
 #include "daq.h"
+#include "vconfig.h"
+extern struct V_data V;
 
 typedef struct D_data {
 	uint8_t dac0 : 8;
@@ -224,6 +226,7 @@ static void adc_int_t_handler(void)
 	} while (!((R.scan_select >> R.scan_index) &0x1)); // check for analog port bit
 	ADCC_DischargeSampleCapacitor(); // short ADC sample cap before next channel sampling
 	ADCC_StartConversion(R.scan_index & 0xf);
+	V.adc_count++;
 #ifdef DEBUG_DAQ1
 	DEBUG1_SetHigh();
 #endif

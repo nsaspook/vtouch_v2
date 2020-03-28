@@ -36,6 +36,8 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 	26500, 98 // charging voltage guess
 };
 
+const char infoline1[] = "   LOW Count   TOD Count    TX count    RX count   ADC Count   SPI Count   DIO Count";
+
 /*
  * low-pri interrupt ISR the runs every second for simple coulomb counting
  */
@@ -100,7 +102,12 @@ void calc_bsoc(void)
 		V.sys_info = false;
 		log_ptr = port_data_dma_ptr();
 		lcode = I_CODE;
-		sprintf((char*) log_ptr, " %c ,System Status: Version %s %s %s \r\n", lcode, VER, build_date, build_time);
+		sprintf((char*) log_ptr, " %c\r\n %c ,System Status: Version %s Build %s %s \r\n %c ,%s\r\n %c ,%10lu, %10lu, %10lu, %10lu, %10lu, %10lu, %10lu \r\n %c\r\n",
+			lcode,
+			lcode, VER, build_date, build_time,
+			lcode, infoline1,
+			lcode, V.lowint_count, V.timerint_count, V.tx_count, V.rx_count, V.adc_count, V.spi_count, V.switch_count,
+			lcode);
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));
 	} else {

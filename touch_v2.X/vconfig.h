@@ -200,7 +200,7 @@ extern "C" {
 		volatile uint8_t ticker, cc_state;
 		bool flipper, calib, enter, sensor_set, fixup, cc_active;
 		volatile bool system_stable, blight_off, in_float;
-		volatile uint32_t lowint_count, timerint_count;
+		volatile uint32_t lowint_count, timerint_count, tx_count, rx_count, adc_count, spi_count, switch_count;
 	} V_data;
 
 	typedef struct V_help {

@@ -24,7 +24,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S187 . . . ]
 "4241
 [v _PIR2bits `VS187 ~T0 @X0 0 e@14754 ]
-"22991
+"89 mcc_generated_files/spi1.c
+[c E16428 0 1 2 3 4 5 .. ]
+[n E16428 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
+[c E16409 0 1 2 3 .. ]
+[n E16409 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
+"154 ./vconfig.h
+[s S2237 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16409 1 `E16409 1 `us 1 `us 1 ]
+[n S2237 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
+"189
+[s S2238 `E16428 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16428 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2237 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
+[n S2238 V_data ui_state buf info ticks blight ac_time testing sys_info ac_on ac_off error abort msg_error msg_ret alarm float_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
+"61 mcc_generated_files/spi1.c
+[v _V `S2238 ~T0 @X0 0 e ]
+"22991 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [v _SPI1RXB `Vuc ~T0 @X0 0 e@15632 ]
 "250 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; <" STATUS_CSHAD equ 03880h ;# ">
@@ -1524,146 +1537,137 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSH equ 03FFEh ;# ">
 "48644
 [; <" TOSU equ 03FFFh ;# ">
-"64 mcc_generated_files/spi1.c
+"66 mcc_generated_files/spi1.c
 [v _SPI1_Initialize `(v ~T0 @X0 1 ef ]
-"65
+"67
 {
 [e :U _SPI1_Initialize ]
 [f ]
-"68
-[e = _SPI1CON1 -> -> 64 `i `uc ]
 "70
-[e = _SPI1CON2 -> -> 3 `i `uc ]
+[e = _SPI1CON1 -> -> 64 `i `uc ]
 "72
-[e = _SPI1BAUD -> -> 79 `i `uc ]
+[e = _SPI1CON2 -> -> 3 `i `uc ]
 "74
-[e = _SPI1CLK -> -> 0 `i `uc ]
+[e = _SPI1BAUD -> -> 79 `i `uc ]
 "76
+[e = _SPI1CLK -> -> 0 `i `uc ]
+"78
 [e = _SPI1CON0 -> -> 131 `i `uc ]
-"77
-[e :UE 2230 ]
-}
 "79
+[e :UE 2241 ]
+}
+"81
 [v _SPI1_Exchange8bit `(uc ~T0 @X0 1 ef1`uc ]
-"80
+"82
 {
 [e :U _SPI1_Exchange8bit ]
-"79
+"81
 [v _data `uc ~T0 @X0 1 r1 ]
-"80
-[f ]
 "82
+[f ]
+"84
 [e = _SPI1TCNTL -> -> 1 `i `uc ]
-"83
+"85
 [e = _SPI1TXB _data ]
-"85
-[e $U 2232  ]
-[e :U 2233 ]
-"86
-{
 "87
+[e $U 2243  ]
+[e :U 2244 ]
+{
+"88
 }
-[e :U 2232 ]
-"85
-[e $ == -> . . _PIR2bits 0 4 `i -> 0 `i 2233  ]
-[e :U 2234 ]
+[e :U 2243 ]
+"87
+[e $ == -> . . _PIR2bits 0 4 `i -> 0 `i 2244  ]
+[e :U 2245 ]
 "89
-[e ) _SPI1RXB ]
-[e $UE 2231  ]
+[e ++ . _V 46 -> -> 1 `i `Vul ]
 "90
-[e :UE 2231 ]
+[e ) _SPI1RXB ]
+[e $UE 2242  ]
+"91
+[e :UE 2242 ]
 }
-"92
-[v _SPI1_Exchange8bitBuffer `(uc ~T0 @X0 1 ef3`*uc`uc`*uc ]
 "93
+[v _SPI1_Exchange8bitBuffer `(uc ~T0 @X0 1 ef3`*uc`uc`*uc ]
+"94
 {
 [e :U _SPI1_Exchange8bitBuffer ]
-"92
+"93
 [v _dataIn `*uc ~T0 @X0 1 r1 ]
 [v _bufLen `uc ~T0 @X0 1 r2 ]
 [v _dataOut `*uc ~T0 @X0 1 r3 ]
-"93
-[f ]
 "94
+[f ]
+"95
 [v _bytesWritten `uc ~T0 @X0 1 a ]
 [e = _bytesWritten -> -> 0 `i `uc ]
-"96
-[e $ ! != -> _bufLen `i -> 0 `i 2236  ]
 "97
+[e $ ! != -> _bufLen `i -> 0 `i 2247  ]
 {
 "98
-[e $ ! != _dataIn -> -> -> 0 `i `*v `*uc 2237  ]
+[e $ ! != _dataIn -> -> -> 0 `i `*v `*uc 2248  ]
+{
 "99
+[e $U 2249  ]
+[e :U 2250 ]
 {
 "100
-[e $U 2238  ]
-[e :U 2239 ]
+[e $ ! == _dataOut -> -> -> 0 `i `*v `*uc 2252  ]
+{
 "101
-{
-"102
-[e $ ! == _dataOut -> -> -> 0 `i `*v `*uc 2241  ]
-"103
-{
-"104
 [e ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
-"105
+"102
 }
-[e $U 2242  ]
-"106
-[e :U 2241 ]
-"107
+[e $U 2253  ]
+[e :U 2252 ]
 {
-"108
+"103
 [e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
+"104
+}
+[e :U 2253 ]
+"106
+[e ++ _bytesWritten -> -> 1 `i `uc ]
+"107
+}
+[e :U 2249 ]
+"99
+[e $ < -> _bytesWritten `i -> _bufLen `i 2250  ]
+[e :U 2251 ]
+"108
+}
+[e $U 2254  ]
+[e :U 2248 ]
+{
 "109
-}
-[e :U 2242 ]
+[e $ ! != _dataOut -> -> -> 0 `i `*v `*uc 2255  ]
+{
+"110
+[e $U 2256  ]
+[e :U 2257 ]
+{
 "111
-[e ++ _bytesWritten -> -> 1 `i `uc ]
-"112
-}
-[e :U 2238 ]
-"100
-[e $ < -> _bytesWritten `i -> _bufLen `i 2239  ]
-[e :U 2240 ]
-"113
-}
-[e $U 2243  ]
-"114
-[e :U 2237 ]
-"115
-{
-"116
-[e $ ! != _dataOut -> -> -> 0 `i `*v `*uc 2244  ]
-"117
-{
-"118
-[e $U 2245  ]
-[e :U 2246 ]
-"119
-{
-"120
 [e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 -> -> 0 `i `uc ]
-"122
+"113
 [e ++ _bytesWritten -> -> 1 `i `uc ]
-"123
+"114
 }
-[e :U 2245 ]
-"118
-[e $ < -> _bytesWritten `i -> _bufLen `i 2246  ]
+[e :U 2256 ]
+"110
+[e $ < -> _bytesWritten `i -> _bufLen `i 2257  ]
+[e :U 2258 ]
+"115
+}
+[e :U 2255 ]
+"116
+}
+[e :U 2254 ]
+"117
+}
 [e :U 2247 ]
-"124
-}
-[e :U 2244 ]
-"125
-}
-[e :U 2243 ]
-"126
-}
-[e :U 2236 ]
-"128
+"119
 [e ) _bytesWritten ]
-[e $UE 2235  ]
-"129
-[e :UE 2235 ]
+[e $UE 2246  ]
+"120
+[e :UE 2246 ]
 }

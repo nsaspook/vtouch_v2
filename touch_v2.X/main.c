@@ -63,7 +63,7 @@
  * USART1		MBMC logger channel
  * timer 2 100 us PWM clock, no interrupt
  * timer 3 one second housekeeping clock for battery state tracking, low priority interrupt
- * timer 5 one second timer, interrupt
+ * timer 5 one second timer, TOD interrupt
  * timer 6 500 us software timer ticker, interrupt
  *
  * dma1 spi transmit
@@ -397,6 +397,7 @@ void main(void)
 			sprintf(get_vterm_ptr(3, 1), "%s           ", asctime(t_mbmc));
 			calc_model_data();
 			V.cc_state = cc_state(C.v_cmode);
+			mode_lamp_dim(V.cc_state << 2);
 			if (C.dupdate) {
 				C.dupdate = false;
 				set_hist_flag();

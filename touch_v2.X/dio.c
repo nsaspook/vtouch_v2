@@ -83,6 +83,7 @@ void switch_handler(void)
 #endif
 
 	// Nop for MAX chip output Propagation Delay after enable
+	V.switch_count++;
 	Nop();
 	Nop();
 	Nop();

@@ -51,6 +51,7 @@
 #include "uart1.h"
 #include "interrupt_manager.h"
 #include "pin_manager.h"
+#include "../vconfig.h"
 
 /**
   Section: Macro Declarations
@@ -61,7 +62,7 @@
 /**
   Section: Global Variables
  */
-
+extern struct V_data V;
 
 static volatile uint8_t uart1RxHead = 0;
 static volatile uint8_t uart1RxTail = 0;
@@ -107,11 +108,11 @@ void UART1_Initialize(void)
 	// TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
 	U1CON2 = 0x00;
 
-    // BRGL 138; 
-    U1BRGL = 0x8A;
+	// BRGL 138; 
+	U1BRGL = 0x8A;
 
-    // BRGH 0; 
-    U1BRGH = 0x00;
+	// BRGH 0; 
+	U1BRGH = 0x00;
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 
 	U1FIFO = 0x00;
@@ -141,7 +142,7 @@ uint8_t UART1_is_rx_ready(void)
 
 bool UART1_is_tx_ready(void)
 {
-    return (bool)(PIR3bits.U1TXIF && U1CON0bits.TXEN);
+	return(bool) (PIR3bits.U1TXIF && U1CON0bits.TXEN);
 }
 
 bool UART1_is_tx_done(void)
@@ -151,15 +152,13 @@ bool UART1_is_tx_done(void)
 
 uint8_t UART1_Read(void)
 {
-    uint8_t readValue  = 0;
+	uint8_t readValue = 0;
 
-    while(0 == uart1RxCount)
-    {
+	while (0 == uart1RxCount) {
 	}
 
 	readValue = uart1RxBuffer[uart1RxTail++];
-   	if(sizeof(uart1RxBuffer) <= uart1RxTail)
-    {
+	if (sizeof(uart1RxBuffer) <= uart1RxTail) {
 		uart1RxTail = 0;
 	}
 	PIE3bits.U1RXIE = 0;
@@ -171,43 +170,36 @@ uint8_t UART1_Read(void)
 
 void UART1_Write(uint8_t txData)
 {
-    while(0 == PIR3bits.U1TXIF)
-    {
+	while (0 == PIR3bits.U1TXIF) {
 	}
 
-    U1TXB = txData;    // Write the data byte to the USART.
-		}
-	
-void __interrupt(irq(U1RX),base(8)) UART1_rx_vect_isr()
+	U1TXB = txData; // Write the data byte to the USART.
+}
+
+void __interrupt(irq(U1RX), base(8)) UART1_rx_vect_isr()
 {
-    if(UART1_RxInterruptHandler)
-{
+	if (UART1_RxInterruptHandler) {
 		UART1_RxInterruptHandler();
 	}
 }
-
-
-
 
 void UART1_Receive_ISR(void)
 {
 	// use this default receive interrupt handler code
 	uart1RxBuffer[uart1RxHead++] = U1RXB;
-    if(sizeof(uart1RxBuffer) <= uart1RxHead)
-    {
+	if (sizeof(uart1RxBuffer) <= uart1RxHead) {
 		uart1RxHead = 0;
 	}
 	uart1RxCount++;
+	V.rx_count++;
 
 	// or set custom function using UART1_SetRxInterruptHandler()
 }
 
-
-
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void)){
+void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
+{
 	UART1_RxInterruptHandler = InterruptHandler;
 }
-
 
 /* stuff the uart1 receive buffer with testing data */
 void UART1_put_buffer(uint8_t bufData)

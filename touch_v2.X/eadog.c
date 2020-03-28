@@ -160,6 +160,7 @@ void eaDogM_WriteString(char *strPtr)
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
 	start_lcd();
+	V.spi_count += strlen(strPtr);
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
 #endif
@@ -191,6 +192,7 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
 	start_lcd();
+	V.spi_count++;
 }
 
 void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
@@ -405,6 +407,7 @@ void send_port_data_dma(uint16_t dsize)
 	DMA2DSZ = 1;
 	DMA2CON0bits.EN = 1; /* enable DMA */
 	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
+	V.tx_count += dsize;
 }
 
 /*
