@@ -184,6 +184,19 @@ bool check_day_time(void)
 		V.ac_time = 0;
 		set_ac_charger_relay(false);
 	}
+
+	if (V.ac_off) {
+		set_ac_charger_relay(false);
+		V.ac_time = 0;
+		V.ac_off = false;
+	}
+
+	if (V.ac_on) {
+		set_ac_charger_relay(true);
+		V.ac_time = 0;
+		V.ac_on = false;
+	}
+
 	/*
 	 * history eeprom update
 	 */

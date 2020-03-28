@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.37"
+#define VER	"1.38"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -59,6 +59,7 @@ extern "C" {
 	 * 1.35 AC charger limits and float cycle counts for H[11]
 	 * 1.36 Charge controller op mode FIXUPS
 	 * 1.37 HID button response fixes, use bitmap data for stored button press info in hid.c
+	 * 1.38 UART 1 serial control parser. 'V' AC charger ON, 'v' AC charger off, '#' Show system information
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -190,6 +191,7 @@ extern "C" {
 		char buf[64], info[64];
 		volatile uint32_t ticks, blight, ac_time;
 		volatile int8_t testing;
+		volatile uint8_t sys_info : 1, ac_on : 1, ac_off : 1;
 		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;

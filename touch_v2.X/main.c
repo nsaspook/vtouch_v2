@@ -200,6 +200,8 @@ time_t pclock;
 static bool current_sensor_cal(void);
 static bool display_history(void);
 
+const char *build_date = __DATE__, *build_time = __TIME__;
+
 /*
  * Main application
  */

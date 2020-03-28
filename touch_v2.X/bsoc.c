@@ -5,6 +5,7 @@
 extern volatile C_data C;
 extern V_data V;
 extern H_data H;
+extern const char *build_date, *build_time;
 
 const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 	23000, 5,
@@ -95,24 +96,33 @@ void calc_bsoc(void)
 
 	V.lowint_count++;
 
-	if (!log_update_wait++ && V.system_stable) {
+	if (V.sys_info) {
+		V.sys_info = false;
 		log_ptr = port_data_dma_ptr();
-		if (H.sequence == HID_AUX)
-			lcode = I_CODE;
-
-		sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f,%d\r\n",
-			lcode, V.ticks,
-			C.v_pv, C.v_cc, C.v_bat, C.v_inverter,
-			C.c_mppt, C.c_pv, C.c_bat,
-			C.p_mppt, C.p_pv, C.p_bat, C.p_load, C.p_inverter,
-			C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
-			C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end, C.dynamic_ah_adj, C.hist[0].cef, C.hist[0].peukert,
-			V.cc_state);
+		lcode = I_CODE;
+		sprintf((char*) log_ptr, " %c ,System Status: Version %s %s %s \r\n", lcode, VER, build_date, build_time);
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));
+	} else {
+		if (!log_update_wait++ && V.system_stable) {
+			log_ptr = port_data_dma_ptr();
+			if (H.sequence == HID_AUX)
+				lcode = I_CODE;
+
+			sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f,%d\r\n",
+				lcode, V.ticks,
+				C.v_pv, C.v_cc, C.v_bat, C.v_inverter,
+				C.c_mppt, C.c_pv, C.c_bat,
+				C.p_mppt, C.p_pv, C.p_bat, C.p_load, C.p_inverter,
+				C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
+				C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end, C.dynamic_ah_adj, C.hist[0].cef, C.hist[0].peukert,
+				V.cc_state);
+			StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
+			send_port_data_dma(strlen((char*) log_ptr));
+		}
+		if (log_update_wait >= LOG_WAIT)
+			log_update_wait = 0;
 	}
-	if (log_update_wait >= LOG_WAIT)
-		log_update_wait = 0;
 
 	C.update = false;
 #ifdef DEBUG_BSOC1
