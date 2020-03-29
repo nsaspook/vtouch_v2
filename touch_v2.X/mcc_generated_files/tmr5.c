@@ -163,7 +163,7 @@ uint8_t TMR5_CheckGateValueStatus(void)
 	return(T5GCONbits.T5GVAL);
 }
 
-void __interrupt(irq(TMR5),base(8),low_priority) TMR5_ISR()
+void __interrupt(irq(TMR5), base(8), low_priority) TMR5_ISR()
 {
 	static volatile unsigned int CountCallBack = 0;
 
@@ -172,7 +172,7 @@ void __interrupt(irq(TMR5),base(8),low_priority) TMR5_ISR()
 	TMR5_WriteTimer(timer5ReloadVal);
 
 	// callback function - called every 100th pass
-	if (++CountCallBack >= (TMR5_INTERRUPT_TICKER_FACTOR+V.ticker)) {
+	if (++CountCallBack >= (TMR5_INTERRUPT_TICKER_FACTOR + V.ticker)) {
 		// ticker function call
 		TMR5_CallBack();
 
@@ -202,6 +202,7 @@ void TMR5_DefaultInterruptHandler(void)
 	V.timerint_count++;
 	V.ticks++;
 	check_day_time();
+	V.ticker = 0;
 }
 
 /**
