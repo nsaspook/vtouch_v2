@@ -46,6 +46,7 @@ void calc_bsoc(void)
 	uint8_t * log_ptr, lcode = D_CODE;
 	static uint8_t log_update_wait = 0;
 	float adj = 1.0;
+
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif

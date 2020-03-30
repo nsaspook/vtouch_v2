@@ -1,10 +1,9 @@
+#include <stdio.h>
+#include <string.h>
 #include "vconfig.h"
 #include "eadog.h"
 #include "ringbufs.h"
-#include <stdio.h>
-#include <string.h>
-
-
+#include "tests.h"
 
 #define max_strlen	64
 #define max_port_data	512
@@ -38,11 +37,11 @@ void wdtdelay(const uint32_t delay)
 void init_display(void)
 {
 	spi_link.tx1a = &ring_buf1;
-	//	spi_link.tx1b = &ring_buf2;
 	ringBufS_init(spi_link.tx1a);
-	//	ringBufS_init(spi_link.tx1b);
 
-	DLED = true;
+#ifdef DEBUG_DISP2
+	DLED2 = true;
+#endif
 #ifdef NHD
 	SPI1CON0bits.EN = 0;
 	// mode 3
@@ -95,7 +94,9 @@ void init_display(void)
 	DMA1SSA = (uint32_t) & ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
-	DLED = false;
+#ifdef DEBUG_DISP2
+	DLED2 = false;
+#endif
 }
 
 /*

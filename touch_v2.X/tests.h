@@ -32,17 +32,24 @@
 #define	TESTS_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
+#include "mcc_generated_files/pin_manager.h"
 
 #define DEBUG_MBMC	// global application debug switch
+#define DLED1	DEBUG1_LAT
+#define DLED2	DEBUG2_LAT
 
 #ifdef DEBUG_MBMC
 //#define DEBUG_DAQ1 // daq debug switches : SCANNER
 //#define DEBUG_DAQ2 // ADC conversion
-#define DEBUG_SWH1 // switches
-#define DEBUG_SWH2
+//#define DEBUG_SWH1 // switches
+//#define DEBUG_SWH2
 //#define DEBUG_BSOC1 // battery run calculations
 //#define DEBUG_BSOC2
 //#define DEBUG_HIST1
+#define DEBUG_TMR3 // timers
+#define DEBUG_TRM5
+//#define DEBUG_DISP1 // LCD Display
+//#define DEBUG_DISP2
 #endif
 
 #define CALIB	false

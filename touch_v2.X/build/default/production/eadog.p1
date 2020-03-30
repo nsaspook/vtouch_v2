@@ -1,37 +1,26 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "19 ./ringbufs.h
-[s S2235 `uc -> 64 `i `uc 1 `uc 1 `uc 1 ]
-[n S2235 ringBufS_t buf head tail count ]
-"136 ./vconfig.h
-[s S2236 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `us 1 `uc 1 `*S2235 1 `*S2235 1 `Vl 1 ]
-[n S2236 spi_link_type SPI_LCD SPI_AUX LCD_TIMER LCD_DATA delay config tx1b tx1a int_count ]
+[s S2237 `uc -> 64 `i `uc 1 `uc 1 `uc 1 ]
+[n S2237 ringBufS_t buf head tail count ]
+"135 ./vconfig.h
+[s S2238 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `us 1 `uc 1 `*S2237 1 `*S2237 1 `Vl 1 ]
+[n S2238 spi_link_type SPI_LCD SPI_AUX LCD_TIMER LCD_DATA delay config tx1b tx1a int_count ]
 "50 /opt/microchip/xc8/v2.10/pic/include/pic18.h
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
 "26 ./ringbufs.h
-[v _ringBufS_init `(v ~T0 @X0 0 ef1`*VS2235 ]
-"46274 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
-[s S2087 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2087 . LATE0 LATE1 LATE2 ]
-"46279
-[s S2088 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2088 . LE0 LE1 LE2 ]
-"46273
-[u S2086 `S2087 1 `S2088 1 ]
-[n S2086 . . . ]
-"46285
-[v _LATEbits `VS2086 ~T0 @X0 0 e@16318 ]
-"23184
-[s S1012 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
-[n S1012 . BMODE MST LSBF . EN ]
+[v _ringBufS_init `(v ~T0 @X0 0 ef1`*VS2237 ]
+"23184 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
+[s S1015 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
+[n S1015 . BMODE MST LSBF . EN ]
 "23191
-[s S1013 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
-[n S1013 . SPI1BMODE SPI1MST SPI1LSBF . SPI1SPIEN ]
+[s S1016 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
+[n S1016 . SPI1BMODE SPI1MST SPI1LSBF . SPI1SPIEN ]
 "23183
-[u S1011 `S1012 1 `S1013 1 ]
-[n S1011 . . . ]
+[u S1014 `S1015 1 `S1016 1 ]
+[n S1014 . . . ]
 "23199
-[v _SPI1CON0bits `VS1011 ~T0 @X0 0 e@15636 ]
+[v _SPI1CON0bits `VS1014 ~T0 @X0 0 e@15636 ]
 "23244
 [v _SPI1CON1 `Vuc ~T0 @X0 0 e@15637 ]
 "23346
@@ -42,84 +31,84 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _SPI1CLK `Vuc ~T0 @X0 0 e@15644 ]
 "23178
 [v _SPI1CON0 `Vuc ~T0 @X0 0 e@15636 ]
-"19 eadog.c
+"18 eadog.c
 [v _send_lcd_cmd_long `(v ~T0 @X0 0 sf1`uc ]
-"21
-[v _send_lcd_cmd `(v ~T0 @X0 0 sf1`uc ]
 "20
+[v _send_lcd_cmd `(v ~T0 @X0 0 sf1`uc ]
+"19
 [v _send_lcd_data `(v ~T0 @X0 0 sf1`uc ]
 "23622 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
-[s S1030 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1030 . . TXUIF RXOIF . EOSIF SOSIF TCZIF SRMTIF ]
+[s S1033 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1033 . . TXUIF RXOIF . EOSIF SOSIF TCZIF SRMTIF ]
 "23632
-[s S1031 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1031 . . SPI1TXUIF SPI1RXOIF . SPI1EOSIF SPI1SOSIF SPI1TCZIF SPI1SRMTIF ]
+[s S1034 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1034 . . SPI1TXUIF SPI1RXOIF . SPI1EOSIF SPI1SOSIF SPI1TCZIF SPI1SRMTIF ]
 "23621
-[u S1029 `S1030 1 `S1031 1 ]
-[n S1029 . . . ]
+[u S1032 `S1033 1 `S1034 1 ]
+[n S1032 . . . ]
 "23643
-[v _SPI1INTFbits `VS1029 ~T0 @X0 0 e@15642 ]
+[v _SPI1INTFbits `VS1032 ~T0 @X0 0 e@15642 ]
 "17443
-[s S798 :1 `uc 1 :2 `uc 1 :2 `uc 1 :1 `uc 1 :2 `uc 1 ]
-[n S798 . SSTP SMODE SMR DSTP DMODE ]
+[s S801 :1 `uc 1 :2 `uc 1 :2 `uc 1 :1 `uc 1 :2 `uc 1 ]
+[n S801 . SSTP SMODE SMR DSTP DMODE ]
 "17442
-[u S797 `S798 1 ]
-[n S797 . . ]
+[u S800 `S801 1 ]
+[n S800 . . ]
 "17451
-[v _DMA1CON1bits `VS797 ~T0 @X0 0 e@15357 ]
+[v _DMA1CON1bits `VS800 ~T0 @X0 0 e@15357 ]
 "16989
 [v _DMA1SSA `Vum ~T0 @X0 0 e@15353 ]
 "17363
-[s S795 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S795 . XIP . AIRQEN . DGO SIRQEN EN ]
+[s S798 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S798 . XIP . AIRQEN . DGO SIRQEN EN ]
 "17372
-[s S796 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S796 . DMA1XIP . DMA1AIRQEN . DMA1DGO DMA1SIRQEN DMA1EN ]
+[s S799 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S799 . DMA1XIP . DMA1AIRQEN . DMA1DGO DMA1SIRQEN DMA1EN ]
 "17362
-[u S794 `S795 1 `S796 1 ]
-[n S794 . . . ]
+[u S797 `S798 1 `S799 1 ]
+[n S797 . . . ]
 "17382
-[v _DMA1CON0bits `VS794 ~T0 @X0 0 e@15356 ]
+[v _DMA1CON0bits `VS797 ~T0 @X0 0 e@15356 ]
 "14835
-[s S688 :1 `uc 1 :2 `uc 1 :2 `uc 1 :1 `uc 1 :2 `uc 1 ]
-[n S688 . SSTP SMODE SMR DSTP DMODE ]
+[s S691 :1 `uc 1 :2 `uc 1 :2 `uc 1 :1 `uc 1 :2 `uc 1 ]
+[n S691 . SSTP SMODE SMR DSTP DMODE ]
 "14834
-[u S687 `S688 1 ]
-[n S687 . . ]
+[u S690 `S691 1 ]
+[n S690 . . ]
 "14843
-[v _DMA2CON1bits `VS687 ~T0 @X0 0 e@15325 ]
+[v _DMA2CON1bits `VS690 ~T0 @X0 0 e@15325 ]
 "14755
-[s S685 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S685 . XIP . AIRQEN . DGO SIRQEN EN ]
+[s S688 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S688 . XIP . AIRQEN . DGO SIRQEN EN ]
 "14764
-[s S686 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S686 . DMA2XIP . DMA2AIRQEN . DMA2DGO DMA2SIRQEN DMA2EN ]
+[s S689 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S689 . DMA2XIP . DMA2AIRQEN . DMA2DGO DMA2SIRQEN DMA2EN ]
 "14754
-[u S684 `S685 1 `S686 1 ]
-[n S684 . . . ]
+[u S687 `S688 1 `S689 1 ]
+[n S687 . . . ]
 "14774
-[v _DMA2CON0bits `VS684 ~T0 @X0 0 e@15324 ]
+[v _DMA2CON0bits `VS687 ~T0 @X0 0 e@15324 ]
 "13318
 [v _DMA2DSA `Vus ~T0 @X0 0 e@15312 ]
 "14381
 [v _DMA2SSA `Vum ~T0 @X0 0 e@15321 ]
 "46050
-[s S2081 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2081 . LATC0 LATC1 LATC2 LATC3 LATC4 LATC5 LATC6 LATC7 ]
+[s S2084 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2084 . LATC0 LATC1 LATC2 LATC3 LATC4 LATC5 LATC6 LATC7 ]
 "46060
-[s S2082 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2082 . LC0 LC1 LC2 LC3 LC4 LC5 LC6 LC7 ]
+[s S2085 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2085 . LC0 LC1 LC2 LC3 LC4 LC5 LC6 LC7 ]
 "46049
-[u S2080 `S2081 1 `S2082 1 ]
-[n S2080 . . . ]
+[u S2083 `S2084 1 `S2085 1 ]
+[n S2083 . . . ]
 "46071
-[v _LATCbits `VS2080 ~T0 @X0 0 e@16316 ]
+[v _LATCbits `VS2083 ~T0 @X0 0 e@16316 ]
 "152 ./mcc_generated_files/spi1.h
 [v _SPI1_Exchange8bit `(uc ~T0 @X0 0 ef1`uc ]
 "47 ./eadog.h
 [v _wait_lcd_set `(v ~T0 @X0 0 ef ]
 "32 ./ringbufs.h
-[v _ringBufS_flush `(v ~T0 @X0 0 ef2`*S2235`Cc ]
+[v _ringBufS_flush `(v ~T0 @X0 0 ef2`*S2237`Cc ]
 "54 /opt/microchip/xc8/v2.10/pic/include/c99/string.h
 [v _strlen `(ui ~T0 @X0 0 ef1`*Cuc ]
 "16773 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
@@ -128,40 +117,40 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _printf `(i ~T0 @X0 0 ev`*Cuc ]
 "46 ./eadog.h
 [v _start_lcd `(v ~T0 @X0 0 ef ]
-"163 eadog.c
-[c E16428 0 1 2 3 4 5 .. ]
-[n E16428 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
-[c E16409 0 1 2 3 .. ]
-[n E16409 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
-"154 ./vconfig.h
-[s S2237 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16409 1 `E16409 1 `us 1 `us 1 ]
-[n S2237 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"189
-[s S2238 `E16428 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16428 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2237 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
-[n S2238 V_data ui_state buf info ticks blight ac_time testing sys_info ac_on ac_off error abort msg_error msg_ret alarm float_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
-"17 eadog.c
-[v _V `S2238 ~T0 @X0 0 e ]
+"164 eadog.c
+[c E16911 0 1 2 3 4 5 .. ]
+[n E16911 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
+[c E16892 0 1 2 3 .. ]
+[n E16892 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
+"153 ./vconfig.h
+[s S2239 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16892 1 `E16892 1 `us 1 `us 1 ]
+[n S2239 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
+"188
+[s S2240 `E16911 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16911 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2239 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
+[n S2240 V_data ui_state buf info ticks blight ac_time testing sys_info ac_on ac_off error abort msg_error msg_ret alarm float_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
+"16 eadog.c
+[v _V `S2240 ~T0 @X0 0 e ]
 "49 ./eadog.h
 [v _wait_lcd_done `(v ~T0 @X0 0 ef ]
 "44
 [v _send_lcd_data_dma `(v ~T0 @X0 0 ef1`uc ]
 "31 ./ringbufs.h
-[v _ringBufS_put_dma `(v ~T0 @X0 0 ef2`*S2235`Cuc ]
+[v _ringBufS_put_dma `(v ~T0 @X0 0 ef2`*S2237`Cuc ]
 "14165 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [v _DMA2SSZ `Vus ~T0 @X0 0 e@15319 ]
 "13103
 [v _DMA2DSZ `Vus ~T0 @X0 0 e@15310 ]
 "23430
-[s S1021 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1021 . RXBF . CLRBF RXRE . TXBE . TXWE ]
+[s S1024 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1024 . RXBF . CLRBF RXRE . TXBE . TXWE ]
 "23440
-[s S1022 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1022 . SPI1RXBF . SPI1CLRBF SPI1RXRE . SPI1TXBE . SPI1TXWE ]
+[s S1025 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1025 . SPI1RXBF . SPI1CLRBF SPI1RXRE . SPI1TXBE . SPI1TXWE ]
 "23429
-[u S1020 `S1021 1 `S1022 1 ]
-[n S1020 . . . ]
+[u S1023 `S1024 1 `S1025 1 ]
+[n S1023 . . . ]
 "23451
-[v _SPI1STATUSbits `VS1020 ~T0 @X0 0 e@15639 ]
+[v _SPI1STATUSbits `VS1023 ~T0 @X0 0 e@15639 ]
 "250 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; <" STATUS_CSHAD equ 03880h ;# ">
 "339
@@ -1660,11 +1649,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSH equ 03FFEh ;# ">
 "48644
 [; <" TOSU equ 03FFFh ;# ">
-"12 eadog.c
-[v _spi_link `S2236 ~T0 @X0 1 e ]
-"13
-[v _ring_buf1 `S2235 ~T0 @X0 1 e ]
-"15
+"11 eadog.c
+[v _spi_link `S2238 ~T0 @X0 1 e ]
+"12
+[v _ring_buf1 `S2237 ~T0 @X0 1 e ]
+"14
 [v _port_data `uc ~T0 @X0 -> 512 `i s ]
 [i _port_data
 :U ..
@@ -1686,350 +1675,346 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ..
 ]
-"23
+"22
 [v _wdtdelay `(v ~T0 @X0 1 ef1`ul ]
-"24
+"23
 {
 [e :U _wdtdelay ]
-"23
+"22
 [v _delay `Cul ~T0 @X0 1 r1 ]
-"24
+"23
 [f ]
-"25
+"24
 [v F17064 `ul ~T0 @X0 1 s dcount ]
-"27
+"26
 {
 [e = F17064 -> -> -> 0 `i `l `ul ]
 [e $ <= F17064 _delay 2244  ]
 [e $U 2245  ]
 [e :U 2244 ]
 {
-"28
+"27
 [e ( ___nop ..  ]
-"29
+"28
 [; <"  clrwdt ;# ">
-"30
+"29
 }
 [e ++ F17064 -> -> -> 1 `i `l `ul ]
 [e $ <= F17064 _delay 2244  ]
 [e :U 2245 ]
 }
-"32
+"31
 [e :UE 2243 ]
 }
-"38
+"37
 [v _init_display `(v ~T0 @X0 1 ef ]
-"39
+"38
 {
 [e :U _init_display ]
 [f ]
-"40
+"39
 [e = . _spi_link 7 &U _ring_buf1 ]
-"42
-[e ( _ringBufS_init (1 -> . _spi_link 7 `*VS2235 ]
-"45
-[e = . . _LATEbits 0 2 -> -> 1 `i `uc ]
-"47
+"40
+[e ( _ringBufS_init (1 -> . _spi_link 7 `*VS2237 ]
+"46
 [e = . . _SPI1CON0bits 0 4 -> -> 0 `i `uc ]
-"49
+"48
 [e = _SPI1CON1 -> -> 32 `i `uc ]
-"51
+"50
 [e = _SPI1CON2 -> -> 3 `i `uc ]
-"53
+"52
 [e = _SPI1BAUD -> -> 4 `i `uc ]
-"55
+"54
 [e = _SPI1CLK -> -> 2 `i `uc ]
-"57
+"56
 [e = _SPI1CON0 -> -> 131 `i `uc ]
-"58
+"57
 [e = . . _SPI1CON0bits 0 4 -> -> 1 `i `uc ]
-"60
+"59
 [e ( _wdtdelay (1 -> -> 350000 `l `ul ]
-"61
+"60
 [e ( _send_lcd_cmd_long (1 -> -> 70 `i `uc ]
-"62
+"61
 [e ( _send_lcd_cmd (1 -> -> 65 `i `uc ]
+"62
+[e ( _wdtdelay (1 -> -> -> 80 `i `l `ul ]
 "63
-[e ( _wdtdelay (1 -> -> -> 80 `i `l `ul ]
-"64
 [e ( _send_lcd_cmd (1 -> -> 83 `i `uc ]
-"65
+"64
 [e ( _send_lcd_data (1 -> -> 2 `i `uc ]
-"66
+"65
 [e ( _wdtdelay (1 -> -> -> 80 `i `l `ul ]
-"67
+"66
 [e ( _send_lcd_cmd_long (1 -> -> 81 `i `uc ]
-"68
+"67
 [e = . . _SPI1CON0bits 0 4 -> -> 0 `i `uc ]
-"69
+"68
 [e = _SPI1CON2 -> -> 2 `i `uc ]
-"70
+"69
 [e = . . _SPI1CON0bits 0 4 -> -> 1 `i `uc ]
-"89
+"88
 [e = . . _SPI1INTFbits 1 1 -> -> 0 `i `uc ]
-"90
+"89
 [e = . . _DMA1CON1bits 0 4 -> -> 0 `i `uc ]
-"91
+"90
 [e = . . _DMA1CON1bits 0 3 -> -> 0 `i `uc ]
-"92
+"91
 [e = . . _DMA1CON1bits 0 1 -> -> 1 `i `uc ]
-"93
+"92
 [e = . . _DMA1CON1bits 0 2 -> -> 0 `i `uc ]
-"94
+"93
 [e = . . _DMA1CON1bits 0 0 -> -> 1 `i `uc ]
-"95
+"94
 [e = _DMA1SSA -> -> &U _ring_buf1 `ul `um ]
-"96
+"95
 [e = . . _DMA1CON0bits 0 4 -> -> 0 `i `uc ]
-"97
+"96
 [e = . . _SPI1INTFbits 1 1 -> -> 1 `i `uc ]
-"98
-[e = . . _LATEbits 0 2 -> -> 0 `i `uc ]
-"99
+"100
 [e :UE 2247 ]
 }
-"104
-[v _init_port_dma `(v ~T0 @X0 1 ef ]
 "105
+[v _init_port_dma `(v ~T0 @X0 1 ef ]
+"106
 {
 [e :U _init_port_dma ]
 [f ]
-"106
-[e = . . _DMA2CON1bits 0 4 -> -> 0 `i `uc ]
 "107
-[e = . . _DMA2CON1bits 0 3 -> -> 0 `i `uc ]
+[e = . . _DMA2CON1bits 0 4 -> -> 0 `i `uc ]
 "108
-[e = . . _DMA2CON1bits 0 1 -> -> 1 `i `uc ]
+[e = . . _DMA2CON1bits 0 3 -> -> 0 `i `uc ]
 "109
-[e = . . _DMA2CON1bits 0 2 -> -> 0 `i `uc ]
+[e = . . _DMA2CON1bits 0 1 -> -> 1 `i `uc ]
 "110
-[e = . . _DMA2CON1bits 0 0 -> -> 1 `i `uc ]
+[e = . . _DMA2CON1bits 0 2 -> -> 0 `i `uc ]
 "111
-[e = . . _DMA2CON0bits 0 5 -> -> 0 `i `uc ]
+[e = . . _DMA2CON1bits 0 0 -> -> 1 `i `uc ]
 "112
-[e = _DMA2DSA -> -> 15850 `i `us ]
+[e = . . _DMA2CON0bits 0 5 -> -> 0 `i `uc ]
 "113
-[e = _DMA2SSA -> -> &U _port_data `ul `um ]
+[e = _DMA2DSA -> -> 15850 `i `us ]
 "114
-[e = . . _DMA2CON0bits 0 4 -> -> 0 `i `uc ]
+[e = _DMA2SSA -> -> &U _port_data `ul `um ]
 "115
+[e = . . _DMA2CON0bits 0 4 -> -> 0 `i `uc ]
+"116
 [e :UE 2248 ]
 }
-"123
-[v _send_lcd_data `(v ~T0 @X0 1 sf1`uc ]
 "124
+[v _send_lcd_data `(v ~T0 @X0 1 sf1`uc ]
+"125
 {
 [e :U _send_lcd_data ]
-"123
-[v _data `Cuc ~T0 @X0 1 r1 ]
 "124
-[f ]
+[v _data `Cuc ~T0 @X0 1 r1 ]
 "125
+[f ]
+"126
 [e :U 2252 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2251 ]
-"126
-[e ( _SPI1_Exchange8bit (1 _data ]
 "127
-[e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
+[e ( _SPI1_Exchange8bit (1 _data ]
 "128
+[e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
+"129
 [e :UE 2249 ]
 }
-"130
-[v _send_lcd_cmd `(v ~T0 @X0 1 sf1`uc ]
 "131
+[v _send_lcd_cmd `(v ~T0 @X0 1 sf1`uc ]
+"132
 {
 [e :U _send_lcd_cmd ]
-"130
-[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "131
-[f ]
+[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "132
+[f ]
+"133
 [e :U 2256 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2255 ]
-"133
-[e ( _SPI1_Exchange8bit (1 -> -> 254 `i `uc ]
 "134
-[e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
+[e ( _SPI1_Exchange8bit (1 -> -> 254 `i `uc ]
 "135
-[e ( _SPI1_Exchange8bit (1 _cmd ]
-"136
 [e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
+"136
+[e ( _SPI1_Exchange8bit (1 _cmd ]
 "137
+[e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
+"138
 [e :UE 2253 ]
 }
-"139
-[v _send_lcd_cmd_long `(v ~T0 @X0 1 sf1`uc ]
 "140
+[v _send_lcd_cmd_long `(v ~T0 @X0 1 sf1`uc ]
+"141
 {
 [e :U _send_lcd_cmd_long ]
-"139
-[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "140
-[f ]
+[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "141
+[f ]
+"142
 [e :U 2260 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2259 ]
-"142
-[e ( _SPI1_Exchange8bit (1 -> -> 254 `i `uc ]
 "143
-[e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
+[e ( _SPI1_Exchange8bit (1 -> -> 254 `i `uc ]
 "144
-[e ( _SPI1_Exchange8bit (1 _cmd ]
+[e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
 "145
-[e ( _wdtdelay (1 -> -> -> 800 `i `l `ul ]
+[e ( _SPI1_Exchange8bit (1 _cmd ]
 "146
+[e ( _wdtdelay (1 -> -> -> 800 `i `l `ul ]
+"147
 [e :UE 2257 ]
 }
-"151
-[v _eaDogM_WriteString `(v ~T0 @X0 1 ef1`*uc ]
 "152
+[v _eaDogM_WriteString `(v ~T0 @X0 1 ef1`*uc ]
+"153
 {
 [e :U _eaDogM_WriteString ]
-"151
-[v _strPtr `*uc ~T0 @X0 1 r1 ]
 "152
-[f ]
+[v _strPtr `*uc ~T0 @X0 1 r1 ]
 "153
+[f ]
+"154
 [e ( _wait_lcd_set ..  ]
-"155
-[e ( _ringBufS_flush (2 , . _spi_link 7 -> -> 0 `i `c ]
 "156
+[e ( _ringBufS_flush (2 , . _spi_link 7 -> -> 0 `i `c ]
+"157
 [e :U 2264 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2263 ]
-"157
+"158
 [e $ ! > ( _strlen (1 -> _strPtr `*Cuc -> -> 64 `i `ui 2265  ]
 [e = *U + _strPtr * -> -> 64 `i `x -> -> # *U _strPtr `i `x -> -> 0 `i `uc ]
 [e :U 2265 ]
-"158
-[e = . . _DMA1CON0bits 0 6 -> -> 0 `i `uc ]
 "159
-[e = _DMA1SSZ -> ( _strlen (1 -> _strPtr `*Cuc `us ]
+[e = . . _DMA1CON0bits 0 6 -> -> 0 `i `uc ]
 "160
-[e = . . _DMA1CON0bits 0 6 -> -> 1 `i `uc ]
+[e = _DMA1SSZ -> ( _strlen (1 -> _strPtr `*Cuc `us ]
 "161
-[e ( _printf , (. :s 1C _strPtr ]
+[e = . . _DMA1CON0bits 0 6 -> -> 1 `i `uc ]
 "162
-[e ( _start_lcd ..  ]
+[e ( _printf , (. :s 1C _strPtr ]
 "163
+[e ( _start_lcd ..  ]
+"164
 [e =+ . _V 46 -> ( _strlen (1 -> _strPtr `*Cuc `Vul ]
-"167
+"168
 [e :UE 2261 ]
 }
-"172
-[v _send_lcd_cmd_dma `(v ~T0 @X0 1 ef1`uc ]
 "173
+[v _send_lcd_cmd_dma `(v ~T0 @X0 1 ef1`uc ]
+"174
 {
 [e :U _send_lcd_cmd_dma ]
-"172
-[v _strPtr `Cuc ~T0 @X0 1 r1 ]
 "173
-[f ]
+[v _strPtr `Cuc ~T0 @X0 1 r1 ]
 "174
-[e ( _wait_lcd_done ..  ]
+[f ]
 "175
-[e ( _send_lcd_data_dma (1 -> -> 254 `i `uc ]
+[e ( _wait_lcd_done ..  ]
 "176
-[e ( _wait_lcd_done ..  ]
+[e ( _send_lcd_data_dma (1 -> -> 254 `i `uc ]
 "177
-[e ( _send_lcd_data_dma (1 _strPtr ]
-"178
 [e ( _wait_lcd_done ..  ]
+"178
+[e ( _send_lcd_data_dma (1 _strPtr ]
 "179
+[e ( _wait_lcd_done ..  ]
+"180
 [e :UE 2266 ]
 }
-"184
-[v _send_lcd_data_dma `(v ~T0 @X0 1 ef1`uc ]
 "185
+[v _send_lcd_data_dma `(v ~T0 @X0 1 ef1`uc ]
+"186
 {
 [e :U _send_lcd_data_dma ]
-"184
-[v _strPtr `Cuc ~T0 @X0 1 r1 ]
 "185
-[f ]
+[v _strPtr `Cuc ~T0 @X0 1 r1 ]
 "186
+[f ]
+"187
 [e ( _wait_lcd_set ..  ]
-"188
-[e ( _ringBufS_flush (2 , . _spi_link 7 -> -> 0 `i `c ]
 "189
+[e ( _ringBufS_flush (2 , . _spi_link 7 -> -> 0 `i `c ]
+"190
 [e :U 2270 ]
 {
 [e = . . _LATCbits 0 2 -> -> 0 `i `uc ]
 }
 [e :U 2269 ]
-"190
-[e = . . _DMA1CON0bits 0 6 -> -> 0 `i `uc ]
 "191
-[e = _DMA1SSZ -> -> 1 `i `us ]
+[e = . . _DMA1CON0bits 0 6 -> -> 0 `i `uc ]
 "192
-[e = . . _DMA1CON0bits 0 6 -> -> 1 `i `uc ]
+[e = _DMA1SSZ -> -> 1 `i `us ]
 "193
-[e ( _ringBufS_put_dma (2 , . _spi_link 7 _strPtr ]
+[e = . . _DMA1CON0bits 0 6 -> -> 1 `i `uc ]
 "194
-[e ( _start_lcd ..  ]
+[e ( _ringBufS_put_dma (2 , . _spi_link 7 _strPtr ]
 "195
-[e ++ . _V 46 -> -> 1 `i `Vul ]
+[e ( _start_lcd ..  ]
 "196
+[e ++ . _V 46 -> -> 1 `i `Vul ]
+"197
 [e :UE 2267 ]
 }
-"198
-[v _eaDogM_WriteStringAtPos `(v ~T0 @X0 1 ef3`uc`uc`*uc ]
 "199
+[v _eaDogM_WriteStringAtPos `(v ~T0 @X0 1 ef3`uc`uc`*uc ]
+"200
 {
 [e :U _eaDogM_WriteStringAtPos ]
-"198
+"199
 [v _r `Cuc ~T0 @X0 1 r1 ]
 [v _c `Cuc ~T0 @X0 1 r2 ]
 [v _strPtr `*uc ~T0 @X0 1 r3 ]
-"199
-[f ]
 "200
+[f ]
+"201
 [v _row `uc ~T0 @X0 1 a ]
-"202
+"203
 [e $U 2273  ]
 {
-"203
-[e :U 2274 ]
 "204
-[e = _row -> -> 64 `i `uc ]
+[e :U 2274 ]
 "205
-[e $U 2272  ]
-"206
-[e :U 2275 ]
-"207
-[e = _row -> -> 20 `i `uc ]
-"208
-[e $U 2272  ]
-"209
-[e :U 2276 ]
-"210
-[e = _row -> -> 84 `i `uc ]
-"211
-[e $U 2272  ]
-"212
-[e :U 2277 ]
-"213
-[e = _row -> -> 0 `i `uc ]
-"214
-[e $U 2272  ]
-"215
-[e :U 2278 ]
-"216
 [e = _row -> -> 64 `i `uc ]
-"217
+"206
 [e $U 2272  ]
+"207
+[e :U 2275 ]
+"208
+[e = _row -> -> 20 `i `uc ]
+"209
+[e $U 2272  ]
+"210
+[e :U 2276 ]
+"211
+[e = _row -> -> 84 `i `uc ]
+"212
+[e $U 2272  ]
+"213
+[e :U 2277 ]
+"214
+[e = _row -> -> 0 `i `uc ]
+"215
+[e $U 2272  ]
+"216
+[e :U 2278 ]
+"217
+[e = _row -> -> 64 `i `uc ]
 "218
+[e $U 2272  ]
+"219
 }
 [e $U 2272  ]
 [e :U 2273 ]
@@ -2039,205 +2024,205 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 3 `i 2277
  2278 ]
 [e :U 2272 ]
-"219
-[e ( _send_lcd_cmd_dma (1 -> -> 69 `i `uc ]
 "220
-[e ( _send_lcd_data_dma (1 -> + -> _row `i -> _c `i `uc ]
+[e ( _send_lcd_cmd_dma (1 -> -> 69 `i `uc ]
 "221
-[e ( _wait_lcd_done ..  ]
+[e ( _send_lcd_data_dma (1 -> + -> _row `i -> _c `i `uc ]
 "222
-[e ( _eaDogM_WriteString (1 _strPtr ]
+[e ( _wait_lcd_done ..  ]
 "223
+[e ( _eaDogM_WriteString (1 _strPtr ]
+"224
 [e :UE 2271 ]
 }
-"225
-[v _eaDogM_WriteIntAtPos `(v ~T0 @X0 1 ef3`uc`uc`uc ]
 "226
+[v _eaDogM_WriteIntAtPos `(v ~T0 @X0 1 ef3`uc`uc`uc ]
+"227
 {
 [e :U _eaDogM_WriteIntAtPos ]
-"225
+"226
 [v _r `uc ~T0 @X0 1 r1 ]
 [v _c `uc ~T0 @X0 1 r2 ]
 [v _i `uc ~T0 @X0 1 r3 ]
-"226
+"227
 [f ]
-"228
+"229
 [e :UE 2279 ]
 }
-"230
-[v _eaDogM_SetPos `(v ~T0 @X0 1 ef2`uc`uc ]
 "231
+[v _eaDogM_SetPos `(v ~T0 @X0 1 ef2`uc`uc ]
+"232
 {
 [e :U _eaDogM_SetPos ]
-"230
+"231
 [v _r `Cuc ~T0 @X0 1 r1 ]
 [v _c `Cuc ~T0 @X0 1 r2 ]
-"231
+"232
 [f ]
-"233
+"234
 [e :UE 2280 ]
 }
-"235
-[v _eaDogM_ClearRow `(v ~T0 @X0 1 ef1`uc ]
 "236
+[v _eaDogM_ClearRow `(v ~T0 @X0 1 ef1`uc ]
+"237
 {
 [e :U _eaDogM_ClearRow ]
-"235
-[v _r `Cuc ~T0 @X0 1 r1 ]
 "236
+[v _r `Cuc ~T0 @X0 1 r1 ]
+"237
 [f ]
-"238
+"239
 [e :UE 2281 ]
 }
-"240
-[v _eaDogM_WriteByteToCGRAM `(v ~T0 @X0 1 ef2`uc`uc ]
 "241
+[v _eaDogM_WriteByteToCGRAM `(v ~T0 @X0 1 ef2`uc`uc ]
+"242
 {
 [e :U _eaDogM_WriteByteToCGRAM ]
-"240
+"241
 [v _ndx `uc ~T0 @X0 1 r1 ]
 [v _data `uc ~T0 @X0 1 r2 ]
-"241
+"242
 [f ]
-"243
+"244
 [e :UE 2282 ]
 }
-"387
-[v _eaDogM_WriteCommand `(v ~T0 @X0 1 ef1`uc ]
 "388
+[v _eaDogM_WriteCommand `(v ~T0 @X0 1 ef1`uc ]
+"389
 {
 [e :U _eaDogM_WriteCommand ]
-"387
-[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "388
-[f ]
+[v _cmd `Cuc ~T0 @X0 1 r1 ]
 "389
-[e ( _send_lcd_cmd_dma (1 _cmd ]
+[f ]
 "390
+[e ( _send_lcd_cmd_dma (1 _cmd ]
+"391
 [e :UE 2283 ]
 }
-"392
-[v _eaDogM_WriteChr `(v ~T0 @X0 1 ef1`c ]
 "393
+[v _eaDogM_WriteChr `(v ~T0 @X0 1 ef1`c ]
+"394
 {
 [e :U _eaDogM_WriteChr ]
-"392
-[v _value `Cc ~T0 @X0 1 r1 ]
 "393
-[f ]
+[v _value `Cc ~T0 @X0 1 r1 ]
 "394
-[e ( _send_lcd_data_dma (1 -> _value `uc ]
+[f ]
 "395
+[e ( _send_lcd_data_dma (1 -> _value `uc ]
+"396
 [e :UE 2284 ]
 }
-"400
-[v _send_port_data_dma `(v ~T0 @X0 1 ef1`us ]
 "401
+[v _send_port_data_dma `(v ~T0 @X0 1 ef1`us ]
+"402
 {
 [e :U _send_port_data_dma ]
-"400
-[v _dsize `us ~T0 @X0 1 r1 ]
 "401
-[f ]
+[v _dsize `us ~T0 @X0 1 r1 ]
 "402
-[e $ ! > -> _dsize `ui -> -> 512 `i `ui 2286  ]
+[f ]
 "403
+[e $ ! > -> _dsize `ui -> -> 512 `i `ui 2286  ]
+"404
 [e = _dsize -> -> 512 `i `us ]
 [e :U 2286 ]
-"405
-[e = . . _DMA2CON0bits 0 6 -> -> 0 `i `uc ]
 "406
-[e = _DMA2SSZ _dsize ]
+[e = . . _DMA2CON0bits 0 6 -> -> 0 `i `uc ]
 "407
-[e = _DMA2DSZ -> -> 1 `i `us ]
+[e = _DMA2SSZ _dsize ]
 "408
-[e = . . _DMA2CON0bits 0 6 -> -> 1 `i `uc ]
+[e = _DMA2DSZ -> -> 1 `i `us ]
 "409
-[e = . . _DMA2CON0bits 1 5 -> -> 1 `i `uc ]
+[e = . . _DMA2CON0bits 0 6 -> -> 1 `i `uc ]
 "410
-[e =+ . _V 43 -> _dsize `Vul ]
+[e = . . _DMA2CON0bits 1 5 -> -> 1 `i `uc ]
 "411
+[e =+ . _V 43 -> _dsize `Vul ]
+"412
 [e :UE 2285 ]
 }
-"416
-[v _port_data_dma_ptr `(*uc ~T0 @X0 1 ef ]
 "417
+[v _port_data_dma_ptr `(*uc ~T0 @X0 1 ef ]
+"418
 {
 [e :U _port_data_dma_ptr ]
 [f ]
-"418
+"419
 [e ) &U _port_data ]
 [e $UE 2287  ]
-"419
+"420
 [e :UE 2287 ]
 }
-"424
-[v _putch `(v ~T0 @X0 1 ef1`uc ]
 "425
+[v _putch `(v ~T0 @X0 1 ef1`uc ]
+"426
 {
 [e :U _putch ]
-"424
-[v _c `uc ~T0 @X0 1 r1 ]
 "425
-[f ]
+[v _c `uc ~T0 @X0 1 r1 ]
 "426
-[e ( _ringBufS_put_dma (2 , . _spi_link 7 -> _c `uc ]
+[f ]
 "427
+[e ( _ringBufS_put_dma (2 , . _spi_link 7 -> _c `uc ]
+"428
 [e :UE 2288 ]
 }
-"432
-[v _start_lcd `(v ~T0 @X0 1 ef ]
 "433
+[v _start_lcd `(v ~T0 @X0 1 ef ]
+"434
 {
 [e :U _start_lcd ]
 [f ]
-"434
-[e = . . _DMA1CON0bits 1 5 -> -> 1 `i `uc ]
 "435
+[e = . . _DMA1CON0bits 1 5 -> -> 1 `i `uc ]
+"436
 [e :UE 2289 ]
 }
-"437
-[v _wait_lcd_set `(v ~T0 @X0 1 ef ]
 "438
+[v _wait_lcd_set `(v ~T0 @X0 1 ef ]
+"439
 {
 [e :U _wait_lcd_set ]
 [f ]
-"439
-[e = . _spi_link 3 -> -> 1 `i `uc ]
 "440
+[e = . _spi_link 3 -> -> 1 `i `uc ]
+"441
 [e :UE 2290 ]
 }
-"442
-[v _wait_lcd_check `(a ~T0 @X0 1 ef ]
 "443
+[v _wait_lcd_check `(a ~T0 @X0 1 ef ]
+"444
 {
 [e :U _wait_lcd_check ]
 [f ]
-"444
+"445
 [e ) -> . _spi_link 3 `a ]
 [e $UE 2291  ]
-"445
+"446
 [e :UE 2291 ]
 }
-"447
-[v _wait_lcd_done `(v ~T0 @X0 1 ef ]
 "448
+[v _wait_lcd_done `(v ~T0 @X0 1 ef ]
+"449
 {
 [e :U _wait_lcd_done ]
 [f ]
-"449
+"450
 [e $U 2293  ]
 [e :U 2294 ]
 [e :U 2293 ]
 [e $ != -> . _spi_link 3 `i -> 0 `i 2294  ]
 [e :U 2295 ]
-"450
+"451
 [e $U 2296  ]
 [e :U 2297 ]
 [e :U 2296 ]
 [e $ ! != -> . . _SPI1STATUSbits 0 5 `i -> 0 `i 2297  ]
 [e :U 2298 ]
-"452
+"453
 [e :UE 2292 ]
 }
 [p f _printf 8650752 ]

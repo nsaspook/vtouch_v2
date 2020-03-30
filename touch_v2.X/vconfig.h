@@ -66,7 +66,6 @@ extern "C" {
 #define DEF_TIME	1585268628
 
 #define SLED	LED0_LAT
-#define DLED	DEBUG2_LAT
 
 #define EADOGM_CMD_CLR		1
 #define EADOGM_CMD_CURSOR_ON     0b00001111

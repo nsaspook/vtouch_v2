@@ -6,4 +6,5 @@ mcc_generated_files/ext_int.h  \
 mcc_generated_files/spi1.h  \
 mcc_generated_files/pin_manager.h  \
 ringbufs.h  \
-eadog.h 
+eadog.h  \
+tests.h 

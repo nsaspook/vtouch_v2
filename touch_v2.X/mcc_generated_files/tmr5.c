@@ -97,8 +97,8 @@ void TMR5_Initialize(void)
 	// Set Default Interrupt Handler
 	TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
-	// CKPS 1:8; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
-	T5CON = 0x31;
+    // CKPS 1:2; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
+    T5CON = 0x11;
 }
 
 void TMR5_StartTimer(void)
@@ -184,6 +184,9 @@ void __interrupt(irq(TMR5), base(8), low_priority) TMR5_ISR()
 void TMR5_CallBack(void)
 {
 	// Add your custom callback code here
+#ifdef DEBUG_TRM5
+	DEBUG2_Toggle();
+#endif
 	if (TMR5_InterruptHandler) {
 		TMR5_InterruptHandler();
 	}
