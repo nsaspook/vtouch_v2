@@ -207,7 +207,12 @@ bool check_day_time(void)
 			if (V.in_float) {
 				V.in_float = false;
 				V.float_ticks = 0;
-				C.hist[0].h[11]++; //increase the battery cycles count
+				C.hist[0].h[11]++; //increase the battery float cycles count
+			}
+			if (V.in_boost) {
+				V.in_boost = false;
+				V.boost_ticks = 0;
+				C.hist[0].h[1]++; //increase the battery boost cycles count
 			}
 		}
 	}

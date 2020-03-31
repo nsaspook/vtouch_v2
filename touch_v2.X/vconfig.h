@@ -192,14 +192,14 @@ extern "C" {
 		volatile uint32_t ticks, blight, ac_time;
 		volatile int8_t testing;
 		volatile uint8_t sys_info : 1, ac_on : 1, ac_off : 1;
-		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks;
+		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks, boost_ticks;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
 		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;
 		terminal_type response;
 		volatile uint8_t ticker, cc_state;
 		bool flipper, calib, enter, sensor_set, fixup, cc_active;
-		volatile bool system_stable, blight_off, in_float;
+		volatile bool system_stable, blight_off, in_float, in_boost;
 		volatile uint32_t lowint_count, timerint_count, tx_count, rx_count, adc_count, spi_count, switch_count;
 	} V_data;
 
@@ -209,7 +209,7 @@ extern "C" {
 
 	/*		hist[x].h[x]
 	 *		h0	Peukert Factor adjusted Ah usage this cycle
-	 *		h1	Lowest discharge ever,
+	 *		h1	Total charge cycles into at least boost
 	 *		h2	current lowest discharge,
 	 *		h3	PV ah total
 	 *		h4	Batt W out 
@@ -217,9 +217,9 @@ extern "C" {
 	 *		h6	Real Ah usage this cycle
 	 *		h7	Batt Voltage full load
 	 *		h8	Batt Voltage one load
-	 *		h9	Highest ESR
-	 *		h10	Lowest ESR
-	 *		h11	Total charge cycles
+	 *		h9	Lowest ESR
+	 *		h10	Highest ESR
+	 *		h11	Total charge cycles into float
 	 *		h12	Total kWH in
 	 */
 

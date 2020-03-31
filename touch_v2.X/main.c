@@ -159,7 +159,9 @@ V_data V = {
 	.blight_off = false,
 	.blight = 0,
 	.float_ticks = 0,
+	.boost_ticks=0,
 	.in_float = false,
+	.in_boost=false,
 	.ac_time = 0,
 };
 H_data H = {
