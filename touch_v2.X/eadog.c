@@ -6,7 +6,7 @@
 #include "tests.h"
 
 #define max_strlen	64
-#define max_port_data	512
+#define max_port_data	1024
 
 struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
