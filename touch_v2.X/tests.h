@@ -54,5 +54,6 @@
 
 #define CALIB	false
 #define FIXUPS	true
+//#define CLR_CYCLE_DATA
 #endif	/* XC_HEADER_TEMPLATE_H */
 

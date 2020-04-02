@@ -37,7 +37,7 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 };
 
 const char infoline1[] = "   LOW Count   TOD Count    TX Count    RX Count   ADC Count   SPI Count   DIO Count";
-const char infoline2[] = "     PEUK AH      LO ESR      HI ESR       PV AH   BAT W Out    BAT W IN     REAL AH    F CYCLES   B CYCLES";
+const char infoline2[] = "     PEUK AH      LO ESR      HI ESR       PV AH   BAT W Out    BAT W IN     REAL AH    F CYCLES   B CYCLES     UPDATES";
 
 /*
  * low-pri interrupt ISR the runs every second for simple coulomb counting
@@ -119,13 +119,13 @@ void calc_bsoc(void)
 		V.sys_info = false;
 		log_ptr = port_data_dma_ptr();
 		lcode = I_CODE;
-		sprintf((char*) log_ptr, " %c\r\n %c ,System Status: Version %s Build %s %s \r\n %c ,%s\r\n %c ,%10lu, %10lu, %10lu, %10lu, %10lu, %10lu, %10lu \r\n %c ,%s\r\n %c ,%10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d\r\n %c\r\n",
+		sprintf((char*) log_ptr, " %c\r\n %c ,System Status: Version %s Build %s %s \r\n %c ,%s\r\n %c ,%10lu, %10lu, %10lu, %10lu, %10lu, %10lu, %10lu \r\n %c ,%s\r\n %c ,%10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10lu\r\n %c\r\n",
 			lcode,
 			lcode, VER, build_date, build_time,
 			lcode, infoline1,
 			lcode, V.lowint_count, V.timerint_count, V.tx_count, V.rx_count, V.adc_count, V.spi_count, V.switch_count,
 			lcode, infoline2,
-			lcode, C.hist[0].h[0], C.hist[0].h[9], C.hist[0].h[10], C.hist[0].h[3], C.hist[0].h[4], C.hist[0].h[5], C.hist[0].h[6], C.hist[0].h[11], C.hist[0].h[1],
+			lcode, C.hist[0].h[0], C.hist[0].h[9], C.hist[0].h[10], C.hist[0].h[3], C.hist[0].h[4], C.hist[0].h[5], C.hist[0].h[6], C.hist[0].h[11], C.hist[0].h[1],C.hist[0].updates,
 			lcode);
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));

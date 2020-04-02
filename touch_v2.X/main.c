@@ -291,8 +291,15 @@ void main(void)
 			 */
 			if (read_cal_data()) {
 				update_cal_data();
-				if (update_hist_data(true, &C.hist[0]) && (C.hist[0].pclock > time(NULL)))
+				if (update_hist_data(true, &C.hist[0]) && (C.hist[0].pclock > time(NULL))) {
 					set_time(C.hist[0].pclock); // load EEPROM time history
+				}
+				
+#ifdef CLR_CYCLE_DATA
+				C.hist[0].h[1]=0;
+				C.hist[0].h[11]=0;
+				C.hist[0].updates=0;
+#endif
 
 				sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
 			} else {
