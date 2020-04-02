@@ -54,14 +54,22 @@ void calc_bsoc(void)
 
 	if (cc_state(C.v_cmode) == M_FLOAT) {
 		if (!V.in_float && ++V.float_ticks > FLOAT_TIME)
-			V.in_float = true;
+			if (!V.in_float) {
+				V.in_float = true;
+				if (C.soc < 95) // SOC and AH corrections
+					C.dynamic_ah = C.bank_ah * 0.95;
+			}
 	} else {
 		V.float_ticks = 0;
 	}
 
 	if (cc_state(C.v_cmode) == M_BOOST) {
 		if (!V.in_boost && ++V.boost_ticks > FLOAT_TIME)
-			V.in_boost = true;
+			if (!V.in_boost) { // SOC and AH corrections
+				V.in_boost = true;
+				if (C.soc < 80)
+					C.dynamic_ah = C.bank_ah * 0.80;
+			}
 	} else {
 		V.boost_ticks = 0;
 	}
