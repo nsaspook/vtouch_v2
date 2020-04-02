@@ -159,9 +159,9 @@ V_data V = {
 	.blight_off = false,
 	.blight = 0,
 	.float_ticks = 0,
-	.boost_ticks=0,
+	.boost_ticks = 0,
 	.in_float = false,
-	.in_boost=false,
+	.in_boost = false,
 	.ac_time = 0,
 };
 H_data H = {
@@ -294,11 +294,29 @@ void main(void)
 				if (update_hist_data(true, &C.hist[0]) && (C.hist[0].pclock > time(NULL))) {
 					set_time(C.hist[0].pclock); // load EEPROM time history
 				}
-				
+
 #ifdef CLR_CYCLE_DATA
-				C.hist[0].h[1]=0;
-				C.hist[0].h[11]=0;
-				C.hist[0].updates=0;
+				C.hist[0].h[1] = 0;
+				C.hist[0].h[11] = 0;
+				C.hist[0].updates = 0;
+#endif
+
+#ifdef CLR_BATTERY_DATA
+				C.hist[0].h[0] = 0;
+				C.hist[0].h[1] = 0;
+				C.hist[0].h[2] = 0;
+				C.hist[0].h[4] = 0;
+				C.hist[0].h[5] = 0;
+				C.hist[0].h[6] = 0;
+				C.hist[0].h[9] = 0;
+				C.hist[0].h[10] = 0;
+				C.hist[0].h[11] = 0;
+				C.hist[0].updates = 0;
+#endif
+
+#ifdef CLR_PV_DATA
+				C.hist[0].h[3] = 0;
+				C.hist[0].h[12] = 0;
 #endif
 
 				sprintf(get_vterm_ptr(2, 0), "Read EEPROM DATA    ");
