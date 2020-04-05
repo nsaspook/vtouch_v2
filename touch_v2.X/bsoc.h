@@ -56,6 +56,7 @@
 #define CEF_DERATE	1.20	// Ahi derate factor to start dynamic CEF corrections
 #define	SOC_DERATE	70      // derate CEF above this
 #define SOC_CEF		100	// Max state of charge to update dynamic charge efficiency factors
+#define HI_ESR		1500	// highest possible esr
 
 #define BVSOC_SLOTS     26      // Battery to SOC data table slots
 

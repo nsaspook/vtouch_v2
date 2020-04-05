@@ -187,7 +187,7 @@ volatile C_data C = {
 	.hist[0].peukert = PEUKERT,
 	.hist[0].updates = 0,
 	.hist[0].h[10] = 0,
-	.hist[0].h[9] = 15000, // highest possible ESR
+	.hist[0].h[9] = HI_ESR, // highest possible ESR
 	.day_start = 0,
 	.day_end = 0,
 	.day_update = 0,
@@ -502,8 +502,13 @@ void main(void)
 					}
 					V.calib = true;
 					sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index + 1);
-					sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 2);
-					sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 3);
+					if (inp_index < 9) {
+						sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 2);
+						sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 3);
+					} else {
+						sprintf(get_vterm_ptr(1, 0), "%4d, %4d, %4lu       ", C.hist[0].h[11], C.hist[0].h[1], C.hist[0].updates);
+						sprintf(get_vterm_ptr(2, 0), "%4d, %4d, %4d        ", C.hist[0].h[0], C.hist[0].h[9], C.hist[0].h[10]);
+					}
 					break;
 				default:
 					break;
