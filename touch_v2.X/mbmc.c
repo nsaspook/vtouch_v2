@@ -288,8 +288,8 @@ void load_hist_data(void)
 	C.hist[0].h[3] = C.pv_ah;
 	C.hist[0].h[0] = C.dynamic_ah_adj;
 	C.hist[0].pclock = time(NULL);
-	C.dynamic_ah = 0.0;
-	C.dynamic_ah_adj = 0.0;
+//	C.dynamic_ah = 0.0;
+//	C.dynamic_ah_adj = 0.0;
 	C.pvkw = 0.0;
 	start_bsoc();
 }
