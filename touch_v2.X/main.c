@@ -193,6 +193,8 @@ volatile C_data C = {
 	.day_update = 0,
 	.dupdate = false,
 	.updates = 0,
+	.dynamic_ah_daily = 0.0,
+	.dynamic_ah_adj_daily = 0.0,
 };
 
 extern volatile struct P_data P;

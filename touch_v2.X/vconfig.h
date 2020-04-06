@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.40"
+#define VER	"1.41"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -62,6 +62,7 @@ extern "C" {
 	 * 1.38 UART 1 serial control parser. 'V' AC charger ON, 'v' AC charger off, '#' Show system information
 	 * 1.39 Tweak one second interrupt times for better precision
 	 * 1.40 SOC and AH corrections at FLOAT and BOOST triggers from charge controller
+	 * 1.41 add daily ah tracking
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -209,13 +210,13 @@ extern "C" {
 	} V_help;
 
 	/*		hist[x].h[x]
-	 *		h0	Peukert Factor adjusted Ah usage this cycle
+	 *		h0	Real Ah usage this cycle
 	 *		h1	Total charge cycles into at least boost
-	 *		h2	current lowest discharge,
+	 *		h2	Current lowest discharge,
 	 *		h3	PV ah total
 	 *		h4	Batt W out 
 	 *		h5	Batt W in
-	 *		h6	Real Ah usage this cycle
+	 *		h6	Real Ah usage 
 	 *		h7	Batt Voltage full load
 	 *		h8	Batt Voltage one load
 	 *		h9	Lowest ESR
