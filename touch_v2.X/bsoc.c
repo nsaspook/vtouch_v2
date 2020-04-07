@@ -135,12 +135,12 @@ void calc_bsoc(void)
 			if (H.sequence == HID_AUX)
 				lcode = I_CODE;
 
-			sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f,%d\r\n",
+			sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f,%d\r\n",
 				lcode, V.ticks,
 				C.v_pv, C.v_cc, C.v_bat, C.v_inverter,
 				C.c_mppt, C.c_pv, C.c_bat,
 				C.p_mppt, C.p_pv, C.p_bat, C.p_load, C.p_inverter,
-				C.dynamic_ah, C.pv_ah, C.soc, C.runtime,
+				C.dynamic_ah, C.dynamic_ah_daily, C.pv_ah, C.soc, C.runtime,
 				C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end, C.dynamic_ah_adj, C.hist[0].cef, C.hist[0].peukert,
 				V.cc_state);
 			StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
