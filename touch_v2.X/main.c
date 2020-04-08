@@ -489,7 +489,7 @@ void main(void)
 				case HID_RUN:
 					V.calib = false;
 					sprintf(get_vterm_ptr(0, 0), "BATT W %3.2f            ", C.p_bat);
-					sprintf(get_vterm_ptr(1, 0), "BAH %3.2f P%3.2f       ", C.dynamic_ah, C.pv_ah);
+					sprintf(get_vterm_ptr(1, 0), "BAH T%3.2f D%3.2f       ", C.dynamic_ah, C.dynamic_ah_daily);
 					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f        ", spinners(5, false), C.soc, C.runtime, C.calc[V_BAT]);
 
 					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f             ", C.esr);
