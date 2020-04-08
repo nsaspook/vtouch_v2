@@ -74,6 +74,7 @@ void calc_bsoc(void)
 		V.boost_ticks = 0;
 	}
 	C.dynamic_ah += (C.c_bat / SSLICE); // Ah
+	C.dynamic_ah_daily += (C.c_bat / SSLICE); // Ah
 	if (C.dynamic_ah > (C.bank_ah))
 		C.dynamic_ah = C.bank_ah;
 	if (C.dynamic_ah < 0.1)
@@ -86,6 +87,7 @@ void calc_bsoc(void)
 	C.dynamic_ah += ((C.c_bat * adj) / SSLICE); // Ah
 
 	C.dynamic_ah_adj = C.dynamic_ah; // need to add peukert factor here
+	C.dynamic_ah_adj_daily=C.dynamic_ah_daily; // need to add peukert factor here
 	if (C.dynamic_ah_adj > (C.bank_ah))
 		C.dynamic_ah_adj = C.bank_ah;
 	if (C.dynamic_ah_adj < 0.1)
