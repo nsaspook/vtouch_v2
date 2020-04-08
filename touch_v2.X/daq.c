@@ -48,10 +48,15 @@ typedef struct R_data { // internal variables
 static volatile R_data R = {
 	.done = false,
 	.scan_index = 0,
+#ifdef BAT_100A
+	.n_offset[A100B] = C_OFFSET100,
+	.n_scalar[A100B] = C_A100,
+#else
 	.n_offset[A200] = C_OFFSET200,
+	.n_scalar[A200] = C_A200,
+#endif
 	.n_offset[A100] = C_OFFSET100,
 	.n_offset[A100M] = C_OFFSET100M,
-	.n_scalar[A200] = C_A200,
 	.n_scalar[A100] = C_A100,
 	.n_scalar[A100M] = C_A100M,
 	.raw_dac[DCHAN_A] = 0x0,
@@ -158,7 +163,11 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 
 		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
+#ifdef BAT_100A
+				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100B]) * R.n_scalar[A100B];
+#else
 				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A200]) * R.n_scalar[A200];
+#endif
 			} else {
 				if (ADC_C_CHAN_MPPT >> chan & 0x1) {
 					return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100M]) * R.n_scalar[A100M];
@@ -368,7 +377,11 @@ bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp)
 	if (!mode)
 		return true;
 
+#ifdef BAT_100A
+	R.n_offset[A100B] = cb;
+#else
 	R.n_offset[A200] = cb;
+#endif
 	R.n_offset[A100] = cp;
 	R.n_offset[A100M] = C_OFFSET100M; //fixme for real value
 	R.c_zero_cal = true;
@@ -380,7 +393,11 @@ bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp)
  */
 bool cal_current_10A(const bool mode, const int16_t cb, const int16_t cp, const float scaleb, const float scalep)
 {
+#ifdef BAT_100A
+	if (!check_range(cb, TEN_A_RANGE, C_CAL_A100))
+#else
 	if (!check_range(cb, TEN_A_RANGE, C_CAL_A200))
+#endif
 		return false;
 
 	if (!check_range(cp, TEN_A_RANGE, C_CAL_A100))
@@ -389,7 +406,11 @@ bool cal_current_10A(const bool mode, const int16_t cb, const int16_t cp, const 
 	if (!mode)
 		return true;
 
+#ifdef BAT_100A
+	R.n_scalar[A100B] = scaleb;
+#else
 	R.n_scalar[A200] = scaleb;
+#endif
 	R.n_scalar[A100] = scalep;
 	R.n_scalar[A100M] = scalep;
 	R.c_scale_cal = true;
@@ -470,13 +491,21 @@ void update_cal_data(void)
 {
 	R = r_cal;
 	if (!R.c_zero_cal) {
+#ifdef BAT_100A
+		R.n_offset[A100B] = C_OFFSET100;
+#else
 		R.n_offset[A200] = C_OFFSET200;
+#endif
 		R.n_offset[A100] = C_OFFSET100;
 		R.n_offset[A100M] = C_OFFSET100M;
 	}
 
 	if (!R.c_scale_cal) {
+#ifdef BAT_100A
+		R.n_scalar[A100B] = C_A100;
+#else
 		R.n_scalar[A200] = C_A200;
+#endif
 		R.n_scalar[A100] = C_A100;
 		R.n_scalar[A100M] = C_A100M;
 	}

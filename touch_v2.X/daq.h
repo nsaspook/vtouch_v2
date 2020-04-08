@@ -53,10 +53,11 @@
 /*
  * current sensor configuration
  */
+//#define BAT_100A // USE the 100A honeywell sensor for battery current, reduces range but has better data within that range
 #define NUM_C_SENSORS	3
 #define ADC_C_CHAN	0b0000100000000011 // 5 volt hall current sensor bitmap
-#define ADC_C_CHAN_TYPE	0b0000000000000001 // 0 - 100A, 1=200A
-#define ADC_C_CHAN_MPPT	0b0000100000000001 // 0 - 100A mppt channel
+#define ADC_C_CHAN_TYPE	0b0000000000000001 // 0 - 100A, 1=200A or battery 100A type if BAT_100A is defined
+#define ADC_C_CHAN_MPPT	0b0000100000000000 // 0 - 100A mppt channel
 /*
  * temp sensor configuration
  */
@@ -93,15 +94,24 @@
 #define V_SCALE		4.1254125
 #define V_SCALE_H	8.2000000
 
+#ifndef BAT_100A
 #define A200		0 // BATTERY,  adc line 0
+#endif
+#define A100B		0 // BATTERY,  adc line 0
 #define A100		1 // CV,       adc line 1
 #define A100M		2 // PV,       adc line 1
 
+#ifndef BAT_100A
 #define C_A200		0.0862000 // BATTERY Amp scalar, second line [0]
+#endif
+#define C_A100B		0.0361010 // PV Amp scalar, second line [0]
 #define C_A100		0.0361010 // PV Amp scalar, first line [1]
 #define C_A100M		0.0361010 // MPPT Amp scalar, first line [2]
 
+#ifndef BAT_100A
 #define C_OFFSET200	3938 // BATTERY sensor adc zero Amp counts, line 0
+#endif
+#define C_OFFSET100B	4004 // BATTERY sensor adc zero Amp counts, line 0
 #define C_OFFSET100	4004 // PV sensor adc zero Amp counts,      line 1
 #define C_OFFSET100M	3995 // MPPT sensor adc zero Amp counts,      line 2
 
@@ -109,7 +119,9 @@
  * sanity check values for current calibration routines
  */
 #define C_CAL_ZERO	4000
+#ifndef BAT_100A
 #define C_CAL_A200	4050 // fixme with real values
+#endif
 #define C_CAL_A100	4278 // ..
 
 #include <xc.h> // include processor files - each processor file is guarded.  

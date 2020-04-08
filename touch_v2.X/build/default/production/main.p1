@@ -7,10 +7,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n E17179 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
 [c E17160 0 1 2 3 .. ]
 [n E17160 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
-"157 ./vconfig.h
+"158 ./vconfig.h
 [s S2239 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E17160 1 `E17160 1 `us 1 `us 1 ]
 [n S2239 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"192
+"193
 [s S2240 `E17179 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E17179 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2239 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
 [n S2240 V_data ui_state buf info ticks blight ac_time testing sys_info ac_on ac_off error abort msg_error msg_ret alarm float_ticks boost_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float in_boost lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
 "167 main.c
@@ -21,7 +21,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "54 ./hid.h
 [s S2247 `E17968 1 `E17975 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `uc 1 ]
 [n S2247 H_data hid_display h_state wait_select select_p wait_enter enter_p wait_calib calib_p sequence ]
-"229 ./vconfig.h
+"230 ./vconfig.h
 [s S2242 `l 1 `l 1 `ul 1 `ul 1 `o 1 `f 1 `f 1 `f 1 `f 1 `f 1 `s -> 13 `i `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 `uc 1 ]
 [n S2242 hist_type pv_eff tot_eff ttg_t updates pclock peukert cef peukert_adj cef_calc cef_save h rate udod bsoc bound_rate bound_factor samplei sampleo ah drate esr rest_rate rest_factor esrp version ]
 "73 ./mbmc.h
@@ -79,7 +79,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _init_display `(v ~T0 @X0 0 ef ]
 "51
 [v _eaDogM_WriteCommand `(v ~T0 @X0 0 ef1`uc ]
-"132 ./daq.h
+"144 ./daq.h
 [v _set_dac `(v ~T0 @X0 0 ef ]
 "129 ./mbmc.h
 [v _set_load_relay_one `(v ~T0 @X0 0 ef1`a ]
@@ -100,28 +100,28 @@ Version 4.0 HI-TECH Software Intermediate Code
 "281 main.c
 [c E17322 0 1 2 3 4 5 6 7 8 9 10 11 12 13 .. ]
 [n E17322 APP_TIMERS TMR_INTERNAL TMR_ADC TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_FLIPPER TMR_ESR TMR_COUNT  ]
-"125 ./daq.h
+"137 ./daq.h
 [v _start_adc_scan `(a ~T0 @X0 0 ef ]
 "45 ./dio.h
 [v _start_switch_handler `(v ~T0 @X0 0 ef ]
-"137 ./daq.h
+"149 ./daq.h
 [v _read_cal_data `(a ~T0 @X0 0 ef ]
-"139
+"151
 [v _update_cal_data `(v ~T0 @X0 0 ef ]
-"140
+"152
 [v _update_hist_data `(a ~T0 @X0 0 ef2`a`*VS2242 ]
 "138 ./mbmc.h
 [v _time `(o ~T0 @X0 0 ef1`*o ]
 "139
 [v _set_time `(v ~T0 @X0 0 ef1`o ]
-"127 ./daq.h
+"139 ./daq.h
 [v _clear_adc_scan `(v ~T0 @X0 0 ef ]
 "91 ./bsoc.h
 [v _cc_state `(uc ~T0 @X0 0 ef1`f ]
 "333 main.c
 [c E17804 0 1 .. ]
 [n E17804 . CONV O_CONV  ]
-"130 ./daq.h
+"142 ./daq.h
 [v _conv_raw_result `(f ~T0 @X0 0 ef2`CE16640`CE17804 ]
 "334 main.c
 [c E18012 0 1 2 3 4 5 6 255 .. ]
@@ -155,7 +155,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _P `VS2245 ~T0 @X0 0 e ]
 "32 ./timers.h
 [v _TimerDone `(a ~T0 @X0 0 ef1`Cuc ]
-"126 ./daq.h
+"138 ./daq.h
 [v _check_adc_scan `(a ~T0 @X0 0 ef ]
 "125 ./mbmc.h
 [v _convert_adc_data `(v ~T0 @X0 0 ef ]
@@ -167,11 +167,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _asctime `(*uc ~T0 @X0 0 ef1`*CS2234 ]
 "126 ./mbmc.h
 [v _calc_model_data `(v ~T0 @X0 0 ef ]
-"141 ./daq.h
+"153 ./daq.h
 [v _set_hist_flag `(v ~T0 @X0 0 ef ]
 "134 ./mbmc.h
 [v _load_hist_data `(v ~T0 @X0 0 ef ]
-"138 ./daq.h
+"150 ./daq.h
 [v _write_cal_data `(v ~T0 @X0 0 ef ]
 "40 ./mconfig.h
 [v _set_back_light_off `(a ~T0 @X0 0 ef1`a ]
@@ -181,7 +181,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _send_lcd_data_dma `(v ~T0 @X0 0 ef1`uc ]
 "49
 [v _wait_lcd_done `(v ~T0 @X0 0 ef ]
-"129 ./daq.h
+"141 ./daq.h
 [v _get_raw_result `(us ~T0 @X0 0 ef1`CE16640 ]
 "47 ./dio.h
 [v _get_switch_bm `(E17187 ~T0 @X0 0 ef1`Cuc ]
@@ -202,13 +202,13 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _check_enter_button `(a ~T0 @X0 0 ef1`*S2247 ]
 "205 main.c
 [v _display_history `(a ~T0 @X0 0 sf ]
-"133 ./daq.h
+"145 ./daq.h
 [v _set_dac_a `(us ~T0 @X0 0 ef1`f ]
-"134
+"146
 [v _set_dac_b `(us ~T0 @X0 0 ef1`f ]
 "57 ./mydisplay.h
 [v _check_help `(a ~T0 @X0 0 ef1`Ca ]
-"135 ./daq.h
+"147 ./daq.h
 [v _cal_current_zero `(a ~T0 @X0 0 ef3`a`s`s ]
 "121 main.c
 [p n 520 ]
@@ -2969,8 +2969,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2328 ]
 }
 [p f _sprintf 13477008 ]
-[a 2C 49 48 58 49 52 58 48 53 0 ]
-[a 5C 49 46 52 50 0 ]
+[a 5C 49 46 52 51 0 ]
+[a 2C 49 49 58 50 49 58 51 50 0 ]
 [a 1C 65 112 114 32 32 56 32 50 48 50 48 0 ]
 [a 17C 73 110 118 97 108 105 100 32 69 69 80 82 79 77 32 68 65 84 65 32 0 ]
 [a 37C 37 100 32 37 50 46 52 102 44 32 37 100 32 32 32 35 32 0 ]
