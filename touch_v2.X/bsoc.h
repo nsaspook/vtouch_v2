@@ -62,6 +62,15 @@
 
 #define FLOAT_TIME	60	// cc in float mode delay time before flag set
 
+/*
+ * PV side diversion
+ */
+#define DPWM_FULL	300
+#define DPWM_LOW_VOLTS	35.0
+#define PV_MAX_POWER	300.0
+#define PWM_MAX_POWER	250.0
+
+
 typedef enum {
 	R_CYCLE = 0,
 	R_TOTAL,
@@ -89,6 +98,7 @@ uint16_t Volts_to_SOC(uint32_t);
 uint32_t peukert(uint16_t, float, float, int16_t);
 float esr_check(uint8_t);
 uint8_t cc_state(float);
+bool pv_diversion(bool);
 
 #endif	/* BSOC_H */
 

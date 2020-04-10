@@ -1,6 +1,7 @@
 #include "bsoc.h"
 #include "mcc_generated_files/interrupt_manager.h"
 #include "hid.h"
+#include "mconfig.h"
 
 extern volatile C_data C;
 extern V_data V;
@@ -39,6 +40,34 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 const char infoline1[] = "   LOW Count   TOD Count    TX Count    RX Count   ADC Count   SPI Count   DIO Count";
 const char infoline2[] = "    DAILY AH      LO ESR      HI ESR       PV AH   BAT W Out    BAT W IN     REAL AH    F CYCLES   B CYCLES     UPDATES";
 
+bool pv_diversion(bool kill)
+{
+	static uint16_t pwm_val = 0;
+
+	if (kill) {
+		pwm_val = 0;
+		V.mode_pwm = 0;
+		diversion_pwm_set(V.mode_pwm); // 10KHz PWM quick stop
+		return false;
+	}
+
+	if (cc_state(C.v_cmode) == M_FLOAT && (C.calc[V_PV] > DPWM_LOW_VOLTS)) {
+		if (++pwm_val > DPWM_FULL)
+			pwm_val = DPWM_FULL; // set diversion PWM to full power
+
+		V.mode_pwm = pwm_val;
+		diversion_pwm_set(V.mode_pwm); // 10KHz PWM ramp up
+		return true;
+	} else {
+		if (V.mode_pwm)
+			V.mode_pwm--;
+
+		diversion_pwm_set(V.mode_pwm); // 10KHz PWM ramp down
+		pwm_val = 0;
+		return false;
+	}
+}
+
 /*
  * low-pri interrupt ISR the runs every second for simple coulomb counting
  */
@@ -51,6 +80,11 @@ void calc_bsoc(void)
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif
+
+	/*
+	 * check for excess power and send to DC dump load 
+	 */
+	pv_diversion(false);
 
 	if (cc_state(C.v_cmode) == M_FLOAT) {
 		if (!V.in_float && ++V.float_ticks > FLOAT_TIME)
@@ -87,7 +121,7 @@ void calc_bsoc(void)
 	C.dynamic_ah += ((C.c_bat * adj) / SSLICE); // Ah
 
 	C.dynamic_ah_adj = C.dynamic_ah; // need to add peukert factor here
-	C.dynamic_ah_adj_daily=C.dynamic_ah_daily; // need to add peukert factor here
+	C.dynamic_ah_adj_daily = C.dynamic_ah_daily; // need to add peukert factor here
 	if (C.dynamic_ah_adj > (C.bank_ah))
 		C.dynamic_ah_adj = C.bank_ah;
 	if (C.dynamic_ah_adj < 0.1)

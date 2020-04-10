@@ -1,6 +1,7 @@
 #include "mconfig.h"
 #include "mydisplay.h"
 #include "msg_text.h"
+#include "bsoc.h"
 
 extern V_data V;
 static D_data D = {' '};
@@ -10,14 +11,14 @@ static const char *build_date = __DATE__, *build_time = __TIME__;
 /*
  * hardware specific routines
  */
-void mode_lamp_dim(const uint16_t level)
+void diversion_pwm_set(const uint16_t level)
 {
 	PWM8_LoadDutyValue(level);
 }
 
-void mode_lamp_bright(void)
+void diversion_pwm_full(void)
 {
-	PWM8_LoadDutyValue(300);
+	PWM8_LoadDutyValue(DPWM_FULL);
 }
 
 /*
@@ -61,7 +62,6 @@ bool check_help(const bool flipper)
 		V.help_id++; // cycle help text messages to LCD
 		StartTimer(TMR_HELPDIS, TDELAY);
 		StartTimer(TMR_INFO, TDELAY);
-		mode_lamp_bright(); // mode switch indicator lamp 'button' level
 		update_lcd(1);
 		estatus = true;
 	} else {
@@ -69,7 +69,6 @@ bool check_help(const bool flipper)
 			set_vterm(0);
 			V.help = false;
 			set_display_info(display_help());
-			mode_lamp_dim(V.mode_pwm);
 			if (TimerDone(TMR_FLIPPER)) {
 				V.flipper = !V.flipper;
 				StartTimer(TMR_FLIPPER, DFLIP);

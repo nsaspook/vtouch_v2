@@ -35,8 +35,8 @@
 #include "mcc_generated_files/mcc.h"
 #include "vconfig.h"
 
-void mode_lamp_dim(uint16_t);
-void mode_lamp_bright(void);
+void diversion_pwm_full(void);
+void diversion_pwm_set(uint16_t);
 bool set_back_light_off(bool);
 
 #endif

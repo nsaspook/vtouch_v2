@@ -235,14 +235,10 @@ void main(void)
 		mode = UI_STATE_LOG;
 	}
 
-	if (mode == UI_STATE_HOST) {
-		RELAY0_SetHigh();
-		V.mode_pwm = 70; // mode switch indicator lamp normal level
-	} else {
-		RELAY0_SetLow();
-		V.mode_pwm = 0;
-	}
-	mode_lamp_dim(V.mode_pwm); // 10KHz PWM
+
+	V.mode_pwm = 0; // set diversion PWM to no power
+
+	diversion_pwm_set(V.mode_pwm); // 10KHz PWM
 
 	while (true) {
 		switch (V.ui_state) {
@@ -426,7 +422,6 @@ void main(void)
 			sprintf(get_vterm_ptr(3, 1), "%s           ", asctime(t_mbmc));
 			calc_model_data();
 			V.cc_state = cc_state(C.v_cmode);
-			mode_lamp_dim(V.cc_state << 2);
 			if (C.dupdate) {
 				C.dupdate = false;
 				set_hist_flag();

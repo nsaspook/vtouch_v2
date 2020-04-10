@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.43"
+#define VER	"1.44"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -65,6 +65,7 @@ extern "C" {
 	 * 1.41 add daily ah tracking
 	 * 1.42 fix daily tracking
 	 * 1.43 add option using BAT_100A in daq.h to select Honeywell sensor for battery current sensor
+	 * 1.44 DC dump load from PV functions
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
