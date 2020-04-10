@@ -66,9 +66,10 @@
  * PV side diversion
  */
 #define DPWM_FULL	300
-#define DPWM_LOW_VOLTS	35.0
+#define DPWM_LOW_VOLTS	40.0
 #define PV_MAX_POWER	300.0
 #define PWM_MAX_POWER	250.0
+#define PWM_WIN_POWER	10.0
 
 
 typedef enum {
