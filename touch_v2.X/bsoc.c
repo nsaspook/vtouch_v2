@@ -40,20 +40,39 @@ const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 const char infoline1[] = "   LOW Count   TOD Count    TX Count    RX Count   ADC Count   SPI Count   DIO Count";
 const char infoline2[] = "    DAILY AH      LO ESR      HI ESR       PV AH   BAT W Out    BAT W IN     REAL AH    F CYCLES   B CYCLES     UPDATES";
 
+/*
+ * DC PWM diversion for direct PV power before MPPT
+ */
 bool pv_diversion(bool kill)
 {
 	static uint16_t pwm_val = 0;
+	static bool pwm_active = false;
 
 	if (kill) {
 		pwm_val = 0;
 		V.mode_pwm = 0;
+		pwm_active = false;
 		diversion_pwm_set(V.mode_pwm); // 10KHz PWM quick stop
 		return false;
 	}
 
-	if (cc_state(C.v_cmode) == M_FLOAT && (C.calc[V_PV] > DPWM_LOW_VOLTS)) {
-		if (++pwm_val > DPWM_FULL)
-			pwm_val = DPWM_FULL; // set diversion PWM to full power
+	if ((((cc_state(C.v_cmode) == M_FLOAT) || (cc_state(C.v_cmode) == M_BOOST)) && (C.calc[V_PV] > DPWM_LOW_VOLTS))) {
+		if (!pwm_active) {
+			pwm_active = true;
+			/*
+			 * setup PWM start conditions
+			 */
+			C.start_power = C.p_pv; // save for later possible display
+		}
+		if (C.p_pv < PWM_MAX_POWER) { // increase power
+			if (++pwm_val > DPWM_FULL)
+				pwm_val = DPWM_FULL; // max PWM limiter
+		}
+
+		if (C.p_pv > PWM_MAX_POWER) { // decrease power
+			if (V.mode_pwm)
+				V.mode_pwm--;
+		}
 
 		V.mode_pwm = pwm_val;
 		diversion_pwm_set(V.mode_pwm); // 10KHz PWM ramp up
@@ -64,6 +83,7 @@ bool pv_diversion(bool kill)
 
 		diversion_pwm_set(V.mode_pwm); // 10KHz PWM ramp down
 		pwm_val = 0;
+		pwm_active = false;
 		return false;
 	}
 }
