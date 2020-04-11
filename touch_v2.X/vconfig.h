@@ -69,7 +69,7 @@ extern "C" {
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
-#define DEF_TIME	1585268628
+#define DEF_TIME	1586643451
 
 #define SLED	LED0_LAT
 
@@ -107,7 +107,7 @@ extern "C" {
 #define DFLIP	1500 // display info flipping spacing
 
 #define LOG_WAIT	10 // data logging internval in seconds
-#define D_CODE		'4'  // data logging line code version
+#define D_CODE		'5'  // data logging line code version
 #define I_CODE		'*'  // info logging line code
 
 #define CAL_DELAY	64
