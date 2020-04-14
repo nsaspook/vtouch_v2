@@ -24,17 +24,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S187 . . . ]
 "4241
 [v _PIR2bits `VS187 ~T0 @X0 0 e@14754 ]
-"89 mcc_generated_files/spi1.c
+"91 mcc_generated_files/spi1.c
 [c E16428 0 1 2 3 4 5 .. ]
 [n E16428 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
 [c E16409 0 1 2 3 .. ]
 [n E16409 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
-"159 ./vconfig.h
+"160 ./vconfig.h
 [s S2237 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16409 1 `E16409 1 `us 1 `us 1 ]
 [n S2237 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
-"194
-[s S2238 `E16428 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16428 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2237 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
-[n S2238 V_data ui_state buf info ticks blight ac_time testing sys_info ac_on ac_off error abort msg_error msg_ret alarm float_ticks boost_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float in_boost lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
+"195
+[s S2238 `E16428 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16428 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2237 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
+[n S2238 V_data ui_state buf info ticks blight ac_time testing sys_info ac_on ac_off error abort msg_error msg_ret alarm float_ticks boost_ticks wdt_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float in_boost lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
 "61 mcc_generated_files/spi1.c
 [v _V `S2238 ~T0 @X0 0 e ]
 "22991 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
@@ -1572,102 +1572,119 @@ Version 4.0 HI-TECH Software Intermediate Code
 "87
 [e $U 2243  ]
 [e :U 2244 ]
-{
 "88
+{
+"89
+[; <"  clrwdt ;# ">
+"90
 }
 [e :U 2243 ]
 "87
 [e $ == -> . . _PIR2bits 0 4 `i -> 0 `i 2244  ]
 [e :U 2245 ]
-"89
-[e ++ . _V 48 -> -> 1 `i `Vul ]
-"90
+"91
+[e ++ . _V 49 -> -> 1 `i `Vul ]
+"92
 [e ) _SPI1RXB ]
 [e $UE 2242  ]
-"91
+"93
 [e :UE 2242 ]
 }
-"93
+"95
 [v _SPI1_Exchange8bitBuffer `(uc ~T0 @X0 1 ef3`*uc`uc`*uc ]
-"94
+"96
 {
 [e :U _SPI1_Exchange8bitBuffer ]
-"93
+"95
 [v _dataIn `*uc ~T0 @X0 1 r1 ]
 [v _bufLen `uc ~T0 @X0 1 r2 ]
 [v _dataOut `*uc ~T0 @X0 1 r3 ]
-"94
+"96
 [f ]
-"95
+"97
 [v _bytesWritten `uc ~T0 @X0 1 a ]
 [e = _bytesWritten -> -> 0 `i `uc ]
-"97
-[e $ ! != -> _bufLen `i -> 0 `i 2247  ]
-{
-"98
-[e $ ! != _dataIn -> -> -> 0 `i `*v `*uc 2248  ]
-{
 "99
-[e $U 2249  ]
-[e :U 2250 ]
-{
+[e $ ! != -> _bufLen `i -> 0 `i 2247  ]
 "100
-[e $ ! == _dataOut -> -> -> 0 `i `*v `*uc 2252  ]
 {
 "101
-[e ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
+[e $ ! != _dataIn -> -> -> 0 `i `*v `*uc 2248  ]
 "102
-}
-[e $U 2253  ]
-[e :U 2252 ]
 {
 "103
-[e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
+[e $U 2249  ]
+[e :U 2250 ]
 "104
-}
-[e :U 2253 ]
+{
+"105
+[e $ ! == _dataOut -> -> -> 0 `i `*v `*uc 2252  ]
 "106
-[e ++ _bytesWritten -> -> 1 `i `uc ]
+{
 "107
-}
-[e :U 2249 ]
-"99
-[e $ < -> _bytesWritten `i -> _bufLen `i 2250  ]
-[e :U 2251 ]
+[e ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
 "108
 }
-[e $U 2254  ]
-[e :U 2248 ]
-{
+[e $U 2253  ]
 "109
-[e $ ! != _dataOut -> -> -> 0 `i `*v `*uc 2255  ]
-{
+[e :U 2252 ]
 "110
-[e $U 2256  ]
-[e :U 2257 ]
 {
 "111
-[e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 -> -> 0 `i `uc ]
-"113
-[e ++ _bytesWritten -> -> 1 `i `uc ]
+[e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 *U + _dataIn * -> _bytesWritten `ux -> -> # *U _dataIn `ui `ux ]
+"112
+}
+[e :U 2253 ]
 "114
-}
-[e :U 2256 ]
-"110
-[e $ < -> _bytesWritten `i -> _bufLen `i 2257  ]
-[e :U 2258 ]
+[e ++ _bytesWritten -> -> 1 `i `uc ]
 "115
-}
-[e :U 2255 ]
+[; <"  clrwdt ;# ">
 "116
 }
-[e :U 2254 ]
+[e :U 2249 ]
+"103
+[e $ < -> _bytesWritten `i -> _bufLen `i 2250  ]
+[e :U 2251 ]
 "117
 }
-[e :U 2247 ]
+[e $U 2254  ]
+"118
+[e :U 2248 ]
 "119
+{
+"120
+[e $ ! != _dataOut -> -> -> 0 `i `*v `*uc 2255  ]
+"121
+{
+"122
+[e $U 2256  ]
+[e :U 2257 ]
+"123
+{
+"124
+[e = *U + _dataOut * -> _bytesWritten `ux -> -> # *U _dataOut `ui `ux ( _SPI1_Exchange8bit (1 -> -> 0 `i `uc ]
+"126
+[e ++ _bytesWritten -> -> 1 `i `uc ]
+"127
+[; <"  clrwdt ;# ">
+"128
+}
+[e :U 2256 ]
+"122
+[e $ < -> _bytesWritten `i -> _bufLen `i 2257  ]
+[e :U 2258 ]
+"129
+}
+[e :U 2255 ]
+"130
+}
+[e :U 2254 ]
+"131
+}
+[e :U 2247 ]
+"133
 [e ) _bytesWritten ]
 [e $UE 2246  ]
-"120
+"134
 [e :UE 2246 ]
 }

@@ -1594,7 +1594,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -> 0 `i `uc
 ]
 "71
-[v _uart2RxBuffer `Vuc ~T0 @X0 -> 255 `i s ]
+[v _uart2RxBuffer `Vuc ~T0 @X0 -> 64 `i s ]
 "72
 [v _uart2RxCount `Vuc ~T0 @X0 1 e ]
 "78
@@ -1703,235 +1703,239 @@ Version 4.0 HI-TECH Software Intermediate Code
 "157
 {
 "158
+[; <"  clrwdt ;# ">
+"159
 }
 [e :U 2235 ]
 "156
 [e $ == -> 0 `i -> _uart2RxCount `i 2236  ]
 [e :U 2237 ]
-"160
-[e = _readValue *U + &U _uart2RxBuffer * -> ++ _uart2RxTail -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2RxBuffer `ui `ux ]
 "161
-[e $ ! <= -> # _uart2RxBuffer `ui -> _uart2RxTail `ui 2238  ]
+[e = _readValue *U + &U _uart2RxBuffer * -> ++ _uart2RxTail -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2RxBuffer `ui `ux ]
 "162
-{
+[e $ ! <= -> # _uart2RxBuffer `ui -> _uart2RxTail `ui 2238  ]
 "163
-[e = _uart2RxTail -> -> 0 `i `uc ]
+{
 "164
+[e = _uart2RxTail -> -> 0 `i `uc ]
+"165
 }
 [e :U 2238 ]
-"165
-[e = . . _PIE6bits 0 2 -> -> 0 `i `uc ]
 "166
-[e -- _uart2RxCount -> -> 1 `i `Vuc ]
+[e = . . _PIE6bits 0 2 -> -> 0 `i `uc ]
 "167
+[e -- _uart2RxCount -> -> 1 `i `Vuc ]
+"168
 [e = . . _PIE6bits 0 2 -> -> 1 `i `uc ]
-"169
+"170
 [e ) _readValue ]
 [e $UE 2234  ]
-"170
+"171
 [e :UE 2234 ]
 }
-"172
-[v _UART2_Write `(v ~T0 @X0 1 ef1`uc ]
 "173
+[v _UART2_Write `(v ~T0 @X0 1 ef1`uc ]
+"174
 {
 [e :U _UART2_Write ]
-"172
-[v _txData `uc ~T0 @X0 1 r1 ]
 "173
-[f ]
+[v _txData `uc ~T0 @X0 1 r1 ]
 "174
+[f ]
+"175
 [e $U 2240  ]
 [e :U 2241 ]
-"175
-{
 "176
+{
+"177
+[; <"  clrwdt ;# ">
+"178
 }
 [e :U 2240 ]
-"174
+"175
 [e $ == -> 0 `i -> _uart2TxBufferRemaining `i 2241  ]
 [e :U 2242 ]
-"178
-[e $ ! == -> 0 `i -> . . _PIE6bits 0 3 `i 2243  ]
-"179
-{
 "180
-[e = _U2TXB _txData ]
+[e $ ! == -> 0 `i -> . . _PIE6bits 0 3 `i 2243  ]
 "181
+{
+"182
+[e = _U2TXB _txData ]
+"183
 }
 [e $U 2244  ]
-"182
-[e :U 2243 ]
-"183
-{
 "184
-[e = . . _PIE6bits 0 3 -> -> 0 `i `uc ]
+[e :U 2243 ]
 "185
-[e = *U + &U _uart2TxBuffer * -> ++ _uart2TxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2TxBuffer `ui `ux _txData ]
-"186
-[e $ ! <= -> # _uart2TxBuffer `ui -> _uart2TxHead `ui 2245  ]
-"187
 {
+"186
+[e = . . _PIE6bits 0 3 -> -> 0 `i `uc ]
+"187
+[e = *U + &U _uart2TxBuffer * -> ++ _uart2TxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2TxBuffer `ui `ux _txData ]
 "188
-[e = _uart2TxHead -> -> 0 `i `uc ]
+[e $ ! <= -> # _uart2TxBuffer `ui -> _uart2TxHead `ui 2245  ]
 "189
-}
-[e :U 2245 ]
+{
 "190
-[e -- _uart2TxBufferRemaining -> -> 1 `i `Vuc ]
+[e = _uart2TxHead -> -> 0 `i `uc ]
 "191
 }
-[e :U 2244 ]
+[e :U 2245 ]
 "192
-[e = . . _PIE6bits 0 3 -> -> 1 `i `uc ]
+[e -- _uart2TxBufferRemaining -> -> 1 `i `Vuc ]
 "193
+}
+[e :U 2244 ]
+"194
+[e = . . _PIE6bits 0 3 -> -> 1 `i `uc ]
+"195
 [e :UE 2239 ]
 }
 [v $root$_UART2_tx_vect_isr `(v ~T0 @X0 0 e ]
-"195
+"197
 [v _UART2_tx_vect_isr `(v ~T1 @X0 1 ef ]
-"196
+"198
 {
 [e :U _UART2_tx_vect_isr ]
 [f ]
-"197
-[e $ ! != _UART2_TxInterruptHandler -> -> 0 `i `*F16180 2247  ]
-"198
-{
 "199
-[e ( *U _UART2_TxInterruptHandler ..  ]
+[e $ ! != _UART2_TxInterruptHandler -> -> 0 `i `*F16180 2247  ]
 "200
+{
+"201
+[e ( *U _UART2_TxInterruptHandler ..  ]
+"202
 }
 [e :U 2247 ]
-"201
+"203
 [e :UE 2246 ]
 }
 [v $root$_UART2_rx_vect_isr `(v ~T0 @X0 0 e ]
-"203
+"205
 [v _UART2_rx_vect_isr `(v ~T2 @X0 1 ef ]
-"204
+"206
 {
 [e :U _UART2_rx_vect_isr ]
 [f ]
-"205
-[e $ ! != _UART2_RxInterruptHandler -> -> 0 `i `*F16182 2249  ]
-"206
-{
 "207
-[e ( *U _UART2_RxInterruptHandler ..  ]
+[e $ ! != _UART2_RxInterruptHandler -> -> 0 `i `*F16182 2249  ]
 "208
+{
+"209
+[e ( *U _UART2_RxInterruptHandler ..  ]
+"210
 }
 [e :U 2249 ]
-"209
+"211
 [e :UE 2248 ]
 }
-"213
+"215
 [v _UART2_Transmit_ISR `(v ~T0 @X0 1 ef ]
-"214
+"216
 {
 [e :U _UART2_Transmit_ISR ]
 [f ]
-"216
-[e $ ! > -> # _uart2TxBuffer `ui -> _uart2TxBufferRemaining `ui 2251  ]
-"217
-{
 "218
-[e = _U2TXB *U + &U _uart2TxBuffer * -> ++ _uart2TxTail -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2TxBuffer `ui `ux ]
+[e $ ! > -> # _uart2TxBuffer `ui -> _uart2TxBufferRemaining `ui 2251  ]
 "219
-[e $ ! <= -> # _uart2TxBuffer `ui -> _uart2TxTail `ui 2252  ]
-"220
 {
+"220
+[e = _U2TXB *U + &U _uart2TxBuffer * -> ++ _uart2TxTail -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2TxBuffer `ui `ux ]
 "221
-[e = _uart2TxTail -> -> 0 `i `uc ]
+[e $ ! <= -> # _uart2TxBuffer `ui -> _uart2TxTail `ui 2252  ]
 "222
-}
-[e :U 2252 ]
+{
 "223
-[e ++ _uart2TxBufferRemaining -> -> 1 `i `Vuc ]
+[e = _uart2TxTail -> -> 0 `i `uc ]
 "224
 }
-[e $U 2253  ]
+[e :U 2252 ]
 "225
-[e :U 2251 ]
+[e ++ _uart2TxBufferRemaining -> -> 1 `i `Vuc ]
 "226
-{
+}
+[e $U 2253  ]
 "227
-[e = . . _PIE6bits 0 3 -> -> 0 `i `uc ]
+[e :U 2251 ]
 "228
+{
+"229
+[e = . . _PIE6bits 0 3 -> -> 0 `i `uc ]
+"230
 }
 [e :U 2253 ]
-"231
+"233
 [e :UE 2250 ]
 }
-"233
+"235
 [v _UART2_Receive_ISR `(v ~T0 @X0 1 ef ]
-"234
+"236
 {
 [e :U _UART2_Receive_ISR ]
 [f ]
-"236
-[e = *U + &U _uart2RxBuffer * -> ++ _uart2RxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2RxBuffer `ui `ux _U2RXB ]
-"237
-[e $ ! <= -> # _uart2RxBuffer `ui -> _uart2RxHead `ui 2255  ]
 "238
-{
+[e = *U + &U _uart2RxBuffer * -> ++ _uart2RxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2RxBuffer `ui `ux _U2RXB ]
 "239
-[e = _uart2RxHead -> -> 0 `i `uc ]
+[e $ ! <= -> # _uart2RxBuffer `ui -> _uart2RxHead `ui 2255  ]
 "240
+{
+"241
+[e = _uart2RxHead -> -> 0 `i `uc ]
+"242
 }
 [e :U 2255 ]
-"241
+"243
 [e ++ _uart2RxCount -> -> 1 `i `Vuc ]
-"244
+"246
 [e :UE 2254 ]
 }
-"248
+"250
 [v _UART2_SetRxInterruptHandler `(v ~T0 @X0 1 ef1`*F16186 ]
 {
 [e :U _UART2_SetRxInterruptHandler ]
 [v _InterruptHandler `*F16188 ~T0 @X0 1 r1 ]
 [f ]
-"249
+"251
 [e = _UART2_RxInterruptHandler _InterruptHandler ]
-"250
+"252
 [e :UE 2256 ]
 }
-"252
+"254
 [v _UART2_SetTxInterruptHandler `(v ~T0 @X0 1 ef1`*F16191 ]
 {
 [e :U _UART2_SetTxInterruptHandler ]
 [v _InterruptHandler `*F16193 ~T0 @X0 1 r1 ]
 [f ]
-"253
+"255
 [e = _UART2_TxInterruptHandler _InterruptHandler ]
-"254
+"256
 [e :UE 2257 ]
 }
-"257
+"259
 [v _UART2_put_buffer `(v ~T0 @X0 1 ef1`uc ]
-"258
+"260
 {
 [e :U _UART2_put_buffer ]
-"257
-[v _bufData `uc ~T0 @X0 1 r1 ]
-"258
-[f ]
 "259
-[e = . . _PIE6bits 0 2 -> -> 0 `i `uc ]
+[v _bufData `uc ~T0 @X0 1 r1 ]
 "260
-[e = *U + &U _uart2RxBuffer * -> ++ _uart2RxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2RxBuffer `ui `ux _bufData ]
+[f ]
 "261
+[e = . . _PIE6bits 0 2 -> -> 0 `i `uc ]
+"262
+[e = *U + &U _uart2RxBuffer * -> ++ _uart2RxHead -> -> 1 `i `Vuc `ux -> -> # *U &U _uart2RxBuffer `ui `ux _bufData ]
+"263
 [e $ ! <= -> # _uart2RxBuffer `ui -> _uart2RxHead `ui 2259  ]
 {
-"262
+"264
 [e = _uart2RxHead -> -> 0 `i `uc ]
-"263
+"265
 }
 [e :U 2259 ]
-"265
-[e ++ _uart2RxCount -> -> 1 `i `Vuc ]
-"266
-[e = . . _PIE6bits 0 2 -> -> 1 `i `uc ]
 "267
+[e ++ _uart2RxCount -> -> 1 `i `Vuc ]
+"268
+[e = . . _PIE6bits 0 2 -> -> 1 `i `uc ]
+"269
 [e :UE 2258 ]
 }

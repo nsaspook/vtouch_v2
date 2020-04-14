@@ -55,7 +55,7 @@
   Section: Macro Declarations
 */
 #define UART2_TX_BUFFER_SIZE 64
-#define UART2_RX_BUFFER_SIZE 255
+#define UART2_RX_BUFFER_SIZE 64
 
 /**
   Section: Global Variables
@@ -155,6 +155,7 @@ uint8_t UART2_Read(void)
     
     while(0 == uart2RxCount)
     {
+        CLRWDT();
     }
 
     readValue = uart2RxBuffer[uart2RxTail++];
@@ -173,6 +174,7 @@ void UART2_Write(uint8_t txData)
 {
     while(0 == uart2TxBufferRemaining)
     {
+        CLRWDT();
     }
 
     if(0 == PIE6bits.U2TXIE)

@@ -97,8 +97,8 @@ void TMR5_Initialize(void)
 	// Set Default Interrupt Handler
 	TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
-    // CKPS 1:2; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
-    T5CON = 0x11;
+	// CKPS 1:2; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
+	T5CON = 0x11;
 }
 
 void TMR5_StartTimer(void)
@@ -206,6 +206,19 @@ void TMR5_DefaultInterruptHandler(void)
 	V.ticks++;
 	check_day_time();
 	V.ticker = 0;
+
+	if (RELAYL1_PORT || RELAYL2_PORT) {
+		if (++V.wdt_ticks > 60) {
+			while (1) { // lockup for WDT to reboot
+				RELAYL1_SetLow();
+				DEBUG2_Toggle();
+				RELAYL2_SetLow();
+				DEBUG1_Toggle();
+			};
+		}
+	} else {
+		V.wdt_ticks = 0;
+	}
 }
 
 /**

@@ -83,6 +83,7 @@ void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte)
     for (i=0; i<ERASE_FLASH_BLOCKSIZE; i++)
     {
         flashRdBufPtr[i] = FLASH_ReadByte((blockStartAddr+i));
+        CLRWDT();
     }
 
     // Load byte at offset
@@ -125,6 +126,8 @@ int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr)
         {
             asm("TBLWTPOSTINC");
         }
+
+        CLRWDT();
     }
 
     NVMCON1bits.NVMREG = 2;

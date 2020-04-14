@@ -39,8 +39,8 @@
 #define DLED2	DEBUG2_LAT
 
 #ifdef DEBUG_MBMC
-#define DEBUG_DAQ1 // daq debug switches : SCANNER
-#define DEBUG_DAQ2 // ADC conversion
+//#define DEBUG_DAQ1 // daq debug switches : SCANNER
+//#define DEBUG_DAQ2 // ADC conversion
 //#define DEBUG_SWH1 // switches
 //#define DEBUG_SWH2
 //#define DEBUG_BSOC1 // battery run calculations
@@ -50,6 +50,8 @@
 //#define DEBUG_TRM5
 //#define DEBUG_DISP1 // LCD Display
 //#define DEBUG_DISP2
+//#define DEBUG_WDT1 // WDT
+//#define DEBUG_WDT2
 #endif
 
 #define CALIB	false

@@ -1844,357 +1844,359 @@ Version 4.0 HI-TECH Software Intermediate Code
 "169
 {
 "170
+[; <"  clrwdt ;# ">
+"171
 }
 [e :U 2235 ]
 "168
 [e $ != -> . . _ADCON0bits 1 0 `i -> 0 `i 2236  ]
 [e :U 2237 ]
-"174
+"175
 [e ) -> + << -> _ADRESH `i -> 8 `i -> _ADRESL `i `us ]
 [e $UE 2234  ]
-"175
+"176
 [e :UE 2234 ]
 }
-"177
-[v _ADCC_StopConversion `(v ~T0 @X0 1 ef ]
 "178
+[v _ADCC_StopConversion `(v ~T0 @X0 1 ef ]
+"179
 {
 [e :U _ADCC_StopConversion ]
 [f ]
-"180
-[e = . . _ADCON0bits 1 0 -> -> 0 `i `uc ]
 "181
+[e = . . _ADCON0bits 1 0 -> -> 0 `i `uc ]
+"182
 [e :UE 2238 ]
 }
-"183
-[v _ADCC_SetStopOnInterrupt `(v ~T0 @X0 1 ef ]
 "184
+[v _ADCC_SetStopOnInterrupt `(v ~T0 @X0 1 ef ]
+"185
 {
 [e :U _ADCC_SetStopOnInterrupt ]
 [f ]
-"186
-[e = . . _ADCON3bits 1 3 -> -> 1 `i `uc ]
 "187
+[e = . . _ADCON3bits 1 3 -> -> 1 `i `uc ]
+"188
 [e :UE 2239 ]
 }
-"189
-[v _ADCC_DischargeSampleCapacitor `(v ~T0 @X0 1 ef ]
 "190
+[v _ADCC_DischargeSampleCapacitor `(v ~T0 @X0 1 ef ]
+"191
 {
 [e :U _ADCC_DischargeSampleCapacitor ]
 [f ]
-"192
-[e = _ADPCH -> -> 59 `i `uc ]
 "193
+[e = _ADPCH -> -> 59 `i `uc ]
+"194
 [e :UE 2240 ]
 }
-"195
-[v _ADCC_LoadAcquisitionRegister `(v ~T0 @X0 1 ef1`us ]
 "196
+[v _ADCC_LoadAcquisitionRegister `(v ~T0 @X0 1 ef1`us ]
+"197
 {
 [e :U _ADCC_LoadAcquisitionRegister ]
-"195
-[v _acquisitionValue `us ~T0 @X0 1 r1 ]
 "196
+[v _acquisitionValue `us ~T0 @X0 1 r1 ]
+"197
 [f ]
-"198
-[e = _ADACQH -> >> -> _acquisitionValue `ui -> 8 `i `uc ]
 "199
-[e = _ADACQL -> _acquisitionValue `uc ]
+[e = _ADACQH -> >> -> _acquisitionValue `ui -> 8 `i `uc ]
 "200
+[e = _ADACQL -> _acquisitionValue `uc ]
+"201
 [e :UE 2241 ]
 }
-"202
-[v _ADCC_SetPrechargeTime `(v ~T0 @X0 1 ef1`us ]
 "203
+[v _ADCC_SetPrechargeTime `(v ~T0 @X0 1 ef1`us ]
+"204
 {
 [e :U _ADCC_SetPrechargeTime ]
-"202
-[v _prechargeTime `us ~T0 @X0 1 r1 ]
 "203
+[v _prechargeTime `us ~T0 @X0 1 r1 ]
+"204
 [f ]
-"205
-[e = _ADPREH -> >> -> _prechargeTime `ui -> 8 `i `uc ]
 "206
-[e = _ADPREL -> _prechargeTime `uc ]
+[e = _ADPREH -> >> -> _prechargeTime `ui -> 8 `i `uc ]
 "207
+[e = _ADPREL -> _prechargeTime `uc ]
+"208
 [e :UE 2242 ]
 }
-"209
-[v _ADCC_SetRepeatCount `(v ~T0 @X0 1 ef1`uc ]
 "210
+[v _ADCC_SetRepeatCount `(v ~T0 @X0 1 ef1`uc ]
+"211
 {
 [e :U _ADCC_SetRepeatCount ]
-"209
-[v _repeatCount `uc ~T0 @X0 1 r1 ]
 "210
+[v _repeatCount `uc ~T0 @X0 1 r1 ]
+"211
 [f ]
-"212
-[e = _ADRPT _repeatCount ]
 "213
+[e = _ADRPT _repeatCount ]
+"214
 [e :UE 2243 ]
 }
-"215
-[v _ADCC_GetCurrentCountofConversions `(uc ~T0 @X0 1 ef ]
 "216
+[v _ADCC_GetCurrentCountofConversions `(uc ~T0 @X0 1 ef ]
+"217
 {
 [e :U _ADCC_GetCurrentCountofConversions ]
 [f ]
-"218
+"219
 [e ) _ADCNT ]
 [e $UE 2244  ]
-"219
+"220
 [e :UE 2244 ]
 }
-"221
-[v _ADCC_ClearAccumulator `(v ~T0 @X0 1 ef ]
 "222
+[v _ADCC_ClearAccumulator `(v ~T0 @X0 1 ef ]
+"223
 {
 [e :U _ADCC_ClearAccumulator ]
 [f ]
-"224
-[e = . . _ADCON2bits 1 3 -> -> 1 `i `uc ]
 "225
+[e = . . _ADCON2bits 1 3 -> -> 1 `i `uc ]
+"226
 [e :UE 2245 ]
 }
-"227
-[v _ADCC_GetAccumulatorValue `(m ~T0 @X0 1 ef ]
 "228
+[v _ADCC_GetAccumulatorValue `(m ~T0 @X0 1 ef ]
+"229
 {
 [e :U _ADCC_GetAccumulatorValue ]
 [f ]
-"230
+"231
 [e ) + + << -> _ADACCU `m -> 16 `i << -> _ADACCH `m -> 8 `i -> _ADACCL `m ]
 [e $UE 2246  ]
-"231
+"232
 [e :UE 2246 ]
 }
-"233
-[v _ADCC_HasAccumulatorOverflowed `(a ~T0 @X0 1 ef ]
 "234
+[v _ADCC_HasAccumulatorOverflowed `(a ~T0 @X0 1 ef ]
+"235
 {
 [e :U _ADCC_HasAccumulatorOverflowed ]
 [f ]
-"236
+"237
 [e ) -> . . _ADSTATbits 1 7 `a ]
 [e $UE 2247  ]
-"237
+"238
 [e :UE 2247 ]
 }
-"239
-[v _ADCC_GetFilterValue `(us ~T0 @X0 1 ef ]
 "240
+[v _ADCC_GetFilterValue `(us ~T0 @X0 1 ef ]
+"241
 {
 [e :U _ADCC_GetFilterValue ]
 [f ]
-"242
+"243
 [e ) -> + << -> _ADFLTRH `i -> 8 `i -> _ADFLTRL `i `us ]
 [e $UE 2248  ]
-"243
+"244
 [e :UE 2248 ]
 }
-"245
-[v _ADCC_GetPreviousResult `(us ~T0 @X0 1 ef ]
 "246
+[v _ADCC_GetPreviousResult `(us ~T0 @X0 1 ef ]
+"247
 {
 [e :U _ADCC_GetPreviousResult ]
 [f ]
-"248
+"249
 [e ) -> + << -> _ADPREVH `i -> 8 `i -> _ADPREVL `i `us ]
 [e $UE 2249  ]
-"249
+"250
 [e :UE 2249 ]
 }
-"251
-[v _ADCC_DefineSetPoint `(v ~T0 @X0 1 ef1`us ]
 "252
+[v _ADCC_DefineSetPoint `(v ~T0 @X0 1 ef1`us ]
+"253
 {
 [e :U _ADCC_DefineSetPoint ]
-"251
-[v _setPoint `us ~T0 @X0 1 r1 ]
 "252
+[v _setPoint `us ~T0 @X0 1 r1 ]
+"253
 [f ]
-"254
-[e = _ADSTPTH -> >> -> _setPoint `ui -> 8 `i `uc ]
 "255
-[e = _ADSTPTL -> _setPoint `uc ]
+[e = _ADSTPTH -> >> -> _setPoint `ui -> 8 `i `uc ]
 "256
+[e = _ADSTPTL -> _setPoint `uc ]
+"257
 [e :UE 2250 ]
 }
-"258
-[v _ADCC_SetUpperThreshold `(v ~T0 @X0 1 ef1`us ]
 "259
+[v _ADCC_SetUpperThreshold `(v ~T0 @X0 1 ef1`us ]
+"260
 {
 [e :U _ADCC_SetUpperThreshold ]
-"258
-[v _upperThreshold `us ~T0 @X0 1 r1 ]
 "259
+[v _upperThreshold `us ~T0 @X0 1 r1 ]
+"260
 [f ]
-"261
-[e = _ADUTHH -> >> -> _upperThreshold `ui -> 8 `i `uc ]
 "262
-[e = _ADUTHL -> _upperThreshold `uc ]
+[e = _ADUTHH -> >> -> _upperThreshold `ui -> 8 `i `uc ]
 "263
+[e = _ADUTHL -> _upperThreshold `uc ]
+"264
 [e :UE 2251 ]
 }
-"265
-[v _ADCC_SetLowerThreshold `(v ~T0 @X0 1 ef1`us ]
 "266
+[v _ADCC_SetLowerThreshold `(v ~T0 @X0 1 ef1`us ]
+"267
 {
 [e :U _ADCC_SetLowerThreshold ]
-"265
-[v _lowerThreshold `us ~T0 @X0 1 r1 ]
 "266
+[v _lowerThreshold `us ~T0 @X0 1 r1 ]
+"267
 [f ]
-"268
-[e = _ADLTHH -> >> -> _lowerThreshold `ui -> 8 `i `uc ]
 "269
-[e = _ADLTHL -> _lowerThreshold `uc ]
+[e = _ADLTHH -> >> -> _lowerThreshold `ui -> 8 `i `uc ]
 "270
+[e = _ADLTHL -> _lowerThreshold `uc ]
+"271
 [e :UE 2252 ]
 }
-"272
-[v _ADCC_GetErrorCalculation `(us ~T0 @X0 1 ef ]
 "273
+[v _ADCC_GetErrorCalculation `(us ~T0 @X0 1 ef ]
+"274
 {
 [e :U _ADCC_GetErrorCalculation ]
 [f ]
-"275
+"276
 [e ) -> + << -> _ADERRH `i -> 8 `i -> _ADERRL `i `us ]
 [e $UE 2253  ]
-"276
+"277
 [e :UE 2253 ]
 }
-"278
-[v _ADCC_EnableDoubleSampling `(v ~T0 @X0 1 ef ]
 "279
+[v _ADCC_EnableDoubleSampling `(v ~T0 @X0 1 ef ]
+"280
 {
 [e :U _ADCC_EnableDoubleSampling ]
 [f ]
-"281
-[e = . . _ADCON1bits 1 0 -> -> 1 `i `uc ]
 "282
+[e = . . _ADCON1bits 1 0 -> -> 1 `i `uc ]
+"283
 [e :UE 2254 ]
 }
-"284
-[v _ADCC_EnableContinuousConversion `(v ~T0 @X0 1 ef ]
 "285
+[v _ADCC_EnableContinuousConversion `(v ~T0 @X0 1 ef ]
+"286
 {
 [e :U _ADCC_EnableContinuousConversion ]
 [f ]
-"287
-[e = . . _ADCON0bits 1 5 -> -> 1 `i `uc ]
 "288
+[e = . . _ADCON0bits 1 5 -> -> 1 `i `uc ]
+"289
 [e :UE 2255 ]
 }
-"290
-[v _ADCC_DisableContinuousConversion `(v ~T0 @X0 1 ef ]
 "291
+[v _ADCC_DisableContinuousConversion `(v ~T0 @X0 1 ef ]
+"292
 {
 [e :U _ADCC_DisableContinuousConversion ]
 [f ]
-"293
-[e = . . _ADCON0bits 1 5 -> -> 0 `i `uc ]
 "294
+[e = . . _ADCON0bits 1 5 -> -> 0 `i `uc ]
+"295
 [e :UE 2256 ]
 }
-"296
-[v _ADCC_HasErrorCrossedUpperThreshold `(a ~T0 @X0 1 ef ]
 "297
+[v _ADCC_HasErrorCrossedUpperThreshold `(a ~T0 @X0 1 ef ]
+"298
 {
 [e :U _ADCC_HasErrorCrossedUpperThreshold ]
 [f ]
-"299
+"300
 [e ) -> . . _ADSTATbits 1 6 `a ]
 [e $UE 2257  ]
-"300
+"301
 [e :UE 2257 ]
 }
-"302
-[v _ADCC_HasErrorCrossedLowerThreshold `(a ~T0 @X0 1 ef ]
 "303
+[v _ADCC_HasErrorCrossedLowerThreshold `(a ~T0 @X0 1 ef ]
+"304
 {
 [e :U _ADCC_HasErrorCrossedLowerThreshold ]
 [f ]
-"305
+"306
 [e ) -> . . _ADSTATbits 1 5 `a ]
 [e $UE 2258  ]
-"306
+"307
 [e :UE 2258 ]
 }
-"308
-[v _ADCC_GetConversionStageStatus `(uc ~T0 @X0 1 ef ]
 "309
+[v _ADCC_GetConversionStageStatus `(uc ~T0 @X0 1 ef ]
+"310
 {
 [e :U _ADCC_GetConversionStageStatus ]
 [f ]
-"311
+"312
 [e ) . . _ADSTATbits 2 0 ]
 [e $UE 2259  ]
-"312
+"313
 [e :UE 2259 ]
 }
 [v $root$_ADCC_ISR `(v ~T0 @X0 0 e ]
-"314
-[v _ADCC_ISR `(v ~T1 @X0 1 ef ]
 "315
+[v _ADCC_ISR `(v ~T1 @X0 1 ef ]
+"316
 {
 [e :U _ADCC_ISR ]
 [f ]
-"317
+"318
 [e = . . _PIR1bits 0 2 -> -> 0 `i `uc ]
-"319
-[e $ ! != _ADCC_ADI_InterruptHandler -> -> 0 `i `*F16240 2261  ]
 "320
+[e $ ! != _ADCC_ADI_InterruptHandler -> -> 0 `i `*F16240 2261  ]
+"321
 [e ( *U _ADCC_ADI_InterruptHandler ..  ]
 [e :U 2261 ]
-"321
+"322
 [e :UE 2260 ]
 }
-"323
+"324
 [v _ADCC_SetADIInterruptHandler `(v ~T0 @X0 1 ef1`*F16242 ]
 {
 [e :U _ADCC_SetADIInterruptHandler ]
 [v _InterruptHandler `*F16244 ~T0 @X0 1 r1 ]
 [f ]
-"324
-[e = _ADCC_ADI_InterruptHandler _InterruptHandler ]
 "325
+[e = _ADCC_ADI_InterruptHandler _InterruptHandler ]
+"326
 [e :UE 2262 ]
 }
 [v $root$_ADCC_ThresholdISR `(v ~T0 @X0 0 e ]
-"327
-[v _ADCC_ThresholdISR `(v ~T2 @X0 1 ef ]
 "328
+[v _ADCC_ThresholdISR `(v ~T2 @X0 1 ef ]
+"329
 {
 [e :U _ADCC_ThresholdISR ]
 [f ]
-"330
+"331
 [e = . . _PIR1bits 0 3 -> -> 0 `i `uc ]
-"332
-[e $ ! != _ADCC_ADTI_InterruptHandler -> -> 0 `i `*F16247 2264  ]
 "333
+[e $ ! != _ADCC_ADTI_InterruptHandler -> -> 0 `i `*F16247 2264  ]
+"334
 [e ( *U _ADCC_ADTI_InterruptHandler ..  ]
 [e :U 2264 ]
-"334
+"335
 [e :UE 2263 ]
 }
-"336
+"337
 [v _ADCC_SetADTIInterruptHandler `(v ~T0 @X0 1 ef1`*F16249 ]
 {
 [e :U _ADCC_SetADTIInterruptHandler ]
 [v _InterruptHandler `*F16251 ~T0 @X0 1 r1 ]
 [f ]
-"337
-[e = _ADCC_ADTI_InterruptHandler _InterruptHandler ]
 "338
+[e = _ADCC_ADTI_InterruptHandler _InterruptHandler ]
+"339
 [e :UE 2265 ]
 }
-"339
+"340
 [v _ADCC_DefaultInterruptHandler `(v ~T0 @X0 1 ef ]
 {
 [e :U _ADCC_DefaultInterruptHandler ]
 [f ]
-"342
+"343
 [e :UE 2266 ]
 }

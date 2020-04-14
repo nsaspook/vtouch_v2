@@ -167,6 +167,7 @@ adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel)
     // Wait for the conversion to finish
     while (ADCON0bits.ADGO)
     {
+        CLRWDT();
     }
     
     

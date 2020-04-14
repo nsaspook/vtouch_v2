@@ -84,7 +84,9 @@ uint8_t SPI1_Exchange8bit(uint8_t data)
 	SPI1TCNTL = 1;
 	SPI1TXB = data;
 
-	while (PIR2bits.SPI1RXIF == SPI_RX_IN_PROGRESS) {
+    while(PIR2bits.SPI1RXIF == SPI_RX_IN_PROGRESS)
+    {
+        CLRWDT();
 	}
 	V.spi_count++;
 	return(SPI1RXB);
@@ -94,23 +96,35 @@ uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOu
 {
 	uint8_t bytesWritten = 0;
 
-	if (bufLen != 0) {
-		if (dataIn != NULL) {
-			while (bytesWritten < bufLen) {
-				if (dataOut == NULL) {
+    if(bufLen != 0)
+    {
+        if(dataIn != NULL)
+        {
+            while(bytesWritten < bufLen)
+            {
+                if(dataOut == NULL)
+                {
 					SPI1_Exchange8bit(dataIn[bytesWritten]);
-				} else {
+                }
+                else
+                {
 					dataOut[bytesWritten] = SPI1_Exchange8bit(dataIn[bytesWritten]);
 				}
 
 				bytesWritten++;
+                CLRWDT();
 			}
-		} else {
-			if (dataOut != NULL) {
-				while (bytesWritten < bufLen) {
+        }
+        else
+        {
+            if(dataOut != NULL)
+            {
+                while(bytesWritten < bufLen )
+                {
 					dataOut[bytesWritten] = SPI1_Exchange8bit(DUMMY_DATA);
 
 					bytesWritten++;
+                    CLRWDT();
 				}
 			}
 		}

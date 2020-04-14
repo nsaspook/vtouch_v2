@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.44"
+#define VER	"1.45"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -66,6 +66,7 @@ extern "C" {
 	 * 1.42 fix daily tracking
 	 * 1.43 add option using BAT_100A in daq.h to select Honeywell sensor for battery current sensor
 	 * 1.44 DC dump load from PV functions
+	 * 1.45 WDT hang protection
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -197,7 +198,7 @@ extern "C" {
 		volatile uint32_t ticks, blight, ac_time;
 		volatile int8_t testing;
 		volatile uint8_t sys_info : 1, ac_on : 1, ac_off : 1;
-		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks, boost_ticks;
+		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks, boost_ticks, wdt_ticks;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, mode_pwm, sequences, all_errors;
 		uint8_t set_sequ : 1, debug : 1, help : 1, stack : 3, help_id : 2, screen : 1;

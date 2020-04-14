@@ -203,6 +203,7 @@ time_t pclock;
 
 static bool current_sensor_cal(void);
 static bool display_history(void);
+static void wdt_reset(void);
 
 const char *build_date = __DATE__, *build_time = __TIME__;
 
@@ -224,6 +225,7 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	V.ui_state = UI_STATE_INIT;
+	WWDT_SoftEnable();
 
 	/*
 	 * RS-232 link I/O relay defaults to monitor/log mode with no power
@@ -580,6 +582,7 @@ void main(void)
 				update_lcd(2);
 			}
 		}
+		wdt_reset();
 	}
 }
 
@@ -714,6 +717,16 @@ static bool display_history(void)
 	}
 }
 
+static void wdt_reset(void)
+{
+#ifdef DEBUG_WDT1
+	RELAYL1_SetHigh();
+#endif
+#ifdef DEBUG_WDT2
+	RELAYL2_SetHigh();
+#endif
+	CLRWDT();
+}
 /**
  End of File
  */

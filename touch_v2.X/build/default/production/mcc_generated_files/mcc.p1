@@ -4,12 +4,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v F16472 `(v ~T0 @X0 0 tf ]
 "109 mcc_generated_files/interrupt_manager.h
 [v _INTERRUPT_Initialize `(v ~T0 @X0 0 ef ]
-"111 mcc_generated_files/mcc.h
+"114 mcc_generated_files/mcc.h
 [v _PMD_Initialize `(v ~T0 @X0 0 ef ]
 "824 mcc_generated_files/pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
-"98 mcc_generated_files/mcc.h
+"101 mcc_generated_files/mcc.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
+"127
+[v _WWDT_Initialize `(v ~T0 @X0 0 ef ]
 "93 mcc_generated_files/fvr.h
 [v _FVR_Initialize `(v ~T0 @X0 0 ef ]
 "123 mcc_generated_files/crc.h
@@ -68,6 +70,58 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _PMD6 `Vuc ~T0 @X0 0 e@14790 ]
 "5068
 [v _PMD7 `Vuc ~T0 @X0 0 e@14791 ]
+"788
+[v _WDTCON0 `Vuc ~T0 @X0 0 e@14683 ]
+"863
+[v _WDTCON1 `Vuc ~T0 @X0 0 e@14684 ]
+"794
+[s S49 :1 `uc 1 :5 `uc 1 ]
+[n S49 . SEN WDTPS ]
+"798
+[s S50 :1 `uc 1 ]
+[n S50 . SWDTEN ]
+"801
+[s S51 :1 `uc 1 ]
+[n S51 . WDTSEN ]
+"804
+[s S52 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S52 . . WDTPS0 WDTPS1 WDTPS2 WDTPS3 WDTPS4 ]
+"793
+[u S48 `S49 1 `S50 1 `S51 1 `S52 1 ]
+[n S48 . . . . . ]
+"813
+[v _WDTCON0bits `VS48 ~T0 @X0 0 e@14683 ]
+"48109
+[s S2191 :1 `uc 1 ]
+[n S2191 . NOT_BOR ]
+"48112
+[s S2192 :1 `uc 1 :1 `uc 1 ]
+[n S2192 . . NOT_POR ]
+"48116
+[s S2193 :2 `uc 1 :1 `uc 1 ]
+[n S2193 . . NOT_RI ]
+"48120
+[s S2194 :3 `uc 1 :1 `uc 1 ]
+[n S2194 . . NOT_RMCLR ]
+"48124
+[s S2195 :4 `uc 1 :1 `uc 1 ]
+[n S2195 . . NOT_RWDT ]
+"48128
+[s S2196 :5 `uc 1 :1 `uc 1 ]
+[n S2196 . . NOT_WDTWV ]
+"48132
+[s S2197 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2197 . nBOR nPOR nRI nRMCLR nRWDT nWDTWV STKUNF STKOVF ]
+"48142
+[s S2198 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S2198 . BOR POR RI RMCLR RWDT WDTWV ]
+"48108
+[u S2190 `S2191 1 `S2192 1 `S2193 1 `S2194 1 `S2195 1 `S2196 1 `S2197 1 `S2198 1 ]
+[n S2190 . . . . . . . . . ]
+"48151
+[v _PCON0bits `VS2190 ~T0 @X0 0 e@16368 ]
+"52474
+[v _GIE `Vb ~T0 @X0 0 e@130711 ]
 "250 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; <" STATUS_CSHAD equ 03880h ;# ">
 "339
@@ -1587,90 +1641,174 @@ Version 4.0 HI-TECH Software Intermediate Code
 "55
 [e ( _OSCILLATOR_Initialize ..  ]
 "56
-[e ( _FVR_Initialize ..  ]
+[e ( _WWDT_Initialize ..  ]
 "57
-[e ( _CRC_Initialize ..  ]
+[e ( _FVR_Initialize ..  ]
 "58
-[e ( _ADCC_Initialize ..  ]
+[e ( _CRC_Initialize ..  ]
 "59
-[e ( _TMR2_Initialize ..  ]
+[e ( _ADCC_Initialize ..  ]
 "60
-[e ( _PWM8_Initialize ..  ]
+[e ( _TMR2_Initialize ..  ]
 "61
-[e ( _EXT_INT_Initialize ..  ]
+[e ( _PWM8_Initialize ..  ]
 "62
-[e ( _TMR6_Initialize ..  ]
+[e ( _EXT_INT_Initialize ..  ]
 "63
-[e ( _TMR3_Initialize ..  ]
+[e ( _TMR6_Initialize ..  ]
 "64
-[e ( _TMR5_Initialize ..  ]
+[e ( _TMR3_Initialize ..  ]
 "65
-[e ( _UART1_Initialize ..  ]
+[e ( _TMR5_Initialize ..  ]
 "66
-[e ( _UART2_Initialize ..  ]
+[e ( _UART1_Initialize ..  ]
 "67
-[e ( _SPI1_Initialize ..  ]
+[e ( _UART2_Initialize ..  ]
 "68
-[e ( _DMA2_Initialize ..  ]
+[e ( _SPI1_Initialize ..  ]
 "69
-[e ( _DMA1_Initialize ..  ]
+[e ( _DMA2_Initialize ..  ]
 "70
-[e ( _CLKREF_Initialize ..  ]
+[e ( _DMA1_Initialize ..  ]
 "71
+[e ( _CLKREF_Initialize ..  ]
+"72
 [e :UE 2230 ]
 }
-"73
-[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
 "74
+[v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
+"75
 {
 [e :U _OSCILLATOR_Initialize ]
 [f ]
-"76
+"77
 [e = _OSCCON1 -> -> 32 `i `uc ]
-"78
+"79
 [e = _OSCCON3 -> -> 0 `i `uc ]
-"80
+"81
 [e = _OSCEN -> -> 0 `i `uc ]
-"82
+"83
 [e = _OSCFRQ -> -> 2 `i `uc ]
-"84
+"85
 [e = _OSCTUNE -> -> 0 `i `uc ]
-"86
+"87
 [e $U 2232  ]
 [e :U 2233 ]
-"87
-{
 "88
+{
+"89
 }
 [e :U 2232 ]
-"86
+"87
 [e $ == -> _PLLR `i -> 0 `i 2233  ]
 [e :U 2234 ]
-"89
+"90
 [e :UE 2231 ]
 }
-"91
-[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
 "92
+[v _PMD_Initialize `(v ~T0 @X0 1 ef ]
+"93
 {
 [e :U _PMD_Initialize ]
 [f ]
-"94
+"95
 [e = _PMD0 -> -> 0 `i `uc ]
-"96
+"97
 [e = _PMD1 -> -> 0 `i `uc ]
-"98
+"99
 [e = _PMD2 -> -> 0 `i `uc ]
-"100
+"101
 [e = _PMD3 -> -> 0 `i `uc ]
-"102
+"103
 [e = _PMD4 -> -> 0 `i `uc ]
-"104
+"105
 [e = _PMD5 -> -> 0 `i `uc ]
-"106
+"107
 [e = _PMD6 -> -> 0 `i `uc ]
-"108
-[e = _PMD7 -> -> 0 `i `uc ]
 "109
+[e = _PMD7 -> -> 0 `i `uc ]
+"110
 [e :UE 2235 ]
+}
+"113
+[v _WWDT_Initialize `(v ~T0 @X0 1 ef ]
+"114
+{
+[e :U _WWDT_Initialize ]
+[f ]
+"116
+[e = _WDTCON0 -> -> 30 `i `uc ]
+"117
+[e = _WDTCON1 -> | -> 7 `i -> 0 `i `uc ]
+"119
+[e :UE 2236 ]
+}
+"121
+[v _WWDT_SoftEnable `(v ~T0 @X0 1 ef ]
+"122
+{
+[e :U _WWDT_SoftEnable ]
+[f ]
+"124
+[e = . . _WDTCON0bits 0 0 -> -> 1 `i `uc ]
+"125
+[e :UE 2237 ]
+}
+"127
+[v _WWDT_SoftDisable `(v ~T0 @X0 1 ef ]
+"128
+{
+[e :U _WWDT_SoftDisable ]
+[f ]
+"130
+[e = . . _WDTCON0bits 0 0 -> -> 0 `i `uc ]
+"131
+[e :UE 2238 ]
+}
+"133
+[v _WWDT_TimeOutStatusGet `(a ~T0 @X0 1 ef ]
+"134
+{
+[e :U _WWDT_TimeOutStatusGet ]
+[f ]
+"136
+[e ) -> . . _PCON0bits 6 4 `a ]
+[e $UE 2239  ]
+"137
+[e :UE 2239 ]
+}
+"139
+[v _WWDT_WindowViolationStatusGet `(a ~T0 @X0 1 ef ]
+"140
+{
+[e :U _WWDT_WindowViolationStatusGet ]
+[f ]
+"142
+[e ) -> . . _PCON0bits 6 5 `a ]
+[e $UE 2240  ]
+"143
+[e :UE 2240 ]
+}
+"145
+[v _WWDT_TimerClear `(v ~T0 @X0 1 ef ]
+"146
+{
+[e :U _WWDT_TimerClear ]
+[f ]
+"149
+[v _readBack `uc ~T0 @X0 1 a ]
+[e = _readBack -> -> 0 `i `uc ]
+"151
+[v _state `a ~T0 @X0 1 a ]
+[e = _state -> _GIE `a ]
+"152
+[e = _GIE -> -> 0 `i `b ]
+"153
+[e = _readBack _WDTCON0 ]
+"154
+[; <"  clrwdt ;# ">
+"155
+[e = _GIE _state ]
+"156
+[e :UE 2241 ]
 }

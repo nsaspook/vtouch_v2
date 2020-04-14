@@ -154,11 +154,14 @@ uint8_t UART1_Read(void)
 {
 	uint8_t readValue = 0;
 
-	while (0 == uart1RxCount) {
+    while(0 == uart1RxCount)
+    {
+        CLRWDT();
 	}
 
 	readValue = uart1RxBuffer[uart1RxTail++];
-	if (sizeof(uart1RxBuffer) <= uart1RxTail) {
+   	if(sizeof(uart1RxBuffer) <= uart1RxTail)
+    {
 		uart1RxTail = 0;
 	}
 	PIE3bits.U1RXIE = 0;
@@ -170,15 +173,18 @@ uint8_t UART1_Read(void)
 
 void UART1_Write(uint8_t txData)
 {
-	while (0 == PIR3bits.U1TXIF) {
+    while(0 == PIR3bits.U1TXIF)
+    {
+        CLRWDT();
 	}
 
-	U1TXB = txData; // Write the data byte to the USART.
+    U1TXB = txData;    // Write the data byte to the USART.
 }
 
-void __interrupt(irq(U1RX), base(8)) UART1_rx_vect_isr()
+void __interrupt(irq(U1RX),base(8)) UART1_rx_vect_isr()
 {
-	if (UART1_RxInterruptHandler) {
+    if(UART1_RxInterruptHandler)
+    {
 		UART1_RxInterruptHandler();
 	}
 }
@@ -187,7 +193,8 @@ void UART1_Receive_ISR(void)
 {
 	// use this default receive interrupt handler code
 	uart1RxBuffer[uart1RxHead++] = U1RXB;
-	if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+    if(sizeof(uart1RxBuffer) <= uart1RxHead)
+    {
 		uart1RxHead = 0;
 	}
 	uart1RxCount++;
