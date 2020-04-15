@@ -51,6 +51,7 @@
 
 #define BLOAD1		10.0       	// load resistor in ohms
 #define BLOAD2		2.5       	// ditto
+#define MAX_LOAD_TIME	60
 
 #define ROR_LIMIT_LOW	0.0140
 #define ROR_LIMIT_SET	0.0001

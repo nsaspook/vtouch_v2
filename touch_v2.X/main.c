@@ -265,7 +265,11 @@ void main(void)
 			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
 			sprintf(get_vterm_ptr(1, 0), " Version %s         ", VER);
 			sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
-			sprintf(get_vterm_ptr(3, 0), "                    ");
+			if (STATUSbits.TO) {
+				sprintf(get_vterm_ptr(3, 0), "                    ");
+			} else {
+				sprintf(get_vterm_ptr(3, 0), " WDT TIMEOUT REBOOT ");
+			}
 			sprintf(get_vterm_ptr(0, 1), "                    ");
 			sprintf(get_vterm_ptr(1, 1), "                    ");
 			sprintf(get_vterm_ptr(2, 1), "                    ");

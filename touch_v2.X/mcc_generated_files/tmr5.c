@@ -208,12 +208,13 @@ void TMR5_DefaultInterruptHandler(void)
 	V.ticker = 0;
 
 	if (RELAYL1_PORT || RELAYL2_PORT) {
-		if (++V.wdt_ticks > 60) {
-			while (1) { // lockup for WDT to reboot
+		if (++V.wdt_ticks > MAX_LOAD_TIME) {
+			while (1) { // shutdown load relays and lockup for WDT to reboot
 				RELAYL1_SetLow();
 				DEBUG2_Toggle();
 				RELAYL2_SetLow();
 				DEBUG1_Toggle();
+				SLED = (uint8_t) ~SLED;
 			};
 		}
 	} else {
