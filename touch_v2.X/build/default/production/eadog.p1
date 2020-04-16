@@ -126,8 +126,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [s S2239 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16892 1 `E16892 1 `us 1 `us 1 ]
 [n S2239 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
 "195
-[s S2240 `E16911 1 `uc -> 64 `i `uc -> 64 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16911 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2239 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
-[n S2240 V_data ui_state buf info ticks blight ac_time testing sys_info ac_on ac_off error abort msg_error msg_ret alarm float_ticks boost_ticks wdt_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float in_boost lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
+[s S2240 `E16911 1 `uc -> 64 `i `uc -> 64 `i `uc -> 16 `i `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16911 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2239 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
+[n S2240 V_data ui_state buf info rbuf ticks blight ac_time testing sys_info ac_on ac_off time_info error abort msg_error msg_ret alarm float_ticks boost_ticks wdt_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float in_boost lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
 "16 eadog.c
 [v _V `S2240 ~T0 @X0 0 e ]
 "49 ./eadog.h
@@ -1685,11 +1685,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 "23
 [f ]
 "24
-[v F17067 `ul ~T0 @X0 1 s dcount ]
+[v F17069 `ul ~T0 @X0 1 s dcount ]
 "26
 {
-[e = F17067 -> -> -> 0 `i `l `ul ]
-[e $ <= F17067 _delay 2244  ]
+[e = F17069 -> -> -> 0 `i `l `ul ]
+[e $ <= F17069 _delay 2244  ]
 [e $U 2245  ]
 [e :U 2244 ]
 {
@@ -1699,8 +1699,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <"  clrwdt ;# ">
 "29
 }
-[e ++ F17067 -> -> -> 1 `i `l `ul ]
-[e $ <= F17067 _delay 2244  ]
+[e ++ F17069 -> -> -> 1 `i `l `ul ]
+[e $ <= F17069 _delay 2244  ]
 [e :U 2245 ]
 }
 "31
@@ -1908,7 +1908,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "163
 [e ( _start_lcd ..  ]
 "164
-[e =+ . _V 49 -> ( _strlen (1 -> _strPtr `*Cuc `Vul ]
+[e =+ . _V 51 -> ( _strlen (1 -> _strPtr `*Cuc `Vul ]
 "168
 [e :UE 2261 ]
 }
@@ -1964,7 +1964,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "195
 [e ( _start_lcd ..  ]
 "196
-[e ++ . _V 49 -> -> 1 `i `Vul ]
+[e ++ . _V 51 -> -> 1 `i `Vul ]
 "197
 [e :UE 2267 ]
 }
@@ -2140,7 +2140,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "410
 [e = . . _DMA2CON0bits 1 5 -> -> 1 `i `uc ]
 "411
-[e =+ . _V 46 -> _dsize `Vul ]
+[e =+ . _V 48 -> _dsize `Vul ]
 "412
 [e :UE 2285 ]
 }

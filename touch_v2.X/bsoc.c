@@ -94,6 +94,7 @@ bool pv_diversion(bool kill)
 void calc_bsoc(void)
 {
 	uint8_t * log_ptr, lcode = D_CODE;
+	uint32_t t_time;
 	static uint8_t log_update_wait = 0;
 	float adj = 1.0;
 
@@ -170,6 +171,14 @@ void calc_bsoc(void)
 		C.runtime = 99;
 
 	V.lowint_count++;
+
+	if (V.time_info) { // set local time from remote server
+		V.time_info = false;
+		t_time = (uint32_t) atol(V.rbuf);
+		if (t_time > DEF_TIME) {
+			set_time(t_time);
+		}
+	}
 
 	if (V.sys_info) {
 		V.sys_info = false;
