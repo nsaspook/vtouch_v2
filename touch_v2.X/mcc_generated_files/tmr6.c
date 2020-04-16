@@ -197,7 +197,6 @@ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
 void TMR6_DefaultInterruptHandler(void)
 {
 	static uint8_t i, j = 0;
-	static bool get_time_text = false;
 	// add your TMR6 interrupt custom code
 	// or set custom function using TMR6_SetInterruptHandler()
 
@@ -212,15 +211,19 @@ void TMR6_DefaultInterruptHandler(void)
 		i = UART1_Read();
 
 		if (i == 't') { // UTC time command stop
+			UART1_Write(i);
+			UART1_Write('\r');
+			UART1_Write('\n');
 			V.time_info = false;
 			if (j == 10)
 				V.time_info = true; // notify main we have a possible valid time
-			get_time_text = false;
+			V.get_time_text = false;
 			V.rbuf[j] = 0; // term string
 			j = 0;
 		}
 
-		if (get_time_text && j < 12) { // load ASCII time string and overflow size count
+		if (V.get_time_text && j < 12) { // load ASCII time string and overflow size count
+			UART1_Write(i);
 			V.rbuf[j++] = i;
 		}
 		if (i == '#') { // Display system data on RS232 terminal
@@ -233,8 +236,9 @@ void TMR6_DefaultInterruptHandler(void)
 			V.ac_off = true;
 		}
 		if (i == 'T') { // UTC time command start
+			UART1_Write(i);
 			V.time_info = false;
-			get_time_text = true;
+			V.get_time_text = true;
 			j = 0;
 		}
 

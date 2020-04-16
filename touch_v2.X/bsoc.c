@@ -195,7 +195,7 @@ void calc_bsoc(void)
 		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
 		send_port_data_dma(strlen((char*) log_ptr));
 	} else {
-		if (!log_update_wait++ && V.system_stable) {
+		if (!log_update_wait++ && V.system_stable && !V.get_time_text) {
 			log_ptr = port_data_dma_ptr();
 			if (H.sequence == HID_AUX)
 				lcode = I_CODE;

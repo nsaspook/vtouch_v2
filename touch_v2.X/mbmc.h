@@ -51,7 +51,7 @@
 
 #define BLOAD1		10.0       	// load resistor in ohms
 #define BLOAD2		2.5       	// ditto
-#define MAX_LOAD_TIME	60
+#define MAX_LOAD_TIME	75
 
 #define ROR_LIMIT_LOW	0.0140
 #define ROR_LIMIT_SET	0.0001
@@ -127,9 +127,10 @@ void convert_adc_data(void);
 void calc_model_data(void);
 void calc_ror_data(void);
 void static_soc(void);
-void set_load_relay_one(bool);
-void set_load_relay_two(bool);
-void set_ac_charger_relay(bool);
+void set_load_relay_zero(const bool);
+void set_load_relay_one(const bool);
+void set_load_relay_two(const bool);
+void set_ac_charger_relay(const bool);
 bool get_ac_charger_relay(void);
 bool check_day_time(void);
 void load_hist_data(void);
@@ -137,5 +138,5 @@ float calc_fixups(float data, FIX_CODES fixup);
 
 char spinners(uint8_t, uint8_t);
 time_t time(time_t *);
-void set_time(time_t t);
+void set_time(const time_t t);
 #endif

@@ -130,6 +130,11 @@ void static_soc(void)
 	C.dynamic_ah_adj = C.dynamic_ah;
 }
 
+void set_load_relay_zero(const bool mode)
+{
+	RELAY0_LAT = mode;
+}
+
 void set_load_relay_one(const bool mode)
 {
 	RELAYL1_LAT = mode;
@@ -294,6 +299,9 @@ void load_hist_data(void)
 	start_bsoc();
 }
 
+/*
+ * if t > 0, t is set to memory location of current_time variable
+ */
 time_t time(time_t * t)
 {
 	static time_t current_time;
@@ -306,7 +314,7 @@ time_t time(time_t * t)
 	return current_time;
 }
 
-void set_time(time_t t)
+void set_time(const time_t t)
 {
 	PIE8bits.TMR5IE = 0;
 	V.ticks = t;

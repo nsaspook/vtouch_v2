@@ -212,6 +212,8 @@ const char *build_date = __DATE__, *build_time = __TIME__;
  */
 void main(void)
 {
+	bool t_out=STATUSbits.TO;
+	
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
 	uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC, i_ror;
 
@@ -256,6 +258,7 @@ void main(void)
 			/*
 			 * load the battery to reduce surface charge
 			 */
+			set_load_relay_zero(true); // serial monitor relay on host board
 			set_load_relay_one(true);
 			set_load_relay_two(true);
 
@@ -265,7 +268,7 @@ void main(void)
 			sprintf(get_vterm_ptr(0, 0), " MBMC SOLARMON      ");
 			sprintf(get_vterm_ptr(1, 0), " Version %s         ", VER);
 			sprintf(get_vterm_ptr(2, 0), " NSASPOOK           ");
-			if (STATUSbits.TO) {
+			if (t_out) {
 				sprintf(get_vterm_ptr(3, 0), "                    ");
 			} else {
 				sprintf(get_vterm_ptr(3, 0), " WDT TIMEOUT REBOOT ");
@@ -347,6 +350,7 @@ void main(void)
 				update_lcd(0);
 				clear_adc_scan();
 				start_adc_scan();
+				wdt_reset();
 				WaitMs(ROR_WAIT); // time between samples
 
 				//WaitMs(500); // wait for updated ADC data
