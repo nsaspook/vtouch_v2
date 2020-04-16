@@ -22,6 +22,7 @@ enum APP_TIMERS {
 	TMR_DISPLAY,
 	TMR_FLIPPER,
 	TMR_ESR,
+	TMR_TEXT,
 	//
 	//(Add timers here as needed)
 	//

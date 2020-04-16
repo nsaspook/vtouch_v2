@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.45"
+#define VER	"1.46"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -67,6 +67,7 @@ extern "C" {
 	 * 1.43 add option using BAT_100A in daq.h to select Honeywell sensor for battery current sensor
 	 * 1.44 DC dump load from PV functions
 	 * 1.45 WDT hang protection
+	 * 1.46 server time updates
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -104,6 +105,7 @@ extern "C" {
 #define SDELAY	500
 #define BDELAY	300
 #define DDELAY	250  // display update spacing
+#define TXTDELAY 10000 // unix time from server timeout
 #define SOCDELAY 125 // sync SPI and UART dma
 #define DFLIP	1500 // display info flipping spacing
 

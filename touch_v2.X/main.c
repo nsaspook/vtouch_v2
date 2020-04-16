@@ -212,8 +212,9 @@ const char *build_date = __DATE__, *build_time = __TIME__;
  */
 void main(void)
 {
-	bool t_out=STATUSbits.TO;
-	
+	bool t_out = STATUSbits.TO;
+	uint32_t t_time;
+
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
 	uint8_t inp_index = 0, i = C_BATT, j = C_PV, k = V_CC, i_ror;
 
@@ -282,7 +283,29 @@ void main(void)
 			sprintf(get_vterm_ptr(2, 2), "                    ");
 			sprintf(get_vterm_ptr(3, 2), "                    ");
 			update_lcd(0);
+			UART1_Write('T');
+			UART1_Write('\r');
+			UART1_Write('\n');
 			WaitMs(1000);
+			if (V.get_time_text) {
+				StartTimer(TMR_TEXT, TXTDELAY);
+
+				while (true) {
+					wdt_reset();
+					if (TimerDone(TMR_TEXT)) {
+						V.get_time_text = false;
+						V.time_info = false;
+						break;
+					}
+					if (V.time_info) {
+						V.time_info = false;
+						t_time = (uint32_t) atol(V.rbuf);
+						if (t_time > DEF_TIME) {
+							set_time(t_time);
+						}
+					}
+				}
+			}
 			StartTimer(TMR_DISPLAY, DDELAY);
 			StartTimer(TMR_ADC, ADC_SCAN_SPEED);
 			StartTimer(TMR_INFO, TDELAY);
