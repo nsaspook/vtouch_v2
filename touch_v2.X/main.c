@@ -43,11 +43,11 @@
 
 /*
  *
- * This program controls and monitors solar power battery arrays on a 12vdc system
+ * This program controls and monitors solar power battery arrays on a 24vdc system
  * MBMC uses a simple expert machine to try and keep current the energy stored in a bank of batteries
  * The main physics functions are contained in the noload_soc, update_cef, ChargeBatt and pick_batt functions
  * Much more work is needed to make the program flow logical but making it work first is the current effort
- * The network interface processor on a pic32 will be able to analyze the collected data for better control at some future point
+ * The network interface processor on a RPi will be able to analyze the collected data for better control at some future point
  *
  * standard program display units:
  * Voltage  in millivolts,
