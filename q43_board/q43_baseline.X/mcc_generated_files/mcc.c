@@ -49,9 +49,13 @@
 
 void SYSTEM_Initialize(void)
 {
+    INTERRUPT_Initialize();
     PMD_Initialize();
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
+    TMR5_Initialize();
+    UART2_Initialize();
+    UART1_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

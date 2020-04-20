@@ -1,24 +1,26 @@
 /**
-  @Generated PIC10 / PIC12 / PIC16 / PIC18 MCUs Header File
+  Generated Interrupt Manager Source File
 
   @Company:
     Microchip Technology Inc.
 
   @File Name:
-    mcc.h
+    interrupt_manager.h
 
   @Summary:
-    This is the mcc.h file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+    This is the Interrupt Manager file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
+    This header file provides implementations for global interrupt handling.
+    For individual peripheral handlers please see the peripheral driver for
+    all modules selected in the GUI.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
         Device            :  PIC18F47Q43
-        Driver Version    :  2.00
+        Driver Version    :  2.12
     The generated drivers are tested against the following:
         Compiler          :  XC8 2.10 and above or later
-        MPLAB             :  MPLAB X 5.30
+        MPLAB 	          :  MPLAB X 5.30
 */
 
 /*
@@ -44,20 +46,8 @@
     SOFTWARE.
 */
 
-#ifndef MCC_H
-#define	MCC_H
-#include <xc.h>
-#include "device_config.h"
-#include "pin_manager.h"
-#include <stdint.h>
-#include <stdbool.h>
-#include <conio.h>
-#include "interrupt_manager.h"
-#include "tmr5.h"
-#include "uart2.h"
-#include "uart1.h"
-
-
+#ifndef INTERRUPT_MANAGER_H
+#define INTERRUPT_MANAGER_H
 
 /**
  * @Param
@@ -65,12 +55,11 @@
  * @Returns
     none
  * @Description
-    Initializes the device to the default states configured in the
- *                  MCC GUI
+    This macro will enable high priority global interrupts.
  * @Example
-    SYSTEM_Initialize(void);
+    INTERRUPT_GlobalInterruptHighEnable();
  */
-void SYSTEM_Initialize(void);
+#define INTERRUPT_GlobalInterruptHighEnable() (INTCON0bits.GIEH = 1)
 
 /**
  * @Param
@@ -78,12 +67,11 @@ void SYSTEM_Initialize(void);
  * @Returns
     none
  * @Description
-    Initializes the oscillator to the default states configured in the
- *                  MCC GUI
+    This macro will disable high priority global interrupts.
  * @Example
-    OSCILLATOR_Initialize(void);
+    INTERRUPT_GlobalInterruptHighDisable();
  */
-void OSCILLATOR_Initialize(void);
+#define INTERRUPT_GlobalInterruptHighDisable() (INTCON0bits.GIEH = 0)
 
 /**
  * @Param
@@ -91,15 +79,36 @@ void OSCILLATOR_Initialize(void);
  * @Returns
     none
  * @Description
-    Initializes the PMD module to the default states configured in the
- *                  MCC GUI
+    This macro will enable low priority global interrupts.
  * @Example
-    PMD_Initialize(void);
+    INTERRUPT_GlobalInterruptLowEnable();
  */
-void PMD_Initialize(void);
+#define INTERRUPT_GlobalInterruptLowEnable() (INTCON0bits.GIEL = 1)
 
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    This macro will disable low priority global interrupts.
+ * @Example
+    INTERRUPT_GlobalInterruptLowDisable();
+ */
+#define INTERRUPT_GlobalInterruptLowDisable() (INTCON0bits.GIEL = 0)
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    Initializes PIC18 peripheral interrupt priorities; enables/disables priority vectors
+ * @Example
+    INTERRUPT_Initialize();
+ */
+void INTERRUPT_Initialize (void);
 
-#endif	/* MCC_H */
+#endif  // INTERRUPT_MANAGER_H
 /**
  End of File
 */
