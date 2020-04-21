@@ -49,6 +49,7 @@
 #include "mcc_generated_files/tmr5.h"
 #include "vtouch.h"
 #include "vtouch_build.h"
+#include "timers.h"
 
 /*
  * Viision terminal code
@@ -248,6 +249,8 @@ uint16_t touch_corner1 = 0, touch_corner_timed = 0;
 volatile uint8_t host_rec[CAP_SIZE] = "H";
 volatile uint8_t scrn_rec[CAP_SIZE] = "S", idx = 0;
 
+volatile uint16_t tickCount[TMR_COUNT];
+
 
 void rxtx_handler(void);
 void led_flash(void);
@@ -424,6 +427,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 
 	if (emulat_type == E220) {
 		if (UART2_DataReady) { // is data from touchscreen
+			BLED_Toggle();
 			if (S.CAM && (status.cam_time > MAX_CAM_TIME)) {
 				CAM_RELAY_TIME = 0;
 				CAM_RELAY_AUX = 0; // clear video switch
@@ -457,7 +461,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 							}
 						} else if (ssbuf[1] == 'A') {
 							status.restart_delay = 0;
-							LATEbits.LATE2 = 0; // connect  led ON
+							BLED_LAT = 1; // connect  led ON
 							S.speedup = -10000;
 						}
 						break;
@@ -570,7 +574,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 						S.LCD_OK = TRUE; // looks like a screen controller is connected
 						S.SCREEN_INIT = FALSE; // command code has been received by lcd controller
 						status.init_check = 0; // reset init code timer
-						LATEbits.LATE2 = 0; // connect  led ON
+						BLED_LAT = 1; // connect  led ON
 
 						if (S.UNTOUCH) { // After untouch is sent dump buffer and clear all.
 							S.TOUCH = FALSE;
@@ -640,7 +644,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 							S.LCD_OK = TRUE; // looks like a screen controller is connected
 							S.SCREEN_INIT = FALSE; // command code has been received by lcd controller
 							status.init_check = 0; // reset init code timer
-							LATEbits.LATE2 = 0; // connect  led ON
+							BLED_LAT = 1; // connect  led ON
 						}
 					}
 
@@ -792,15 +796,12 @@ void main(void)
 	}
 
 	if (emulat_type == E220) {
-		setup_lcd(); // send lcd touch controller setup codes
-	}
-
-	if (emulat_type == E220) {
 		S.DATA1 = FALSE; // reset COMM flags.
 		S.DATA2 = FALSE; // reset touch COMM flag
 
 		Test_Screen(); // send touch init commands
 		/* Loop forever */
+		StartTimer(TMR_CAM, 1000);
 		while (TRUE) {
 			rxtx_handler();
 			if (j++ >= (BLINK_RATE_E220 + S.speedup)) { // delay a bit ok
@@ -817,7 +818,10 @@ void main(void)
 						S.CAM = FALSE;
 					}
 				}
-				status.cam_time++;
+				if (TimerDone(TMR_CAM)) {
+					status.cam_time++;
+					StartTimer(TMR_CAM, 1000);
+				}
 
 				/*		For the auto-restart switch						*/
 				//FIXME
@@ -843,7 +847,7 @@ void main(void)
 
 			if (S.CATCH46) { // flag to send report to host
 				if (S.CATCH) { // send the buffered touch report
-					//					Delay10KTCYx(75); // 75 ms
+					WaitMs(75); // 75 ms
 					putc1(0xFE); // send position report header to host
 					if (screen_type == DELL_E215546) {
 						ssreport.tohost = TRUE;
@@ -870,7 +874,7 @@ void main(void)
 					S.CATCH = FALSE;
 					S.CATCH46 = FALSE;
 				} else { // just send status
-					//					Delay10KTCYx(65); // 65 ms
+					WaitMs(65); // 65 ms
 					putc1(0xF5); // send status report
 					putc1(0xFF); // end of report
 					status.status_count++;
@@ -879,8 +883,7 @@ void main(void)
 			};
 
 			if (S.CATCH37) { // send screen size codes
-				//				LATFbits.LATF7 = 0; // off blink for rez codes sent
-				//				Delay10KTCYx(75); // 75 ms
+				WaitMs(75); // 75 ms
 				rez_scale_h = 1.0; // LCD touch screen real H/V rez
 				rez_scale_v = 1.0;
 				if (!(screen_type == DELL_E215546))
