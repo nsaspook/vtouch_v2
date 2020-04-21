@@ -375,14 +375,14 @@ void setup_lcd(void)
 	}
 }
 
-void putc1(uint16_t c)
+void putc1(uint8_t c)
 {
 	while (!UART1_is_tx_ready()) {
 	}; // wait until the usart is clear
 	UART1_Write(c);
 }
 
-void putc2(uint16_t c)
+void putc2(uint8_t c)
 {
 	while (!UART2_is_tx_ready()) {
 	}; // wait until the usart is clear
