@@ -726,33 +726,6 @@ void main(void)
 	// default interface
 	screen_type = DELL_E215546;
 	emulat_type = E220;
-	z = 0b11111001; // DELL_E224864 E220
-	if (z == 0b11111110) {
-		screen_type = DELL_E215546;
-		emulat_type = VIISION;
-		z = 0b11111110;
-	}
-	if (z == 0b11111010) {
-		screen_type = DELL_E224864;
-		emulat_type = VIISION;
-	}
-	if (z == 0b11111101) {
-		screen_type = DELL_E215546;
-		emulat_type = E220;
-		z = 0b11111101;
-	}
-	if (z == 0b11111001) {
-		screen_type = DELL_E224864;
-		emulat_type = E220;
-	}
-	if (z == 0b11111100) {
-		screen_type = DELL_E215546;
-		emulat_type = OTHER_MECH;
-	}
-	if (z == 0b11111000) {
-		screen_type = DELL_E224864;
-		emulat_type = OTHER_MECH;
-	}
 
 	CAM_RELAY_TIME = 0;
 	CAM_RELAY = 0;
@@ -799,7 +772,7 @@ void main(void)
 		S.DATA1 = FALSE; // reset COMM flags.
 		S.DATA2 = FALSE; // reset touch COMM flag
 
-		Test_Screen(); // send touch init commands
+		setup_lcd();
 		/* Loop forever */
 		StartTimer(TMR_CAM, 1000);
 		while (TRUE) {
