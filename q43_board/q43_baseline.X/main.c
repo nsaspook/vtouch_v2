@@ -63,27 +63,6 @@
  * usart1	connected to implant host computer at 9600
  * usart2       connected to touchscreen  serial post at 9600
  *
- *
- * V1.00	First release
- * V1.01	pre compute X/Y scale values
- * V1.02	Clean up port setup code and WDT (remove clrwdt from isr)
- * V1.03        New touchscreen support.
- * V1.04	xmit rs232 uses int mode in ISR
- * V1.05	Configuration for touch code repeats sending to host
- * V1.06	Set touch repeats to zero
- * V1.07        Set Z touch value to max 0x0F
- * V1.08	Set Z to 1 and remove multi-touch testing
- * V2.00        Code rewrite
- * V3.00	add code for smartset again
- * V3.01	mode checks and lamps for proper smartset to emulation operation
- * V3.10	working Intellitouch version
- * V3.20	code cleanup
- * V3.30	unified Viision/E220/E500 driver, see vtouch_build.h
- * V3.31	bug fixes, cleanup
- * V3.32	PORT G jumpers for smartset configuation.
- * V3.33	display screen/machine config on LATJ with data 8 bit config on PORTB, program structure
- * V3.34	merge state machine refactor update
- * V3.35	"" ""
  * V4.00	convert to 47Q43 board and XC8
  *
  *
@@ -137,7 +116,7 @@ typedef struct reporttype {
 	uint16_t x_cord, y_cord, z_cord;
 	uint8_t checksum;
 	uint8_t tohost;
-} volatile reporttype;
+} reporttype;
 
 typedef struct statustype {
 	int32_t alive_led, touch_count, resync_count, rawint_count, status_count;
@@ -146,11 +125,11 @@ typedef struct statustype {
 	uint8_t do_cap : 1;
 	uint8_t comm_check, init_check, touch_good, cam_time;
 	uint16_t restart_delay;
-} volatile statustype;
+} statustype;
 
 typedef struct flag_var_t {
 	uint8_t CATCH : 1, TOUCH : 1;
-} volatile F;
+} F;
 
 typedef struct disp_state_t {
 	uint8_t CATCH, TOUCH, UNTOUCH, LCD_OK,
@@ -160,7 +139,7 @@ typedef struct disp_state_t {
 	uint16_t c_idx, speedup, ts_type;
 } disp_state_t;
 
-volatile disp_state_t S = {
+disp_state_t S = {
 	.ts_type = TS_TYPE
 };
 
@@ -182,18 +161,17 @@ enum emulat_type_t {
 	VIISION, E220, OTHER_MECH
 };
 
-volatile enum screen_type_t screen_type;
-volatile enum emulat_type_t emulat_type;
+enum screen_type_t screen_type;
+enum emulat_type_t emulat_type;
 
-volatile int32_t j = 0;
-volatile float xs = X_SCALE, ys = Y_SCALE, xs_ss = X_SCALE_SS, ys_ss = Y_SCALE_SS; // defaults
-volatile uint16_t timer0_off = TIMEROFFSET;
+int32_t j = 0;
+float xs = X_SCALE, ys = Y_SCALE, xs_ss = X_SCALE_SS, ys_ss = Y_SCALE_SS; // defaults
 
-volatile uint8_t elobuf[BUF_SIZE], elobuf_out[BUF_SIZE_V80], elobuf_in[BUF_SIZE_V80], xl = X_LOGICAL, yl = Y_LOGICAL;
-volatile uint8_t ssbuf[BUF_SIZE];
+uint8_t elobuf[BUF_SIZE], elobuf_out[BUF_SIZE_V80], elobuf_in[BUF_SIZE_V80], xl = X_LOGICAL, yl = Y_LOGICAL;
+uint8_t ssbuf[BUF_SIZE];
 
-volatile struct reporttype ssreport;
-volatile struct statustype status;
+struct reporttype ssreport;
+struct statustype status;
 
 const uint8_t elocodes_s_v[] = {
 	0x0d, 0x0d, 0x0d, 0x0d, 0x0d, 0x3c, 0x2b, 0x44, 0x25, 0x29, 0x44, 0x3d, 0x2a, 0x37
@@ -210,45 +188,43 @@ const uint8_t elocodes[ELO_SEQ_V80][ELO_SIZE_I_V80] = {// elo 2210/2216 program 
 	'U', 'R', '2', '0', '0', '0', '0', '0', '0', '0', // nvram reset
 }; // initial intelli-touch codes
 
-uint8_t elocodes_m_e[] = {// 5 char, soft-reset,touch scanning off, report transfer on, (0x26) tracking mode, report transfer on, clear touch buffer, touch scanning on
+const uint8_t elocodes_m_e[] = {// 5 char, soft-reset,touch scanning off, report transfer on, (0x26) tracking mode, report transfer on, clear touch buffer, touch scanning on
 	0x0d, 0x0d, 0x0d, 0x0d, 0x0d, 0x3c, 0x2b, 0x44, 0x26, 0x44, 0x3d, 0x2a
 }; // initial touch config codes, tracking
-uint8_t elocodes_s_e[] = {// same as above ex (0x25) enter point mode
+const uint8_t elocodes_s_e[] = {// same as above ex (0x25) enter point mode
 	0x0d, 0x0d, 0x0d, 0x0d, 0x0d, 0x3c, 0x2b, 0x44, 0x25, 0x44, 0x3d, 0x2a
 }; // initial touch config codes, single
 
 
 // SmartSet codes 0 command, 1 status, 2 low byte, 3 high byte, etc ...
-uint8_t elocodes_e0[] = {
+const uint8_t elocodes_e0[] = {
 	'U', 'B', 0x03, 0x8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // smartset timing and spacing setup
 };
-uint8_t elocodes_e1[] = {
+const uint8_t elocodes_e1[] = {
 	'U', 'E', '1', '4', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-uint8_t elocodes_e2[] = {
+const uint8_t elocodes_e2[] = {
 	'U', 'N', '1', '7', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-uint8_t elocodes_e3[] = {
+const uint8_t elocodes_e3[] = {
 	'U', 'R', '2', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // reset nvram and reboot
 };
-uint8_t elocodes_e4[] = {
+const uint8_t elocodes_e4[] = {
 	'U', 'S', 'Y', 0x01, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-uint8_t elocodes_e5[] = {
+const uint8_t elocodes_e5[] = {
 	'U', 'i', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-uint8_t elocodes_e6[] = {
+const uint8_t elocodes_e6[] = {
 	'U', 'g', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
-uint8_t elocodes_e7[] = {// dummy packet
+const uint8_t elocodes_e7[] = {// dummy packet
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
 uint16_t touch_corner1 = 0, touch_corner_timed = 0;
 
-volatile uint8_t host_rec[CAP_SIZE] = "H";
-volatile uint8_t scrn_rec[CAP_SIZE] = "S", idx = 0;
-
+uint8_t idx = 0;
 volatile uint16_t tickCount[TMR_COUNT];
 
 
@@ -261,7 +237,7 @@ void touch_cam(void)
 	if (S.CATCH) {
 		if ((elobuf[0] <= (uint8_t) 0x06) && (elobuf[1] >= (uint8_t) 0x5a)) { // check for left bottom corner
 			touch_corner1++;
-			touch_corner_timed = TRUE;
+			touch_corner_timed = true;
 		};
 
 		if ((elobuf[0] >= (uint8_t) 0x72) && (elobuf[1] >= (uint8_t) 0x5a)) { // check for right bottom corner
@@ -271,7 +247,7 @@ void touch_cam(void)
 
 
 	if (touch_corner1 >= MAX_CAM_TOUCH) { // we have several corner presses 
-		S.CAM = TRUE;
+		S.CAM = true;
 		status.cam_time = 0;
 		CAM_RELAY_TIME = 1;
 		touch_corner1 = 0;
@@ -285,6 +261,7 @@ void touch_cam(void)
 void wdtdelay(uint32_t delay)
 {
 	uint32_t dcount;
+
 	for (dcount = 0; dcount <= delay; dcount++) { // delay a bit
 		ClrWdt(); // reset the WDT timer
 	};
@@ -304,7 +281,6 @@ void elocmdout(uint8_t * elostr)
 
 void eloSScmdout(uint8_t elostr)
 {
-
 	while (!UART2_is_tx_ready()) {
 	}; // wait until the usart is clear
 	UART2_Write(elostr);
@@ -315,7 +291,7 @@ void eloSScmdout(uint8_t elostr)
 	wdtdelay(10000); // inter char delay
 }
 
-void elopacketout(uint8_t *strptr, uint8_t strcount, uint8_t slow)
+void elopacketout(const uint8_t *strptr, uint8_t strcount, uint8_t slow)
 {
 	uint8_t i, c, sum = 0;
 
@@ -382,27 +358,24 @@ void start_delay(void)
 
 void rxtx_handler(void) // timer & serial data transform functions are handled here
 {
-	static uint8_t junk = 0, c = 0, *data_ptr,
-		i = 0, data_pos, data_len, tchar, uchar;
+	static uint8_t c = 0, i = 0, data_pos, uchar, tchar;
 	uint16_t x_tmp, y_tmp, uvalx, lvalx, uvaly, lvaly;
-	static uint16_t scrn_ptr = 0, host_ptr = 0;
 	static uint8_t sum = 0xAA + 'U';
 
 	status.rawint_count++;
-
-
 	if (UART1_DataReady) { // is data from host COMM1, only from E220/E500 machines
 
 		if (status.do_cap) {
 		} else {
 			tchar = UART1_Read(); // read from host
-			S.DATA1 = TRUE; // usart is connected to data
+			S.DATA1 = true; // usart is connected to data
+			S.LCD_OK = true; // looks like a screen controller is connected
 			if (tchar == 0x46) { // send one report to host
-				S.CATCH46 = TRUE;
+				S.CATCH46 = true;
 				status.touch_good = 0;
 			}
 			if (tchar == 0x37) { // start of touch scan read
-				S.CATCH37 = TRUE;
+				S.CATCH37 = true;
 				status.touch_good = 0;
 			}
 			if (tchar == 0x3C) { // touch reset from host
@@ -419,7 +392,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				CAM_RELAY_TIME = 0;
 				CAM_RELAY_AUX = 0; // clear video switch
 				CAM_RELAY = 0; // clear video switch
-				S.CAM = FALSE;
+				S.CAM = false;
 			}
 
 			c = UART2_Read(); // read data from touchscreen
@@ -438,7 +411,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				}
 				if (ssbuf[1] == 'T') {
 					status.restart_delay = 0;
-					S.CATCH = TRUE;
+					S.CATCH = true;
 					if (!ssreport.tohost) {
 						ssreport.x_cord = (ELO_REV_H - (((uint16_t) ssbuf[3])+(((uint16_t) ssbuf[4]) << 8))) >> 4;
 						ssreport.y_cord = (((uint16_t) ssbuf[5])+(((uint16_t) ssbuf[6]) << 8)) >> 4;
@@ -451,7 +424,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				break;
 			}
 			sum += c;
-			S.DATA2 = TRUE; // usart is connected to data
+			S.DATA2 = true; // usart is connected to data
 		}
 	}
 
@@ -462,7 +435,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 			c = UART2_Read();
 
 			if (((c & 0xc0) == 0xc0) || S.CATCH) { // start of touch sequence
-				S.CATCH = TRUE; // found elo touch command start of sequence
+				S.CATCH = true; // found elo touch command start of sequence
 				j = 0; // reset led timer
 				elobuf[i++] = c; // start stuffing the command buffer
 			}
@@ -470,13 +443,13 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				i = 0; // reset i to start of cmd
 				uchar = 0; /* check for proper touch format */
 				if ((elobuf[0]& 0xc0) == 0xc0) /* binary start code? */
-					uchar = TRUE;
+					uchar = true;
 
-				S.CATCH = FALSE; // reset buffering now
+				S.CATCH = false; // reset buffering now
 
 				/* munge the data for proper Varian format */
 				if (elobuf[5]) { // S.TOUCH
-					S.TOUCH = TRUE; // first touch sequence has been sent
+					S.TOUCH = true; // first touch sequence has been sent
 					uvalx = elobuf[0]&0x3f; // prune the data to 6-bits
 					lvalx = elobuf[1]&0x3f;
 					uvaly = elobuf[2]&0x3f;
@@ -500,7 +473,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				}
 
 				if (!elobuf[5]) { //S.UNTOUCH
-					S.UNTOUCH = TRUE; // untouch sequence found
+					S.UNTOUCH = true; // untouch sequence found
 					elobuf_out[0] = 0xc0; // restuff the buffer with needed varian untouch sequence
 					elobuf_out[1] = 0x80;
 					elobuf_out[2] = 0x40;
@@ -517,15 +490,15 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 							UART1_Write(elobuf_out[data_pos]);
 						} while (++data_pos < HOST_CMD_SIZE_V80);
 					}
-					S.LCD_OK = TRUE; // looks like a screen controller is connected
-					S.SCREEN_INIT = FALSE; // command code has been received by lcd controller
+					S.LCD_OK = true; // looks like a screen controller is connected
+					S.SCREEN_INIT = false; // command code has been received by lcd controller
 					status.init_check = 0; // reset init code timer
 					BLED_LAT = 1; // connect  led ON
 
 					if (S.UNTOUCH) { // After untouch is sent dump buffer and clear all.
-						S.TOUCH = FALSE;
-						S.UNTOUCH = FALSE;
-						S.CATCH = FALSE;
+						S.TOUCH = false;
+						S.UNTOUCH = false;
+						S.CATCH = false;
 					}
 				}
 			}
@@ -533,9 +506,9 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 			/* Clear the interrupt flag */
 			if (i > CMD_OVERFLOW_V80) {
 				i = 0; // just incase i is greater than CMD_SIZE*2 somehow
-				S.CATCH = FALSE;
-				S.TOUCH = FALSE;
-				S.UNTOUCH = FALSE;
+				S.CATCH = false;
+				S.TOUCH = false;
+				S.UNTOUCH = false;
 			}
 
 			LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
@@ -567,8 +540,6 @@ uint8_t Test_Screen(void)
  */
 void main(void)
 {
-	uint8_t z, check_byte;
-	uint16_t eep_ptr;
 	uint8_t scaled_char;
 	float rez_scale_h = 1.0, rez_parm_h, rez_scale_v = 1.0, rez_parm_v;
 	float rez_scale_h_ss = ELO_SS_H_SCALE, rez_scale_v_ss = ELO_SS_V_SCALE;
@@ -581,8 +552,6 @@ void main(void)
 	// If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global Interrupts
 	// Use the following macros to:
 
-
-	status.do_cap = DO_CAP;
 	S.c_idx = 0;
 	S.speedup = 0;
 
@@ -596,7 +565,7 @@ void main(void)
 	CAM_RELAY_AUX = 0;
 	status.touch_count = 0;
 	S.CAM = 0;
-	ssreport.tohost = TRUE;
+	ssreport.tohost = true;
 
 
 	// Enable high priority global interrupts
@@ -612,7 +581,6 @@ void main(void)
 	//INTERRUPT_GlobalInterruptLowDisable();
 
 	if (emulat_type == OTHER_MECH) {
-
 	}
 
 	if (emulat_type == VIISION) {
@@ -626,13 +594,13 @@ void main(void)
 	}
 
 	if (emulat_type == E220) {
-		S.DATA1 = FALSE; // reset COMM flags.
-		S.DATA2 = FALSE; // reset touch COMM flag
+		S.DATA1 = false; // reset COMM flags.
+		S.DATA2 = false; // reset touch COMM flag
 
 		setup_lcd();
 		/* Loop forever */
 		StartTimer(TMR_CAM, 1000);
-		while (TRUE) {
+		while (true) {
 			rxtx_handler();
 			if (j++ >= (BLINK_RATE_E220 + S.speedup)) { // delay a bit ok
 #ifdef	DEBUG_CAM
@@ -642,10 +610,10 @@ void main(void)
 				if (status.cam_time > MAX_CAM_TIMEOUT) {
 					CAM_RELAY_TIME = 0;
 					if (touch_corner_timed) {
-						touch_corner_timed = FALSE;
+						touch_corner_timed = false;
 						CAM_RELAY_AUX = 0; // clear video switch
 						CAM_RELAY = 0; // clear video switch
-						S.CAM = FALSE;
+						S.CAM = false;
 					}
 				}
 				if (TimerDone(TMR_CAM)) {
@@ -660,11 +628,11 @@ void main(void)
 						start_delay();
 						setup_lcd(); // send lcd touch controller setup codes
 						start_delay();
-						while (TRUE) {
+						while (true) {
 						}; // lockup WDT counter to restart
 					} else {
 						if ((status.restart_delay >= (uint16_t) 150) && (S.TSTATUS)) { // after delay restart TS status.
-							S.TSTATUS = FALSE; // lost comms while connected
+							S.TSTATUS = false; // lost comms while connected
 							status.restart_delay = 0;
 						};
 					};
@@ -678,13 +646,12 @@ void main(void)
 			if (S.CATCH46) { // flag to send report to host
 				if (S.CATCH) { // send the buffered touch report
 					DEBUG1_Toggle();
-					//					WaitMs(75); // 75 ms
 					putc1(0xFE); // send position report header to host
 					if (screen_type == DELL_E215546) {
-						ssreport.tohost = TRUE;
+						ssreport.tohost = true;
 						rez_parm_h = ((float) (ssreport.x_cord)) * rez_scale_h_ss;
 						rez_parm_v = ((float) (ssreport.y_cord)) * rez_scale_v_ss;
-						ssreport.tohost = FALSE;
+						ssreport.tohost = false;
 						scaled_char = ((uint16_t) (rez_parm_h));
 						elobuf[0] = scaled_char;
 						putc1(scaled_char); // send h scaled touch coord
@@ -702,19 +669,17 @@ void main(void)
 					}
 					putc1(0xFF); // send end of report to host
 					status.touch_count++;
-					S.CATCH = FALSE;
-					S.CATCH46 = FALSE;
+					S.CATCH = false;
+					S.CATCH46 = false;
 				} else { // just send status
-					//					WaitMs(65); // 65 ms
 					putc1(0xF5); // send status report
 					putc1(0xFF); // end of report
 					status.status_count++;
-					S.CATCH46 = FALSE;
+					S.CATCH46 = false;
 				};
 			};
 
 			if (S.CATCH37) { // send screen size codes
-				//				WaitMs(75); // 75 ms
 				rez_scale_h = 1.0; // LCD touch screen real H/V rez
 				rez_scale_v = 1.0;
 				if (!(screen_type == DELL_E215546))
@@ -731,7 +696,7 @@ void main(void)
 				}
 				putc1(0xFF); // end of report
 				status.resync_count++;
-				S.CATCH37 = FALSE;
+				S.CATCH37 = false;
 			};
 
 			if (S.TOUCH) {
@@ -744,16 +709,12 @@ void main(void)
 
 	if (emulat_type == VIISION) {
 		/* Loop forever */
-		while (TRUE) { // busy loop BSG style
+		while (true) { // busy loop BSG style
 			rxtx_handler();
 			if (j++ >= BLINK_RATE_V80) { // delay a bit ok
 				LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
-
 				if (S.LCD_OK) { // screen status feedback
-
-					timer0_off = TIMEROFFSET;
 				} else {
-					timer0_off = TIMERFAST;
 				}
 				j = 0;
 			}
@@ -764,7 +725,7 @@ void main(void)
 
 	if (emulat_type == OTHER_MECH) {
 		/* Loop forever */
-		while (TRUE) { // busy loop BSG style
+		while (true) { // busy loop BSG style
 			rxtx_handler();
 			if (j++ >= BLINK_RATE_OTHER) { // delay a bit ok
 				LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
@@ -784,15 +745,15 @@ void led_flash(void)
 {
 	LED2_Toggle();
 	idx = 0; // reset packet char index counter
-	ssreport.tohost = FALSE; // when packets stop allow for next updates
+	ssreport.tohost = false; // when packets stop allow for next updates
 	if (!S.LCD_OK && (status.init_check++ >LCD_CHK_TIME)) {
 		status.init_check = 0; // reset screen init code counter
-		S.SCREEN_INIT = TRUE; // set init code flag so it can be sent in main loop
+		S.SCREEN_INIT = true; // set init code flag so it can be sent in main loop
 	}
 
 	if ((status.comm_check++ >COMM_CHK_TIME) && !S.CATCH) { // check for LCD screen connection
 		status.comm_check = 0; // reset connect heartbeat counter
-		S.LCD_OK = FALSE; // reset the connect flag while waiting for response from controller.
+		S.LCD_OK = false; // reset the connect flag while waiting for response from controller.
 		while (!UART2_is_tx_ready()) {
 		}; // wait until the usart is clear
 	}
