@@ -220,7 +220,7 @@ uint8_t elocodes_s_e[] = {// same as above ex (0x25) enter point mode
 
 // SmartSet codes 0 command, 1 status, 2 low byte, 3 high byte, etc ...
 uint8_t elocodes_e0[] = {
-	'U', 'B', 0x01, 0x4, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // smartset timing and spacing setup
+	'U', 'B', 0x03, 0x8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // smartset timing and spacing setup
 };
 uint8_t elocodes_e1[] = {
 	'U', 'E', '1', '4', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -229,7 +229,7 @@ uint8_t elocodes_e2[] = {
 	'U', 'N', '1', '7', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 uint8_t elocodes_e3[] = {
-	'U', 'R', '2', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	'U', 'R', '2', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // reset nvram and reboot
 };
 uint8_t elocodes_e4[] = {
 	'U', 'S', 'Y', 0x01, 0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -427,6 +427,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 
 	if (emulat_type == E220) {
 		if (UART2_DataReady) { // is data from touchscreen
+			DEBUG2_Toggle();
 			BLED_Toggle();
 			if (S.CAM && (status.cam_time > MAX_CAM_TIME)) {
 				CAM_RELAY_TIME = 0;
@@ -725,7 +726,8 @@ void main(void)
 
 	// default interface
 	screen_type = DELL_E215546;
-	emulat_type = E220;
+//	emulat_type = E220;
+	emulat_type = VIISION;
 
 	CAM_RELAY_TIME = 0;
 	CAM_RELAY = 0;
@@ -820,7 +822,8 @@ void main(void)
 
 			if (S.CATCH46) { // flag to send report to host
 				if (S.CATCH) { // send the buffered touch report
-					WaitMs(75); // 75 ms
+					DEBUG1_Toggle();
+					//					WaitMs(75); // 75 ms
 					putc1(0xFE); // send position report header to host
 					if (screen_type == DELL_E215546) {
 						ssreport.tohost = TRUE;
@@ -847,7 +850,7 @@ void main(void)
 					S.CATCH = FALSE;
 					S.CATCH46 = FALSE;
 				} else { // just send status
-					WaitMs(65); // 65 ms
+					//					WaitMs(65); // 65 ms
 					putc1(0xF5); // send status report
 					putc1(0xFF); // end of report
 					status.status_count++;
@@ -856,7 +859,7 @@ void main(void)
 			};
 
 			if (S.CATCH37) { // send screen size codes
-				WaitMs(75); // 75 ms
+				//				WaitMs(75); // 75 ms
 				rez_scale_h = 1.0; // LCD touch screen real H/V rez
 				rez_scale_v = 1.0;
 				if (!(screen_type == DELL_E215546))

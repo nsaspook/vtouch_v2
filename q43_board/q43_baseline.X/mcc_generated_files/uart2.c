@@ -50,6 +50,7 @@
 #include <xc.h>
 #include "uart2.h"
 #include "interrupt_manager.h"
+#include "pin_manager.h"
 
 /**
   Section: Macro Declarations
@@ -267,7 +268,8 @@ void UART2_Receive_ISR(void)
 
 void UART2_RxDataHandler(void)
 {
-	// use this default receive interrupt handler code
+	// use this default receive interrupt handler code							
+	DEBUG2_Toggle();
 	uart2RxBuffer[uart2RxHead++] = U2RXB;
 	if (sizeof(uart2RxBuffer) <= uart2RxHead) {
 		uart2RxHead = 0;
