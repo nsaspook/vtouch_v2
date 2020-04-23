@@ -620,7 +620,7 @@ void main(void)
 static bool current_sensor_cal(void)
 {
 	uint8_t x = 0;
-	uint32_t cb = 0, cp = 0;
+	uint32_t cb = 0, cp = 0, cm = 0;
 
 	sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
 	sprintf(get_vterm_ptr(1, 0), "Sensor Zero          ");
@@ -637,30 +637,32 @@ static bool current_sensor_cal(void)
 
 	x = 0;
 	do {
-		cb += get_raw_result(C_BATT);
+		cb += get_raw_result(C_BATT); // get a average result
 		cp += get_raw_result(C_PV);
+		cm += get_raw_result(C_MPPT);
 		sprintf(get_vterm_ptr(0, 0), "Sensor Readings      ");
-		sprintf(get_vterm_ptr(1, 0), " %d %d               ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(1, 0), " %d %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV), get_raw_result(C_MPPT));
 		sprintf(get_vterm_ptr(2, 0), "Stability clock %d   ", x);
 		update_lcd(0);
 		clear_adc_scan();
 		start_adc_scan();
 		WaitMs(100);
 	} while (++x < CAL_DELAY);
-	cb = cb >> 6;
+	cb = cb >> 6; // shift down for average result
 	cp = cp >> 6;
+	cm = cm >> 6;
 
-	if (cal_current_zero(false, cb, cp)) {
-		cal_current_zero(true, cb, cp);
+	if (cal_current_zero(false, cb, cp, cm)) {
+		cal_current_zero(true, cb, cp, cm);
 		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
-		sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", cb, cp);
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld %ld            ", cb, cp, cm);
 		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set         ");
 		update_lcd(0);
 		WaitMs(2000);
 		write_cal_data();
 	} else {
 		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
-		sprintf(get_vterm_ptr(1, 0), " %ld %ld             ", get_raw_result(C_BATT), get_raw_result(C_PV));
+		sprintf(get_vterm_ptr(1, 0), " %ld %ld %ld            ", cb, cp, cm);
 		sprintf(get_vterm_ptr(2, 0), "Zero Out Of Range    ");
 		update_lcd(0);
 		WaitMs(2000);

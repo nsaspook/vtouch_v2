@@ -365,13 +365,16 @@ static bool check_range(const int16_t value, const int16_t window, const int16_t
 /*
  * mode set to false for check values only, do not update
  */
-bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp)
+bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp, const int16_t cm)
 {
 
 	if (!check_range(cb, ZERO_RANGE, C_CAL_ZERO))
 		return false;
 
 	if (!check_range(cp, ZERO_RANGE, C_CAL_ZERO))
+		return false;
+
+	if (!check_range(cm, ZERO_RANGE, C_CAL_ZERO))
 		return false;
 
 	if (!mode)
@@ -383,13 +386,13 @@ bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp)
 	R.n_offset[A200] = cb;
 #endif
 	R.n_offset[A100] = cp;
-	R.n_offset[A100M] = C_OFFSET100M; //fixme for real value
+	R.n_offset[A100M] = cm;
 	R.c_zero_cal = true;
 	return true;
 }
 
 /*
- * update internal current scaling using a calibrated 10A flow in both sensors
+ * update internal current scaling using a calibrated 10A value in both sensors
  */
 bool cal_current_10A(const bool mode, const int16_t cb, const int16_t cp, const float scaleb, const float scalep)
 {

@@ -113,7 +113,7 @@
 #endif
 #define C_OFFSET100B	4004 // BATTERY sensor adc zero Amp counts, line 0
 #define C_OFFSET100	4004 // PV sensor adc zero Amp counts,      line 1
-#define C_OFFSET100M	3995 // MPPT sensor adc zero Amp counts,      line 2
+#define C_OFFSET100M	4000 // MPPT sensor adc zero Amp counts,      line 2
 
 /*
  * sanity check values for current calibration routines
@@ -144,7 +144,7 @@ void dac_spi_control(bool);
 void set_dac(void);
 uint16_t set_dac_a(float);
 uint16_t set_dac_b(float);
-bool cal_current_zero(bool, int16_t, int16_t);
+bool cal_current_zero(bool, int16_t, int16_t, int16_t);
 bool cal_current_10A(bool, int16_t, int16_t, float, float);
 bool read_cal_data(void);
 void write_cal_data(void);
