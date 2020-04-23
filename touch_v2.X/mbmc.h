@@ -40,7 +40,7 @@
 #define LP_BUFFER_SIZE	ADC_BUFFER_SIZE+8
 #define STATIC_LOAD_POWER	14.00
 #define BANKAH	225.0	// baatery bank label Ah
-#define DEGRADE	100.0	// adjust to what the battery bank Ah really is
+#define DEGRADE	150.0	// adjust to what the battery bank Ah really is
 #define SSLICE	3600.0	// samples per hour
 
 #ifdef DEBUG_HIST1
@@ -63,6 +63,8 @@
 #define DAWN_VOLTS	22.0
 #define DUSK_VOLTS	12.0
 #define BRIGHT_VOLTS	50.0
+#define BAT_LOW_VOLTS	21.5
+#define BAT_DEAD_VOLTS	18.0
 #define MAX_AC_TIME	60*60*4 // AC charger max runtime per trigger
 #define DAY_DELAY	240
 #define SOC_TOO_LOW	20

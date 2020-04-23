@@ -59,7 +59,7 @@
 // CONFIG3
 #pragma config MCLRE = EXTMCLR    // MCLR Enable bit->If LVP = 0, MCLR pin is MCLR; If LVP = 1, RE3 pin function is MCLR 
 #pragma config PWRTS = PWRT_OFF    // Power-up timer selection bits->PWRT is disabled
-#pragma config MVECEN = OFF    // Multi-vector enable bit->Interrupt contoller does not use vector table to prioritze interrupts
+#pragma config MVECEN = ON    // Multi-vector enable bit->Multi-vector enabled, Vector table used for interrupts
 #pragma config IVT1WAY = ON    // IVTLOCK bit One-way set enable bit->IVTLOCKED bit can be cleared and set only once
 #pragma config LPBOREN = OFF    // Low Power BOR Enable bit->Low-Power BOR disabled
 #pragma config BOREN = SBORDIS    // Brown-out Reset Enable bits->Brown-out Reset enabled , SBOREN bit is ignored
@@ -69,16 +69,16 @@
 #pragma config ZCD = OFF    // ZCD Disable bit->ZCD module is disabled. ZCD can be enabled by setting the ZCDSEN bit of ZCDCON
 #pragma config PPS1WAY = ON    // PPSLOCK bit One-Way Set Enable bit->PPSLOCKED bit can be cleared and set only once; PPS registers remain locked after one clear/set cycle
 #pragma config STVREN = ON    // Stack Full/Underflow Reset Enable bit->Stack full/underflow will cause Reset
-#pragma config LVP = ON    // Low Voltage Programming Enable bit->Low voltage programming enabled. MCLR/VPP pin function is MCLR. MCLRE configuration bit is ignored
+#pragma config LVP = OFF    // Low Voltage Programming Enable bit->HV on MCLR/VPP must be used for programming
 #pragma config XINST = OFF    // Extended Instruction Set Enable bit->Extended Instruction Set and Indexed Addressing Mode disabled
 
 // CONFIG5
-#pragma config WDTCPS = WDTCPS_31    // WDT Period selection bits->Divider ratio 1:65536; software control of WDTPS
-#pragma config WDTE = OFF    // WDT operating mode->WDT Disabled; SWDTEN is ignored
+#pragma config WDTCPS = WDTCPS_14    // WDT Period selection bits->Divider ratio 1:524299
+#pragma config WDTE = SWDTEN    // WDT operating mode->WDT enabled/disabled by SWDTEN bit
 
 // CONFIG6
 #pragma config WDTCWS = WDTCWS_7    // WDT Window Select bits->window always open (100%); software control; keyed access not required
-#pragma config WDTCCS = SC    // WDT input clock selector->Software Control
+#pragma config WDTCCS = LFINTOSC    // WDT input clock selector->WDT reference clock is the 31.0 kHz LFINTOSC
 
 // CONFIG7
 #pragma config BBSIZE = BBSIZE_512    // Boot Block Size selection bits->Boot Block size is 512 words

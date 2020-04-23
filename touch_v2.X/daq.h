@@ -82,7 +82,7 @@
 #define EE_CHECKMARK	0x1957
 #define TATE		0x42
 
-//#define CAL_10A
+#define CAL_10A
 
 /*
  * conversion constants
@@ -120,9 +120,9 @@
  */
 #define C_CAL_ZERO	4000
 #ifndef BAT_100A
-#define C_CAL_A200	4050 // fixme with real values
+#define C_CAL_A200	4150 // fixme with real values
 #endif
-#define C_CAL_A100	4278 // ..
+#define C_CAL_A100	4240 // ..
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include "mcc_generated_files/adcc.h"

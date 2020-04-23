@@ -178,7 +178,7 @@ char spinners(uint8_t shape, const uint8_t reset)
  */
 bool check_day_time(void)
 {
-	static uint8_t day_delay = 0;
+	static uint8_t day_delay = 0, low_bat_delay = 0;
 	float light;
 
 	light = conv_raw_result(V_LIGHT_SENSOR, CONV);
@@ -226,6 +226,16 @@ bool check_day_time(void)
 		if (time(NULL) >= V.blight) {
 			V.blight = 0; // set to trigger time to false
 			V.blight_off = true; // trigger a display back-light off command
+		}
+	}
+
+	if (V.system_stable) {
+		// low battery volts, turn on charger
+		if ((C.v_bat < BAT_LOW_VOLTS) && (C.v_bat > BAT_DEAD_VOLTS) && (++low_bat_delay > 10)) {
+			V.ac_on = true;
+			low_bat_delay = 0;
+		} else {
+			low_bat_delay = 0;
 		}
 	}
 
