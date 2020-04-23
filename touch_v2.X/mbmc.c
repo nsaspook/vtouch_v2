@@ -229,9 +229,12 @@ bool check_day_time(void)
 		}
 	}
 
-	if (V.system_stable && (++low_bat_delay > 10)) { // low battery volts, turn on charger
-		if (C.v_bat < BAT_LOW_VOLTS) {
+	if (V.system_stable) {
+		// low battery volts, turn on charger
+		if ((C.v_bat < BAT_LOW_VOLTS) && (C.v_bat > BAT_DEAD_VOLTS) && (++low_bat_delay > 10)) {
 			V.ac_on = true;
+			low_bat_delay = 0;
+		} else {
 			low_bat_delay = 0;
 		}
 	}

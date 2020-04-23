@@ -139,10 +139,6 @@ typedef struct disp_state_t {
 	uint16_t c_idx, speedup, ts_type;
 } disp_state_t;
 
-disp_state_t S = {
-	.ts_type = TS_TYPE
-};
-
 /*
  * Old monitors
  * E779866	SecureTouch  use DELL_E215546 setting
@@ -152,7 +148,19 @@ disp_state_t S = {
  * E328497	IntelliTouch use DELL_E215546 setting
  * E483757	new remote OSD
  * E005277	power brick
+ * 
+ * TS_TYPE	0 Original CRT type screens
+ *		1 OEM LCD screens
  */
+
+enum oem_type {
+	OEM_CRT=0, OEM_LCD=1
+};
+
+disp_state_t S = {
+	.ts_type = OEM_CRT,
+};
+
 enum screen_type_t {
 	DELL_E215546, OTHER_SCREEN
 };
@@ -249,7 +257,6 @@ void touch_cam(void)
 	if (touch_corner1 >= MAX_CAM_TOUCH) { // we have several corner presses 
 		S.CAM = true;
 		status.cam_time = 0;
-		CAM_RELAY_TIME = 1;
 		touch_corner1 = 0;
 		CAM_RELAY_AUX = 1; // set secondary VGA/CAM switch
 		CAM_RELAY = 1; // set primary VGA/CAM switch
@@ -389,7 +396,6 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 			DEBUG2_Toggle();
 			BLED_Toggle();
 			if (S.CAM && (status.cam_time > MAX_CAM_TIME)) {
-				CAM_RELAY_TIME = 0;
 				CAM_RELAY_AUX = 0; // clear video switch
 				CAM_RELAY = 0; // clear video switch
 				S.CAM = false;
@@ -560,7 +566,6 @@ void main(void)
 	//	emulat_type = E220;
 	emulat_type = VIISION;
 
-	CAM_RELAY_TIME = 0;
 	CAM_RELAY = 0;
 	CAM_RELAY_AUX = 0;
 	status.touch_count = 0;
@@ -608,7 +613,6 @@ void main(void)
 #endif
 				LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
 				if (status.cam_time > MAX_CAM_TIMEOUT) {
-					CAM_RELAY_TIME = 0;
 					if (touch_corner_timed) {
 						touch_corner_timed = false;
 						CAM_RELAY_AUX = 0; // clear video switch

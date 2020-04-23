@@ -133,6 +133,46 @@
 #define LED2_SetAnalogMode()      do { ANSELDbits.ANSELD1 = 1; } while(0)
 #define LED2_SetDigitalMode()     do { ANSELDbits.ANSELD1 = 0; } while(0)
 
+// get/set CAM_R1 aliases
+#define CAM_R1_TRIS                 TRISDbits.TRISD6
+#define CAM_R1_LAT                  LATDbits.LATD6
+#define CAM_R1_PORT                 PORTDbits.RD6
+#define CAM_R1_WPU                  WPUDbits.WPUD6
+#define CAM_R1_OD                   ODCONDbits.ODCD6
+#define CAM_R1_ANS                  ANSELDbits.ANSELD6
+#define CAM_R1_SetHigh()            do { LATDbits.LATD6 = 1; } while(0)
+#define CAM_R1_SetLow()             do { LATDbits.LATD6 = 0; } while(0)
+#define CAM_R1_Toggle()             do { LATDbits.LATD6 = ~LATDbits.LATD6; } while(0)
+#define CAM_R1_GetValue()           PORTDbits.RD6
+#define CAM_R1_SetDigitalInput()    do { TRISDbits.TRISD6 = 1; } while(0)
+#define CAM_R1_SetDigitalOutput()   do { TRISDbits.TRISD6 = 0; } while(0)
+#define CAM_R1_SetPullup()          do { WPUDbits.WPUD6 = 1; } while(0)
+#define CAM_R1_ResetPullup()        do { WPUDbits.WPUD6 = 0; } while(0)
+#define CAM_R1_SetPushPull()        do { ODCONDbits.ODCD6 = 0; } while(0)
+#define CAM_R1_SetOpenDrain()       do { ODCONDbits.ODCD6 = 1; } while(0)
+#define CAM_R1_SetAnalogMode()      do { ANSELDbits.ANSELD6 = 1; } while(0)
+#define CAM_R1_SetDigitalMode()     do { ANSELDbits.ANSELD6 = 0; } while(0)
+
+// get/set CAM_R aliases
+#define CAM_R_TRIS                 TRISDbits.TRISD7
+#define CAM_R_LAT                  LATDbits.LATD7
+#define CAM_R_PORT                 PORTDbits.RD7
+#define CAM_R_WPU                  WPUDbits.WPUD7
+#define CAM_R_OD                   ODCONDbits.ODCD7
+#define CAM_R_ANS                  ANSELDbits.ANSELD7
+#define CAM_R_SetHigh()            do { LATDbits.LATD7 = 1; } while(0)
+#define CAM_R_SetLow()             do { LATDbits.LATD7 = 0; } while(0)
+#define CAM_R_Toggle()             do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0)
+#define CAM_R_GetValue()           PORTDbits.RD7
+#define CAM_R_SetDigitalInput()    do { TRISDbits.TRISD7 = 1; } while(0)
+#define CAM_R_SetDigitalOutput()   do { TRISDbits.TRISD7 = 0; } while(0)
+#define CAM_R_SetPullup()          do { WPUDbits.WPUD7 = 1; } while(0)
+#define CAM_R_ResetPullup()        do { WPUDbits.WPUD7 = 0; } while(0)
+#define CAM_R_SetPushPull()        do { ODCONDbits.ODCD7 = 0; } while(0)
+#define CAM_R_SetOpenDrain()       do { ODCONDbits.ODCD7 = 1; } while(0)
+#define CAM_R_SetAnalogMode()      do { ANSELDbits.ANSELD7 = 1; } while(0)
+#define CAM_R_SetDigitalMode()     do { ANSELDbits.ANSELD7 = 0; } while(0)
+
 // get/set BLED aliases
 #define BLED_TRIS                 TRISEbits.TRISE0
 #define BLED_LAT                  LATEbits.LATE0

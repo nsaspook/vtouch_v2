@@ -49,7 +49,6 @@ typedef signed long int32_t;
 typedef signed long long int64_t;
 #endif
 
-#define	TS_TYPE     0		// E220 original screen type: 0 for old CRT type screens, 1 for newer Varian LCD screens with Carroll-Touch
 #define BUF_SIZE    64
 #define	CAP_SIZE    256
 
@@ -67,9 +66,8 @@ typedef signed long long int64_t;
 #define MAX_CAM_TIME	5
 #define MAX_CAM_TIMEOUT	30
 #define MAX_CAM_TOUCH	5
-#define CAM_RELAY       LATAbits.LATA1
-#define CAM_RELAY_AUX	LATEbits.LATE1
-#define CAM_RELAY_TIME	LATEbits.LATE2
+#define CAM_RELAY       CAM_R_LAT
+#define CAM_RELAY_AUX	CAM_R1_LAT
 #define	TIMERPACKET     41000
 
 #define BUF_SIZE_V80        16
