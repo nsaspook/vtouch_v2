@@ -432,6 +432,9 @@ void main(void)
 			break;
 		}
 
+		/*
+		 * start the ADC scan for raw data
+		 */
 		if (TimerDone(TMR_ADC) && check_adc_scan()) {
 			/*
 			 * download the system data variables
@@ -475,7 +478,9 @@ void main(void)
 				update_lcd(0);
 				WaitMs(2000);
 			}
-
+			/*
+			 * Display back-light control
+			 */
 			if (set_back_light_off(false)) {
 				send_lcd_cmd_dma(0x53); // back-light command
 				send_lcd_data_dma(NHD_BL_MED); // light on
@@ -486,65 +491,62 @@ void main(void)
 				send_lcd_data_dma(NHD_BL_OFF); // light off
 				wait_lcd_done();
 			}
+			/*
+			 * LCD display updates
+			 */
+			hid_display(&H);
+			switch (H.hid_display) {
+			case HID_PWR:
+				V.calib = false;
+				sprintf(get_vterm_ptr(0, 0), "PV %c W %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
+				sprintf(get_vterm_ptr(1, 0), "LOAD W %3.2f LA %2.2f      ", C.p_load, C.c_load);
+				sprintf(get_vterm_ptr(2, 0), "MPPT W %3.2f %d       ", C.p_mppt, V.cc_state);
 
-			if (false) {
-				sprintf(get_vterm_ptr(0, 0), "%d %2.4f  %d %x  ", get_raw_result(i), C.calc[i], get_switch_bm(SSELECT), check_switches());
-				sprintf(get_vterm_ptr(1, 0), "%d %2.4f  %d   ", get_raw_result(j), C.calc[j], get_switch_bm(SENTER));
-				sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d   # ", get_raw_result(k), C.calc[k], inp_index);
-			} else {
-				hid_display(&H);
-				switch (H.hid_display) {
-				case HID_PWR:
-					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %c W %3.2f       ", (C.day) ? 'D' : ' ', C.p_pv);
-					sprintf(get_vterm_ptr(1, 0), "LOAD W %3.2f LA %2.2f      ", C.p_load, C.c_load);
-					sprintf(get_vterm_ptr(2, 0), "MPPT W %3.2f %d       ", C.p_mppt, V.cc_state);
+				sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f        ", (C.day) ? 'D' : ' ', C.pvkw);
+				sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f         ", C.loadkw);
+				sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f         ", C.invkw);
+				break;
+			case HID_MAIN:
+				V.calib = false;
+				sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f     ", calc_fixups(C.calc[V_PV], WIDE_ZERO), calc_fixups(C.calc[C_MPPT], WIDE_ZERO | NO_NEG));
+				sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f     ", calc_fixups(C.calc[V_BAT], WIDE_ZERO), C.calc[C_BATT]);
+				sprintf(get_vterm_ptr(2, 0), "CV %2.2f CA %2.2f     ", calc_fixups(C.calc[V_CC], WIDE_ZERO), C.calc[C_PV]);
 
-					sprintf(get_vterm_ptr(0, 1), "PV %c WH %3.2f        ", (C.day) ? 'D' : ' ', C.pvkw);
-					sprintf(get_vterm_ptr(1, 1), "LOAD WH %3.2f         ", C.loadkw);
-					sprintf(get_vterm_ptr(2, 1), "INV  WH %3.2f         ", C.invkw);
-					break;
-				case HID_MAIN:
-					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "PV %2.2f PA %2.2f     ", calc_fixups(C.calc[V_PV], WIDE_ZERO), calc_fixups(C.calc[C_MPPT], WIDE_ZERO | NO_NEG));
-					sprintf(get_vterm_ptr(1, 0), "BV %2.2f BA %2.2f     ", calc_fixups(C.calc[V_BAT], WIDE_ZERO), C.calc[C_BATT]);
-					sprintf(get_vterm_ptr(2, 0), "CV %2.2f CA %2.2f     ", calc_fixups(C.calc[V_CC], WIDE_ZERO), C.calc[C_PV]);
+				sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f         ", C.bkwi);
+				sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f         ", C.bkwo);
+				sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f         ", C.bkwi + C.bkwo);
+				break;
+			case HID_RUN:
+				V.calib = false;
+				sprintf(get_vterm_ptr(0, 0), "BATT W %3.2f            ", C.p_bat);
+				sprintf(get_vterm_ptr(1, 0), "BAH T%3.2f D%3.2f       ", C.dynamic_ah, C.dynamic_ah_daily);
+				sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f        ", spinners(5, false), C.soc, C.runtime, C.calc[V_BAT]);
 
-					sprintf(get_vterm_ptr(0, 1), "BAT IWH %4.1f         ", C.bkwi);
-					sprintf(get_vterm_ptr(1, 1), "BAT OWH %4.1f         ", C.bkwo);
-					sprintf(get_vterm_ptr(2, 1), "BAT TWH %4.1f         ", C.bkwi + C.bkwo);
-					break;
-				case HID_RUN:
-					V.calib = false;
-					sprintf(get_vterm_ptr(0, 0), "BATT W %3.2f            ", C.p_bat);
-					sprintf(get_vterm_ptr(1, 0), "BAH T%3.2f D%3.2f       ", C.dynamic_ah, C.dynamic_ah_daily);
-					sprintf(get_vterm_ptr(2, 0), "S%cC %d RUN %d V%2.2f        ", spinners(5, false), C.soc, C.runtime, C.calc[V_BAT]);
-
-					sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f             ", C.esr);
-					sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f         ", C.bv_one_load, C.load_i1);
-					sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f         ", C.bv_full_load, C.load_i2);
-					break;
-				case HID_AUX:
-					if (!V.calib) { // clear buffer and start from zero
-						lp_filter(0.0, i, -1);
-						lp_filter(0.0, j, -1);
-						lp_filter(0.0, k, -1);
-					}
-					V.calib = true;
-					sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index + 1);
-					if (inp_index < 9) {
-						sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 2);
-						sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 3);
-					} else {
-						sprintf(get_vterm_ptr(1, 0), "%4d, %4d, %4lu       ", C.hist[0].h[11], C.hist[0].h[1], C.hist[0].updates);
-						sprintf(get_vterm_ptr(2, 0), "%4d, %4d, %4d        ", C.hist[0].h[0], C.hist[0].h[9], C.hist[0].h[10]);
-					}
-					break;
-				default:
-					break;
+				sprintf(get_vterm_ptr(0, 1), "ESR  %2.6f             ", C.esr);
+				sprintf(get_vterm_ptr(1, 1), "R1 %2.3f %3.4f         ", C.bv_one_load, C.load_i1);
+				sprintf(get_vterm_ptr(2, 1), "R2 %2.3f %3.4f         ", C.bv_full_load, C.load_i2);
+				break;
+			case HID_AUX:
+				if (!V.calib) { // clear buffer and start from zero
+					lp_filter(0.0, i, -1);
+					lp_filter(0.0, j, -1);
+					lp_filter(0.0, k, -1);
 				}
-				clear_hid_pflags(&H);
+				V.calib = true;
+				sprintf(get_vterm_ptr(0, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(i), C.calc[i], inp_index + 1);
+				if (inp_index < 9) {
+					sprintf(get_vterm_ptr(1, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(j), C.calc[j], inp_index + 2);
+					sprintf(get_vterm_ptr(2, 0), "%d %2.4f, %d  TRIM   ", get_raw_result(k), C.calc[k], inp_index + 3);
+				} else {
+					sprintf(get_vterm_ptr(1, 0), "%4d, %4d, %4lu       ", C.hist[0].h[11], C.hist[0].h[1], C.hist[0].updates);
+					sprintf(get_vterm_ptr(2, 0), "%4d, %4d, %4d        ", C.hist[0].h[0], C.hist[0].h[9], C.hist[0].h[10]);
+				}
+				break;
+			default:
+				break;
 			}
+			clear_hid_pflags(&H);
+
 			StartTimer(TMR_DISPLAY, DDELAY);
 			V.enter = check_enter_button(&H);
 			if (V.enter && (H.hid_display != HID_AUX)) {

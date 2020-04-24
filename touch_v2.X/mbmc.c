@@ -229,6 +229,9 @@ bool check_day_time(void)
 		}
 	}
 
+	/*
+	 * AC charger auto routines
+	 */
 	if (V.system_stable) {
 		// low battery volts, turn on charger
 		if ((C.v_bat < BAT_LOW_VOLTS) && (C.v_bat > BAT_DEAD_VOLTS) && (++low_bat_delay > 10)) {
@@ -237,40 +240,40 @@ bool check_day_time(void)
 		} else {
 			low_bat_delay = 0;
 		}
-	}
 
-	if (!day_delay++ && V.system_stable) {
-		if (C.soc > SOC_CRITICAL) {
-			if (!C.day) {
-				if (light > DAWN_VOLTS) {
-					C.day = true;
-					C.day_start = time(NULL);
-					if (get_ac_charger_relay()) { // USE PV charging during the day
-						set_ac_charger_relay(false);
-						V.ac_time = 0;
+		if (!day_delay++) {
+			if (C.soc > SOC_CRITICAL) {
+				if (!C.day) {
+					if (light > DAWN_VOLTS) {
+						C.day = true;
+						C.day_start = time(NULL);
+						if (get_ac_charger_relay()) { // USE PV charging during the day
+							set_ac_charger_relay(false);
+							V.ac_time = 0;
+						}
+						return true;
 					}
-					return true;
+				} else {
+					if (light < DUSK_VOLTS) {
+						C.day = false;
+						C.day_end = time(NULL);
+						C.day_update = C.day_end + DUPDATE; // set up trigger time
+						/*
+						 * at low battery condition charge with AC at night
+						 */
+						if ((C.soc < SOC_TOO_LOW)) {
+							set_ac_charger_relay(true);
+							V.ac_time = 0;
+						}
+						return true;
+					}
 				}
 			} else {
-				if (light < DUSK_VOLTS) {
-					C.day = false;
-					C.day_end = time(NULL);
-					C.day_update = C.day_end + DUPDATE; // set up trigger time
-					/*
-					 * at low battery condition charge with AC at night
-					 */
-					if ((C.soc < SOC_TOO_LOW)) {
+				if ((C.p_pv < C.p_inverter) && (light < BRIGHT_VOLTS)) { // see if PV can raise SOC
+					if (!get_ac_charger_relay()) { // USE AC charger if PV power will be lower
 						set_ac_charger_relay(true);
 						V.ac_time = 0;
 					}
-					return true;
-				}
-			}
-		} else {
-			if ((C.p_pv < C.p_inverter) && (light < BRIGHT_VOLTS)) { // see if PV can raise SOC
-				if (!get_ac_charger_relay()) { // USE AC charger if PV power will be lower
-					set_ac_charger_relay(true);
-					V.ac_time = 0;
 				}
 			}
 		}
@@ -332,7 +335,7 @@ void set_time(const time_t t)
 }
 
 /*
- * cleanup mainly noise values
+ * cleanup mainly noise values near zero value
  */
 float calc_fixups(float data, FIX_CODES fixup)
 {

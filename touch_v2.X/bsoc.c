@@ -101,12 +101,14 @@ void calc_bsoc(void)
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
 #endif
-
+	V.lowint_count++;
 	/*
 	 * check for excess power and send to DC dump load 
 	 */
 	pv_diversion(false);
-
+	/*
+	 * Charge Controller condition events
+	 */
 	if (cc_state(C.v_cmode) == M_FLOAT) {
 		if (!V.in_float && ++V.float_ticks > FLOAT_TIME)
 			if (!V.in_float) {
@@ -128,6 +130,10 @@ void calc_bsoc(void)
 	} else {
 		V.boost_ticks = 0;
 	}
+
+	/*
+	 * Battery data calculations
+	 */
 	C.dynamic_ah += (C.c_bat / SSLICE); // Ah
 	C.dynamic_ah_daily += (C.c_bat / SSLICE); // Ah
 	if (C.dynamic_ah > (C.bank_ah))
@@ -170,8 +176,9 @@ void calc_bsoc(void)
 	if (C.runtime > 99)
 		C.runtime = 99;
 
-	V.lowint_count++;
-
+	/*
+	 * check event flags
+	 */
 	if (V.time_info) { // set local time from remote server
 		V.time_info = false;
 		t_time = (uint32_t) atol(V.rbuf);
@@ -290,6 +297,9 @@ uint32_t peukert(uint16_t brate, float bcurrent, float peukert, int16_t bsoc)
 	return(uint32_t) t6;
 }
 
+/*
+ * static SOC table
+ */
 uint16_t Volts_to_SOC(const uint32_t cvoltage)
 {
 	uint8_t slot;
