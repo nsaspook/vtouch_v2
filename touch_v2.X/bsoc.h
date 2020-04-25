@@ -36,9 +36,12 @@
 #include <stdio.h>
 #include <string.h>
 #include "mcc_generated_files/tmr3.h"
+#include "vconfig.h"
 #include "mbmc.h"
 #include "eadog.h"
 #include "timers.h"
+#include "hid.h"
+#include "mconfig.h"
 
 #define	MAXRUNTIME	95.0
 #define MINRUNTIME	0.05
@@ -89,6 +92,11 @@ typedef enum {
 	M_LIMIT = 6,
 	M_OFFLINE = 255,
 } M_CODES;
+
+extern volatile C_data C;
+extern V_data V;
+extern H_data H;
+extern const char *build_date, *build_time;
 
 void calc_bsoc(void);
 void init_bsoc(void);

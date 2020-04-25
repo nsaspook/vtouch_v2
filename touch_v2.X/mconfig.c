@@ -3,10 +3,10 @@
 #include "msg_text.h"
 #include "bsoc.h"
 
-extern V_data V;
+/*
+ * LCD data buffer for virtual display for four vterms
+ */
 static D_data D = {' '};
-
-static const char *build_date = __DATE__, *build_time = __TIME__;
 
 /*
  * hardware specific routines

@@ -33,10 +33,11 @@
 #include <math.h>
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/crc.h"
+#include "vconfig.h"
 #include "timers.h"
 #include "tests.h"
-#include "vconfig.h"
 
+extern struct V_data V;
 /*
  * adc channel configuration
  */

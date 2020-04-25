@@ -2,14 +2,8 @@
 #include "mcc_generated_files/ext_int.h"
 #include "bsoc.h"
 
-extern C_data C;
-extern V_data V;
-
 struct tm *t_mbmc; // don't use the xc8 clock function, time will be saved in the history structure
 volatile uint32_t utctime = 0; // utctime set from remote ntp server
-volatile struct P_data P = {
-	.SYSTEM_STABLE = false,
-};
 
 /* spinner defines */
 #define MAX_SHAPES  6

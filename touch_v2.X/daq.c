@@ -8,8 +8,6 @@
 #include <pic18f57k42.h>
 
 #include "daq.h"
-#include "vconfig.h"
-extern struct V_data V;
 
 typedef struct D_data {
 	uint8_t dac0 : 8;

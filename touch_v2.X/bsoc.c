@@ -1,12 +1,5 @@
 #include "bsoc.h"
 #include "mcc_generated_files/interrupt_manager.h"
-#include "hid.h"
-#include "mconfig.h"
-
-extern volatile C_data C;
-extern V_data V;
-extern H_data H;
-extern const char *build_date, *build_time;
 
 const uint32_t BVSOC_TABLE[BVSOC_SLOTS][2] = {
 	23000, 5,
@@ -187,6 +180,9 @@ void calc_bsoc(void)
 		}
 	}
 
+	/*
+	 * serial port log data updates using DMA
+	 */
 	if (V.sys_info) {
 		V.sys_info = false;
 		log_ptr = port_data_dma_ptr();
@@ -199,7 +195,7 @@ void calc_bsoc(void)
 			lcode, infoline2,
 			lcode, C.hist[0].h[0], C.hist[0].h[9], C.hist[0].h[10], C.hist[0].h[3], C.hist[0].h[4], C.hist[0].h[5], C.hist[0].h[6], C.hist[0].h[11], C.hist[0].h[1], C.hist[0].updates,
 			lcode);
-		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
+		StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates to avoid memory contention
 		send_port_data_dma(strlen((char*) log_ptr));
 	} else {
 		if (!log_update_wait++ && V.system_stable && !V.get_time_text) {
@@ -215,7 +211,7 @@ void calc_bsoc(void)
 				C.dynamic_ah, C.dynamic_ah_daily, C.pv_ah, C.soc, C.runtime,
 				C.esr, C.v_sensor, get_ac_charger_relay(), C.day, C.day_start, C.day_end, C.dynamic_ah_adj, C.hist[0].cef, C.hist[0].peukert,
 				V.cc_state);
-			StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates
+			StartTimer(TMR_DISPLAY, SOCDELAY); // sync the spi dma display updates to avoid memory contention
 			send_port_data_dma(strlen((char*) log_ptr));
 		}
 		if (log_update_wait >= LOG_WAIT)

@@ -29,7 +29,7 @@ void ringBufS_init(volatile ringBufS_t *_this)
 	    -> count
 	  and sets head = tail
 	 ***/
-	memset((void*)_this, 0, sizeof(*_this));
+	memset((void*) _this, 0, sizeof(*_this));
 }
 
 int8_t ringBufS_empty(ringBufS_t *_this)
@@ -70,6 +70,15 @@ void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c)
 		_this->buf[_this->head] = c;
 		++_this->head;
 		++_this->count;
+	}
+}
+
+void ringBufS_put_dma_cpy(ringBufS_t *_this, const char *ptr, const uint8_t len)
+{
+	if (_this->count < RBUF_SIZE) {
+		memcpy(_this->buf, ptr, len);
+		_this->head = len;
+		_this->count = len;
 	}
 }
 

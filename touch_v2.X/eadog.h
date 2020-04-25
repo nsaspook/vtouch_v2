@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   eadog.h
  * Author: root
  *
@@ -7,7 +7,7 @@
 
 /* Parts taken from:
  * Modified for C18 and PIC18F45K80 with SPI using ring buffers with interrupts
- * 
+ *
  *            file: EA-DOGM_MIO.c
  *         version: 2.03
  *     description: Multi I/O driver for EA DOGM displays
@@ -26,6 +26,8 @@ extern "C" {
 #include "vconfig.h"
 #include "ringbufs.h"
 
+extern struct V_data V;
+
 #define LCD_CMD_MASK	0x01
 #define LCD_CMD_SET	0x100
 #define LCD_CLEAR_HOME	0x04
@@ -36,7 +38,6 @@ extern "C" {
 #define NHD_BL_HIGH	8
 
 	void wdtdelay(uint32_t);
-
 	void init_display(void);
 	void init_port_dma(void);
 	void send_port_data_dma(uint16_t);

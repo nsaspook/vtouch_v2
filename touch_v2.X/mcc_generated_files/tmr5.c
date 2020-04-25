@@ -60,7 +60,7 @@
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
 extern V_data V;
-extern C_data C;
+extern volatile C_data C;
 
 /**
   Section: TMR5 APIs

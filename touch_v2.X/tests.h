@@ -48,8 +48,8 @@
 //#define DEBUG_HIST1
 //#define DEBUG_TMR3 // timers
 //#define DEBUG_TRM5
-//#define DEBUG_DISP1 // LCD Display
-//#define DEBUG_DISP2
+#define DEBUG_DISP1 // LCD Display
+#define DEBUG_DISP2
 //#define DEBUG_WDT1 // WDT
 //#define DEBUG_WDT2
 #endif

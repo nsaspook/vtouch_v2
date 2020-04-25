@@ -197,7 +197,6 @@ volatile C_data C = {
 	.dynamic_ah_adj_daily = 0.0,
 };
 
-extern volatile struct P_data P;
 struct tm *t_mbmc;
 time_t pclock;
 
@@ -424,7 +423,7 @@ void main(void)
 		case UI_STATE_LOG:
 			break;
 		case UI_STATE_MON: // monitor
-			P.SYSTEM_STABLE = true;
+//			P.SYSTEM_STABLE = true;
 			break;
 		case UI_STATE_ERROR:
 		default:

@@ -35,6 +35,9 @@
 #include "mcc_generated_files/mcc.h"
 #include "vconfig.h"
 
+extern const char *build_date, *build_time;
+extern V_data V;
+
 void diversion_pwm_full(void);
 void diversion_pwm_set(uint16_t);
 bool set_back_light_off(bool);

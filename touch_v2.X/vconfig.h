@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.48"
+#define VER	"1.49"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -70,6 +70,7 @@ extern "C" {
 	 * 1.46 server time updates
 	 * 1.47 Battery low voltage checks for charger activation
 	 * 1.48 add third current sensor zero calibration
+	 * 1.49 restructure and optimizations
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

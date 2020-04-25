@@ -10,10 +10,7 @@
 
 struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
-//struct ringBufS_t ring_buf2;
 static uint8_t port_data[max_port_data] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
-
-extern struct V_data V;
 
 static void send_lcd_cmd_long(uint8_t); // for display init only
 static void send_lcd_data(uint8_t);
@@ -27,7 +24,6 @@ void wdtdelay(const uint32_t delay)
 		Nop();
 		ClrWdt(); // reset the WDT timer
 	};
-
 }
 
 /*
@@ -151,19 +147,27 @@ static void send_lcd_cmd_long(const uint8_t cmd)
  */
 void eaDogM_WriteString(char *strPtr)
 {
+	uint8_t len = strlen(strPtr);
+
+#ifdef DEBUG_DISP1
+	DLED1 = true;
+#endif
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
-	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
+	if (len > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
 	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-	DMA1SSZ = strlen(strPtr);
+	DMA1SSZ = len;
 	DMA1CON0bits.EN = 1; /* enable DMA */
-	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
-	start_lcd();
-	V.spi_count += strlen(strPtr);
+	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
+	start_lcd(); // start DMA transfer
+	V.spi_count += len;
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
+#endif
+#ifdef DEBUG_DISP1
+	DLED1 = false;
 #endif
 }
 
@@ -184,6 +188,9 @@ void send_lcd_cmd_dma(const uint8_t strPtr)
  */
 void send_lcd_data_dma(const uint8_t strPtr)
 {
+#ifdef DEBUG_DISP2
+	DLED2 = true;
+#endif
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
@@ -192,8 +199,11 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	DMA1SSZ = 1;
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
-	start_lcd();
+	start_lcd(); // start DMA transfer
 	V.spi_count++;
+#ifdef DEBUG_DISP2
+	DLED2 = false;
+#endif
 }
 
 void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
@@ -449,5 +459,4 @@ void wait_lcd_done(void)
 {
 	while (spi_link.LCD_DATA);
 	while (!SPI1STATUSbits.TXBE);
-	//	wdtdelay(50);
 }

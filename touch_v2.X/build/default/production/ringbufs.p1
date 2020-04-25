@@ -4,6 +4,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S2237 ringBufS_t buf head tail count ]
 "29 /opt/microchip/xc8/v2.10/pic/include/c99/string.h
 [v _memset `(*v ~T0 @X0 0 ef3`*v`i`ui ]
+"27
+[v _memcpy `(*v ~T0 @X0 0 ef3`*v`*Cv`ui ]
 "250 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [; <" STATUS_CSHAD equ 03880h ;# ">
 "339
@@ -1679,29 +1681,55 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 2254 ]
 }
 "76
-[v _ringBufS_flush `(v ~T0 @X0 1 ef2`*S2237`Cc ]
+[v _ringBufS_put_dma_cpy `(v ~T0 @X0 1 ef3`*S2237`*Cuc`Cuc ]
 "77
 {
-[e :U _ringBufS_flush ]
+[e :U _ringBufS_put_dma_cpy ]
 "76
 [v __this `*S2237 ~T0 @X0 1 r1 ]
-[v _clearBuffer `Cc ~T0 @X0 1 r2 ]
+[v _ptr `*Cuc ~T0 @X0 1 r2 ]
+[v _len `Cuc ~T0 @X0 1 r3 ]
 "77
 [f ]
 "78
-[e = . *U __this 3 -> -> 0 `i `uc ]
-"79
-[e = . *U __this 1 -> -> 0 `i `uc ]
-"80
-[e = . *U __this 2 -> -> 0 `i `uc ]
-"81
-[e $ ! != -> _clearBuffer `i -> 0 `i 2257  ]
+[e $ ! < -> . *U __this 3 `i -> 64 `i 2257  ]
 {
+"79
+[e ( _memcpy (3 , , -> &U . *U __this 0 `*v -> _ptr `*Cv -> _len `ui ]
+"80
+[e = . *U __this 1 _len ]
+"81
+[e = . *U __this 3 _len ]
 "82
-[e ( _memset (3 , , -> &U . *U __this 0 `*v -> 0 `i * -> # *U &U . *U __this 0 `ui -> -> 64 `i `ui ]
-"83
 }
 [e :U 2257 ]
-"84
+"83
 [e :UE 2256 ]
+}
+"85
+[v _ringBufS_flush `(v ~T0 @X0 1 ef2`*S2237`Cc ]
+"86
+{
+[e :U _ringBufS_flush ]
+"85
+[v __this `*S2237 ~T0 @X0 1 r1 ]
+[v _clearBuffer `Cc ~T0 @X0 1 r2 ]
+"86
+[f ]
+"87
+[e = . *U __this 3 -> -> 0 `i `uc ]
+"88
+[e = . *U __this 1 -> -> 0 `i `uc ]
+"89
+[e = . *U __this 2 -> -> 0 `i `uc ]
+"90
+[e $ ! != -> _clearBuffer `i -> 0 `i 2259  ]
+{
+"91
+[e ( _memset (3 , , -> &U . *U __this 0 `*v -> 0 `i * -> # *U &U . *U __this 0 `ui -> -> 64 `i `ui ]
+"92
+}
+[e :U 2259 ]
+"93
+[e :UE 2258 ]
 }

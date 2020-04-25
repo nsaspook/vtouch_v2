@@ -36,6 +36,8 @@
 #include "vconfig.h"
 #include "daq.h"
 
+extern V_data V;
+
 #define LOCALTIME_OFFSET	60ul*60ul*(-8ul)
 #define LP_BUFFER_SIZE	ADC_BUFFER_SIZE+8
 #define STATIC_LOAD_POWER	14.00
@@ -88,41 +90,13 @@ typedef struct C_data { // real calculated variables
 	uint32_t day_start, day_end, day_update, updates;
 } C_data;
 
-typedef struct P_data {
-	uint8_t BCHECK : 1;
-	uint8_t TIMERFLAG : 1;
-	uint8_t PRIPOWEROK : 1;
-	uint8_t FORCEOUT : 1;
-	uint8_t WORKERFLAG : 1;
-	uint8_t CHARGEROVERRIDE : 1;
-	uint8_t FAILSAFE : 1;
-	uint8_t MORNING_HELP : 1;
-	uint8_t SYSTEM_STABLE : 1;
-	uint8_t HOLD_PROC : 1;
-	uint8_t POWER_UNSTABLE : 1;
-	uint8_t B2 : 1;
-	uint8_t B3 : 1;
-	uint8_t B4 : 1;
-	uint8_t SET_BATT : 1;
-	uint8_t BLANK_LCD : 1;
-	uint8_t STATIC_SOC : 1;
-	uint8_t SET_CEF : 1;
-	uint8_t D_UPDATE : 1;
-	uint8_t GLITCH_CHECK : 1;
-	uint8_t FORCEDAY : 1;
-	uint8_t COOLING : 1;
-	uint8_t UPDATE_EEP : 1;
-	uint8_t RESET_ZEROS : 1;
-	uint8_t SAVE_DAILY : 1;
-	uint8_t SETBATT_SOC : 1;
-	uint8_t SYNCSOC : 1;
-} P_data_t;
-
 typedef enum {
 	WIDE_ZERO = 1,
 	NO_NEG = 2,
 	SKIP = 8,
 } FIX_CODES;
+
+extern volatile C_data C;
 
 float lp_filter(const float, const uint8_t, const int8_t);
 void convert_adc_data(void);
