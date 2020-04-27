@@ -66,8 +66,9 @@ typedef signed long long int64_t;
 #define MAX_CAM_TIME	5
 #define MAX_CAM_TIMEOUT	30
 #define MAX_CAM_TOUCH	5
-#define CAM_RELAY       CAM_R_LAT
-#define CAM_RELAY_AUX	CAM_R1_LAT
+#define CAM_RELAY       CAM_R_LAT  // SV6 pin 8
+#define CAM_RELAY_AUX	CAM_R1_LAT // SV6 pin 7
+#define K1		K1_LAT // SV6 pin 1
 #define	TIMERPACKET     41000
 
 #define BUF_SIZE_V80        16

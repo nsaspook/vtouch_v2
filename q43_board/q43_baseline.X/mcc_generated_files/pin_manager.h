@@ -113,6 +113,26 @@
 #define RC7_SetAnalogMode()         do { ANSELCbits.ANSELC7 = 1; } while(0)
 #define RC7_SetDigitalMode()        do { ANSELCbits.ANSELC7 = 0; } while(0)
 
+// get/set K1 aliases
+#define K1_TRIS                 TRISDbits.TRISD0
+#define K1_LAT                  LATDbits.LATD0
+#define K1_PORT                 PORTDbits.RD0
+#define K1_WPU                  WPUDbits.WPUD0
+#define K1_OD                   ODCONDbits.ODCD0
+#define K1_ANS                  ANSELDbits.ANSELD0
+#define K1_SetHigh()            do { LATDbits.LATD0 = 1; } while(0)
+#define K1_SetLow()             do { LATDbits.LATD0 = 0; } while(0)
+#define K1_Toggle()             do { LATDbits.LATD0 = ~LATDbits.LATD0; } while(0)
+#define K1_GetValue()           PORTDbits.RD0
+#define K1_SetDigitalInput()    do { TRISDbits.TRISD0 = 1; } while(0)
+#define K1_SetDigitalOutput()   do { TRISDbits.TRISD0 = 0; } while(0)
+#define K1_SetPullup()          do { WPUDbits.WPUD0 = 1; } while(0)
+#define K1_ResetPullup()        do { WPUDbits.WPUD0 = 0; } while(0)
+#define K1_SetPushPull()        do { ODCONDbits.ODCD0 = 0; } while(0)
+#define K1_SetOpenDrain()       do { ODCONDbits.ODCD0 = 1; } while(0)
+#define K1_SetAnalogMode()      do { ANSELDbits.ANSELD0 = 1; } while(0)
+#define K1_SetDigitalMode()     do { ANSELDbits.ANSELD0 = 0; } while(0)
+
 // get/set LED2 aliases
 #define LED2_TRIS                 TRISDbits.TRISD1
 #define LED2_LAT                  LATDbits.LATD1
