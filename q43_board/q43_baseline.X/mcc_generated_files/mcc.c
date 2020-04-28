@@ -55,9 +55,12 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     WWDT_Initialize();
     TMR6_Initialize();
+    DMA1_Initialize();
     TMR5_Initialize();
     UART2_Initialize();
     UART1_Initialize();
+    SPI1_Initialize();
+    SystemArbiter_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)
@@ -144,6 +147,13 @@ void WWDT_TimerClear(void)
     readBack = WDTCON0;
     CLRWDT();
     GIE = state;
+}
+void SystemArbiter_Initialize(void)
+{
+    // This function is dependant on the PR1WAY CONFIG bit
+    PRLOCK = 0x55;
+    PRLOCK = 0xAA;
+    PRLOCKbits.PRLOCKED = 1;
 }
 /**
  End of File
