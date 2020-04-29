@@ -154,7 +154,7 @@ typedef struct disp_state_t {
  */
 
 enum oem_type {
-	OEM_CRT=0, OEM_LCD=1
+	OEM_CRT = 0, OEM_LCD = 1
 };
 
 disp_state_t S = {
@@ -747,7 +747,7 @@ void main(void)
 
 void led_flash(void)
 {
-	LED2_Toggle();
+	//	LED2_Toggle();
 	idx = 0; // reset packet char index counter
 	ssreport.tohost = false; // when packets stop allow for next updates
 	if (!S.LCD_OK && (status.init_check++ >LCD_CHK_TIME)) {

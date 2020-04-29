@@ -52,7 +52,7 @@
 */
 #include <stdint.h>
 
-uint16_t lcdsrc0[10];
+uint32_t lcdsrc0[10];
 uint16_t DstVarName0[1];
 
 /**

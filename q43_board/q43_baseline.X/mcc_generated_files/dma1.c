@@ -61,7 +61,7 @@ void DMA1_Initialize(void)
     //DMA Instance Selection : 0x00
     DMASELECT = 0x00;
     //Source Address : lcdsrc0
-    DMAnSSA = &lcdsrc0;
+    DMAnSSA = (uint32_t) &lcdsrc0;
     //Destination Address : &DstVarName0
     DMAnDSA= &DstVarName0;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
