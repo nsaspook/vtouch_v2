@@ -39,7 +39,7 @@
 #include "eadog.h"
 #include "timers.h"
 
-typedef struct D_data { // control data structure 
+typedef struct D_data { // vterm control data structure 
     char lcd[4][4][40];
     uint8_t vterm : 1;
     D_CODES last_info;

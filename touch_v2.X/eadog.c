@@ -27,7 +27,7 @@ void wdtdelay(const uint32_t delay)
 }
 
 /*
- * Init the EA DOGM163 in 8-bit serial mode
+ * Init the NHD-0420D3Z-NSW-BBW-V3 in 8-bit serial mode
  * channel 1 DMA
  */
 void init_display(void)
@@ -114,7 +114,7 @@ void init_port_dma(void)
 #ifdef NHD
 
 /*
- * R2 short on LCD board
+ * R2 short on LCD NHD-0420D3Z-NSW-BBW-V3 board
  */
 
 static void send_lcd_data(const uint8_t data)

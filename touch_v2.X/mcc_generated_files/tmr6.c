@@ -194,6 +194,9 @@ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
 	TMR6_InterruptHandler = InterruptHandler;
 }
 
+/*
+ * update software timers and parse simple serial port #1 single character commands
+ */
 void TMR6_DefaultInterruptHandler(void)
 {
 	static uint8_t i, j = 0;

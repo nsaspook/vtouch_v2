@@ -50,21 +50,24 @@
  * The network interface processor on a RPi will be able to analyze the collected data for better control at some future point
  *
  * standard program display units:
- * Voltage  in millivolts,
- * Current in milliamps
- * Watts Power in milliwatts
- * Ah battery capacity milliAh
+ * Voltage  in Volts,
+ * Current in Amps
+ * Watts Power in Watts
+ * Ah battery capacity Ah
  *
+ * some important data structures
+ * V: structure, global control structure
  * R: structure, real values from measurements
  * C: structure, calculated values from measurements or programs
- * B: structure, battery parameters
+ * D: structure, LCD control and buffers
+ * H: structure, battery history parameters
  *
- * USART2 		Is the client comm port 38400
- * USART1		MBMC logger channel
- * timer 2 100 us PWM clock, no interrupt
+ * USART2 		client comm port 38400
+ * USART1		MBMC logger and command channel
+ * timer 2 100us PWM clock, no interrupt
  * timer 3 one second housekeeping clock for battery state tracking, low priority interrupt
  * timer 5 one second timer, TOD interrupt
- * timer 6 500 us software timer ticker, interrupt
+ * timer 6 500us software timer ticker and parse simple serial port #1 single character commands, interrupt
  *
  * dma1 spi transmit
  * dma2 tx1 transmit
@@ -94,7 +97,7 @@
  * 7				misc 3			6
  * 8				misc 4			7
  *
- * 4x20 LCD status panel and led status lights.
+ * 4x20 LCD status panel NHD-0420D3Z-NSW-BBW-V3 and led status lights .
  *
  * uln2802 port output pins OUTP
  * i/o  port	function
@@ -105,17 +108,6 @@
  * 
  * system variables float
  *
- * current_in
- * current_battery
- * current_load
- *
- * voltage_pv
- * voltage_cc
- * voltage_battery
- * voltage_load
- * voltage_buss
- * voltage_thermo
- * voltage_backup
  */
 
 #pragma warning disable 520
