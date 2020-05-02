@@ -10,18 +10,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [p i ___nop ]
 "26 ./ringbufs.h
 [v _ringBufS_init `(v ~T0 @X0 0 ef1`*VS2237 ]
-"46274 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
-[s S2090 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2090 . LATE0 LATE1 LATE2 ]
-"46279
-[s S2091 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S2091 . LE0 LE1 LE2 ]
-"46273
-[u S2089 `S2090 1 `S2091 1 ]
-[n S2089 . . . ]
-"46285
-[v _LATEbits `VS2089 ~T0 @X0 0 e@16318 ]
-"23184
+"23184 /opt/microchip/xc8/v2.10/pic/include/pic18f57k42.h
 [s S1015 :1 `uc 1 :1 `uc 1 :1 `uc 1 :4 `uc 1 :1 `uc 1 ]
 [n S1015 . BMODE MST LSBF . EN ]
 "23191
@@ -1727,8 +1716,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . _spi_link 7 &U _ring_buf1 ]
 "36
 [e ( _ringBufS_init (1 -> . _spi_link 7 `*VS2237 ]
-"39
-[e = . . _LATEbits 0 2 -> -> 1 `i `uc ]
 "42
 [e = . . _SPI1CON0bits 0 4 -> -> 0 `i `uc ]
 "44
@@ -1783,8 +1770,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _DMA1CON0bits 0 4 -> -> 0 `i `uc ]
 "92
 [e = . . _SPI1INTFbits 1 1 -> -> 1 `i `uc ]
-"94
-[e = . . _LATEbits 0 2 -> -> 0 `i `uc ]
 "96
 [e :UE 2247 ]
 }
@@ -1901,8 +1886,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "150
 [v _len `uc ~T0 @X0 1 a ]
 [e = _len -> ( _strlen (1 -> _strPtr `*Cuc `uc ]
-"153
-[e = . . _LATEbits 0 1 -> -> 1 `i `uc ]
 "155
 [e ( _wait_lcd_set ..  ]
 "157
@@ -1929,8 +1912,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _start_lcd ..  ]
 "165
 [e =+ . _V 52 -> _len `Vul ]
-"170
-[e = . . _LATEbits 0 1 -> -> 0 `i `uc ]
 "172
 [e :UE 2261 ]
 }
@@ -1965,8 +1946,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _strPtr `Cuc ~T0 @X0 1 r1 ]
 "190
 [f ]
-"192
-[e = . . _LATEbits 0 2 -> -> 1 `i `uc ]
 "194
 [e ( _wait_lcd_set ..  ]
 "196
@@ -1989,8 +1968,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _start_lcd ..  ]
 "203
 [e ++ . _V 52 -> -> 1 `i `Vul ]
-"205
-[e = . . _LATEbits 0 2 -> -> 0 `i `uc ]
 "207
 [e :UE 2267 ]
 }
