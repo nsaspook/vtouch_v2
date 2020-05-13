@@ -83,7 +83,7 @@ extern struct V_data V;
 #define EE_CHECKMARK	0x1957
 #define TATE		0x42
 
-//#define CAL_10A
+#define CAL_10A
 
 /*
  * conversion constants
