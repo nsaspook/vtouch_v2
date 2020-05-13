@@ -83,7 +83,11 @@ extern struct V_data V;
 #define EE_CHECKMARK	0x1957
 #define TATE		0x42
 
-#define CAL_10A
+/*
+ * current sensor configuration
+ */
+//#define CAL_10A	// set 10A scaling
+//#define CAL_TWO // dupe the PV sensor results into the MPPT calibration table
 
 /*
  * conversion constants

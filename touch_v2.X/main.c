@@ -633,6 +633,9 @@ static bool current_sensor_cal(void)
 		cb += get_raw_result(C_BATT); // get a average result
 		cp += get_raw_result(C_PV);
 		cm += get_raw_result(C_MPPT);
+#ifdef CAL_TWO
+		cm=cp;
+#endif
 		sprintf(get_vterm_ptr(0, 0), "Sensor Readings      ");
 		sprintf(get_vterm_ptr(1, 0), " %d %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV), get_raw_result(C_MPPT));
 		sprintf(get_vterm_ptr(2, 0), "Stability clock %d   ", x);
