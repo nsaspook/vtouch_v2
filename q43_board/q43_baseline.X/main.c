@@ -563,7 +563,7 @@ void main(void)
 
 	// default interface
 	screen_type = DELL_E215546;
-	//	emulat_type = E220;
+	//	emulation_type = E220;
 	emulat_type = VIISION;
 
 	CAM_RELAY = 0;
