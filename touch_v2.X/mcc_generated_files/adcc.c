@@ -83,10 +83,10 @@ void ADCC_Initialize(void)
     ADRPT = 0x40;
     // ADPCH ANA0; 
     ADPCH = 0x00;
+    // ADACQ 40; 
+    ADACQL = 0x28;
     // ADACQ 0; 
-    ADACQL = 0x00;
-    // ADACQ 8; 
-    ADACQH = 0x08;
+    ADACQH = 0x00;
     // ADCAP Additional uC disabled; 
     ADCAP = 0x00;
     // ADPRE 0; 
@@ -107,8 +107,8 @@ void ADCC_Initialize(void)
     ADACT = 0x00;
     // ADCS FOSC/128; 
     ADCLK = 0x3F;
-    // ADGO stop; ADFM right; ADON enabled; ADCS FOSC/ADCLK; ADCONT disabled; 
-    ADCON0 = 0x84;
+    // ADGO stop; ADFM right; ADON enabled; ADCS Frc; ADCONT disabled; 
+    ADCON0 = 0x94;
     
     // Clear the ADC interrupt flag
     PIR1bits.ADIF = 0;
