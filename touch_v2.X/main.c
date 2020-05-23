@@ -155,6 +155,7 @@ V_data V = {
 	.in_float = false,
 	.in_boost = false,
 	.ac_time = 0,
+	.rbuf = "1",
 };
 H_data H = {
 	.hid_display = HID_MAIN,
@@ -415,7 +416,7 @@ void main(void)
 		case UI_STATE_LOG:
 			break;
 		case UI_STATE_MON: // monitor
-//			P.SYSTEM_STABLE = true;
+			//			P.SYSTEM_STABLE = true;
 			break;
 		case UI_STATE_ERROR:
 		default:
@@ -634,7 +635,7 @@ static bool current_sensor_cal(void)
 		cp += get_raw_result(C_PV);
 		cm += get_raw_result(C_MPPT);
 #ifdef CAL_TWO
-		cm=cp;
+		cm = cp;
 #endif
 		sprintf(get_vterm_ptr(0, 0), "Sensor Readings      ");
 		sprintf(get_vterm_ptr(1, 0), " %d %d %d              ", get_raw_result(C_BATT), get_raw_result(C_PV), get_raw_result(C_MPPT));
