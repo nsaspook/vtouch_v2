@@ -706,7 +706,7 @@ static bool current_sensor_cal(void)
 	if (cal_current_10A(false, cb, cp, 0.0, 0.0)) {
 		cal_current_10A(true, cb, cp, 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
 		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
-		sprintf(get_vterm_ptr(1, 0), " %f %f               ", 10.0 / (float) (cb - cbz), 10.0 / (float) (cp - cpz));
+		sprintf(get_vterm_ptr(1, 0), " %f %f               ", 10.0 / (float) ((cb - cbz) + 1), 10.0 / (float) ((cp - cpz) + 1));
 		sprintf(get_vterm_ptr(2, 0), "10A Cal Set          ");
 		update_lcd(0);
 		WaitMs(5000);

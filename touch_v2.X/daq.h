@@ -86,8 +86,8 @@ extern struct V_data V;
 /*
  * current sensor configuration
  */
-//#define CAL_10A	// set 10A scaling
-//#define CAL_TWO // dupe the PV sensor results into the MPPT calibration table
+#define CAL_10A	// set 10A scaling
+#define CAL_TWO // dupe the PV sensor results into the MPPT calibration table
 
 /*
  * conversion constants
