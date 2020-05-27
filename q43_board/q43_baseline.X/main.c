@@ -47,6 +47,7 @@
 #include <stdbool.h>
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/tmr5.h"
+#include "qconfig.h"
 #include "vtouch.h"
 #include "vtouch_build.h"
 #include "timers.h"
