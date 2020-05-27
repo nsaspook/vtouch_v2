@@ -20,7 +20,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.51"
+#define VER	"1.52"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -73,6 +73,7 @@ extern "C" {
 	 * 1.49 restructure and optimizations
 	 * 1.50 current sensor options in daq.h: CAL_10A  CAL_TWO
 	 * 1.51 change ADC to FRC clock source
+	 * 1.52 back to ext clock for ADC with increased time for hold sample
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
