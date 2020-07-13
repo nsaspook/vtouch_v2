@@ -4,6 +4,7 @@
 #include <string.h>
 #include "d232.h"
 #include "mcc_generated_files/spi1.h"
+#include "dogm-graphic.h"
 
 #define max_strlen	64
 
@@ -22,23 +23,13 @@ void wdtdelay(const uint32_t delay)
 }
 
 /*
- * Init the EA DOGM163 in 8-bit serial mode
+ * Init the EA DOGS102 in 8-bit serial mode
  */
 void init_display(void)
 {
 	CSB_SetHigh();
 	wdtdelay(IS_DELAYPOWERUP); // > 400ms power up delay
-	send_lcd_cmd(0x39);
-	send_lcd_cmd(0x1d);
-	send_lcd_cmd(0x50);
-	send_lcd_cmd(0x6c);
-	send_lcd_cmd(0x76); // contrast last 4 bits
-	send_lcd_cmd_long(0x38); // follower control
-	send_lcd_cmd(0x0f);
-	send_lcd_cmd_long(0x01); // clear
-	send_lcd_cmd(0x02);
-	send_lcd_cmd(0x06);
-	wdtdelay(IS_DELAYLONG);
+	lcd_init();
 }
 
 /*

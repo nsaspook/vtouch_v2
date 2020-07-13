@@ -13,8 +13,8 @@
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
-        Device            :  PIC18F47Q43
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
+	Device            :  PIC18F47Q43
 	Driver Version    :  2.00
  */
 
@@ -50,6 +50,7 @@
 #include "timers.h"
 #include "d232.h"
 #include "eadog.h"
+#include "dogm-graphic.h"
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
@@ -87,7 +88,7 @@ void work_sw(void)
 	if (TimerDone(TMR_INIT)) {
 		IO.clock++;
 		sprintf(buffer[0], " H %i, M %i     ", IO.hits, IO.misses);
-		sprintf(buffer[1], " Score %i %i    ", IO.score, otto_b1.result); 
+		sprintf(buffer[1], " Score %i %i    ", IO.score, otto_b1.result);
 		//sprintf(buffer[1], " ADC %i %i    ", 0, IO.button_value);
 		buffer[1][16] = 0; // cut off line for LCD
 		eaDogM_WriteStringAtPos(1, 0, buffer[0]);
@@ -128,7 +129,16 @@ void main(void)
 	IO.io = IO_IDLE;
 
 	init_display();
-	eaDogM_CursorOff();
+	lcd_data(0xff);
+	lcd_data(0xff);
+	lcd_data(0xff);
+	lcd_data(0xff);
+	lcd_data(0xff);
+	lcd_data(0xff);
+	lcd_data(0xff);
+	lcd_data(0x00);
+	while (true);
+	//	eaDogM_CursorOff();
 	srand(99);
 
 	StartTimer(TMR_INIT, 1000);

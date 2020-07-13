@@ -64,12 +64,12 @@
 void SPI1_Initialize(void)
 {
     // Set the SPI1 module to the options selected in the User Interface
-		// SSP active high; SDOP active high; FST disabled; SMP Middle; CKP Idle:Low, Active:High; CKE Active to idle; SDIP active high; 
-		SPI1CON1 = 0x40;
+		// SSP active high; SDOP active high; FST disabled; SMP Middle; CKP Idle:High, Active:Low; CKE Idle to active; SDIP active high; 
+		SPI1CON1 = 0x20;
 		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
 		SPI1CON2 = 0x03;
 		// BAUD 0; 
-		SPI1BAUD = 0x0F;
+		SPI1BAUD = 0x04;
 		// CLKSEL FOSC; 
 		SPI1CLK = 0x00;
 		// BMODE last byte; LSBF MSb first; EN enabled; MST bus master; 
