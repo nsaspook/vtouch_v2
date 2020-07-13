@@ -110,7 +110,10 @@ void eaDogM_WriteString(char *strPtr)
 
 	RS_SetHigh();
 	CSB_SetLow();
-	if (i > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
+	if (i > max_strlen) {
+		strPtr[max_strlen] = 0; // buffer overflow check
+		i = max_strlen;
+	}
 
 	while (bytesWritten < i) {
 		wdtdelay(IS_DELAYSHORT); // inter-character spacing for LCD code execute delays
