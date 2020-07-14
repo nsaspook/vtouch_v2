@@ -129,15 +129,12 @@ void main(void)
 	IO.io = IO_IDLE;
 
 	init_display();
-	lcd_data(0xff);
-	lcd_data(0xff);
-	lcd_data(0xff);
-	lcd_data(0xff);
-	lcd_data(0xff);
-	lcd_data(0xff);
-	lcd_data(0xff);
-	lcd_data(0x00);
-	while (true);
+
+	while (true) {
+		lcd_data(0xff);
+		lcd_data(0x00);
+		LCD_SWITCH_ON();
+	};
 	//	eaDogM_CursorOff();
 	srand(99);
 

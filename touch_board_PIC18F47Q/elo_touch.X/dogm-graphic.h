@@ -459,8 +459,8 @@ void lcd_move_xy    (int8_t pages, int16_t columns);
  *****************************************************************************/
 
 //Control A0 input of LCD
-#define LCD_DRAM()            RS_SetLow();
-#define LCD_CMD()             RS_SetHigh();
+#define LCD_DRAM()            RS_SetHigh();
+#define LCD_CMD()             RS_SetLow();
 
 //Control reset input of LCD
 #define LCD_RESET_OFF()       PORT_RST |= _BV(PIN_RST)
