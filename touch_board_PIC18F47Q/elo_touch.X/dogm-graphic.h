@@ -62,7 +62,7 @@ extern void init_spi_lcd(void);
 #define LCD_WRAP_AROUND  0
 
 //Include graphic functions, i.e. lcd_draw_image_P, lcd_draw_image_xy_P, lcd_clear_area ? 
-#define LCD_INCLUDE_GRAPHIC_FUNCTIONS  0
+#define LCD_INCLUDE_GRAPHIC_FUNCTIONS  1
 
 /*Example SPI setup (Atmega162)
  *init spi: msb first, update on falling edge , read on rising edge, 9 MHz
@@ -100,8 +100,8 @@ static inline uint8_t lcd_get_position_column(void) {return lcd_current_column;}
 
 //User functions to write raw data from flash
 #if LCD_INCLUDE_GRAPHIC_FUNCTIONS >= 1
-  void lcd_draw_image_P(PGM_VOID_P progmem_image, uint8_t pages, uint8_t columns, uint8_t style);
-  void lcd_draw_image_xy_P(PGM_VOID_P progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style);
+  void lcd_draw_image_P(void * progmem_image, uint8_t pages, uint8_t columns, uint8_t style);
+  void lcd_draw_image_xy_P(void * progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style);
 #endif
 
 void lcd_clear_area(uint8_t pages, uint8_t columns, uint8_t style);

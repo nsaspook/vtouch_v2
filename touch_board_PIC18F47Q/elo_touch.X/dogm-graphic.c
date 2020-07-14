@@ -145,7 +145,7 @@ void lcd_command(uint8_t cmd) {
  * columns       - width of image in pixels (or columns)
  * style         - Bit2: sets inverse mode
  */  
-void lcd_draw_image_P(PGM_VOID_P progmem_image, uint8_t pages, uint8_t columns, uint8_t style) {
+void lcd_draw_image_P(void * progmem_image, uint8_t pages, uint8_t columns, uint8_t style) {
 	uint8_t i,j = 0;
   uint8_t inv = (style & INVERT_BIT);
 	while(j<pages && (lcd_get_position_page() < LCD_RAM_PAGES)) {
@@ -173,7 +173,7 @@ void lcd_draw_image_P(PGM_VOID_P progmem_image, uint8_t pages, uint8_t columns, 
  * columns       - width of image in pixels
  * style         - Bit2: sets inverse mode
  */
-void lcd_draw_image_xy_P(PGM_VOID_P progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style) {
+void lcd_draw_image_xy_P(void * progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style) {
 	uint16_t i,j;
   uint8_t data   = 0;
   uint8_t inv    = style & INVERT_BIT;
