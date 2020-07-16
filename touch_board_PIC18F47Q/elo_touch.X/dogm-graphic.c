@@ -145,12 +145,12 @@ void lcd_command(uint8_t cmd) {
  * columns       - width of image in pixels (or columns)
  * style         - Bit2: sets inverse mode
  */  
-void lcd_draw_image_P(void * progmem_image, uint8_t pages, uint8_t columns, uint8_t style) {
+void lcd_draw_image_P(uint8_t * progmem_image, uint8_t pages, uint8_t columns, uint8_t style) {
 	uint8_t i,j = 0;
   uint8_t inv = (style & INVERT_BIT);
 	while(j<pages && (lcd_get_position_page() < LCD_RAM_PAGES)) {
 		for (i=0; i<columns && (lcd_get_position_column() < LCD_WIDTH); i++) {
-      uint8_t tmp = pgm_read_byte(progmem_image++);
+      uint8_t tmp = *progmem_image++;
 			if(!inv)
 				lcd_data(tmp);
 			else
@@ -173,7 +173,7 @@ void lcd_draw_image_P(void * progmem_image, uint8_t pages, uint8_t columns, uint
  * columns       - width of image in pixels
  * style         - Bit2: sets inverse mode
  */
-void lcd_draw_image_xy_P(void * progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style) {
+void lcd_draw_image_xy_P(uint8_t * progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style) {
 	uint16_t i,j;
   uint8_t data   = 0;
   uint8_t inv    = style & INVERT_BIT;
@@ -190,9 +190,9 @@ void lcd_draw_image_xy_P(void * progmem_image, uint8_t x, uint8_t y, uint8_t pag
 		for (i=0; i<columns && (lcd_get_position_column() < LCD_WIDTH); i++){
       data = 0;
       if (!offset || j+1 != pages)
-        data = pgm_read_byte(progmem_image+j*columns + i) << offset;
+        data = (*progmem_image+j*columns + i) << offset;
 			if(j > 0 && offset)
-				data |= pgm_read_byte(progmem_image+(j-1)*columns + i) >> (8-offset);
+				data |= (*progmem_image+(j-1)*columns + i) >> (8-offset);
 			if(inv)	lcd_data(~data);
       else 		lcd_data(data);
 		  }

@@ -100,8 +100,8 @@ static inline uint8_t lcd_get_position_column(void) {return lcd_current_column;}
 
 //User functions to write raw data from flash
 #if LCD_INCLUDE_GRAPHIC_FUNCTIONS >= 1
-  void lcd_draw_image_P(void * progmem_image, uint8_t pages, uint8_t columns, uint8_t style);
-  void lcd_draw_image_xy_P(void * progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style);
+  void lcd_draw_image_P(uint8_t * progmem_image, uint8_t pages, uint8_t columns, uint8_t style);
+  void lcd_draw_image_xy_P(uint8_t * progmem_image, uint8_t x, uint8_t y, uint8_t pages, uint8_t columns, uint8_t style);
 #endif
 
 void lcd_clear_area(uint8_t pages, uint8_t columns, uint8_t style);

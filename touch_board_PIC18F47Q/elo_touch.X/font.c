@@ -72,8 +72,8 @@ inline void lcd_set_font(FONT_P font, uint8_t style){
 /******************************************************************************
  * Loads the pointer to the selected fonts data
  */
-inline PGM_P font_data(FONT_P font) {
-  PGM_P tmp;
+inline  int font_data(FONT_P font) {
+  int tmp;
   if (sizeof(tmp) == 2)
     tmp = (PGM_P)pgm_read_word(&(font->data));
   else
@@ -85,12 +85,12 @@ inline PGM_P font_data(FONT_P font) {
 /******************************************************************************
  * Loads the pointer to the width table for the selected font
  */
-inline PGM_P font_widthtable(FONT_P font) {
-  PGM_P tmp;
+inline int font_widthtable(FONT_P font) {
+  uint16_t tmp;
   if (sizeof(tmp) == 2)
     tmp = (PGM_P)pgm_read_word(&(font->widthtable));
   else
-    memcpy_P((char*)&tmp,&(font->widthtable),sizeof(tmp));
+    memcpy((char*)&tmp,&(font->widthtable),sizeof(tmp));
   return tmp;
   }
 
@@ -140,7 +140,7 @@ PGM_P font_get_char_position(FONT_P font, char character) {
   uint16_t ret         = 0;
   int16_t  charnum_ret = font_get_char_number(font, character);
   uint8_t  charnum     = charnum_ret;
-  PGM_P    base        = font_widthtable(font);
+  int    base        = font_widthtable(font);
 
   if (charnum_ret < 0)     //char not found
     return 0;
@@ -283,7 +283,7 @@ uint16_t lcd_put_string_length(FONT_P font, uint8_t style, char* str, uint8_t le
  * the string from program memory. The position of the string on the display
  * is selected by page / col.
  */ 
-uint16_t lcd_put_string_xy_P(FONT_P font, uint8_t style, PGM_P str,uint8_t page, uint8_t col) {
+uint16_t lcd_put_string_xy_P(FONT_P font, uint8_t style, int str,uint8_t page, uint8_t col) {
   LCD_MOVE_TO(page,col);
   return lcd_put_string_P(font,style,str);
   }
