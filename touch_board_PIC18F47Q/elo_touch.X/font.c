@@ -75,9 +75,9 @@ inline void lcd_set_font(FONT_P font, uint8_t style){
 inline  int font_data(FONT_P font) {
   int tmp;
   if (sizeof(tmp) == 2)
-    tmp = (PGM_P)pgm_read_word(&(font->data));
+    tmp=&font->data;
   else
-    memcpy_P((char*)&tmp,&(font->data),sizeof(tmp));
+    memcpy((char*)&tmp,&(font->data),sizeof(tmp));
   return tmp;
   }
 
