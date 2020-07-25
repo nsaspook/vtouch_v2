@@ -175,6 +175,7 @@ void calc_bsoc(void)
 	if (V.time_info) { // set local time from remote server
 		V.time_info = false;
 		t_time = (uint32_t) atol(V.rbuf);
+		V.boot_time=t_time;
 		if (t_time > DEF_TIME) {
 			set_time(t_time);
 		}
@@ -187,9 +188,9 @@ void calc_bsoc(void)
 		V.sys_info = false;
 		log_ptr = port_data_dma_ptr();
 		lcode = I_CODE;
-		sprintf((char*) log_ptr, " %c\r\n %c ,System Status: Version %s Build %s %s \r\n %c ,%s\r\n %c ,%10lu, %10lu, %10lu, %10lu, %10lu, %10lu, %10lu \r\n %c ,%s\r\n %c ,%10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10lu\r\n %c\r\n",
+		sprintf((char*) log_ptr, " %c\r\n %c ,System Status: Version %s Build %s %s up-time seconds %lu \r\n %c ,%s\r\n %c ,%10lu, %10lu, %10lu, %10lu, %10lu, %10lu, %10lu \r\n %c ,%s\r\n %c ,%10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10lu\r\n %c\r\n",
 			lcode,
-			lcode, VER, build_date, build_time,
+			lcode, VER, build_date, build_time, V.ticks-V.boot_time,
 			lcode, infoline1,
 			lcode, V.lowint_count, V.timerint_count, V.tx_count, V.rx_count, V.adc_count, V.spi_count, V.switch_count,
 			lcode, infoline2,

@@ -134,6 +134,7 @@ typedef signed long long int24_t;
 
 V_data V = {
 	.ticks = DEF_TIME,
+	.boot_time = DEF_TIME,
 	.ticker = 25, // timer start offset
 	.checksum_error = 0,
 	.all_errors = 0,
