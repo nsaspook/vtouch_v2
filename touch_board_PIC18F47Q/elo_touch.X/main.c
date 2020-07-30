@@ -51,6 +51,9 @@
 #include "d232.h"
 #include "eadog.h"
 #include "dogm-graphic.h"
+#include "OledDriver.h"
+#include "OledChar.h"
+#include "OledGrph.h"
 
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
@@ -103,6 +106,7 @@ void work_sw(void)
 void main(void)
 {
 	uint8_t x = 0, y = 0;
+	uint32_t irow = 0;
 	char buffer[24];
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -130,18 +134,44 @@ void main(void)
 
 	init_display();
 
-	while (true) {
-		lcd_data(0xff);
-		lcd_data(0x00);
-		LCD_SWITCH_ON();
-	};
+	//	while (true) {
+	//	lcd_data(0xff);
+	//	lcd_data(0x00);
+	LCD_SWITCH_ON();
+	//	};
 	//	eaDogM_CursorOff();
 	srand(99);
+	OledInit(); // font and graphics routines
 
 	StartTimer(TMR_INIT, 1000);
 	Digital232_init();
-	sprintf(buffer, "SW %s Play!", sw_version);
-	eaDogM_WriteStringAtPos(0, 0, buffer);
+	sprintf(buffer, "SW %s     ", sw_version);
+	while (true) {
+		OledSetCursor(0, 0);
+		OledPutString("K42 LCD       ");
+		OledSetCursor(0, 1);
+		OledPutString("Basic I/O     ");
+		OledSetCursor(0, 2);
+		OledPutString(buffer);
+		OledSetCursor(0, 3);
+		OledPutString("DogS Driver   ");
+		OledSetCursor(0, 4);
+		OledPutString("DogS Driver   ");
+		OledSetCursor(0, 5);
+		OledPutString("DogS Driver   ");
+		OledSetCursor(0, 6);
+		OledPutString("DogS Driver   ");
+		OledSetCursor(0, 7);
+		OledPutString("DogS Driver   ");
+		//		OledMoveTo(0, irow & 31);
+		//		OledDrawRect(100, 31);
+		//		OledMoveTo(0, irow & 31);
+		//		OledLineTo(100, irow & 31);
+		OledUpdate();
+		irow++;
+
+	}
+	//	eaDogM_WriteStringAtPos(0, 0, buffer);
 
 	otto_b1.range = otto_b1.span - otto_b1.offset;
 	otto_b1.scalar = ADC_SCALE / (float) otto_b1.range;

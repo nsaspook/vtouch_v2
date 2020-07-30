@@ -5,7 +5,8 @@
 #include <string.h>
 #include "mcc_generated_files/pin_manager.h"
 #include "mcc_generated_files/spi1.h"
-#include "font.h"
+#include "dogm-graphic.h"
+//#include "font.h"
 
 /*****************************************************************************
  * BEGIN CONFIG BLOCK
@@ -109,7 +110,7 @@ void lcd_clear_area_xy(uint8_t pages, uint8_t columns, uint8_t style, uint8_t pa
   
 
 //Move cursor
-void lcd_moveto_xy  (uint8_t page, uint8_t column);
+void lcd_moveto_xy(uint8_t page, uint8_t column);
 void lcd_move_xy    (int8_t pages, int16_t columns);
 
 //Set display contrast

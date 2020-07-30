@@ -266,7 +266,7 @@ void touch_cam(void)
 	};
 }
 
-void wdtdelay(uint32_t delay)
+static void wdtdelay(uint32_t delay)
 {
 	uint32_t dcount;
 
