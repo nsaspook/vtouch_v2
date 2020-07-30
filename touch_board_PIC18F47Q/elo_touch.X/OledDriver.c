@@ -50,7 +50,7 @@
 #include "OledDriver.h"
 #include "OledChar.h"
 #include "OledGrph.h"
-#include "eadog.h"
+//#include "eadog.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "mcc_generated_files/spi1.h"
 #include "dogm-graphic.h"
@@ -136,38 +136,18 @@ uint8_t * pbOledFontUser;
  */
 uint8_t rgbOledBmp[cbOledDispMax];
 
-// Harmony SPI Driver
-static uint8_t SPIHandle;
-
 /* ------------------------------------------------------------ */
 /*				Forward Declarations							*/
 /* ------------------------------------------------------------ */
 
-void OledHostInit();
-void OledHostTerm();
-void OledDevInit();
-void OledDevTerm();
-void OledDvrInit();
+void OledHostInit(void);
+void OledHostTerm(void);
+void OledDevInit(void);
+void OledDevTerm(void);
+void OledDvrInit(void);
 void OledPutBuffer(int32_t cb, uint8_t * rgbTx);
 
-//#define READ_CORE_TIMER()                 _CP0_GET_COUNT()          // Read the MIPS Core Timer
-void DRV_SPI_BufferAddWrite(uint8_t, uint8_t *, uint16_t, uint8_t, uint8_t);
 uint16_t SPI1_to_Buffer(uint8_t *, uint16_t, uint8_t *);
-
-void DRV_SPI_BufferAddWrite(uint8_t handle, uint8_t * TXbuffer, uint16_t len, uint8_t p0, uint8_t p1)
-{
-	SPI1_to_Buffer((uint8_t *) TXbuffer, len, NULL);
-};
-
-void BSP_DelayUs(uint32_t microseconds)
-{
-	wdtdelay(microseconds);
-}
-
-void DelayMs(uint32_t delay)
-{
-	BSP_DelayUs(delay * 1000);
-}
 
 /* ------------------------------------------------------------ */
 /*				Procedure Definitions							*/
@@ -262,8 +242,6 @@ void OledHostInit(void)
 	/*
 	 * dogm does the init
 	 */
-	// use spi device #1
-	SPIHandle = 1;
 }
 
 /* ------------------------------------------------------------ */
@@ -356,6 +334,7 @@ void OledDvrInit(void)
  **	Description:
  **		Initialize the OLED display controller and turn the display on.
  */
+
 
 void OledDevInit(void)
 {
@@ -563,34 +542,40 @@ void OledUpdate(void)
 
 void OledPutBuffer(int32_t cb, uint8_t * rgbTx)
 {
-	DRV_SPI_BufferAddWrite(SPIHandle, (uint8_t *) rgbTx, cb, 0, 0);
+		SPI1_to_Buffer((uint8_t *) rgbTx, cb, NULL);
 }
 
 uint16_t SPI1_to_Buffer(uint8_t *dataIn, uint16_t bufLen, uint8_t *dataOut)
 {
 	uint16_t bytesWritten = 0;
 
+
+	LCD_SELECT();
+	LCD_DRAM();
+
 	if (bufLen != 0) {
 		if (dataIn != NULL) {
 			while (bytesWritten < bufLen) {
 				if (dataOut == NULL) {
-					lcd_data(dataIn[bytesWritten]);
+					SPI1_Exchange8bit(dataIn[bytesWritten]);
 				} else {
-					lcd_data(dataIn[bytesWritten]);
+					SPI1_Exchange8bit(dataIn[bytesWritten]);
 				}
-
+				lcd_inc_column(1);
 				bytesWritten++;
 			}
 		} else {
 			if (dataOut != NULL) {
 				while (bytesWritten < bufLen) {
-					lcd_data(DUMMY_DATA);
-
+					SPI1_Exchange8bit(DUMMY_DATA);
+					lcd_inc_column(1);
 					bytesWritten++;
 				}
 			}
 		}
 	}
 
+	LCD_UNSELECT();
 	return bytesWritten;
 }
+

@@ -41,7 +41,7 @@
 /*					Miscellaneous Declarations					*/
 /* ------------------------------------------------------------ */
 
-#define	cbOledDispMax		512		//max number of bytes in display buffer
+#define	cbOledDispMax		1024		//max number of bytes in display buffer
 
 #define	ccolOledMax		102		//number of display columns
 #define	crowOledMax		64		//number of display rows
@@ -82,15 +82,13 @@
 /*					Procedure Declarations						*/
 /* ------------------------------------------------------------ */
 
-void OledInit();
-void OledTerm();
-void OledDisplayOn();
-void OledDisplayOff();
-void OledClear();
-void OledClearBuffer();
-void OledUpdate();
-void BSP_DelayUs(uint32_t);
-void DelayMs(uint32_t);
+void OledInit(void);
+void OledTerm(void);
+void OledDisplayOn(void);
+void OledDisplayOff(void);
+void OledClear(void);
+void OledClearBuffer(void);
+void OledUpdate(void);
 
 /* ------------------------------------------------------------ */
 

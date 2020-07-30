@@ -40,9 +40,7 @@
 /*				Include File Definitions						*/
 /* ------------------------------------------------------------ */
 
-//#include <p32xxxx.h>
 #include <stdint.h>
-//#include <plib.h>
 
 #include <inttypes.h>
 
@@ -94,7 +92,7 @@ uint8_t rgbOledFontUser[cbOledFontUser];
 /* ------------------------------------------------------------ */
 
 void OledDrawGlyph(char ch);
-void OledAdvanceCursor();
+void OledAdvanceCursor(void);
 
 /* ------------------------------------------------------------ */
 /*				Procedure Definitions							*/
@@ -255,7 +253,7 @@ OledSetCharUpdate(int32_t f)
  */
 
 int32_t
-OledGetCharUpdate()
+OledGetCharUpdate(void)
 {
 
 	return fOledCharUpdate;
@@ -391,7 +389,7 @@ OledDrawGlyph(char ch)
  */
 
 void
-OledAdvanceCursor()
+OledAdvanceCursor(void)
 {
 
 	xchOledCur += 1;

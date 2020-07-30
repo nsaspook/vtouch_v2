@@ -148,9 +148,9 @@ void main(void)
 	sprintf(buffer, "SW %s     ", sw_version);
 	while (true) {
 		OledSetCursor(0, 0);
-		OledPutString("K42 LCD       ");
+		OledPutString("K42 DOGS102   ");
 		OledSetCursor(0, 1);
-		OledPutString("Basic I/O     ");
+		OledPutString("Basic DISPLAY ");
 		OledSetCursor(0, 2);
 		OledPutString(buffer);
 		OledSetCursor(0, 3);
@@ -163,10 +163,10 @@ void main(void)
 		OledPutString("DogS Driver   ");
 		OledSetCursor(0, 7);
 		OledPutString("DogS Driver   ");
-		//		OledMoveTo(0, irow & 31);
-		//		OledDrawRect(100, 31);
-		//		OledMoveTo(0, irow & 31);
-		//		OledLineTo(100, irow & 31);
+//		OledMoveTo(0, irow & 63);
+//		OledDrawRect(63, 63);
+		OledMoveTo(0, irow & 63);
+		OledLineTo(63, irow & 63);
 		OledUpdate();
 		irow++;
 

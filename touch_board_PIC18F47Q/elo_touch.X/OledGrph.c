@@ -39,10 +39,8 @@
 /*				Include File Definitions						*/
 /* ------------------------------------------------------------ */
 
-//#include <p32xxxx.h>
 #include <stdint.h>
 #include <stdlib.h>
-//#include <plib.h>
 
 #include "OledDriver.h"
 
@@ -79,10 +77,10 @@ int modOledCur;
 /*				Forward Declarations							*/
 /* ------------------------------------------------------------ */
 
-void OledMoveDown();
-void OledMoveUp();
-void OledMoveRight();
-void OledMoveLeft();
+void OledMoveDown(void);
+void OledMoveUp(void);
+void OledMoveRight(void);
+void OledMoveLeft(void);
 uint8_t OledRopSet(uint8_t bPix, uint8_t bDsp, uint8_t mskPix);
 uint8_t OledRopOr(uint8_t bPix, uint8_t bDsp, uint8_t mskPix);
 uint8_t OledRopAnd(uint8_t bPix, uint8_t bDsp, uint8_t mskPix);
@@ -301,7 +299,7 @@ OledSetDrawMode(int32_t mod)
  */
 
 int
-OledGetDrawMode()
+OledGetDrawMode(void)
 {
 
 	return modOledCur;
@@ -327,7 +325,7 @@ OledGetDrawMode()
  */
 
 void
-OledDrawPixel()
+OledDrawPixel(void)
 {
 
 	*pbOledCur = (*pfnDoRop)((clrOledCur << bnOledCur), *pbOledCur, (1 << bnOledCur));
@@ -352,7 +350,7 @@ OledDrawPixel()
  */
 
 uint8_t
-OledGetPixel()
+OledGetPixel(void)
 {
 
 	return(*pbOledCur & (1 << bnOledCur)) != 0 ? 1 : 0;
@@ -387,8 +385,8 @@ OledLineTo(int32_t xco, int32_t yco)
 	int cpx;
 	int dxco;
 	int dyco;
-	void (*pfnMajor)();
-	void (*pfnMinor)();
+	void (*pfnMajor)(void);
+	void (*pfnMinor)(void);
 
 	/* Clamp the point to be on the display.
 	 */
@@ -1175,8 +1173,7 @@ int32_t OledClampXco(int32_t xco)
  **		This routine forces the y value to be on the display.
  */
 
-int32_t
-OledClampYco(int32_t yco)
+int32_t OledClampYco(int32_t yco)
 {
 	if (yco < 0) {
 		yco = 0;
