@@ -67,13 +67,13 @@ void SPI1_Initialize(void)
 		// SSP active high; SDOP active high; FST disabled; SMP Middle; CKP Idle:High, Active:Low; CKE Idle to active; SDIP active high; 
 		SPI1CON1 = 0x20;
 		// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
-		SPI1CON2 = 0x03;
+		SPI1CON2 = 0x02;
 		// BAUD 0; 
 		SPI1BAUD = 0x03;
 		// CLKSEL FOSC; 
 		SPI1CLK = 0x00;
 		// BMODE last byte; LSBF MSb first; EN enabled; MST bus master; 
-		SPI1CON0 = 0x82;
+		SPI1CON0 = 0x83;
 }
 
 uint8_t SPI1_Exchange8bit(uint8_t data)

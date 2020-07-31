@@ -81,15 +81,15 @@ void init_display(void)
 	SPI1CON1 = 0x40;
 	SPI1CON0 = 0x83;
 #endif
-//	SPI1INTFbits.SPI1TXUIF = 0;
-//	DMA1CON1bits.DMODE = 0;
-//	DMA1CON1bits.DSTP = 0;
-//	DMA1CON1bits.SMODE = 1;
-//	DMA1CON1bits.SMR = 0;
-//	DMA1CON1bits.SSTP = 1;
-//	DMA1SSA = (uint32_t) & ring_buf1;
-//	DMA1CON0bits.DGO = 0;
-//	SPI1INTFbits.SPI1TXUIF = 1;
+	//	SPI1INTFbits.SPI1TXUIF = 0;
+	//	DMA1CON1bits.DMODE = 0;
+	//	DMA1CON1bits.DSTP = 0;
+	//	DMA1CON1bits.SMODE = 1;
+	//	DMA1CON1bits.SMR = 0;
+	//	DMA1CON1bits.SSTP = 1;
+	//	DMA1SSA = (uint32_t) & ring_buf1;
+	//	DMA1CON0bits.DGO = 0;
+	//	SPI1INTFbits.SPI1TXUIF = 1;
 #ifdef DEBUG_DISP2
 	DLED2 = false;
 #endif
@@ -100,15 +100,15 @@ void init_display(void)
  */
 void init_port_dma(void)
 {
-//	DMA2CON1bits.DMODE = 0;
-//	DMA2CON1bits.DSTP = 0;
-//	DMA2CON1bits.SMODE = 1;
-//	DMA2CON1bits.SMR = 0;
-//	DMA2CON1bits.SSTP = 1;
-//	DMA2CON0bits.SIRQEN = 0;
-//	DMA2DSA = 0x3DEA; // U1TXB SERIAL PORT 1
-//	DMA2SSA = (uint32_t) port_data;
-//	DMA2CON0bits.DGO = 0;
+	//	DMA2CON1bits.DMODE = 0;
+	//	DMA2CON1bits.DSTP = 0;
+	//	DMA2CON1bits.SMODE = 1;
+	//	DMA2CON1bits.SMR = 0;
+	//	DMA2CON1bits.SSTP = 1;
+	//	DMA2CON0bits.SIRQEN = 0;
+	//	DMA2DSA = 0x3DEA; // U1TXB SERIAL PORT 1
+	//	DMA2SSA = (uint32_t) port_data;
+	//	DMA2CON0bits.DGO = 0;
 }
 
 #ifdef NHD
@@ -157,12 +157,12 @@ void eaDogM_WriteString(char *strPtr)
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	if (len > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
-//	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-//	DMA1SSZ = len;
-//	DMA1CON0bits.EN = 1; /* enable DMA */
+	//	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
+	//	DMA1SSZ = len;
+	//	DMA1CON0bits.EN = 1; /* enable DMA */
 	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
 	start_lcd(); // start DMA transfer
-//	V.spi_count += len;
+	//	V.spi_count += len;
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
 #endif
@@ -195,12 +195,12 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
-//	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-//	DMA1SSZ = 1;
-//	DMA1CON0bits.EN = 1; /* enable DMA */
+	//	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
+	//	DMA1SSZ = 1;
+	//	DMA1CON0bits.EN = 1; /* enable DMA */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
 	start_lcd(); // start DMA transfer
-//	V.spi_count++;
+	//	V.spi_count++;
 #ifdef DEBUG_DISP2
 	DLED2 = false;
 #endif
@@ -413,11 +413,11 @@ void send_port_data_dma(uint16_t dsize)
 	if (dsize > max_port_data)
 		dsize = max_port_data;
 
-//	DMA2CON0bits.EN = 0; /* disable DMA to change source count */
-//	DMA2SSZ = dsize;
-//	DMA2DSZ = 1;
-//	DMA2CON0bits.EN = 1; /* enable DMA */
-//	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
+	//	DMA2CON0bits.EN = 0; /* disable DMA to change source count */
+	//	DMA2SSZ = dsize;
+	//	DMA2DSZ = 1;
+	//	DMA2CON0bits.EN = 1; /* enable DMA */
+	//	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
 }
 
 /*
@@ -441,7 +441,7 @@ void putch(char c)
  */
 void start_lcd(void)
 {
-//	DMA1CON0bits.DMA1SIRQEN = 1; /* start DMA trigger */
+	//	DMA1CON0bits.DMA1SIRQEN = 1; /* start DMA trigger */
 }
 
 void wait_lcd_set(void)

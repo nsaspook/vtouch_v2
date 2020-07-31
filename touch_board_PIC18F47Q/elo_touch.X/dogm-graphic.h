@@ -1,8 +1,10 @@
 #ifndef DOGMGRAPHIC_H_INCLUDED
 #define DOGMGRAPHIC_H_INCLUDED
 
+#include <xc.h>
 #include <inttypes.h>
 #include <string.h>
+#include "mcc_generated_files/interrupt_manager.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "mcc_generated_files/spi1.h"
 #include "dogm-graphic.h"
@@ -10,6 +12,13 @@
 /*****************************************************************************
  * BEGIN CONFIG BLOCK
  *****************************************************************************/
+
+/*
+ * use DMA for disply buffer updates
+ */
+//#define USE_DMA
+
+
 //Select the display type: DOGS102: 102, DOGM128/DOGL128: 128, DOGM132: 132, DOGXL160: 160, DOGXL240: 240
 #define DISPLAY_TYPE  102
 

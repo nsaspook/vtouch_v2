@@ -90,6 +90,8 @@ void OledClear(void);
 void OledClearBuffer(void);
 void OledUpdate(void);
 
+void wait_lcd_done(void);
+
 /* ------------------------------------------------------------ */
 
 #endif

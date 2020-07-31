@@ -118,6 +118,9 @@ void lcd_data(uint8_t data)
 {
 	LCD_SELECT();
 	LCD_DRAM();
+	SPI1CON0bits.EN = 0;
+	SPI1CON2 = 0x03; //  Received data is stored in the FIFO
+	SPI1CON0bits.EN = 1;
 	SPI1_Exchange8bit(data);
 	LCD_UNSELECT();
 	lcd_inc_column(1);
@@ -131,6 +134,9 @@ void lcd_command(uint8_t cmd)
 {
 	LCD_SELECT();
 	LCD_CMD();
+	SPI1CON0bits.EN = 0;
+	SPI1CON2 = 0x03; //  Received data is stored in the FIFO
+	SPI1CON0bits.EN = 1;
 	SPI1_Exchange8bit(cmd);
 	LCD_UNSELECT();
 }
