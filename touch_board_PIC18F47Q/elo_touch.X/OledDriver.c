@@ -575,34 +575,23 @@ uint16_t SPI1_to_Buffer(uint8_t *dataIn, uint16_t bufLen, uint8_t *dataOut)
 	uint16_t bytesWritten = 0, i = 0;
 
 #ifdef USE_DMA
-	while (DMA1CON0bits.DMA1SIRQEN) {
+	while (DMA1CON0bits.DGO) {
 		//			if (++i > 2000) {
 		//				break;
 		//			}
 	};
 	PWM8_LoadDutyValue(199);
-	SPI1CON0bits.EN = 0;
-	SPI1CON2 = 0x02; //  Received data is not stored in the FIFO
-	SPI1CON0bits.EN = 1;
+//	SPI1CON0bits.EN = 0;
+//	SPI1CON2 = 0x02; //  Received data is not stored in the FIFO
+//	SPI1CON0bits.EN = 1;
 	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
 	DMA1SSA = (volatile uint24_t) dataIn;
 	DMA1SSZ = bufLen;
 	DMA1DSA = (volatile unsigned short) &SPI1TXB; //set destination start address
 	DMA1DSZ = 1;
-	DMA1CON1bits.DMODE = 0;
-	DMA1CON1bits.DSTP = 0;
-	DMA1CON1bits.SMODE = 1;
-	DMA1CON1bits.SMR = 0;
-	DMA1CON1bits.SSTP = 1;
-	DMA1SIRQ = 0x15; //set DMA Transfer Trigger Source
-	DMA1AIRQ = 0x00; //set DMA Transfer abort Source 
-	PIR2bits.DMA1DCNTIF = 0; //clear Destination Count Interrupt Flag bit
-	PIR2bits.DMA1SCNTIF = 0; //clear Source Count Interrupt Flag bit
-	PIR2bits.DMA1AIF = 0; //clear abort Interrupt Flag bit
-	PIR2bits.DMA1ORIF = 0; //clear overrun Interrupt Flag bit
-	SPI1INTFbits.SPI1TXUIF = 1;
-	DMA1CON0 = 0x80; //EN = 1 | SIRQEN = 0 | DGO = 0 |xx| AIRQEN = 0 |x| XIP = 0
-	DMA1CON0bits.DMA1SIRQEN = 1; /* start DMA trigger */
+	DMA1CON0bits.EN = 1;
+	DMA1CON0bits.DGO=1;
+//	DMA1CON0bits.DMA1SIRQEN = 1; /* start DMA trigger */
 	PWM8_LoadDutyValue(1);
 	return bufLen;
 #else

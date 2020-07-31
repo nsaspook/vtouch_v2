@@ -49,15 +49,12 @@
  */
 
 #include <xc.h>
-#include <stdint.h>
 #include "dma1.h"
 #include "interrupt_manager.h"
-#include "pwm8.h"
 
 /**
   Section: Global Variables Definitions
  */
-extern volatile uint8_t LCD_DATA;
 
 /**
   Section: DMA APIs
@@ -70,17 +67,17 @@ void DMA1_Initialize(void)
 	DMA1SSZ = 0x0001; //set source size
 	DMA1DSZ = 0x0001; //set destination size
 	DMA1SIRQ = 0x15; //set DMA Transfer Trigger Source
-    DMA1AIRQ = 0x13; //set DMA Transfer abort Source
+    DMA1AIRQ = 0x3D; //set DMA Transfer abort Source
 
     PIR2bits.DMA1DCNTIF =0; // clear Destination Count Interrupt Flag bit
     PIR2bits.DMA1SCNTIF =0; // clear Source Count Interrupt Flag bit
     PIR2bits.DMA1AIF =0; // clear abort Interrupt Flag bit
 	PIR2bits.DMA1ORIF =0; // clear overrun Interrupt Flag bit
 
-    PIE2bits.DMA1DCNTIE =0; // disable Destination Count 0 Interrupt
-    PIE2bits.DMA1SCNTIE =0; // disable Source Count Interrupt
-    PIE2bits.DMA1AIE =0; // disable abort Interrupt
-    PIE2bits.DMA1ORIE =0; // disable overrun Interrupt 
+    PIE2bits.DMA1DCNTIE =1; // enable Destination Count 0 Interrupt
+    PIE2bits.DMA1SCNTIE =1; // enable Source Count Interrupt
+    PIE2bits.DMA1AIE =1; // enable abort Interrupt
+    PIE2bits.DMA1ORIE =1; // enable overrun Interrupt 
 
 	asm("BCF INTCON0,7");
 
@@ -96,9 +93,37 @@ void DMA1_Initialize(void)
 	DMA1CON0 = 0x00; //set control register0
 }
 
+void __interrupt(irq(DMA1SCNT),base(8)) DMA1_DMASCNT_ISR()
+{
+    PIR2bits.DMA1SCNTIF=0;// clear Source Count Interrupt Flag 
+    // add your DMA channel 1 source count 0 interrupt custom code
+}
 
+void __interrupt(irq(DMA1DCNT),base(8)) DMA1_DMADCNT_ISR()
+{
+    PIR2bits.DMA1DCNTIF=0; // clear Destination Count Interrupt Flag 
+    // add your DMA channel 1 destination count 0 interrupt custom code
+}
 
+#if (__XC8_VERSION <= 1400)
+void __interrupt(irq(DMA1ARBT),base(8)) DMA1_DMAA_ISR()
+#else   // __XC8_VERSION
+void __interrupt(irq(DMA1A),base(8)) DMA1_DMAA_ISR()
+#endif // __XC8_VERSION
+{
+    PIR2bits.DMA1AIF=0;// clear abort Interrupt Flag 
+    // add your DMA channel 1 abort interrupt custom code
+}
 
+#if (__XC8_VERSION <= 1400)
+void __interrupt(irq(IRQ_DMA1OVR),base(8)) DMA1_DMAOR_ISR()
+#else // __XC8_VERSION
+void __interrupt(irq(DMA1OR),base(8)) DMA1_DMAOR_ISR()
+#endif // __XC8_VERSION
+{
+    PIR2bits.DMA1ORIF=0;// clear overrun Interrupt Flag 
+    // add your DMA channel 1 overrun interrupt custom code
+}
 /**
   End of File
  */
