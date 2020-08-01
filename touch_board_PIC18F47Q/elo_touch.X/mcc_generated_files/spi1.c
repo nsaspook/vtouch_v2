@@ -66,8 +66,8 @@ void SPI1_Initialize(void)
     // Set the SPI1 module to the options selected in the User Interface
 		// SSP active high; SDOP active high; FST disabled; SMP Middle; CKP Idle:High, Active:Low; CKE Idle to active; SDIP active high; 
 		SPI1CON1 = 0x20;
-		// SSET disabled; RXR data is not stored in the FIFO; TXR not required for a transfer; 
-		SPI1CON2 = 0x00;
+		// SSET disabled; RXR data is not stored in the FIFO; TXR required for a transfer; 
+		SPI1CON2 = 0x02;
 		// BAUD 0; 
 		SPI1BAUD = 0x03;
 		// CLKSEL FOSC; 

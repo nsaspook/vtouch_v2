@@ -61,17 +61,17 @@ void DMA1_Initialize(void)
     //DMA Instance Selection : 0x00
     DMASELECT = 0x00;
     //Source Address : lcdsrc0
-    DMAnSSA = (uint32_t) &lcdsrc0;
-    //Destination Address : &DstVarName0
-    DMAnDSA= &DstVarName0;
+    DMAnSSA = &lcdsrc0;
+    //Destination Address : &SPI1TXB
+    DMAnDSA = &SPI1TXB;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
     DMAnCON1 = 0x02;
     //Source Message Size : 1
     DMAnSSZ = 1;
     //Destination Message Size : 1
     DMAnDSZ = 1;
-    //Start Trigger : SIRQ None; 
-    DMAnSIRQ = 0x00;
+    //Start Trigger : SIRQ SPI1TX; 
+    DMAnSIRQ = 0x19;
     //Abort Trigger : AIRQ None; 
     DMAnAIRQ = 0x00;
 	
@@ -89,8 +89,8 @@ void DMA1_Initialize(void)
     PIE2bits.DMA1AIE = 0;
     PIE2bits.DMA1ORIE = 0;
 	
-    //EN enabled; SIRQEN disabled; DGO not in progress; AIRQEN disabled; 
-    DMAnCON0 = 0x80;
+    //EN enabled; SIRQEN enabled; DGO not in progress; AIRQEN disabled; 
+    DMAnCON0 = 0xC0;
 	
 }
 

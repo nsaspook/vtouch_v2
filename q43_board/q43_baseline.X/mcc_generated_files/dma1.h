@@ -52,8 +52,7 @@
 */
 #include <stdint.h>
 
-uint32_t lcdsrc0[10];
-uint16_t DstVarName0[1];
+uint16_t lcdsrc0[10];
 
 /**
  * @brief Initializes the DMA1 module
