@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -10183,6 +10183,22 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="134.62" y="7.62"/>
 <pinref part="R2" gate="G$1" pin="1"/>
 <junction x="88.9" y="25.4"/>
+<wire x1="86.36" y1="0" x2="86.36" y2="-12.7" width="0.1524" layer="91"/>
+<pinref part="R11" gate="G$1" pin="2"/>
+<junction x="35.56" y="-2.54"/>
+<pinref part="R12" gate="G$1" pin="1"/>
+<junction x="35.56" y="-7.62"/>
+<wire x1="35.56" y1="-7.62" x2="35.56" y2="-2.54" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="15.24" x2="35.56" y2="-2.54" width="0.1524" layer="91"/>
+<pinref part="SV2" gate="1" pin="6"/>
+<wire x1="25.4" y1="15.24" x2="35.56" y2="15.24" width="0.1524" layer="91"/>
+<junction x="25.4" y="15.24"/>
+<pinref part="PWM_LCD" gate="G$1" pin="TP"/>
+<wire x1="2.54" y1="15.24" x2="25.4" y2="15.24" width="0.1524" layer="91"/>
+<junction x="2.54" y="15.24"/>
+<wire x1="86.36" y1="-12.7" x2="35.56" y2="-12.7" width="0.1524" layer="91"/>
+<wire x1="35.56" y1="-12.7" x2="35.56" y2="-7.62" width="0.1524" layer="91"/>
+<junction x="86.36" y="0"/>
 </segment>
 </net>
 <net name="N$15" class="0">
@@ -10253,22 +10269,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="58.42" y1="-2.54" x2="45.72" y2="-2.54" width="0.1524" layer="91"/>
 <junction x="45.72" y="-2.54"/>
 <junction x="58.42" y="-2.54"/>
-</segment>
-</net>
-<net name="N$22" class="0">
-<segment>
-<pinref part="SV2" gate="1" pin="6"/>
-<wire x1="25.4" y1="15.24" x2="35.56" y2="15.24" width="0.1524" layer="91"/>
-<pinref part="R11" gate="G$1" pin="2"/>
-<wire x1="35.56" y1="15.24" x2="35.56" y2="-2.54" width="0.1524" layer="91"/>
-<junction x="25.4" y="15.24"/>
-<junction x="35.56" y="-2.54"/>
-<pinref part="R12" gate="G$1" pin="1"/>
-<wire x1="35.56" y1="-7.62" x2="35.56" y2="-2.54" width="0.1524" layer="91"/>
-<junction x="35.56" y="-7.62"/>
-<pinref part="PWM_LCD" gate="G$1" pin="TP"/>
-<wire x1="2.54" y1="15.24" x2="25.4" y2="15.24" width="0.1524" layer="91"/>
-<junction x="2.54" y="15.24"/>
 </segment>
 </net>
 <net name="N$20" class="0">
