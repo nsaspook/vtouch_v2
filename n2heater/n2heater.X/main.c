@@ -41,39 +41,61 @@
     SOFTWARE.
  */
 
+#pragma warning disable 520
+#pragma warning disable 1498
+
+#include <stdint.h>
 #include "mcc_generated_files/mcc.h"
+#include "timer.h"
 
-int8_t controller_work(void)
-{
-	ADCC_StartConversion(AIR_FLOW);
-	while (!ADCC_IsConversionDone());
-
-	if (ADCC_GetConversionResult() > 5) {
-		BLED2_SetHigh();
-		return 33;
-	}
-	BLED2_SetHigh();
-	return 0;
-}
+volatile uint16_t tickCount[TMR_COUNT] = {0};
+uint16_t controller_work(void);
 
 /*
 			 Main application
  */
 void main(void)
 {
+	uint16_t pwm_value = 1;
 	// Initialize the device
 	SYSTEM_Initialize();
 
 	INTERRUPT_GlobalInterruptHighEnable();
-	INTERRUPT_GlobalInterruptLowEnable();
 
-	while (1) {
-		// Add your application code
-		//PWM8_LoadDutyValue(controller_work());
-//		PWM8_LoadDutyValue(333);
-//		controller_work();
-		BLED2_SetHigh();
+	StartTimer(TMR_PWM, 200);
+	StartTimer(TMR_PERIOD, 100);
+	SSR_PWM_SetHigh();
+	TMR0_StartTimer();
+
+	while (true) {
+		pwm_value = controller_work();
+		if (TimerDone(TMR_PERIOD)) {
+			StartTimer(TMR_PERIOD, 100);
+			StartTimer(TMR_PWM, pwm_value);
+			SSR_PWM_SetHigh();
+			LED1_SetHigh();
+		}
+		if (TimerDone(TMR_PWM)) {
+			StartTimer(TMR_PWM, 200);
+			SSR_PWM_SetLow();
+			LED1_SetLow();
+		}
 	}
+}
+
+uint16_t controller_work(void)
+{
+	ADCC_StartConversion(AIR_FLOW);
+	while (!ADCC_IsConversionDone());
+
+	if (ADCC_GetConversionResult() > 350) {
+		BLED2_SetHigh();
+		LED2_SetHigh();
+		return 33;
+	}
+	BLED2_SetLow();
+	LED2_SetLow();
+	return 1;
 }
 /**
  End of File
