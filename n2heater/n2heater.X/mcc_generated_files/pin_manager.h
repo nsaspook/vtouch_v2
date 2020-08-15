@@ -325,6 +325,18 @@
 #define IO_RB5_SetAnalogMode()      do { ANSELBbits.ANSELB5 = 1; } while(0)
 #define IO_RB5_SetDigitalMode()     do { ANSELBbits.ANSELB5 = 0; } while(0)
 
+// get/set RB7 procedures
+#define RB7_SetHigh()            do { LATBbits.LATB7 = 1; } while(0)
+#define RB7_SetLow()             do { LATBbits.LATB7 = 0; } while(0)
+#define RB7_Toggle()             do { LATBbits.LATB7 = ~LATBbits.LATB7; } while(0)
+#define RB7_GetValue()              PORTBbits.RB7
+#define RB7_SetDigitalInput()    do { TRISBbits.TRISB7 = 1; } while(0)
+#define RB7_SetDigitalOutput()   do { TRISBbits.TRISB7 = 0; } while(0)
+#define RB7_SetPullup()             do { WPUBbits.WPUB7 = 1; } while(0)
+#define RB7_ResetPullup()           do { WPUBbits.WPUB7 = 0; } while(0)
+#define RB7_SetAnalogMode()         do { ANSELBbits.ANSELB7 = 1; } while(0)
+#define RB7_SetDigitalMode()        do { ANSELBbits.ANSELB7 = 0; } while(0)
+
 // get/set IO_RC0 aliases
 #define IO_RC0_TRIS                 TRISCbits.TRISC0
 #define IO_RC0_LAT                  LATCbits.LATC0
@@ -424,18 +436,6 @@
 #define IO_RC4_SetOpenDrain()       do { ODCONCbits.ODCC4 = 1; } while(0)
 #define IO_RC4_SetAnalogMode()      do { ANSELCbits.ANSELC4 = 1; } while(0)
 #define IO_RC4_SetDigitalMode()     do { ANSELCbits.ANSELC4 = 0; } while(0)
-
-// get/set RC6 procedures
-#define RC6_SetHigh()            do { LATCbits.LATC6 = 1; } while(0)
-#define RC6_SetLow()             do { LATCbits.LATC6 = 0; } while(0)
-#define RC6_Toggle()             do { LATCbits.LATC6 = ~LATCbits.LATC6; } while(0)
-#define RC6_GetValue()              PORTCbits.RC6
-#define RC6_SetDigitalInput()    do { TRISCbits.TRISC6 = 1; } while(0)
-#define RC6_SetDigitalOutput()   do { TRISCbits.TRISC6 = 0; } while(0)
-#define RC6_SetPullup()             do { WPUCbits.WPUC6 = 1; } while(0)
-#define RC6_ResetPullup()           do { WPUCbits.WPUC6 = 0; } while(0)
-#define RC6_SetAnalogMode()         do { ANSELCbits.ANSELC6 = 1; } while(0)
-#define RC6_SetDigitalMode()        do { ANSELCbits.ANSELC6 = 0; } while(0)
 
 // get/set RC7 procedures
 #define RC7_SetHigh()            do { LATCbits.LATC7 = 1; } while(0)

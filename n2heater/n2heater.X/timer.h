@@ -24,7 +24,7 @@ enum APP_TIMERS {
 	TMR_ADC,
 	TMR_PWM,
 	TMR_PERIOD,
-	TMR_T4,
+	TMR_LOG,
 	//
 	//(Add timers here as needed)
 	//

@@ -45,10 +45,13 @@
 #pragma warning disable 1498
 
 #include <stdint.h>
+#include <stdio.h>
 #include "mcc_generated_files/mcc.h"
 #include "timer.h"
+#include "n2heater.h"
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
+uint32_t flow = 0, temp = 0, count = 0;
 uint16_t controller_work(void);
 
 /*
@@ -56,43 +59,61 @@ uint16_t controller_work(void);
  */
 void main(void)
 {
+	char	buffer[80];
 	uint16_t pwm_value = 1;
 	// Initialize the device
 	SYSTEM_Initialize();
 
 	INTERRUPT_GlobalInterruptHighEnable();
 
-	StartTimer(TMR_PWM, 200);
-	StartTimer(TMR_PERIOD, 100);
-	SSR_PWM_SetHigh();
+	StartTimer(TMR_PWM, PWM_DUTY);
+	StartTimer(TMR_PERIOD, PWM_MS);
+	StartTimer(TMR_LOG, LOGGING);
+	SSR_PWM_SetLow();
 	TMR0_StartTimer();
 
 	while (true) {
 		pwm_value = controller_work();
 		if (TimerDone(TMR_PERIOD)) {
-			StartTimer(TMR_PERIOD, 100);
+			StartTimer(TMR_PERIOD, PWM_MS);
 			StartTimer(TMR_PWM, pwm_value);
 			SSR_PWM_SetHigh();
 			LED1_SetHigh();
 		}
 		if (TimerDone(TMR_PWM)) {
-			StartTimer(TMR_PWM, 200);
+			StartTimer(TMR_PWM, PWM_DUTY);
 			SSR_PWM_SetLow();
 			LED1_SetLow();
+		}
+		if (TimerDone(TMR_LOG)) {
+			StartTimer(TMR_LOG, LOGGING);
+			sprintf(buffer,"%lu: Flow %lu, Temp %lu \r\n", count++, flow, temp);
+//			UART1_Write('f');
+//			UART2_Write('f');
 		}
 	}
 }
 
 uint16_t controller_work(void)
 {
+	static uint16_t pwm_val = PWM_HIGH;
+
+	ADCC_StartConversion(AIR_TEMP);
+	while (!ADCC_IsConversionDone());
+
+	if ((temp = ADCC_GetConversionResult()) > FLOW_TEMP) {
+		pwm_val = PWM_LOW;
+	}
+
 	ADCC_StartConversion(AIR_FLOW);
 	while (!ADCC_IsConversionDone());
 
-	if (ADCC_GetConversionResult() > 350) {
+	if ((flow = ADCC_GetConversionResult()) > FLOW_RATE) {
 		BLED2_SetHigh();
 		LED2_SetHigh();
-		return 33;
+		return pwm_val;
 	}
+
 	BLED2_SetLow();
 	LED2_SetLow();
 	return 1;

@@ -57,7 +57,7 @@
 extern volatile uint16_t tickCount[TMR_COUNT];
 /**
   Section: Global Variables Definitions
-*/
+ */
 
 volatile uint16_t timer0ReloadVal16bit;
 
@@ -71,17 +71,17 @@ void TMR0_Initialize(void)
 {
 	// Set TMR0 to the options selected in the User Interface
 
-    // T0CS FOSC/4; T0CKPS 1:1; T0ASYNC synchronised; 
-    T0CON1 = 0x40;
+	// T0CS FOSC/4; T0CKPS 1:1; T0ASYNC synchronised; 
+	T0CON1 = 0x40;
 
-    // TMR0H 255; 
-    TMR0H = 0xFF;
+    // TMR0H 224; 
+    TMR0H = 0xE0;
 
-    // TMR0L 254; 
-    TMR0L = 0xFE;
+    // TMR0L 192; 
+    TMR0L = 0xC0;
 
-    // Load TMR0 value to the 16-bit reload variable
-    timer0ReloadVal16bit = (TMR0H << 8) | TMR0L;
+	// Load TMR0 value to the 16-bit reload variable
+	timer0ReloadVal16bit = (TMR0H << 8) | TMR0L;
 
 	// Clear Interrupt flag before enabling the interrupt
 	PIR3bits.TMR0IF = 0;
@@ -92,8 +92,8 @@ void TMR0_Initialize(void)
 	// Set Default Interrupt Handler
 	TMR0_SetInterruptHandler(TMR0_DefaultInterruptHandler);
 
-    // T0OUTPS 1:1; T0EN enabled; T016BIT 16-bit; 
-    T0CON0 = 0x90;
+	// T0OUTPS 1:1; T0EN enabled; T016BIT 16-bit; 
+	T0CON0 = 0x90;
 }
 
 void TMR0_StartTimer(void)
@@ -110,12 +110,12 @@ void TMR0_StopTimer(void)
 
 uint16_t TMR0_ReadTimer(void)
 {
-    uint16_t readVal;
-    uint8_t readValLow;
-    uint8_t readValHigh;
+	uint16_t readVal;
+	uint8_t readValLow;
+	uint8_t readValHigh;
 
     readValLow  = TMR0L;
-    readValHigh = TMR0H;
+	readValHigh = TMR0H;
     readVal  = ((uint16_t)readValHigh << 8) + readValLow;
 
 	return readVal;
@@ -123,25 +123,25 @@ uint16_t TMR0_ReadTimer(void)
 
 void TMR0_WriteTimer(uint16_t timerVal)
 {
-    // Write to the Timer0 register
-    TMR0H = timerVal >> 8;
-    TMR0L = (uint8_t) timerVal;
+	// Write to the Timer0 register
+	TMR0H = timerVal >> 8;
+	TMR0L = (uint8_t) timerVal;
 }
 
 void TMR0_Reload(void)
 {
-    // Write to the Timer0 register
-    TMR0H = timer0ReloadVal16bit >> 8;
-    TMR0L = (uint8_t) timer0ReloadVal16bit;
+	// Write to the Timer0 register
+	TMR0H = timer0ReloadVal16bit >> 8;
+	TMR0L = (uint8_t) timer0ReloadVal16bit;
 }
 
 void __interrupt(irq(TMR0),base(8)) TMR0_ISR()
 {
 	// clear the TMR0 interrupt flag
 	PIR3bits.TMR0IF = 0;
-    // Write to the Timer0 register
-    TMR0H = timer0ReloadVal16bit >> 8;
-    TMR0L = (uint8_t) timer0ReloadVal16bit;
+	// Write to the Timer0 register
+	TMR0H = timer0ReloadVal16bit >> 8;
+	TMR0L = (uint8_t) timer0ReloadVal16bit;
 
     if(TMR0_InterruptHandler)
     {
@@ -149,7 +149,7 @@ void __interrupt(irq(TMR0),base(8)) TMR0_ISR()
 	}
 
 	// add your TMR0 interrupt custom code
-    	uint8_t i;
+	uint8_t i;
 
 	//Decrement each software timer
 	for (i = 0; i < TMR_COUNT; i++) {
@@ -157,8 +157,9 @@ void __interrupt(irq(TMR0),base(8)) TMR0_ISR()
 			tickCount[i]--;
 		}
 	}
-//	SSR_PWM_Toggle();
-		PIR3bits.TMR0IF = 0;
+	PIR3bits.TMR0IF = 0;
+	TMR0H = timer0ReloadVal16bit >> 8;
+	TMR0L = (uint8_t) timer0ReloadVal16bit;
 }
 
 

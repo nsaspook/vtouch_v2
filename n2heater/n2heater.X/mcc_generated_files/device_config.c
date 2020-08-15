@@ -47,8 +47,8 @@
 // Configuration bits: selected in the GUI
 
 // CONFIG1L
-#pragma config FEXTOSC = OFF    // External Oscillator Selection->Oscillator not enabled
-#pragma config RSTOSC = HFINTOSC_64MHZ    // Reset Oscillator Selection->HFINTOSC with HFFRQ = 64 MHz and CDIV = 1:1
+#pragma config FEXTOSC = ECH    // External Oscillator Selection->EC (external clock) above 8 MHz; PFM set to high power
+#pragma config RSTOSC = EXTOSC_4PLL    // Reset Oscillator Selection->EXTOSC with 4x PLL, with EXTOSC operating per FEXTOSC bits
 
 // CONFIG1H
 #pragma config CLKOUTEN = OFF    // Clock out Enable bit->CLKOUT function is disabled
