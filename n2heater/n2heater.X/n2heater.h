@@ -12,15 +12,16 @@
 extern "C" {
 #endif
 
-#define FLOW_RATE	250		// adc value from flow sensor
-#define FLOW_TEMP	1250		// adc value from temp sensor
-#define PWM_HIGH	330		// ramp pwm duty 1-1000
-#define PWM_LOW		250		// setback pwm duty 1-1000
-	
+#define FLOW_RATE	4000		// adc value from flow sensor: for heater activation
+#define FLOW_TEMP	1250		// adc value from temp sensor: not used
+#define PWM_HIGH	430		// ramp pwm duty 1-1000: Set for about 200W from the 600W heater
+#define PWM_LOW		300		// setback pwm duty 1-1000: not used
+#define PWM_OFF		1		// blink power on indicator
+
 #define PWM_MS		1000		// pwm period = 1 second
 #define PWM_DUTY	2000		// duty setup timeout = 2 seconds, should not happen with normal logic
-	
-#define LOGGING		50		// rs232 log output every 10 seconds
+
+#define LOGGING		10000		// rs232 log output every 10 seconds
 
 
 #ifdef	__cplusplus

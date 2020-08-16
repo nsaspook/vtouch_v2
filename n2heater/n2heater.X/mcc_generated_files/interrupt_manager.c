@@ -79,6 +79,7 @@ void  INTERRUPT_Initialize (void)
 
 void __interrupt(irq(default),base(8)) Default_ISR()
 {
+	while (true); // lockup on unknown interrupt
 }
 
 /**

@@ -41,6 +41,17 @@
     SOFTWARE.
  */
 
+/*
+ * VISTA HC end-station N2 CRYO heater controller for 600W inline heater
+ * PWM to about 200W for N2 purge
+ * 
+ * FLow sensor OMRON D6F-50A6-000
+ * TE SSR-480D125
+ * Power Supply Mean Well RD-50A
+ * Enclosure: CAMDENBOSS  CDIC00005 
+ * PIC18F47K42 Touch Board: basic function
+ */
+
 #pragma warning disable 520
 #pragma warning disable 1498
 
@@ -49,9 +60,13 @@
 #include "mcc_generated_files/mcc.h"
 #include "timer.h"
 #include "n2heater.h"
-
+/*
+ * 1ms software timer variables
+ */
 volatile uint16_t tickCount[TMR_COUNT] = {0};
+
 uint32_t flow = 0, temp = 0, count = 0;
+
 uint16_t controller_work(void);
 
 /*
@@ -59,18 +74,25 @@ uint16_t controller_work(void);
  */
 void main(void)
 {
-	char	buffer[80];
-	uint16_t pwm_value = 1;
+	char buffer[80];
+	uint16_t pwm_value = PWM_OFF;
+
 	// Initialize the device
 	SYSTEM_Initialize();
 
 	INTERRUPT_GlobalInterruptHighEnable();
 
+	SSR_PWM_SetLow();
+	TMR0_StartTimer();
+	BLED2_SetHigh(); // boot LED indicator
+	WaitMs(5000);
+	BLED2_SetLow();
+	/*
+	 * software timer 1 second PWM cycles
+	 */
 	StartTimer(TMR_PWM, PWM_DUTY);
 	StartTimer(TMR_PERIOD, PWM_MS);
 	StartTimer(TMR_LOG, LOGGING);
-	SSR_PWM_SetLow();
-	TMR0_StartTimer();
 
 	while (true) {
 		pwm_value = controller_work();
@@ -85,15 +107,20 @@ void main(void)
 			SSR_PWM_SetLow();
 			LED1_SetLow();
 		}
+		/*
+		 * testing logging & WDT reseting every 10 seconds
+		 */
 		if (TimerDone(TMR_LOG)) {
 			StartTimer(TMR_LOG, LOGGING);
-			sprintf(buffer,"%lu: Flow %lu, Temp %lu \r\n", count++, flow, temp);
-//			UART1_Write('f');
-//			UART2_Write('f');
+			CLRWDT();
+			sprintf(buffer, "%lu: Flow %lu, Temp %lu \r\n", count++, flow, temp);
 		}
 	}
 }
 
+/*
+ * I/O and program state setting
+ */
 uint16_t controller_work(void)
 {
 	static uint16_t pwm_val = PWM_HIGH;
@@ -103,6 +130,12 @@ uint16_t controller_work(void)
 
 	if ((temp = ADCC_GetConversionResult()) > FLOW_TEMP) {
 		pwm_val = PWM_LOW;
+	}
+
+	if (!BUTTON1_GetValue()) {
+		BLED2_SetHigh();
+		LED2_SetHigh();
+		return PWM_HIGH;
 	}
 
 	ADCC_StartConversion(AIR_FLOW);
@@ -116,7 +149,7 @@ uint16_t controller_work(void)
 
 	BLED2_SetLow();
 	LED2_SetLow();
-	return 1;
+	return PWM_OFF;
 }
 /**
  End of File

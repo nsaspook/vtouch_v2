@@ -73,12 +73,12 @@
 #pragma config XINST = OFF    // Extended Instruction Set Enable bit->Extended Instruction Set and Indexed Addressing Mode disabled
 
 // CONFIG3L
-#pragma config WDTCPS = WDTCPS_31    // WDT Period selection bits->Divider ratio 1:65536; software control of WDTPS
-#pragma config WDTE = OFF    // WDT operating mode->WDT Disabled; SWDTEN is ignored
+#pragma config WDTCPS = WDTCPS_15    // WDT Period selection bits->Divider ratio 1:1048576
+#pragma config WDTE = ON    // WDT operating mode->WDT enabled regardless of sleep
 
 // CONFIG3H
-#pragma config WDTCWS = WDTCWS_7    // WDT Window Select bits->window always open (100%); software control; keyed access not required
-#pragma config WDTCCS = SC    // WDT input clock selector->Software Control
+#pragma config WDTCWS = WDTCWS_6    // WDT Window Select bits->window always open (100%); no software control; keyed access required
+#pragma config WDTCCS = LFINTOSC    // WDT input clock selector->WDT reference clock is the 31.0 kHz LFINTOSC
 
 // CONFIG4L
 #pragma config BBSIZE = BBSIZE_512    // Boot Block Size selection bits->Boot Block size is 512 words

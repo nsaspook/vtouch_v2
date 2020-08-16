@@ -174,6 +174,7 @@ uint8_t UART2_Read(void)
     
     while(0 == uart2RxCount)
     {
+        CLRWDT();
     }
 
     uart2RxLastError = uart2RxStatusBuffer[uart2RxTail];
@@ -194,6 +195,7 @@ void UART2_Write(uint8_t txData)
 {
     while(0 == uart2TxBufferRemaining)
     {
+        CLRWDT();
     }
 
     if(0 == PIE6bits.U2TXIE)
