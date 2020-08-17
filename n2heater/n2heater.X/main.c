@@ -63,9 +63,11 @@
 /*
  * 1ms software timer variables
  */
-volatile uint16_t tickCount[TMR_COUNT] = {0};
+volatile uint16_t tickCount[TMR_COUNT] = {0}, max_heat_time = 0;
 
 uint32_t flow = 0, temp = 0, count = 0;
+
+const char *build_date = __DATE__, *build_time = __TIME__, build_version[5] = "1.0";
 
 uint16_t controller_work(void);
 
@@ -142,9 +144,19 @@ uint16_t controller_work(void)
 	while (!ADCC_IsConversionDone());
 
 	if ((flow = ADCC_GetConversionResult()) > FLOW_RATE) {
-		BLED2_SetHigh();
-		LED2_SetHigh();
-		return pwm_val;
+		if (max_heat_time >= MAX_HEAT) { // shutdown after a long run
+			BLED2_SetLow();
+			LED2_SetLow();
+			max_heat_time = MAX_HEAT + 1;
+			return PWM_OFF;
+		} else {
+			BLED2_SetHigh();
+			LED2_SetHigh();
+			return pwm_val;
+		}
+	} else {
+		// flow rate below setpoint, reset max heater time
+		max_heat_time = 0;
 	}
 
 	BLED2_SetLow();

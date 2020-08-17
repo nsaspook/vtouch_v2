@@ -22,7 +22,7 @@ extern "C" {
 #define PWM_DUTY	2000		// duty setup timeout = 2 seconds, should not happen with normal logic
 
 #define LOGGING		10000		// rs232 log output every 10 seconds
-
+#define MAX_HEAT	30000		// longest continious heating time in seconds
 
 #ifdef	__cplusplus
 }
