@@ -61,7 +61,7 @@
 #include "timer.h"
 #include "n2heater.h"
 /*
- * 1ms software timer variables
+ * software time variables
  */
 volatile uint16_t tickCount[TMR_COUNT] = {0}, max_heat_time = 0;
 
