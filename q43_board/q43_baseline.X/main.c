@@ -137,7 +137,8 @@ typedef struct disp_state_t {
 	SCREEN_INIT,
 	CATCH46, CATCH37, TSTATUS,
 	DATA1, DATA2, CAM;
-	uint16_t c_idx, speedup, ts_type;
+	uint16_t c_idx, ts_type;
+	int16_t speedup;
 } disp_state_t;
 
 /*
@@ -324,7 +325,7 @@ void elopacketout(const uint8_t *strptr, uint8_t strcount, uint8_t slow)
 void elocmdout_v80(const uint8_t * elostr)
 {
 	int16_t e;
-	int8_t elo_char;
+	uint8_t elo_char;
 	for (e = 0; e < ELO_SIZE_V80; e++) { // send buffered data
 		while (!UART2_is_tx_ready()) {
 		}; // wait until the usart is clear
@@ -469,8 +470,8 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 					y_tmp = (uint16_t) ((float) y_tmp * (float) ys_ss); // Y rescale
 					x_tmp = (x_tmp >> (uint16_t) 4); // rescale x to 8-bit value
 					y_tmp = (y_tmp >> (uint16_t) 4); // rescale y
-					elobuf_in[1] = x_tmp; // X to 8-bit var
-					elobuf_in[2] = y_tmp; // Y
+					elobuf_in[1] = (uint8_t) x_tmp; // X to 8-bit var
+					elobuf_in[2] = (uint8_t) y_tmp; // Y
 					elobuf_out[0] = 0xc0 + ((elobuf_in[1]&0xc0) >> 6); // stuff into binary 4002 format
 					elobuf_out[1] = 0x80 + (elobuf_in[1]&0x3f);
 					elobuf_out[2] = 0x40 + ((elobuf_in[2]&0xc0) >> 6);
@@ -657,18 +658,18 @@ void main(void)
 						rez_parm_h = ((float) (ssreport.x_cord)) * rez_scale_h_ss;
 						rez_parm_v = ((float) (ssreport.y_cord)) * rez_scale_v_ss;
 						ssreport.tohost = false;
-						scaled_char = ((uint16_t) (rez_parm_h));
+						scaled_char = ((uint8_t) (rez_parm_h));
 						elobuf[0] = scaled_char;
 						putc1(scaled_char); // send h scaled touch coord
-						scaled_char = ((uint16_t) (rez_parm_v));
+						scaled_char = ((uint8_t) (rez_parm_v));
 						elobuf[1] = scaled_char;
 						putc1(scaled_char); // send v scaled touch coord
 					} else {
 						rez_parm_h = ((float) (elobuf[0])) * rez_scale_h;
-						scaled_char = ((uint16_t) (rez_parm_h));
+						scaled_char = ((uint8_t) (rez_parm_h));
 						putc1(scaled_char); // send h scaled touch coord
 						rez_parm_v = ((float) (elobuf[1])) * rez_scale_v;
-						scaled_char = ((uint16_t) (rez_parm_v));
+						scaled_char = ((uint8_t) (rez_parm_v));
 						putc1(scaled_char); // send v scaled touch coord
 						S.c_idx = 0;
 					}
