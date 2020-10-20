@@ -58,8 +58,8 @@ void PIN_MANAGER_Initialize(void)
     LATx registers
     */
     LATE = 0x00;
-    LATD = 0x00;
-    LATA = 0x00;
+    LATD = 0xF0;
+    LATA = 0x40;
     LATB = 0x00;
     LATC = 0x00;
 
@@ -135,6 +135,7 @@ void PIN_MANAGER_Initialize(void)
     
 	
     U2RXPPS = 0x0F;   //RB7->UART2:RX2;    
+    RA5PPS = 0x0F;   //RA5->PWM7:PWM7;    
     U1RXPPS = 0x17;   //RC7->UART1:RX1;    
 }
   

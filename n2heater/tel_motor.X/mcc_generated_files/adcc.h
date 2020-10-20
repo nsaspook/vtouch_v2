@@ -89,7 +89,7 @@ typedef __uint24 uint24_t;
 typedef enum
 {
     AIR_FLOW =  0x0,
-    AIR_TEMP =  0x1,
+    OM_SPEED =  0x1,
     channel_VSS =  0x3B,
     channel_Temp =  0x3C,
     channel_DAC1 =  0x3D,

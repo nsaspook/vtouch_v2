@@ -84,7 +84,6 @@ void main(void)
 
 	INTERRUPT_GlobalInterruptHighEnable();
 
-	SSR_PWM_SetLow();
 	TMR0_StartTimer();
 	BLED2_SetHigh(); // boot LED indicator
 	WaitMs(5000);
@@ -101,12 +100,10 @@ void main(void)
 		if (TimerDone(TMR_PERIOD)) {
 			StartTimer(TMR_PERIOD, PWM_MS);
 			StartTimer(TMR_PWM, pwm_value);
-			SSR_PWM_SetHigh();
 			LED1_SetHigh();
 		}
 		if (TimerDone(TMR_PWM)) {
 			StartTimer(TMR_PWM, PWM_DUTY);
-			SSR_PWM_SetLow();
 			LED1_SetLow();
 		}
 		/*
@@ -127,7 +124,7 @@ uint16_t controller_work(void)
 {
 	static uint16_t pwm_val = PWM_HIGH;
 
-	ADCC_StartConversion(AIR_TEMP);
+	ADCC_StartConversion(OM_SPEED);
 	while (!ADCC_IsConversionDone());
 
 	if ((temp = ADCC_GetConversionResult()) > FLOW_TEMP) {
