@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.0">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -9,6 +9,20 @@
 <grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
+<layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
+<layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
+<layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
+<layer number="5" name="Route5" color="4" fill="4" visible="no" active="no"/>
+<layer number="6" name="Route6" color="1" fill="8" visible="no" active="no"/>
+<layer number="7" name="Route7" color="4" fill="8" visible="no" active="no"/>
+<layer number="8" name="Route8" color="1" fill="2" visible="no" active="no"/>
+<layer number="9" name="Route9" color="4" fill="2" visible="no" active="no"/>
+<layer number="10" name="Route10" color="1" fill="7" visible="no" active="no"/>
+<layer number="11" name="Route11" color="4" fill="7" visible="no" active="no"/>
+<layer number="12" name="Route12" color="1" fill="5" visible="no" active="no"/>
+<layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
+<layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
+<layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="no"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="no" active="no"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="no" active="no"/>
@@ -14131,7 +14145,7 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="ZENER-DIODE" urn="urn:adsk.eagle:component:43648/6" prefix="D" uservalue="yes" library_version="7">
+<deviceset name="ZENER-DIODE" urn="urn:adsk.eagle:component:43648/7" prefix="D" uservalue="yes" library_version="8">
 <description>Z-Diode</description>
 <gates>
 <gate name="G$1" symbol="ZD" x="0" y="0"/>
@@ -14146,7 +14160,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43342/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="DO41Z10" package="DO41Z10">
@@ -14158,7 +14174,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43341/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="8" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="C1702-15" package="C1702-15">
@@ -14170,7 +14188,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43351/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="1" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="DO13M" package="DO13M">
@@ -14182,7 +14202,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43361/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="SOD57-10" package="SOD57Z10">
@@ -14194,7 +14216,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43357/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="DO34-7" package="DO34Z7">
@@ -14206,7 +14230,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43364/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="3" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="SOD64-10" package="SOD64Z10">
@@ -14218,7 +14244,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43406/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="SOD64-12" package="SOD64Z12">
@@ -14230,7 +14258,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43356/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="TO236" package="TO236">
@@ -14242,7 +14272,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43403/2"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="F126-10" package="F126Z10">
@@ -14254,7 +14286,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43409/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="F126-12" package="F126Z12">
@@ -14266,7 +14300,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43358/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="ZD-10" package="ZDIO-10">
@@ -14278,7 +14314,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43408/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="2" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="ZD-2.5" package="ZDIO-2.5">
@@ -14290,7 +14328,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43407/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="4" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="ZD-5" package="ZDIO-5">
@@ -14302,7 +14342,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43412/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="6" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="ZD-7.5" package="ZDIO-7.5">
@@ -14314,7 +14356,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43411/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="6" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="ZD-12.5" package="ZDIO12.5">
@@ -14326,7 +14370,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43413/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="P1-Z12" package="P1Z12">
@@ -14338,7 +14384,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43340/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="1" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="P1-12" package="P1Z12">
@@ -14350,7 +14398,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43340/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="SOD80C" package="SOD80C">
@@ -14362,7 +14412,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43405/2"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="6" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="SOT23" package="SOT23">
@@ -14374,7 +14426,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43389/2"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="3" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="SOT223" package="SOT223">
@@ -14386,7 +14440,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43439/1"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="0" constant="no"/>
+</technology>
 </technologies>
 </device>
 <device name="SMB" package="SMB">
@@ -14398,7 +14454,9 @@ diameter 3 mm, horizontal, grid 12.7 mm</description>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:43404/2"/>
 </package3dinstances>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="POPULARITY" value="3" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -16300,6 +16358,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <part name="VSS15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="TP1" library="testpad" library_urn="urn:adsk.eagle:library:385" deviceset="TP" device="B1,27" package3d_urn="urn:adsk.eagle:package:27944/2"/>
 <part name="VSS28" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="D2" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="ZENER-DIODE" device="SMB" package3d_urn="urn:adsk.eagle:package:43404/2" value="5.6"/>
+<part name="VSS29" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -16740,6 +16800,13 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <instance part="VSS28" gate="G$1" x="195.58" y="-38.1" smashed="yes">
 <attribute name="VALUE" x="193.04" y="-43.18" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="D2" gate="G$1" x="132.08" y="-63.5" smashed="yes" rot="R90">
+<attribute name="NAME" x="130.175" y="-65.278" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="135.509" y="-65.278" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS29" gate="G$1" x="137.16" y="-66.04" smashed="yes" rot="R90">
+<attribute name="VALUE" x="142.24" y="-68.58" size="1.778" layer="96" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -16876,12 +16943,6 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="-15.24" y="66.04"/>
 </segment>
 <segment>
-<pinref part="D1" gate="G$1" pin="A"/>
-<pinref part="VSS23" gate="G$1" pin="VSS"/>
-<wire x1="134.62" y1="-55.88" x2="132.08" y2="-55.88" width="0.1524" layer="91"/>
-<junction x="134.62" y="-55.88"/>
-</segment>
-<segment>
 <pinref part="S3" gate="G$1" pin="3"/>
 <pinref part="VSS24" gate="G$1" pin="VSS"/>
 <junction x="165.1" y="-58.42"/>
@@ -16921,6 +16982,19 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="TP1" gate="G$1" pin="TP"/>
 <pinref part="VSS28" gate="G$1" pin="VSS"/>
+</segment>
+<segment>
+<pinref part="D2" gate="G$1" pin="A"/>
+<pinref part="VSS29" gate="G$1" pin="VSS"/>
+<wire x1="134.62" y1="-66.04" x2="132.08" y2="-66.04" width="0.1524" layer="91"/>
+<junction x="134.62" y="-66.04"/>
+<junction x="132.08" y="-66.04"/>
+<pinref part="D1" gate="G$1" pin="A"/>
+<pinref part="VSS23" gate="G$1" pin="VSS"/>
+<wire x1="134.62" y1="-55.88" x2="132.08" y2="-55.88" width="0.1524" layer="91"/>
+<junction x="134.62" y="-55.88"/>
+<junction x="132.08" y="-55.88"/>
+<wire x1="134.62" y1="-66.04" x2="134.62" y2="-55.88" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VDD" class="0">
@@ -16993,6 +17067,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="111.76" y="-58.42"/>
 <pinref part="F1" gate="G$1" pin="2"/>
 <pinref part="R8" gate="G$1" pin="1"/>
+<junction x="116.84" y="-58.42"/>
 </segment>
 <segment>
 <pinref part="SV8" gate="1" pin="7"/>
@@ -17926,6 +18001,11 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="109.22" y1="-35.56" x2="109.22" y2="-43.18" width="0.1524" layer="91"/>
 <pinref part="X6" gate="G$1" pin="1"/>
 <junction x="182.88" y="-15.24"/>
+<wire x1="127" y1="-58.42" x2="132.08" y2="-58.42" width="0.1524" layer="91"/>
+<pinref part="D2" gate="G$1" pin="C"/>
+<wire x1="132.08" y1="-58.42" x2="132.08" y2="-60.96" width="0.1524" layer="91"/>
+<junction x="127" y="-58.42"/>
+<junction x="132.08" y="-60.96"/>
 </segment>
 </net>
 <net name="N$62" class="0">

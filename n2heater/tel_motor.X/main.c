@@ -64,8 +64,10 @@
  * software time variables
  */
 volatile uint16_t tickCount[TMR_COUNT] = {0}, max_heat_time = 0;
+float pot_norm = 0.0;
 
-uint16_t flow = 0, temp = 0, count = 0;
+uint16_t flow = 0, temp = 0;
+uint32_t count = 0;
 
 const char *build_date = __DATE__, *build_time = __TIME__, build_version[5] = "1.0";
 
@@ -85,8 +87,9 @@ void main(void)
 	INTERRUPT_GlobalInterruptHighEnable();
 
 	TMR0_StartTimer();
+	TMR2_Stop();
 	BLED2_SetHigh(); // boot LED indicator
-	WaitMs(5000);
+	WaitMs(250);
 	BLED2_SetLow();
 	/*
 	 * software timer 1 second PWM cycles
@@ -105,6 +108,9 @@ void main(void)
 			CLRWDT();
 			sprintf(buffer, "%lu: \r\n", count++);
 		}
+		if (TimerDone(TMR_PERIOD)) {
+			StartTimer(TMR_PERIOD, PWM_MS);
+		}
 	}
 }
 
@@ -118,14 +124,13 @@ uint16_t controller_work(void)
 	ADCC_StartConversion(OM_SPEED);
 	while (!ADCC_IsConversionDone());
 	temp = ADCC_GetConversionResult();
+	pot_norm = (float) (temp + 1) / 4095.0;
 
 	if (!BUTTON1_GetValue()) {
 		clock_val = CLOCK_SLOWEST;
 	}
-	if (!BUTTON2_GetValue()) {
-	}
 
-	ADCC_StartConversion(AIR_FLOW);
+	ADCC_StartConversion(OM_FLOW);
 	while (!ADCC_IsConversionDone());
 	flow = ADCC_GetConversionResult();
 
@@ -134,6 +139,19 @@ uint16_t controller_work(void)
 	} else {
 		clock_val = temp; //update clock speed with ADC value
 	}
+
+	if (TimerDone(TMR_PERIOD)) {
+		StartTimer(TMR_PERIOD, 100);
+		TMR2_Stop();
+		TMR2_Period8BitSet((temp >> 5) + 16);
+		if (BUTTON2_GetValue()) {
+			T2CON = 0x80;
+		} else {
+			T2CON = 0x80 +12;
+		}
+		TMR2_Start();
+	}
+
 
 	return clock_val;
 }

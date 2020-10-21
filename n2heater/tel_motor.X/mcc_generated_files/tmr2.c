@@ -13,13 +13,13 @@
   @Description
     This source file provides APIs for TMR2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.4
-        Device            :  PIC18F47K42
-        Driver Version    :  2.11
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.4
+	Device            :  PIC18F47K42
+	Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.20 and above 
-        MPLAB 	          :  MPLAB X 5.40
-*/
+	Compiler          :  XC8 2.20 and above 
+	MPLAB 	          :  MPLAB X 5.40
+ */
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -42,169 +42,174 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
-*/
+ */
 
 /**
   Section: Included Files
-*/
+ */
 
 #include <xc.h>
 #include "tmr2.h"
 #include "interrupt_manager.h"
 #include "pin_manager.h"
 
+extern uint16_t flow, temp;
+
 /**
   Section: Global Variables Definitions
-*/
+ */
 
 void (*TMR2_InterruptHandler)(void);
 
 /**
   Section: TMR2 APIs
-*/
+ */
 
 void TMR2_Initialize(void)
 {
-    // Set TMR2 to the options selected in the User Interface
+	// Set TMR2 to the options selected in the User Interface
 
-    // T2CS FOSC/4; 
-    T2CLKCON = 0x01;
+	// T2CS FOSC/4; 
+	T2CLKCON = 0x01;
 
-    // T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Rising Edge; T2CKSYNC Not Synchronized; 
-    T2HLT = 0x00;
+    // T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Falling Edge; T2CKSYNC Synchronized; 
+    T2HLT = 0x60;
 
-    // T2RSEL T2CKIPPS pin; 
-    T2RST = 0x00;
+	// T2RSEL T2CKIPPS pin; 
+	T2RST = 0x00;
 
-    // PR2 159; 
-    T2PR = 0x9F;
+	// PR2 159; 
+	T2PR = 0x9F;
 
-    // TMR2 0; 
-    T2TMR = 0x00;
+	// TMR2 0; 
+	T2TMR = 0x00;
 
-    // Clearing IF flag before enabling the interrupt.
-    PIR4bits.TMR2IF = 0;
+	// Clearing IF flag before enabling the interrupt.
+	PIR4bits.TMR2IF = 0;
 
-    // Enabling TMR2 interrupt.
-    PIE4bits.TMR2IE = 1;
+	// Enabling TMR2 interrupt.
+	PIE4bits.TMR2IE = 1;
 
-    // Set Default Interrupt Handler
-    TMR2_SetInterruptHandler(TMR2_DefaultInterruptHandler);
+	// Set Default Interrupt Handler
+	TMR2_SetInterruptHandler(TMR2_DefaultInterruptHandler);
 
-    // T2CKPS 1:1; T2OUTPS 1:1; TMR2ON on; 
-    T2CON = 0x80;
+	// T2CKPS 1:1; T2OUTPS 1:1; TMR2ON on; 
+	T2CON = 0x80;
 }
 
 void TMR2_ModeSet(TMR2_HLT_MODE mode)
 {
-   // Configure different types HLT mode
-    T2HLTbits.MODE = mode;
+	// Configure different types HLT mode
+	T2HLTbits.MODE = mode;
 }
 
 void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset)
 {
-    //Configure different types of HLT external reset source
-    T2RSTbits.RSEL = reset;
+	//Configure different types of HLT external reset source
+	T2RSTbits.RSEL = reset;
 }
 
 void TMR2_Start(void)
 {
-    // Start the Timer by writing to TMRxON bit
-    T2CONbits.TMR2ON = 1;
+	// Start the Timer by writing to TMRxON bit
+	T2CONbits.TMR2ON = 1;
 }
 
 void TMR2_StartTimer(void)
 {
-    TMR2_Start();
+	TMR2_Start();
 }
 
 void TMR2_Stop(void)
 {
-    // Stop the Timer by writing to TMRxON bit
-    T2CONbits.TMR2ON = 0;
+	// Stop the Timer by writing to TMRxON bit
+	T2CONbits.TMR2ON = 0;
 }
 
 void TMR2_StopTimer(void)
 {
-    TMR2_Stop();
+	TMR2_Stop();
 }
 
 uint8_t TMR2_Counter8BitGet(void)
 {
-    uint8_t readVal;
+	uint8_t readVal;
 
-    readVal = TMR2;
+	readVal = TMR2;
 
-    return readVal;
+	return readVal;
 }
 
 uint8_t TMR2_ReadTimer(void)
 {
-    return TMR2_Counter8BitGet();
+	return TMR2_Counter8BitGet();
 }
 
 void TMR2_Counter8BitSet(uint8_t timerVal)
 {
-    // Write to the Timer2 register
-    TMR2 = timerVal;
+	// Write to the Timer2 register
+	TMR2 = timerVal;
 }
 
 void TMR2_WriteTimer(uint8_t timerVal)
 {
-    TMR2_Counter8BitSet(timerVal);
+	TMR2_Counter8BitSet(timerVal);
 }
 
 void TMR2_Period8BitSet(uint8_t periodVal)
 {
-   PR2 = periodVal;
+	PR2 = periodVal;
 }
 
 void TMR2_LoadPeriodRegister(uint8_t periodVal)
 {
-   TMR2_Period8BitSet(periodVal);
+	TMR2_Period8BitSet(periodVal);
 }
 
 void __interrupt(irq(TMR2),base(8)) TMR2_ISR()
 {
-    static volatile unsigned int CountCallBack = 0;
+	static volatile unsigned int CountCallBack = 0;
 
-    // clear the TMR2 interrupt flag
-    PIR4bits.TMR2IF = 0;
+	// clear the TMR2 interrupt flag
+	PIR4bits.TMR2IF = 0;
 
-    // callback function - called every 100th pass
+	// callback function - called every 100th pass
     if (++CountCallBack >= TMR2_INTERRUPT_TICKER_FACTOR)
     {
-        // ticker function call
-        TMR2_CallBack();
+		// ticker function call
+		TMR2_CallBack();
 
-        // reset ticker counter
-        CountCallBack = 0;
-    }
+		// reset ticker counter
+		CountCallBack = 0;
+	}
 }
 
 void TMR2_CallBack(void)
 {
-    // Add your custom callback code here
-    // this code executes every TMR2_INTERRUPT_TICKER_FACTOR periods of TMR2
+	// Add your custom callback code here
+	// this code executes every TMR2_INTERRUPT_TICKER_FACTOR periods of TMR2
     if(TMR2_InterruptHandler)
     {
-        TMR2_InterruptHandler();
-    }
+		TMR2_InterruptHandler();
+	}
 }
 
 void TMR2_SetInterruptHandler(void (* InterruptHandler)(void)){
-    TMR2_InterruptHandler = InterruptHandler;
+	TMR2_InterruptHandler = InterruptHandler;
 }
 
 void TMR2_DefaultInterruptHandler(void){
 	static uint8_t blink=0;
-    // add your TMR2 interrupt custom code
-    // or set custom function using TMR2_SetInterruptHandler()
-	OM_PWM_Toggle();
-	if (!blink++)
+	// add your TMR2 interrupt custom code
+	// or set custom function using TMR2_SetInterruptHandler()
+	if (OM_ON_GetValue()) {
+		OM_PWM_Toggle();
+	}
+	if (!blink++) {
 		BLED2_Toggle();
+	}
 }
 
 /**
   End of File
-*/
+ */

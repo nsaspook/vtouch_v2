@@ -80,8 +80,8 @@ void ADCC_Initialize(void)
     ADRPT = 0x00;
     // ADPCH ANA0; 
     ADPCH = 0x00;
-    // ADACQ 32; 
-    ADACQL = 0x20;
+    // ADACQ 64; 
+    ADACQL = 0x40;
     // ADACQ 0; 
     ADACQH = 0x00;
     // ADCAP Additional uC disabled; 
