@@ -65,7 +65,7 @@
  */
 volatile uint16_t tickCount[TMR_COUNT] = {0}, max_heat_time = 0;
 
-uint32_t flow = 0, temp = 0, count = 0;
+uint16_t flow = 0, temp = 0, count = 0;
 
 const char *build_date = __DATE__, *build_time = __TIME__, build_version[5] = "1.0";
 
@@ -76,8 +76,8 @@ uint16_t controller_work(void);
  */
 void main(void)
 {
-	char buffer[80];
-	uint16_t pwm_value = PWM_OFF;
+	char buffer[128];
+	uint16_t pwm_value = CLOCK_SLOWEST;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -97,22 +97,13 @@ void main(void)
 
 	while (true) {
 		pwm_value = controller_work();
-		if (TimerDone(TMR_PERIOD)) {
-			StartTimer(TMR_PERIOD, PWM_MS);
-			StartTimer(TMR_PWM, pwm_value);
-			LED1_SetHigh();
-		}
-		if (TimerDone(TMR_PWM)) {
-			StartTimer(TMR_PWM, PWM_DUTY);
-			LED1_SetLow();
-		}
 		/*
 		 * testing logging & WDT reseting every 10 seconds
 		 */
 		if (TimerDone(TMR_LOG)) {
 			StartTimer(TMR_LOG, LOGGING);
 			CLRWDT();
-			sprintf(buffer, "%lu: Flow %lu, Temp %lu \r\n", count++, flow, temp);
+			sprintf(buffer, "%lu: \r\n", count++);
 		}
 	}
 }
@@ -122,43 +113,29 @@ void main(void)
  */
 uint16_t controller_work(void)
 {
-	static uint16_t pwm_val = PWM_HIGH;
+	static uint16_t clock_val = CLOCK_SLOWEST;
 
 	ADCC_StartConversion(OM_SPEED);
 	while (!ADCC_IsConversionDone());
-
-	if ((temp = ADCC_GetConversionResult()) > FLOW_TEMP) {
-		pwm_val = PWM_LOW;
-	}
+	temp = ADCC_GetConversionResult();
 
 	if (!BUTTON1_GetValue()) {
-		BLED2_SetHigh();
-		LED2_SetHigh();
-		return PWM_HIGH;
+		clock_val = CLOCK_SLOWEST;
+	}
+	if (!BUTTON2_GetValue()) {
 	}
 
 	ADCC_StartConversion(AIR_FLOW);
 	while (!ADCC_IsConversionDone());
+	flow = ADCC_GetConversionResult();
 
-	if ((flow = ADCC_GetConversionResult()) > FLOW_RATE) {
-		if (max_heat_time >= MAX_HEAT) { // shutdown after a long run
-			BLED2_SetLow();
-			LED2_SetLow();
-			max_heat_time = MAX_HEAT + 1;
-			return PWM_OFF;
-		} else {
-			BLED2_SetHigh();
-			LED2_SetHigh();
-			return pwm_val;
-		}
+	if ((clock_val == CLOCK_SLOWEST) && (temp > CLOCK_SLOWEST)) {
+		// keep it slow until the ADC value is below CLOCK_SLOWEST value
 	} else {
-		// flow rate below setpoint, reset max heater time
-		max_heat_time = 0;
+		clock_val = temp; //update clock speed with ADC value
 	}
 
-	BLED2_SetLow();
-	LED2_SetLow();
-	return PWM_OFF;
+	return clock_val;
 }
 /**
  End of File
