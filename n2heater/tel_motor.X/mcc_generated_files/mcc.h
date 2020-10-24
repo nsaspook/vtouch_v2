@@ -54,8 +54,9 @@
 #include <conio.h>
 #include "interrupt_manager.h"
 #include "tmr5.h"
-#include "pwm7.h"
+#include "tmr4.h"
 #include "tmr2.h"
+#include "pwm7.h"
 #include "tmr0.h"
 #include "adcc.h"
 #include "uart2.h"

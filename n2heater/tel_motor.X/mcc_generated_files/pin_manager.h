@@ -85,25 +85,25 @@
 #define OM_SPEED_SetAnalogMode()      do { ANSELAbits.ANSELA0 = 1; } while(0)
 #define OM_SPEED_SetDigitalMode()     do { ANSELAbits.ANSELA0 = 0; } while(0)
 
-// get/set OM_FLOW aliases
-#define OM_FLOW_TRIS                 TRISAbits.TRISA1
-#define OM_FLOW_LAT                  LATAbits.LATA1
-#define OM_FLOW_PORT                 PORTAbits.RA1
-#define OM_FLOW_WPU                  WPUAbits.WPUA1
-#define OM_FLOW_OD                   ODCONAbits.ODCA1
-#define OM_FLOW_ANS                  ANSELAbits.ANSELA1
-#define OM_FLOW_SetHigh()            do { LATAbits.LATA1 = 1; } while(0)
-#define OM_FLOW_SetLow()             do { LATAbits.LATA1 = 0; } while(0)
-#define OM_FLOW_Toggle()             do { LATAbits.LATA1 = ~LATAbits.LATA1; } while(0)
-#define OM_FLOW_GetValue()           PORTAbits.RA1
-#define OM_FLOW_SetDigitalInput()    do { TRISAbits.TRISA1 = 1; } while(0)
-#define OM_FLOW_SetDigitalOutput()   do { TRISAbits.TRISA1 = 0; } while(0)
-#define OM_FLOW_SetPullup()          do { WPUAbits.WPUA1 = 1; } while(0)
-#define OM_FLOW_ResetPullup()        do { WPUAbits.WPUA1 = 0; } while(0)
-#define OM_FLOW_SetPushPull()        do { ODCONAbits.ODCA1 = 0; } while(0)
-#define OM_FLOW_SetOpenDrain()       do { ODCONAbits.ODCA1 = 1; } while(0)
-#define OM_FLOW_SetAnalogMode()      do { ANSELAbits.ANSELA1 = 1; } while(0)
-#define OM_FLOW_SetDigitalMode()     do { ANSELAbits.ANSELA1 = 0; } while(0)
+// get/set OM_ERROR aliases
+#define OM_ERROR_TRIS                 TRISAbits.TRISA1
+#define OM_ERROR_LAT                  LATAbits.LATA1
+#define OM_ERROR_PORT                 PORTAbits.RA1
+#define OM_ERROR_WPU                  WPUAbits.WPUA1
+#define OM_ERROR_OD                   ODCONAbits.ODCA1
+#define OM_ERROR_ANS                  ANSELAbits.ANSELA1
+#define OM_ERROR_SetHigh()            do { LATAbits.LATA1 = 1; } while(0)
+#define OM_ERROR_SetLow()             do { LATAbits.LATA1 = 0; } while(0)
+#define OM_ERROR_Toggle()             do { LATAbits.LATA1 = ~LATAbits.LATA1; } while(0)
+#define OM_ERROR_GetValue()           PORTAbits.RA1
+#define OM_ERROR_SetDigitalInput()    do { TRISAbits.TRISA1 = 1; } while(0)
+#define OM_ERROR_SetDigitalOutput()   do { TRISAbits.TRISA1 = 0; } while(0)
+#define OM_ERROR_SetPullup()          do { WPUAbits.WPUA1 = 1; } while(0)
+#define OM_ERROR_ResetPullup()        do { WPUAbits.WPUA1 = 0; } while(0)
+#define OM_ERROR_SetPushPull()        do { ODCONAbits.ODCA1 = 0; } while(0)
+#define OM_ERROR_SetOpenDrain()       do { ODCONAbits.ODCA1 = 1; } while(0)
+#define OM_ERROR_SetAnalogMode()      do { ANSELAbits.ANSELA1 = 1; } while(0)
+#define OM_ERROR_SetDigitalMode()     do { ANSELAbits.ANSELA1 = 0; } while(0)
 
 // get/set BUTTON1 aliases
 #define BUTTON1_TRIS                 TRISAbits.TRISA2
@@ -177,25 +177,25 @@
 #define RA5_SetAnalogMode()         do { ANSELAbits.ANSELA5 = 1; } while(0)
 #define RA5_SetDigitalMode()        do { ANSELAbits.ANSELA5 = 0; } while(0)
 
-// get/set OM_PWM aliases
-#define OM_PWM_TRIS                 TRISAbits.TRISA6
-#define OM_PWM_LAT                  LATAbits.LATA6
-#define OM_PWM_PORT                 PORTAbits.RA6
-#define OM_PWM_WPU                  WPUAbits.WPUA6
-#define OM_PWM_OD                   ODCONAbits.ODCA6
-#define OM_PWM_ANS                  ANSELAbits.ANSELA6
-#define OM_PWM_SetHigh()            do { LATAbits.LATA6 = 1; } while(0)
-#define OM_PWM_SetLow()             do { LATAbits.LATA6 = 0; } while(0)
-#define OM_PWM_Toggle()             do { LATAbits.LATA6 = ~LATAbits.LATA6; } while(0)
-#define OM_PWM_GetValue()           PORTAbits.RA6
-#define OM_PWM_SetDigitalInput()    do { TRISAbits.TRISA6 = 1; } while(0)
-#define OM_PWM_SetDigitalOutput()   do { TRISAbits.TRISA6 = 0; } while(0)
-#define OM_PWM_SetPullup()          do { WPUAbits.WPUA6 = 1; } while(0)
-#define OM_PWM_ResetPullup()        do { WPUAbits.WPUA6 = 0; } while(0)
-#define OM_PWM_SetPushPull()        do { ODCONAbits.ODCA6 = 0; } while(0)
-#define OM_PWM_SetOpenDrain()       do { ODCONAbits.ODCA6 = 1; } while(0)
-#define OM_PWM_SetAnalogMode()      do { ANSELAbits.ANSELA6 = 1; } while(0)
-#define OM_PWM_SetDigitalMode()     do { ANSELAbits.ANSELA6 = 0; } while(0)
+// get/set OM_PULSE aliases
+#define OM_PULSE_TRIS                 TRISAbits.TRISA6
+#define OM_PULSE_LAT                  LATAbits.LATA6
+#define OM_PULSE_PORT                 PORTAbits.RA6
+#define OM_PULSE_WPU                  WPUAbits.WPUA6
+#define OM_PULSE_OD                   ODCONAbits.ODCA6
+#define OM_PULSE_ANS                  ANSELAbits.ANSELA6
+#define OM_PULSE_SetHigh()            do { LATAbits.LATA6 = 1; } while(0)
+#define OM_PULSE_SetLow()             do { LATAbits.LATA6 = 0; } while(0)
+#define OM_PULSE_Toggle()             do { LATAbits.LATA6 = ~LATAbits.LATA6; } while(0)
+#define OM_PULSE_GetValue()           PORTAbits.RA6
+#define OM_PULSE_SetDigitalInput()    do { TRISAbits.TRISA6 = 1; } while(0)
+#define OM_PULSE_SetDigitalOutput()   do { TRISAbits.TRISA6 = 0; } while(0)
+#define OM_PULSE_SetPullup()          do { WPUAbits.WPUA6 = 1; } while(0)
+#define OM_PULSE_ResetPullup()        do { WPUAbits.WPUA6 = 0; } while(0)
+#define OM_PULSE_SetPushPull()        do { ODCONAbits.ODCA6 = 0; } while(0)
+#define OM_PULSE_SetOpenDrain()       do { ODCONAbits.ODCA6 = 1; } while(0)
+#define OM_PULSE_SetAnalogMode()      do { ANSELAbits.ANSELA6 = 1; } while(0)
+#define OM_PULSE_SetDigitalMode()     do { ANSELAbits.ANSELA6 = 0; } while(0)
 
 // get/set IO_RB0 aliases
 #define IO_RB0_TRIS                 TRISBbits.TRISB0
@@ -441,25 +441,25 @@
 #define RC7_SetAnalogMode()         do { ANSELCbits.ANSELC7 = 1; } while(0)
 #define RC7_SetDigitalMode()        do { ANSELCbits.ANSELC7 = 0; } while(0)
 
-// get/set IO_RD0 aliases
-#define IO_RD0_TRIS                 TRISDbits.TRISD0
-#define IO_RD0_LAT                  LATDbits.LATD0
-#define IO_RD0_PORT                 PORTDbits.RD0
-#define IO_RD0_WPU                  WPUDbits.WPUD0
-#define IO_RD0_OD                   ODCONDbits.ODCD0
-#define IO_RD0_ANS                  ANSELDbits.ANSELD0
-#define IO_RD0_SetHigh()            do { LATDbits.LATD0 = 1; } while(0)
-#define IO_RD0_SetLow()             do { LATDbits.LATD0 = 0; } while(0)
-#define IO_RD0_Toggle()             do { LATDbits.LATD0 = ~LATDbits.LATD0; } while(0)
-#define IO_RD0_GetValue()           PORTDbits.RD0
-#define IO_RD0_SetDigitalInput()    do { TRISDbits.TRISD0 = 1; } while(0)
-#define IO_RD0_SetDigitalOutput()   do { TRISDbits.TRISD0 = 0; } while(0)
-#define IO_RD0_SetPullup()          do { WPUDbits.WPUD0 = 1; } while(0)
-#define IO_RD0_ResetPullup()        do { WPUDbits.WPUD0 = 0; } while(0)
-#define IO_RD0_SetPushPull()        do { ODCONDbits.ODCD0 = 0; } while(0)
-#define IO_RD0_SetOpenDrain()       do { ODCONDbits.ODCD0 = 1; } while(0)
-#define IO_RD0_SetAnalogMode()      do { ANSELDbits.ANSELD0 = 1; } while(0)
-#define IO_RD0_SetDigitalMode()     do { ANSELDbits.ANSELD0 = 0; } while(0)
+// get/set OM_EMO aliases
+#define OM_EMO_TRIS                 TRISDbits.TRISD0
+#define OM_EMO_LAT                  LATDbits.LATD0
+#define OM_EMO_PORT                 PORTDbits.RD0
+#define OM_EMO_WPU                  WPUDbits.WPUD0
+#define OM_EMO_OD                   ODCONDbits.ODCD0
+#define OM_EMO_ANS                  ANSELDbits.ANSELD0
+#define OM_EMO_SetHigh()            do { LATDbits.LATD0 = 1; } while(0)
+#define OM_EMO_SetLow()             do { LATDbits.LATD0 = 0; } while(0)
+#define OM_EMO_Toggle()             do { LATDbits.LATD0 = ~LATDbits.LATD0; } while(0)
+#define OM_EMO_GetValue()           PORTDbits.RD0
+#define OM_EMO_SetDigitalInput()    do { TRISDbits.TRISD0 = 1; } while(0)
+#define OM_EMO_SetDigitalOutput()   do { TRISDbits.TRISD0 = 0; } while(0)
+#define OM_EMO_SetPullup()          do { WPUDbits.WPUD0 = 1; } while(0)
+#define OM_EMO_ResetPullup()        do { WPUDbits.WPUD0 = 0; } while(0)
+#define OM_EMO_SetPushPull()        do { ODCONDbits.ODCD0 = 0; } while(0)
+#define OM_EMO_SetOpenDrain()       do { ODCONDbits.ODCD0 = 1; } while(0)
+#define OM_EMO_SetAnalogMode()      do { ANSELDbits.ANSELD0 = 1; } while(0)
+#define OM_EMO_SetDigitalMode()     do { ANSELDbits.ANSELD0 = 0; } while(0)
 
 // get/set BLED2 aliases
 #define BLED2_TRIS                 TRISDbits.TRISD1

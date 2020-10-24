@@ -50,10 +50,12 @@
 
 #include <xc.h>
 #include "tmr2.h"
+#include "tmr4.h"
 #include "interrupt_manager.h"
 #include "pin_manager.h"
 
-extern uint16_t flow, temp;
+extern uint16_t temp;
+extern volatile bool can_move;
 
 /**
   Section: Global Variables Definitions
@@ -202,8 +204,9 @@ void TMR2_DefaultInterruptHandler(void){
 	static uint8_t blink=0;
 	// add your TMR2 interrupt custom code
 	// or set custom function using TMR2_SetInterruptHandler()
-	if (OM_ON_GetValue()) {
-		OM_PWM_Toggle();
+	if (can_move && OM_ON_GetValue()) {
+		OM_PULSE_SetLow();
+		TMR4_Start();
 	}
 	if (!blink++) {
 		BLED2_Toggle();

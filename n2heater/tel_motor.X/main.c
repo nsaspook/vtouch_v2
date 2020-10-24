@@ -59,14 +59,14 @@
 #include <stdio.h>
 #include "mcc_generated_files/mcc.h"
 #include "timer.h"
-#include "n2heater.h"
+#include "stepper.h"
 /*
  * software time variables
  */
 volatile uint16_t tickCount[TMR_COUNT] = {0}, max_heat_time = 0;
-float pot_norm = 0.0;
 
-uint16_t flow = 0, temp = 0;
+volatile bool can_move = true;
+uint16_t temp = 0;
 uint32_t count = 0;
 
 const char *build_date = __DATE__, *build_time = __TIME__, build_version[5] = "1.0";
@@ -94,8 +94,7 @@ void main(void)
 	/*
 	 * software timer 1 second PWM cycles
 	 */
-	StartTimer(TMR_PWM, PWM_DUTY);
-	StartTimer(TMR_PERIOD, PWM_MS);
+	StartTimer(TMR_PERIOD, STEPPER_MS);
 	StartTimer(TMR_LOG, LOGGING);
 
 	while (true) {
@@ -109,7 +108,7 @@ void main(void)
 			sprintf(buffer, "%lu: \r\n", count++);
 		}
 		if (TimerDone(TMR_PERIOD)) {
-			StartTimer(TMR_PERIOD, PWM_MS);
+			StartTimer(TMR_PERIOD, STEPPER_MS);
 		}
 	}
 }
@@ -119,25 +118,17 @@ void main(void)
  */
 uint16_t controller_work(void)
 {
-	static uint16_t clock_val = CLOCK_SLOWEST;
+	static uint8_t debounce = 0;
 
 	ADCC_StartConversion(OM_SPEED);
 	while (!ADCC_IsConversionDone());
 	temp = ADCC_GetConversionResult();
-	pot_norm = (float) (temp + 1) / 4095.0;
 
 	if (!BUTTON1_GetValue()) {
-		clock_val = CLOCK_SLOWEST;
-	}
-
-	ADCC_StartConversion(OM_FLOW);
-	while (!ADCC_IsConversionDone());
-	flow = ADCC_GetConversionResult();
-
-	if ((clock_val == CLOCK_SLOWEST) && (temp > CLOCK_SLOWEST)) {
-		// keep it slow until the ADC value is below CLOCK_SLOWEST value
-	} else {
-		clock_val = temp; //update clock speed with ADC value
+		if (++debounce >= 16) {
+			can_move = false; // kill software pulse generation
+			OM_EMO_SetHigh(); // trigger EMO signal relay
+		}
 	}
 
 	if (TimerDone(TMR_PERIOD)) {
@@ -147,13 +138,12 @@ uint16_t controller_work(void)
 		if (BUTTON2_GetValue()) {
 			T2CON = 0x80;
 		} else {
-			T2CON = 0x80 +12;
+			T2CON = 0x80 + 12;
 		}
 		TMR2_Start();
 	}
 
-
-	return clock_val;
+	return temp;
 }
 /**
  End of File

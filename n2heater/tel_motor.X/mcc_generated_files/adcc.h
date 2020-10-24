@@ -89,7 +89,6 @@ typedef __uint24 uint24_t;
 typedef enum
 {
     OM_SPEED =  0x0,
-    OM_FLOW =  0x1,
     channel_VSS =  0x3B,
     channel_Temp =  0x3C,
     channel_DAC1 =  0x3D,
