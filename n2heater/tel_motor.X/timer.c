@@ -18,10 +18,12 @@ void StartTimer(const uint8_t timer, const uint16_t count)
 
 bool TimerDone(const uint8_t timer)
 {
-	if (tickCount[timer] == 0) { //Check if counted down to zero
-		return true; //then return true
+	bool done = false;
+
+	if (tickCount[timer] == (uint16_t) 0) { //Check if counted down to zero
+		done = true; //then return true
 	}
-	return false; //else return false
+	return done; //else return false
 }
 
 //**********************************************************************************************************************

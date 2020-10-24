@@ -58,7 +58,6 @@
 */
 volatile uint16_t timer5ReloadVal;
 void (*TMR5_InterruptHandler)(void);
-extern volatile uint16_t max_heat_time;
 
 /**
   Section: TMR5 APIs
@@ -186,7 +185,6 @@ void TMR5_DefaultInterruptHandler(void){
     // add your TMR5 interrupt custom code
     // or set custom function using TMR5_SetInterruptHandler()
 		    BLED1_Toggle();
-		    max_heat_time++;
 }
 
 /**

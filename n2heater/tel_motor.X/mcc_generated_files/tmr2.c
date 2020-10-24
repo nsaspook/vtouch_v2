@@ -210,6 +210,7 @@ void TMR2_DefaultInterruptHandler(void){
 	}
 	if (!blink++) {
 		BLED2_Toggle();
+		LED2_Toggle();
 	}
 }
 
