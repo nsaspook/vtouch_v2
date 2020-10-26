@@ -42,6 +42,8 @@
  */
 
 /*
+ * FGB@MCHP 10/25/2020
+ * 
  * TEL 5-phase stepper motor controller
  * Enclosure: CAMDENBOSS  CDIC00005 
  * PIC18F47K42 Touch Board: basic function
@@ -49,8 +51,8 @@
  * RA1 stepper controller error signal input
  * 
  * RA6  stepper driver pulse signal output
- * RA2  EMO button for total power stop input
- * RA3  speed range button for motor speed slow/fast input
+ * RA3  EMO button for total power stop input
+ * RA2  speed range button for motor speed slow/fast input
  * 
  * RD0 EMO signal to relay output
  * RA4 LED1 indicator output
@@ -141,10 +143,10 @@ uint16_t controller_work(void)
 		StartTimer(TMR_PERIOD, 100);
 		TMR2_Stop();
 		TMR2_Period8BitSet((uint8_t) ((temp >> 5) + (uint16_t) 16));
-		if ((bool) BUTTON2_GetValue()) { // motor speed range
-			T2CON = 0x81;
+		if (((bool) BUTTON2_GetValue())) { // motor speed range switch
+			T2CON = 0x80 + MFAST;
 		} else {
-			T2CON = 0x80 + 12;
+			T2CON = 0x80 + MSLOW;
 		}
 		TMR2_Start();
 	}
