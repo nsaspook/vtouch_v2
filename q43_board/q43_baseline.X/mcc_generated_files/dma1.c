@@ -61,9 +61,9 @@ void DMA1_Initialize(void)
     //DMA Instance Selection : 0x00
     DMASELECT = 0x00;
     //Source Address : lcdsrc0
-    DMAnSSA = &lcdsrc0;
+    DMAnSSA = (volatile uint24_t) &lcdsrc0;
     //Destination Address : &SPI1TXB
-    DMAnDSA = &SPI1TXB;
+    DMAnDSA = (volatile unsigned short) &SPI1TXB;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
     DMAnCON1 = 0x02;
     //Source Message Size : 1

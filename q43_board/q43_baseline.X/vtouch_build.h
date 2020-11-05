@@ -35,7 +35,7 @@
 
 
 const char *build_date = __DATE__, *build_time = __TIME__,
-	build_version[] = " V4.02 47Q43 Varian VE touch-screen converter. Fred Brooks, Microchip Inc.";
+	build_version[] = " V4.03 47Q43 Varian VE touch-screen converter. Fred Brooks, Microchip Inc.";
 
 #ifdef	__cplusplus
 extern "C" {

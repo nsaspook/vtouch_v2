@@ -64,7 +64,7 @@
  * usart1	connected to implant host computer at 9600
  * usart2       connected to touchscreen  serial post at 9600
  *
- * V4.00	convert to 47Q43 board and XC8
+ * V4.00+	convert to 47Q43 board and XC8
  *
  *
  *
@@ -556,17 +556,13 @@ void main(void)
 	SYSTEM_Initialize();
 
 	TMR5_SetInterruptHandler(led_flash);
-	// If using interrupts in PIC18 High/Low Priority Mode you need to enable the Global High and Low Interrupts
-	// If using interrupts in PIC Mid-Range Compatibility Mode you need to enable the Global Interrupts
-	// Use the following macros to:
 
 	S.c_idx = 0;
 	S.speedup = 0;
 
 	// default interface
 	screen_type = DELL_E215546;
-	//	emulation_type = E220;
-	emulat_type = VIISION;
+	emulat_type = E220;
 
 	CAM_RELAY = 0;
 	CAM_RELAY_AUX = 0;
@@ -580,12 +576,6 @@ void main(void)
 
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
-
-	// Disable high priority global interrupts
-	//INTERRUPT_GlobalInterruptHighDisable();
-
-	// Disable low priority global interrupts.
-	//INTERRUPT_GlobalInterruptLowDisable();
 
 	if (emulat_type == OTHER_MECH) {
 	}
@@ -760,8 +750,8 @@ void led_flash(void)
 	if ((status.comm_check++ >COMM_CHK_TIME) && !S.CATCH) { // check for LCD screen connection
 		status.comm_check = 0; // reset connect heartbeat counter
 		S.LCD_OK = false; // reset the connect flag while waiting for response from controller.
-		while (!UART2_is_tx_ready()) {
-		}; // wait until the usart is clear
+//		while (!UART2_is_tx_ready()) {
+//		}; // wait until the usart is clear
 	}
 }
 /**

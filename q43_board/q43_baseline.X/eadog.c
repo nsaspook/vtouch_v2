@@ -147,7 +147,7 @@ static void send_lcd_cmd_long(const uint8_t cmd)
  */
 void eaDogM_WriteString(char *strPtr)
 {
-	uint8_t len = strlen(strPtr);
+	uint8_t len = (uint8_t) strlen(strPtr);
 
 #ifdef DEBUG_DISP1
 	DLED1 = true;

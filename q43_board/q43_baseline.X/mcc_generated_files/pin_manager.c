@@ -69,7 +69,7 @@ void PIN_MANAGER_Initialize(void)
     TRISE = 0x00;
     TRISA = 0xFF;
     TRISB = 0xBF;
-    TRISC = 0x91;
+    TRISC = 0xD1;
     TRISD = 0x3C;
 
     /**
@@ -85,10 +85,10 @@ void PIN_MANAGER_Initialize(void)
     WPUx registers
     */
     WPUD = 0x00;
-    WPUE = 0x00;
+    WPUE = 0x06;
     WPUB = 0x00;
     WPUA = 0x00;
-    WPUC = 0x00;
+    WPUC = 0x06;
 
     /**
     RxyI2C registers
@@ -137,7 +137,6 @@ void PIN_MANAGER_Initialize(void)
     RB6PPS = 0x23;   //RB6->UART2:TX2;    
     RC3PPS = 0x31;   //RC3->SPI1:SCK1;    
     RC5PPS = 0x32;   //RC5->SPI1:SDO1;    
-    RC6PPS = 0x20;   //RC6->UART1:TX1;    
     U1RXPPS = 0x17;   //RC7->UART1:RX1;    
     SPI1SDIPPS = 0x14;   //RC4->SPI1:SDI1;    
 }
