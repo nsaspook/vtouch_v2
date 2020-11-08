@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <string.h>
 #include "qconfig.h"
 #include "eadog.h"
@@ -156,13 +155,10 @@ void eaDogM_WriteString(char *strPtr)
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
-	if (len > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
-	//	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-	//	DMA1SSZ = len;
-	//	DMA1CON0bits.EN = 1; /* enable DMA */
+	if (len > (uint8_t) max_strlen)
+		strPtr[max_strlen] = 0; // buffer overflow check
 	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
 	start_lcd(); // start DMA transfer
-	//	V.spi_count += len;
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
 #endif
@@ -195,12 +191,8 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
-	//	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
-	//	DMA1SSZ = 1;
-	//	DMA1CON0bits.EN = 1; /* enable DMA */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
 	start_lcd(); // start DMA transfer
-	//	V.spi_count++;
 #ifdef DEBUG_DISP2
 	DLED2 = false;
 #endif

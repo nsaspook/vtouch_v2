@@ -51,6 +51,7 @@
 #include "vtouch.h"
 #include "vtouch_build.h"
 #include "timers.h"
+#include "eadog.h"
 
 /*
  * Viision terminal code
@@ -267,15 +268,6 @@ void touch_cam(void)
 	};
 }
 
-static void wdtdelay(uint32_t delay)
-{
-	uint32_t dcount;
-
-	for (dcount = 0; dcount <= delay; dcount++) { // delay a bit
-		ClrWdt(); // reset the WDT timer
-	};
-}
-
 void elocmdout(uint8_t * elostr)
 {
 	while (!UART2_is_tx_ready()) {
@@ -314,7 +306,9 @@ void elopacketout(const uint8_t *strptr, uint8_t strcount, uint8_t slow)
 			c = sum;
 			break;
 		default:
-			sum += (c = strptr[i]);
+			c = strptr[i];
+			sum += c;
+			break;
 		}
 		eloSScmdout(c);
 	};
@@ -428,7 +422,10 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 					status.restart_delay = 0;
 					BLED_LAT = 1; // connect  led ON
 					S.speedup = -10000;
+				} else {
 				}
+				break;
+			default:
 				break;
 			}
 			sum += c;
@@ -556,6 +553,10 @@ void main(void)
 	SYSTEM_Initialize();
 
 	TMR5_SetInterruptHandler(led_flash);
+	init_display();
+	eaDogM_WriteStringAtPos(0, 0, build_date);
+	eaDogM_WriteStringAtPos(1, 0, build_time);
+	eaDogM_WriteStringAtPos(2, 0, build_version);
 
 	S.c_idx = 0;
 	S.speedup = 0;
@@ -750,8 +751,8 @@ void led_flash(void)
 	if ((status.comm_check++ >COMM_CHK_TIME) && !S.CATCH) { // check for LCD screen connection
 		status.comm_check = 0; // reset connect heartbeat counter
 		S.LCD_OK = false; // reset the connect flag while waiting for response from controller.
-//		while (!UART2_is_tx_ready()) {
-//		}; // wait until the usart is clear
+		//		while (!UART2_is_tx_ready()) {
+		//		}; // wait until the usart is clear
 	}
 }
 /**
