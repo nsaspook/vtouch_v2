@@ -49,7 +49,7 @@
 #define EADOGM_CMD_SET_TABLE2    0b00101010
 #define EADOGM_COLSPAN		16
 
-#define NHD		// 4x20 SPI display
+//#define NHD		// 4x20 SPI display
 
 struct spi_link_type { // internal SPI state table
 	uint8_t SPI_LCD : 1;

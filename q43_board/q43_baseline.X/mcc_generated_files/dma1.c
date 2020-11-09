@@ -50,7 +50,10 @@
 
 #include <xc.h>
 #include "dma1.h"
+#include "../qconfig.h"
+extern struct spi_link_type spi_link;
 
+void (*DMA1_SCNTI_InterruptHandler)(void);
 
 /**
   Section: DMA1 APIs
@@ -61,9 +64,9 @@ void DMA1_Initialize(void)
     //DMA Instance Selection : 0x00
     DMASELECT = 0x00;
     //Source Address : lcdsrc0
-    DMAnSSA = (volatile uint24_t) &lcdsrc0;
+    DMAnSSA = &lcdsrc0;
     //Destination Address : &SPI1TXB
-    DMAnDSA = (volatile unsigned short) &SPI1TXB;
+    DMAnDSA = &SPI1TXB;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
     DMAnCON1 = 0x02;
     //Source Message Size : 1
@@ -85,7 +88,8 @@ void DMA1_Initialize(void)
     PIR2bits.DMA1ORIF =0; 
     
     PIE2bits.DMA1DCNTIE = 0;
-    PIE2bits.DMA1SCNTIE = 0;
+    PIE2bits.DMA1SCNTIE = 1; 
+	DMA1_SetSCNTIInterruptHandler(DMA1_DefaultInterruptHandler);
     PIE2bits.DMA1AIE = 0;
     PIE2bits.DMA1ORIE = 0;
 	
@@ -179,6 +183,25 @@ void DMA1_SetDMAPriority(uint8_t priority)
 	PRLOCKbits.PRLOCKED = 1;
 }
 
+void __interrupt(irq(IRQ_DMA1SCNT),base(8)) DMA1_DMASCNTI_ISR()
+{
+    // Clear the source count interrupt flag
+    PIR2bits.DMA1SCNTIF = 0;
+
+    if (DMA1_SCNTI_InterruptHandler)
+            DMA1_SCNTI_InterruptHandler();
+}
+
+void DMA1_SetSCNTIInterruptHandler(void (* InterruptHandler)(void))
+{
+	 DMA1_SCNTI_InterruptHandler = InterruptHandler;
+}
+
+void DMA1_DefaultInterruptHandler(void){
+    // add your DMA1 interrupt custom code
+    // or set custom function using DMA1_SetSCNTIInterruptHandler() /DMA1_SetDCNTIInterruptHandler() /DMA1_SetAIInterruptHandler() /DMA1_SetORIInterruptHandler()
+	spi_link.LCD_DATA = 0;
+}
 /**
  End of File
 */

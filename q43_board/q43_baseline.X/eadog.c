@@ -2,6 +2,7 @@
 #include "qconfig.h"
 #include "eadog.h"
 #include "ringbufs.h"
+#include "mcc_generated_files/dma1.h"
 //#include "tests.h"
 
 #define max_strlen	64
@@ -38,47 +39,50 @@ void init_display(void)
 	DLED2 = true;
 #endif
 #ifdef NHD
-	SPI1CON0bits.EN = 0;
+	//	SPI1CON0bits.EN = 0;
 	// mode 3
-	SPI1CON1 = 0x20;
+	//	SPI1CON1 = 0x20;
 	// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
-	SPI1CON2 = 0x03;
+	//	SPI1CON2 = 0x03;
 	// BAUD 0; 
-	SPI1BAUD = 0x04; // 50kHz SCK
+	//	SPI1BAUD = 0x04; // 50kHz SCK
 	// CLKSEL MFINTOSC; 
-	SPI1CLK = 0x02;
+	//	SPI1CLK = 0x02;
 	// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
-	SPI1CON0 = 0x83;
-	SPI1CON0bits.EN = 1;
+	//	SPI1CON0 = 0x83;
+	//	SPI1CON0bits.EN = 1;
 
 	wdtdelay(350000); // > 400ms power up delay
-	send_lcd_cmd_long(0x46); // home cursor
-	send_lcd_cmd(0x41); // display on
+	send_lcd_cmd_dma(0x46); // home cursor
+	wdtdelay(800);
+	send_lcd_cmd_dma(0x41); // display on
 	wdtdelay(80);
-	send_lcd_cmd(0x53); // set back-light level
-	send_lcd_data(NHD_BL_LOW);
+	send_lcd_cmd_dma(0x53); // set back-light level
+	send_lcd_data_dma(NHD_BL_LOW);
 	wdtdelay(80);
-	send_lcd_cmd_long(0x51); // clear screen
-	SPI1CON0bits.EN = 0;
-	SPI1CON2 = 0x02; //  Received data is not stored in the FIFO
-	SPI1CON0bits.EN = 1;
+	send_lcd_cmd_dma(0x51); // clear screen
+	wdtdelay(800);
+	//	SPI1CON0bits.EN = 0;
+	//	SPI1CON2 = 0x02; //  Received data is not stored in the FIFO
+	//	SPI1CON0bits.EN = 1;
+	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
 #else
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
-	send_lcd_cmd(0x39);
-	send_lcd_cmd(0x1d);
-	send_lcd_cmd(0x50);
-	send_lcd_cmd(0x6c);
-	send_lcd_cmd(0x76); // contrast last 4 bits
-	send_lcd_cmd_long(0x38); // follower control
-	send_lcd_cmd(0x0f);
-	send_lcd_cmd_long(0x01); // clear
-	send_lcd_cmd(0x02);
-	send_lcd_cmd(0x06);
+	send_lcd_cmd_dma(0x39);
+	send_lcd_cmd_dma(0x1d);
+	send_lcd_cmd_dma(0x50);
+	send_lcd_cmd_dma(0x6c);
+	send_lcd_cmd_dma(0x76); // contrast last 4 bits
+	send_lcd_cmd_dma(0x38); // follower control
+	wdtdelay(800);
+	send_lcd_cmd_dma(0x0f);
+	send_lcd_cmd_dma(0x01); // clear
+		wdtdelay(800);
+	send_lcd_cmd_dma(0x02);
+	send_lcd_cmd_dma(0x06);
 	wdtdelay(30);
-	SPI1CON2 = 0x02;
-	SPI1CON1 = 0x40;
-	SPI1CON0 = 0x83;
+	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
 #endif
 	//	SPI1INTFbits.SPI1TXUIF = 0;
 	//	DMA1CON1bits.DMODE = 0;
@@ -158,6 +162,7 @@ void eaDogM_WriteString(char *strPtr)
 	if (len > (uint8_t) max_strlen)
 		strPtr[max_strlen] = 0; // buffer overflow check
 	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
+	DMA1_SetSourceSize(len);
 	start_lcd(); // start DMA transfer
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
@@ -192,6 +197,7 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
+	DMA1_SetSourceSize(1);
 	start_lcd(); // start DMA transfer
 #ifdef DEBUG_DISP2
 	DLED2 = false;
@@ -404,12 +410,6 @@ void send_port_data_dma(uint16_t dsize)
 {
 	if (dsize > max_port_data)
 		dsize = max_port_data;
-
-	//	DMA2CON0bits.EN = 0; /* disable DMA to change source count */
-	//	DMA2SSZ = dsize;
-	//	DMA2DSZ = 1;
-	//	DMA2CON0bits.EN = 1; /* enable DMA */
-	//	DMA2CON0bits.DMA2SIRQEN = 1; /* start DMA trigger */
 }
 
 /*
@@ -433,7 +433,8 @@ void putch(char c)
  */
 void start_lcd(void)
 {
-	//	DMA1CON0bits.DMA1SIRQEN = 1; /* start DMA trigger */
+	DMA1_StartTransfer();
+	DMA1_StartTransferWithTrigger();
 }
 
 void wait_lcd_set(void)
@@ -448,6 +449,6 @@ bool wait_lcd_check(void)
 
 void wait_lcd_done(void)
 {
-	while (spi_link.LCD_DATA);
-	while (!SPI1STATUSbits.TXBE);
+	//	while (spi_link.LCD_DATA);
+	//	while (!SPI1STATUSbits.TXBE);
 }
