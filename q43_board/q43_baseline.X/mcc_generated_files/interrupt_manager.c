@@ -69,9 +69,12 @@ void  INTERRUPT_Initialize (void)
 
     GIE = state;
     // Assign peripheral interrupt priority vectors
+    IPR2bits.DMA1DCNTIP = 1;
     IPR2bits.DMA1SCNTIP = 1;
     IPR8bits.U2TXIP = 1;
     IPR8bits.U2RXIP = 1;
+    IPR4bits.U1TXIP = 1;
+    IPR4bits.U1RXIP = 1;
     IPR15bits.TMR6IP = 1;
     IPR8bits.TMR5IP = 1;
 }

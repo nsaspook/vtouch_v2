@@ -39,19 +39,10 @@ void init_display(void)
 	DLED2 = true;
 #endif
 #ifdef NHD
-	//	SPI1CON0bits.EN = 0;
-	// mode 3
-	//	SPI1CON1 = 0x20;
-	// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
-	//	SPI1CON2 = 0x03;
-	// BAUD 0; 
-	//	SPI1BAUD = 0x04; // 50kHz SCK
-	// CLKSEL MFINTOSC; 
-	//	SPI1CLK = 0x02;
-	// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
-	//	SPI1CON0 = 0x83;
-	//	SPI1CON0bits.EN = 1;
-
+	DMASELECT = 0x00;
+	DMAnCON0bits.EN = 0; /* disable DMA to change source addr */
+	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
+	DMAnCON0bits.EN = 1; /* enable DMA */
 	wdtdelay(350000); // > 400ms power up delay
 	send_lcd_cmd_dma(0x46); // home cursor
 	wdtdelay(800);
@@ -62,10 +53,8 @@ void init_display(void)
 	wdtdelay(80);
 	send_lcd_cmd_dma(0x51); // clear screen
 	wdtdelay(800);
-	//	SPI1CON0bits.EN = 0;
-	//	SPI1CON2 = 0x02; //  Received data is not stored in the FIFO
-	//	SPI1CON0bits.EN = 1;
-	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
+
+
 #else
 	CSB_SetHigh();
 	wdtdelay(350000); // > 400ms power up delay
@@ -78,7 +67,7 @@ void init_display(void)
 	wdtdelay(800);
 	send_lcd_cmd_dma(0x0f);
 	send_lcd_cmd_dma(0x01); // clear
-		wdtdelay(800);
+	wdtdelay(800);
 	send_lcd_cmd_dma(0x02);
 	send_lcd_cmd_dma(0x06);
 	wdtdelay(30);
@@ -162,7 +151,10 @@ void eaDogM_WriteString(char *strPtr)
 	if (len > (uint8_t) max_strlen)
 		strPtr[max_strlen] = 0; // buffer overflow check
 	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
+	DMASELECT = 0x00;
+	DMAnCON0bits.EN = 0; /* disable DMA to change source count */
 	DMA1_SetSourceSize(len);
+	DMAnCON0bits.EN = 1; /* enable DMA */
 	start_lcd(); // start DMA transfer
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
@@ -197,7 +189,11 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
+	DMASELECT = 0x00;
+	DMAnCON0bits.EN = 0; /* disable DMA to change source count */
 	DMA1_SetSourceSize(1);
+	DMAnCON0bits.EN = 1; /* enable DMA */
+
 	start_lcd(); // start DMA transfer
 #ifdef DEBUG_DISP2
 	DLED2 = false;
@@ -423,10 +419,10 @@ uint8_t* port_data_dma_ptr(void)
 /*
  * STDOUT user handler function
  */
-void putch(char c)
-{
-	ringBufS_put_dma(spi_link.tx1a, c);
-}
+//void putch(char c)
+//{
+//	ringBufS_put_dma(spi_link.tx1a, c);
+//}
 
 /*
  * Trigger the SPI DMA transfer to the LCD display
@@ -434,7 +430,6 @@ void putch(char c)
 void start_lcd(void)
 {
 	DMA1_StartTransfer();
-	DMA1_StartTransferWithTrigger();
 }
 
 void wait_lcd_set(void)
@@ -449,6 +444,7 @@ bool wait_lcd_check(void)
 
 void wait_lcd_done(void)
 {
-	//	while (spi_link.LCD_DATA);
+//	while (spi_link.LCD_DATA);
 	//	while (!SPI1STATUSbits.TXBE);
+	CSB_SetHigh(); /* SPI deselect display */
 }
