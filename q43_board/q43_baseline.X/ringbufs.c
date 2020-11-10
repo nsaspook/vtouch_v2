@@ -82,7 +82,7 @@ void ringBufS_put_dma_cpy(ringBufS_t *_this, const char *ptr, const uint8_t len)
 	}
 }
 
-void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer)
+void ringBufS_flush(ringBufS_t *_this, const bool clearBuffer)
 {
 	_this->count = 0;
 	_this->head = 0;

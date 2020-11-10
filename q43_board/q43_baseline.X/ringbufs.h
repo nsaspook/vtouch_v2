@@ -30,7 +30,7 @@ extern "C" {
 	void ringBufS_put(ringBufS_t *_this, const uint8_t c);
 	void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
 	void ringBufS_put_dma_cpy(ringBufS_t *, const char *, const uint8_t);
-	void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
+	void ringBufS_flush(ringBufS_t *_this, const bool clearBuffer);
 
 
 #ifdef	__cplusplus

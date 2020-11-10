@@ -129,12 +129,8 @@ typedef struct statustype {
 	uint16_t restart_delay;
 } statustype;
 
-typedef struct flag_var_t {
-	uint8_t CATCH : 1, TOUCH : 1;
-} F;
-
 typedef struct disp_state_t {
-	uint8_t CATCH, TOUCH, UNTOUCH, LCD_OK,
+	bool CATCH, TOUCH, UNTOUCH, LCD_OK,
 	SCREEN_INIT,
 	CATCH46, CATCH37, TSTATUS,
 	DATA1, DATA2, CAM;
@@ -160,8 +156,9 @@ enum oem_type {
 	OEM_CRT = 0, OEM_LCD = 1
 };
 
-disp_state_t S = {
+volatile disp_state_t S = {
 	.ts_type = OEM_CRT,
+	.TSTATUS = true,
 };
 
 enum screen_type_t {
@@ -233,9 +230,10 @@ const uint8_t elocodes_e7[] = {// dummy packet
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-uint16_t touch_corner1 = 0, touch_corner_timed = 0;
+uint16_t touch_corner1 = 0;
+bool touch_corner_timed = false;
 
-uint8_t idx = 0;
+volatile uint8_t idx = 0;
 volatile uint16_t tickCount[TMR_COUNT];
 
 
@@ -292,7 +290,7 @@ void eloSScmdout(uint8_t elostr)
 	wdtdelay(10000); // inter char delay
 }
 
-void elopacketout(const uint8_t *strptr, uint8_t strcount, uint8_t slow)
+void elopacketout(const uint8_t *strptr, uint8_t strcount, bool slow)
 {
 	uint8_t i, c, sum = 0;
 
@@ -312,8 +310,9 @@ void elopacketout(const uint8_t *strptr, uint8_t strcount, uint8_t slow)
 		}
 		eloSScmdout(c);
 	};
-	if (slow)
+	if (slow) {
 		wdtdelay(30000);
+	}
 }
 
 void elocmdout_v80(const uint8_t * elostr)
@@ -331,7 +330,7 @@ void elocmdout_v80(const uint8_t * elostr)
 	wdtdelay(50000); // wait for LCD controller reset
 }
 
-void setup_lcd(void)
+void setup_lcd_smartset(void)
 {
 	elopacketout(elocodes_e3, ELO_SEQ, 0); // reset to default smartset
 	wdtdelay(700000); // wait for LCD touch controller reset
@@ -373,6 +372,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 			tchar = UART1_Read(); // read from host
 			S.DATA1 = true; // usart is connected to data
 			S.LCD_OK = true; // looks like a screen controller is connected
+			S.TSTATUS = true;
 			if (tchar == 0x46) { // send one report to host
 				S.CATCH46 = true;
 				status.touch_good = 0;
@@ -453,7 +453,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				S.CATCH = false; // reset buffering now
 
 				/* munge the data for proper Varian format */
-				if (elobuf[5]) { // S.TOUCH
+				if ((bool) elobuf[5]) { // S.TOUCH
 					S.TOUCH = true; // first touch sequence has been sent
 					uvalx = elobuf[0]&0x3f; // prune the data to 6-bits
 					lvalx = elobuf[1]&0x3f;
@@ -488,10 +488,11 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				}
 
 				if (S.TOUCH || S.UNTOUCH) { // send both
-					if (uchar) { /* only send valid data */
+					if ((bool) uchar) { /* only send valid data */
 						data_pos = 0;
 						do {
-							while (!UART1_is_tx_ready());
+							while (!UART1_is_tx_ready()) {
+							};
 							UART1_Write(elobuf_out[data_pos]);
 						} while (++data_pos < HOST_CMD_SIZE_V80);
 					}
@@ -536,7 +537,7 @@ uint8_t Test_Screen(void)
 	}; // wait until the USART is clear
 	UART2_Write(0x46);
 	wdtdelay(30000);
-	setup_lcd(); // send lcd touch controller setup codes
+	setup_lcd_smartset(); // send lcd touch controller setup codes
 	return S.DATA2;
 }
 
@@ -553,12 +554,10 @@ void main(void)
 	SYSTEM_Initialize();
 
 	TMR5_SetInterruptHandler(led_flash);
-//	init_display();
-	while (false) {
-		eaDogM_WriteStringAtPos(0, 0, build_date);
-		eaDogM_WriteStringAtPos(1, 0, build_time);
-		eaDogM_WriteStringAtPos(2, 0, build_version);
-	}
+	//	init_display();
+	//	eaDogM_WriteStringAtPos(0, 0, build_date);
+	//	eaDogM_WriteStringAtPos(1, 0, build_time);
+	//	eaDogM_WriteStringAtPos(2, 0, build_version);
 
 	S.c_idx = 0;
 	S.speedup = 0;
@@ -597,7 +596,7 @@ void main(void)
 		S.DATA1 = false; // reset COMM flags.
 		S.DATA2 = false; // reset touch COMM flag
 
-		setup_lcd();
+		setup_lcd_smartset();
 		/* Loop forever */
 		StartTimer(TMR_CAM, 1000);
 		while (true) {
@@ -622,10 +621,10 @@ void main(void)
 
 				/*		For the auto-restart switch						*/
 				//FIXME
-				if (AUTO_RESTART) { // enable auto-restarts
+				if (AUTO_RESTART == true) { // enable auto-restarts
 					if ((status.restart_delay++ >= (uint16_t) 60) && (!S.TSTATUS)) { // try and reinit lcd after delay
 						start_delay();
-						setup_lcd(); // send lcd touch controller setup codes
+						setup_lcd_smartset(); // send lcd touch controller setup codes
 						start_delay();
 						while (true) {
 						}; // lockup WDT counter to restart
@@ -647,7 +646,7 @@ void main(void)
 					DEBUG1_Toggle();
 					putc1(0xFE); // send position report header to host
 					if (screen_type == DELL_E215546) {
-						ssreport.tohost = true;
+						ssreport.tohost = true; // ISR flag
 						rez_parm_h = ((float) (ssreport.x_cord)) * rez_scale_h_ss;
 						rez_parm_v = ((float) (ssreport.y_cord)) * rez_scale_v_ss;
 						ssreport.tohost = false;
@@ -681,8 +680,9 @@ void main(void)
 			if (S.CATCH37) { // send screen size codes
 				rez_scale_h = 1.0; // LCD touch screen real H/V rez
 				rez_scale_v = 1.0;
-				if (!(screen_type == DELL_E215546))
+				if (!(screen_type == DELL_E215546)) {
 					putc2(0x3D); // send clear buffer to touch
+				}
 
 				putc1(0xF4); // send status report
 				if (S.ts_type == 0) { // CRT type screens
@@ -740,11 +740,14 @@ void main(void)
 	}
 }
 
+/*
+ * This runs in the timer5 ISR
+ */
 void led_flash(void)
 {
 	LED2_Toggle();
-	idx = 0; // reset packet char index counter
-	ssreport.tohost = false; // when packets stop allow for next updates
+	//	idx = 0; // reset packet char index counter
+	//	ssreport.tohost = false; // when packets stop allow for next updates
 	if (!S.LCD_OK && (status.init_check++ >LCD_CHK_TIME)) {
 		status.init_check = 0; // reset screen init code counter
 		S.SCREEN_INIT = true; // set init code flag so it can be sent in main loop
@@ -753,8 +756,6 @@ void led_flash(void)
 	if ((status.comm_check++ >COMM_CHK_TIME) && !S.CATCH) { // check for LCD screen connection
 		status.comm_check = 0; // reset connect heartbeat counter
 		S.LCD_OK = false; // reset the connect flag while waiting for response from controller.
-		//		while (!UART2_is_tx_ready()) {
-		//		}; // wait until the usart is clear
 	}
 }
 /**

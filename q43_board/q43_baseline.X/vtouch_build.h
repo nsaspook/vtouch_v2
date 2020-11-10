@@ -34,8 +34,9 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 
 
-char *build_date = __DATE__, *build_time = __TIME__,
-	build_version[] = " V4.04 47Q43 Varian VE touch-screen converter. Fred Brooks, Microchip Inc.";
+char *build_date = __DATE__;
+char *build_time = __TIME__;
+char build_version[] = " V4.04 47Q43 Varian VE touch-screen converter. Fred Brooks, Microchip Inc.";
 
 #ifdef	__cplusplus
 extern "C" {
