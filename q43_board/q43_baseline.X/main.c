@@ -553,10 +553,12 @@ void main(void)
 	SYSTEM_Initialize();
 
 	TMR5_SetInterruptHandler(led_flash);
-	init_display();
-	eaDogM_WriteStringAtPos(0, 0, build_date);
-	eaDogM_WriteStringAtPos(1, 0, build_time);
-	eaDogM_WriteStringAtPos(2, 0, build_version);
+//	init_display();
+	while (false) {
+		eaDogM_WriteStringAtPos(0, 0, build_date);
+		eaDogM_WriteStringAtPos(1, 0, build_time);
+		eaDogM_WriteStringAtPos(2, 0, build_version);
+	}
 
 	S.c_idx = 0;
 	S.speedup = 0;

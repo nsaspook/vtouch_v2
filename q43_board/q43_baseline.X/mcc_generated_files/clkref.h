@@ -1,26 +1,24 @@
 /**
-  Generated Interrupt Manager Header File
+  CLKREF Generated Driver API Header File
 
-  @Company:
+  @Company
     Microchip Technology Inc.
 
-  @File Name:
-    interrupt_manager.h
+  @File Name
+    clkref.h
 
-  @Summary:
-    This is the Interrupt Manager file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+  @Summary
+    This is the generated header file for the CLKREF driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
-  @Description:
-    This header file provides implementations for global interrupt handling.
-    For individual peripheral handlers please see the peripheral driver for
-    all modules selected in the GUI.
+  @Description
+    This header file provides APIs for driver for CLKREF.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
         Device            :  PIC18F47Q43
-        Driver Version    :  2.12
+        Driver Version    :  2.01
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above or later
-        MPLAB 	          :  MPLAB X 5.30
+        Compiler          :  XC8 2.10 and above
+        MPLAB             :  MPLAB X 5.30
 */
 
 /*
@@ -46,41 +44,62 @@
     SOFTWARE.
 */
 
-#include "interrupt_manager.h"
-#include "mcc.h"
+#ifndef CLKREF_H
+#define CLKREF_H
 
-void  INTERRUPT_Initialize (void)
-{
-    INTCON0bits.IPEN = 1;
+/**
+  Section: Included Files
+*/
 
-    bool state = (unsigned char)GIE;
-    GIE = 0;
-    IVTLOCK = 0x55;
-    IVTLOCK = 0xAA;
-    IVTLOCKbits.IVTLOCKED = 0x00; // unlock IVT
+#include <stdbool.h>
+#include <stdint.h>
 
-    IVTBASEU = 0;
-    IVTBASEH = 0;
-    IVTBASEL = 8;
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-    IVTLOCK = 0x55;
-    IVTLOCK = 0xAA;
-    IVTLOCKbits.IVTLOCKED = 0x01; // lock IVT
+    extern "C" {
 
-    GIE = state;
-    // Assign peripheral interrupt priority vectors
-    IPR8bits.U2TXIP = 1;
-    IPR8bits.U2RXIP = 1;
-    IPR4bits.U1TXIP = 1;
-    IPR4bits.U1RXIP = 1;
-    IPR15bits.TMR6IP = 1;
-    IPR8bits.TMR5IP = 1;
-}
+#endif
 
-void __interrupt(irq(default),base(8)) Default_ISR()
-{
-}
+/**
+  Section: CLKREF APIs
+*/
 
+/**
+  @Summary
+    Initializes the CLKREF
+
+  @Description
+    This routine initializes the CLKREF.
+    This routine must be called before any other CLKREF routine is called.
+    This routine should only be called once during system initialization.
+
+  @Preconditions
+    None
+
+  @Param
+    None
+
+  @Returns
+    None
+
+  @Comment
+
+  @Example
+    <code>
+    CLKREF_Initialize();
+    </code>
+*/
+void CLKREF_Initialize(void);
+
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    }
+
+#endif
+
+#endif // CLKREF_H
 /**
  End of File
 */
+
+

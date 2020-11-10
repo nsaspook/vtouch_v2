@@ -55,12 +55,12 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     WWDT_Initialize();
     TMR6_Initialize();
-    DMA1_Initialize();
-    TMR2_Initialize();
     TMR5_Initialize();
+    TMR2_Initialize();
     UART2_Initialize();
     UART1_Initialize();
     SPI1_Initialize();
+    CLKREF_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)

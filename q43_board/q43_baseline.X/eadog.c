@@ -2,7 +2,7 @@
 #include "qconfig.h"
 #include "eadog.h"
 #include "ringbufs.h"
-#include "mcc_generated_files/dma1.h"
+//#include "mcc_generated_files/dma1.h"
 //#include "tests.h"
 
 #define max_strlen	64
@@ -39,21 +39,18 @@ void init_display(void)
 	DLED2 = true;
 #endif
 #ifdef NHD
-	DMASELECT = 0x00;
-	DMAnCON0bits.EN = 0; /* disable DMA to change source addr */
-	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
-	DMAnCON0bits.EN = 1; /* enable DMA */
 	wdtdelay(350000); // > 400ms power up delay
-	send_lcd_cmd_dma(0x46); // home cursor
+//	while (true) {
+	send_lcd_cmd(0x46); // home cursor
 	wdtdelay(800);
-	send_lcd_cmd_dma(0x41); // display on
+	send_lcd_cmd(0x41); // display on
 	wdtdelay(80);
-	send_lcd_cmd_dma(0x53); // set back-light level
-	send_lcd_data_dma(NHD_BL_LOW);
+	send_lcd_cmd(0x53); // set back-light level
+	send_lcd_data(NHD_BL_LOW);
 	wdtdelay(80);
-	send_lcd_cmd_dma(0x51); // clear screen
+	send_lcd_cmd(0x51); // clear screen
 	wdtdelay(800);
-
+//	}
 
 #else
 	CSB_SetHigh();
@@ -151,10 +148,7 @@ void eaDogM_WriteString(char *strPtr)
 	if (len > (uint8_t) max_strlen)
 		strPtr[max_strlen] = 0; // buffer overflow check
 	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
-	DMASELECT = 0x00;
-	DMAnCON0bits.EN = 0; /* disable DMA to change source count */
-	DMA1_SetSourceSize(len);
-	DMAnCON0bits.EN = 1; /* enable DMA */
+	SPI1_WriteBlock(spi_link.tx1a,len);
 	start_lcd(); // start DMA transfer
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
@@ -189,10 +183,6 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
-	DMASELECT = 0x00;
-	DMAnCON0bits.EN = 0; /* disable DMA to change source count */
-	DMA1_SetSourceSize(1);
-	DMAnCON0bits.EN = 1; /* enable DMA */
 
 	start_lcd(); // start DMA transfer
 #ifdef DEBUG_DISP2
@@ -429,7 +419,6 @@ uint8_t* port_data_dma_ptr(void)
  */
 void start_lcd(void)
 {
-	DMA1_StartTransfer();
 }
 
 void wait_lcd_set(void)
@@ -445,6 +434,6 @@ bool wait_lcd_check(void)
 void wait_lcd_done(void)
 {
 //	while (spi_link.LCD_DATA);
-	//	while (!SPI1STATUSbits.TXBE);
+
 	CSB_SetHigh(); /* SPI deselect display */
 }

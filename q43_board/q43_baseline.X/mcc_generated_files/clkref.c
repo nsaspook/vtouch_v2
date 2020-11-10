@@ -1,26 +1,24 @@
 /**
-  Generated Interrupt Manager Header File
+  CLKREF Generated Driver File
 
-  @Company:
+  @Company
     Microchip Technology Inc.
 
-  @File Name:
-    interrupt_manager.h
+  @File Name
+    clkref.c
 
-  @Summary:
-    This is the Interrupt Manager file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+  @Summary
+    This is the generated driver implementation file for the CLKREF driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
-  @Description:
-    This header file provides implementations for global interrupt handling.
-    For individual peripheral handlers please see the peripheral driver for
-    all modules selected in the GUI.
+  @Description
+    This source file provides APIs for CLKREF.
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
         Device            :  PIC18F47Q43
-        Driver Version    :  2.12
+        Driver Version    :  2.01
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above or later
-        MPLAB 	          :  MPLAB X 5.30
+        Compiler          :  XC8 2.10 and above
+        MPLAB             :  MPLAB X 5.30
 */
 
 /*
@@ -46,41 +44,24 @@
     SOFTWARE.
 */
 
-#include "interrupt_manager.h"
-#include "mcc.h"
+/**
+  Section: Included Files
+*/
 
-void  INTERRUPT_Initialize (void)
+#include <xc.h>
+#include "clkref.h"
+
+/**
+  Section: CLKREF APIs
+*/
+
+void CLKREF_Initialize(void)
 {
-    INTCON0bits.IPEN = 1;
-
-    bool state = (unsigned char)GIE;
-    GIE = 0;
-    IVTLOCK = 0x55;
-    IVTLOCK = 0xAA;
-    IVTLOCKbits.IVTLOCKED = 0x00; // unlock IVT
-
-    IVTBASEU = 0;
-    IVTBASEH = 0;
-    IVTBASEL = 8;
-
-    IVTLOCK = 0x55;
-    IVTLOCK = 0xAA;
-    IVTLOCKbits.IVTLOCKED = 0x01; // lock IVT
-
-    GIE = state;
-    // Assign peripheral interrupt priority vectors
-    IPR8bits.U2TXIP = 1;
-    IPR8bits.U2RXIP = 1;
-    IPR4bits.U1TXIP = 1;
-    IPR4bits.U1RXIP = 1;
-    IPR15bits.TMR6IP = 1;
-    IPR8bits.TMR5IP = 1;
+    // CLK FOSC; 
+    CLKRCLK = 0x00;
+    // DC 50% Duty Cycle; DIV BaseClock/64; CLKREN enabled; 
+    CLKRCON = 0x96;
 }
-
-void __interrupt(irq(default),base(8)) Default_ISR()
-{
-}
-
 /**
  End of File
 */
