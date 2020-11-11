@@ -61,7 +61,7 @@ void PIN_MANAGER_Initialize(void)
     LATD = 0x00;
     LATA = 0x00;
     LATB = 0x00;
-    LATC = 0x06;
+    LATC = 0x2E;
 
     /**
     TRISx registers
@@ -110,11 +110,11 @@ void PIN_MANAGER_Initialize(void)
     /**
     SLRCONx registers
     */
-    SLRCONA = 0xFF;
-    SLRCONB = 0xFF;
+    SLRCONA = 0x00;
+    SLRCONB = 0x00;
     SLRCONC = 0xFF;
-    SLRCOND = 0xFF;
-    SLRCONE = 0x07;
+    SLRCOND = 0x00;
+    SLRCONE = 0x00;
 
     /**
     INLVLx registers

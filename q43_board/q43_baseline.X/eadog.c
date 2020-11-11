@@ -5,10 +5,10 @@
 //#include "mcc_generated_files/dma1.h"
 //#include "tests.h"
 
-#define max_strlen	64
+#define max_strlen	21
 #define max_port_data	1024
 
-struct spi_link_type spi_link;
+volatile struct spi_link_type spi_link;
 struct ringBufS_t ring_buf1;
 static uint8_t port_data[max_port_data] = {255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0, 255, 0};
 
@@ -40,7 +40,6 @@ void init_display(void)
 #endif
 #ifdef NHD
 	wdtdelay(350000); // > 400ms power up delay
-//	while (true) {
 	send_lcd_cmd(0x46); // home cursor
 	wdtdelay(800);
 	send_lcd_cmd(0x41); // display on
@@ -50,7 +49,6 @@ void init_display(void)
 	wdtdelay(80);
 	send_lcd_cmd(0x51); // clear screen
 	wdtdelay(800);
-//	}
 
 #else
 	CSB_SetHigh();
@@ -145,10 +143,11 @@ void eaDogM_WriteString(char *strPtr)
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
-	if (len > (uint8_t) max_strlen)
-		strPtr[max_strlen] = 0; // buffer overflow check
+	if (len > (uint8_t) max_strlen) {
+		len=max_strlen;
+	}
 	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
-	SPI1_WriteBlock(spi_link.tx1a,len);
+	SPI1_ExchangeBlock(spi_link.tx1a, len);
 	start_lcd(); // start DMA transfer
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
@@ -211,8 +210,8 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 		row = 0x40;
 		break;
 	}
-	send_lcd_cmd_dma(0x45);
-	send_lcd_data_dma(row + c);
+	send_lcd_cmd(0x45);
+	send_lcd_data(row + c);
 	wait_lcd_done();
 	eaDogM_WriteString(strPtr);
 }
@@ -381,12 +380,12 @@ void eaDogM_WriteByteToCGRAM(uint8_t ndx, uint8_t data)
 
 void eaDogM_WriteCommand(const uint8_t cmd)
 {
-	send_lcd_cmd_dma(cmd);
+	send_lcd_cmd(cmd);
 }
 
 void eaDogM_WriteChr(const int8_t value)
 {
-	send_lcd_data_dma((uint8_t) value);
+	send_lcd_data((uint8_t) value);
 }
 
 /*
@@ -407,14 +406,6 @@ uint8_t* port_data_dma_ptr(void)
 }
 
 /*
- * STDOUT user handler function
- */
-//void putch(char c)
-//{
-//	ringBufS_put_dma(spi_link.tx1a, c);
-//}
-
-/*
  * Trigger the SPI DMA transfer to the LCD display
  */
 void start_lcd(void)
@@ -433,7 +424,7 @@ bool wait_lcd_check(void)
 
 void wait_lcd_done(void)
 {
-//	while (spi_link.LCD_DATA);
+	//	while (spi_link.LCD_DATA);
 
 	CSB_SetHigh(); /* SPI deselect display */
 }

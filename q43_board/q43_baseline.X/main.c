@@ -179,7 +179,7 @@ uint8_t elobuf[BUF_SIZE], elobuf_out[BUF_SIZE_V80], elobuf_in[BUF_SIZE_V80], xl 
 uint8_t ssbuf[BUF_SIZE];
 
 struct reporttype ssreport;
-struct statustype status;
+volatile struct statustype status;
 
 const uint8_t elocodes_s_v[] = {
 	0x0d, 0x0d, 0x0d, 0x0d, 0x0d, 0x3c, 0x2b, 0x44, 0x25, 0x29, 0x44, 0x3d, 0x2a, 0x37
@@ -233,8 +233,9 @@ const uint8_t elocodes_e7[] = {// dummy packet
 uint16_t touch_corner1 = 0;
 bool touch_corner_timed = false;
 
-volatile uint8_t idx = 0;
+uint8_t idx = 0;
 volatile uint16_t tickCount[TMR_COUNT];
+char buffer[256];
 
 
 void rxtx_handler(void);
@@ -358,6 +359,9 @@ void start_delay(void)
 	wdtdelay(100000);
 }
 
+/*
+ * main program loop processing
+ */
 void rxtx_handler(void) // timer & serial data transform functions are handled here
 {
 	static uint8_t c = 0, i = 0, data_pos, uchar, tchar;
@@ -547,17 +551,13 @@ uint8_t Test_Screen(void)
 void main(void)
 {
 	uint8_t scaled_char;
+	uint32_t ticks = 0;
 	float rez_scale_h = 1.0, rez_parm_h, rez_scale_v = 1.0, rez_parm_v;
 	float rez_scale_h_ss = ELO_SS_H_SCALE, rez_scale_v_ss = ELO_SS_V_SCALE;
 
 	// Initialize the device
 	SYSTEM_Initialize();
-
 	TMR5_SetInterruptHandler(led_flash);
-	//	init_display();
-	//	eaDogM_WriteStringAtPos(0, 0, build_date);
-	//	eaDogM_WriteStringAtPos(1, 0, build_time);
-	//	eaDogM_WriteStringAtPos(2, 0, build_version);
 
 	S.c_idx = 0;
 	S.speedup = 0;
@@ -572,12 +572,22 @@ void main(void)
 	S.CAM = 0;
 	ssreport.tohost = true;
 
-
 	// Enable high priority global interrupts
 	INTERRUPT_GlobalInterruptHighEnable();
 
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
+
+	SPI1CON0bits.EN = 1;
+	init_display();
+	sprintf(buffer, "%s ", build_version);
+	eaDogM_WriteStringAtPos(0, 0, buffer);
+	sprintf(buffer, "%s ", build_date);
+	eaDogM_WriteStringAtPos(1, 0, buffer);
+	sprintf(buffer, "%s ", build_time);
+	eaDogM_WriteStringAtPos(2, 0, buffer);
+
+	StartTimer(TMR_DIS, 500);
 
 	if (emulat_type == OTHER_MECH) {
 	}
@@ -703,6 +713,11 @@ void main(void)
 			};
 
 			ClrWdt(); // reset the WDT timer
+			if (TimerDone(TMR_DIS)) {
+				sprintf(buffer, "%lu", ticks++);
+				eaDogM_WriteStringAtPos(3, 0, buffer);
+				StartTimer(TMR_DIS, 500);
+			}
 		}
 	}
 
