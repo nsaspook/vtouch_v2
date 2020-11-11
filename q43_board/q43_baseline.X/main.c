@@ -578,6 +578,7 @@ void main(void)
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
 
+	DMA2_StopTransfer();
 	SPI1CON0bits.EN = 1;
 	init_display();
 	sprintf(buffer, "%s ", build_version);

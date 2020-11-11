@@ -2,7 +2,8 @@
 #include "qconfig.h"
 #include "eadog.h"
 #include "ringbufs.h"
-//#include "mcc_generated_files/dma1.h"
+#include "mcc_generated_files/dma1.h"
+#include "mcc_generated_files/dma2.h"
 //#include "tests.h"
 
 #define max_strlen	21
@@ -80,22 +81,17 @@ void init_display(void)
 #ifdef DEBUG_DISP2
 	DLED2 = false;
 #endif
+#ifdef USE_DMA
+	DMA1_SetSCNTIInterruptHandler(clear_lcd_done);
+	DMA2_SetDCNTIInterruptHandler(spi_rec_done);
+#endif
 }
 
 /*
- * channel 2 DMA, serial port 1 transmit
+ * channel DMA
  */
 void init_port_dma(void)
 {
-	//	DMA2CON1bits.DMODE = 0;
-	//	DMA2CON1bits.DSTP = 0;
-	//	DMA2CON1bits.SMODE = 1;
-	//	DMA2CON1bits.SMR = 0;
-	//	DMA2CON1bits.SSTP = 1;
-	//	DMA2CON0bits.SIRQEN = 0;
-	//	DMA2DSA = 0x3DEA; // U1TXB SERIAL PORT 1
-	//	DMA2SSA = (uint32_t) port_data;
-	//	DMA2CON0bits.DGO = 0;
 }
 
 #ifdef NHD
@@ -139,15 +135,24 @@ void eaDogM_WriteString(char *strPtr)
 #ifdef DEBUG_DISP1
 	DLED1 = true;
 #endif
+	wait_lcd_done();
 	wait_lcd_set();
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	if (len > (uint8_t) max_strlen) {
-		len=max_strlen;
+		len = max_strlen;
 	}
 	ringBufS_put_dma_cpy(spi_link.tx1a, strPtr, len);
+#ifdef USE_DMA
+	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
+	DMA1_SetSourceSize(len);
+	DMA1_SetDestinationSize(1);
+	DMA2_SetSourceSize(1);
+	DMA2_SetDestinationSize(len);
+#else
 	SPI1_ExchangeBlock(spi_link.tx1a, len);
+#endif
 	start_lcd(); // start DMA transfer
 #ifdef DISPLAY_SLOW
 	wdtdelay(9000);
@@ -182,7 +187,13 @@ void send_lcd_data_dma(const uint8_t strPtr)
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
 	ringBufS_put_dma(spi_link.tx1a, strPtr); // don't use printf to send zeros
-
+#ifdef USE_DMA
+	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
+	DMA1_SetSourceSize(1);
+	DMA1_SetDestinationSize(1);
+	DMA2_SetSourceSize(1);
+	DMA2_SetDestinationSize(1);
+#endif
 	start_lcd(); // start DMA transfer
 #ifdef DEBUG_DISP2
 	DLED2 = false;
@@ -213,6 +224,7 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 	send_lcd_cmd(0x45);
 	send_lcd_data(row + c);
 	wait_lcd_done();
+	CSB_SetHigh(); /* SPI deselect display */
 	eaDogM_WriteString(strPtr);
 }
 
@@ -410,11 +422,15 @@ uint8_t* port_data_dma_ptr(void)
  */
 void start_lcd(void)
 {
+#ifdef USE_DMA
+	DMA2_StartTransferWithTrigger();
+	DMA1_StartTransfer();
+#endif
 }
 
 void wait_lcd_set(void)
 {
-	spi_link.LCD_DATA = 1;
+	spi_link.LCD_DATA = true;
 }
 
 bool wait_lcd_check(void)
@@ -424,7 +440,21 @@ bool wait_lcd_check(void)
 
 void wait_lcd_done(void)
 {
-	//	while (spi_link.LCD_DATA);
+#ifdef USE_DMA
+	while (spi_link.LCD_DATA) {
+	};
+#endif
+	while (!SPI1STATUSbits.TXBE) {
+	};
+}
 
-	CSB_SetHigh(); /* SPI deselect display */
+void clear_lcd_done(void)
+{
+	spi_link.LCD_DATA = false;
+}
+
+
+void spi_rec_done(void)
+{
+	DMA2_StopTransfer();
 }
