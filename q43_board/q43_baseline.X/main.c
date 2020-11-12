@@ -237,7 +237,8 @@ uint8_t idx = 0;
 volatile uint16_t tickCount[TMR_COUNT];
 char buffer[256];
 
-
+void putc1(uint8_t);
+void putc2(uint8_t);
 void rxtx_handler(void);
 void led_flash(void);
 
@@ -269,11 +270,7 @@ void touch_cam(void)
 
 void elocmdout(uint8_t * elostr)
 {
-	while (!UART2_is_tx_ready()) {
-	}; // wait until the usart is clear
-	UART2_Write(elostr[0]);
-	while (!UART2_is_tx_ready()) {
-	}; // wait until the usart is clear
+	putc2(elostr[0]);
 
 	LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
 	wdtdelay(30000);
@@ -281,11 +278,7 @@ void elocmdout(uint8_t * elostr)
 
 void eloSScmdout(uint8_t elostr)
 {
-	while (!UART2_is_tx_ready()) {
-	}; // wait until the usart is clear
-	UART2_Write(elostr);
-	while (!UART2_is_tx_ready()) {
-	}; // wait until the usart is clear
+	putc2(elostr);
 
 	LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
 	wdtdelay(10000); // inter char delay
@@ -321,10 +314,8 @@ void elocmdout_v80(const uint8_t * elostr)
 	int16_t e;
 	uint8_t elo_char;
 	for (e = 0; e < ELO_SIZE_V80; e++) { // send buffered data
-		while (!UART2_is_tx_ready()) {
-		}; // wait until the usart is clear
 		elo_char = elostr[e];
-		UART2_Write(elo_char); // send to LCD touch
+		putc2(elo_char); // send to LCD touch
 		LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
 		wdtdelay(10000); // inter char delay
 	}
@@ -367,28 +358,31 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 	static uint8_t c = 0, i = 0, data_pos, uchar, tchar;
 	uint16_t x_tmp, y_tmp, uvalx, lvalx, uvaly, lvaly;
 	static uint8_t sum = 0xAA + 'U';
+	static uint32_t ticks = 0;
 
 	status.rawint_count++;
-	if (UART1_DataReady) { // is data from host COMM1, only from E220/E500 machines
+	if (emulat_type != OTHER_MECH) {
+		if (UART1_DataReady) { // is data from host COMM1, only from E220/E500 machines
 
-		if (status.do_cap) {
-		} else {
-			tchar = UART1_Read(); // read from host
-			S.DATA1 = true; // usart is connected to data
-			S.LCD_OK = true; // looks like a screen controller is connected
-			S.TSTATUS = true;
-			if (tchar == 0x46) { // send one report to host
-				S.CATCH46 = true;
-				status.touch_good = 0;
-			}
-			if (tchar == 0x37) { // start of touch scan read
-				S.CATCH37 = true;
-				status.touch_good = 0;
-			}
-			if (tchar == 0x3C) { // touch reset from host
-				// a possible setup command
-			}
-		};
+			if (status.do_cap) {
+			} else {
+				tchar = UART1_Read(); // read from host
+				S.DATA1 = true; // usart is connected to data
+				S.LCD_OK = true; // looks like a screen controller is connected
+				S.TSTATUS = true;
+				if (tchar == 0x46) { // send one report to host
+					S.CATCH46 = true;
+					status.touch_good = 0;
+				}
+				if (tchar == 0x37) { // start of touch scan read
+					S.CATCH37 = true;
+					status.touch_good = 0;
+				}
+				if (tchar == 0x3C) { // touch reset from host
+					// a possible setup command
+				}
+			};
+		}
 	}
 
 	if (emulat_type == E220) {
@@ -495,9 +489,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 					if ((bool) uchar) { /* only send valid data */
 						data_pos = 0;
 						do {
-							while (!UART1_is_tx_ready()) {
-							};
-							UART1_Write(elobuf_out[data_pos]);
+							putc1(elobuf_out[data_pos]);
 						} while (++data_pos < HOST_CMD_SIZE_V80);
 					}
 					S.LCD_OK = true; // looks like a screen controller is connected
@@ -524,22 +516,32 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 			LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
 		}
 
-		if (emulat_type == OTHER_SCREEN) {
+		if (emulat_type == OTHER_MECH) {
 			if (UART2_DataReady) { // is data from touchscreen COMM2
 				/* Get the character received from the USART */
 				c = UART2_Read();
+				putc1(c);
 				LATEbits.LATE0 = !LATEbits.LATE0;
-
+			}
+			if (UART1_DataReady) { // is data from host COMM1
+				/* Get the character received from the USART */
+				c = UART1_Read();
+				putc2(c);
+				LATEbits.LATE0 = !LATEbits.LATE0;
 			}
 		}
+	}
+
+	if (TimerDone(TMR_DIS)) {
+		sprintf(buffer, "%lu %i,%i,%i,%i,%i,%i,%i", ticks++, screen_type, emulat_type, status.status_count, status.resync_count, idx, S.DATA1, S.DATA2);
+		eaDogM_WriteStringAtPos(3, 0, buffer);
+		StartTimer(TMR_DIS, 500);
 	}
 }
 
 uint8_t Test_Screen(void)
 {
-	while (!UART2_is_tx_ready()) {
-	}; // wait until the USART is clear
-	UART2_Write(0x46);
+	putc2(0x46);
 	wdtdelay(30000);
 	setup_lcd_smartset(); // send lcd touch controller setup codes
 	return S.DATA2;
@@ -551,7 +553,6 @@ uint8_t Test_Screen(void)
 void main(void)
 {
 	uint8_t scaled_char;
-	uint32_t ticks = 0;
 	float rez_scale_h = 1.0, rez_parm_h, rez_scale_v = 1.0, rez_parm_v;
 	float rez_scale_h_ss = ELO_SS_H_SCALE, rez_scale_v_ss = ELO_SS_V_SCALE;
 
@@ -562,9 +563,19 @@ void main(void)
 	S.c_idx = 0;
 	S.speedup = 0;
 
-	// default interface
-	screen_type = DELL_E215546;
-	emulat_type = E220;
+	// default interfaces
+	if (E_TYPE_GetValue()) { // SV4 pin 3
+		emulat_type = E220;
+	} else {
+		emulat_type = VIISION;
+	}
+
+	if (D_TYPE_GetValue()) { // SV4 pin 1
+		screen_type = DELL_E215546;
+	} else {
+		screen_type = OTHER_SCREEN;
+		emulat_type = OTHER_MECH;
+	}
 
 	CAM_RELAY = 0;
 	CAM_RELAY_AUX = 0;
@@ -714,11 +725,6 @@ void main(void)
 			};
 
 			ClrWdt(); // reset the WDT timer
-			if (TimerDone(TMR_DIS)) {
-				sprintf(buffer, "%lu", ticks++);
-				eaDogM_WriteStringAtPos(3, 0, buffer);
-				StartTimer(TMR_DIS, 500);
-			}
 		}
 	}
 
