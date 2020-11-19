@@ -121,7 +121,7 @@ typedef struct reporttype {
 } reporttype;
 
 typedef struct statustype {
-	int32_t alive_led, touch_count, resync_count, rawint_count, status_count;
+	int32_t alive_led, touch_count, resync_count, rawint_count, status_count, lcd_count;
 	uint8_t host_write : 1;
 	uint8_t scrn_write : 1;
 	uint8_t do_cap : 1;
@@ -157,7 +157,7 @@ enum oem_type {
 };
 
 volatile disp_state_t S = {
-	.ts_type = OEM_CRT,
+	.ts_type = OEM_LCD,
 	.TSTATUS = true,
 };
 
@@ -179,7 +179,9 @@ uint8_t elobuf[BUF_SIZE], elobuf_out[BUF_SIZE_V80], elobuf_in[BUF_SIZE_V80], xl 
 uint8_t ssbuf[BUF_SIZE];
 
 struct reporttype ssreport;
-volatile struct statustype status;
+volatile struct statustype status = {
+	.do_cap = false,
+};
 
 const uint8_t elocodes_s_v[] = {
 	0x0d, 0x0d, 0x0d, 0x0d, 0x0d, 0x3c, 0x2b, 0x44, 0x25, 0x29, 0x44, 0x3d, 0x2a, 0x37
@@ -387,6 +389,8 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 
 	if (emulat_type == E220) {
 		if (UART2_DataReady) { // is data from touchscreen
+			status.lcd_count++;
+			LED2_Toggle();
 			DEBUG2_Toggle();
 			BLED_Toggle();
 			if (S.CAM && (status.cam_time > MAX_CAM_TIME)) {
@@ -433,7 +437,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 
 	if (emulat_type == VIISION) {
 		if (UART2_DataReady) { // is data from screen COMM2
-
+			LED2_Toggle();
 			/* Get the character received from the USART */
 			c = UART2_Read();
 
@@ -522,6 +526,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				c = UART2_Read();
 				putc1(c);
 				LATEbits.LATE0 = !LATEbits.LATE0;
+				LED2_Toggle();
 			}
 			if (UART1_DataReady) { // is data from host COMM1
 				/* Get the character received from the USART */
@@ -533,8 +538,10 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 	}
 
 	if (TimerDone(TMR_DIS)) {
-		sprintf(buffer, "%lu %i,%i,%i,%i,%i,%i,%i", ticks++, screen_type, emulat_type, status.status_count, status.resync_count, idx, S.DATA1, S.DATA2);
+		sprintf(buffer, "%i,%i,%i,%i,%i", S.ts_type, screen_type, emulat_type, status.status_count, status.resync_count);
 		eaDogM_WriteStringAtPos(3, 0, buffer);
+		sprintf(buffer, "%i,%i,%i %i ", idx, S.DATA1, S.DATA2, status.lcd_count);
+		eaDogM_WriteStringAtPos(0, 0, buffer);
 		StartTimer(TMR_DIS, 500);
 	}
 }
@@ -564,12 +571,27 @@ void main(void)
 	S.speedup = 0;
 
 	// default interfaces
+	/*
+	 * host expects
+	 */
+	if (S_TYPE_GetValue()) { // SV4 pin 5
+		S.ts_type = OEM_CRT;
+	} else {
+		S.ts_type = OEM_LCD;
+	}
+
+	/*
+	 * host is
+	 */
 	if (E_TYPE_GetValue()) { // SV4 pin 3
 		emulat_type = E220;
 	} else {
 		emulat_type = VIISION;
 	}
 
+	/*
+	 * touch screen is
+	 */
 	if (D_TYPE_GetValue()) { // SV4 pin 1
 		screen_type = DELL_E215546;
 	} else {
@@ -707,11 +729,11 @@ void main(void)
 				}
 
 				putc1(0xF4); // send status report
-				if (S.ts_type == 0) { // CRT type screens
+				if (S.ts_type == OEM_CRT) { // CRT type screens
 					putc1(0x77); // touch parm
 					putc1(0x5f); // touch parm
 				}
-				if (S.ts_type == 1) { // new LCD type screens
+				if (S.ts_type == OEM_LCD) { // new LCD type screens
 					putc1(0x71); // touch parm 113
 					putc1(0x59); // touch parm 89
 				}
@@ -768,17 +790,15 @@ void main(void)
 void led_flash(void)
 {
 	LED2_Toggle();
-	//	idx = 0; // reset packet char index counter
-	//	ssreport.tohost = false; // when packets stop allow for next updates
-	if (!S.LCD_OK && (status.init_check++ >LCD_CHK_TIME)) {
-		status.init_check = 0; // reset screen init code counter
-		S.SCREEN_INIT = true; // set init code flag so it can be sent in main loop
-	}
+	//	if (!S.LCD_OK && (status.init_check++ >LCD_CHK_TIME)) {
+	//		status.init_check = 0; // reset screen init code counter
+	//		S.SCREEN_INIT = true; // set init code flag so it can be sent in main loop
+	//	}
 
-	if ((status.comm_check++ >COMM_CHK_TIME) && !S.CATCH) { // check for LCD screen connection
-		status.comm_check = 0; // reset connect heartbeat counter
-		S.LCD_OK = false; // reset the connect flag while waiting for response from controller.
-	}
+	//	if ((status.comm_check++ >COMM_CHK_TIME) && !S.CATCH) { // check for LCD screen connection
+	//		status.comm_check = 0; // reset connect heartbeat counter
+	//		S.LCD_OK = false; // reset the connect flag while waiting for response from controller.
+	//	}
 }
 /**
  End of File
