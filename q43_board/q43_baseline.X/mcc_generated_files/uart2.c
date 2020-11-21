@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for UART2.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
 	Device            :  PIC18F47Q43
 	Driver Version    :  2.4.0
     The generated drivers are tested against the following:
-	Compiler          :  XC8 2.10 and above
-	MPLAB             :  MPLAB X 5.30
+        Compiler          :  XC8 2.30 and above
+        MPLAB             :  MPLAB X 5.40
  */
 
 /*
@@ -55,8 +55,8 @@
 /**
   Section: Macro Declarations
  */
-#define UART2_TX_BUFFER_SIZE 128
-#define UART2_RX_BUFFER_SIZE 128
+#define UART2_TX_BUFFER_SIZE 64
+#define UART2_RX_BUFFER_SIZE 64
 
 /**
   Section: Global Variables
@@ -152,12 +152,12 @@ void UART2_Initialize(void)
 
 bool UART2_is_rx_ready(void)
 {
-	return(uart2RxCount ? true : false);
+    return (uart2RxCount ? true : false);
 }
 
 bool UART2_is_tx_ready(void)
 {
-	return(uart2TxBufferRemaining ? true : false);
+    return (uart2TxBufferRemaining ? true : false);
 }
 
 bool UART2_is_tx_done(void)
@@ -165,22 +165,24 @@ bool UART2_is_tx_done(void)
 	return U2ERRIRbits.TXMTIF;
 }
 
-uart2_status_t UART2_get_last_status(void)
-{
+uart2_status_t UART2_get_last_status(void){
 	return uart2RxLastError;
 }
 
 uint8_t UART2_Read(void)
 {
-	uint8_t readValue = 0;
+    uint8_t readValue  = 0;
 
-	while (0 == uart2RxCount) {
+    while(0 == uart2RxCount)
+    {
+        CLRWDT();
 	}
 
 	uart2RxLastError = uart2RxStatusBuffer[uart2RxTail];
 
 	readValue = uart2RxBuffer[uart2RxTail++];
-	if (sizeof(uart2RxBuffer) <= uart2RxTail) {
+   	if(sizeof(uart2RxBuffer) <= uart2RxTail)
+    {
 		uart2RxTail = 0;
 	}
 	PIE8bits.U2RXIE = 0;
@@ -192,15 +194,21 @@ uint8_t UART2_Read(void)
 
 void UART2_Write(uint8_t txData)
 {
-	while (0 == uart2TxBufferRemaining) {
+    while(0 == uart2TxBufferRemaining)
+    {
+        CLRWDT();
 	}
 
-	if (0 == PIE8bits.U2TXIE) {
+    if(0 == PIE8bits.U2TXIE)
+    {
 		U2TXB = txData;
-	} else {
+    }
+    else
+    {
 		PIE8bits.U2TXIE = 0;
 		uart2TxBuffer[uart2TxHead++] = txData;
-		if (sizeof(uart2TxBuffer) <= uart2TxHead) {
+        if(sizeof(uart2TxBuffer) <= uart2TxHead)
+        {
 			uart2TxHead = 0;
 		}
 		uart2TxBufferRemaining--;
@@ -208,30 +216,38 @@ void UART2_Write(uint8_t txData)
 	PIE8bits.U2TXIE = 1;
 }
 
-void __interrupt(irq(U2TX), base(8)) UART2_tx_vect_isr()
+void __interrupt(irq(U2TX),base(8)) UART2_tx_vect_isr()
 {
-	if (UART2_TxInterruptHandler) {
+    if(UART2_TxInterruptHandler)
+    {
 		UART2_TxInterruptHandler();
 	}
 }
 
-void __interrupt(irq(U2RX), base(8)) UART2_rx_vect_isr()
+void __interrupt(irq(U2RX),base(8)) UART2_rx_vect_isr()
 {
-	if (UART2_RxInterruptHandler) {
+    if(UART2_RxInterruptHandler)
+    {
 		UART2_RxInterruptHandler();
 	}
 }
 
+
+
 void UART2_Transmit_ISR(void)
 {
 	// use this default transmit interrupt handler code
-	if (sizeof(uart2TxBuffer) > uart2TxBufferRemaining) {
+    if(sizeof(uart2TxBuffer) > uart2TxBufferRemaining)
+    {
 		U2TXB = uart2TxBuffer[uart2TxTail++];
-		if (sizeof(uart2TxBuffer) <= uart2TxTail) {
+       if(sizeof(uart2TxBuffer) <= uart2TxTail)
+        {
 			uart2TxTail = 0;
 		}
 		uart2TxBufferRemaining++;
-	} else {
+    }
+    else
+    {
 		PIE8bits.U2TXIE = 0;
 	}
 
@@ -240,24 +256,20 @@ void UART2_Transmit_ISR(void)
 
 void UART2_Receive_ISR(void)
 {
-	uint8_t junk; // try to cleanup after errors
 	// use this default receive interrupt handler code
 	uart2RxStatusBuffer[uart2RxHead].status = 0;
 
-	if (U2ERRIRbits.FERIF) {
-		junk = U2RXB;
+    if(U2ERRIRbits.FERIF){
 		uart2RxStatusBuffer[uart2RxHead].ferr = 1;
 		UART2_FramingErrorHandler();
 	}
 
-	if (U2ERRIRbits.RXFOIF) {
+    if(U2ERRIRbits.RXFOIF){
 		uart2RxStatusBuffer[uart2RxHead].oerr = 1;
-		U2ERRIRbits.RXFOIF = 0;
 		UART2_OverrunErrorHandler();
 	}
 
-	if (uart2RxStatusBuffer[uart2RxHead].status) {
-		uart2RxStatusBuffer[uart2RxHead].status = 0;
+    if(uart2RxStatusBuffer[uart2RxHead].status){
 		UART2_ErrorHandler();
 	} else {
 		UART2_RxDataHandler();
@@ -266,52 +278,44 @@ void UART2_Receive_ISR(void)
 	// or set custom function using UART2_SetRxInterruptHandler()
 }
 
-void UART2_RxDataHandler(void)
-{
+void UART2_RxDataHandler(void){
 	// use this default receive interrupt handler code							
 	DEBUG2_Toggle();
 	uart2RxBuffer[uart2RxHead++] = U2RXB;
-	if (sizeof(uart2RxBuffer) <= uart2RxHead) {
+    if(sizeof(uart2RxBuffer) <= uart2RxHead)
+    {
 		uart2RxHead = 0;
 	}
 	uart2RxCount++;
 }
 
-void UART2_DefaultFramingErrorHandler(void)
-{
-}
+void UART2_DefaultFramingErrorHandler(void){}
 
-void UART2_DefaultOverrunErrorHandler(void)
-{
-}
+void UART2_DefaultOverrunErrorHandler(void){}
 
-void UART2_DefaultErrorHandler(void)
-{
+void UART2_DefaultErrorHandler(void){
 	UART2_RxDataHandler();
 }
 
-void UART2_SetFramingErrorHandler(void (* interruptHandler)(void))
-{
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void)){
 	UART2_FramingErrorHandler = interruptHandler;
 }
 
-void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void))
-{
+void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void)){
 	UART2_OverrunErrorHandler = interruptHandler;
 }
 
-void UART2_SetErrorHandler(void (* interruptHandler)(void))
-{
+void UART2_SetErrorHandler(void (* interruptHandler)(void)){
 	UART2_ErrorHandler = interruptHandler;
 }
 
-void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void))
-{
+
+
+void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void)){
 	UART2_RxInterruptHandler = InterruptHandler;
 }
 
-void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void))
-{
+void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void)){
 	UART2_TxInterruptHandler = InterruptHandler;
 }
 

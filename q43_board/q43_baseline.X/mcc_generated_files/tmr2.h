@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for TMR2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
         Device            :  PIC18F47Q43
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above 
-        MPLAB 	          :  MPLAB X 5.30
+        Compiler          :  XC8 2.30 and above 
+        MPLAB 	          :  MPLAB X 5.40
 */
 
 /*
@@ -366,6 +366,7 @@ typedef enum
     /* Reserved enum cannot be used 
     */
     TMR2_RESERVED_4
+
 
 } TMR2_HLT_EXT_RESET_SOURCE;
 
@@ -904,4 +905,3 @@ bool TMR2_HasOverflowOccured(void);
 /**
  End of File
 */
-

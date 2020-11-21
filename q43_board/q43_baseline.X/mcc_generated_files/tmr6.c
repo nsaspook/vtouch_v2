@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for TMR6.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
 	Device            :  PIC18F47Q43
 	Driver Version    :  2.11
     The generated drivers are tested against the following:
-	Compiler          :  XC8 2.10 and above 
-	MPLAB 	          :  MPLAB X 5.30
+        Compiler          :  XC8 2.30 and above 
+        MPLAB 	          :  MPLAB X 5.40
  */
 
 /*
@@ -165,19 +165,20 @@ void TMR6_LoadPeriodRegister(uint8_t periodVal)
 	TMR6_Period8BitSet(periodVal);
 }
 
-void __interrupt(irq(TMR6), base(8)) TMR6_ISR()
+void __interrupt(irq(TMR6),base(8)) TMR6_ISR()
 {
 
 	// clear the TMR6 interrupt flag
 	PIR15bits.TMR6IF = 0;
 
-	if (TMR6_InterruptHandler) {
+    if(TMR6_InterruptHandler)
+    {
 		TMR6_InterruptHandler();
 	}
 }
 
-void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
-{
+
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
 	TMR6_InterruptHandler = InterruptHandler;
 }
 

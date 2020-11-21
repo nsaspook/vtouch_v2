@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for DMA1.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
         Device            :  PIC18F47Q43
         Driver Version    :  1.0.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above or later
-        MPLAB             :  MPLAB X 5.30
+        Compiler          :  XC8 2.30 and above or later
+        MPLAB             :  MPLAB X 5.40
 */
 
 /*
@@ -52,7 +52,7 @@
 */
 #include <stdint.h>
 
-uint16_t spibuffer[128];
+uint8_t spibuffer[128];
 
 /**
  * @brief Initializes the DMA1 module

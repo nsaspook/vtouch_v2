@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for TMR2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.79.0
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
         Device            :  PIC18F47Q43
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.10 and above 
-        MPLAB 	          :  MPLAB X 5.30
+        Compiler          :  XC8 2.30 and above 
+        MPLAB 	          :  MPLAB X 5.40
 */
 
 /*
