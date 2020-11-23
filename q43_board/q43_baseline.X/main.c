@@ -265,8 +265,8 @@ void touch_cam(void)
 		touch_corner1 = 0;
 		CAM_RELAY_AUX = 1; // set secondary VGA/CAM switch
 		CAM_RELAY = 1; // set primary VGA/CAM switch
-		elobuf[0] = 0;
-		elobuf[1] = 0;
+		elobuf[0] = 1;
+		elobuf[1] = 1;
 	};
 }
 
@@ -602,7 +602,7 @@ void main(void)
 	CAM_RELAY = 0;
 	CAM_RELAY_AUX = 0;
 	status.touch_count = 0;
-	S.CAM = 0;
+	S.CAM = false;
 	ssreport.tohost = true;
 
 	// Enable high priority global interrupts
