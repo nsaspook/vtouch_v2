@@ -156,7 +156,7 @@ enum oem_type {
 	OEM_CRT = 0, OEM_LCD = 1
 };
 
-volatile disp_state_t S = {
+disp_state_t S = {
 	.ts_type = OEM_LCD,
 	.TSTATUS = true,
 };
@@ -179,7 +179,7 @@ uint8_t elobuf[BUF_SIZE], elobuf_out[BUF_SIZE_V80], elobuf_in[BUF_SIZE_V80], xl 
 uint8_t ssbuf[BUF_SIZE];
 
 struct reporttype ssreport;
-volatile struct statustype status = {
+struct statustype status = {
 	.do_cap = false,
 };
 
@@ -790,15 +790,6 @@ void main(void)
 void led_flash(void)
 {
 	LED2_Toggle();
-	//	if (!S.LCD_OK && (status.init_check++ >LCD_CHK_TIME)) {
-	//		status.init_check = 0; // reset screen init code counter
-	//		S.SCREEN_INIT = true; // set init code flag so it can be sent in main loop
-	//	}
-
-	//	if ((status.comm_check++ >COMM_CHK_TIME) && !S.CATCH) { // check for LCD screen connection
-	//		status.comm_check = 0; // reset connect heartbeat counter
-	//		S.LCD_OK = false; // reset the connect flag while waiting for response from controller.
-	//	}
 }
 /**
  End of File
