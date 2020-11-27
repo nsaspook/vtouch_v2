@@ -4,7 +4,6 @@
 #include "ringbufs.h"
 #include "mcc_generated_files/dma1.h"
 #include "mcc_generated_files/dma2.h"
-//#include "tests.h"
 
 #define max_strlen	21
 #define max_port_data	1024

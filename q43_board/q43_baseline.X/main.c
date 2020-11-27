@@ -76,7 +76,7 @@
  * Male         2-3-rx
  *              3-2-tx
  *
- * HFBR-0501Z light link converter
+ * HFBR-0501Z light link converter for front screen touch interface
  *
  */
 
@@ -89,14 +89,15 @@
  *
  * PRORTA, PORTE Camera, aux switching with touch in target box
  * LED2			run flasher led onboard.
- * 8 led status lights.
+ * status LCD 4x20.
  *
  * Microchip Inc , Aug 2009,2018,2020
  * Gresham, Oregon
  *
  *
  * This application is designed for use with the
- * 47Q43 touch_board and  device.
+ * 47Q43 touch_board
+ * 
  * HOST RS-232  5-1     uC port1
  * Female       2-2-tx
  *              3-3-rx
@@ -107,8 +108,8 @@
  * VGA converter box relay
  * Omron
  * G6k-2P bottom view
- * Pin		8 - gnd, wire tag 0/stripe,	RELAY output	pin 10 on connector SIG COMMON
- * Pin		1 + 5vdc signal,		Power PIN	pin 2 connector for RA1 or RE1 PORT SIGNAL
+ * Pin		8 - gnd, wire tag 0/stripe,	RELAY output	pin 10 on connector SIG COMMON SV6
+ * Pin		1 + 5vdc signal,		Power PIN	pin 7-8 connector for RD6 or RD7 PORT SIGNAL SV6
  */
 
 //#define DEBUG_CAM
@@ -150,6 +151,12 @@ typedef struct disp_state_t {
  * 
  * TS_TYPE	0 Original CRT type screens
  *		1 OEM LCD screens
+ * 
+ * SV4 jumpers
+ * 1-2 off default: DELL_E215546
+ * 3-4 off default: E220/E500
+ * 5-6 off default: OEM CRT
+ * 
  */
 
 enum oem_type {
@@ -274,7 +281,7 @@ void elocmdout(uint8_t * elostr)
 {
 	putc2(elostr[0]);
 
-	LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
+	BLED_Toggle(); // flash external led
 	wdtdelay(30000);
 }
 
@@ -282,7 +289,7 @@ void eloSScmdout(uint8_t elostr)
 {
 	putc2(elostr);
 
-	LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
+	BLED_Toggle(); // flash external led
 	wdtdelay(10000); // inter char delay
 }
 
@@ -318,7 +325,7 @@ void elocmdout_v80(const uint8_t * elostr)
 	for (e = 0; e < ELO_SIZE_V80; e++) { // send buffered data
 		elo_char = elostr[e];
 		putc2(elo_char); // send to LCD touch
-		LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
+		BLED_Toggle(); // flash external led
 		wdtdelay(10000); // inter char delay
 	}
 	wdtdelay(50000); // wait for LCD controller reset
@@ -517,7 +524,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				S.UNTOUCH = false;
 			}
 
-			LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
+			BLED_Toggle(); // flash external led
 		}
 
 		if (emulat_type == OTHER_MECH) {
@@ -525,14 +532,14 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 				/* Get the character received from the USART */
 				c = UART2_Read();
 				putc1(c);
-				LATEbits.LATE0 = !LATEbits.LATE0;
+				BLED_Toggle();
 				LED2_Toggle();
 			}
 			if (UART1_DataReady) { // is data from host COMM1
 				/* Get the character received from the USART */
 				c = UART1_Read();
 				putc2(c);
-				LATEbits.LATE0 = !LATEbits.LATE0;
+				BLED_Toggle();
 			}
 		}
 	}
@@ -649,7 +656,7 @@ void main(void)
 #ifdef	DEBUG_CAM
 				CAM_RELAY = !CAM_RELAY;
 #endif
-				LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
+				BLED_Toggle(); // flash external led
 				if (status.cam_time > MAX_CAM_TIMEOUT) {
 					if (touch_corner_timed) {
 						touch_corner_timed = false;
@@ -755,7 +762,7 @@ void main(void)
 		while (true) { // busy loop BSG style
 			rxtx_handler();
 			if (j++ >= BLINK_RATE_V80) { // delay a bit ok
-				LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
+				BLED_Toggle(); // flash external led
 				if (S.LCD_OK) { // screen status feedback
 				} else {
 				}
@@ -771,7 +778,7 @@ void main(void)
 		while (true) { // busy loop BSG style
 			rxtx_handler();
 			if (j++ >= BLINK_RATE_OTHER) { // delay a bit ok
-				LATEbits.LATE0 = !LATEbits.LATE0; // flash external led
+				BLED_Toggle(); // flash external led
 				j = 0;
 			}
 			ClrWdt(); // reset the WDT timer
