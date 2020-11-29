@@ -87,7 +87,7 @@ typedef struct C_data { // real calculated variables
 	hist_type hist[1];
 	float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
 	bool day, dupdate;
-	uint32_t day_start, day_end, day_update, updates;
+	time_t day_start, day_end, day_update, updates;
 } C_data;
 
 typedef enum {

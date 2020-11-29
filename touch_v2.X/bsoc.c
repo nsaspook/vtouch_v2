@@ -103,7 +103,7 @@ void calc_bsoc(void)
 	 * Charge Controller condition events
 	 */
 	if (cc_state(C.v_cmode) == M_FLOAT) {
-		if (!V.in_float && ++V.float_ticks > FLOAT_TIME)
+		if (!V.in_float && (++V.float_ticks > FLOAT_TIME))
 			if (!V.in_float) {
 				V.in_float = true;
 				if (C.soc < 95) // SOC and AH corrections
@@ -114,7 +114,7 @@ void calc_bsoc(void)
 	}
 
 	if (cc_state(C.v_cmode) == M_BOOST) {
-		if (!V.in_boost && ++V.boost_ticks > FLOAT_TIME)
+		if (!V.in_boost && (++V.boost_ticks > FLOAT_TIME))
 			if (!V.in_boost) { // SOC and AH corrections
 				V.in_boost = true;
 				if (C.soc < 80)
@@ -391,25 +391,25 @@ uint8_t cc_state(float cc_signal)
 {
 	uint8_t state = M_OFFLINE; // offline
 
-	if (cc_signal > 4.75 && cc_signal < 0.75)
+	if ((cc_signal > 4.75) && (cc_signal < 0.75))
 		return state; // dead signal range
 
-	if (cc_signal > 4.25 && cc_signal < 4.65) // 4.4
+	if ((cc_signal > 4.25) && (cc_signal < 4.65)) // 4.4
 		return state; //offline
 
-	if (cc_signal > 3.75 && cc_signal < 4.25) // 4.0
+	if ((cc_signal > 3.75) && (cc_signal < 4.25)) // 4.0
 		state = M_LIMIT;
-	if (cc_signal > 3.25 && cc_signal < 3.75) // 3.5
+	if ((cc_signal > 3.25) && (cc_signal < 3.75)) // 3.5
 		state = M_FLOAT;
-	if (cc_signal > 2.75 && cc_signal < 3.25) // 3.0
+	if ((cc_signal > 2.75) && (cc_signal < 3.25)) // 3.0
 		state = M_BOOST;
-	if (cc_signal > 2.25 && cc_signal < 2.75) // 2.5
+	if ((cc_signal > 2.25) && (cc_signal < 2.75)) // 2.5
 		state = M_EQUAL;
-	if (cc_signal > 1.75 && cc_signal < 2.25) // 2.0
+	if ((cc_signal > 1.75) && (cc_signal < 2.25)) // 2.0
 		state = M_MPPT;
-	if (cc_signal > 1.25 && cc_signal < 1.75) // 1.5
+	if ((cc_signal > 1.25) && (cc_signal < 1.75)) // 1.5
 		state = M_ACT;
-	if (cc_signal > .75 && cc_signal < 1.25) // 1.0
+	if ((cc_signal > .75) && cc_signal < 1.25) // 1.0
 		state = M_DEACT;
 	return state;
 }

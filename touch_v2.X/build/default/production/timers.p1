@@ -1,7 +1,7 @@
 Version 4.0 HI-TECH Software Intermediate Code
 "7 timers.c
 [v _tickCount `Vus ~T0 @X0 -> 0 `x e ]
-"34
+"35
 [c E16547 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 .. ]
 [n E16547 APP_TIMERS TMR_INTERNAL TMR_ADC TMR_T2 TMR_T3 TMR_T4 TMR_MC_TX TMR_HBIO TMR_INFO TMR_HELP TMR_HELPDIS TMR_DISPLAY TMR_FLIPPER TMR_ESR TMR_TEXT TMR_COUNT  ]
 "50 /opt/microchip/mplabx/v5.45/packs/Microchip/PIC18F-K_DFP/1.4.87/xc8/pic/include/pic18.h
@@ -1530,39 +1530,39 @@ Version 4.0 HI-TECH Software Intermediate Code
 "21
 [f ]
 "22
-[; <"  clrwdt ;# ">
+[v _ret `a ~T0 @X0 1 a ]
+[e = _ret -> -> 0 `i `a ]
 "23
-[e $ ! == -> *U + &U _tickCount * -> _timer `ux -> -> # *U &U _tickCount `ui `ux `ui -> -> 0 `i `ui 2243  ]
-{
+[; <"  clrwdt ;# ">
 "24
-[e ) -> -> 1 `i `a ]
-[e $UE 2242  ]
+[e $ ! == -> *U + &U _tickCount * -> _timer `ux -> -> # *U &U _tickCount `ui `ux `ui -> -> -> 0 `i `us `ui 2243  ]
+{
 "25
+[e = _ret -> -> 1 `i `a ]
+"26
 }
 [e :U 2243 ]
-"26
-[e ) -> -> 0 `i `a ]
-[e $UE 2242  ]
 "27
+[e ) _ret ]
+[e $UE 2242  ]
+"28
 [e :UE 2242 ]
 }
-"32
-[v _WaitMs `(v ~T0 @X0 1 ef1`Cus ]
 "33
+[v _WaitMs `(v ~T0 @X0 1 ef1`Cus ]
+"34
 {
 [e :U _WaitMs ]
-"32
-[v _numMilliseconds `Cus ~T0 @X0 1 r1 ]
 "33
-[f ]
+[v _numMilliseconds `Cus ~T0 @X0 1 r1 ]
 "34
-[e ( _StartTimer (2 , -> . `E16547 0 `uc _numMilliseconds ]
+[f ]
 "35
+[e ( _StartTimer (2 , -> . `E16547 0 `uc _numMilliseconds ]
+"36
 [e $U 2245  ]
 [e :U 2246 ]
 {
-"36
-[e ( ___nop ..  ]
 "37
 [e ( ___nop ..  ]
 "38
@@ -1570,13 +1570,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "39
 [e ( ___nop ..  ]
 "40
+[e ( ___nop ..  ]
+"41
 [; <"  clrwdt ;# ">
-"42
+"43
 }
 [e :U 2245 ]
-"35
+"36
 [e $ ! != -> ( _TimerDone (1 -> . `E16547 0 `uc `i -> 0 `i 2246  ]
 [e :U 2247 ]
-"43
+"44
 [e :UE 2244 ]
 }

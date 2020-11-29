@@ -19,11 +19,12 @@ void StartTimer(const uint8_t timer, const uint16_t count)
 
 bool TimerDone(const uint8_t timer)
 {
+	bool ret = false;
 	ClrWdt(); // reset the WDT timer
-	if (tickCount[timer] == 0) { //Check if counted down to zero
-		return true; //then return true
+	if (tickCount[timer] == (uint16_t)0) { //Check if counted down to zero
+		ret = true; //then return true
 	}
-	return false; //else return false
+	return ret; //return status
 }
 
 //**********************************************************************************************************************
