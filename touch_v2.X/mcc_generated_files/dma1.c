@@ -13,12 +13,12 @@
   @Description
     This header file provides implementations for driver APIs for DMA CHANNEL1.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
 	Device            :  PIC18F57K42
 	Driver Version    :  2.10
     The generated drivers are tested against the following:
-	Compiler          :  XC8 1.45
-	MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.05 and above
+        MPLAB 	          :  MPLAB X 5.20
  */
 
 /*
@@ -91,7 +91,7 @@ void DMA1_Initialize(void)
 	DMA1SSZ = 0x0001; //set source size
 	DMA1DSZ = 0x0001; //set destination size
 	DMA1SIRQ = 0x15; //set DMA Transfer Trigger Source
-	DMA1AIRQ = 0x0; //set DMA Transfer abort Source
+    DMA1AIRQ = 0x3D; //set DMA Transfer abort Source
 
 	PIR2bits.DMA1DCNTIF = 0; // clear Destination Count Interrupt Flag bit
 	PIR2bits.DMA1SCNTIF = 0; // clear Source Count Interrupt Flag bit

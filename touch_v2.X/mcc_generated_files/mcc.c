@@ -13,12 +13,12 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
         Device            :  PIC18F57K42
         Driver Version    :  2.00
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 or later
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.05 and above or later
+        MPLAB             :  MPLAB X 5.20
 */
 
 /*
@@ -57,8 +57,8 @@ void SYSTEM_Initialize(void)
     FVR_Initialize();
     CRC_Initialize();
     ADCC_Initialize();
-    PWM8_Initialize();
     TMR2_Initialize();
+    PWM8_Initialize();
     EXT_INT_Initialize();
     TMR6_Initialize();
     TMR3_Initialize();

@@ -13,12 +13,12 @@
   @Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
         Device            :  PIC18F57K42
         Driver Version    :  2.00
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 or later
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.05 and above or later
+        MPLAB             :  MPLAB X 5.20
 */
 
 /*
@@ -57,11 +57,11 @@
 #include "adcc.h"
 #include "tmr5.h"
 #include "tmr6.h"
-#include "tmr3.h"
 #include "pwm8.h"
+#include "tmr3.h"
 #include "tmr2.h"
-#include "ext_int.h"
 #include "memory.h"
+#include "ext_int.h"
 #include "uart2.h"
 #include "uart1.h"
 #include "dma1.h"

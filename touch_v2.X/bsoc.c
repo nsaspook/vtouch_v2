@@ -107,7 +107,7 @@ void calc_bsoc(void)
 			if (!V.in_float) {
 				V.in_float = true;
 				if (C.soc < 95) // SOC and AH corrections
-					C.dynamic_ah = C.bank_ah * 0.95;
+					C.dynamic_ah = C.bank_ah * 0.95f;
 			}
 	} else {
 		V.float_ticks = 0;
@@ -118,7 +118,7 @@ void calc_bsoc(void)
 			if (!V.in_boost) { // SOC and AH corrections
 				V.in_boost = true;
 				if (C.soc < 80)
-					C.dynamic_ah = C.bank_ah * 0.80;
+					C.dynamic_ah = C.bank_ah * 0.80f;
 			}
 	} else {
 		V.boost_ticks = 0;
@@ -229,10 +229,10 @@ void init_bsoc(void)
 	/*
 	 * use raw battery voltage
 	 */
-	C.soc = Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0);
-	C.dynamic_ah = C.bank_ah * (Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0) / 100.0);
+	C.soc = Volts_to_SOC((uint32_t) (conv_raw_result(V_BAT, CONV) * 1000.0f));
+	C.dynamic_ah = C.bank_ah * (Volts_to_SOC((uint32_t) (conv_raw_result(V_BAT, CONV) * 1000.0f)) / 100.0f);
 	if (V.cc_active) { // charge controller online FIXUP
-		C.dynamic_ah += 10.0;
+		C.dynamic_ah += 10.0f;
 		C.soc += 10;
 	}
 	C.dynamic_ah_adj = C.dynamic_ah;
@@ -289,7 +289,7 @@ uint32_t peukert(uint16_t brate, float bcurrent, float peukert, int16_t bsoc)
 	if (C.hist[0].peukert_adj > Perk_ADJ_FH)
 		C.hist[0].peukert_adj = Perk_ADJ_FH; // limit how HIGH
 
-	t6 = t6 * 3600.0; // convert to seconds for runtime at current discharge rate
+	t6 = t6 * 3600.0f; // convert to seconds for runtime at current discharge rate
 	return(uint32_t) t6;
 }
 
@@ -306,7 +306,7 @@ uint16_t Volts_to_SOC(const uint32_t cvoltage)
 	 */
 	for (slot = 0; slot < BVSOC_SLOTS; slot++) {
 		if (cvoltage > BVSOC_TABLE[slot][0]) {
-			soc = BVSOC_TABLE[slot][1];
+			soc = (uint16_t) BVSOC_TABLE[slot][1];
 		}
 	}
 	return soc;

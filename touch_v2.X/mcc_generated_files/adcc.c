@@ -13,12 +13,12 @@
   @Description
     This source file provides implementations for driver APIs for ADCC.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
         Device            :  PIC18F57K42
-        Driver Version    :  2.13
+        Driver Version    :  2.1.4
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.05 and above
+        MPLAB             :  MPLAB X 5.20
 */
 
 /*
@@ -225,10 +225,10 @@ void ADCC_ClearAccumulator(void)
     ADCON2bits.ADACLR = 1;
 }
 
-int24_t ADCC_GetAccumulatorValue(void)
+uint24_t ADCC_GetAccumulatorValue(void)
 {
     //Return the contents of ADACCU, ADACCH and ADACCL registers
-    return (((int24_t)ADACCU << 16)+((int24_t)ADACCH << 8) + ADACCL);
+    return (((uint24_t)ADACCU << 16)+((uint24_t)ADACCH << 8) + ADACCL);
 }
 
 bool ADCC_HasAccumulatorOverflowed(void)

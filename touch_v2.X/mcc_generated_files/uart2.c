@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for UART2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
         Device            :  PIC18F57K42
-        Driver Version    :  2.30
+        Driver Version    :  2.4.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.05 and above
+        MPLAB             :  MPLAB X 5.20
 */
 
 /*
@@ -69,11 +69,20 @@ volatile uint8_t uart2TxBufferRemaining;
 static volatile uint8_t uart2RxHead = 0;
 static volatile uint8_t uart2RxTail = 0;
 static volatile uint8_t uart2RxBuffer[UART2_RX_BUFFER_SIZE];
+static volatile uart2_status_t uart2RxStatusBuffer[UART2_RX_BUFFER_SIZE];
 volatile uint8_t uart2RxCount;
+static volatile uart2_status_t uart2RxLastError;
 
 /**
   Section: UART2 APIs
 */
+void (*UART2_FramingErrorHandler)(void);
+void (*UART2_OverrunErrorHandler)(void);
+void (*UART2_ErrorHandler)(void);
+
+void UART2_DefaultFramingErrorHandler(void);
+void UART2_DefaultOverrunErrorHandler(void);
+void UART2_DefaultErrorHandler(void);
 
 void UART2_Initialize(void)
 {
@@ -122,6 +131,12 @@ void UART2_Initialize(void)
     U2ERRIE = 0x00;
 
 
+    UART2_SetFramingErrorHandler(UART2_DefaultFramingErrorHandler);
+    UART2_SetOverrunErrorHandler(UART2_DefaultOverrunErrorHandler);
+    UART2_SetErrorHandler(UART2_DefaultErrorHandler);
+
+    uart2RxLastError.status = 0;
+
     // initializing the driver state
     uart2TxHead = 0;
     uart2TxTail = 0;
@@ -134,19 +149,23 @@ void UART2_Initialize(void)
     PIE6bits.U2RXIE = 1;
 }
 
-uint8_t UART2_is_rx_ready(void)
+bool UART2_is_rx_ready(void)
 {
-    return uart2RxCount;
+    return (uart2RxCount ? true : false);
 }
 
-uint8_t UART2_is_tx_ready(void)
+bool UART2_is_tx_ready(void)
 {
-    return uart2TxBufferRemaining;
+    return (uart2TxBufferRemaining ? true : false);
 }
 
 bool UART2_is_tx_done(void)
 {
     return U2ERRIRbits.TXMTIF;
+}
+
+uart2_status_t UART2_get_last_status(void){
+    return uart2RxLastError;
 }
 
 uint8_t UART2_Read(void)
@@ -157,6 +176,8 @@ uint8_t UART2_Read(void)
     {
         CLRWDT();
     }
+
+    uart2RxLastError = uart2RxStatusBuffer[uart2RxTail];
 
     readValue = uart2RxBuffer[uart2RxTail++];
    	if(sizeof(uart2RxBuffer) <= uart2RxTail)
@@ -235,14 +256,55 @@ void UART2_Transmit_ISR(void)
 void UART2_Receive_ISR(void)
 {
     // use this default receive interrupt handler code
+    uart2RxStatusBuffer[uart2RxHead].status = 0;
+
+    if(U2ERRIRbits.FERIF){
+        uart2RxStatusBuffer[uart2RxHead].ferr = 1;
+        UART2_FramingErrorHandler();
+    }
+    
+    if(U2ERRIRbits.RXFOIF){
+        uart2RxStatusBuffer[uart2RxHead].oerr = 1;
+        UART2_OverrunErrorHandler();
+    }
+    
+    if(uart2RxStatusBuffer[uart2RxHead].status){
+        UART2_ErrorHandler();
+    } else {
+        UART2_RxDataHandler();
+    }
+
+    // or set custom function using UART2_SetRxInterruptHandler()
+}
+
+void UART2_RxDataHandler(void){
+    // use this default receive interrupt handler code
     uart2RxBuffer[uart2RxHead++] = U2RXB;
     if(sizeof(uart2RxBuffer) <= uart2RxHead)
     {
         uart2RxHead = 0;
     }
     uart2RxCount++;
+}
     
-    // or set custom function using UART2_SetRxInterruptHandler()
+void UART2_DefaultFramingErrorHandler(void){}
+
+void UART2_DefaultOverrunErrorHandler(void){}
+
+void UART2_DefaultErrorHandler(void){
+    UART2_RxDataHandler();
+}
+
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void)){
+    UART2_FramingErrorHandler = interruptHandler;
+}
+
+void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void)){
+    UART2_OverrunErrorHandler = interruptHandler;
+}
+
+void UART2_SetErrorHandler(void (* interruptHandler)(void)){
+    UART2_ErrorHandler = interruptHandler;
 }
 
 

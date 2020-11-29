@@ -13,7 +13,7 @@
    @Description
      This source file provides implementations for driver APIs for EXT_INT.
      Generation Information :
-	 Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.77
 	 Device            :  PIC18F57K42
 	 Driver Version    :  1.11
      The generated drivers are tested against the following:
