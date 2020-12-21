@@ -13,7 +13,6 @@ extern "C" {
 #endif
 #include <xc.h>
 #include "mcc_generated_files/dma5.h"
-#include "mcc_generated_files/dma6.h"
 #include "mcc_generated_files/tmr4.h"
 #include "mcc_generated_files/dac1.h"
 

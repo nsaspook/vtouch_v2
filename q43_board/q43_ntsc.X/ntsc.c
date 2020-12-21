@@ -2,6 +2,7 @@
 
 volatile uint32_t vcounts = 0, vfcounts = 0;
 volatile bool h_mode = true, mode_init = false; // horizonal scan
+
 void vcntd(void);
 void vcnts(void);
 void vint(void);
@@ -47,12 +48,12 @@ void ntsc_init(void)
 	TMR4_Start();
 }
 
-void vcntd(void)
+void vcntd(void) // each DMA transfer interrupt, 31 total bytes
 {
 	vcounts++;
 }
 
-void vcnts(void)
+void vcnts(void) // each scan line interrupt, 262 total for scan lines and V sync
 {
 	vfcounts++;
 	if (h_mode) { // Horizontal sync (hsync) pulse: Start each scanline with 0.3V, then 0V for 4.7us (microseconds), and then back to 0.3V.
