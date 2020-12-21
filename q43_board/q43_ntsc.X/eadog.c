@@ -2,8 +2,6 @@
 #include "qconfig.h"
 #include "eadog.h"
 #include "ringbufs.h"
-#include "mcc_generated_files/dma1.h"
-#include "mcc_generated_files/dma2.h"
 
 #define max_strlen	21
 #define max_port_data	1024
@@ -455,5 +453,4 @@ void clear_lcd_done(void)
 
 void spi_rec_done(void)
 {
-	DMA2_StopTransfer();
 }

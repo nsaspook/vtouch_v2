@@ -13,7 +13,7 @@
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
 	Device            :  PIC18F47Q43
 	Driver Version    :  2.00
  */
@@ -55,21 +55,6 @@
 #include "ntsc.h"
 
 /*
- * Viision terminal code
- * This program converts the rs-232 output from a ELO controller type LCD monitor
- * to a format that can be used with the Varian Viision 80 Implanter with ADYIN CRT monitor
- * The LCD touchscreen will be  programmed to the correct touch response and configuration at program start
- *
- * USART1 is the host comm port
- * USART2 is the touch-screen comm port
- *
- * usart1	connected to implant host computer at 9600
- * usart2       connected to touchscreen  serial post at 9600
- *
- * V4.00+	convert to 47Q43 board and XC8
- *
- *
- *
  * HOST RS-232  5-1     uC port1
  * Female       2-2-tx
  *              3-3-rx
@@ -82,20 +67,6 @@
  */
 
 /* E220/E500 terminal code
- * This program converts the rs-232 output from a ELO touch-screen controller
- * to a format that can be used with the Varian E220/E500 Implanter
- * The touch controller must be first programmed
- * USART1 is the host comm port
- * USART2 is the touch-screen comm port
- *
- * PRORTA, PORTE Camera, aux switching with touch in target box
- * LED2			run flasher led onboard.
- * status LCD 4x20.
- *
- * Microchip Inc , Aug 2009,2018,2020
- * Gresham, Oregon
- *
- *
  * This application is designed for use with the
  * 47Q43 touch_board
  * 
@@ -105,12 +76,6 @@
  * LCD  RS-232  5-1     uC port2
  * Male         2-3-rx
  *              3-2-tx
- *
- * VGA converter box relay
- * Omron
- * G6k-2P bottom view
- * Pin		8 - gnd, wire tag 0/stripe,	RELAY output	pin 10 on connector SIG COMMON SV6
- * Pin		1 + 5vdc signal,		Power PIN	pin 7-8 connector for RD6 or RD7 PORT SIGNAL SV6
  */
 
 //#define DEBUG_CAM
@@ -394,7 +359,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 	}
 
 	if (TimerDone(TMR_DIS)) {
-		sprintf(buffer, "%lu,%lu", vcounts, vfcounts);
+		sprintf(buffer, "%lu,%lu    ", vcounts, vfcounts);
 		eaDogM_WriteStringAtPos(3, 0, buffer);
 		sprintf(buffer, "%i,%i,%i %i ", idx, S.DATA1, S.DATA2, status.lcd_count);
 		eaDogM_WriteStringAtPos(0, 0, buffer);
@@ -468,7 +433,6 @@ void main(void)
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
 
-	DMA2_StopTransfer();
 	SPI1CON0bits.EN = 1;
 	init_display();
 	sprintf(buffer, "%s ", build_version);
