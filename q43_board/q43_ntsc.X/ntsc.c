@@ -1,6 +1,7 @@
 #include "ntsc.h"
 
-volatile uint32_t vcounts = 0, vfcounts = 0;
+volatile uint32_t vcounts = 0;
+volatile uint8_t vfcounts = 0;
 volatile bool h_mode = true, mode_init = false; // horizonal scan
 
 void vcntd(void);
@@ -13,23 +14,24 @@ void ntsc_init(void)
 
 	TMR4_Start();
 	TMR4_StopTimer();
-	DMA5_SetDCNTIInterruptHandler(vcntd);
+	DMA5_SetDMAPriority(0);
+	//	DMA5_SetDCNTIInterruptHandler(vcntd);
 	DMA5_SetSCNTIInterruptHandler(vcnts);
 
 	/*
 	 * setup the static V, H and video patterns for DMA and TM4 clocking
 	 */
-	for (count = 0; count < 4; count++) {
+	for (count = 0; count < 2; count++) {
 		vsync[count] = SYNC_LEVEL;
 		hsync[count] = BLANK_LEVEL;
 	}
 
-	for (count = 4; count < 8; count++) {
+	for (count = 2; count < 4; count++) {
 		vsync[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = 8; count < 25; count++) {
+	for (count = 4; count < 10; count++) {
 		vsync[count] = vramp;
 		hsync[count] = SYNC_LEVEL;
 		vramp = vramp + 2;
@@ -37,7 +39,7 @@ void ntsc_init(void)
 			vramp = VIDEO_LEVEL;
 		}
 	}
-	for (count = 25; count < 40; count++) {
+	for (count = 10; count < 40; count++) {
 		vsync[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
@@ -58,7 +60,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	vfcounts++;
 	if (h_mode) { // Horizontal sync (hsync) pulse: Start each scanline with 0.3V, then 0V for 4.7us (microseconds), and then back to 0.3V.
 		if (vfcounts >= 243) {
-			vcounts = 0;
 			vfcounts = 0;
 			h_mode = false;
 			mode_init = true;
@@ -68,11 +69,11 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = &hsync;
+			DMAnSSZ = 12;
 			DMAnCON0bits.EN = 1;
 		}
 	} else { // Vertical sync (vsync) pulse: Lines 243-262 of each frame (off the bottom of the TV) start with 0.3V for 4.7us, and the rest is 0V.
 		if (vfcounts >= 20) {
-			vcounts = 0;
 			vfcounts = 0;
 			h_mode = true;
 			mode_init = true;
@@ -82,6 +83,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = &vsync;
+			DMAnSSZ = 12;
 			DMAnCON0bits.EN = 1;
 		}
 	}

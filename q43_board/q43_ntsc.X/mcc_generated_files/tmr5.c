@@ -134,7 +134,7 @@ void TMR5_WriteTimer(uint16_t timerVal)
 
         // Write to the Timer5 register
         TMR5H = (timerVal >> 8);
-        TMR5L = timerVal & 0xff;
+        TMR5L = timerVal;
 
         // Start the Timer after writing to the register
         T5CONbits.TMR5ON =1;
@@ -143,7 +143,7 @@ void TMR5_WriteTimer(uint16_t timerVal)
     {
         // Write to the Timer5 register
         TMR5H = (timerVal >> 8);
-        TMR5L = timerVal & 0xff;
+        TMR5L = timerVal;
     }
 }
 

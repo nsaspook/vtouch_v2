@@ -359,7 +359,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 	}
 
 	if (TimerDone(TMR_DIS)) {
-		sprintf(buffer, "%lu,%lu    ", vcounts, vfcounts);
+		sprintf(buffer, "%lu,%u    ", vcounts, vfcounts);
 		eaDogM_WriteStringAtPos(3, 0, buffer);
 		sprintf(buffer, "%i,%i,%i %i ", idx, S.DATA1, S.DATA2, status.lcd_count);
 		eaDogM_WriteStringAtPos(0, 0, buffer);

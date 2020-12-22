@@ -52,7 +52,6 @@
 #include "dma5.h"
 
 void (*DMA5_SCNTI_InterruptHandler)(void);
-void (*DMA5_DCNTI_InterruptHandler)(void);
 
 /**
   Section: DMA5 APIs
@@ -86,8 +85,7 @@ void DMA5_Initialize(void)
     // Clear Overrun Interrupt Flag bit
     PIR12bits.DMA5ORIF =0; 
     
-    PIE12bits.DMA5DCNTIE = 1;
-	DMA5_SetDCNTIInterruptHandler(DMA5_DefaultInterruptHandler);
+    PIE12bits.DMA5DCNTIE = 0;
     PIE12bits.DMA5SCNTIE = 1; 
 	DMA5_SetSCNTIInterruptHandler(DMA5_DefaultInterruptHandler);
     PIE12bits.DMA5AIE = 0;
@@ -195,20 +193,6 @@ void __interrupt(irq(IRQ_DMA5SCNT),base(8)) DMA5_DMASCNTI_ISR()
 void DMA5_SetSCNTIInterruptHandler(void (* InterruptHandler)(void))
 {
 	 DMA5_SCNTI_InterruptHandler = InterruptHandler;
-}
-
-void __interrupt(irq(IRQ_DMA5DCNT),base(8)) DMA5_DMADCNTI_ISR()
-{
-    // Clear the source count interrupt flag
-    PIR12bits.DMA5DCNTIF = 0;
-
-    if (DMA5_DCNTI_InterruptHandler)
-            DMA5_DCNTI_InterruptHandler();
-}
-
-void DMA5_SetDCNTIInterruptHandler(void (* InterruptHandler)(void))
-{
-	 DMA5_DCNTI_InterruptHandler = InterruptHandler;
 }
 
 void DMA5_DefaultInterruptHandler(void){

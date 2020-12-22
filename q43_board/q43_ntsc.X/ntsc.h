@@ -18,13 +18,14 @@ extern "C" {
 
 
 #define SYNC_LEVEL	0
-#define BLANK_LEVEL	15
-#define BLACK_LEVEL	25
-#define VIDEO_LEVEL	50
+#define BLANK_LEVEL	30
+#define BLACK_LEVEL	35
+#define VIDEO_LEVEL	55
 
 	extern uint8_t vsync[256];
 	extern uint8_t hsync[256];
-	extern volatile uint32_t vcounts, vfcounts;
+	extern volatile uint32_t vcounts;
+	extern volatile uint8_t vfcounts;
 
 	void ntsc_init(void);
 

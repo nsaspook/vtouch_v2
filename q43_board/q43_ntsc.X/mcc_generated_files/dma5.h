@@ -160,12 +160,6 @@ void DMA5_SetDMAPriority(uint8_t priority);
  */
 void DMA5_SetSCNTIInterruptHandler(void (* InterruptHandler)(void));
 
-/**
- * @brief This routine is used to set the callback for the DCNTI Interrupt.
- * @return None
- * @param Callback Function to be called
- */
-void DMA5_SetDCNTIInterruptHandler(void (* InterruptHandler)(void));
 
 
 /**
