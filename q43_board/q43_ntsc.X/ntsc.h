@@ -16,11 +16,11 @@ extern "C" {
 #include "mcc_generated_files/tmr4.h"
 #include "mcc_generated_files/dac1.h"
 
-
-#define SYNC_LEVEL	0
-#define BLANK_LEVEL	30
-#define BLACK_LEVEL	35
-#define VIDEO_LEVEL	55
+#define LO		50
+#define SYNC_LEVEL	0+LO
+#define BLANK_LEVEL	40+LO
+#define BLACK_LEVEL	45+LO
+#define VIDEO_LEVEL	90+LO
 
 	extern uint8_t vsync[256];
 	extern uint8_t hsync[256];
