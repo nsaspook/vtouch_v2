@@ -15,39 +15,41 @@ void ntsc_init(void)
 	TMR4_Start();
 	TMR4_StopTimer();
 	DMA5_SetDMAPriority(0);
-	//	DMA5_SetDCNTIInterruptHandler(vcntd);
+//	DMA5_SetDCNTIInterruptHandler(vcntd);
 	DMA5_SetSCNTIInterruptHandler(vcnts);
 
 	/*
 	 * setup the static V, H and video patterns for DMA and TM4 clocking
 	 */
-	for (count = 0; count < 1; count++) {
+	for (count = 0; count < 38; count++) {
 		vsync[count] = SYNC_LEVEL;
 		hsync[count] = BLANK_LEVEL;
 	}
 
-	for (count = 1; count < 3; count++) {
+	for (count = 38; count < 48; count++) {
 		vsync[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = 3; count < 10; count++) {
+	for (count = 48; count < 200; count++) {
 		vsync[count] = vramp;
 		hsync[count] = SYNC_LEVEL;
 		vramp = vramp + 9;
 		if (vramp > VIDEO_LEVEL) {
 			vramp = VIDEO_LEVEL;
 		}
+		vsync[count] = BLANK_LEVEL; // dma testing
 	}
-	for (count = 10; count < 40; count++) {
+	for (count = 200; count < 240; count++) {
 		vsync[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
 	DMA5_StopTransfer();
-	DAC1_SetOutput(128);
+//	DAC1_SetOutput(128);
 	TMR4_SetInterruptHandler(vint);
-	TMR4_Start();
+//	DMA5_StartTransfer();
+		TMR4_Start();
 }
 
 void vcntd(void) // each DMA transfer interrupt, 31 total bytes
@@ -69,7 +71,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = &hsync;
-			DMAnSSZ = 13;
+			DMAnSSZ = 240;
 			DMAnCON0bits.EN = 1;
 		}
 	} else { // Vertical sync (vsync) pulse: Lines 243-262 of each frame (off the bottom of the TV) start with 0.3V for 4.7us, and the rest is 0V.
@@ -83,7 +85,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = &vsync;
-			DMAnSSZ = 13;
+			DMAnSSZ = 240;
 			DMAnCON0bits.EN = 1;
 		}
 	}

@@ -63,16 +63,16 @@ void DMA5_Initialize(void)
     DMASELECT = 0x04;
     //Source Address : vsync
     DMAnSSA = &vsync;
-    //Destination Address : &DAC1DATL
-    DMAnDSA = &DAC1DATL;
+    //Destination Address : &PORTB
+    DMAnDSA= &PORTB;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
     DMAnCON1 = 0x02;
     //Source Message Size : 31
     DMAnSSZ = 31;
-    //Destination Message Size : 1
-    DMAnDSZ = 1;
-    //Start Trigger : SIRQ TMR4; 
-    DMAnSIRQ = 0x5B;
+    //Destination Message Size : 13
+    DMAnDSZ = 13;
+    //Start Trigger : SIRQ None; 
+    DMAnSIRQ = 0x00;
     //Abort Trigger : AIRQ None; 
     DMAnAIRQ = 0x00;
 	
@@ -91,8 +91,8 @@ void DMA5_Initialize(void)
     PIE12bits.DMA5AIE = 0;
     PIE12bits.DMA5ORIE = 0;
 	
-    //EN enabled; SIRQEN enabled; DGO not in progress; AIRQEN disabled; 
-    DMAnCON0 = 0xC0;
+    //EN enabled; SIRQEN disabled; DGO not in progress; AIRQEN disabled; 
+    DMAnCON0 = 0x80;
 	
 }
 
