@@ -6,7 +6,6 @@ volatile bool h_mode = true, mode_init = false; // horizonal scan
 
 void vcntd(void);
 void vcnts(void);
-void vint(void);
 
 void ntsc_init(void)
 {
@@ -14,16 +13,15 @@ void ntsc_init(void)
 
 	DMA5_SetDMAPriority(0);
 	DMA5_SetDCNTIInterruptHandler(vcnts);
-	//	DMA5_SetSCNTIInterruptHandler(vcnts);
 	DMASELECT = 0x04;
 	DMAnCON0bits.EN = 0;
-	DMAnSSA = &vsync;
+	DMAnSSA = (volatile uint24_t) &vsync;
 	DMAnSSZ = DMA_B;
 	DMAnDSZ = DMAnSSZ;
 	DMAnCON0bits.EN = 1;
 
 	/*
-	 * setup the static V, H and video patterns for DMA and TM4 clocking
+	 * setup the static V, H and video patterns for DMA transfer pattern
 	 */
 	for (count = 0; count < 25; count++) {
 		vsync[count] = SYNC_LEVEL;
@@ -36,13 +34,8 @@ void ntsc_init(void)
 	}
 
 	for (count = 48; count < 200; count++) {
-		vsync[count] = vramp;
-		hsync[count] = SYNC_LEVEL;
-		vramp = vramp + 9;
-		if (vramp > VIDEO_LEVEL) {
-			vramp = VIDEO_LEVEL;
-		}
 		vsync[count] = BLANK_LEVEL; // dma testing
+		hsync[count] = SYNC_LEVEL;
 		if (!(count % 8)) {
 			if (count > 100)
 				vsync[count] += 2;
@@ -78,7 +71,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			mode_init = false;
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
-			DMAnSSA = &hsync;
+			DMAnSSA = (volatile uint24_t) &hsync;
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
@@ -93,7 +86,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			mode_init = false;
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
-			DMAnSSA = &vsync;
+			DMAnSSA = (volatile uint24_t) &vsync;
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
@@ -101,10 +94,4 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	}
 	DMA5_StopTransfer();
 	DMA5_StartTransfer();
-}
-
-void vint(void)
-{
-	//	vcnts();
-	//	DMA5_StartTransfer();
 }
