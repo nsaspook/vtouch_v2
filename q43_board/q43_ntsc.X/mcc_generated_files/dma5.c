@@ -51,7 +51,7 @@
 #include <xc.h>
 #include "dma5.h"
 
-void (*DMA5_SCNTI_InterruptHandler)(void);
+void (*DMA5_DCNTI_InterruptHandler)(void);
 
 /**
   Section: DMA5 APIs
@@ -68,9 +68,9 @@ void DMA5_Initialize(void)
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
     DMAnCON1 = 0x02;
     //Source Message Size : 31
-    DMAnSSZ = 31;
+    DMAnSSZ = 243;
     //Destination Message Size : 13
-    DMAnDSZ = 13;
+    DMAnDSZ = 243;
     //Start Trigger : SIRQ None; 
     DMAnSIRQ = 0x00;
     //Abort Trigger : AIRQ None; 
@@ -85,9 +85,9 @@ void DMA5_Initialize(void)
     // Clear Overrun Interrupt Flag bit
     PIR12bits.DMA5ORIF =0; 
     
-    PIE12bits.DMA5DCNTIE = 0;
-    PIE12bits.DMA5SCNTIE = 1; 
-	DMA5_SetSCNTIInterruptHandler(DMA5_DefaultInterruptHandler);
+    PIE12bits.DMA5DCNTIE = 1;
+	DMA5_SetDCNTIInterruptHandler(DMA5_DefaultInterruptHandler);
+    PIE12bits.DMA5SCNTIE = 0;
     PIE12bits.DMA5AIE = 0;
     PIE12bits.DMA5ORIE = 0;
 	
@@ -181,18 +181,18 @@ void DMA5_SetDMAPriority(uint8_t priority)
 	PRLOCKbits.PRLOCKED = 1;
 }
 
-void __interrupt(irq(IRQ_DMA5SCNT),base(8)) DMA5_DMASCNTI_ISR()
+void __interrupt(irq(IRQ_DMA5DCNT),base(8)) DMA5_DMADCNTI_ISR()
 {
     // Clear the source count interrupt flag
-    PIR12bits.DMA5SCNTIF = 0;
+    PIR12bits.DMA5DCNTIF = 0;
 
-    if (DMA5_SCNTI_InterruptHandler)
-            DMA5_SCNTI_InterruptHandler();
+    if (DMA5_DCNTI_InterruptHandler)
+            DMA5_DCNTI_InterruptHandler();
 }
 
-void DMA5_SetSCNTIInterruptHandler(void (* InterruptHandler)(void))
+void DMA5_SetDCNTIInterruptHandler(void (* InterruptHandler)(void))
 {
-	 DMA5_SCNTI_InterruptHandler = InterruptHandler;
+	 DMA5_DCNTI_InterruptHandler = InterruptHandler;
 }
 
 void DMA5_DefaultInterruptHandler(void){

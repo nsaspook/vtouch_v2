@@ -601,7 +601,7 @@ void main(void)
 
 	while (true) {
 		// Add your application code
-		rxtx_handler();
+//		rxtx_handler();
 	}
 }
 

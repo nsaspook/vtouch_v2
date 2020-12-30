@@ -12,15 +12,18 @@
 extern "C" {
 #endif
 #include <xc.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "mcc_generated_files/dma5.h"
-#include "mcc_generated_files/tmr4.h"
-#include "mcc_generated_files/dac1.h"
+#include "mcc_generated_files/pin_manager.h"
 
 #define LO		0
 #define SYNC_LEVEL	0+LO
 #define BLANK_LEVEL	1+LO
 #define BLACK_LEVEL	0+LO
 #define VIDEO_LEVEL	0+LO
+
+#define DMA_B		234
 
 	extern uint8_t vsync[256];
 	extern uint8_t hsync[256];

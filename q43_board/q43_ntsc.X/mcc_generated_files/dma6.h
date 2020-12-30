@@ -53,6 +53,7 @@
 #include <stdint.h>
 
 uint8_t hsync[256];
+uint8_t DstVarName5[10];
 
 /**
  * @brief Initializes the DMA6 module
@@ -154,18 +155,6 @@ void DMA6_StopTransfer(void);
 void DMA6_SetDMAPriority(uint8_t priority);
 
 
-/**
- * @brief This routine is used to set the callback for the DCNTI Interrupt.
- * @return None
- * @param Callback Function to be called
- */
-void DMA6_SetDCNTIInterruptHandler(void (* InterruptHandler)(void));
 
 
-/**
- * @brief This is the default Interrupt Handler function
- * @return None
- * @param None
- */
-void DMA6_DefaultInterruptHandler(void);
 #endif //DMA6_H

@@ -51,7 +51,6 @@
 #include <xc.h>
 #include "dma6.h"
 
-void (*DMA6_DCNTI_InterruptHandler)(void);
 
 /**
   Section: DMA6 APIs
@@ -63,8 +62,8 @@ void DMA6_Initialize(void)
     DMASELECT = 0x05;
     //Source Address : hsync
     DMAnSSA = &hsync;
-    //Destination Address : &CLKRCLK
-    DMAnDSA = &CLKRCLK;
+    //Destination Address : &DstVarName5
+    DMAnDSA= &DstVarName5;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
     DMAnCON1 = 0x02;
     //Source Message Size : 1
@@ -85,8 +84,7 @@ void DMA6_Initialize(void)
     // Clear Overrun Interrupt Flag bit
     PIR13bits.DMA6ORIF =0; 
     
-    PIE13bits.DMA6DCNTIE = 1;
-	DMA6_SetDCNTIInterruptHandler(DMA6_DefaultInterruptHandler);
+    PIE13bits.DMA6DCNTIE = 0;
     PIE13bits.DMA6SCNTIE = 0;
     PIE13bits.DMA6AIE = 0;
     PIE13bits.DMA6ORIE = 0;
@@ -181,24 +179,6 @@ void DMA6_SetDMAPriority(uint8_t priority)
 	PRLOCKbits.PRLOCKED = 1;
 }
 
-void __interrupt(irq(IRQ_DMA6DCNT),base(8)) DMA6_DMADCNTI_ISR()
-{
-    // Clear the source count interrupt flag
-    PIR13bits.DMA6DCNTIF = 0;
-
-    if (DMA6_DCNTI_InterruptHandler)
-            DMA6_DCNTI_InterruptHandler();
-}
-
-void DMA6_SetDCNTIInterruptHandler(void (* InterruptHandler)(void))
-{
-	 DMA6_DCNTI_InterruptHandler = InterruptHandler;
-}
-
-void DMA6_DefaultInterruptHandler(void){
-    // add your DMA6 interrupt custom code
-    // or set custom function using DMA6_SetSCNTIInterruptHandler() /DMA6_SetDCNTIInterruptHandler() /DMA6_SetAIInterruptHandler() /DMA6_SetORIInterruptHandler()
-}
 /**
  End of File
 */
