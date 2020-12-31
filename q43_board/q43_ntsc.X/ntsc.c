@@ -2,7 +2,6 @@
 
 volatile uint32_t vcounts = 0;
 volatile uint8_t vfcounts = 0;
-volatile bool mode_init = false; // horizonal scan
 
 volatile enum s_mode_t {
 	sync1, sync2, sync3
@@ -69,18 +68,12 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 {
 	vfcounts++;
 	IO_RB4_Toggle();
-	IO_RB4_Toggle();
-	IO_RB4_Toggle();
 
 	switch (s_mode) {
 	case sync1:
 		if (vfcounts >= 247) { // 243
 			vfcounts = 0;
 			s_mode = sync2;
-			mode_init = true;
-		}
-		if (mode_init) {
-			mode_init = false;
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = (volatile uint24_t) & hsync;
@@ -93,10 +86,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		if (vfcounts >= 1) { // 20
 			vfcounts = 0;
 			s_mode = sync3;
-			mode_init = true;
-		}
-		if (mode_init) {
-			mode_init = false;
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = (volatile uint24_t) & vsync;
@@ -110,10 +99,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		if (vfcounts >= 14) {
 			vfcounts = 0;
 			s_mode = sync1;
-			mode_init = true;
-		}
-		if (mode_init) {
-			mode_init = false;
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = (volatile uint24_t) & vsync;
@@ -126,7 +111,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	default:
 		vfcounts = 0;
 		s_mode = sync1;
-		mode_init = false;
 		DMASELECT = 0x04;
 		DMAnCON0bits.EN = 0;
 		DMAnSSA = (volatile uint24_t) & vsync;

@@ -18,10 +18,10 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 
 #define LO		0
-#define SYNC_LEVEL	0+LO
-#define BLANK_LEVEL	1+LO
-#define BLACK_LEVEL	0+LO
-#define VIDEO_LEVEL	0+LO
+#define SYNC_LEVEL	0
+#define BLANK_LEVEL	1
+#define BLACK_LEVEL	0
+#define VIDEO_LEVEL	0
 
 #define DMA_B		234
 
