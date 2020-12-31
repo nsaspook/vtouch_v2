@@ -2,7 +2,11 @@
 
 volatile uint32_t vcounts = 0;
 volatile uint8_t vfcounts = 0;
-volatile bool h_mode = true, mode_init = false; // horizonal scan
+volatile bool mode_init = false; // horizonal scan
+
+volatile enum s_mode_t {
+	sync1, sync2, sync3
+} s_mode;
 
 void vcntd(void);
 void vcnts(void);
@@ -15,7 +19,7 @@ void ntsc_init(void)
 	DMA5_SetDCNTIInterruptHandler(vcnts);
 	DMASELECT = 0x04;
 	DMAnCON0bits.EN = 0;
-	DMAnSSA = (volatile uint24_t) &vsync;
+	DMAnSSA = (volatile uint24_t) & vsync;
 	DMAnSSZ = DMA_B;
 	DMAnDSZ = DMAnSSZ;
 	DMAnCON0bits.EN = 1;
@@ -25,7 +29,7 @@ void ntsc_init(void)
 	 */
 	for (count = 0; count < 25; count++) {
 		vsync[count] = SYNC_LEVEL;
-		hsync[count] = BLANK_LEVEL;
+		hsync[count] = SYNC_LEVEL;
 	}
 
 	for (count = 17; count < 48; count++) {
@@ -46,6 +50,12 @@ void ntsc_init(void)
 		hsync[count] = SYNC_LEVEL;
 	}
 
+	for (count = 233; count < 255; count++) {
+		hsync[count] = BLANK_LEVEL;
+	}
+
+	s_mode = sync1;
+
 	DMA5_StopTransfer();
 	DMA5_StartTransfer();
 }
@@ -61,37 +71,72 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	IO_RB4_Toggle();
 	IO_RB4_Toggle();
 	IO_RB4_Toggle();
-	if (h_mode) { // Horizontal sync (hsync) pulse: Start each scanline with 0.3V, then 0V for 4.7us (microseconds), and then back to 0.3V.
-		if (vfcounts >= 244) { // 243
+
+	switch (s_mode) {
+	case sync1:
+		if (vfcounts >= 247) { // 243
 			vfcounts = 0;
-			h_mode = false;
+			s_mode = sync2;
 			mode_init = true;
 		}
 		if (mode_init) {
 			mode_init = false;
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
-			DMAnSSA = (volatile uint24_t) &hsync;
+			DMAnSSA = (volatile uint24_t) & hsync;
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
 		}
-	} else { // Vertical sync (vsync) pulse: Lines 243-262 of each frame (off the bottom of the TV) start with 0.3V for 4.7us, and the rest is 0V.
-		if (vfcounts >= 21) { // 20
+		break;
+	case sync2:
+		if (vfcounts >= 1) { // 20
 			vfcounts = 0;
-			h_mode = true;
+			s_mode = sync3;
 			mode_init = true;
 		}
 		if (mode_init) {
 			mode_init = false;
 			DMASELECT = 0x04;
 			DMAnCON0bits.EN = 0;
-			DMAnSSA = (volatile uint24_t) &vsync;
+			DMAnSSA = (volatile uint24_t) & vsync;
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
+			IO_RB1_SetDigitalInput();
 		}
+		break;
+	case sync3:
+		if (vfcounts >= 14) {
+			vfcounts = 0;
+			s_mode = sync1;
+			mode_init = true;
+		}
+		if (mode_init) {
+			mode_init = false;
+			DMASELECT = 0x04;
+			DMAnCON0bits.EN = 0;
+			DMAnSSA = (volatile uint24_t) & vsync;
+			DMAnSSZ = DMA_B;
+			DMAnDSZ = DMAnSSZ;
+			DMAnCON0bits.EN = 1;
+			IO_RB1_SetDigitalOutput();
+		}
+		break;
+	default:
+		vfcounts = 0;
+		s_mode = sync1;
+		mode_init = false;
+		DMASELECT = 0x04;
+		DMAnCON0bits.EN = 0;
+		DMAnSSA = (volatile uint24_t) & vsync;
+		DMAnSSZ = DMA_B;
+		DMAnDSZ = DMAnSSZ;
+		DMAnCON0bits.EN = 1;
+		IO_RB1_SetDigitalOutput();
+		break;
 	}
+
 	DMA5_StopTransfer();
 	DMA5_StartTransfer();
 }
