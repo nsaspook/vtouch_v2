@@ -23,10 +23,10 @@ extern "C" {
 #define BLACK_LEVEL	0
 #define VIDEO_LEVEL	0
 
-#define DMA_B		234
+#define DMA_B		474
 
-	extern uint8_t vsync[256];
-	extern uint8_t hsync[256];
+	extern uint8_t vsync[750];
+	extern uint8_t hsync[750];
 	extern volatile uint32_t vcounts;
 	extern volatile uint8_t vfcounts;
 

@@ -12,7 +12,7 @@ void vcnts(void);
 
 void ntsc_init(void)
 {
-	uint8_t count = 0, vramp = BLACK_LEVEL;
+	uint16_t count = 0, vramp = BLACK_LEVEL;
 
 	DMA5_SetDMAPriority(0);
 	DMA5_SetDCNTIInterruptHandler(vcnts);
@@ -26,12 +26,12 @@ void ntsc_init(void)
 	/*
 	 * setup the static V, H and video patterns for DMA transfer pattern
 	 */
-	for (count = 0; count < 25; count++) {
+	for (count = 0; count < 48; count++) {
 		vsync[count] = SYNC_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = 17; count < 48; count++) {
+	for (count = 38; count < 48; count++) {
 		vsync[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
@@ -44,12 +44,12 @@ void ntsc_init(void)
 				vsync[count] += 2;
 		}
 	}
-	for (count = 200; count < 255; count++) {
+	for (count = 200; count < 749; count++) {
 		vsync[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = 233; count < 255; count++) {
+	for (count = (DMA_B-38); count < 749; count++) {
 		hsync[count] = BLANK_LEVEL;
 	}
 

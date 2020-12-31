@@ -54,30 +54,6 @@
 #include "eadog.h"
 #include "ntsc.h"
 
-/*
- * HOST RS-232  5-1     uC port1
- * Female       2-2-tx
- *              3-3-rx
- * LCD  RS-232  5-1     uC port2
- * Male         2-3-rx
- *              3-2-tx
- *
- * HFBR-0501Z light link converter for front screen touch interface
- *
- */
-
-/* E220/E500 terminal code
- * This application is designed for use with the
- * 47Q43 touch_board
- * 
- * HOST RS-232  5-1     uC port1
- * Female       2-2-tx
- *              3-3-rx
- * LCD  RS-232  5-1     uC port2
- * Male         2-3-rx
- *              3-2-tx
- */
-
 volatile uint16_t tickCount[TMR_COUNT];
 char buffer[256];
 
@@ -124,6 +100,7 @@ void main(void)
 	eaDogM_WriteStringAtPos(1, 0, buffer);
 	sprintf(buffer, "%s ", build_time);
 	eaDogM_WriteStringAtPos(2, 0, buffer);
+	BLED_SetLow();
 
 	StartTimer(TMR_DIS, 500);
 
