@@ -56,8 +56,8 @@ void SYSTEM_Initialize(void)
     TMR6_Initialize();
     DMA6_Initialize();
     DMA5_Initialize();
-    TMR5_Initialize();
     TMR2_Initialize();
+    TMR5_Initialize();
     UART1_Initialize();
     SPI1_Initialize();
     CLKREF_Initialize();

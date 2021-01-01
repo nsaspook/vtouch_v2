@@ -52,7 +52,7 @@
 */
 #include <stdint.h>
 
-uint8_t hsync[750];
+uint8_t hsync[512];
 uint8_t DstVarName5[10];
 
 /**

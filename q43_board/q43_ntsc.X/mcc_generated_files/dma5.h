@@ -52,7 +52,7 @@
 */
 #include <stdint.h>
 
-uint8_t vsync[750];
+uint8_t vsync[512];
 //uint8_t PORTB[1];
 
 /**
