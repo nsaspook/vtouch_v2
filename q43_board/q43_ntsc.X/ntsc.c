@@ -2,10 +2,9 @@
 
 volatile uint32_t vcounts = 0;
 volatile uint8_t vfcounts = 0;
+volatile bool ntsc_vid = true;
 
-volatile enum s_mode_t {
-	sync1, sync2, sync3
-} s_mode;
+volatile enum s_mode_t s_mode;
 
 void vcntd(void);
 void vcnts(void);
@@ -49,7 +48,7 @@ void ntsc_init(void)
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = (DMA_B-38); count < 749; count++) {
+	for (count = (DMA_B - 38); count < 749; count++) {
 		hsync[count] = BLANK_LEVEL;
 	}
 
@@ -70,7 +69,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	IO_RB4_Toggle();
 
 	switch (s_mode) {
-	case sync1:
+	case sync1: // H sync and video
 		if (vfcounts >= 247) { // 243
 			vfcounts = 0;
 			s_mode = sync2;
@@ -82,7 +81,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnCON0bits.EN = 1;
 		}
 		break;
-	case sync2:
+	case sync2: // V sync and no video
 		if (vfcounts >= 1) { // 20
 			vfcounts = 0;
 			s_mode = sync3;
@@ -92,10 +91,10 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
-			IO_RB1_SetDigitalInput();
+			IO_RB1_SetDigitalInput(); // turn-off video bits
 		}
 		break;
-	case sync3:
+	case sync3: // H sync and no video
 		if (vfcounts >= 14) {
 			vfcounts = 0;
 			s_mode = sync1;
@@ -105,7 +104,9 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
-			IO_RB1_SetDigitalOutput();
+			if (ntsc_vid) { // if set, turn-on video bits
+				IO_RB1_SetDigitalOutput();
+			}
 		}
 		break;
 	default:
@@ -117,7 +118,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		DMAnSSZ = DMA_B;
 		DMAnDSZ = DMAnSSZ;
 		DMAnCON0bits.EN = 1;
-		IO_RB1_SetDigitalOutput();
+		IO_RB1_SetDigitalOutput(); // video bits, on
 		break;
 	}
 

@@ -12,6 +12,7 @@
 extern "C" {
 #endif
 #include <xc.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "mcc_generated_files/dma5.h"
@@ -25,10 +26,16 @@ extern "C" {
 
 #define DMA_B		474
 
+	enum s_mode_t {
+		sync1, sync2, sync3, sync_error
+	};
+
 	extern uint8_t vsync[750];
 	extern uint8_t hsync[750];
 	extern volatile uint32_t vcounts;
 	extern volatile uint8_t vfcounts;
+	extern volatile bool ntsc_vid;
+	extern volatile enum s_mode_t s_mode;
 
 	void ntsc_init(void);
 
