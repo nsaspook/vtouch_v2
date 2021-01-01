@@ -20,7 +20,7 @@ void ntsc_init(void)
 	vbuf_ptr = vsync;
 	DMA5_SetDMAPriority(0);
 	DMA5_SetDCNTIInterruptHandler(vcnts);
-	DMASELECT = 0x04;
+	DMASELECT = DMA_M;
 	DMAnCON0bits.EN = 0;
 	DMAnSSA = (volatile uint24_t) vbuf_ptr;
 	DMAnSSZ = DMA_B;
@@ -31,37 +31,44 @@ void ntsc_init(void)
 	/*
 	 * setup the static V, H and video patterns for DMA transfer engine to PORTB
 	 */
-	for (count = 0; count < 48; count++) {
+	for (count = 0; count < B_START; count++) {
 		vsync[count] = SYNC_LEVEL;
+		vbuffer[count] = SYNC_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = 38; count < 48; count++) {
+	for (count = S_END; count < B_START; count++) {
 		vsync[count] = BLANK_LEVEL;
+		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = 48; count < 200; count++) {
+	for (count = V_START; count < V_END; count++) {
 		vsync[count] = BLANK_LEVEL;
+		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 		if (!(count % 8)) { // add a bit of default texture
-			if (count > 100)
+			if (count > V_DOTS)
 				vsync[count] += VIDEO_LEVEL; // set bit 1 of PORTB
+		} else {
+			if ((count % 8)) { // add a bit of default texture
+				if (count > V_DOTS)
+					vbuffer[count] += VIDEO_LEVEL; // set bit 1 of PORTB
+			}
 		}
 	}
-	for (count = 200; count < (V_BUF_SIZ - 1); count++) {
+	for (count = V_END; count < (V_BUF_SIZ - 1); count++) {
 		vsync[count] = BLANK_LEVEL;
+		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = (DMA_B - 38); count < (V_BUF_SIZ - 1); count++) {
+	for (count = (DMA_B - S_END); count < (V_BUF_SIZ - 1); count++) {
 		hsync[count] = BLANK_LEVEL;
 	}
 
 	// default scan mode to all lines
 	s_mode = sync1;
-	// dupe scanline buffer
-	memcpy((void*) vbuffer, (void*) vsync, V_BUF_SIZ);
 
 	/*
 	 * kickstart the DMA engine
@@ -94,7 +101,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		if (vfcounts >= S_COUNT) { // 243
 			vfcounts = 0;
 			s_mode = sync2;
-			DMASELECT = 0x04;
+			DMASELECT = DMA_M;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = (volatile uint24_t) & hsync;
 			DMAnSSZ = DMA_B;
@@ -112,7 +119,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		if (vfcounts >= S_COUNT) {
 			vfcounts = 0;
 			s_mode = sync2;
-			DMASELECT = 0x04;
+			DMASELECT = DMA_M;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = (volatile uint24_t) & hsync;
 			DMAnSSZ = DMA_B;
@@ -130,7 +137,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		if (vfcounts >= H_SYNC) {
 			vfcounts = 0;
 			s_mode = sync3;
-			DMASELECT = 0x04;
+			DMASELECT = DMA_M;
 			DMAnCON0bits.EN = 0;
 			DMAnSSA = (volatile uint24_t) vbuf_ptr;
 			DMAnSSZ = DMA_B;
@@ -147,7 +154,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			} else {
 				s_mode = sync1;
 			}
-			DMASELECT = 0x04;
+			DMASELECT = DMA_M;
 			DMAnCON0bits.EN = 0;
 			if (ntsc_flip) {
 				vbuf_ptr = vbuffer;
@@ -163,7 +170,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	default:
 		vfcounts = 0;
 		s_mode = sync1;
-		DMASELECT = 0x04;
+		DMASELECT = DMA_M;
 		DMAnCON0bits.EN = 0;
 		ntsc_flip = false;
 		vbuf_ptr = vsync;
