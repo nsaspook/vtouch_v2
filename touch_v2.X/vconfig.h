@@ -16,11 +16,12 @@ extern "C" {
 
 #include <xc.h>
 #include <time.h>
+#include <stdint.h>
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.54"
+#define VER	"1.55"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -76,6 +77,7 @@ extern "C" {
 	 * 1.52 back to ext clock for ADC with increased time for hold sample
 	 * 1.53 fix lcd display line limits
 	 * 1.54 uptime records
+	 * 1.55 refactor
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
