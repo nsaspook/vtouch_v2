@@ -21,9 +21,10 @@ extern "C" {
 #define DMA_M		0x04	// DMA modules number
 
 #define SYNC_LEVEL	0
-#define BLANK_LEVEL	1
-#define BLACK_LEVEL	1
-#define VIDEO_LEVEL	2
+#define BLANK_LEVEL	1 // PORTB bit 0 set
+#define BLACK_LEVEL	1 // "
+#define VIDEO_LEVEL	2 // PORTB bit 1
+#define HOZ_LEVEL	4 // PORTB bit 2
 
 #define DMA_B		466	// timing adjustment of H sync pulses for 63.2us
 #define V_BUF_SIZ	512	// data buffer array size

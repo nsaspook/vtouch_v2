@@ -117,7 +117,7 @@ void led_flash(void)
 {
 	LED2_Toggle();
 	ntsc_flip = !ntsc_flip;
-//	scan_line++;
+	scan_line++;
 }
 /**
  End of File
