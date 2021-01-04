@@ -18,6 +18,7 @@ void ntsc_init(void)
 	uint16_t count = 0;
 
 	vbuf_ptr = vsync;
+	SLRCONB = 0xff;
 	DMA5_SetDMAPriority(0);
 	DMA5_SetDCNTIInterruptHandler(vcnts);
 	DMASELECT = DMA_M;
@@ -63,7 +64,11 @@ void ntsc_init(void)
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	for (count = (DMA_B - S_END); count < (V_BUF_SIZ - 1); count++) {
+	for (count = (DMA_B - 5); count < (V_BUF_SIZ - 1); count++) {
+		hsync[count] = BLANK_LEVEL;
+	}
+
+	for (count = V_H; count < (V_H + 10); count++) {
 		hsync[count] = BLANK_LEVEL;
 	}
 
