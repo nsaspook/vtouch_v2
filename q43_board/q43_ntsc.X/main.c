@@ -104,6 +104,7 @@ void main(void)
 
 	StartTimer(TMR_DIS, 500);
 
+	TMR6_Stop(); // disable software timers to stop scan-line jitter
 	while (true) {
 		// Add your application code
 		//				rxtx_handler();

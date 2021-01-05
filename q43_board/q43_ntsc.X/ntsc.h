@@ -26,19 +26,19 @@ extern "C" {
 #define VIDEO_LEVEL	2 // PORTB bit 1
 #define HOZ_LEVEL	4 // PORTB bit 2
 
-#define DMA_B		461	// timing adjustment of H sync pulses for 63.2us
+#define DMA_B		466	// timing adjustment of H sync pulses for 63.2us
 #define V_BUF_SIZ	512	// data buffer array size
-#define S_COUNT		253	// scanlines 
-#define H_SYNC		3	// number of H sync lines
-#define H_COUNT		7	// post H sync scanlines
+#define S_COUNT		240	// scanlines 
+#define H_SYNC		1	// number of H sync lines
+#define H_COUNT		22	// post H sync scanlines
 
-#define S_END		40	// H scan pulse	
+#define S_END		37	// H scan pulse	
 #define B_START		48	// H front-porch
 #define V_START		48	// Video start
 #define V_END		400	// Video end
 #define V_H		DMA_B/2
 
-#define V_DOTS		100	// scanline video dot position
+#define V_DOTS		160	// scanline video dot position
 
 	enum s_mode_t {
 		sync0, sync1, sync2, sync3, sync_error

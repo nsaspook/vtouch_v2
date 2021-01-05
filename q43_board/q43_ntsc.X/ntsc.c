@@ -48,11 +48,11 @@ void ntsc_init(void)
 		vsync[count] = BLANK_LEVEL;
 		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
-		if (!(count % 8)) { // add a bit of default texture
+		if ((count % 8)) { // add a bit of default texture
 			if (count > V_DOTS)
 				vsync[count] += VIDEO_LEVEL; // set bit 1 of PORTB
 		} else {
-			if ((count % 8)) { // add a bit of default texture
+			if (!(count % 8)) { // add a bit of default texture
 				if (count > V_DOTS)
 					vbuffer[count] += VIDEO_LEVEL; // set bit 1 of PORTB
 			}
@@ -69,7 +69,7 @@ void ntsc_init(void)
 	}
 
 	for (count = V_H; count < (V_H + 10); count++) {
-		hsync[count] = BLANK_LEVEL;
+//		hsync[count] = BLANK_LEVEL; // double speed H pulses
 	}
 
 	// default scan mode to all lines
@@ -190,6 +190,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	/*
 	 * re-trigger the state machine for a new scanline
 	 */
-	DMA5_StopTransfer();
+//	DMA5_StopTransfer();
 	DMA5_StartTransfer();
 }

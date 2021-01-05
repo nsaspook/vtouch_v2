@@ -60,7 +60,6 @@
 #include "dma6.h"
 #include "uart1.h"
 #include "spi1.h"
-#include "clkref.h"
 
 
 

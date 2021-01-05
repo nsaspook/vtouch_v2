@@ -60,7 +60,6 @@ void SYSTEM_Initialize(void)
     TMR5_Initialize();
     UART1_Initialize();
     SPI1_Initialize();
-    CLKREF_Initialize();
     SystemArbiter_Initialize();
 }
 
