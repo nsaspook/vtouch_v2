@@ -24,13 +24,12 @@ extern "C" {
 #define BLANK_LEVEL	1 // PORTB bit 0 set
 #define BLACK_LEVEL	1 // "
 #define VIDEO_LEVEL	2 // PORTB bit 1
-#define HOZ_LEVEL	4 // PORTB bit 2
-
-#define DMA_B		466	// timing adjustment of H sync pulses for 63.2us
+	
+#define DMA_B		473	// timing adjustment of H sync pulses for 63.2us
 #define V_BUF_SIZ	512	// data buffer array size
-#define S_COUNT		240	// scanlines 
-#define H_SYNC		1	// number of H sync lines
-#define H_COUNT		22	// post H sync scanlines
+#define S_COUNT		247	// scanlines 
+#define H_SYNC		3	// number of H sync lines
+#define H_COUNT		12	// post H sync scanlines
 
 #define S_END		37	// H scan pulse	
 #define B_START		48	// H front-porch

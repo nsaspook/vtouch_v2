@@ -28,7 +28,6 @@ void ntsc_init(void)
 	DMAnDSZ = DMAnSSZ;
 	DMAnCON0bits.EN = 1;
 
-
 	/*
 	 * setup the static V, H and video patterns for DMA transfer engine to PORTB
 	 */
@@ -69,7 +68,7 @@ void ntsc_init(void)
 	}
 
 	for (count = V_H; count < (V_H + 10); count++) {
-//		hsync[count] = BLANK_LEVEL; // double speed H pulses
+		hsync[count] = BLANK_LEVEL; // double speed H pulses
 	}
 
 	// default scan mode to all lines
