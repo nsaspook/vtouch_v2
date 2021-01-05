@@ -17,14 +17,14 @@ extern "C" {
 #include <stdbool.h>
 #include "mcc_generated_files/dma5.h"
 #include "mcc_generated_files/pin_manager.h"
-	
+
 #define DMA_M		0x04	// DMA modules number
 
-#define SYNC_LEVEL	0
+#define SYNC_LEVEL	0 // clear all PORTB bits
 #define BLANK_LEVEL	1 // PORTB bit 0 set
 #define BLACK_LEVEL	1 // "
 #define VIDEO_LEVEL	2 // PORTB bit 1
-	
+
 #define DMA_B		473	// timing adjustment of H sync pulses for 63.2us
 #define V_BUF_SIZ	512	// data buffer array size
 #define S_COUNT		247	// scanlines 
@@ -34,10 +34,9 @@ extern "C" {
 #define S_END		37	// H scan pulse	
 #define B_START		48	// H front-porch
 #define V_START		48	// Video start
+#define V_DOTS		160	// scanline video dot position
 #define V_END		400	// Video end
 #define V_H		DMA_B/2
-
-#define V_DOTS		160	// scanline video dot position
 
 	enum s_mode_t {
 		sync0, sync1, sync2, sync3, sync_error

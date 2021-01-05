@@ -17,8 +17,9 @@ void ntsc_init(void)
 {
 	uint16_t count = 0;
 
+	DMA5_StopTransfer();
 	vbuf_ptr = vsync;
-	SLRCONB = 0xff;
+	SLRCONB = 0xff; // reduce PORTB slewrate
 	DMA5_SetDMAPriority(0);
 	DMA5_SetDCNTIInterruptHandler(vcnts);
 	DMASELECT = DMA_M;
@@ -77,7 +78,6 @@ void ntsc_init(void)
 	/*
 	 * kickstart the DMA engine
 	 */
-	DMA5_StopTransfer();
 	DMA5_StartTransfer();
 }
 
@@ -189,6 +189,5 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	/*
 	 * re-trigger the state machine for a new scanline
 	 */
-//	DMA5_StopTransfer();
 	DMA5_StartTransfer();
 }
