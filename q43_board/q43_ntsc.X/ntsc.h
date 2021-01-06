@@ -48,7 +48,7 @@ extern "C" {
 	extern volatile uint8_t vbuffer[V_BUF_SIZ], *vbuf_ptr;
 	extern volatile uint32_t vcounts;
 	extern volatile uint8_t vfcounts, scan_line;
-	extern volatile bool ntsc_vid, ntsc_flip;
+	extern volatile bool ntsc_vid, ntsc_flip, task_hold;
 	extern volatile enum s_mode_t s_mode;
 
 	void ntsc_init(void);

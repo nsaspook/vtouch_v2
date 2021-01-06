@@ -108,7 +108,6 @@ void vcntd(void) // each timer 4 interrupt
 	TMR4_Stop();
 	task_hold = true;
 	while (task_hold) {
-
 	};
 	IO_RB4_Toggle();
 }

@@ -95,6 +95,11 @@ void main(void)
 	while (true) {
 		// Add your application code
 		BLED_Toggle();
+		task_hold = true; // set the idle ISR hold flag
+		while (task_hold) { // wait until idle ISR return flag is cleared to reduce CPU/IO usage during DMA
+		};
+		scan_line++; // back from idle ISR 
+		ntsc_flip = !ntsc_flip;
 	}
 }
 
@@ -104,8 +109,6 @@ void main(void)
 void led_flash(void)
 {
 	LED2_Toggle();
-	ntsc_flip = !ntsc_flip;
-	//	scan_line++;
 }
 /**
  End of File
