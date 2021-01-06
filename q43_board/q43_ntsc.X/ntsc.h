@@ -17,6 +17,7 @@ extern "C" {
 #include <stdbool.h>
 #include "mcc_generated_files/dma5.h"
 #include "mcc_generated_files/pin_manager.h"
+#include "mcc_generated_files/tmr4.h"
 
 #define DMA_M		0x04	// DMA modules number
 

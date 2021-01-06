@@ -2,7 +2,7 @@
 
 volatile uint32_t vcounts = 0;
 volatile uint8_t vfcounts = 0, scan_line = 0;
-volatile bool ntsc_vid = true, ntsc_flip = false;
+volatile bool ntsc_vid = true, ntsc_flip = false, task_hold = true;
 
 volatile enum s_mode_t s_mode;
 volatile uint8_t vbuffer[V_BUF_SIZ], *vbuf_ptr;
@@ -17,6 +17,19 @@ void ntsc_init(void)
 {
 	uint16_t count = 0;
 
+	/*
+	 * Interrupt driven task manager
+	 * after the H sync pulse there are V syncs with no video
+	 * main-line code runs for the duration of one timer 4 interrupt period
+	 * ~200us for testing, then goes back to idle
+	 * until re-triggered the next H sync cycle
+	 */
+	TMR4_Stop();
+	TMR4_SetInterruptHandler(vcntd);
+
+	/*
+	 * DMA hardware registers data setup
+	 */
 	DMA5_StopTransfer();
 	vbuf_ptr = vsync;
 	SLRCONB = 0xff; // reduce PORTB slewrate
@@ -79,14 +92,25 @@ void ntsc_init(void)
 	 * kickstart the DMA engine
 	 */
 	DMA5_StartTransfer();
+	TMR4_StartTimer();
 }
 
 /*
- * routine not used
+ * low priority idle task for timer 4 ISR
+ * waits checking task_hold until its false (set to false in DMA state machine)
+ * this task is interruptible from all high pri interrupts and control returns after high pri processing
+ * when it exits the hold loop, program flow returns to main for application processing
+ * until another timer 4 interrupt returns program flow to here.
  */
-void vcntd(void) // each DMA transfer interrupt
+void vcntd(void) // each timer 4 interrupt
 {
-	vcounts++;
+	IO_RB4_Toggle();
+	TMR4_Stop();
+	task_hold = true;
+	while (task_hold) {
+
+	};
+	IO_RB4_Toggle();
 }
 
 /*
@@ -98,7 +122,6 @@ void vcntd(void) // each DMA transfer interrupt
 void vcnts(void) // each scan line interrupt, 262 total for scan lines and V sync
 {
 	vfcounts++;
-	IO_RB4_Toggle();
 
 	switch (s_mode) {
 	case sync0: // H sync and video, one line
@@ -148,6 +171,11 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
 			IO_RB1_SetDigitalInput(); // turn-off video bits
+			/*
+			 * trigger main task processing using the task manager
+			 */
+			task_hold = false; // clear idle routine run flag
+			TMR4_StartTimer(); // run in main for timer 4 interrupt period then back to idle
 		}
 		break;
 	case sync3: // H sync and no video

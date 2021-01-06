@@ -47,6 +47,7 @@
 #include <stdbool.h>
 #include "mcc_generated_files/mcc.h"
 #include "mcc_generated_files/tmr5.h"
+#include "mcc_generated_files/tmr4.h"
 #include "qconfig.h"
 #include "vtouch.h"
 #include "vtouch_build.h"
@@ -57,34 +58,18 @@
 volatile uint16_t tickCount[TMR_COUNT];
 char buffer[256];
 
-void rxtx_handler(void);
 void led_flash(void);
 
 /*
- * main program loop processing
- */
-void rxtx_handler(void) // timer & serial data transform functions are handled here
-{
-	if (TimerDone(TMR_DIS)) {
-		BLED_Toggle();
-		sprintf(buffer, "%lu,%u    ", vcounts++, vfcounts);
-		eaDogM_WriteStringAtPos(3, 0, buffer);
-		sprintf(buffer, "%NTSC      ");
-		eaDogM_WriteStringAtPos(0, 0, buffer);
-		StartTimer(TMR_DIS, 500);
-	}
-}
-
-/*
-			 Main application
+ *			 Main application
  */
 void main(void)
 {
 
 	// Initialize the device
 	SYSTEM_Initialize();
+	TMR4_Stop();
 	TMR5_SetInterruptHandler(led_flash);
-	ntsc_init();
 
 	// Enable high priority global interrupts
 	INTERRUPT_GlobalInterruptHighEnable();
@@ -105,9 +90,11 @@ void main(void)
 	StartTimer(TMR_DIS, 500);
 
 	TMR6_Stop(); // disable software timers to stop scan-line jitter
+	ntsc_init();
+
 	while (true) {
 		// Add your application code
-		//				rxtx_handler();
+		BLED_Toggle();
 	}
 }
 
@@ -118,7 +105,7 @@ void led_flash(void)
 {
 	LED2_Toggle();
 	ntsc_flip = !ntsc_flip;
-	scan_line++;
+	//	scan_line++;
 }
 /**
  End of File
