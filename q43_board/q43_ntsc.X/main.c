@@ -94,7 +94,7 @@ void main(void)
 
 	while (true) {
 		// Add your application code
-		BLED_Toggle();
+		BLED_Toggle();  // application code blink LED
 		task_hold = true; // set the idle ISR hold flag
 		while (task_hold) { // wait until idle ISR return flag is cleared to reduce CPU/IO usage during DMA
 		};
@@ -108,7 +108,7 @@ void main(void)
  */
 void led_flash(void)
 {
-	LED2_Toggle();
+	LED2_Toggle(); // ISR code blink LED
 }
 /**
  End of File
