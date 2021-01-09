@@ -31,6 +31,7 @@ extern "C" {
 #define S_COUNT		247	// scanlines 
 #define H_SYNC		3	// number of H sync lines
 #define H_COUNT		12	// post H sync scanlines
+#define B_COUNT		S_COUNT-40	// bottom blank scanlines
 
 #define S_END		37	// H scan pulse	
 #define B_START		48	// H front-porch
@@ -39,8 +40,11 @@ extern "C" {
 #define V_END		400	// Video end
 #define V_H		DMA_B/2
 
+#define TASK_S1		250
+#define TASK_S2		120
+
 	enum s_mode_t {
-		sync0, sync1, sync2, sync3, sync_error
+		sync0, sync1, syncB, sync2, sync3, sync_error
 	};
 
 	extern uint8_t vsync[V_BUF_SIZ];

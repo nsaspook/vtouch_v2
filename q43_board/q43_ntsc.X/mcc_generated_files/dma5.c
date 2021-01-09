@@ -63,8 +63,8 @@ void DMA5_Initialize(void)
     DMASELECT = 0x04;
     //Source Address : vsync
     DMAnSSA = &vsync;
-    //Destination Address : &PORTB
-    DMAnDSA= &PORTB;
+    //Destination Address : &LATB
+    DMAnDSA= &LATB;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
     DMAnCON1 = 0x02;
     //Source Message Size : 31

@@ -36,7 +36,12 @@
 
 const char *build_date = __DATE__;
 const char *build_time = __TIME__;
-const char build_version[] = "V0.06 47Q43 NTSC";
+const char build_version[] = "V0.08 47Q43 NTSC";
+
+/*
+ * 0.07	change output SFR to LATB from PORTB, the same on pic18 for writes
+ * 0.08 add more blank scans for processing
+ */
 
 #ifdef	__cplusplus
 extern "C" {

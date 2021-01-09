@@ -124,15 +124,20 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 
 	switch (s_mode) {
 	case sync0: // H sync and video, one line
-		if (vfcounts >= S_COUNT) { // 243
-			vfcounts = 0;
-			s_mode = sync2;
+		if (vfcounts >= B_COUNT) {
+			s_mode = syncB;
 			DMASELECT = DMA_M;
 			DMAnCON0bits.EN = 0;
-			DMAnSSA = (volatile uint24_t) & hsync;
+			DMAnSSA = (volatile uint24_t) vbuf_ptr;
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
+			/*
+			 * trigger main task processing using the task manager
+			 */
+			task_hold = false; // clear idle routine run flag
+			TMR4_Period8BitSet(TASK_S1);
+			TMR4_StartTimer(); // run in main for timer 4 interrupt period then back to idle
 		} else {
 			if (vfcounts == scan_line) {
 				IO_RB1_SetDigitalOutput();
@@ -142,6 +147,29 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		}
 		break;
 	case sync1: // H sync and video, all lines
+		if (vfcounts >= B_COUNT) {
+			s_mode = syncB;
+			DMASELECT = DMA_M;
+			DMAnCON0bits.EN = 0;
+			DMAnSSA = (volatile uint24_t) vbuf_ptr;
+			DMAnSSZ = DMA_B;
+			DMAnDSZ = DMAnSSZ;
+			DMAnCON0bits.EN = 1;			
+			/*
+			 * trigger main task processing using the task manager
+			 */
+			task_hold = false; // clear idle routine run flag
+			TMR4_Period8BitSet(TASK_S1);
+			TMR4_StartTimer(); // run in main for timer 4 interrupt period then back to idle
+		} else {
+			if (ntsc_vid) {
+				IO_RB1_SetDigitalOutput();
+			} else {
+				IO_RB1_SetDigitalInput();
+			}
+		}
+		break;
+	case syncB: // H sync and video, bottom blank
 		if (vfcounts >= S_COUNT) {
 			vfcounts = 0;
 			s_mode = sync2;
@@ -151,12 +179,9 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
+			IO_RB1_SetDigitalInput();
 		} else {
-			if (ntsc_vid) {
-				IO_RB1_SetDigitalOutput();
-			} else {
-				IO_RB1_SetDigitalInput();
-			}
+			IO_RB1_SetDigitalInput();
 		}
 		break;
 	case sync2: // V sync and no video
@@ -174,6 +199,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			 * trigger main task processing using the task manager
 			 */
 			task_hold = false; // clear idle routine run flag
+			TMR4_Period8BitSet(TASK_S2);
 			TMR4_StartTimer(); // run in main for timer 4 interrupt period then back to idle
 		}
 		break;
