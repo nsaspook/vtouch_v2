@@ -99,7 +99,7 @@ void main(void)
 		while (task_hold) { // wait until idle ISR return flag is cleared to reduce CPU/IO usage during DMA
 		};
 		scan_line++; // back from idle ISR 
-		ntsc_flip = !ntsc_flip;
+//		ntsc_flip = !ntsc_flip;
 	}
 }
 
