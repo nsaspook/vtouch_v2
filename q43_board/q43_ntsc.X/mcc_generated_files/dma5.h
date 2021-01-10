@@ -52,7 +52,7 @@
 */
 #include <stdint.h>
 
-uint8_t vsync[512];
+uint8_t vsync[256];
 
 /**
  * @brief Initializes the DMA5 module

@@ -27,13 +27,24 @@ void ntsc_init(void)
 	TMR4_Stop();
 	TMR4_SetInterruptHandler(vcntd);
 
+	// This function is dependant on the PR1WAY CONFIG bit
+	PRLOCK = 0x55;
+	PRLOCK = 0xAA;
+	PRLOCKbits.PRLOCKED = 0;
+	ISRPR = 2;
+	DMA5PR = 2;
+	MAINPR = 3;
+	PRLOCK = 0x55;
+	PRLOCK = 0xAA;
+	PRLOCKbits.PRLOCKED = 1;
+
 	/*
 	 * DMA hardware registers data setup
 	 */
 	DMA5_StopTransfer();
 	vbuf_ptr = vsync;
 	SLRCONB = 0xff; // reduce PORTB slewrate
-	DMA5_SetDMAPriority(0);
+	//	DMA5_SetDMAPriority(1);
 	DMA5_SetDCNTIInterruptHandler(vcnts);
 	DMASELECT = DMA_M;
 	DMAnCON0bits.EN = 0;
@@ -154,7 +165,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSA = (volatile uint24_t) vbuf_ptr;
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
-			DMAnCON0bits.EN = 1;			
+			DMAnCON0bits.EN = 1;
 			/*
 			 * trigger main task processing using the task manager
 			 */
