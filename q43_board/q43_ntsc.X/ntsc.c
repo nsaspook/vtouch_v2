@@ -27,11 +27,14 @@ void ntsc_init(void)
 	TMR4_Stop();
 	TMR4_SetInterruptHandler(vcntd);
 
+	/*
+	 * setup system arbiter to share memory
+	 */
 	// This function is dependant on the PR1WAY CONFIG bit
 	PRLOCK = 0x55;
 	PRLOCK = 0xAA;
 	PRLOCKbits.PRLOCKED = 0;
-	ISRPR = 2;
+	ISRPR = 1;
 	DMA5PR = 2;
 	MAINPR = 3;
 	PRLOCK = 0x55;
@@ -44,7 +47,6 @@ void ntsc_init(void)
 	DMA5_StopTransfer();
 	vbuf_ptr = vsync;
 	SLRCONB = 0xff; // reduce PORTB slewrate
-	//	DMA5_SetDMAPriority(1);
 	DMA5_SetDCNTIInterruptHandler(vcnts);
 	DMASELECT = DMA_M;
 	DMAnCON0bits.EN = 0;
@@ -54,7 +56,7 @@ void ntsc_init(void)
 	DMAnCON0bits.EN = 1;
 
 	/*
-	 * setup the static V, H and video patterns for DMA transfer engine to PORTB
+	 * setup the static V, H and video patterns for DMA transfer engine to LATB
 	 */
 	for (count = 0; count < B_START; count++) {
 		vsync[count] = SYNC_LEVEL;
@@ -74,11 +76,11 @@ void ntsc_init(void)
 		hsync[count] = SYNC_LEVEL;
 		if ((count % 8)) { // add a bit of default texture
 			if (count > V_DOTS)
-				vsync[count] += VIDEO_LEVEL; // set bit 1 of PORTB
+				vsync[count] += VIDEO_LEVEL; // set bit 1 of LATB
 		} else {
 			if (!(count % 8)) { // add a bit of default texture
 				if (count > V_DOTS)
-					vbuffer[count] += VIDEO_LEVEL; // set bit 1 of PORTB
+					vbuffer[count] += VIDEO_LEVEL; // set bit 1 of LATB
 			}
 		}
 	}
