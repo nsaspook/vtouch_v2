@@ -117,12 +117,12 @@ void ntsc_init(void)
  */
 void vcntd(void) // each timer 4 interrupt
 {
-	IO_RB4_Toggle();
+	S_SET_Toggle();
 	TMR4_Stop();
 	task_hold = true;
 	while (task_hold) {
 	};
-	IO_RB4_Toggle();
+	S_SET_Toggle();
 }
 
 /*
@@ -145,6 +145,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
+			IO_RB1_SetDigitalInput(); // turn-off video bits
 			/*
 			 * trigger main task processing using the task manager
 			 */
@@ -168,6 +169,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
+			IO_RB1_SetDigitalInput(); // turn-off video bits
 			/*
 			 * trigger main task processing using the task manager
 			 */
@@ -192,9 +194,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
-			IO_RB1_SetDigitalInput();
-		} else {
-			IO_RB1_SetDigitalInput();
 		}
 		break;
 	case sync2: // V sync and no video
