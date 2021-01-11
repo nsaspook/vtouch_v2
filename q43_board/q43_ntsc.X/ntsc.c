@@ -28,7 +28,7 @@ void ntsc_init(void)
 	TMR4_SetInterruptHandler(vcntd);
 
 	/*
-	 * setup system arbiter to share memory
+	 * setup system arbiter to share memory with DMA process
 	 */
 	// This function is dependant on the PR1WAY CONFIG bit
 	PRLOCK = 0x55;
