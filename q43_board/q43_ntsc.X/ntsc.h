@@ -40,10 +40,14 @@ extern "C" {
 #define V_END		200	// Video end : 400
 #define V_H		DMA_B/2
 
-#define TASK_S1		90
+#define TASK_S1		85
 #define TASK_S2		30
-	
+
 #define SL_V_OFF	0XFE
+#define SL_V1		0b11111100
+#define SL_V2		0b11111010
+#define SL_V3		0b11110110
+#define SL_V4		0b11101110
 
 	enum s_mode_t {
 		sync0, sync1, syncB, sync2, sync3, sync_error
