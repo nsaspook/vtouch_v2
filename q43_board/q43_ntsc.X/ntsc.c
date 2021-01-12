@@ -75,11 +75,11 @@ void ntsc_init(void)
 		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 		if ((count % 8)) { // add a bit of default texture
-			if (count > V_DOTS)
+			if (count > SL_DOTS)
 				vsync[count] += VIDEO_LEVEL; // set bit 1 of LATB
 		} else {
 			if (!(count % 8)) { // add a bit of default texture
-				if (count > V_DOTS)
+				if (count > SL_DOTS)
 					vbuffer[count] += VIDEO_LEVEL; // set bit 1 of LATB
 			}
 		}
@@ -145,7 +145,8 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
-			IO_RB1_SetDigitalInput(); // turn-off video bits
+			//			IO_RB1_SetDigitalInput(); // turn-off video bits
+			TRISB = SL_V_OFF;
 			/*
 			 * trigger main task processing using the task manager
 			 */
@@ -156,7 +157,8 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			if (vfcounts == scan_line) {
 				IO_RB1_SetDigitalOutput();
 			} else {
-				IO_RB1_SetDigitalInput();
+				//				IO_RB1_SetDigitalInput();
+				TRISB = SL_V_OFF; // turn-off all video bits
 			}
 		}
 		break;
@@ -169,7 +171,8 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
-			IO_RB1_SetDigitalInput(); // turn-off video bits
+			//			IO_RB1_SetDigitalInput(); // turn-off video bits
+			TRISB = SL_V_OFF; // turn-off all video bits
 			/*
 			 * trigger main task processing using the task manager
 			 */
@@ -180,7 +183,8 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			if (ntsc_vid) {
 				IO_RB1_SetDigitalOutput();
 			} else {
-				IO_RB1_SetDigitalInput();
+				//IO_RB1_SetDigitalInput();
+				TRISB = SL_V_OFF; // turn-off all video bits
 			}
 		}
 		break;
@@ -206,7 +210,8 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
 			DMAnCON0bits.EN = 1;
-			IO_RB1_SetDigitalInput(); // turn-off video bits
+			//IO_RB1_SetDigitalInput(); // turn-off video bits
+			TRISB = SL_V_OFF; // turn-off all video bits
 			/*
 			 * trigger main task processing using the task manager
 			 */
@@ -247,7 +252,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		DMAnSSZ = DMA_B;
 		DMAnDSZ = DMAnSSZ;
 		DMAnCON0bits.EN = 1;
-		IO_RB1_SetDigitalOutput(); // video bits, on
+		IO_RB1_SetDigitalOutput(); // video bit1 , on
 		break;
 	}
 

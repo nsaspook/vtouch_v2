@@ -35,13 +35,15 @@ extern "C" {
 
 #define S_END		16	// H scan pulse	: 37
 #define B_START		24	// H front-porch : 48
+#define SL_DOTS		80	// scanline video dot position : 160
 #define V_START		24	// Video start : 48
-#define V_DOTS		80	// scanline video dot position : 160
 #define V_END		200	// Video end : 400
 #define V_H		DMA_B/2
 
 #define TASK_S1		90
 #define TASK_S2		30
+	
+#define SL_V_OFF	0XFE
 
 	enum s_mode_t {
 		sync0, sync1, syncB, sync2, sync3, sync_error
