@@ -77,11 +77,13 @@ void ntsc_init(void)
 		hsync[count] = SYNC_LEVEL;
 		if ((count % 8)) { // add a bit of default texture
 			if (count > SL_DOTS)
-				vsync[count] += VIDEO_LEVEL; // set bit 1 of LATB
+				vsync[count] += VIDEO_LEVEL; // set bit 1
 		} else {
 			if (!(count % 8)) { // add a bit of default texture
-				if (count > SL_DOTS)
-					vbuffer[count] += VIDEO_LEVEL; // set bit 1 of LATB
+				if (count > SL_DOTS) {
+					vbuffer[count] += VIDEO_LEVEL; // set bit 1
+					vsync[count] += (VIDEO_LEVEL << 1); // set bit 2 
+				}
 			}
 		}
 	}
@@ -135,6 +137,7 @@ void vcntd(void) // each timer 4 interrupt
 void vcnts(void) // each scan line interrupt, 262 total for scan lines and V sync
 {
 	vfcounts++;
+	vml = SL_V2;
 
 	switch (s_mode) {
 	case sync0: // H sync and video, one line
