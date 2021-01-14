@@ -5,7 +5,7 @@ volatile uint8_t vfcounts = 0, scan_line = 0, vml = SL_V1;
 volatile bool ntsc_vid = true, ntsc_flip = false, task_hold = true;
 
 volatile enum s_mode_t s_mode;
-volatile uint8_t vsyncu[V_BUF_SIZ]={0}, vbuffer[V_BUF_SIZ], *vbuf_ptr;
+volatile uint8_t vsyncu[V_BUF_SIZ] = {0}, *vbuf_ptr;
 
 void vcntd(void);
 void vcnts(void);
@@ -16,6 +16,7 @@ void vcnts(void);
 void ntsc_init(void)
 {
 	uint16_t count = 0;
+	uint8_t char_c = 0;
 
 	/*
 	 * Interrupt driven task manager
@@ -62,41 +63,34 @@ void ntsc_init(void)
 	for (count = 0; count < B_START; count++) {
 		vsync[count] = SYNC_LEVEL;
 		vsyncu[count] = SYNC_LEVEL;
-		vbuffer[count] = SYNC_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
 	for (count = S_END; count < B_START; count++) {
 		vsync[count] = BLANK_LEVEL;
 		vsyncu[count] = BLANK_LEVEL;
-		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
 	for (count = V_START; count < V_END; count++) {
-		vsync[count] = BLANK_LEVEL;
-		vsyncu[count] = BLANK_LEVEL;
-		vbuffer[count] = BLANK_LEVEL;
+		vsync[count] |= BLANK_LEVEL;
+		vsyncu[count] |= BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 		if ((count % 8)) { // add a bit of default texture
-			if (count > SL_DOTS)
-				vsync[count] += VIDEO_LEVEL; // set bit 1
+			//			if (count > SL_DOTS)
+			//vsync[count] += VIDEO_LEVEL; // set bit 1
 		} else {
 			if (!(count % 8)) { // add a bit of default texture
 				if (count > SL_DOTS) {
-					vbuffer[count] += VIDEO_LEVEL; // set bit 1
-					vsync[count] += (VIDEO_LEVEL << 1); // set bit 2 
-					//					vsyncu[count] += (VIDEO_LEVEL << 1); // set bit 2 
+					//					vsync[count] += (VIDEO_LEVEL << 1); // set bit 2 
+					ntsc_font(((char_c++)&0xf) + 16, count);
 				}
 			}
 		}
-		if (count > SL_DOTS)
-			vsync[count] += (VIDEO_LEVEL << 2); // set bit 3 
 	}
 	for (count = V_END; count < (V_BUF_SIZ - 1); count++) {
 		vsync[count] = BLANK_LEVEL;
 		vsyncu[count] = BLANK_LEVEL;
-		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
@@ -116,6 +110,17 @@ void ntsc_init(void)
 	 */
 	DMA5_StartTransfer();
 	TMR4_StartTimer();
+}
+
+void ntsc_font(uint8_t chr, uint8_t count)
+{
+	uint8_t cbits, i;
+
+	for (i = 0; i < 8; i++) {
+		cbits = fontv[(chr * 8) + i];
+		vsync[count + i] += (cbits >> 3)&0x1e;
+		vsyncu[count + i] += (cbits << 1)&0x1e;
+	}
 }
 
 /*
@@ -148,9 +153,9 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 	vfcounts++;
 	x = vfcounts & 0x7;
 	if (x > 3) {
-		vbuf_ptr = vsyncu;
+		DMAnSSA = (volatile uint24_t) vsyncu;
 	} else {
-		vbuf_ptr = vsync;
+		DMAnSSA = (volatile uint24_t) vsync;
 	}
 	x = x & 0x3;
 

@@ -18,6 +18,7 @@ extern "C" {
 #include "mcc_generated_files/dma5.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "mcc_generated_files/tmr4.h"
+#include "font_basic.h"
 
 #define DMA_M		0x04	// DMA modules number
 
@@ -26,7 +27,7 @@ extern "C" {
 #define BLACK_LEVEL	1 // "
 #define VIDEO_LEVEL	2 // PORTB bit 1
 
-#define DMA_B		240	// timing adjustment of H sync pulses for 63.2us: 473
+#define DMA_B		230	// timing adjustment of H sync pulses for 63.2us: 473
 #define V_BUF_SIZ	256	// data buffer array size : 256
 #define S_COUNT		247	// scanlines 
 #define H_SYNC		3	// number of H sync lines
@@ -55,13 +56,15 @@ extern "C" {
 
 	extern uint8_t vsync[V_BUF_SIZ];
 	extern uint8_t hsync[V_BUF_SIZ];
-	extern volatile uint8_t vbuffer[V_BUF_SIZ], *vbuf_ptr;
+	extern volatile uint8_t *vbuf_ptr;
 	extern volatile uint32_t vcounts;
 	extern volatile uint8_t vfcounts, scan_line;
 	extern volatile bool ntsc_vid, ntsc_flip, task_hold;
 	extern volatile enum s_mode_t s_mode;
 
 	void ntsc_init(void);
+	
+	void ntsc_font(uint8_t, uint8_t);
 
 	/*
 	 * NTSC state machine options

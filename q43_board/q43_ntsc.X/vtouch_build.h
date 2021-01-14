@@ -36,7 +36,7 @@
 
 const char *build_date = __DATE__;
 const char *build_time = __TIME__;
-const char build_version[] = "V0.10 47Q43 NTSC";
+const char build_version[] = "V0.12 47Q43 NTSC";
 
 /*
  * 0.07	change output SFR to LATB from PORTB, the same on pic18 for writes
