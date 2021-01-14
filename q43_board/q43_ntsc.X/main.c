@@ -95,7 +95,7 @@ void main(void)
 	while (true) {
 		// Add your application code
 		BLED_Toggle(); // application code blink LED
-		scan_line++; // back from idle ISR 
+//		scan_line++; // back from idle ISR 
 		if (scan_line>210)
 			scan_line=5;
 //		ntsc_flip = !ntsc_flip;

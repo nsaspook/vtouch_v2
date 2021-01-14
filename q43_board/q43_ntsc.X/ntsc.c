@@ -5,7 +5,7 @@ volatile uint8_t vfcounts = 0, scan_line = 0, vml = SL_V1;
 volatile bool ntsc_vid = true, ntsc_flip = false, task_hold = true;
 
 volatile enum s_mode_t s_mode;
-volatile uint8_t vbuffer[V_BUF_SIZ], *vbuf_ptr;
+volatile uint8_t vsyncu[V_BUF_SIZ]={0}, vbuffer[V_BUF_SIZ], *vbuf_ptr;
 
 void vcntd(void);
 void vcnts(void);
@@ -61,18 +61,21 @@ void ntsc_init(void)
 	 */
 	for (count = 0; count < B_START; count++) {
 		vsync[count] = SYNC_LEVEL;
+		vsyncu[count] = SYNC_LEVEL;
 		vbuffer[count] = SYNC_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
 	for (count = S_END; count < B_START; count++) {
 		vsync[count] = BLANK_LEVEL;
+		vsyncu[count] = BLANK_LEVEL;
 		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
 
 	for (count = V_START; count < V_END; count++) {
 		vsync[count] = BLANK_LEVEL;
+		vsyncu[count] = BLANK_LEVEL;
 		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 		if ((count % 8)) { // add a bit of default texture
@@ -83,12 +86,16 @@ void ntsc_init(void)
 				if (count > SL_DOTS) {
 					vbuffer[count] += VIDEO_LEVEL; // set bit 1
 					vsync[count] += (VIDEO_LEVEL << 1); // set bit 2 
+					//					vsyncu[count] += (VIDEO_LEVEL << 1); // set bit 2 
 				}
 			}
 		}
+		if (count > SL_DOTS)
+			vsync[count] += (VIDEO_LEVEL << 2); // set bit 3 
 	}
 	for (count = V_END; count < (V_BUF_SIZ - 1); count++) {
 		vsync[count] = BLANK_LEVEL;
+		vsyncu[count] = BLANK_LEVEL;
 		vbuffer[count] = BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 	}
@@ -136,8 +143,34 @@ void vcntd(void) // each timer 4 interrupt
  */
 void vcnts(void) // each scan line interrupt, 262 total for scan lines and V sync
 {
+	uint8_t x;
+
 	vfcounts++;
-	vml = SL_V2;
+	x = vfcounts & 0x7;
+	if (x > 3) {
+		vbuf_ptr = vsyncu;
+	} else {
+		vbuf_ptr = vsync;
+	}
+	x = x & 0x3;
+
+	switch (x) {
+	case 0:
+		vml = SL_V1;
+		break;
+	case 1:
+		vml = SL_V2;
+		break;
+	case 2:
+		vml = SL_V3;
+		break;
+	case 3:
+		vml = SL_V4;
+		break;
+	default:
+		vml = SL_V1;
+		break;
+	}
 
 	switch (s_mode) {
 	case sync0: // H sync and video, one line
@@ -230,7 +263,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			DMASELECT = DMA_M;
 			DMAnCON0bits.EN = 0;
 			if (ntsc_flip) {
-				vbuf_ptr = vbuffer;
+				vbuf_ptr = vsync;
 			} else {
 				vbuf_ptr = vsync;
 			}
