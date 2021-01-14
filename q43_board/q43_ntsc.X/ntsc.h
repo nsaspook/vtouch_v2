@@ -49,6 +49,7 @@ extern "C" {
 #define SL_V2		0b11111010
 #define SL_V3		0b11110110
 #define SL_V4		0b11101110
+#define SL_MASK		0b00011110
 
 	enum s_mode_t {
 		sync0, sync1, syncB, sync2, sync3, sync_error

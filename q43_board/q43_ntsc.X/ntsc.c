@@ -9,6 +9,32 @@ volatile uint8_t vsyncu[V_BUF_SIZ] = {0}, *vbuf_ptr;
 
 void vcntd(void);
 void vcnts(void);
+uint8_t reverse_bit8(uint8_t);
+
+uint8_t reverse_bit8(uint8_t x)
+{
+	return x;
+	x = ((uint8_t) ((x & (uint8_t) 0x55) << 1)) | ((uint8_t) ((x & (uint8_t) 0xAA) >> 1));
+	x = ((uint8_t) ((x & (uint8_t) 0x33) << 2)) | ((uint8_t) ((x & (uint8_t) 0xCC) >> 2));
+	return(uint8_t) (x << 4) | (uint8_t) (x >> 4);
+}
+
+uint16_t reverse_bit16(uint16_t x)
+{
+	x = ((x & 0x5555) << 1) | ((x & 0xAAAA) >> 1);
+	x = ((x & 0x3333) << 2) | ((x & 0xCCCC) >> 2);
+	x = ((x & 0x0F0F) << 4) | ((x & 0xF0F0) >> 4);
+	return(x << 8) | (x >> 8);
+}
+
+uint32_t reverse_bit32(uint32_t x)
+{
+	x = ((x & 0x55555555) << 1) | ((x & 0xAAAAAAAA) >> 1);
+	x = ((x & 0x33333333) << 2) | ((x & 0xCCCCCCCC) >> 2);
+	x = ((x & 0x0F0F0F0F) << 4) | ((x & 0xF0F0F0F0) >> 4);
+	x = ((x & 0x00FF00FF) << 8) | ((x & 0xFF00FF00) >> 8);
+	return(x << 16) | (x >> 16);
+}
 
 /*
  * setup the data formats and hardware for the DMA engine
@@ -72,19 +98,16 @@ void ntsc_init(void)
 		hsync[count] = SYNC_LEVEL;
 	}
 
+	char_c = 8;
 	for (count = V_START; count < V_END; count++) {
 		vsync[count] |= BLANK_LEVEL;
 		vsyncu[count] |= BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
-		if ((count % 8)) { // add a bit of default texture
-			//			if (count > SL_DOTS)
-			//vsync[count] += VIDEO_LEVEL; // set bit 1
-		} else {
-			if (!(count % 8)) { // add a bit of default texture
-				if (count > SL_DOTS) {
-					//					vsync[count] += (VIDEO_LEVEL << 1); // set bit 2 
-					ntsc_font(((char_c++)&0xf) + 16, count);
-				}
+
+		if (count > SL_DOTS) {
+			if (char_c++ > 7) {
+				ntsc_font(15, count);
+				char_c = 0;
 			}
 		}
 	}
@@ -117,9 +140,12 @@ void ntsc_font(uint8_t chr, uint8_t count)
 	uint8_t cbits, i;
 
 	for (i = 0; i < 8; i++) {
-		cbits = fontv[(chr * 8) + i];
-		vsync[count + i] += (cbits >> 3)&0x1e;
-		vsyncu[count + i] += (cbits << 1)&0x1e;
+		cbits = fontv[(chr * 8) + (i)];
+		//		cbits = 0b11110000;
+		vsyncu[count + i] += ((cbits & 0xf0) >> 3);
+		vsync[count + i] += ((cbits & 0x0f) << 1);
+		//		vsyncu[count + i] += 0b00000010;
+		//		vsync[count + i] += 0b00000000;
 	}
 }
 
@@ -150,32 +176,49 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 {
 	uint8_t x;
 
-	vfcounts++;
-	x = vfcounts & 0x7;
-	if (x > 3) {
-		DMAnSSA = (volatile uint24_t) vsyncu;
-	} else {
-		DMAnSSA = (volatile uint24_t) vsync;
-	}
-	x = x & 0x3;
 
-	switch (x) {
-	case 0:
-		vml = SL_V1;
-		break;
-	case 1:
-		vml = SL_V2;
-		break;
-	case 2:
-		vml = SL_V3;
-		break;
-	case 3:
-		vml = SL_V4;
-		break;
-	default:
-		vml = SL_V1;
-		break;
+	x = vfcounts & 0x7; // mask bits
+	if (x > 3) {
+		DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
+		switch (x) {
+		case 4:
+			vml = SL_V4;
+			break;
+		case 5:
+			vml = SL_V3;
+			break;
+		case 6:
+			vml = SL_V2;
+			break;
+		case 7:
+			vml = SL_V1;
+			break;
+		default:
+			vml = SL_V_OFF;
+			break;
+		}
+	} else {
+		DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
+		switch (x) {
+		case 0:
+			vml = SL_V4;
+			break;
+		case 1:
+			vml = SL_V3;
+			break;
+		case 2:
+			vml = SL_V2;
+			break;
+		case 3:
+			vml = SL_V1;
+			break;
+		default:
+			vml = SL_V_OFF;
+			break;
+		}
 	}
+	vfcounts++;
+
 
 	switch (s_mode) {
 	case sync0: // H sync and video, one line
