@@ -98,7 +98,6 @@ void main(void)
 //		scan_line++; // back from idle ISR 
 		if (scan_line>210)
 			scan_line=5;
-//		ntsc_flip = !ntsc_flip;
 	}
 }
 

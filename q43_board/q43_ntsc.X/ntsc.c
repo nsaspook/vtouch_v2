@@ -2,7 +2,7 @@
 
 volatile uint32_t vcounts = 0;
 volatile uint8_t vfcounts = 0, scan_line = 0, vml = SL_V1;
-volatile bool ntsc_vid = true, ntsc_flip = false, task_hold = true;
+volatile bool ntsc_vid = true, task_hold = true;
 
 volatile enum s_mode_t s_mode;
 volatile uint8_t vsyncu[V_BUF_SIZ] = {0}, *vbuf_ptr;
@@ -11,29 +11,14 @@ void vcntd(void);
 void vcnts(void);
 uint8_t reverse_bit8(uint8_t);
 
+/*
+ * lsb to msb to display chars correctly
+ */
 uint8_t reverse_bit8(uint8_t x)
 {
-	return x;
 	x = ((uint8_t) ((x & (uint8_t) 0x55) << 1)) | ((uint8_t) ((x & (uint8_t) 0xAA) >> 1));
 	x = ((uint8_t) ((x & (uint8_t) 0x33) << 2)) | ((uint8_t) ((x & (uint8_t) 0xCC) >> 2));
 	return(uint8_t) (x << 4) | (uint8_t) (x >> 4);
-}
-
-uint16_t reverse_bit16(uint16_t x)
-{
-	x = ((x & 0x5555) << 1) | ((x & 0xAAAA) >> 1);
-	x = ((x & 0x3333) << 2) | ((x & 0xCCCC) >> 2);
-	x = ((x & 0x0F0F) << 4) | ((x & 0xF0F0) >> 4);
-	return(x << 8) | (x >> 8);
-}
-
-uint32_t reverse_bit32(uint32_t x)
-{
-	x = ((x & 0x55555555) << 1) | ((x & 0xAAAAAAAA) >> 1);
-	x = ((x & 0x33333333) << 2) | ((x & 0xCCCCCCCC) >> 2);
-	x = ((x & 0x0F0F0F0F) << 4) | ((x & 0xF0F0F0F0) >> 4);
-	x = ((x & 0x00FF00FF) << 8) | ((x & 0xFF00FF00) >> 8);
-	return(x << 16) | (x >> 16);
 }
 
 /*
@@ -42,7 +27,7 @@ uint32_t reverse_bit32(uint32_t x)
 void ntsc_init(void)
 {
 	uint16_t count = 0;
-	uint8_t char_c = 0;
+	uint8_t char_c = 0, char_n = 0;
 
 	/*
 	 * Interrupt driven task manager
@@ -98,15 +83,15 @@ void ntsc_init(void)
 		hsync[count] = SYNC_LEVEL;
 	}
 
-	char_c = 8;
+	char_c = 7;
 	for (count = V_START; count < V_END; count++) {
 		vsync[count] |= BLANK_LEVEL;
 		vsyncu[count] |= BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 
 		if (count > SL_DOTS) {
-			if (char_c++ > 7) {
-				ntsc_font(15, count);
+			if (++char_c > 6) {
+				ntsc_font(20 + char_n++, count);
 				char_c = 0;
 			}
 		}
@@ -135,17 +120,20 @@ void ntsc_init(void)
 	TMR4_StartTimer();
 }
 
-void ntsc_font(uint8_t chr, uint8_t count)
+/*
+ * Encode the font 'rom' into display memory format
+ * two 256 byte banks for each display line, split into 4 bits per bank
+ * It's possible to optimize 7 bits for one bank per display line but
+ * I'm using port B so need to share the pic programmer lines on 6 and 7
+ */
+void ntsc_font(uint16_t chr, uint16_t count)
 {
 	uint8_t cbits, i;
 
 	for (i = 0; i < 8; i++) {
-		cbits = fontv[(chr * 8) + (i)];
-		//		cbits = 0b11110000;
-		vsyncu[count + i] += ((cbits & 0xf0) >> 3);
-		vsync[count + i] += ((cbits & 0x0f) << 1);
-		//		vsyncu[count + i] += 0b00000010;
-		//		vsync[count + i] += 0b00000000;
+		cbits = reverse_bit8(fontv[(chr * 8) + (i)]); // flip bits for proper display
+		vsync[count + i] |= ((cbits & 0xf0) >> 3) | BLANK_LEVEL; // mask and shift to upper/lower banks
+		vsyncu[count + i] |= ((cbits & 0x0f) << 1) | BLANK_LEVEL;
 	}
 }
 
@@ -171,46 +159,55 @@ void vcntd(void) // each timer 4 interrupt
  * ISR triggered by the completed DMA transfer of the data buffer to PORTB
  * Generates the required HV sync for fake-progressive NTSC scanning on most modern TV sets
  * http://people.ece.cornell.edu/land/courses/ece5760/video/gvworks/GV%27s%20works%20%20NTSC%20demystified%20-%20B&W%20Video%20and%20Sync%20-%20Part%201.htm
+ * 
+ * some code is duplicated for scanline timing adjustments to match for different code paths.
  */
 void vcnts(void) // each scan line interrupt, 262 total for scan lines and V sync
 {
 	uint8_t x;
 
-
-	x = vfcounts & 0x7; // mask bits
+	x = vfcounts & 0x7; // mask bits for port B bit line and bank selection
 	if (x > 3) {
-		DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
+		DMASELECT = DMA_M;
 		switch (x) {
 		case 4:
 			vml = SL_V4;
+			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
 			break;
 		case 5:
 			vml = SL_V3;
+			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
 			break;
 		case 6:
 			vml = SL_V2;
+			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
 			break;
 		case 7:
 			vml = SL_V1;
+			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
 			break;
 		default:
 			vml = SL_V_OFF;
 			break;
 		}
 	} else {
-		DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
+		DMASELECT = DMA_M;
 		switch (x) {
 		case 0:
 			vml = SL_V4;
+			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
 			break;
 		case 1:
 			vml = SL_V3;
+			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
 			break;
 		case 2:
 			vml = SL_V2;
+			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
 			break;
 		case 3:
 			vml = SL_V1;
+			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
 			break;
 		default:
 			vml = SL_V_OFF;
@@ -269,7 +266,7 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			}
 		}
 		break;
-	case syncB: // H sync and video, bottom blank
+	case syncB: // H sync and no video, bottom blank
 		if (vfcounts >= S_COUNT) {
 			vfcounts = 0;
 			s_mode = sync2;
@@ -310,11 +307,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 			}
 			DMASELECT = DMA_M;
 			DMAnCON0bits.EN = 0;
-			if (ntsc_flip) {
-				vbuf_ptr = vsync;
-			} else {
-				vbuf_ptr = vsync;
-			}
 			DMAnSSA = (volatile uint24_t) vbuf_ptr;
 			DMAnSSZ = DMA_B;
 			DMAnDSZ = DMAnSSZ;
@@ -326,7 +318,6 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		s_mode = sync1;
 		DMASELECT = DMA_M;
 		DMAnCON0bits.EN = 0;
-		ntsc_flip = false;
 		vbuf_ptr = vsync;
 		DMAnSSA = (volatile uint24_t) vbuf_ptr;
 		DMAnSSZ = DMA_B;

@@ -27,14 +27,14 @@ extern "C" {
 #define BLACK_LEVEL	1 // "
 #define VIDEO_LEVEL	2 // PORTB bit 1
 
-#define DMA_B		230	// timing adjustment of H sync pulses for 63.2us: 473
+#define DMA_B		228	// timing adjustment of H sync pulses for 63.2us: 473
 #define V_BUF_SIZ	256	// data buffer array size : 256
 #define S_COUNT		247	// scanlines 
 #define H_SYNC		3	// number of H sync lines
 #define H_COUNT		12	// post H sync scanlines
 #define B_COUNT		S_COUNT-30	// bottom blank scanlines
 
-#define S_END		16	// H scan pulse	: 37
+#define S_END		17	// H scan pulse	: 37
 #define B_START		24	// H front-porch : 48
 #define SL_DOTS		80	// scanline video dot position : 160
 #define V_START		24	// Video start : 48
@@ -44,7 +44,7 @@ extern "C" {
 #define TASK_S1		85
 #define TASK_S2		30
 
-#define SL_V_OFF	0XFE
+#define SL_V_OFF	0b11111110
 #define SL_V1		0b11111100
 #define SL_V2		0b11111010
 #define SL_V3		0b11110110
@@ -64,8 +64,8 @@ extern "C" {
 	extern volatile enum s_mode_t s_mode;
 
 	void ntsc_init(void);
-	
-	void ntsc_font(uint8_t, uint8_t);
+
+	void ntsc_font(uint16_t, uint16_t);
 
 	/*
 	 * NTSC state machine options
