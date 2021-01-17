@@ -87,7 +87,7 @@ void init_display(void)
 	DMA1CON1bits.SMODE = 1;
 	DMA1CON1bits.SMR = 0;
 	DMA1CON1bits.SSTP = 1;
-	DMA1SSA = (uint32_t) & ring_buf1;
+	DMA1SSA = (uint24_t) & ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
 #ifdef DEBUG_DISP2
@@ -107,7 +107,7 @@ void init_port_dma(void)
 	DMA2CON1bits.SSTP = 1;
 	DMA2CON0bits.SIRQEN = 0;
 	DMA2DSA = 0x3DEA; // U1TXB SERIAL PORT 1
-	DMA2SSA = (uint32_t) port_data;
+	DMA2SSA = (uint24_t) port_data;
 	DMA2CON0bits.DGO = 0;
 }
 
@@ -147,7 +147,7 @@ static void send_lcd_cmd_long(const uint8_t cmd)
  */
 void eaDogM_WriteString(char *strPtr)
 {
-	uint8_t len = strlen(strPtr);
+	uint8_t len = (uint8_t) strlen(strPtr);
 
 #ifdef DEBUG_DISP1
 	DLED1 = true;
@@ -156,7 +156,7 @@ void eaDogM_WriteString(char *strPtr)
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
-	if (len > max_strlen){
+	if (len > max_strlen) {
 		strPtr[max_strlen] = 0; // buffer overflow check
 		len = max_strlen;
 	}
