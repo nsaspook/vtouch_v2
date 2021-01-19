@@ -71,7 +71,7 @@ void ntsc_init(void)
 	/*
 	 * setup the static V, H and video patterns for DMA transfer engine to LATB
 	 */
-	for (count = 0; count < B_START; count++) {
+	for (count = 0; count < S_END; count++) {
 		vsync[count] = SYNC_LEVEL;
 		vsyncu[count] = SYNC_LEVEL;
 		hsync[count] = SYNC_LEVEL;
