@@ -7,6 +7,11 @@ volatile bool ntsc_vid = true, task_hold = true;
 volatile enum s_mode_t s_mode;
 volatile uint8_t vsyncu[V_BUF_SIZ] = {0}, *vbuf_ptr;
 
+/*
+ * function variable that should not be optimized
+ */
+volatile uint8_t x;
+
 void vcntd(void);
 void vcnts(void);
 uint8_t reverse_bit8(uint8_t);
@@ -71,7 +76,7 @@ void ntsc_init(void)
 	/*
 	 * setup the static V, H and video patterns for DMA transfer engine to LATB
 	 */
-	for (count = 0; count < S_END; count++) {
+	for (count = 0; count < B_START; count++) {
 		vsync[count] = SYNC_LEVEL;
 		vsyncu[count] = SYNC_LEVEL;
 		hsync[count] = SYNC_LEVEL;
@@ -89,7 +94,7 @@ void ntsc_init(void)
 		vsyncu[count] |= BLANK_LEVEL;
 		hsync[count] = SYNC_LEVEL;
 
-		if (count > SL_DOTS) {
+		if (count >= SL_DOTS) {
 			if (++char_c > 6) {
 				ntsc_font(20 + char_n++, count);
 				char_c = 0;
@@ -132,6 +137,8 @@ void ntsc_font(uint16_t chr, uint16_t count)
 
 	for (i = 0; i < 8; i++) {
 		cbits = reverse_bit8(fontv[(chr * 8) + (i)]); // flip bits for proper display
+		vsync[count + i] = 0;
+		vsyncu[count + i] = 0;
 		vsync[count + i] |= ((cbits & 0xf0) >> 3) | BLANK_LEVEL; // mask and shift to upper/lower banks
 		vsyncu[count + i] |= ((cbits & 0x0f) << 1) | BLANK_LEVEL;
 	}
@@ -164,7 +171,6 @@ void vcntd(void) // each timer 4 interrupt
  */
 void vcnts(void) // each scan line interrupt, 262 total for scan lines and V sync
 {
-	uint8_t x;
 
 	x = vfcounts & 0x7; // mask bits for port B bit line and bank selection
 	if (x > 3) {

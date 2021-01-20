@@ -27,18 +27,18 @@ extern "C" {
 #define BLACK_LEVEL	1 // "
 #define VIDEO_LEVEL	2 // PORTB bit 1
 
-#define DMA_B		300	// timing adjustment of H sync pulses for 63.2us: 473
+#define DMA_B		240	// timing adjustment of H sync pulses for 63.2us: 473
 #define V_BUF_SIZ	256	// data buffer array size : 256
 #define S_COUNT		247	// scanlines 
 #define H_SYNC		3	// number of H sync lines
 #define H_COUNT		12	// post H sync scanlines
 #define B_COUNT		S_COUNT-30	// bottom blank scanlines
 
-#define S_END		37	// H scan pulse	: 37
-#define B_START		48	// H front-porch : 48
-#define SL_DOTS		160	// scanline video dot position : 160
-#define V_START		48	// Video start : 48
-#define V_END		400	// Video end : 400
+#define S_END		17	// H scan pulse	: 37
+#define B_START		24	// H front-porch : 48
+#define SL_DOTS		80	// scanline video dot position : 160
+#define V_START		B_START	// Video start : 48
+#define V_END		200	// Video end : 400
 #define V_H		DMA_B/2
 
 #define TASK_S1		85

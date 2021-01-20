@@ -65,6 +65,7 @@ void led_flash(void);
  */
 void main(void)
 {
+	uint8_t xlines = 0;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -95,9 +96,16 @@ void main(void)
 	while (true) {
 		// Add your application code
 		BLED_Toggle(); // application code blink LED
-//		scan_line++; // back from idle ISR 
-		if (scan_line>210)
-			scan_line=5;
+		//				scan_line++; // back from idle ISR 
+		xlines++;
+		if (scan_line > 210) {
+			scan_line = 5;
+		}
+		if (xlines > 210) {
+			xlines = 5;
+			ntsc_font(0, SL_DOTS-1);
+			ntsc_font(0, SL_DOTS-1 + 8);
+		}
 	}
 }
 
