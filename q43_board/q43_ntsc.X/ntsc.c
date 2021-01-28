@@ -179,18 +179,22 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		case 4:
 			vml = SL_V4;
 			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		case 5:
 			vml = SL_V3;
 			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		case 6:
 			vml = SL_V2;
 			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		case 7:
 			vml = SL_V1;
 			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		default:
 			vml = SL_V_OFF;
@@ -202,18 +206,22 @@ void vcnts(void) // each scan line interrupt, 262 total for scan lines and V syn
 		case 0:
 			vml = SL_V4;
 			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		case 1:
 			vml = SL_V3;
 			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		case 2:
 			vml = SL_V2;
 			DMAnSSA = (volatile uint24_t) vsync; // lower bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		case 3:
 			vml = SL_V1;
 			DMAnSSA = (volatile uint24_t) vsyncu; // upper bitmap
+			NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 			break;
 		default:
 			vml = SL_V_OFF;

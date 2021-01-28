@@ -103,8 +103,8 @@ void main(void)
 		}
 		if (xlines > 210) {
 			xlines = 5;
-			ntsc_font(0, SL_DOTS-1);
-			ntsc_font(0, SL_DOTS-1 + 8);
+			ntsc_font(1, SL_DOTS-1);
+			ntsc_font(1, SL_DOTS-1 + 8);
 		}
 	}
 }

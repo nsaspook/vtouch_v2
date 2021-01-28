@@ -36,7 +36,7 @@ extern "C" {
 
 #define S_END		17	// H scan pulse	: 37
 #define B_START		24	// H front-porch : 48
-#define SL_DOTS		80	// scanline video dot position : 160
+#define SL_DOTS		48	// scanline video dot position : 160
 #define V_START		B_START	// Video start : 48
 #define V_END		200	// Video end : 400
 #define V_H		DMA_B/2
