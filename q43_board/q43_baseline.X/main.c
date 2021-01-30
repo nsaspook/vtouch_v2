@@ -13,7 +13,7 @@
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
 	Device            :  PIC18F47Q43
 	Driver Version    :  2.00
  */
@@ -456,8 +456,9 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 			if (i == CMD_SIZE_SS_V80) { // see if we should send it
 				i = 0; // reset i to start of cmd
 				uchar = 0; /* check for proper touch format */
-				if ((elobuf[0]& 0xc0) == 0xc0) /* binary start code? */
+				if ((elobuf[0]& 0xc0) == 0xc0) /* binary start code? */ {
 					uchar = true;
+				}
 
 				S.CATCH = false; // reset buffering now
 

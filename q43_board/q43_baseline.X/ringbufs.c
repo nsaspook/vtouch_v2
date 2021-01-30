@@ -19,7 +19,7 @@ uint8_t modulo_dec(const uint8_t value, const uint8_t modulus)
 	return my_value;
 }
 
-void ringBufS_init(volatile ringBufS_t *_this)
+void *ringBufS_init(volatile ringBufS_t *_this)
 {
 	/*****
 	  The following clears:
@@ -29,7 +29,7 @@ void ringBufS_init(volatile ringBufS_t *_this)
 	    -> count
 	  and sets head = tail
 	 ***/
-	memset((void*) _this, 0, sizeof(*_this));
+	return memset((void*) _this, 0, sizeof(*_this));
 }
 
 int8_t ringBufS_empty(ringBufS_t *_this)
@@ -82,13 +82,16 @@ void ringBufS_put_dma_cpy(ringBufS_t *_this, const char *ptr, const uint8_t len)
 	}
 }
 
-void ringBufS_flush(ringBufS_t *_this, const bool clearBuffer)
+void *ringBufS_flush(ringBufS_t *_this, const bool clearBuffer)
 {
+	void *tmp = NULL;
+
 	_this->count = 0;
 	_this->head = 0;
 	_this->tail = 0;
 	if (clearBuffer) {
-		memset(_this->buf, 0, sizeof(_this->buf));
+		tmp = memset(_this->buf, 0, sizeof(_this->buf));
 	}
+	return tmp;
 }
 

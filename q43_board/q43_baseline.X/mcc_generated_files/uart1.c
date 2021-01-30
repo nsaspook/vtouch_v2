@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for UART1.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
         Device            :  PIC18F47Q43
-        Driver Version    :  2.4.0
+        Driver Version    :  2.4.1
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.30 and above
-        MPLAB             :  MPLAB X 5.40
+        Compiler          :  XC8 2.31 and above
+        MPLAB             :  MPLAB X 5.45
 */
 
 /*
@@ -183,7 +183,6 @@ uint8_t UART1_Read(void)
     
     while(0 == uart1RxCount)
     {
-        CLRWDT();
     }
 
     uart1RxLastError = uart1RxStatusBuffer[uart1RxTail];
@@ -204,7 +203,6 @@ void UART1_Write(uint8_t txData)
 {
     while(0 == uart1TxBufferRemaining)
     {
-        CLRWDT();
     }
 
     if(0 == PIE4bits.U1TXIE)

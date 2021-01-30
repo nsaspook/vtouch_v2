@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for DMA2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.6
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
         Device            :  PIC18F47Q43
         Driver Version    :  1.0.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 2.30 and above
-        MPLAB 	          :  MPLAB X 5.40
+        Compiler          :  XC8 2.31 and above
+        MPLAB 	          :  MPLAB X 5.45
 */
 
 /*
