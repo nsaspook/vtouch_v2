@@ -144,7 +144,7 @@ typedef struct disp_state_t {
  * E779866	SecureTouch  use DELL_E215546 setting
  * E215546	IntelliTouch use DELL_E215546 setting
  * NEW REPLACEMENT MONITORS 1990L 1991L
- * E328700	IntelliTouch use DELL_E215546 setting
+ * E328700	Black with HDMI, IntelliTouch use DELL_E215546 setting
  * E328497	IntelliTouch use DELL_E215546 setting
  * E483757	new remote OSD
  * E005277	power brick
@@ -164,7 +164,7 @@ enum oem_type {
 };
 
 disp_state_t S = {
-	.ts_type = OEM_LCD,
+	.ts_type = OEM_CRT,
 	.TSTATUS = true,
 };
 
