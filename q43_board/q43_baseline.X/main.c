@@ -13,7 +13,7 @@
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.7
 	Device            :  PIC18F47Q43
 	Driver Version    :  2.00
  */
@@ -215,7 +215,7 @@ const uint8_t elocodes_s_e[] = {// same as above ex (0x25) enter point mode
 
 // SmartSet codes 0 command, 1 status, 2 low byte, 3 high byte, etc ...
 const uint8_t elocodes_e0[] = {
-	'U', 'B', 0x03, 0x8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // smartset timing and spacing setup
+	'U', 'B', 0x05, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // smartset timing and spacing setup
 };
 const uint8_t elocodes_e1[] = {
 	'U', 'E', '1', '4', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -242,7 +242,7 @@ const uint8_t elocodes_e7[] = {// dummy packet
 uint16_t touch_corner1 = 0;
 bool touch_corner_timed = false;
 
-uint8_t idx = 0;
+uint8_t idx = 0, id_data[8];
 volatile uint16_t tickCount[TMR_COUNT];
 char buffer[256];
 
@@ -250,6 +250,7 @@ void putc1(uint8_t);
 void putc2(uint8_t);
 void rxtx_handler(void);
 void led_flash(void);
+bool check_id(void);
 
 void touch_cam(void)
 {
@@ -335,6 +336,9 @@ void setup_lcd_smartset(void)
 {
 	elopacketout(elocodes_e3, ELO_SEQ, 0); // reset to default smartset
 	wdtdelay(700000); // wait for LCD touch controller reset
+	if (check_id()) {
+
+	};
 	elopacketout(elocodes_e0, ELO_SEQ, 0); // set touch packet spacing and timing
 	elopacketout(elocodes_e2, ELO_SEQ, 0); // nvram save
 
@@ -562,6 +566,21 @@ uint8_t Test_Screen(void)
 	return S.DATA2;
 }
 
+bool check_id(void)
+{
+	uint8_t i = 0;
+
+	elopacketout(elocodes_e5, ELO_SEQ, 0); // query touch screen ID
+	wdtdelay(70000); // wait for LCD touch controller ID response
+	while (UART2_DataReady) { // is data from screen COMM2
+		id_data[i] = UART2_Read();
+		if (++i >= 8) {
+			return true;
+		}
+	}
+	return false;
+}
+
 /*
 			 Main application
  */
@@ -637,6 +656,9 @@ void main(void)
 	if (emulat_type == VIISION) {
 		elocmdout_v80(&elocodes[7][0]); // reset;
 		wdtdelay(700000); // wait for LCD touch controller reset
+		if (check_id()) {
+
+		};
 		/* program the display */
 		elocmdout_v80(&elocodes[0][0]);
 		elocmdout_v80(&elocodes[4][0]);
@@ -760,7 +782,7 @@ void main(void)
 
 	if (emulat_type == VIISION) {
 		/* Loop forever */
-		while (true) { // busy loop BSG style
+		while (true) { // busy loop
 			rxtx_handler();
 			if (j++ >= BLINK_RATE_V80) { // delay a bit ok
 				BLED_Toggle(); // flash external led
