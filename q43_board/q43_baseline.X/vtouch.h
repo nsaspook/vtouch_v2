@@ -52,10 +52,11 @@ typedef signed long long int64_t;
 #define BUF_SIZE    64
 #define	CAP_SIZE    256
 
-#define	CMD_SIZE    2
+#define	CMD_SIZE	2
 #define	CMD_OVERFLOW	CMD_SIZE*12
-#define ELO_SIZE    12
-#define ELO_SEQ     10
+#define ELO_TS_TYPE	2
+#define ELO_SIZE	12
+#define ELO_SEQ		10
 #define ELO_REV_H	4096
 #define ELO_SS_H_SCALE	0.483
 #define ELO_SS_V_SCALE	0.380

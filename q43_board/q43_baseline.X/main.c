@@ -132,7 +132,7 @@ typedef struct statustype {
 
 typedef struct disp_state_t {
 	bool CATCH, TOUCH, UNTOUCH, LCD_OK,
-	SCREEN_INIT,
+	SCREEN_INIT, SCREEN_COMM,
 	CATCH46, CATCH37, TSTATUS,
 	DATA1, DATA2, CAM;
 	uint16_t c_idx, ts_type;
@@ -166,6 +166,8 @@ enum oem_type {
 disp_state_t S = {
 	.ts_type = OEM_CRT,
 	.TSTATUS = true,
+	.SCREEN_COMM = false,
+	.SCREEN_INIT = false,
 };
 
 enum screen_type_t {
@@ -233,7 +235,7 @@ const uint8_t elocodes_e5[] = {
 	'U', 'i', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 const uint8_t elocodes_e6[] = {
-	'U', 'g', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+	'U', 'M', 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 const uint8_t elocodes_e7[] = {// dummy packet
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -250,7 +252,9 @@ void putc1(uint8_t);
 void putc2(uint8_t);
 void rxtx_handler(void);
 void led_flash(void);
-bool check_id(void);
+bool check_id(uint8_t);
+void setup_lcd_smartset_e220(void);
+void setup_lcd_smartset_v80(void);
 
 void touch_cam(void)
 {
@@ -332,16 +336,56 @@ void elocmdout_v80(const uint8_t * elostr)
 	wdtdelay(50000); // wait for LCD controller reset
 }
 
-void setup_lcd_smartset(void)
+bool check_id(uint8_t ts_type)
+{
+	uint8_t i = 0;
+
+	while (UART2_DataReady) {
+		uint8_t dump;
+		dump = UART2_Read();
+	} // dump data from screen COMM2
+
+	elopacketout(elocodes_e5, ELO_SEQ, 0); // query touch screen ID
+	wdtdelay(70000); // wait for LCD touch controller ID response
+	while (UART2_DataReady) { // is data from screen COMM2
+		id_data[i] = UART2_Read();
+		if (++i >= 8) {
+			S.SCREEN_COMM = true;
+			if (id_data[1] == ts_type) { // code = 2 for IntelliTouch touchscreen type
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+	S.SCREEN_COMM = false;
+	return false;
+}
+
+void setup_lcd_smartset_e220(void)
 {
 	elopacketout(elocodes_e3, ELO_SEQ, 0); // reset to default smartset
 	wdtdelay(700000); // wait for LCD touch controller reset
-	if (check_id()) {
-
+	if (check_id(ELO_TS_TYPE)) {
+		elopacketout(elocodes_e6, ELO_SEQ, 0); // set touch modes
+		S.SCREEN_INIT = true;
 	};
 	elopacketout(elocodes_e0, ELO_SEQ, 0); // set touch packet spacing and timing
 	elopacketout(elocodes_e2, ELO_SEQ, 0); // nvram save
+}
 
+void setup_lcd_smartset_v80(void)
+{
+	elocmdout_v80(&elocodes[7][0]); // reset;
+	wdtdelay(700000); // wait for LCD touch controller reset
+	if (check_id(ELO_TS_TYPE)) {
+		S.SCREEN_INIT = true;
+	};
+	/* program the display */
+	elocmdout_v80(&elocodes[0][0]);
+	elocmdout_v80(&elocodes[4][0]);
+	elocmdout_v80(&elocodes[5][0]);
+	elocmdout_v80(&elocodes[6][0]);
 }
 
 void putc1(uint8_t c)
@@ -509,7 +553,7 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 						} while (++data_pos < HOST_CMD_SIZE_V80);
 					}
 					S.LCD_OK = true; // looks like a screen controller is connected
-					S.SCREEN_INIT = false; // command code has been received by lcd controller
+					//					S.SCREEN_INIT = false; // command code has been received by lcd controller
 					status.init_check = 0; // reset init code timer
 					BLED_LAT = 1; // connect  led ON
 
@@ -562,23 +606,8 @@ uint8_t Test_Screen(void)
 {
 	putc2(0x46);
 	wdtdelay(30000);
-	setup_lcd_smartset(); // send lcd touch controller setup codes
+	setup_lcd_smartset_e220(); // send lcd touch controller setup codes
 	return S.DATA2;
-}
-
-bool check_id(void)
-{
-	uint8_t i = 0;
-
-	elopacketout(elocodes_e5, ELO_SEQ, 0); // query touch screen ID
-	wdtdelay(70000); // wait for LCD touch controller ID response
-	while (UART2_DataReady) { // is data from screen COMM2
-		id_data[i] = UART2_Read();
-		if (++i >= 8) {
-			return true;
-		}
-	}
-	return false;
 }
 
 /*
@@ -654,23 +683,14 @@ void main(void)
 	}
 
 	if (emulat_type == VIISION) {
-		elocmdout_v80(&elocodes[7][0]); // reset;
-		wdtdelay(700000); // wait for LCD touch controller reset
-		if (check_id()) {
-
-		};
-		/* program the display */
-		elocmdout_v80(&elocodes[0][0]);
-		elocmdout_v80(&elocodes[4][0]);
-		elocmdout_v80(&elocodes[5][0]);
-		elocmdout_v80(&elocodes[6][0]);
+		setup_lcd_smartset_v80();
 	}
 
 	if (emulat_type == E220) {
 		S.DATA1 = false; // reset COMM flags.
 		S.DATA2 = false; // reset touch COMM flag
 
-		setup_lcd_smartset();
+		setup_lcd_smartset_e220();
 		/* Loop forever */
 		StartTimer(TMR_CAM, 1000);
 		while (true) {
@@ -698,7 +718,7 @@ void main(void)
 				if (AUTO_RESTART == true) { // enable auto-restarts
 					if ((status.restart_delay++ >= (uint16_t) 60) && (!S.TSTATUS)) { // try and reinit lcd after delay
 						start_delay();
-						setup_lcd_smartset(); // send lcd touch controller setup codes
+						setup_lcd_smartset_e220(); // send lcd touch controller setup codes
 						start_delay();
 						while (true) {
 						}; // lockup WDT counter to restart

@@ -309,7 +309,9 @@ void eaDogM_WriteString(char *strPtr)
 	/* reset buffer for DMA */
 	ringBufS_flush(spi_link.tx1a, false);
 	CSB_SetLow(); /* SPI select display */
-	if (strlen(strPtr) > max_strlen) strPtr[max_strlen] = 0; // buffer overflow check
+	if (strlen(strPtr) > max_strlen) {
+		strPtr[max_strlen] = 0; // buffer overflow check
+	}
 	DMA1CON0bits.EN = 0; /* disable DMA to change source count */
 	DMA1SSZ = strlen(strPtr);
 	DMA1CON0bits.EN = 1; /* enable DMA */
@@ -452,7 +454,6 @@ void clear_lcd_done(void)
 {
 	spi_link.LCD_DATA = false;
 }
-
 
 void spi_rec_done(void)
 {
