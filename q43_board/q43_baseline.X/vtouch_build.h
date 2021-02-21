@@ -36,7 +36,7 @@
 
 const char *build_date = __DATE__;
 const char *build_time = __TIME__;
-const char build_version[] = "V4.07 47Q43 Varian";
+const char build_version[] = "V4.09 47Q43 Varian";
 
 #ifdef	__cplusplus
 extern "C" {

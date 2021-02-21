@@ -53,14 +53,13 @@ void SYSTEM_Initialize(void)
     PMD_Initialize();
     PIN_MANAGER_Initialize();
     OSCILLATOR_Initialize();
-    WWDT_Initialize();
+    TMR6_Initialize();
     DMA2_Initialize();
     DMA1_Initialize();
     TMR2_Initialize();
-    TMR6_Initialize();
     TMR5_Initialize();
-    UART1_Initialize();
     UART2_Initialize();
+    UART1_Initialize();
     SPI1_Initialize();
     CLKREF_Initialize();
     SystemArbiter_Initialize();
@@ -107,50 +106,6 @@ void PMD_Initialize(void)
 }
 
 
-void WWDT_Initialize(void)
-{
-    // Initializes the WWDT to the default states configured in the MCC GUI
-    WDTCON0 = WDTCPS;
-    WDTCON1 = WDTCWS|WDTCCS;
-    
-}
-
-void WWDT_SoftEnable(void)
-{
-    // WWDT software enable. 
-    WDTCON0bits.SEN=1;
-}
-
-void WWDT_SoftDisable(void)
-{
-    // WWDT software disable.
-    WDTCON0bits.SEN=0;
-}
-
-bool WWDT_TimeOutStatusGet(void)
-{
-    // Return the status of WWDT time out reset.
-    return (PCON0bits.nRWDT);
-}
-
-bool WWDT_WindowViolationStatusGet(void)
-{
-   // Return the status of WWDT window violation reset.
-    return (PCON0bits.nWDTWV); 
-}  
-
-void WWDT_TimerClear(void)
-{
-    // Disable the interrupt,read back the WDTCON0 reg for arming, 
-    // clearing the WWDT and enable the interrupt.
-    uint8_t readBack=0;
-    
-    bool state = GIE;
-    GIE = 0;
-    readBack = WDTCON0;
-    CLRWDT();
-    GIE = state;
-}
 void SystemArbiter_Initialize(void)
 {
     // This function is dependant on the PR1WAY CONFIG bit

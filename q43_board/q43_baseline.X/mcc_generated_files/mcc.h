@@ -56,16 +56,13 @@
 #include "tmr5.h"
 #include "tmr6.h"
 #include "dma1.h"
-#include "tmr2.h"
 #include "dma2.h"
+#include "tmr2.h"
 #include "uart2.h"
 #include "uart1.h"
 #include "spi1.h"
 #include "clkref.h"
 
-#define WDTCWS  7
-#define WDTCCS  0
-#define WDTCPS  28
 
 
 /**
@@ -107,84 +104,6 @@ void OSCILLATOR_Initialize(void);
  */
 void PMD_Initialize(void);
 
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-    Initializes the WWDT to the default states configured in the
- *                  MCC GUI
- * @Example
-    WWDT_Initialize();
- */
-void WWDT_Initialize(void);
-
-
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-   Enable the WWDT by setting the SEN bit.
- * @Example
-    WWDT_SoftEnable();
- */
-void WWDT_SoftEnable(void);
-
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-   Disable the WWDT by clearing the SEN bit.
- * @Example
-    WWDT_SoftDisable();
- */
-void WWDT_SoftDisable(void);
-
-/**
- * @Param
-    none
- * @Returns
-    none
- * @Description
-   Disable the interrupt, arm the WWDT by reading back the WDTCON0 register
- * clear the WWDT and enable the interrupt.
- * @Example
-    WWDT_TimerClear();
- */
-void WWDT_TimerClear(void);
-
-/**
- * @Param
-    none
- * @Returns
-   High --> WWDT reset has not occurred. 
- * Low  --> WWDT reset has  occurred.
- * @Description
-    Returns the status of whether the WWDT reset has occurred or not.
- * @Example
-    if(WWDT_TimeOutStatusGet())
- */
-bool WWDT_TimeOutStatusGet(void);
-
-/**
- * @Param
-    none
- * @Returns
-   High --> WWDT window violation reset has not occurred. 
- * Low  --> WWDT window violation reset has  occurred.
- * @Description
-    Returns the status of, whether the WWDT window violation 
- *  reset has occurred or not.
- * @Example
-    if(WWDT_WindowViolationStatusGet())
- */
-bool WWDT_WindowViolationStatusGet(void);
-      
 /**
  * @Param
     none

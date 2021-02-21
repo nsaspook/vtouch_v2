@@ -19,25 +19,25 @@
  */
 
 /*
-    (c) 2018 Microchip Technology Inc. and its subsidiaries. 
-    
-    Subject to your compliance with these terms, you may use Microchip software and any 
-    derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
-    license terms applicable to your use of third party software (including open source software) that 
+    (c) 2018 Microchip Technology Inc. and its subsidiaries.
+
+    Subject to your compliance with these terms, you may use Microchip software and any
+    derivatives exclusively with Microchip products. It is your responsibility to comply with third party
+    license terms applicable to your use of third party software (including open source software) that
     may accompany Microchip software.
-    
-    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER 
-    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY 
-    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS 
+
+    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER
+    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY
+    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS
     FOR A PARTICULAR PURPOSE.
-    
-    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
-    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
-    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP 
-    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO 
-    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL 
-    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
-    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
+
+    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE,
+    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND
+    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP
+    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO
+    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL
+    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT
+    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS
     SOFTWARE.
  */
 #pragma warning disable 520
@@ -97,7 +97,7 @@
  *
  * This application is designed for use with the
  * 47Q43 touch_board
- * 
+ *
  * HOST RS-232  5-1     uC port1
  * Female       2-2-tx
  *              3-3-rx
@@ -148,15 +148,15 @@ typedef struct disp_state_t {
  * E328497	IntelliTouch use DELL_E215546 setting
  * E483757	new remote OSD
  * E005277	power brick
- * 
+ *
  * TS_TYPE	0 Original CRT type screens
  *		1 OEM LCD screens
- * 
+ *
  * SV4 jumpers
  * 1-2 off default: DELL_E215546
  * 3-4 off default: E220/E500
  * 5-6 off default: OEM CRT
- * 
+ *
  */
 
 enum oem_type {
@@ -244,7 +244,7 @@ const uint8_t elocodes_e7[] = {// dummy packet
 uint16_t touch_corner1 = 0;
 bool touch_corner_timed = false;
 
-uint8_t idx = 0, id_data[8];
+uint8_t idx = 0, id_data[8] = {0xff, 0xff};
 volatile uint16_t tickCount[TMR_COUNT];
 char buffer[256];
 
@@ -253,6 +253,7 @@ void putc2(uint8_t);
 void rxtx_handler(void);
 void led_flash(void);
 bool check_id(uint8_t);
+void setup_lcd_smartset_other(void);
 void setup_lcd_smartset_e220(void);
 void setup_lcd_smartset_v80(void);
 
@@ -271,7 +272,7 @@ void touch_cam(void)
 	};
 
 
-	if (touch_corner1 >= MAX_CAM_TOUCH) { // we have several corner presses 
+	if (touch_corner1 >= MAX_CAM_TOUCH) { // we have several corner presses
 		S.CAM = true;
 		status.cam_time = 0;
 		touch_corner1 = 0;
@@ -352,6 +353,8 @@ bool check_id(uint8_t ts_type)
 		if (++i >= 8) {
 			S.SCREEN_COMM = true;
 			if (id_data[1] == ts_type) { // code = 2 for IntelliTouch touchscreen type
+				sprintf(buffer, "%s  ID %i    ", build_time, id_data[1]);
+				eaDogM_WriteStringAtPos(2, 0, buffer);
 				return true;
 			} else {
 				return false;
@@ -360,6 +363,18 @@ bool check_id(uint8_t ts_type)
 	}
 	S.SCREEN_COMM = false;
 	return false;
+}
+
+void setup_lcd_smartset_other(void)
+{
+	elopacketout(elocodes_e3, ELO_SEQ, 0); // reset to default smartset
+	wdtdelay(700000); // wait for LCD touch controller reset
+	if (check_id(ELO_TS_TYPE)) {
+		elopacketout(elocodes_e6, ELO_SEQ, 0); // set touch modes
+		S.SCREEN_INIT = true;
+	};
+	elopacketout(elocodes_e0, ELO_SEQ, 0); // set touch packet spacing and timing
+	elopacketout(elocodes_e2, ELO_SEQ, 0); // nvram save
 }
 
 void setup_lcd_smartset_e220(void)
@@ -674,12 +689,14 @@ void main(void)
 	eaDogM_WriteStringAtPos(0, 0, buffer);
 	sprintf(buffer, "%s ", build_date);
 	eaDogM_WriteStringAtPos(1, 0, buffer);
-	sprintf(buffer, "%s ", build_time);
+	/* display build time and boot status codes 67 34 07, WDT reset 67 24 07 */
+	sprintf(buffer, "%s B:%X %X %X", build_time, STATUS, PCON0, PCON1);
 	eaDogM_WriteStringAtPos(2, 0, buffer);
 
 	StartTimer(TMR_DIS, 500);
 
 	if (emulat_type == OTHER_MECH) {
+		setup_lcd_smartset_other();
 	}
 
 	if (emulat_type == VIISION) {
@@ -687,12 +704,14 @@ void main(void)
 	}
 
 	if (emulat_type == E220) {
+		setup_lcd_smartset_e220();
 		S.DATA1 = false; // reset COMM flags.
 		S.DATA2 = false; // reset touch COMM flag
-
-		setup_lcd_smartset_e220();
-		/* Loop forever */
 		StartTimer(TMR_CAM, 1000);
+	}
+
+	if (emulat_type == E220) {
+		/* Loop forever */
 		while (true) {
 			rxtx_handler();
 			if (j++ >= (BLINK_RATE_E220 + S.speedup)) { // delay a bit ok
@@ -715,11 +734,12 @@ void main(void)
 
 				/*		For the auto-restart switch						*/
 				//FIXME
-				if (AUTO_RESTART == true) { // enable auto-restarts
+				if (AUTO_RESTART) { // enable auto-restarts
 					if ((status.restart_delay++ >= (uint16_t) 60) && (!S.TSTATUS)) { // try and reinit lcd after delay
 						start_delay();
 						setup_lcd_smartset_e220(); // send lcd touch controller setup codes
-						start_delay();
+						sprintf(buffer, "%s  RESTART  ", build_time);
+						eaDogM_WriteStringAtPos(2, 0, buffer);
 						while (true) {
 						}; // lockup WDT counter to restart
 					} else {
