@@ -54,7 +54,7 @@ typedef signed long long int64_t;
 
 #define	CMD_SIZE	2
 #define	CMD_OVERFLOW	CMD_SIZE*12
-#define ELO_TS_TYPE	73	// return code for type of touch controller
+#define ELO_TS_TYPE	2	// return code for type of touch controller
 #define ELO_SIZE	12
 #define ELO_SEQ		10
 #define ELO_REV_H	4096
@@ -62,8 +62,6 @@ typedef signed long long int64_t;
 #define ELO_SS_V_SCALE	0.380
 #define	BLINK_RATE_E220	20000
 #define AUTO_RESTART	true
-#define SINGLE_TOUCH	false
-#define GOOD_MAX        128		// max number of chars from TS without expected frames seen
 #define MAX_CAM_TIME	5
 #define MAX_CAM_TIMEOUT	30
 #define MAX_CAM_TOUCH	5

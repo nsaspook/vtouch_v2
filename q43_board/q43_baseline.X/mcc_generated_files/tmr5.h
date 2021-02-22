@@ -60,7 +60,6 @@
 
 #endif
 
-#define TMR5_INTERRUPT_TICKER_FACTOR    100
 
 /**
   Section: TMR5 APIs
@@ -349,23 +348,6 @@ void TMR5_StartSinglePulseAcquisition(void);
 */
 uint8_t TMR5_CheckGateValueStatus(void);
 
-/**
-  @Summary
-    CallBack function.
-
-  @Description
-    This routine is called by the Interrupt Manager.
-
-  @Preconditions
-    Initialize  the TMR5 module with interrupt before calling this function.
-
-  @Param
-    None
-
-  @Returns
-    None
-*/
-void TMR5_CallBack(void);
 
 /**
   @Summary

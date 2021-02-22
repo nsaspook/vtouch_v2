@@ -132,9 +132,10 @@ typedef struct statustype {
 
 typedef struct disp_state_t {
 	bool CATCH, TOUCH, UNTOUCH, LCD_OK,
-	SCREEN_INIT, SCREEN_COMM,
+	SCREEN_INIT,
 	CATCH46, CATCH37, TSTATUS,
 	DATA1, DATA2, CAM;
+	volatile bool SCREEN_COMM;
 	uint16_t c_idx, ts_type;
 	int16_t speedup;
 } disp_state_t;
@@ -244,7 +245,7 @@ const uint8_t elocodes_e7[] = {// dummy packet
 uint16_t touch_corner1 = 0;
 bool touch_corner_timed = false;
 
-uint8_t idx = 0, id_data[8] = {0xff, 0xff};
+uint8_t idx = 0, id_data[ELO_SEQ + 1] = {0xff, 0xff, 0xff, 0xff};
 volatile uint16_t tickCount[TMR_COUNT];
 char buffer[256];
 
@@ -356,11 +357,11 @@ bool check_id(uint8_t ts_type)
 	wdtdelay(70000); // wait for LCD touch controller ID response
 	while (UART2_DataReady) { // is data from screen COMM2
 		id_data[i] = UART2_Read();
-		if (++i >= 8) {
-			sprintf(buffer, "%s TS%i ID%i    ", build_time, ts_type, id_data[1]);
+		if (++i >= ELO_SEQ) {
+			sprintf(buffer, "%s TS%i ID%i    ", build_time, ts_type, id_data[2]);
 			eaDogM_WriteStringAtPos(2, 0, buffer);
 			S.SCREEN_COMM = true;
-			if (id_data[1] == ts_type) { // code = 2 for IntelliTouch touchscreen type
+			if ((id_data[1] == 'I') && id_data[2] == ts_type) { // code = 2 for IntelliTouch touchscreen type
 				return true;
 			} else {
 				return false;
@@ -649,7 +650,7 @@ void main(void)
 	S.c_idx = 0;
 	S.speedup = 0;
 
-	// default interfaces
+	// default interface jumpers
 	/*
 	 * host expects
 	 */
@@ -676,6 +677,15 @@ void main(void)
 	} else {
 		screen_type = OTHER_SCREEN;
 		emulat_type = OTHER_MECH;
+	}
+
+	/*
+	 * touch screen ID and auto resets
+	 */
+	if (I_TYPE_GetValue()) { // SV4 pin 1
+		a_start = AUTO_RESTART; // program defined default
+	} else {
+		a_start = false;
 	}
 
 	CAM_RELAY = 0;
@@ -870,6 +880,9 @@ void main(void)
  */
 void led_flash(void)
 {
+	if (S.SCREEN_COMM == false) {
+		TMR5_WriteTimer(0xF960); // fast flashes
+	}
 	LED2_Toggle();
 }
 /**

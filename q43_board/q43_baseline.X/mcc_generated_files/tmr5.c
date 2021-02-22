@@ -72,14 +72,14 @@ void TMR5_Initialize(void)
     //GSS T5G_pin; 
     T5GATE = 0x00;
 
-    //CS FOSC/4; 
-    T5CLK = 0x01;
+    //CS MFINTOSC_31.25kHz; 
+    T5CLK = 0x06;
 
-    //TMR5H 177; 
-    TMR5H = 0xB1;
+    //TMR5H 194; 
+    TMR5H = 0xC2;
 
-    //TMR5L 224; 
-    TMR5L = 0xE0;
+    //TMR5L 247; 
+    TMR5L = 0xF7;
 
     // Clearing IF flag before enabling the interrupt.
     PIR8bits.TMR5IF = 0;
@@ -93,8 +93,8 @@ void TMR5_Initialize(void)
     // Set Default Interrupt Handler
     TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
 
-    // CKPS 1:8; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
-    T5CON = 0x31;
+    // CKPS 1:2; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
+    T5CON = 0x11;
 }
 
 void TMR5_StartTimer(void)
@@ -164,31 +164,17 @@ uint8_t TMR5_CheckGateValueStatus(void)
 
 void __interrupt(irq(TMR5),base(8)) TMR5_ISR()
 {
-    static volatile unsigned int CountCallBack = 0;
 
     // Clear the TMR5 interrupt flag
     PIR8bits.TMR5IF = 0;
     TMR5_WriteTimer(timer5ReloadVal);
 
-    // callback function - called every 100th pass
-    if (++CountCallBack >= TMR5_INTERRUPT_TICKER_FACTOR)
-    {
-        // ticker function call
-        TMR5_CallBack();
-
-        // reset ticker counter
-        CountCallBack = 0;
-    }
-}
-
-void TMR5_CallBack(void)
-{
-    // Add your custom callback code here
     if(TMR5_InterruptHandler)
     {
         TMR5_InterruptHandler();
     }
 }
+
 
 void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
     TMR5_InterruptHandler = InterruptHandler;
