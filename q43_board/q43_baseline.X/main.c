@@ -346,21 +346,29 @@ bool check_id(uint8_t ts_type)
 		dump = UART2_Read();
 	} // dump data from screen COMM2
 
+	if (AUTO_RESTART == false) {
+		sprintf(buffer, "%s SKIP ID ", build_time);
+		eaDogM_WriteStringAtPos(2, 0, buffer);
+		return true;
+	}
+
 	elopacketout(elocodes_e5, ELO_SEQ, 0); // query touch screen ID
 	wdtdelay(70000); // wait for LCD touch controller ID response
 	while (UART2_DataReady) { // is data from screen COMM2
 		id_data[i] = UART2_Read();
 		if (++i >= 8) {
+			sprintf(buffer, "%s TS%i ID%i    ", build_time, ts_type, id_data[1]);
+			eaDogM_WriteStringAtPos(2, 0, buffer);
 			S.SCREEN_COMM = true;
 			if (id_data[1] == ts_type) { // code = 2 for IntelliTouch touchscreen type
-				sprintf(buffer, "%s  ID %i    ", build_time, id_data[1]);
-				eaDogM_WriteStringAtPos(2, 0, buffer);
 				return true;
 			} else {
 				return false;
 			}
 		}
 	}
+	sprintf(buffer, "%s  NO ID   ", build_time);
+	eaDogM_WriteStringAtPos(2, 0, buffer);
 	S.SCREEN_COMM = false;
 	return false;
 }
@@ -609,9 +617,9 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 	}
 
 	if (TimerDone(TMR_DIS)) {
-		sprintf(buffer, "%i,%i,%i,%i,%i", S.ts_type, screen_type, emulat_type, status.status_count, status.resync_count);
+		sprintf(buffer, "%i,%i,%i,%i,%i ", S.ts_type, screen_type, emulat_type, status.status_count, status.resync_count);
 		eaDogM_WriteStringAtPos(3, 0, buffer);
-		sprintf(buffer, "%i,%i,%i %i ", idx, S.DATA1, S.DATA2, status.lcd_count);
+		sprintf(buffer, "%i,%i,%i,%i  ", idx, S.DATA1, S.DATA2, status.lcd_count);
 		eaDogM_WriteStringAtPos(0, 0, buffer);
 		StartTimer(TMR_DIS, 500);
 	}
@@ -630,7 +638,7 @@ uint8_t Test_Screen(void)
  */
 void main(void)
 {
-	uint8_t scaled_char;
+	uint8_t scaled_char, a_start = AUTO_RESTART;
 	float rez_scale_h = 1.0, rez_parm_h, rez_scale_v = 1.0, rez_parm_v;
 	float rez_scale_h_ss = ELO_SS_H_SCALE, rez_scale_v_ss = ELO_SS_V_SCALE;
 
@@ -734,16 +742,19 @@ void main(void)
 
 				/*		For the auto-restart switch						*/
 				//FIXME
-				if (AUTO_RESTART) { // enable auto-restarts
+				if (a_start) { // enable auto-restarts of host comms lost
 					if ((status.restart_delay++ >= (uint16_t) 60) && (!S.TSTATUS)) { // try and reinit lcd after delay
-						start_delay();
-						setup_lcd_smartset_e220(); // send lcd touch controller setup codes
-						sprintf(buffer, "%s  RESTART  ", build_time);
-						eaDogM_WriteStringAtPos(2, 0, buffer);
-						while (true) {
-						}; // lockup WDT counter to restart
+						if (S.SCREEN_INIT == false) { // try to init the screen
+							setup_lcd_smartset_e220(); // send lcd touch controller setup codes
+						}
+						if (S.SCREEN_INIT == false) { // screen is offline so reboot translator
+							sprintf(buffer, "%s  RESTART  ", build_time);
+							eaDogM_WriteStringAtPos(2, 0, buffer);
+							while (true) {
+							}; // lockup WDT counter to restart
+						}
 					} else {
-						if ((status.restart_delay >= (uint16_t) 150) && (S.TSTATUS)) { // after delay restart TS status.
+						if (S.SCREEN_INIT && (status.restart_delay >= (uint16_t) 150) && (S.TSTATUS)) { // after delay restart TS status.
 							S.TSTATUS = false; // lost comms while connected
 							status.restart_delay = 0;
 						};

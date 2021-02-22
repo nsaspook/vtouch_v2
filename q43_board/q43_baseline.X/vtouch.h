@@ -54,7 +54,7 @@ typedef signed long long int64_t;
 
 #define	CMD_SIZE	2
 #define	CMD_OVERFLOW	CMD_SIZE*12
-#define ELO_TS_TYPE	2
+#define ELO_TS_TYPE	73	// return code for type of touch controller
 #define ELO_SIZE	12
 #define ELO_SEQ		10
 #define ELO_REV_H	4096
