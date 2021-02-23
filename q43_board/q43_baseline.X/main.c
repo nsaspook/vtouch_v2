@@ -349,7 +349,7 @@ bool check_id(uint8_t ts_type)
 	} // dump data from screen COMM2
 
 	if (a_start == false) {
-		sprintf(buffer, "%s SKIP ID ", build_time);
+		sprintf(buffer, "%s SKIP ID  ", build_time);
 		eaDogM_WriteStringAtPos(2, 0, buffer);
 		return true;
 	}
@@ -367,6 +367,8 @@ bool check_id(uint8_t ts_type)
 				eaDogM_WriteStringAtPos(1, 0, buffer);
 				return true;
 			} else {
+				sprintf(buffer, "%s ID NOK ", build_date);
+				eaDogM_WriteStringAtPos(1, 0, buffer);
 				return false;
 			}
 		}
