@@ -43,6 +43,7 @@
 #pragma warning disable 520
 #pragma warning disable 1498
 
+#include <xc.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "mcc_generated_files/mcc.h"
@@ -243,7 +244,7 @@ const uint8_t elocodes_e7[] = {// dummy packet
 };
 
 uint16_t touch_corner1 = 0;
-bool touch_corner_timed = false;
+bool touch_corner_timed = false, a_start = AUTO_RESTART;
 
 uint8_t idx = 0, id_data[ELO_SEQ + 1] = {0xff, 0xff, 0xff, 0xff};
 volatile uint16_t tickCount[TMR_COUNT];
@@ -347,7 +348,7 @@ bool check_id(uint8_t ts_type)
 		dump = UART2_Read();
 	} // dump data from screen COMM2
 
-	if (AUTO_RESTART == false) {
+	if (a_start == false) {
 		sprintf(buffer, "%s SKIP ID ", build_time);
 		eaDogM_WriteStringAtPos(2, 0, buffer);
 		return true;
@@ -358,10 +359,12 @@ bool check_id(uint8_t ts_type)
 	while (UART2_DataReady) { // is data from screen COMM2
 		id_data[i] = UART2_Read();
 		if (++i >= ELO_SEQ) {
-			sprintf(buffer, "%s TS%i ID%i    ", build_time, ts_type, id_data[2]);
+			sprintf(buffer, "%s TS %x:ID %x    ", build_time, ts_type, id_data[2]);
 			eaDogM_WriteStringAtPos(2, 0, buffer);
 			S.SCREEN_COMM = true;
-			if ((id_data[1] == 'I') && id_data[2] == ts_type) { // code = 2 for IntelliTouch touchscreen type
+			if ((id_data[1] == 'I') && id_data[2] == ts_type) { // code = ASCII '2' for IntelliTouch controller type
+				sprintf(buffer, "%s ID OK ", build_date);
+				eaDogM_WriteStringAtPos(1, 0, buffer);
 				return true;
 			} else {
 				return false;
@@ -639,7 +642,7 @@ uint8_t Test_Screen(void)
  */
 void main(void)
 {
-	uint8_t scaled_char, a_start = AUTO_RESTART;
+	uint8_t scaled_char;
 	float rez_scale_h = 1.0, rez_parm_h, rez_scale_v = 1.0, rez_parm_v;
 	float rez_scale_h_ss = ELO_SS_H_SCALE, rez_scale_v_ss = ELO_SS_V_SCALE;
 
@@ -682,7 +685,7 @@ void main(void)
 	/*
 	 * touch screen ID and auto resets
 	 */
-	if (I_TYPE_GetValue()) { // SV4 pin 1
+	if (I_TYPE_GetValue()) { // SV7 pin 1
 		a_start = AUTO_RESTART; // program defined default
 	} else {
 		a_start = false;

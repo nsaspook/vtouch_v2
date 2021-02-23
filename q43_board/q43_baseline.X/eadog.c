@@ -34,56 +34,56 @@ void init_display(void)
 {
 	spi_link.tx1a = &ring_buf1;
 	ringBufS_init(spi_link.tx1a);
-
 #ifdef DEBUG_DISP2
-	DLED2 = true;
+		DLED2 = true;
 #endif
 #ifdef NHD
-	wdtdelay(350000); // > 400ms power up delay
-	send_lcd_cmd(0x46); // home cursor
-	wdtdelay(800);
-	send_lcd_cmd(0x41); // display on
-	wdtdelay(80);
-	send_lcd_cmd(0x53); // set back-light level
-	send_lcd_data(NHD_BL_LOW);
-	wdtdelay(80);
-	send_lcd_cmd(0x51); // clear screen
-	wdtdelay(800);
+		wdtdelay(350000); // > 400ms power up delay
+		send_lcd_cmd(0x46); // home cursor
+		wdtdelay(800);
+		send_lcd_cmd(0x41); // display on
+		wdtdelay(80);
+		send_lcd_cmd(0x53); // set back-light level
+		send_lcd_data(NHD_BL_LOW);
+		wdtdelay(80);
+		send_lcd_cmd(0x51); // clear screen
+		wdtdelay(800);
 
 #else
-	CSB_SetHigh();
-	wdtdelay(350000); // > 400ms power up delay
-	send_lcd_cmd_dma(0x39);
-	send_lcd_cmd_dma(0x1d);
-	send_lcd_cmd_dma(0x50);
-	send_lcd_cmd_dma(0x6c);
-	send_lcd_cmd_dma(0x76); // contrast last 4 bits
-	send_lcd_cmd_dma(0x38); // follower control
-	wdtdelay(800);
-	send_lcd_cmd_dma(0x0f);
-	send_lcd_cmd_dma(0x01); // clear
-	wdtdelay(800);
-	send_lcd_cmd_dma(0x02);
-	send_lcd_cmd_dma(0x06);
-	wdtdelay(30);
-	DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
+		CSB_SetHigh();
+		wdtdelay(350000); // > 400ms power up delay
+		send_lcd_cmd_dma(0x39);
+		send_lcd_cmd_dma(0x1d);
+		send_lcd_cmd_dma(0x50);
+		send_lcd_cmd_dma(0x6c);
+		send_lcd_cmd_dma(0x76); // contrast last 4 bits
+		send_lcd_cmd_dma(0x38); // follower control
+		wdtdelay(800);
+		send_lcd_cmd_dma(0x0f);
+		send_lcd_cmd_dma(0x01); // clear
+		wdtdelay(800);
+		send_lcd_cmd_dma(0x02);
+		send_lcd_cmd_dma(0x06);
+		wdtdelay(30);
+		DMA1_SetSourceAddress((uint24_t) spi_link.tx1a);
 #endif
-	//	SPI1INTFbits.SPI1TXUIF = 0;
-	//	DMA1CON1bits.DMODE = 0;
-	//	DMA1CON1bits.DSTP = 0;
-	//	DMA1CON1bits.SMODE = 1;
-	//	DMA1CON1bits.SMR = 0;
-	//	DMA1CON1bits.SSTP = 1;
-	//	DMA1SSA = (uint32_t) & ring_buf1;
-	//	DMA1CON0bits.DGO = 0;
-	//	SPI1INTFbits.SPI1TXUIF = 1;
+		//	SPI1INTFbits.SPI1TXUIF = 0;
+		//	DMA1CON1bits.DMODE = 0;
+		//	DMA1CON1bits.DSTP = 0;
+		//	DMA1CON1bits.SMODE = 1;
+		//	DMA1CON1bits.SMR = 0;
+		//	DMA1CON1bits.SSTP = 1;
+		//	DMA1SSA = (uint32_t) & ring_buf1;
+		//	DMA1CON0bits.DGO = 0;
+		//	SPI1INTFbits.SPI1TXUIF = 1;
 #ifdef DEBUG_DISP2
-	DLED2 = false;
+		DLED2 = false;
 #endif
 #ifdef USE_DMA
-	DMA1_SetSCNTIInterruptHandler(clear_lcd_done);
-	DMA2_SetDCNTIInterruptHandler(spi_rec_done);
+		DMA1_SetSCNTIInterruptHandler(clear_lcd_done);
+		DMA2_SetDCNTIInterruptHandler(spi_rec_done);
 #endif
+	
 }
 
 /*
@@ -443,7 +443,7 @@ bool wait_lcd_check(void)
 void wait_lcd_done(void)
 {
 #ifdef USE_DMA
-	while (spi_link.LCD_DATA) {
+	while ((bool)spi_link.LCD_DATA) {
 	};
 #endif
 	while (!SPI1STATUSbits.TXBE) {
