@@ -61,7 +61,7 @@ typedef signed long long int64_t;
 #define ELO_SS_H_SCALE	0.483
 #define ELO_SS_V_SCALE	0.380
 #define	BLINK_RATE_E220	20000
-#define AUTO_RESTART	true
+#define AUTO_RESTART	false
 #define MAX_CAM_TIME	5
 #define MAX_CAM_TIMEOUT	30
 #define MAX_CAM_TOUCH	5

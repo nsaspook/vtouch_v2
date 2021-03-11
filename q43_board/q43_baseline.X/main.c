@@ -219,7 +219,7 @@ const uint8_t elocodes_s_e[] = {// same as above ex (0x25) enter point mode
 
 // SmartSet codes 0 command, 1 status, 2 low byte, 3 high byte, etc ...
 const uint8_t elocodes_e0[] = {
-	'U', 'B', 0x01, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // smartset timing and spacing setup
+	'U', 'B', 0x00, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 // smartset timing and spacing setup
 };
 const uint8_t elocodes_e1[] = {
 	'U', 'E', '1', '4', 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
@@ -737,7 +737,7 @@ void main(void)
 		/* Loop forever */
 		while (true) {
 			rxtx_handler();
-			if (j++ >= (BLINK_RATE_E220 + S.speedup)) { // delay a bit ok
+			if ((UART1_DataReady) || (UART2_DataReady) || S.CATCH || (j++ >= (BLINK_RATE_E220 + S.speedup))) { // delay a bit ok
 #ifdef	DEBUG_CAM
 				CAM_RELAY = !CAM_RELAY;
 #endif
