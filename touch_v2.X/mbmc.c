@@ -203,6 +203,7 @@ bool check_day_time(void)
 		if (time(NULL) >= C.day_update) {
 			C.day_update = 0; // set to trigger time to false
 			C.dupdate = true; // trigger a EEPROM history write
+			low_bat_delay = 0; // reset low voltage timer ticks
 			if (V.in_float) {
 				V.in_float = false;
 				V.float_ticks = 0;
@@ -230,14 +231,14 @@ bool check_day_time(void)
 		// low battery volts, turn on charger
 		if ((C.v_bat < BAT_LOW_VOLTS) && (C.v_bat > BAT_DEAD_VOLTS) && (++low_bat_delay > BAT_LOW_VDELAY)) {
 			V.ac_on = true;
+			V.ac_time = 0;
 			set_ac_charger_relay(true);
 			low_bat_delay = 0;
 		} else {
 			if ((C.v_bat < BAT_DEAD_VOLTS) && (++low_bat_delay > BAT_DEAD_VDELAY)) {
+				V.ac_on = true;
 				set_ac_charger_relay(true);
 				V.ac_time = 0;
-				low_bat_delay = 0;
-			} else {
 				low_bat_delay = 0;
 			}
 		}
