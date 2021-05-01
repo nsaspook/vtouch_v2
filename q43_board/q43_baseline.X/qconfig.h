@@ -50,7 +50,7 @@
 #define EADOGM_COLSPAN		16
 
 #define NHD		// 4x20 SPI display
-//#define USE_DMA
+#define SHOWFOSC
 
 struct spi_link_type { // internal SPI state table
 	uint8_t SPI_LCD : 1;

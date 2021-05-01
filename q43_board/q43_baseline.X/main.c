@@ -53,6 +53,7 @@
 #include "vtouch_build.h"
 #include "timers.h"
 #include "eadog.h"
+#include "speed.h"
 
 /*
  * Viision terminal code
@@ -627,6 +628,10 @@ void rxtx_handler(void) // timer & serial data transform functions are handled h
 		eaDogM_WriteStringAtPos(3, 0, buffer);
 		sprintf(buffer, "%i,%i,%i,%i  ", idx, S.DATA1, S.DATA2, status.lcd_count);
 		eaDogM_WriteStringAtPos(0, 0, buffer);
+#ifdef SHOWFOSC
+		sprintf(buffer, "%u0000Hz FOSC ", get_fosc());
+		eaDogM_WriteStringAtPos(2, 0, buffer);
+#endif
 		StartTimer(TMR_DIS, 500);
 	}
 }
@@ -704,6 +709,8 @@ void main(void)
 
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
+
+	init_get_fosc();
 
 	DMA2_StopTransfer();
 	SPI1CON0bits.EN = 1;
