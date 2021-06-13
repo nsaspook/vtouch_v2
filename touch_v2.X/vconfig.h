@@ -16,11 +16,12 @@ extern "C" {
 
 #include <xc.h>
 #include <time.h>
+#include <stdint.h>
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.53"
+#define VER	"1.57"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -75,10 +76,13 @@ extern "C" {
 	 * 1.51 change ADC to FRC clock source
 	 * 1.52 back to ext clock for ADC with increased time for hold sample
 	 * 1.53 fix lcd display line limits
+	 * 1.54 uptime records
+	 * 1.55 refactor
+	 * 1.56 adjust low voltage cutoff routines
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
-#define DEF_TIME	1586643451
+#define DEF_TIME	1610856503
 
 #define SLED	LED0_LAT
 
@@ -204,7 +208,7 @@ extern "C" {
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
 		char buf[64], info[64], rbuf[16];
-		volatile uint32_t ticks, blight, ac_time;
+		volatile uint32_t ticks, blight, ac_time, boot_time;
 		volatile int8_t testing;
 		volatile uint8_t sys_info : 1, ac_on : 1, ac_off : 1, time_info : 1, get_time_text : 1;
 		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks, boost_ticks, wdt_ticks;

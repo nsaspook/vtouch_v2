@@ -37,8 +37,9 @@ H_data* hid_display(H_data* h)
 		h->enter_p = SW_OFF;
 		h->calib_p = SW_OFF;
 		break;
-	default:
+
 	case H_STATE_DISPLAY:
+	default:
 		if (!h->wait_select && (h->select_p == SW_OFF)) {
 			h->sequence = ++h->sequence & 0x3;
 			if ((h->sequence == HID_AUX) && !get_switch(SCALIB))
