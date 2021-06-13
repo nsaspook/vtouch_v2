@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.2">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -17820,12 +17820,12 @@ SMD chip inductor</description>
 <attribute name="VALUE" x="85.09" y="82.55" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R5" gate="G$1" x="43.18" y="71.12" smashed="yes">
-<attribute name="NAME" x="37.211" y="67.31" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="39.37" y="67.31" size="1.778" layer="96" rot="R90"/>
+<attribute name="NAME" x="39.751" y="69.85" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="39.37" y="64.77" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R6" gate="G$1" x="58.42" y="71.12" smashed="yes">
-<attribute name="NAME" x="52.451" y="67.31" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="54.61" y="67.31" size="1.778" layer="96" rot="R90"/>
+<attribute name="NAME" x="57.531" y="74.93" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="57.15" y="64.77" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R7" gate="G$1" x="73.66" y="71.12" smashed="yes">
 <attribute name="NAME" x="67.691" y="67.31" size="1.778" layer="95" rot="R90"/>
@@ -17848,8 +17848,8 @@ SMD chip inductor</description>
 <attribute name="VALUE" x="34.29" y="57.658" size="1.778" layer="96"/>
 </instance>
 <instance part="R12" gate="G$1" x="38.1" y="76.2" smashed="yes">
-<attribute name="NAME" x="34.29" y="77.6986" size="1.778" layer="95"/>
-<attribute name="VALUE" x="34.29" y="72.898" size="1.778" layer="96"/>
+<attribute name="NAME" x="41.91" y="77.6986" size="1.778" layer="95"/>
+<attribute name="VALUE" x="34.29" y="77.978" size="1.778" layer="96"/>
 </instance>
 <instance part="R13" gate="G$1" x="38.1" y="93.98" smashed="yes">
 <attribute name="NAME" x="34.29" y="95.4786" size="1.778" layer="95"/>
@@ -17868,8 +17868,8 @@ SMD chip inductor</description>
 <attribute name="VALUE" x="80.01" y="88.138" size="1.778" layer="96"/>
 </instance>
 <instance part="R17" gate="G$1" x="53.34" y="71.12" smashed="yes" rot="R90">
-<attribute name="NAME" x="51.8414" y="67.31" size="1.778" layer="95" rot="R90"/>
-<attribute name="VALUE" x="56.642" y="67.31" size="1.778" layer="96" rot="R90"/>
+<attribute name="NAME" x="51.8414" y="72.39" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="51.562" y="64.77" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="R18" gate="G$1" x="78.74" y="76.2" smashed="yes">
 <attribute name="NAME" x="74.93" y="77.6986" size="1.778" layer="95"/>
@@ -17900,7 +17900,7 @@ SMD chip inductor</description>
 <attribute name="VALUE" x="90.17" y="77.978" size="1.778" layer="96"/>
 </instance>
 <instance part="R25" gate="G$1" x="45.72" y="63.5" smashed="yes">
-<attribute name="NAME" x="41.91" y="64.9986" size="1.778" layer="95"/>
+<attribute name="NAME" x="44.45" y="64.9986" size="1.778" layer="95"/>
 <attribute name="VALUE" x="41.91" y="60.198" size="1.778" layer="96"/>
 </instance>
 <instance part="R26" gate="G$1" x="63.5" y="66.04" smashed="yes">
@@ -17932,8 +17932,8 @@ SMD chip inductor</description>
 <instance part="VSS3" gate="G$1" x="99.06" y="68.58" smashed="yes" rot="R180">
 <attribute name="VALUE" x="101.6" y="73.66" size="1.778" layer="96" rot="R270"/>
 </instance>
-<instance part="VSS5" gate="G$1" x="50.8" y="66.04" smashed="yes" rot="R180">
-<attribute name="VALUE" x="53.34" y="71.12" size="1.778" layer="96" rot="R270"/>
+<instance part="VSS5" gate="G$1" x="50.8" y="60.96" smashed="yes">
+<attribute name="VALUE" x="53.34" y="58.42" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="VSS6" gate="G$1" x="68.58" y="68.58" smashed="yes" rot="R180">
 <attribute name="VALUE" x="71.12" y="73.66" size="1.778" layer="96" rot="R270"/>
