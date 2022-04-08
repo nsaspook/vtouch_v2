@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.57"
+#define VER	"1.58"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -79,6 +79,7 @@ extern "C" {
 	 * 1.54 uptime records
 	 * 1.55 refactor
 	 * 1.56 adjust low voltage cutoff routines
+	 * 1.58 MPLAB_IDE 6.00
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

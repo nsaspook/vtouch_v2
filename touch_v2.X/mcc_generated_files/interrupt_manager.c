@@ -80,9 +80,9 @@ void  INTERRUPT_Initialize (void)
     IPR5bits.INT1IP = 0;
     IPR9bits.TMR6IP = 1;
     IPR8bits.TMR5IP = 0;
+    IPR6bits.TMR3IP = 0;
     IPR1bits.ADIP = 1;
     IPR1bits.ADTIP = 1;
-    IPR6bits.TMR3IP = 0;
 }
 
 void __interrupt(irq(default),base(8)) Default_ISR()
