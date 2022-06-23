@@ -11,14 +11,14 @@
     This is the generated driver implementation file for the SPI1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description
-    This source file provides APIs for SPI1.
+    This header file provides implementations for driver APIs for SPI1.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
 	Device            :  PIC18F57K42
-	Driver Version    :  2.01
+        Driver Version    :  1.0.0
     The generated drivers are tested against the following:
-	Compiler          :  XC8 1.45
-	MPLAB 	          :  MPLAB X 4.15	
+        Compiler          :  XC8 2.20 and above or later
+        MPLAB             :  MPLAB X 5.40
  */
 
 /*
@@ -44,95 +44,104 @@
     SOFTWARE.
  */
 
-/**
-  Section: Included Files
- */
-
-#include <xc.h>
 #include "spi1.h"
+#include <xc.h>
 
-/**
-  Section: Macro Declarations
- */
+typedef struct { 
+    uint8_t con0; 
+    uint8_t con1; 
+    uint8_t con2; 
+    uint8_t baud; 
+    uint8_t operation;
+} spi1_configuration_t;
 
-#define SPI_RX_IN_PROGRESS 0x0
 
-#include "../vconfig.h"
-extern struct V_data V;
-/**
-  Section: Module APIs
- */
+//con0 == SPIxCON0, con1 == SPIxCON1, con2 == SPIxCON2, baud == SPIxBAUD, operation == Master/Slave
+static const spi1_configuration_t spi1_configuration[] = {   
+    { 0x2, 0x40, 0x0, 0x2, 0 }
+};
 
 void SPI1_Initialize(void)
 {
-	// Set the SPI1 module to the options selected in the User Interface
-	// SSP active high; SDOP active high; FST disabled; SMP Middle; CKP Idle:Low, Active:High; CKE Active to idle; SDIP active high; 
+    //EN disabled; LSBF MSb first; MST bus slave; BMODE last byte; 
+    SPI1CON0 = 0x02;
+    //SMP Middle; CKE Active to idle; CKP Idle:Low, Active:High; FST disabled; SSP active high; SDIP active high; SDOP active high; 
 	SPI1CON1 = 0x40;
-	// SSET disabled; RXR suspended if the RxFIFO is full; TXR required for a transfer; 
-	SPI1CON2 = 0x03;
-	// BAUD 0; 
-	SPI1BAUD = 0x4F;
-	// CLKSEL FOSC; 
+    //SSET disabled; TXR not required for a transfer; RXR data is not stored in the FIFO; 
+    SPI1CON2 = 0x00;
+    //CLKSEL FOSC; 
 	SPI1CLK = 0x00;
-	// BMODE every byte; LSBF MSb first; EN enabled; MST bus master; 
-	SPI1CON0 = 0x83;
+    //BAUD 2; 
+    SPI1BAUD = 0x02;
+    TRISCbits.TRISC3 = 0;
 }
 
-uint8_t SPI1_Exchange8bit(uint8_t data)
+bool SPI1_Open(spi1_modes_t spi1UniqueConfiguration)
 {
-	//One byte transfer count
-	SPI1TCNTL = 1;
-	SPI1TXB = data;
-
-    while(PIR2bits.SPI1RXIF == SPI_RX_IN_PROGRESS)
+    if(!SPI1CON0bits.EN)
     {
-        CLRWDT();
+        SPI1CON0 = spi1_configuration[spi1UniqueConfiguration].con0;
+        SPI1CON1 = spi1_configuration[spi1UniqueConfiguration].con1;
+        SPI1CON2 = spi1_configuration[spi1UniqueConfiguration].con2 | (_SPI1CON2_SPI1RXR_MASK | _SPI1CON2_SPI1TXR_MASK);
+        SPI1CLK  = 0x00;
+        SPI1BAUD = spi1_configuration[spi1UniqueConfiguration].baud;        
+        TRISCbits.TRISC3 = spi1_configuration[spi1UniqueConfiguration].operation;
+        SPI1CON0bits.EN = 1;
+        return true;
 	}
-	V.spi_count++;
-	return(SPI1RXB);
+    return false;
 }
 
-uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut)
+void SPI1_Close(void)
 {
-	uint8_t bytesWritten = 0;
+    SPI1CON0bits.EN = 0;
+}
 
-    if(bufLen != 0)
+uint8_t SPI1_ExchangeByte(uint8_t data)
     {
-        if(dataIn != NULL)
+    SPI1TCNTL = 1;
+    SPI1TXB = data;
+    while(!PIR2bits.SPI1RXIF);
+    return SPI1RXB;
+}
+
+void SPI1_ExchangeBlock(void *block, size_t blockSize)
         {
-            while(bytesWritten < bufLen)
+    uint8_t *data = block;
+    while(blockSize--)
             {
-                if(dataOut == NULL)
-                {
-					SPI1_Exchange8bit(dataIn[bytesWritten]);
+        SPI1TCNTL = 1;
+        SPI1TXB = *data;
+        while(!PIR2bits.SPI1RXIF);
+        *data++ = SPI1RXB;
                 }
-                else
-                {
-					dataOut[bytesWritten] = SPI1_Exchange8bit(dataIn[bytesWritten]);
 				}
 
-				bytesWritten++;
-                CLRWDT();
+// Half Duplex SPI Functions
+void SPI1_WriteBlock(void *block, size_t blockSize)
+{
+    uint8_t *data = block;
+    while(blockSize--)
+    {
+        SPI1_ExchangeByte(*data++);
 			}
         }
-        else
-        {
-            if(dataOut != NULL)
-            {
-                while(bytesWritten < bufLen )
-                {
-					dataOut[bytesWritten] = SPI1_Exchange8bit(DUMMY_DATA);
 
-					bytesWritten++;
-                    CLRWDT();
+void SPI1_ReadBlock(void *block, size_t blockSize)
+        {
+    uint8_t *data = block;
+    while(blockSize--)
+            {
+        *data++ = SPI1_ExchangeByte(0);
 				}
 			}
+
+void SPI1_WriteByte(uint8_t byte)
+{
+    SPI1TXB = byte;
 		}
-	}
 
-	return bytesWritten;
+uint8_t SPI1_ReadByte(void)
+{
+    return SPI1RXB;
 }
-
-/**
- End of File
- */

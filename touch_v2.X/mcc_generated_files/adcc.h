@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for ADCC.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
-        Driver Version    :  2.13
+        Driver Version    :  2.1.4
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB             :  MPLAB X 5.40
 */
 
 /*
@@ -70,8 +70,8 @@
  */
 
 typedef uint16_t adc_result_t;
-#ifndef __DEFINED_int24_t
-typedef signed long int int24_t;
+#ifndef uint24_t
+typedef __uint24 uint24_t;
 #endif
 
 /** ADCC Channel Definition
@@ -196,7 +196,7 @@ void ADCC_StartConversion(adcc_channel_t channel);
     convertedValue = ADCC_GetConversionResult();
     </code>
  */
-bool ADCC_IsConversionDone();
+bool ADCC_IsConversionDone(void);
 
 /**
   @Summary
@@ -485,12 +485,12 @@ void ADCC_ClearAccumulator(void);
 
   @Example
     <code>
-    int24_t accumulatorValue;
+    uint24_t accumulatorValue;
     ADCC_Initialize();
     accumulatorValue = ADCC_GetAccumulatorValue();
     </code>
 */
-int24_t ADCC_GetAccumulatorValue(void);
+uint24_t ADCC_GetAccumulatorValue(void);
 
 /**
   @Summary

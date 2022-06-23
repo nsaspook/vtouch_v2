@@ -13,7 +13,7 @@
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
 	Device            :  PIC18F57K42
 	Driver Version    :  2.00
  */
@@ -131,6 +131,7 @@ typedef signed long long int24_t;
 #include "dio.h"
 #include "hid.h"
 #include "bsoc.h"
+#include "isr_func.h"
 
 V_data V = {
 	.ticks = DEF_TIME,
@@ -214,11 +215,15 @@ void main(void)
 	// Initialize the device
 	SYSTEM_Initialize();
 
+	TMR6_SetInterruptHandler(t6_isr);
+	TMR5_SetInterruptHandler(t5_isr);
+
 	// Enable high priority global interrupts
 	INTERRUPT_GlobalInterruptHighEnable();
 
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
+
 
 	V.ui_state = UI_STATE_INIT;
 	WWDT_SoftEnable();
@@ -408,7 +413,7 @@ void main(void)
 				current_sensor_cal();
 				WaitMs(4000);
 			}
-			V.blight = time(NULL) + BL_TIME;
+			V.blight = (uint32_t) time(NULL) + BL_TIME;
 			V.sensor_set = false;
 			V.system_stable = true;
 			break;
@@ -467,7 +472,7 @@ void main(void)
 				write_cal_data(); // save updated history to EEPROM
 				sprintf(get_vterm_ptr(0, 0), "History Data  Saved  ");
 				sprintf(get_vterm_ptr(1, 0), "To EEPROM            ");
-				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu       ", time(NULL), C.hist[0].updates);
+				sprintf(get_vterm_ptr(2, 0), " Time %lu, %lu       ", (uint32_t) time(NULL), C.hist[0].updates);
 				update_lcd(0);
 				WaitMs(2000);
 			}
@@ -650,8 +655,8 @@ static bool current_sensor_cal(void)
 	cp = cp >> 6;
 	cm = cm >> 6;
 
-	if (cal_current_zero(false, cb, cp, cm)) {
-		cal_current_zero(true, cb, cp, cm);
+	if (cal_current_zero(false, (int16_t) cb, (int16_t)cp, (int16_t)cm)) {
+		cal_current_zero(true, (int16_t)cb, (int16_t)cp, (int16_t)cm);
 		sprintf(get_vterm_ptr(0, 0), "Battery and PV       ");
 		sprintf(get_vterm_ptr(1, 0), " %ld %ld %ld            ", cb, cp, cm);
 		sprintf(get_vterm_ptr(2, 0), "Zero Cal Set         ");

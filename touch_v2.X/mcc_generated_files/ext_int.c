@@ -13,12 +13,12 @@
    @Description
      This source file provides implementations for driver APIs for EXT_INT.
      Generation Information :
-	 Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
 	 Device            :  PIC18F57K42
 	 Driver Version    :  1.11
      The generated drivers are tested against the following:
-	 Compiler          :  XC8 1.45
-	 MPLAB             :  MPLAB X 4.15
+         Compiler          :  XC8 2.20 and above
+         MPLAB             :  MPLAB X 5.40
  */
 
 /**
@@ -33,7 +33,7 @@
 void (*INT0_InterruptHandler)(void);
 void (*INT1_InterruptHandler)(void);
 
-void __interrupt(irq(INT0), base(8)) INT0_ISR()
+void __interrupt(irq(INT0),base(8)) INT0_ISR()
 {
 	EXT_INT0_InterruptFlagClear();
 
@@ -41,21 +41,21 @@ void __interrupt(irq(INT0), base(8)) INT0_ISR()
 	INT0_CallBack();
 }
 
+
 void INT0_CallBack(void)
 {
 	// Add your custom callback code here
-	if (INT0_InterruptHandler) {
+    if(INT0_InterruptHandler)
+    {
 		INT0_InterruptHandler();
 	}
 }
 
-void INT0_SetInterruptHandler(void (* InterruptHandler)(void))
-{
+void INT0_SetInterruptHandler(void (* InterruptHandler)(void)){
 	INT0_InterruptHandler = InterruptHandler;
 }
 
-void INT0_DefaultInterruptHandler(void)
-{
+void INT0_DefaultInterruptHandler(void){
 	// add your INT0 interrupt custom code
 	// or set custom function using INT0_SetInterruptHandler()
 }
@@ -67,21 +67,21 @@ void __interrupt(irq(INT1),base(8),low_priority) INT1_ISR()
 	INT1_CallBack();
 }
 
+
 void INT1_CallBack(void)
 {
 	// Add your custom callback code here
-	if (INT1_InterruptHandler) {
+    if(INT1_InterruptHandler)
+    {
 		INT1_InterruptHandler();
 	}
 }
 
-void INT1_SetInterruptHandler(void (* InterruptHandler)(void))
-{
+void INT1_SetInterruptHandler(void (* InterruptHandler)(void)){
 	INT1_InterruptHandler = InterruptHandler;
 }
 
-void INT1_DefaultInterruptHandler(void)
-{
+void INT1_DefaultInterruptHandler(void){
 	// add your INT1 interrupt custom code
 	// or set custom function using INT1_SetInterruptHandler()
 }

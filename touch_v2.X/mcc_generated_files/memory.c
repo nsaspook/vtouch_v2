@@ -13,12 +13,12 @@
   @Description
     This file provides implementations of driver APIs for MEMORY.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
-        Driver Version    :  2.11
+        Driver Version    :  2.12
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB             :  MPLAB X 5.40
 */
 
 /*
@@ -131,17 +131,13 @@ int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr)
     }
 
     NVMCON1bits.NVMREG = 2;
-    NVMCON1bits.WREN = 1;
-    asm("BCF INTCON0,7");
-    asm("BANKSEL NVMCON1");
-    asm("BSF NVMCON1,2");
-    asm("MOVLW 0x55");
-    asm("MOVWF NVMCON2"); 
-    asm("MOVLW 0xAA"); 
-    asm("MOVWF NVMCON2");
-    asm("BSF NVMCON1,1");
-    asm("BSF INTCON0,7");
-    asm("BCF NVMCON1,2");
+    NVMCON1bits.WREN = 1;	
+    INTCON0bits.GIE = 0; // Disable interrupts	
+    NVMCON2 = 0x55;
+    NVMCON2 = 0xAA;
+    NVMCON1bits.WR = 1; // Start program
+	INTCON0bits.GIE = GIEBitValue; // Restore interrupt enable
+    NVMCON1bits.WREN = 0; // Disable writes to memory
 
     return 0;
 }
@@ -156,16 +152,13 @@ void FLASH_EraseBlock(uint32_t baseAddr)
 
     NVMCON1bits.NVMREG = 2;
     NVMCON1bits.WREN = 1;
-    NVMCON1bits.FREE = 1;
-    asm("BCF INTCON0,7");
-    asm("BANKSEL NVMCON1");
-    asm("BSF NVMCON1,2");
-    asm("MOVLW 0x55");
-    asm("MOVWF NVMCON2"); 
-    asm("MOVLW 0xAA"); 
-    asm("MOVWF NVMCON2");
-    asm("BSF NVMCON1,1");
-    asm("BSF INTCON0,7");
+    NVMCON1bits.FREE = 1;	
+    INTCON0bits.GIE = 0; // Disable interrupts	
+    NVMCON2 = 0x55;
+    NVMCON2 = 0xAA;
+    NVMCON1bits.WR = 1; // Start program
+	INTCON0bits.GIE = GIEBitValue; // Restore interrupt enable
+    NVMCON1bits.WREN = 0; // Disable writes to memory
 }
 
 /**

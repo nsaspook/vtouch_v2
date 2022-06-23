@@ -13,12 +13,12 @@
   Description:
     This header file provides implementations for pin APIs for all pins selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB             :  MPLAB X 5.40
 
     Copyright (c) 2013 - 2015 released Microchip Technology Inc.  All rights reserved.
 */
@@ -46,9 +46,7 @@
     SOFTWARE.
 */
 
-#include <xc.h>
 #include "pin_manager.h"
-#include "stdbool.h"
 
 
 
@@ -97,6 +95,16 @@ void PIN_MANAGER_Initialize(void)
     WPUC = 0x97;
 
     /**
+    RxyI2C registers
+    */
+    RB1I2C = 0x00;
+    RB2I2C = 0x00;
+    RC3I2C = 0x00;
+    RC4I2C = 0x00;
+    RD0I2C = 0x00;
+    RD1I2C = 0x00;
+
+    /**
     ODx registers
     */
     ODCONE = 0x00;
@@ -115,6 +123,16 @@ void PIN_MANAGER_Initialize(void)
     SLRCOND = 0xFF;
     SLRCONE = 0x07;
     SLRCONF = 0xFF;
+
+    /**
+    INLVLx registers
+    */
+    INLVLA = 0xFF;
+    INLVLB = 0xFF;
+    INLVLC = 0xFF;
+    INLVLD = 0xFF;
+    INLVLE = 0x0F;
+    INLVLF = 0xFF;
 
 
 

@@ -89,7 +89,7 @@ void calc_bsoc(void)
 	uint8_t * log_ptr, lcode = D_CODE;
 	uint32_t t_time;
 	static uint8_t log_update_wait = 0;
-	float adj = 1.0;
+	double adj = 1.0;
 
 #ifdef DEBUG_BSOC1
 	DEBUG1_SetHigh();
@@ -175,7 +175,7 @@ void calc_bsoc(void)
 	if (V.time_info) { // set local time from remote server
 		V.time_info = false;
 		t_time = (uint32_t) atol(V.rbuf);
-		V.boot_time=t_time;
+		V.boot_time = t_time;
 		if (t_time > DEF_TIME) {
 			set_time(t_time);
 		}
@@ -188,9 +188,9 @@ void calc_bsoc(void)
 		V.sys_info = false;
 		log_ptr = port_data_dma_ptr();
 		lcode = I_CODE;
-		sprintf((char*) log_ptr, " %c\r\n %c ,System Status: Version %s Build %s %s up-time seconds %lu \r\n %c ,%s\r\n %c ,%10lu, %10lu, %10lu, %10lu, %10lu, %10lu, %10lu \r\n %c ,%s\r\n %c ,%10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10lu\r\n %c\r\n",
+		sprintf((char*) log_ptr, " %c\r\n %c ,System Status: Version %s Build %s %s up-time seconds %llu \r\n %c ,%s\r\n %c ,%10lu, %10lu, %10lu, %10lu, %10lu, %10lu, %10lu \r\n %c ,%s\r\n %c ,%10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10d, %10lu\r\n %c\r\n",
 			lcode,
-			lcode, VER, build_date, build_time, V.ticks-V.boot_time,
+			lcode, VER, build_date, build_time, V.ticks - V.boot_time,
 			lcode, infoline1,
 			lcode, V.lowint_count, V.timerint_count, V.tx_count, V.rx_count, V.adc_count, V.spi_count, V.switch_count,
 			lcode, infoline2,
@@ -204,7 +204,7 @@ void calc_bsoc(void)
 			if (H.sequence == HID_AUX)
 				lcode = I_CODE;
 
-			sprintf((char*) log_ptr, " %c ,%lu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%lu,%lu,%4.3f,%4.3f,%4.3f,%d\r\n",
+			sprintf((char*) log_ptr, " %c ,%llu,%4.4f,%4.4f,%4.4f,%4.4f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%4.3f,%d,%d,%2.6f,%4.3f,%d,%d,%llu,%llu,%4.3f,%4.3f,%4.3f,%d\r\n",
 				lcode, V.ticks,
 				C.v_pv, C.v_cc, C.v_bat, C.v_inverter,
 				C.c_mppt, C.c_pv, C.c_bat,
@@ -230,8 +230,8 @@ void init_bsoc(void)
 	/*
 	 * use raw battery voltage
 	 */
-	C.soc = Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0);
-	C.dynamic_ah = C.bank_ah * (Volts_to_SOC((uint32_t) conv_raw_result(V_BAT, CONV) * 1000.0) / 100.0);
+	C.soc = Volts_to_SOC((uint32_t) (conv_raw_result(V_BAT, CONV) * 1000.0));
+	C.dynamic_ah = C.bank_ah * (Volts_to_SOC((uint32_t) (conv_raw_result(V_BAT, CONV) * 1000.0)) / 100.0);
 	if (V.cc_active) { // charge controller online FIXUP
 		C.dynamic_ah += 10.0;
 		C.soc += 10;
@@ -267,7 +267,7 @@ void reset_bsoc(const R_CODES rmode)
 /* Current is in 0.1A units */
 uint32_t peukert(uint16_t brate, float bcurrent, float peukert, int16_t bsoc)
 {
-	float t1, t2, t3, t4, t5, t6, t7, t_time;
+	double t1, t2, t3, t4, t5, t6, t7, t_time;
 
 	t1 = (float) bcurrent; // Load on battery in 0.1A units
 	t1 /= 10.0; // convert back to A
@@ -307,7 +307,7 @@ uint16_t Volts_to_SOC(const uint32_t cvoltage)
 	 */
 	for (slot = 0; slot < BVSOC_SLOTS; slot++) {
 		if (cvoltage > BVSOC_TABLE[slot][0]) {
-			soc = BVSOC_TABLE[slot][1];
+			soc = (uint16_t) BVSOC_TABLE[slot][1];
 		}
 	}
 	return soc;

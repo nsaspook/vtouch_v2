@@ -209,7 +209,7 @@ extern "C" {
 	typedef struct V_data { // control data structure 
 		UI_STATES ui_state;
 		char buf[64], info[64], rbuf[16];
-		volatile uint32_t ticks, blight, ac_time, boot_time;
+		volatile time_t ticks, blight, ac_time, boot_time;
 		volatile int8_t testing;
 		volatile uint8_t sys_info : 1, ac_on : 1, ac_off : 1, time_info : 1, get_time_text : 1;
 		uint8_t error, abort, msg_error, msg_ret, alarm, float_ticks, boost_ticks, wdt_ticks;

@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for TMR3.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
 	Device            :  PIC18F57K42
 	Driver Version    :  2.11
     The generated drivers are tested against the following:
-	Compiler          :  XC8 1.45
-	MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB 	          :  MPLAB X 5.40
  */
 
 /*
@@ -83,11 +83,11 @@ void TMR3_Initialize(void)
     //TMR3L 192; 
     TMR3L = 0xC0;
 
-	// Load the TMR value to reload variable
-	timer3ReloadVal = (uint16_t) ((TMR3H << 8) | TMR3L);
-
 	// Clearing IF flag before enabling the interrupt.
 	PIR6bits.TMR3IF = 0;
+
+    // Load the TMR value to reload variable
+    timer3ReloadVal=(uint16_t)((TMR3H << 8) | TMR3L);
 
 	// Enabling TMR3 interrupt.
 	PIE6bits.TMR3IE = 1;
@@ -122,14 +122,15 @@ uint16_t TMR3_ReadTimer(void)
 	readValLow = TMR3L;
 	readValHigh = TMR3H;
 
-	readVal = ((uint16_t) readValHigh << 8) | readValLow;
+    readVal = ((uint16_t)readValHigh << 8) | readValLow;
 
 	return readVal;
 }
 
 void TMR3_WriteTimer(uint16_t timerVal)
 {
-	if (T3CONbits.NOT_SYNC == 1) {
+    if (T3CONbits.NOT_SYNC == 1)
+    {
 		// Stop the Timer by writing to TMRxON bit
 		T3CONbits.TMR3ON = 0;
 
@@ -138,8 +139,10 @@ void TMR3_WriteTimer(uint16_t timerVal)
 		TMR3L = timerVal;
 
 		// Start the Timer after writing to the register
-		T3CONbits.TMR3ON = 1;
-	} else {
+        T3CONbits.TMR3ON =1;
+    }
+    else
+    {
 		// Write to the Timer3 register
 		TMR3H = (timerVal >> 8);
 		TMR3L = timerVal;
@@ -158,10 +161,10 @@ void TMR3_StartSinglePulseAcquisition(void)
 
 uint8_t TMR3_CheckGateValueStatus(void)
 {
-	return(T3GCONbits.T3GVAL);
+    return (T3GCONbits.T3GVAL);
 }
 
-void __interrupt(irq(TMR3), base(8), low_priority) TMR3_ISR()
+void __interrupt(irq(TMR3),base(8),low_priority) TMR3_ISR()
 {
 	static volatile unsigned int CountCallBack = 0;
 
@@ -169,8 +172,9 @@ void __interrupt(irq(TMR3), base(8), low_priority) TMR3_ISR()
 	PIR6bits.TMR3IF = 0;
 	TMR3_WriteTimer(timer3ReloadVal);
 
-	// callback function - called every 40th pass
-	if (++CountCallBack >= TMR3_INTERRUPT_TICKER_FACTOR) {
+    // callback function - called every 200th pass
+    if (++CountCallBack >= TMR3_INTERRUPT_TICKER_FACTOR)
+    {
 		// ticker function call
 		TMR3_CallBack();
 
@@ -182,21 +186,17 @@ void __interrupt(irq(TMR3), base(8), low_priority) TMR3_ISR()
 void TMR3_CallBack(void)
 {
 	// Add your custom callback code here
-#ifdef DEBUG_TMR3
-	DEBUG1_Toggle();
-#endif
-	if (TMR3_InterruptHandler) {
+    if(TMR3_InterruptHandler)
+    {
 		TMR3_InterruptHandler();
 	}
 }
 
-void TMR3_SetInterruptHandler(void (* InterruptHandler)(void))
-{
+void TMR3_SetInterruptHandler(void (* InterruptHandler)(void)){
 	TMR3_InterruptHandler = InterruptHandler;
 }
 
-void TMR3_DefaultInterruptHandler(void)
-{
+void TMR3_DefaultInterruptHandler(void){
 	// add your TMR3 interrupt custom code
 	// or set custom function using TMR3_SetInterruptHandler()
 }

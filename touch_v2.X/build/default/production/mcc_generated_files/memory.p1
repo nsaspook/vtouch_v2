@@ -39,14 +39,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _INTCON0bits `VS2094 ~T0 @X0 0 e@16338 ]
 "218 mcc_generated_files/memory.h
 [v _FLASH_EraseBlock `(v ~T0 @X0 0 ef1`ul ]
-"5614 /root/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8/pic/include/proc/pic18f57k42.h
+"5888 /root/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8/pic/include/proc/pic18f57k42.h
+[v _NVMCON2 `Vuc ~T0 @X0 0 e@14822 ]
+"5614
 [v _NVMADRH `Vuc ~T0 @X0 0 e@14817 ]
 "5486
 [v _NVMADRL `Vuc ~T0 @X0 0 e@14816 ]
 "5670
 [v _NVMDAT `Vuc ~T0 @X0 0 e@14819 ]
-"5888
-[v _NVMCON2 `Vuc ~T0 @X0 0 e@14822 ]
 "8 /root/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8/pic/include/builtins.h
 [v ___nop `(v ~T0 @X0 0 ef ]
 [p i ___nop ]
@@ -1717,160 +1717,146 @@ Version 4.0 HI-TECH Software Intermediate Code
 "134
 [e = . . _NVMCON1bits 0 2 -> -> 1 `i `uc ]
 "135
-[; <" BCF INTCON0,7 ;# ">
+[e = . . _INTCON0bits 0 6 -> -> 0 `i `uc ]
 "136
-[; <" BANKSEL NVMCON1 ;# ">
+[e = _NVMCON2 -> -> 85 `i `uc ]
 "137
-[; <" BSF NVMCON1,2 ;# ">
+[e = _NVMCON2 -> -> 170 `i `uc ]
 "138
-[; <" MOVLW 0x55 ;# ">
+[e = . . _NVMCON1bits 0 1 -> -> 1 `i `uc ]
 "139
-[; <" MOVWF NVMCON2 ;# ">
+[e = . . _INTCON0bits 0 6 _GIEBitValue ]
 "140
-[; <" MOVLW 0xAA ;# ">
-"141
-[; <" MOVWF NVMCON2 ;# ">
+[e = . . _NVMCON1bits 0 2 -> -> 0 `i `uc ]
 "142
-[; <" BSF NVMCON1,1 ;# ">
-"143
-[; <" BSF INTCON0,7 ;# ">
-"144
-[; <" BCF NVMCON1,2 ;# ">
-"146
 [e ) -> -> 0 `i `c ]
 [e $UE 2207  ]
-"147
+"143
 [e :UE 2207 ]
 }
-"149
+"145
 [v _FLASH_EraseBlock `(v ~T0 @X0 1 ef1`ul ]
-"150
+"146
 {
 [e :U _FLASH_EraseBlock ]
-"149
+"145
 [v _baseAddr `ul ~T0 @X0 1 r1 ]
-"150
+"146
 [f ]
-"151
+"147
 [v _GIEBitValue `uc ~T0 @X0 1 a ]
 [e = _GIEBitValue . . _INTCON0bits 0 6 ]
-"153
+"149
 [e = _TBLPTRU -> >> & _baseAddr -> -> 16711680 `l `ul -> 16 `i `uc ]
-"154
+"150
 [e = _TBLPTRH -> >> & _baseAddr -> -> 65280 `ui `ul -> 8 `i `uc ]
-"155
+"151
 [e = _TBLPTRL -> & _baseAddr -> -> -> 255 `i `l `ul `uc ]
-"157
+"153
 [e = . . _NVMCON1bits 2 1 -> -> 2 `i `uc ]
-"158
+"154
 [e = . . _NVMCON1bits 0 2 -> -> 1 `i `uc ]
-"159
+"155
 [e = . . _NVMCON1bits 0 4 -> -> 1 `i `uc ]
+"156
+[e = . . _INTCON0bits 0 6 -> -> 0 `i `uc ]
+"157
+[e = _NVMCON2 -> -> 85 `i `uc ]
+"158
+[e = _NVMCON2 -> -> 170 `i `uc ]
+"159
+[e = . . _NVMCON1bits 0 1 -> -> 1 `i `uc ]
 "160
-[; <" BCF INTCON0,7 ;# ">
+[e = . . _INTCON0bits 0 6 _GIEBitValue ]
 "161
-[; <" BANKSEL NVMCON1 ;# ">
+[e = . . _NVMCON1bits 0 2 -> -> 0 `i `uc ]
 "162
-[; <" BSF NVMCON1,2 ;# ">
-"163
-[; <" MOVLW 0x55 ;# ">
-"164
-[; <" MOVWF NVMCON2 ;# ">
-"165
-[; <" MOVLW 0xAA ;# ">
-"166
-[; <" MOVWF NVMCON2 ;# ">
-"167
-[; <" BSF NVMCON1,1 ;# ">
-"168
-[; <" BSF INTCON0,7 ;# ">
-"169
 [e :UE 2214 ]
 }
-"175
+"168
 [v _DATAEE_WriteByte `(v ~T0 @X0 1 ef2`us`uc ]
-"176
+"169
 {
 [e :U _DATAEE_WriteByte ]
-"175
+"168
 [v _bAdd `us ~T0 @X0 1 r1 ]
 [v _bData `uc ~T0 @X0 1 r2 ]
-"176
+"169
 [f ]
-"177
+"170
 [v _GIEBitValue `uc ~T0 @X0 1 a ]
 [e = _GIEBitValue . . _INTCON0bits 0 6 ]
-"179
+"172
 [e = _NVMADRH -> & >> -> _bAdd `ui -> 8 `i -> -> 3 `i `ui `uc ]
-"180
+"173
 [e = _NVMADRL -> & -> _bAdd `ui -> -> 255 `i `ui `uc ]
-"181
+"174
 [e = _NVMDAT _bData ]
-"182
+"175
 [e = . . _NVMCON1bits 2 1 -> -> 0 `i `uc ]
-"183
+"176
 [e = . . _NVMCON1bits 0 2 -> -> 1 `i `uc ]
-"184
+"177
 [e = . . _INTCON0bits 0 6 -> -> 0 `i `uc ]
-"185
+"178
 [e = _NVMCON2 -> -> 85 `i `uc ]
-"186
+"179
 [e = _NVMCON2 -> -> 170 `i `uc ]
-"187
+"180
 [e = . . _NVMCON1bits 0 1 -> -> 1 `i `uc ]
-"189
+"182
 [e $U 2216  ]
 [e :U 2217 ]
-"190
+"183
 {
-"191
+"184
 }
 [e :U 2216 ]
-"189
+"182
 [e $ != -> . . _NVMCON1bits 0 1 `i -> 0 `i 2217  ]
 [e :U 2218 ]
-"193
+"186
 [e = . . _NVMCON1bits 0 2 -> -> 0 `i `uc ]
-"194
+"187
 [e = . . _INTCON0bits 0 6 _GIEBitValue ]
-"195
+"188
 [e :UE 2215 ]
 }
-"197
+"190
 [v _DATAEE_ReadByte `(uc ~T0 @X0 1 ef1`us ]
-"198
+"191
 {
 [e :U _DATAEE_ReadByte ]
-"197
+"190
 [v _bAdd `us ~T0 @X0 1 r1 ]
-"198
+"191
 [f ]
-"199
+"192
 [e = _NVMADRH -> & >> -> _bAdd `ui -> 8 `i -> -> 3 `i `ui `uc ]
-"200
+"193
 [e = _NVMADRL -> & -> _bAdd `ui -> -> 255 `i `ui `uc ]
-"201
+"194
 [e = . . _NVMCON1bits 2 1 -> -> 0 `i `uc ]
-"202
+"195
 [e = . . _NVMCON1bits 0 0 -> -> 1 `i `uc ]
-"203
+"196
 [e ( ___nop ..  ]
-"204
+"197
 [e ( ___nop ..  ]
-"206
+"199
 [e ) _NVMDAT ]
 [e $UE 2219  ]
-"207
+"200
 [e :UE 2219 ]
 }
-"209
+"202
 [v _MEMORY_Tasks `(v ~T0 @X0 1 ef ]
-"210
+"203
 {
 [e :U _MEMORY_Tasks ]
 [f ]
-"212
+"205
 [e = . . _PIR0bits 0 4 -> -> 0 `i `uc ]
-"213
+"206
 [e :UE 2220 ]
 }

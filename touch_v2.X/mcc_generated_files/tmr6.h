@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for TMR6.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above 
+        MPLAB 	          :  MPLAB X 5.40
 */
 
 /*
@@ -319,13 +319,13 @@ typedef enum
      */
     TMR6_UART2_TX_EDGE
 
+
 } TMR6_HLT_EXT_RESET_SOURCE;
 
 
 /**
   Section: Macro Declarations
 */
-#define TMR6_INTERRUPT_TICKER_FACTOR    101
 
 /**
   Section: TMR6 APIs

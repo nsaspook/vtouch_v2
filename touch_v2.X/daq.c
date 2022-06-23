@@ -5,7 +5,7 @@
  * The end result is a 13-bit ADC value
  */
 
-#include <pic18f57k42.h>
+#include "xc.h"
 
 #include "daq.h"
 
@@ -302,15 +302,15 @@ void set_dac(void)
 	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_A] >> 8) &0xf;
 	R.max5322_cmd.map.cont = DAC_LOAD_A; // update DAC A @ registers
 	DAC_CS0_SetLow();
-	SPI1_Exchange8bit(R.max5322_cmd.bd[1]);
-	SPI1_Exchange8bit(R.max5322_cmd.bd[0]);
+	SPI1_ExchangeByte(R.max5322_cmd.bd[1]);
+	SPI1_ExchangeByte(R.max5322_cmd.bd[0]);
 	DAC_CS0_SetHigh();
 	R.max5322_cmd.map.dac0 = R.raw_dac[DCHAN_B]&0xff;
 	R.max5322_cmd.map.dac1 = (R.raw_dac[DCHAN_B] >> 8) &0xf;
 	R.max5322_cmd.map.cont = DAC_LOAD_B; // update DAC B @ registers
 	DAC_CS0_SetLow();
-	SPI1_Exchange8bit(R.max5322_cmd.bd[1]);
-	SPI1_Exchange8bit(R.max5322_cmd.bd[0]);
+	SPI1_ExchangeByte(R.max5322_cmd.bd[1]);
+	SPI1_ExchangeByte(R.max5322_cmd.bd[0]);
 	while (!SPI1STATUSbits.TXBE); // wait until TX buffer is empty
 	DAC_CS0_SetHigh();
 	dac_spi_control(false);
@@ -481,7 +481,7 @@ void write_cal_data(void)
 		while (CRC_IsBusy());
 	} while (++x < y);
 	// Read CRC check value
-	crcVal = CRC_CalculatedResultGet(NORMAL, 0x00);
+	crcVal = (uint8_t) CRC_CalculatedResultGet(NORMAL, 0x00);
 	// store crc in EEPROM
 	DATAEE_WriteByte(sizeof(R) - 1, crcVal);
 }

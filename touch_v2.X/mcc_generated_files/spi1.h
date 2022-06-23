@@ -11,14 +11,14 @@
     This is the generated header file for the SPI1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description
-    This header file provides APIs for SPI1.
+    This header file provides APIs for driver for SPI1.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
-        Driver Version    :  2.01
+        Driver Version    :  1.0.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above or later
+        MPLAB             :  MPLAB X 5.40
 */
 
 /*
@@ -44,183 +44,30 @@
     SOFTWARE.
 */
 
-#ifndef _SPI1_H
-#define _SPI1_H
+#ifndef SPI1_MASTER_H
+#define SPI1_MASTER_H
 
 /**
   Section: Included Files
 */
 
-#include <stdbool.h>
-#include <stddef.h>
+#include <stdio.h>
 #include <stdint.h>
+#include <stdbool.h>
 
-#ifdef __cplusplus  // Provide C++ Compatibility
+/* SPI interfaces */
+typedef enum { 
+    SPI1_DEFAULT
+} spi1_modes_t;
 
-    extern "C" {
-
-#endif
-
-/**
-  Section: Macro Declarations
-*/
-
-#define DUMMY_DATA 0x0
-
-/**
-  Section: SPI1 Module APIs
-*/
-
-/**
-  @Summary
-    Initializes the SPI1
-
-  @Description
-    This routine initializes the SPI1.
-    This routine must be called before any other SPI1 routine is called.
-    This routine should only be called once during system initialization.
-
-  @Preconditions
-    None
-
-  @Param
-    None
-
-  @Returns
-    None
-
-  @Comment
-    
-
-  @Example
-    <code>
-    uint8_t     myWriteBuffer[MY_BUFFER_SIZE];
-    uint8_t     myReadBuffer[MY_BUFFER_SIZE];
-    uint8_t     writeData;
-    uint8_t     readData;
-    uint8_t     total;
-
-    SPI1_Initialize();
-
-    total = 0;
-    do
-    {
-        total = SPI1_Exchange8bitBuffer(&myWriteBuffer[total], MY_BUFFER_SIZE - total, &myReadBuffer[total]);
-
-        // Do something else...
-
-    } while(total < MY_BUFFER_SIZE);
-
-    readData = SPI1_Exchange8bit(writeData);
-    </code>
- */
 void SPI1_Initialize(void);
+bool SPI1_Open(spi1_modes_t spi1UniqueConfiguration);
+void SPI1_Close(void);
+uint8_t SPI1_ExchangeByte(uint8_t data);
+void SPI1_ExchangeBlock(void *block, size_t blockSize);
+void SPI1_WriteBlock(void *block, size_t blockSize);
+void SPI1_ReadBlock(void *block, size_t blockSize);
+void SPI1_WriteByte(uint8_t byte);
+uint8_t SPI1_ReadByte(void);
 
-/**
-  @Summary
-    Exchanges a data byte over SPI1
-
-  @Description
-    This routine exchanges a data byte over SPI1 bus.
-    This is a blocking routine.
-
-  @Preconditions
-    The SPI1_Initialize() routine should be called
-    prior to use this routine.
-
-  @Param
-    data - data byte to be transmitted over SPI1 bus
-
-  @Returns
-    The received byte over SPI1 bus
-
-  @Example
-    <code>
-    uint8_t     writeData;
-    uint8_t     readData;
-    uint8_t     readDummy;
-
-    SPI1_Initialize();
-
-    // for transmission over SPI bus
-    readDummy = SPI1_Exchange8bit(writeData);
-
-    // for reception over SPI bus
-    readData = SPI1_Exchange8bit(DUMMY_DATA);
-    </code>
- */
-uint8_t SPI1_Exchange8bit(uint8_t data);
-
- /**
-  @Summary
-    Exchanges buffer of data over SPI1
-
-  @Description
-    This routine exchanges buffer of data (of size one byte) over SPI1 bus.
-    This is a blocking routine.
-
-  @Preconditions
-    The SPI1_Initialize() routine should be called
-    prior to use this routine.
-
-  @Param
-    dataIn  - Buffer of data to be transmitted over SPI1.
-    bufLen  - Number of bytes to be exchanged.
-    dataOut - Buffer of data to be received over SPI1.
-
-  @Returns
-    Number of bytes exchanged over SPI1.
-
-  @Example
-    <code>
-    uint8_t     myWriteBuffer[MY_BUFFER_SIZE];
-    uint8_t     myReadBuffer[MY_BUFFER_SIZE];
-    uint8_t     total;
-
-    SPI1_Initialize();
-
-    total = 0;
-    do
-    {
-        total = SPI1_Exchange8bitBuffer(&myWriteBuffer[total], MY_BUFFER_SIZE - total, &myReadBuffer[total]);
-
-        // Do something else...
-
-    } while(total < MY_BUFFER_SIZE);
-    </code>
- */
-uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-
-/**
-  @Summary
-    Gets the SPI1 buffer full status
-
-  @Description
-    This routine gets the SPI1 buffer full status
-
-  @Preconditions
-    The SPI1_Initialize() routine should be called
-    prior to use this routine.
-
-  @Param
-    None
-
-  @Returns
-    true  - if the buffer is full
-    false - if the buffer is not full.
-
-  @Example
-    Refer to SPI1_Initialize() for an example
- */
-
-
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
-
-#endif
-
-#endif // _SPI1_H
-/**
- End of File
-*/
+#endif //SPI1_H

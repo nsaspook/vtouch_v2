@@ -300,13 +300,13 @@ void load_hist_data(void)
 		C.hist[0].h[10] = esr_rescale;
 	if (esr_rescale < C.hist[0].h[9])
 		C.hist[0].h[9] = esr_rescale;
-	C.hist[0].h[8] = C.bv_one_load * 100.0;
-	C.hist[0].h[7] = C.bv_full_load * 100.0;
-	C.hist[0].h[6] = C.dynamic_ah;
-	C.hist[0].h[5] = C.bkwi;
-	C.hist[0].h[4] = C.bkwo;
-	C.hist[0].h[3] = C.pv_ah;
-	C.hist[0].h[0] = C.dynamic_ah_daily;
+	C.hist[0].h[8] = (int16_t) (C.bv_one_load * 100.0);
+	C.hist[0].h[7] = (int16_t) (C.bv_full_load * 100.0);
+	C.hist[0].h[6] = (int16_t) C.dynamic_ah;
+	C.hist[0].h[5] = (int16_t) C.bkwi;
+	C.hist[0].h[4] = (int16_t) C.bkwo;
+	C.hist[0].h[3] = (int16_t) C.pv_ah;
+	C.hist[0].h[0] = (int16_t) C.dynamic_ah_daily;
 	C.hist[0].pclock = time(NULL);
 	C.dynamic_ah_daily = 0.0;
 	C.dynamic_ah_adj_daily = 0.0;
@@ -320,6 +320,7 @@ void load_hist_data(void)
 time_t time(time_t * t)
 {
 	static time_t current_time;
+	
 	PIE8bits.TMR5IE = 0;
 	current_time = V.ticks;
 	PIE8bits.TMR5IE = 1;

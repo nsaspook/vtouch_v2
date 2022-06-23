@@ -120,25 +120,25 @@ void init_port_dma(void)
 static void send_lcd_data(const uint8_t data)
 {
 	CSB_SetLow();
-	SPI1_Exchange8bit(data);
+	SPI1_ExchangeByte(data);
 	wdtdelay(8);
 }
 
 static void send_lcd_cmd(const uint8_t cmd)
 {
 	CSB_SetLow();
-	SPI1_Exchange8bit(NHD_CMD);
+	SPI1_ExchangeByte(NHD_CMD);
 	wdtdelay(8);
-	SPI1_Exchange8bit(cmd);
+	SPI1_ExchangeByte(cmd);
 	wdtdelay(8);
 }
 
 static void send_lcd_cmd_long(const uint8_t cmd)
 {
 	CSB_SetLow();
-	SPI1_Exchange8bit(NHD_CMD);
+	SPI1_ExchangeByte(NHD_CMD);
 	wdtdelay(8);
-	SPI1_Exchange8bit(cmd);
+	SPI1_ExchangeByte(cmd);
 	wdtdelay(800);
 }
 

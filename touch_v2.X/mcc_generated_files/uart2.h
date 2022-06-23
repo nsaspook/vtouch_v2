@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for UART2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
-        Driver Version    :  2.30
+        Driver Version    :  2.4.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB             :  MPLAB X 5.40
 */
 
 /*
@@ -65,11 +65,21 @@
   Section: Macro Declarations
 */
 
-#define UART2_DataReady  (uart2RxCount)
+#define UART2_DataReady  (UART2_is_rx_ready())
 
 /**
   Section: Data Type Definitions
 */
+
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart2_status_t;
 
 /**
  Section: Global variables
@@ -106,11 +116,11 @@ void UART2_Initialize(void);
 
 /**
   @Summary
-    Checks if UART2 receiver is empty
+    Checks if the UART2 receiver ready for reading
 
   @Description
-    This routine returns the available number of bytes to be read 
-    from UART2 receiver
+    This routine checks if UART2 receiver has received data 
+    and ready to be read
 
   @Preconditions
     UART2_Initialize() function should be called
@@ -122,7 +132,9 @@ void UART2_Initialize(void);
     None
 
   @Returns
-    The number of bytes UART2 has available for reading
+    Status of UART2 receiver
+    TRUE: UART2 receiver is ready for reading
+    FALSE: UART2 receiver is not ready for reading
     
   @Example
     <code>
@@ -132,9 +144,6 @@ void UART2_Initialize(void);
         
         // Initialize the device
         SYSTEM_Initialize();
-        
-        // Enable the Global Interrupts
-        INTERRUPT_GlobalInterruptEnable();
         
         while(1)
         {
@@ -151,15 +160,15 @@ void UART2_Initialize(void);
     }
     </code>
 */
-uint8_t UART2_is_rx_ready(void);
+bool UART2_is_rx_ready(void);
 
 /**
   @Summary
-    Checks if the UART2 transmitter is ready
+    Checks if the UART2 transmitter is ready to transmit data
 
   @Description
-    This routine checks if UART2 transmitter is empty and ready
-    for next transmission
+    This routine checks if UART2 transmitter is ready 
+    to accept and transmit data byte
 
   @Preconditions
     UART2_Initialize() function should have been called
@@ -171,8 +180,9 @@ uint8_t UART2_is_rx_ready(void);
     None
 
   @Returns
-    The number of available bytes that UART2 has remaining in 
-    its transmit buffer
+    Status of UART2 transmitter
+    TRUE: UART2 transmitter is ready
+    FALSE: UART2 transmitter is not ready
     
   @Example
     <code>
@@ -182,9 +192,6 @@ uint8_t UART2_is_rx_ready(void);
         
         // Initialize the device
         SYSTEM_Initialize();
-        
-        // Enable the Global Interrupts
-        INTERRUPT_GlobalInterruptEnable();
         
         while(1)
         {
@@ -201,7 +208,7 @@ uint8_t UART2_is_rx_ready(void);
     }
     </code>
 */
-uint8_t UART2_is_tx_ready(void);
+bool UART2_is_tx_ready(void);
 
 /**
   @Summary
@@ -249,6 +256,54 @@ uint8_t UART2_is_tx_ready(void);
     </code>
 */
 bool UART2_is_tx_done(void);
+
+/**
+  @Summary
+    Gets the error status of the last read byte.
+
+  @Description
+    This routine gets the error status of the last read byte.
+
+  @Preconditions
+    UART2_Initialize() function should have been called
+    before calling this function. The returned value is only
+    updated after a read is called.
+
+  @Param
+    None
+
+  @Returns
+    the status of the last read byte
+
+  @Example
+	<code>
+    void main(void)
+    {
+        volatile uint8_t rxData;
+        volatile uart2_status_t rxStatus;
+        
+        // Initialize the device
+        SYSTEM_Initialize();
+        
+        // Enable the Global Interrupts
+        INTERRUPT_GlobalInterruptEnable();
+        
+        while(1)
+        {
+            // Logic to echo received data
+            if(UART2_is_rx_ready())
+            {
+                rxData = UART2_Read();
+                rxStatus = UART2_get_last_status();
+                if(rxStatus.ferr){
+                    LED_0_SetHigh();
+                }
+            }
+        }
+    }
+    </code>
+ */
+uart2_status_t UART2_get_last_status(void);
 
 /**
   @Summary
@@ -324,8 +379,6 @@ uint8_t UART2_Read(void);
 */
 void UART2_Write(uint8_t txData);
 
-void UART2_put_buffer(uint8_t);
-
 /**
   @Summary
     Maintains the driver's transmitter state machine and implements its ISR.
@@ -367,6 +420,81 @@ void UART2_Transmit_ISR(void);
     None
 */       
 void UART2_Receive_ISR(void);
+
+/**
+  @Summary
+    Maintains the driver's receiver state machine
+
+  @Description
+    This routine is called by the receive state routine and is used to maintain 
+    the driver's internal receiver state machine. It should be called by a custom
+    ISR to maintain normal behavior
+
+  @Preconditions
+    UART2_Initialize() function should have been called
+    for the ISR to execute correctly.
+
+  @Param
+    None
+
+  @Returns
+    None
+*/
+void UART2_RxDataHandler(void);
+
+/**
+  @Summary
+    Set UART2 Framing Error Handler
+
+  @Description
+    This API sets the function to be called upon UART2 framing error
+
+  @Preconditions
+    Initialize  the UART2 before calling this API
+
+  @Param
+    Address of function to be set as framing error handler
+
+  @Returns
+    None
+*/
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
+
+/**
+  @Summary
+    Set UART2 Overrun Error Handler
+
+  @Description
+    This API sets the function to be called upon UART2 overrun error
+
+  @Preconditions
+    Initialize  the UART2 module before calling this API
+
+  @Param
+    Address of function to be set as overrun error handler
+
+  @Returns
+    None
+*/
+void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void));
+
+/**
+  @Summary
+    Set UART2 Error Handler
+
+  @Description
+    This API sets the function to be called upon UART2 error
+
+  @Preconditions
+    Initialize  the UART2 module before calling this API
+
+  @Param
+    Address of function to be set as error handler
+
+  @Returns
+    None
+*/
+void UART2_SetErrorHandler(void (* interruptHandler)(void));
 
 
 

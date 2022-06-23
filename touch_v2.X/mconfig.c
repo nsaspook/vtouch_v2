@@ -239,7 +239,7 @@ bool set_back_light_off(bool mode)
 			if (!blight_on) { // check back-light state
 				V.blight_off = false; // clear timer trigger 
 				blight_on = true; // update tracking state to ON
-				V.blight = time(NULL) + BL_TIME; // reset background 10min trigger
+				V.blight = (uint32_t) time(NULL) + BL_TIME; // reset background 10min trigger
 				send_cmd = true; // send trigger return code
 			}
 		}

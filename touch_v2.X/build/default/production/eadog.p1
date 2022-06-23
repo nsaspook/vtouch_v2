@@ -103,8 +103,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S2061 . . . ]
 "45781
 [v _LATCbits `VS2061 ~T0 @X0 0 e@16316 ]
-"152 ./mcc_generated_files/spi1.h
-[v _SPI1_Exchange8bit `(uc ~T0 @X0 0 ef1`uc ]
+"66 ./mcc_generated_files/spi1.h
+[v _SPI1_ExchangeByte `(uc ~T0 @X0 0 ef1`uc ]
 "54 /opt/microchip/xc8/v2.36/pic/include/c99/string.h
 [v _strlen `(ui ~T0 @X0 0 ef1`*Cuc ]
 "48 ./eadog.h
@@ -118,15 +118,15 @@ Version 4.0 HI-TECH Software Intermediate Code
 "47 ./eadog.h
 [v _start_lcd `(v ~T0 @X0 0 ef ]
 "168 eadog.c
-[c E16745 0 1 2 3 4 5 .. ]
-[n E16745 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
-[c E16726 0 1 2 3 .. ]
-[n E16726 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
+[c E16759 0 1 2 3 4 5 .. ]
+[n E16759 . UI_STATE_INIT UI_STATE_HOST UI_STATE_DEBUG UI_STATE_LOG UI_STATE_MON UI_STATE_ERROR  ]
+[c E16740 0 1 2 3 .. ]
+[n E16740 . DIS_STR DIS_HELP DIS_ERR DIS_CLEAR  ]
 "174 ./vconfig.h
-[s S2210 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16726 1 `E16726 1 `us 1 `us 1 ]
+[s S2210 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 :1 `uc 1 `E16740 1 `E16740 1 `us 1 `us 1 ]
 [n S2210 terminal_type mesgid TID mcode mparm cmdlen log_seq host_display_ack info help_temp ceid log_num ]
 "209
-[s S2211 `E16745 1 `uc -> 64 `i `uc -> 64 `i `uc -> 16 `i `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16745 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2210 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
+[s S2211 `E16759 1 `uc -> 64 `i `uc -> 64 `i `uc -> 16 `i `Vo 1 `Vo 1 `Vo 1 `Vo 1 `Vc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `uc 1 `E16759 1 `us 1 `us 1 `us 1 `us 1 `us 1 `us 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :3 `uc 1 :2 `uc 1 :1 `uc 1 `S2210 1 `Vuc 1 `Vuc 1 `a 1 `a 1 `a 1 `a 1 `a 1 `a 1 `Va 1 `Va 1 `Va 1 `Va 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 `Vul 1 ]
 [n S2211 V_data ui_state buf info rbuf ticks blight ac_time boot_time testing sys_info ac_on ac_off time_info get_time_text error abort msg_error msg_ret alarm float_ticks boost_ticks wdt_ticks ui_sw r_checksum t_checksum checksum_error mode_pwm sequences all_errors set_sequ debug help stack help_id screen response ticker cc_state flipper calib enter sensor_set fixup cc_active system_stable blight_off in_float in_boost lowint_count timerint_count tx_count rx_count adc_count spi_count switch_count ]
 "29 ./eadog.h
 [v _V `S2211 ~T0 @X0 0 e ]
@@ -1685,11 +1685,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 "20
 [f ]
 "21
-[v F16905 `ul ~T0 @X0 1 s dcount ]
+[v F16919 `ul ~T0 @X0 1 s dcount ]
 "23
 {
-[e = F16905 -> -> -> 0 `i `l `ul ]
-[e $ <= F16905 _delay 2215  ]
+[e = F16919 -> -> -> 0 `i `l `ul ]
+[e $ <= F16919 _delay 2215  ]
 [e $U 2216  ]
 [e :U 2215 ]
 {
@@ -1699,8 +1699,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <"  clrwdt ;# ">
 "26
 }
-[e ++ F16905 -> -> -> 1 `i `l `ul ]
-[e $ <= F16905 _delay 2215  ]
+[e ++ F16919 -> -> -> 1 `i `l `ul ]
+[e $ <= F16919 _delay 2215  ]
 [e :U 2216 ]
 }
 "27
@@ -1816,7 +1816,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2222 ]
 "123
-[e ( _SPI1_Exchange8bit (1 _data ]
+[e ( _SPI1_ExchangeByte (1 _data ]
 "124
 [e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
 "125
@@ -1838,11 +1838,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2226 ]
 "130
-[e ( _SPI1_Exchange8bit (1 -> -> 254 `i `uc ]
+[e ( _SPI1_ExchangeByte (1 -> -> 254 `i `uc ]
 "131
 [e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
 "132
-[e ( _SPI1_Exchange8bit (1 _cmd ]
+[e ( _SPI1_ExchangeByte (1 _cmd ]
 "133
 [e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
 "134
@@ -1864,11 +1864,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e :U 2230 ]
 "139
-[e ( _SPI1_Exchange8bit (1 -> -> 254 `i `uc ]
+[e ( _SPI1_ExchangeByte (1 -> -> 254 `i `uc ]
 "140
 [e ( _wdtdelay (1 -> -> -> 8 `i `l `ul ]
 "141
-[e ( _SPI1_Exchange8bit (1 _cmd ]
+[e ( _SPI1_ExchangeByte (1 _cmd ]
 "142
 [e ( _wdtdelay (1 -> -> -> 800 `i `l `ul ]
 "143

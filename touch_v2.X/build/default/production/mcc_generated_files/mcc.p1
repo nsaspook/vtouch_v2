@@ -1,12 +1,12 @@
 Version 4.0 HI-TECH Software Intermediate Code
-[v F16280 `(v ~T0 @X0 0 tf ]
-[v F16282 `(v ~T0 @X0 0 tf ]
-[v F16302 `(v ~T0 @X0 0 tf ]
+[v F16660 `(v ~T0 @X0 0 tf ]
+[v F16662 `(v ~T0 @X0 0 tf ]
+[v F16705 `(v ~T0 @X0 0 tf ]
 "109 mcc_generated_files/interrupt_manager.h
 [v _INTERRUPT_Initialize `(v ~T0 @X0 0 ef ]
 "114 mcc_generated_files/mcc.h
 [v _PMD_Initialize `(v ~T0 @X0 0 ef ]
-"824 mcc_generated_files/pin_manager.h
+"830 mcc_generated_files/pin_manager.h
 [v _PIN_MANAGER_Initialize `(v ~T0 @X0 0 ef ]
 "101 mcc_generated_files/mcc.h
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 0 ef ]
@@ -18,7 +18,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _CRC_Initialize `(v ~T0 @X0 0 ef ]
 "140 mcc_generated_files/adcc.h
 [v _ADCC_Initialize `(v ~T0 @X0 0 ef ]
-"364 mcc_generated_files/tmr2.h
+"63 mcc_generated_files/dma1.h
+[v _DMA1_Initialize `(v ~T0 @X0 0 ef ]
+"365 mcc_generated_files/tmr2.h
 [v _TMR2_Initialize `(v ~T0 @X0 0 ef ]
 "102 mcc_generated_files/pwm8.h
 [v _PWM8_Initialize `(v ~T0 @X0 0 ef ]
@@ -30,18 +32,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _TMR3_Initialize `(v ~T0 @X0 0 ef ]
 "101 mcc_generated_files/tmr5.h
 [v _TMR5_Initialize `(v ~T0 @X0 0 ef ]
-"105 mcc_generated_files/uart1.h
+"115 mcc_generated_files/uart1.h
 [v _UART1_Initialize `(v ~T0 @X0 0 ef ]
-"105 mcc_generated_files/uart2.h
+"115 mcc_generated_files/uart2.h
 [v _UART2_Initialize `(v ~T0 @X0 0 ef ]
-"117 mcc_generated_files/spi1.h
+"63 mcc_generated_files/spi1.h
 [v _SPI1_Initialize `(v ~T0 @X0 0 ef ]
-"114 mcc_generated_files/dma2.h
-[v _DMA2_Initialize `(v ~T0 @X0 0 ef ]
-"114 mcc_generated_files/dma1.h
-[v _DMA1_Initialize `(v ~T0 @X0 0 ef ]
 "92 mcc_generated_files/clkref.h
 [v _CLKREF_Initialize `(v ~T0 @X0 0 ef ]
+"204 mcc_generated_files/mcc.h
+[v _SystemArbiter_Initialize `(v ~T0 @X0 0 ef ]
 "4959 /root/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8/pic/include/proc/pic18f57k42.h
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@14809 ]
 "5099
@@ -122,6 +122,16 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _PCON0bits `VS2162 ~T0 @X0 0 e@16368 ]
 "52064
 [v _GIE `Vb ~T0 @X0 0 e@130711 ]
+"5908
+[v _PRLOCK `Vuc ~T0 @X0 0 e@14831 ]
+"5914
+[s S263 :1 `uc 1 ]
+[n S263 . PRLOCKED ]
+"5913
+[u S262 `S263 1 ]
+[n S262 . . ]
+"5918
+[v _PRLOCKbits `VS262 ~T0 @X0 0 e@14831 ]
 "251 /root/.mchp_packs/Microchip/PIC18F-K_DFP/1.6.125/xc8/pic/include/proc/pic18f57k42.h
 [; <" STATUS_CSHAD equ 03880h ;# ">
 "340
@@ -1620,12 +1630,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; <" TOSH equ 03FFEh ;# ">
 "48272
 [; <" TOSU equ 03FFFh ;# ">
-"389 mcc_generated_files/uart2.h
-[v _UART2_RxInterruptHandler `*F16280 ~T0 @X0 1 e ]
-"407
-[v _UART2_TxInterruptHandler `*F16282 ~T0 @X0 1 e ]
-"365 mcc_generated_files/uart1.h
-[v _UART1_RxInterruptHandler `*F16302 ~T0 @X0 1 e ]
+"55 mcc_generated_files/dma1.h
+[v _SrcVarName0 `uc ~T0 @X0 -> 10 `i e ]
+"517 mcc_generated_files/uart2.h
+[v _UART2_RxInterruptHandler `*F16660 ~T0 @X0 1 e ]
+"535
+[v _UART2_TxInterruptHandler `*F16662 ~T0 @X0 1 e ]
+"497 mcc_generated_files/uart1.h
+[v _UART1_RxInterruptHandler `*F16705 ~T0 @X0 1 e ]
 "50 mcc_generated_files/mcc.c
 [v _SYSTEM_Initialize `(v ~T0 @X0 1 ef ]
 "51
@@ -1649,31 +1661,31 @@ Version 4.0 HI-TECH Software Intermediate Code
 "59
 [e ( _ADCC_Initialize ..  ]
 "60
-[e ( _TMR2_Initialize ..  ]
-"61
-[e ( _PWM8_Initialize ..  ]
-"62
-[e ( _EXT_INT_Initialize ..  ]
-"63
-[e ( _TMR6_Initialize ..  ]
-"64
-[e ( _TMR3_Initialize ..  ]
-"65
-[e ( _TMR5_Initialize ..  ]
-"66
-[e ( _UART1_Initialize ..  ]
-"67
-[e ( _UART2_Initialize ..  ]
-"68
-[e ( _SPI1_Initialize ..  ]
-"69
-[e ( _DMA2_Initialize ..  ]
-"70
 [e ( _DMA1_Initialize ..  ]
-"71
+"61
+[e ( _TMR2_Initialize ..  ]
+"62
+[e ( _PWM8_Initialize ..  ]
+"63
+[e ( _EXT_INT_Initialize ..  ]
+"64
+[e ( _TMR6_Initialize ..  ]
+"65
+[e ( _TMR3_Initialize ..  ]
+"66
+[e ( _TMR5_Initialize ..  ]
+"67
+[e ( _UART1_Initialize ..  ]
+"68
+[e ( _UART2_Initialize ..  ]
+"69
+[e ( _SPI1_Initialize ..  ]
+"70
 [e ( _CLKREF_Initialize ..  ]
+"71
+[e ( _SystemArbiter_Initialize ..  ]
 "72
-[e :UE 2201 ]
+[e :UE 2207 ]
 }
 "74
 [v _OSCILLATOR_Initialize `(v ~T0 @X0 1 ef ]
@@ -1692,18 +1704,18 @@ Version 4.0 HI-TECH Software Intermediate Code
 "85
 [e = _OSCTUNE -> -> 0 `i `uc ]
 "87
-[e $U 2203  ]
-[e :U 2204 ]
+[e $U 2209  ]
+[e :U 2210 ]
 "88
 {
 "89
 }
-[e :U 2203 ]
+[e :U 2209 ]
 "87
-[e $ == -> _PLLR `i -> 0 `i 2204  ]
-[e :U 2205 ]
+[e $ == -> _PLLR `i -> 0 `i 2210  ]
+[e :U 2211 ]
 "90
-[e :UE 2202 ]
+[e :UE 2208 ]
 }
 "92
 [v _PMD_Initialize `(v ~T0 @X0 1 ef ]
@@ -1728,7 +1740,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "109
 [e = _PMD7 -> -> 0 `i `uc ]
 "110
-[e :UE 2206 ]
+[e :UE 2212 ]
 }
 "113
 [v _WWDT_Initialize `(v ~T0 @X0 1 ef ]
@@ -1741,7 +1753,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "117
 [e = _WDTCON1 -> | -> 7 `i -> 0 `i `uc ]
 "119
-[e :UE 2207 ]
+[e :UE 2213 ]
 }
 "121
 [v _WWDT_SoftEnable `(v ~T0 @X0 1 ef ]
@@ -1752,7 +1764,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "124
 [e = . . _WDTCON0bits 0 0 -> -> 1 `i `uc ]
 "125
-[e :UE 2208 ]
+[e :UE 2214 ]
 }
 "127
 [v _WWDT_SoftDisable `(v ~T0 @X0 1 ef ]
@@ -1763,7 +1775,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 "130
 [e = . . _WDTCON0bits 0 0 -> -> 0 `i `uc ]
 "131
-[e :UE 2209 ]
+[e :UE 2215 ]
 }
 "133
 [v _WWDT_TimeOutStatusGet `(a ~T0 @X0 1 ef ]
@@ -1773,9 +1785,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "136
 [e ) -> . . _PCON0bits 6 4 `a ]
-[e $UE 2210  ]
+[e $UE 2216  ]
 "137
-[e :UE 2210 ]
+[e :UE 2216 ]
 }
 "139
 [v _WWDT_WindowViolationStatusGet `(a ~T0 @X0 1 ef ]
@@ -1785,9 +1797,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "142
 [e ) -> . . _PCON0bits 6 5 `a ]
-[e $UE 2211  ]
+[e $UE 2217  ]
 "143
-[e :UE 2211 ]
+[e :UE 2217 ]
 }
 "145
 [v _WWDT_TimerClear `(v ~T0 @X0 1 ef ]
@@ -1810,5 +1822,20 @@ Version 4.0 HI-TECH Software Intermediate Code
 "155
 [e = _GIE _state ]
 "156
-[e :UE 2212 ]
+[e :UE 2218 ]
+}
+"157
+[v _SystemArbiter_Initialize `(v ~T0 @X0 1 ef ]
+"158
+{
+[e :U _SystemArbiter_Initialize ]
+[f ]
+"160
+[e = _PRLOCK -> -> 85 `i `uc ]
+"161
+[e = _PRLOCK -> -> 170 `i `uc ]
+"162
+[e = . . _PRLOCKbits 0 0 -> -> 1 `i `uc ]
+"163
+[e :UE 2219 ]
 }

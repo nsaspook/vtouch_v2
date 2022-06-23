@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for UART1.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
 	Device            :  PIC18F57K42
-	Driver Version    :  2.30
+        Driver Version    :  2.4.0
     The generated drivers are tested against the following:
-	Compiler          :  XC8 1.45
-	MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB             :  MPLAB X 5.40
  */
 
 /*
@@ -65,11 +65,21 @@ extern "C" {
 	  Section: Macro Declarations
 	 */
 
-#define UART1_DataReady  (uart1RxCount)
+#define UART1_DataReady  (UART1_is_rx_ready())
 
 	/**
 	  Section: Data Type Definitions
 	 */
+
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart1_status_t;
 
 	/**
 	 Section: Global variables
@@ -106,11 +116,11 @@ extern "C" {
 
 	/**
 	  @Summary
-	    Checks if UART1 receiver is empty
+    Checks if the UART1 receiver ready for reading
 
 	  @Description
-	    This routine returns the available number of bytes to be read 
-	    from UART1 receiver
+    This routine checks if UART1 receiver has received data 
+    and ready to be read
 
 	  @Preconditions
 	    UART1_Initialize() function should be called
@@ -122,7 +132,9 @@ extern "C" {
 	    None
 
 	  @Returns
-	    The number of bytes UART1 has available for reading
+    Status of UART1 receiver
+    TRUE: UART1 receiver is ready for reading
+    FALSE: UART1 receiver is not ready for reading
     
 	  @Example
 	    <code>
@@ -132,9 +144,6 @@ extern "C" {
         
 		// Initialize the device
 		SYSTEM_Initialize();
-        
-		// Enable the Global Interrupts
-		INTERRUPT_GlobalInterruptEnable();
         
 		while(1)
 		{
@@ -151,7 +160,7 @@ extern "C" {
 	    }
 	    </code>
 	 */
-	uint8_t UART1_is_rx_ready(void);
+bool UART1_is_rx_ready(void);
 
 	/**
 	  @Summary
@@ -250,6 +259,54 @@ bool UART1_is_tx_ready(void);
 
 	/**
 	  @Summary
+    Gets the error status of the last read byte.
+
+  @Description
+    This routine gets the error status of the last read byte.
+
+  @Preconditions
+    UART1_Initialize() function should have been called
+    before calling this function. The returned value is only
+    updated after a read is called.
+
+  @Param
+    None
+
+  @Returns
+    the status of the last read byte
+
+  @Example
+	<code>
+    void main(void)
+    {
+        volatile uint8_t rxData;
+        volatile uart1_status_t rxStatus;
+        
+        // Initialize the device
+        SYSTEM_Initialize();
+        
+        // Enable the Global Interrupts
+        INTERRUPT_GlobalInterruptEnable();
+        
+        while(1)
+        {
+            // Logic to echo received data
+            if(UART1_is_rx_ready())
+            {
+                rxData = UART1_Read();
+                rxStatus = UART1_get_last_status();
+                if(rxStatus.ferr){
+                    LED_0_SetHigh();
+                }
+            }
+        }
+    }
+    </code>
+ */
+uart1_status_t UART1_get_last_status(void);
+
+/**
+  @Summary
 	    Read a byte of data from the UART1.
 
 	  @Description
@@ -344,10 +401,85 @@ bool UART1_is_tx_ready(void);
 	 */
 	void UART1_Receive_ISR(void);
 
+/**
+  @Summary
+    Maintains the driver's receiver state machine
 
+  @Description
+    This routine is called by the receive state routine and is used to maintain 
+    the driver's internal receiver state machine. It should be called by a custom
+    ISR to maintain normal behavior
+
+  @Preconditions
+    UART1_Initialize() function should have been called
+    for the ISR to execute correctly.
+
+  @Param
+    None
+
+  @Returns
+    None
+*/
+void UART1_RxDataHandler(void);
 
 	/**
 	  @Summary
+    Set UART1 Framing Error Handler
+
+  @Description
+    This API sets the function to be called upon UART1 framing error
+
+  @Preconditions
+    Initialize  the UART1 before calling this API
+
+  @Param
+    Address of function to be set as framing error handler
+
+  @Returns
+    None
+*/
+void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
+
+/**
+  @Summary
+    Set UART1 Overrun Error Handler
+
+  @Description
+    This API sets the function to be called upon UART1 overrun error
+
+  @Preconditions
+    Initialize  the UART1 module before calling this API
+
+  @Param
+    Address of function to be set as overrun error handler
+
+  @Returns
+    None
+*/
+void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
+
+/**
+  @Summary
+    Set UART1 Error Handler
+
+  @Description
+    This API sets the function to be called upon UART1 error
+
+  @Preconditions
+    Initialize  the UART1 module before calling this API
+
+  @Param
+    Address of function to be set as error handler
+
+  @Returns
+    None
+*/
+void UART1_SetErrorHandler(void (* interruptHandler)(void));
+
+
+
+/**
+  @Summary
 	    UART1 Receive Interrupt Handler
 
 	  @Description

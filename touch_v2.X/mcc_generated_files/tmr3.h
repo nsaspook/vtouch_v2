@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for TMR3.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB 	          :  MPLAB X 5.40
 */
 
 /*
@@ -60,7 +60,7 @@
 
 #endif
 
-#define TMR3_INTERRUPT_TICKER_FACTOR    197
+#define TMR3_INTERRUPT_TICKER_FACTOR    200
 
 /**
   Section: TMR3 APIs

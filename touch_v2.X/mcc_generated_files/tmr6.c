@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for TMR6.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
 	Device            :  PIC18F57K42
 	Driver Version    :  2.11
     The generated drivers are tested against the following:
-	Compiler          :  XC8 1.45 
-	MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above 
+        MPLAB 	          :  MPLAB X 5.40
  */
 
 /*
@@ -51,12 +51,6 @@
 #include <xc.h>
 #include "tmr6.h"
 #include "interrupt_manager.h"
-#include "uart1.h"
-#include "../vconfig.h"
-#include "../timers.h"
-
-extern struct V_data V;
-extern volatile uint16_t tickCount[TMR_COUNT];
 
 /**
   Section: Global Variables Definitions
@@ -169,7 +163,7 @@ void TMR6_LoadPeriodRegister(uint8_t periodVal)
 	TMR6_Period8BitSet(periodVal);
 }
 
-void __interrupt(irq(TMR6), base(8)) TMR6_ISR()
+void __interrupt(irq(TMR6),base(8)) TMR6_ISR()
 {
 
 	// clear the TMR6 interrupt flag
@@ -184,13 +178,13 @@ void TMR6_CallBack(void)
 {
 	// Add your custom callback code here
 	// this code executes every TMR6_INTERRUPT_TICKER_FACTOR periods of TMR6
-	if (TMR6_InterruptHandler) {
+    if(TMR6_InterruptHandler)
+    {
 		TMR6_InterruptHandler();
 	}
 }
 
-void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
-{
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
 	TMR6_InterruptHandler = InterruptHandler;
 }
 
@@ -199,53 +193,8 @@ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
  */
 void TMR6_DefaultInterruptHandler(void)
 {
-	static uint8_t i, j = 0;
 	// add your TMR6 interrupt custom code
 	// or set custom function using TMR6_SetInterruptHandler()
-
-	//Decrement each software timer
-	for (i = 0; i < TMR_COUNT; i++) {
-		if (tickCount[i] != 0) {
-			tickCount[i]--;
-		}
-	}
-
-	if (UART1_is_rx_ready()) {
-		i = UART1_Read();
-
-		if (i == 't') { // UTC time command stop
-			UART1_Write(i);
-			UART1_Write('\r');
-			UART1_Write('\n');
-			V.time_info = false;
-			if (j == 10)
-				V.time_info = true; // notify main we have a possible valid time
-			V.get_time_text = false;
-			V.rbuf[j] = 0; // term string
-			j = 0;
-		}
-
-		if (V.get_time_text && j < 12) { // load ASCII time string and overflow size count
-			UART1_Write(i);
-			V.rbuf[j++] = i;
-		}
-		if (i == '#') { // Display system data on RS232 terminal
-			V.sys_info = true;
-		}
-		if (i == 'V') { // AC charger ON
-			V.ac_on = true;
-		}
-		if (i == 'v') { // AC charger OFF
-			V.ac_off = true;
-		}
-		if (i == 'T') { // UTC time command start
-			UART1_Write(i);
-			V.time_info = false;
-			V.get_time_text = true;
-			j = 0;
-		}
-
-	}
 }
 
 /**

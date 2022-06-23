@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for TMR2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
         Device            :  PIC18F57K42
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above 
+        MPLAB 	          :  MPLAB X 5.40
 */
 
 /*
@@ -318,6 +318,7 @@ typedef enum
     /* UART2_tx_edge is the Timer external reset source 
      */
     TMR2_UART2_TX_EDGE
+
 
 } TMR2_HLT_EXT_RESET_SOURCE;
 
@@ -856,4 +857,3 @@ bool TMR2_HasOverflowOccured(void);
 /**
  End of File
 */
-

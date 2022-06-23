@@ -1,5 +1,5 @@
 /**
-  DMA Generated Driver File
+  DMA1 Generated Driver File
   
   @Company
     Microchip Technology Inc.
@@ -8,17 +8,17 @@
     dma1.c
 
   @Summary
-    This is the generated driver implementation file for the DMA driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+    This is the generated driver implementation file for the DMA1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description
-    This header file provides implementations for driver APIs for DMA CHANNEL1.
+    This source file provides APIs for DMA1.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.5
 	Device            :  PIC18F57K42
-	Driver Version    :  2.10
+        Driver Version    :  1.0.0
     The generated drivers are tested against the following:
-	Compiler          :  XC8 1.45
-	MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.20 and above
+        MPLAB 	          :  MPLAB X 5.40
  */
 
 /*
@@ -53,109 +53,187 @@
 #include "interrupt_manager.h"
 #include "../vconfig.h"
 
-/**
-  Section: Global Variables Definitions
- */
-
-extern struct spi_link_type spi_link;
-
-//------------------------------------------------------------------------------
-#define m_ARBITER_LOCK()    \
-      do{ \
-           asm("BANKSEL PRLOCK");\
-           asm("MOVLW   0x55");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("MOVLW   0xAA");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("BSF     (PRLOCK & 0xFF),0");\
-        }while(0)
-//------------------------------------------------------------------------------
-#define m_ARBITER_UNLOCK()  \
-      do{ \
-           asm("BANKSEL PRLOCK");\
-           asm("MOVLW   0x55");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("MOVLW   0xAA");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("BCF     (PRLOCK & 0xFF),0");\
-        }while(0)
+void (*DMA1_SCNTI_InterruptHandler)(void);
+void (*DMA1_DCNTI_InterruptHandler)(void);
+void (*DMA1_AI_InterruptHandler)(void);
+void (*DMA1_ORI_InterruptHandler)(void);
 
 /**
-  Section: DMA APIs
+  Section: DMA1 APIs
  */
+
 void DMA1_Initialize(void)
 {
-	DMA1SSA = 0x001000; //set source start address
-	DMA1DSA = 0x3D11; //set destination start address 
-	DMA1CON1 = 0x03; //set control register1 
-	DMA1SSZ = 0x0001; //set source size
-	DMA1DSZ = 0x0001; //set destination size
-	DMA1SIRQ = 0x15; //set DMA Transfer Trigger Source
-	DMA1AIRQ = 0x0; //set DMA Transfer abort Source
+    //Source Address : SrcVarName0
+    DMA1SSA = &SrcVarName0;
+    //Destination Address : &SPI1TXB
+    DMA1DSA = &SPI1TXB;
+    //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP cleared; 
+    DMA1CON1 = 0x03;
+    //Source Message Size : 1
+    DMA1SSZ = 1;
+    //Destination Message Size : 1
+    DMA1DSZ = 1;
+    //Start Trigger : SIRQ None; 
+    DMA1SIRQ = 0x00;
+    //Abort Trigger : AIRQ None; 
+    DMA1AIRQ = 0x00;
 
-	PIR2bits.DMA1DCNTIF = 0; // clear Destination Count Interrupt Flag bit
-	PIR2bits.DMA1SCNTIF = 0; // clear Source Count Interrupt Flag bit
-	PIR2bits.DMA1AIF = 0; // clear abort Interrupt Flag bit
-	PIR2bits.DMA1ORIF = 0; // clear overrun Interrupt Flag bit
+    // Clear Destination Count Interrupt Flag bit
+    PIR2bits.DMA1DCNTIF = 0; 
+    // Clear Source Count Interrupt Flag bit
+    PIR2bits.DMA1SCNTIF = 0; 
+    // Clear Abort Interrupt Flag bit
+    PIR2bits.DMA1AIF = 0; 
+    // Clear Overrun Interrupt Flag bit
+    PIR2bits.DMA1ORIF =0; 
 
-	PIE2bits.DMA1DCNTIE = 1; // enable Destination Count 0 Interrupt
-	PIE2bits.DMA1SCNTIE = 1; // enable Source Count Interrupt
-	PIE2bits.DMA1AIE = 1; // enable abort Interrupt
-	PIE2bits.DMA1ORIE = 1; // enable overrun Interrupt 
-
-	ISRPR = 0;
-	MAINPR = 1;
-	DMA1PR = 4;
-	DMA2PR = 2;
-	SCANPR = 3;
-
-	asm("BCF INTCON0,7");
-
-	asm("BANKSEL PRLOCK");
-	asm("MOVLW 0x55");
-	asm("MOVWF PRLOCK");
-	asm("MOVLW 0xAA");
-	asm("MOVWF PRLOCK");
-	asm("BSF PRLOCK, 0");
-
-	asm("BSF INTCON0,7");
-
-	DMA1CON0 = 0x00; //set control register0
+    PIE2bits.DMA1DCNTIE = 1;
+	DMA1_SetDCNTIInterruptHandler(DMA1_DefaultInterruptHandler);
+    PIE2bits.DMA1SCNTIE = 1; 
+	DMA1_SetSCNTIInterruptHandler(DMA1_DefaultInterruptHandler);
+    PIE2bits.DMA1AIE = 1; 
+	DMA1_SetAIInterruptHandler(DMA1_DefaultInterruptHandler);
+    PIE2bits.DMA1ORIE =1; 
+	DMA1_SetORIInterruptHandler(DMA1_DefaultInterruptHandler);
+	
+    //EN enabled; SIRQEN disabled; DGO not in progress; AIRQEN disabled; 
+    DMA1CON0 = 0x80;
+	
 }
 
-void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
+void DMA1_SelectSourceRegion(uint8_t region)
 {
-	PIR2bits.DMA1SCNTIF = 0; // clear Source Count Interrupt Flag 
-	// add your DMA channel 1 source count 0 interrupt custom code
-	spi_link.LCD_DATA = 0;
+	DMA1CON1bits.SMR  = region;
 }
 
-void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()
+void DMA1_SetSourceAddress(uint24_t address)
 {
-	PIR2bits.DMA1DCNTIF = 0; // clear Destination Count Interrupt Flag 
-	// add your DMA channel 1 destination count 0 interrupt custom code
+	DMA1SSA = address;
 }
 
-#if (__XC8_VERSION <= 1400)
-void __interrupt(irq(DMA1ARBT), base(8)) DMA1_DMAA_ISR()
-#else   // __XC8_VERSION
-
-void __interrupt(irq(DMA1A), base(8)) DMA1_DMAA_ISR()
-#endif // __XC8_VERSION
+void DMA1_SetDestinationAddress(uint16_t address)
 {
-	PIR2bits.DMA1AIF = 0; // clear abort Interrupt Flag 
-	// add your DMA channel 1 abort interrupt custom code
+	DMA1DSA = address;
 }
 
-#if (__XC8_VERSION <= 1400)
-void __interrupt(irq(IRQ_DMA1OVR), base(8)) DMA1_DMAOR_ISR()
-#else // __XC8_VERSION
-
-void __interrupt(irq(DMA1OR), base(8)) DMA1_DMAOR_ISR()
-#endif // __XC8_VERSION
+void DMA1_SetSourceSize(uint16_t size)
 {
-	PIR2bits.DMA1ORIF = 0; // clear overrun Interrupt Flag 
-	// add your DMA channel 1 overrun interrupt custom code
+	DMA1SSZ= size;
+}
+
+void DMA1_SetDestinationSize(uint16_t size)
+{                     
+	DMA1DSZ= size;
+}
+
+uint24_t DMA1_GetSourcePointer(void)
+{
+	return DMA1SPTR;
+}
+
+uint16_t DMA1_GetDestinationPointer(void)
+{
+	return DMA1DPTR;
+}
+
+void DMA1_SetStartTrigger(uint8_t sirq)
+{
+	DMA1SIRQ = sirq;
+}
+
+void DMA1_SetAbortTrigger(uint8_t airq)
+{
+	DMA1AIRQ = airq;
+}
+
+void DMA1_StartTransfer(void)
+{
+	DMA1CON0bits.DGO = 1;
+}
+
+void DMA1_StartTransferWithTrigger(void)
+{
+	DMA1CON0bits.SIRQEN = 1;
+}
+
+void DMA1_StopTransfer(void)
+{
+	DMA1CON0bits.SIRQEN = 0; 
+	DMA1CON0bits.DGO = 0;
+}
+
+void DMA1_SetDMAPriority(uint8_t priority)
+{
+    // This function is dependant on the PR1WAY CONFIG bit
+	PRLOCK = 0x55;
+	PRLOCK = 0xAA;
+	PRLOCKbits.PRLOCKED = 0;
+	DMA1PR = priority;
+	PRLOCK = 0x55;
+	PRLOCK = 0xAA;
+	PRLOCKbits.PRLOCKED = 1;
+}
+
+void __interrupt(irq(IRQ_DMA1SCNT),base(8)) DMA1_DMASCNTI_ISR()
+{
+    // Clear the source count interrupt flag
+    PIR2bits.DMA1SCNTIF = 0;
+
+    if (DMA1_SCNTI_InterruptHandler)
+            DMA1_SCNTI_InterruptHandler();
+}
+
+void DMA1_SetSCNTIInterruptHandler(void (* InterruptHandler)(void))
+{
+	 DMA1_SCNTI_InterruptHandler = InterruptHandler;
+}
+
+void __interrupt(irq(IRQ_DMA1DCNT),base(8)) DMA1_DMADCNTI_ISR()
+{
+    // Clear the source count interrupt flag
+    PIR2bits.DMA1DCNTIF = 0;
+
+    if (DMA1_DCNTI_InterruptHandler)
+            DMA1_DCNTI_InterruptHandler();
+}
+
+void DMA1_SetDCNTIInterruptHandler(void (* InterruptHandler)(void))
+{
+	 DMA1_DCNTI_InterruptHandler = InterruptHandler;
+}
+
+void __interrupt(irq(IRQ_DMA1A),base(8)) DMA1_DMAAI_ISR()
+{
+    // Clear the source count interrupt flag
+    PIR2bits.DMA1AIF = 0;
+
+    if (DMA1_AI_InterruptHandler)
+            DMA1_AI_InterruptHandler();
+}
+
+void DMA1_SetAIInterruptHandler(void (* InterruptHandler)(void))
+{
+	 DMA1_AI_InterruptHandler = InterruptHandler;
+}
+
+void __interrupt(irq(IRQ_DMA1OR),base(8)) DMA1_DMAORI_ISR()
+{
+    // Clear the source count interrupt flag
+    PIR2bits.DMA1ORIF = 0;
+
+    if (DMA1_ORI_InterruptHandler)
+            DMA1_ORI_InterruptHandler();
+}
+
+void DMA1_SetORIInterruptHandler(void (* InterruptHandler)(void))
+{
+	 DMA1_ORI_InterruptHandler = InterruptHandler;
+}
+
+void DMA1_DefaultInterruptHandler(void){
+    // add your DMA1 interrupt custom code
+    // or set custom function using DMA1_SetSCNTIInterruptHandler() /DMA1_SetDCNTIInterruptHandler() /DMA1_SetAIInterruptHandler() /DMA1_SetORIInterruptHandler()
 }
 /**
   End of File
