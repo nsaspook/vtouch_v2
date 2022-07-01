@@ -78,16 +78,16 @@ extern V_data V;
 #define PEUKERT		1.0
 
 typedef struct C_data { // real calculated variables
-	float calc[ADC_BUFFER_SIZE];
-	float c_load, c_bat, c_pv, c_mppt, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, v_cmode, bv_ror, bc_ror;
-	float p_load, p_inverter, p_pv, p_bat, p_mppt, start_power;
-	float t_comp, esr;
-	float bank_ah, dynamic_ah, pv_ah, loadah, dynamic_ah_adj, dynamic_ah_daily, dynamic_ah_adj_daily;
-	float bkwi, bkwo, pvkw, invkw, loadkw;
+	double calc[ADC_BUFFER_SIZE];
+	double c_load, c_bat, c_pv, c_mppt, v_cc, v_pv, v_bat, v_cbus, v_bbat, v_temp, v_inverter, v_sensor, v_cmode, bv_ror, bc_ror;
+	double p_load, p_inverter, p_pv, p_bat, p_mppt, start_power;
+	double t_comp, esr;
+	double bank_ah, dynamic_ah, pv_ah, loadah, dynamic_ah_adj, dynamic_ah_daily, dynamic_ah_adj_daily;
+	double bkwi, bkwo, pvkw, invkw, loadkw;
 	uint16_t runtime, soc;
 	bool update;
 	hist_type hist[1];
-	float load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
+	double load_i1, load_i2, bv_noload, bv_one_load, bv_full_load;
 	bool day, dupdate;
 	time_t day_start, day_end, day_update, updates;
 } C_data;
@@ -100,7 +100,7 @@ typedef enum {
 
 extern volatile C_data C;
 
-float lp_filter(const float, const uint8_t, const int8_t);
+double lp_filter(const double, const uint8_t, const int8_t);
 void convert_adc_data(void);
 void calc_model_data(void);
 void calc_ror_data(void);
@@ -112,7 +112,7 @@ void set_ac_charger_relay(const bool);
 bool get_ac_charger_relay(void);
 bool check_day_time(void);
 void load_hist_data(void);
-float calc_fixups(float data, FIX_CODES fixup);
+double calc_fixups(double data, FIX_CODES fixup);
 
 char spinners(uint8_t, uint8_t);
 time_t time(time_t *);

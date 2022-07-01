@@ -31,7 +31,7 @@ typedef struct R_data { // internal variables
 	adc_result_t raw_dac[DAC_BUFFER_SIZE];
 	union dac_buf_type max5322_cmd;
 	int16_t n_offset[NUM_C_SENSORS];
-	float n_scalar[NUM_C_SENSORS];
+	double n_scalar[NUM_C_SENSORS];
 	uint8_t scan_index;
 	uint16_t scan_select;
 	bool done;
@@ -152,7 +152,7 @@ adc_result_t get_raw_result(const adcc_channel_t index)
 /*
  * turn ADC values into standard program values
  */
-float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
+double conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 {
 
 	switch (to_what) {
@@ -163,15 +163,15 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 		if (ADC_C_CHAN >> chan & 0x1) { // current conversion
 			if (ADC_C_CHAN_TYPE >> chan & 0x1) {
 #ifdef BAT_100A
-				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100B]) * R.n_scalar[A100B];
+				return((double) ((int16_t) get_raw_result(chan)) - R.n_offset[A100B]) * R.n_scalar[A100B];
 #else
-				return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A200]) * R.n_scalar[A200];
+				return((double) ((int16_t) get_raw_result(chan)) - R.n_offset[A200]) * R.n_scalar[A200];
 #endif
 			} else {
 				if (ADC_C_CHAN_MPPT >> chan & 0x1) {
-					return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100M]) * R.n_scalar[A100M];
+					return((double) ((int16_t) get_raw_result(chan)) - R.n_offset[A100M]) * R.n_scalar[A100M];
 				} else {
-					return((float) ((int16_t) get_raw_result(chan)) - R.n_offset[A100]) * R.n_scalar[A100];
+					return((double) ((int16_t) get_raw_result(chan)) - R.n_offset[A100]) * R.n_scalar[A100];
 				}
 			}
 		} else {
@@ -179,21 +179,21 @@ float conv_raw_result(const adcc_channel_t chan, const adc_conv_t to_what)
 				return 25.0; // filler until sensor is selected
 			} else { // voltage conversion
 				if (ADC_V_CHAN_TYPE >> chan & 0x01) {
-					return((float) get_raw_result(chan) * V_SCALE_H) / 1000.0;
+					return((double) get_raw_result(chan) * V_SCALE_H) / 1000.0;
 				} else {
-					return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+					return((double) get_raw_result(chan) * V_SCALE) / 1000.0;
 				}
 			}
 		}
 		break;
 	case O_CONV:
 		if (ADC_C_CHAN >> chan & 0x1 || ADC_T_CHAN >> chan & 0x1)
-			return((float) get_raw_result(chan) * C_SCALE) / 1000.0;
+			return((double) get_raw_result(chan) * C_SCALE) / 1000.0;
 
 		if (ADC_V_CHAN_TYPE >> chan & 0x01) {
-			return((float) get_raw_result(chan) * V_SCALE_H) / 1000.0;
+			return((double) get_raw_result(chan) * V_SCALE_H) / 1000.0;
 		} else {
-			return((float) get_raw_result(chan) * V_SCALE) / 1000.0;
+			return((double) get_raw_result(chan) * V_SCALE) / 1000.0;
 		}
 
 		break;
@@ -316,7 +316,7 @@ void set_dac(void)
 	dac_spi_control(false);
 }
 
-static uint16_t convert_dac_raw(float voltage)
+static uint16_t convert_dac_raw(double voltage)
 {
 	/*
 	 * check limits
@@ -334,7 +334,7 @@ static uint16_t convert_dac_raw(float voltage)
 /*
  * 0.0 to 10.0 volts
  */
-uint16_t set_dac_a(const float voltage)
+uint16_t set_dac_a(const double voltage)
 {
 	R.raw_dac[DCHAN_A] = convert_dac_raw(voltage);
 	return R.raw_dac[DCHAN_A];
@@ -343,7 +343,7 @@ uint16_t set_dac_a(const float voltage)
 /*
  * 0.0 to 10.0 volts
  */
-uint16_t set_dac_b(const float voltage)
+uint16_t set_dac_b(const double voltage)
 {
 	R.raw_dac[DCHAN_B] = convert_dac_raw(voltage);
 	return R.raw_dac[DCHAN_B];
@@ -393,7 +393,7 @@ bool cal_current_zero(const bool mode, const int16_t cb, const int16_t cp, const
 /*
  * update internal current scaling using a calibrated 10A value in both sensors
  */
-bool cal_current_10A(const bool mode, const int16_t cb, const int16_t cp, const float scaleb, const float scalep)
+bool cal_current_10A(const bool mode, const int16_t cb, const int16_t cp, const double scaleb, const double scalep)
 {
 #ifdef BAT_100A
 	if (!check_range(cb, TEN_A_RANGE, C_CAL_A100))

@@ -21,7 +21,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.58"
+#define VER	"1.59"
 	/*
 	 * 0.1 MBMC new version for one 24vdc battery string for the 57K42
 	 * 0.2 start to configure the hardware for mbmc duty
@@ -80,6 +80,7 @@ extern "C" {
 	 * 1.55 refactor
 	 * 1.56 adjust low voltage cutoff routines
 	 * 1.58 MPLAB_IDE 6.00
+	 * 1.59 float to double, casting cleanup
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -247,7 +248,7 @@ extern "C" {
 		int32_t pv_eff, tot_eff; // pv generation eff factor, total system eff factor
 		uint32_t ttg_t, updates;
 		time_t pclock;
-		float peukert, cef, peukert_adj, cef_calc, cef_save;
+		double peukert, cef, peukert_adj, cef_calc, cef_save;
 		int16_t h[HPARAM_SIZE]; // h[6]=cumulative battery Ah cc and inv (real),h[0]=cumulative battery Ah cc and inv (p_adj)
 		uint16_t rate, udod, bsoc, bound_rate, bound_factor, samplei, sampleo, ah, drate, esr, rest_rate, rest_factor, esrp;
 		uint8_t version;

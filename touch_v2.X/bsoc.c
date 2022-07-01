@@ -265,7 +265,7 @@ void reset_bsoc(const R_CODES rmode)
 }
 
 /* Current is in 0.1A units */
-uint32_t peukert(uint16_t brate, float bcurrent, float peukert, int16_t bsoc)
+uint32_t peukert(uint16_t brate, double bcurrent, double peukert, int16_t bsoc)
 {
 	double t1, t2, t3, t4, t5, t6, t7, t_time;
 
@@ -319,7 +319,7 @@ uint16_t Volts_to_SOC(const uint32_t cvoltage)
  * -1.0 when each FSM sequence is done
  * (fsm 'true' will init the state machine and return the init code)
  */
-float esr_check(const uint8_t fsm)
+double esr_check(const uint8_t fsm)
 {
 	static uint8_t esr_state = 0;
 
@@ -388,7 +388,7 @@ float esr_check(const uint8_t fsm)
 /*
  * read analog signal from RS485 interface for charge controller status
  */
-uint8_t cc_state(float cc_signal)
+uint8_t cc_state(double cc_signal)
 {
 	uint8_t state = M_OFFLINE; // offline
 

@@ -122,16 +122,16 @@ char * get_vterm_ptr(const uint8_t line, const uint8_t vterm)
 
 void vterm_dump(void)
 {
-	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(0, 0), get_vterm_ptr(0, 1));
+	sprintf(V.buf, "vterm %x:%x   ", (unsigned int) get_vterm_ptr(0, 0), (unsigned int) get_vterm_ptr(0, 1));
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(0, 0, V.buf);
-	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(1, 0), get_vterm_ptr(1, 1));
+	sprintf(V.buf, "vterm %x:%x   ", (unsigned int) get_vterm_ptr(1, 0), (unsigned int) get_vterm_ptr(1, 1));
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(1, 0, V.buf);
-	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(2, 0), get_vterm_ptr(2, 1));
+	sprintf(V.buf, "vterm %x:%x   ", (unsigned int) get_vterm_ptr(2, 0), (unsigned int) get_vterm_ptr(2, 1));
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(2, 0, V.buf);
-	sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(3, 0), get_vterm_ptr(3, 1));
+	sprintf(V.buf, "vterm %x:%x   ", (unsigned int) get_vterm_ptr(3, 0), (unsigned int) get_vterm_ptr(3, 1));
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(3, 0, V.buf);
 	WaitMs(3000);

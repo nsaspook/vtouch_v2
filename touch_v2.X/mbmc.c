@@ -20,10 +20,10 @@ const char spin[MAX_SHAPES][20] = {
  * floating point low pass filter, 
  * slow/fast select, use (-1) to zero buffer channel and return new
  */
-float lp_filter(const float new, const uint8_t bn, const int8_t slow)
+double lp_filter(const double new, const uint8_t bn, const int8_t slow)
 {
-	static float smooth[LP_BUFFER_SIZE];
-	float lp_speed;
+	static double smooth[LP_BUFFER_SIZE];
+	double lp_speed;
 
 	if (bn >= LP_BUFFER_SIZE) // buffer index check
 		return new;
@@ -64,7 +64,7 @@ void convert_adc_data(void)
  */
 void calc_model_data(void)
 {
-	static float bvror = 0.0, bcror = 0.0;
+	static double bvror = 0.0, bcror = 0.0;
 	stop_bsoc();
 
 	if (!V.calib) {
@@ -103,7 +103,7 @@ void calc_model_data(void)
  */
 void calc_ror_data(void)
 {
-	static float bvror = 0.0, bcror = 0.0; // must remember prior values
+	double bvror = 0.0, bcror = 0.0; // must remember prior values
 
 	C.bc_ror = fabs(conv_raw_result(C_BATT, CONV) - bcror);
 	bcror = conv_raw_result(C_BATT, CONV);
@@ -173,7 +173,7 @@ char spinners(uint8_t shape, const uint8_t reset)
 bool check_day_time(void)
 {
 	static uint8_t day_delay = 0, low_bat_delay = 0;
-	float light;
+	double light;
 
 	light = conv_raw_result(V_LIGHT_SENSOR, CONV);
 	/*
@@ -340,7 +340,7 @@ void set_time(const time_t t)
 /*
  * cleanup mainly noise values near zero value
  */
-float calc_fixups(float data, FIX_CODES fixup)
+double calc_fixups(double data, FIX_CODES fixup)
 {
 	if ((fixup & SKIP) || (!V.fixup))
 		return data;

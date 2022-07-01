@@ -392,7 +392,7 @@ void main(void)
 			update_lcd(0);
 			uint16_t i_esr = 1;
 			uint8_t shape = 0;
-			float esr_temp;
+			double esr_temp;
 			while ((esr_temp = esr_check(false)) < 0.0) {
 				WaitMs(110); // limit display updates
 				shape = (uint8_t) fabs(esr_temp);

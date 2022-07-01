@@ -104,9 +104,9 @@ void start_bsoc(void);
 void stop_bsoc(void);
 void reset_bsoc(R_CODES);
 uint16_t Volts_to_SOC(uint32_t);
-uint32_t peukert(uint16_t, float, float, int16_t);
-float esr_check(uint8_t);
-uint8_t cc_state(float);
+uint32_t peukert(uint16_t, double, double, int16_t);
+double esr_check(uint8_t);
+uint8_t cc_state(double);
 bool pv_diversion(bool);
 
 #endif	/* BSOC_H */
