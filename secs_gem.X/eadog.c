@@ -64,7 +64,7 @@ void init_display(void)
 	DMA1CON1bits.SMODE = 1;
 	DMA1CON1bits.SMR = 0;
 	DMA1CON1bits.SSTP = 1;
-	DMA1SSA = (uint32_t) & ring_buf1;
+	DMA1SSA = (uint24_t) & ring_buf1;
 	DMA1CON0bits.DGO = 0;
 	SPI1INTFbits.SPI1TXUIF = 1;
 	DLED = false;
@@ -81,7 +81,7 @@ void init_port(void)
 	DMA2CON1bits.SMR = 0;
 	DMA2CON1bits.SSTP = 0;
 	DMA2DSA = 0x3FBB; // LATB
-	DMA2SSA = (uint32_t) port_data;
+	DMA2SSA = (uint24_t) port_data;
 	DMA2CON0bits.DGO = 0;
 }
 
@@ -144,7 +144,7 @@ void wait_lcd_done(void)
 	wdtdelay(50);
 }
 
-void eaDogM_WriteChr(const int8_t value)
+void eaDogM_WriteChr(const uint8_t value)
 {
 	send_lcd_data_dma((uint8_t) value);
 }
@@ -194,9 +194,6 @@ void eaDogM_WriteString(char *strPtr)
 	DMA1CON0bits.EN = 1; /* enable DMA */
 	printf("%s", strPtr); // testing copy method using STDIO redirect to buffer
 	start_lcd();
-#ifdef DISPLAY_SLOW
-	wdtdelay(9000);
-#endif
 }
 
 /*

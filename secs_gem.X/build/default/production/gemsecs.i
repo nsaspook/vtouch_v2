@@ -27883,7 +27883,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 94 "./vconfig.h"
+# 85 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28767,7 +28767,7 @@ void WaitMs(uint16_t numMilliseconds);
  void wait_lcd_set(void);
  _Bool wait_lcd_check(void);
  void wait_lcd_done(void);
- void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteChr(uint8_t);
  void eaDogM_WriteCommand(uint8_t);
  void eaDogM_SetPos(uint8_t, uint8_t);
  void eaDogM_ClearRow(uint8_t);
@@ -29012,10 +29012,6 @@ uint16_t block_checksum(uint8_t *byte_block, const uint16_t byte_count)
  for (i = 0; i < byte_count; i++) {
   sum += byte_block[i];
  }
-
-
-
-
  return sum;
 }
 
@@ -29040,9 +29036,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
  switch (*m_link) {
  case LINK_STATE_IDLE:
-
-
-
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
@@ -29071,7 +29064,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 108 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -29088,7 +29080,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
      *m_link = LINK_STATE_EOT;
     }
    }
-
   }
   break;
  case LINK_STATE_EOT:
@@ -29181,9 +29172,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   break;
  case LINK_STATE_ACK:
-
-
-
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
   V.systemb = H10[1].block.block.systemb;
@@ -29246,13 +29234,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-
-
-
-
-
-
-
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
@@ -29367,11 +29348,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   retry = 3;
   UART1_Write(0x05);
   StartTimer(TMR_T2, 3000);
-  *t_link = LINK_STATE_ENQ;
-
-
-
-
   break;
  case LINK_STATE_ENQ:
   if (TimerDone(TMR_T2)) {
@@ -29426,13 +29402,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
     V.all_errors++;
    }
   }
-
-
-
-
-
-
-
   break;
  case LINK_STATE_ACK:
   if (TimerDone(TMR_T3)) {
@@ -29641,10 +29610,10 @@ uint16_t format_display_text(const char *data)
 {
  int16_t j, i = 0, k, z = 0;
 
- k = strlen(data);
+ k = (int16_t) strlen(data);
 
  if (!k)
-  return k;
+  return (uint16_t)k;
 
 
 
@@ -29657,7 +29626,7 @@ uint16_t format_display_text(const char *data)
   }
 
  }
- return k;
+ return (uint16_t)k;
 }
 
 
@@ -30175,7 +30144,7 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
  uint16_t i = 0;
 
  do {
-  DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+  DATAEE_WriteByte(i + ((uint16_t)(V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
  } while (++i <= 255);
 
  sprintf(V.info, "Saved S%dF%d %d     ", stream, function, V.response.log_num);

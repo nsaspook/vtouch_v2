@@ -27670,7 +27670,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 94 "./vconfig.h"
+# 85 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -27828,7 +27828,7 @@ void PIN_MANAGER_Initialize (void);
  void wait_lcd_set(void);
  _Bool wait_lcd_check(void);
  void wait_lcd_done(void);
- void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteChr(uint8_t);
  void eaDogM_WriteCommand(uint8_t);
  void eaDogM_SetPos(uint8_t, uint8_t);
  void eaDogM_ClearRow(uint8_t);
@@ -28110,7 +28110,7 @@ void init_display(void)
  DMA1CON1bits.SMODE = 1;
  DMA1CON1bits.SMR = 0;
  DMA1CON1bits.SSTP = 1;
- DMA1SSA = (uint32_t) & ring_buf1;
+ DMA1SSA = (uint24_t) & ring_buf1;
  DMA1CON0bits.DGO = 0;
  SPI1INTFbits.SPI1TXUIF = 1;
  LATEbits.LATE2 = 0;
@@ -28127,7 +28127,7 @@ void init_port(void)
  DMA2CON1bits.SMR = 0;
  DMA2CON1bits.SSTP = 0;
  DMA2DSA = 0x3FBB;
- DMA2SSA = (uint32_t) port_data;
+ DMA2SSA = (uint24_t) port_data;
  DMA2CON0bits.DGO = 0;
 }
 
@@ -28190,7 +28190,7 @@ void wait_lcd_done(void)
  wdtdelay(50);
 }
 
-void eaDogM_WriteChr(const int8_t value)
+void eaDogM_WriteChr(const uint8_t value)
 {
  send_lcd_data_dma((uint8_t) value);
 }
@@ -28240,9 +28240,6 @@ void eaDogM_WriteString(char *strPtr)
  DMA1CON0bits.EN = 1;
  printf("%s", strPtr);
  start_lcd();
-
-
-
 }
 
 

@@ -28584,7 +28584,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 94 "./vconfig.h"
+# 85 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28746,7 +28746,7 @@ void PMD_Initialize(void);
  void wait_lcd_set(void);
  _Bool wait_lcd_check(void);
  void wait_lcd_done(void);
- void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteChr(uint8_t);
  void eaDogM_WriteCommand(uint8_t);
  void eaDogM_SetPos(uint8_t, uint8_t);
  void eaDogM_ClearRow(uint8_t);
@@ -29266,7 +29266,8 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 374 "main.c"
+
+
 header33 H33[] = {
  {
   .length = 33,
@@ -29603,10 +29604,6 @@ void main(void)
      else
       sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
     }
-
-
-
-
     break;
    case SEQ_STATE_RX:
 
@@ -29624,9 +29621,6 @@ void main(void)
      }
      s[16] = 0;
      MyeaDogM_WriteStringAtPos(0, 0, s);
-
-
-
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
       V.failed_send = 0;
@@ -29719,11 +29713,11 @@ void main(void)
    case SEQ_STATE_INIT:
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
-    if (V.debug)
+    if (V.debug) {
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-    else
+    } else {
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 838 "main.c"
+    }
     break;
    case SEQ_STATE_RX:
 
@@ -29816,6 +29810,5 @@ void main(void)
     update_lcd(2);
    }
   }
-# 938 "main.c"
  }
 }

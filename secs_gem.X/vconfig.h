@@ -26,15 +26,6 @@ extern "C" {
 	 * 1.22 message sequencing in secs_II_message
 	 * 1.70 code cleanup and update for better display terminals
 	 */
-	//#define TESTING
-	//#define DISPLAY_SLOW
-
-	//#define DB1
-	//#define DB2
-	//#define DB3
-	//#define DB4
-	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
-	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
 
 #define SLED	LED0_LAT

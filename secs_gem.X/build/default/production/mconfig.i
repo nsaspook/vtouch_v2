@@ -28361,7 +28361,7 @@ void PMD_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 94 "./vconfig.h"
+# 85 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -28738,7 +28738,7 @@ void *memccpy (void *restrict, const void *restrict, int, size_t);
  void wait_lcd_set(void);
  _Bool wait_lcd_check(void);
  void wait_lcd_done(void);
- void eaDogM_WriteChr(int8_t);
+ void eaDogM_WriteChr(uint8_t);
  void eaDogM_WriteCommand(uint8_t);
  void eaDogM_SetPos(uint8_t, uint8_t);
  void eaDogM_ClearRow(uint8_t);
@@ -28832,7 +28832,7 @@ D_CODES set_temp_display_help(const D_CODES);
 extern V_data V;
 static D_data D = {0};
 
-static const char *build_date = "Dec 16 2024", *build_time = "18:14:35";
+static const char *build_date = "Dec 16 2024", *build_time = "18:47:46";
 
 
 
@@ -28944,13 +28944,13 @@ char * get_vterm_ptr(uint8_t line, uint8_t vterm)
 
 void vterm_dump(void)
 {
- sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(0, 0), get_vterm_ptr(0, 1));
+ sprintf(V.buf, "vterm %x:%x   ", (uint16_t) get_vterm_ptr(0, 0), (uint16_t) get_vterm_ptr(0, 1));
  wait_lcd_done();
  eaDogM_WriteStringAtPos(0, 0, V.buf);
- sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(1, 0), get_vterm_ptr(1, 1));
+ sprintf(V.buf, "vterm %x:%x   ", (uint16_t) get_vterm_ptr(1, 0), (uint16_t) get_vterm_ptr(1, 1));
  wait_lcd_done();
  eaDogM_WriteStringAtPos(1, 0, V.buf);
- sprintf(V.buf, "vterm %x:%x   ", get_vterm_ptr(2, 0), get_vterm_ptr(2, 1));
+ sprintf(V.buf, "vterm %x:%x   ", (uint16_t) get_vterm_ptr(2, 0), (uint16_t) get_vterm_ptr(2, 1));
  wait_lcd_done();
  eaDogM_WriteStringAtPos(2, 0, V.buf);
  WaitMs(3000);

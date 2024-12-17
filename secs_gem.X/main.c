@@ -353,24 +353,6 @@ header26 H26[] = {
 };
 #endif
 
-#ifdef DB2
-header27 H27[] = {
-	{ // S1F13 send 'online request ' from equipment to host for TESTING
-		.length = 27,
-		.block.block.rbit = 1,
-		.block.block.didh = 0,
-		.block.block.didl = 0,
-		.block.block.wbit = 1,
-		.block.block.stream = 1,
-		.block.block.function = 13,
-		.block.block.ebit = 1,
-		.block.block.bidh = 0,
-		.block.block.bidl = 1,
-		.block.block.systemb = 1,
-	},
-};
-#endif
-
 header33 H33[] = {
 	{ // S2F41 'ready load-lock ' command from host to equipment
 		.length = 33,
@@ -707,10 +689,6 @@ void main(void)
 					else
 						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
 				}
-#ifdef DB1
-				WaitMs(50);
-				UART1_put_buffer(ENQ);
-#endif
 				break;
 			case SEQ_STATE_RX:
 				/*
@@ -728,9 +706,6 @@ void main(void)
 					}
 					s[16] = 0;
 					MyeaDogM_WriteStringAtPos(0, 0, s);
-#ifdef DB1
-					WaitMs(5);
-#endif
 					if (V.wbit) { // check for receive only messages
 						V.s_state = SEQ_STATE_TX;
 						V.failed_send = false;
@@ -823,18 +798,11 @@ void main(void)
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
-				if (V.debug)
+				if (V.debug) {
 					sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-				else
-					sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-
-#ifdef DB1
-				if (SLED) {
-					UART2_put_buffer(ENQ);
 				} else {
-					UART1_put_buffer(ENQ);
+					sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 				}
-#endif
 				break;
 			case SEQ_STATE_RX:
 				/*
@@ -927,14 +895,6 @@ void main(void)
 				update_lcd(2);
 			}
 		}
-
-#ifdef DISP_TRIG
-		if (TimerDone(TMR_SEQ)) {
-			StartTimer(TMR_SEQ, 10000);
-			StartTimer(TMR_INFO, TDELAY);
-			V.set_sequ = true;
-		}
-#endif
 	}
 }
 /**
