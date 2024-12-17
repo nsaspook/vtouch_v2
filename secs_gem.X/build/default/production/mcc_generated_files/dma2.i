@@ -1,4 +1,4 @@
-# 1 "mcc_generated_files/pin_manager.c"
+# 1 "mcc_generated_files/dma2.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
 # 288 "<built-in>" 3
@@ -18,8 +18,8 @@ extern char * __inthi_stack_hi;
 extern char * __intlo_stack_lo;
 extern char * __intlo_stack_hi;
 # 2 "<built-in>" 2
-# 1 "mcc_generated_files/pin_manager.c" 2
-# 49 "mcc_generated_files/pin_manager.c"
+# 1 "mcc_generated_files/dma2.c" 2
+# 51 "mcc_generated_files/dma2.c"
 # 1 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -27541,100 +27541,46 @@ __attribute__((__unsupported__("The READTIMER" "0" "() macro is not available wi
 unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 2 3
-# 49 "mcc_generated_files/pin_manager.c" 2
+# 51 "mcc_generated_files/dma2.c" 2
 
-# 1 "mcc_generated_files/pin_manager.h" 1
-# 672 "mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 50 "mcc_generated_files/pin_manager.c" 2
-
+# 1 "mcc_generated_files/dma2.h" 1
+# 54 "mcc_generated_files/dma2.h"
 # 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdbool.h" 1 3
-# 51 "mcc_generated_files/pin_manager.c" 2
-
-
-
-
-
-
-void PIN_MANAGER_Initialize(void)
+# 54 "mcc_generated_files/dma2.h" 2
+# 114 "mcc_generated_files/dma2.h"
+void DMA2_Initialize(void);
+# 52 "mcc_generated_files/dma2.c" 2
+# 61 "mcc_generated_files/dma2.c"
+void DMA2_Initialize(void)
 {
+    DMA2SSA = 0x001000;
+    DMA2DSA = 0x3FBB;
+    DMA2CON1 = 0x03;
+    DMA2SSZ = 0x0001;
+    DMA2DSZ = 0x0001;
+    DMA2SIRQ = 0x46;
+    DMA2AIRQ = 0x3D;
 
+    PIR5bits.DMA2DCNTIF =0;
+    PIR5bits.DMA2SCNTIF =0;
+    PIR5bits.DMA2AIF =0;
+ PIR5bits.DMA2ORIF =0;
 
+    PIE5bits.DMA2DCNTIE =0;
+    PIE5bits.DMA2SCNTIE =0;
+    PIE5bits.DMA2AIE =0;
+    PIE5bits.DMA2ORIE =0;
 
-    LATE = 0x07;
-    LATD = 0x00;
-    LATA = 0x00;
-    LATF = 0x00;
-    LATB = 0x00;
-    LATC = 0x06;
+ __asm("BCF INTCON0,7");
 
+ __asm("BANKSEL PRLOCK");
+    __asm("MOVLW 0x55");
+    __asm("MOVWF PRLOCK");
+    __asm("MOVLW 0xAA");
+    __asm("MOVWF PRLOCK");
+    __asm("BSF PRLOCK, 0");
 
+ __asm("BSF INTCON0,7");
 
-
-    TRISE = 0x00;
-    TRISF = 0x0F;
-    TRISA = 0x8F;
-    TRISB = 0x8F;
-    TRISC = 0x91;
-    TRISD = 0x0C;
-
-
-
-
-    ANSELD = 0x00;
-    ANSELC = 0x01;
-    ANSELB = 0x08;
-    ANSELE = 0x00;
-    ANSELF = 0x0F;
-    ANSELA = 0x8F;
-
-
-
-
-    WPUD = 0xFC;
-    WPUF = 0xF0;
-    WPUE = 0x00;
-    WPUB = 0x87;
-    WPUA = 0x00;
-    WPUC = 0x90;
-
-
-
-
-    ODCONE = 0x00;
-    ODCONF = 0x00;
-    ODCONA = 0x00;
-    ODCONB = 0x00;
-    ODCONC = 0x00;
-    ODCOND = 0x00;
-
-
-
-
-    SLRCONA = 0xFF;
-    SLRCONB = 0xFF;
-    SLRCONC = 0xFF;
-    SLRCOND = 0xFF;
-    SLRCONE = 0x07;
-    SLRCONF = 0xFF;
-# 126 "mcc_generated_files/pin_manager.c"
-    U2RXPPS = 0x0F;
-    RB6PPS = 0x16;
-    RC3PPS = 0x1E;
-    INT0PPS = 0x08;
-    INT2PPS = 0x0A;
-    INT1PPS = 0x09;
-    U1RXPPS = 0x17;
-    SPI1SCKPPS = 0x13;
-    RA4PPS = 0x01;
-    RA5PPS = 0x26;
-    RA6PPS = 0x28;
-    RD1PPS = 0x10;
-    RC5PPS = 0x1F;
-    RC6PPS = 0x13;
-    SPI1SDIPPS = 0x14;
-}
-
-void PIN_MANAGER_IOC(void)
-{
+    DMA2CON0 = 0x00;
 }
