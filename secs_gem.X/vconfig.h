@@ -19,11 +19,12 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define VER	"1.64G"
+#define VER	"1.70G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
 	 * 1.22 message sequencing in secs_II_message
+	 * 1.70 code cleanup and update for better display terminals
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

@@ -27883,7 +27883,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 93 "./vconfig.h"
+# 94 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -29046,7 +29046,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
-
     V.uart = 1;
     StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
@@ -29056,7 +29055,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   if (UART2_is_rx_ready()) {
    rxData = UART2_Read();
    if (rxData == 0x05) {
-
     V.uart = 2;
     StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
@@ -29073,7 +29071,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
-# 110 "gemsecs.c"
+# 108 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     if (rxData == 0x04) {
@@ -29233,7 +29231,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
-
     do { LATEbits.LATE1 = 1; } while(0);
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
@@ -29366,7 +29363,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
-
   V.error = LINK_ERROR_NONE;
   retry = 3;
   UART1_Write(0x05);
@@ -29620,19 +29616,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   sprintf(V.terminal, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.64G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.70G");
   break;
  case display_online:
   sprintf(V.terminal, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.64G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.70G");
   break;
  case display_comm:
   sprintf(V.terminal, msg2,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.64G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.70G");
   break;
  default:
   sprintf(V.terminal, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.64G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "1.70G");
   break;
  }
 
@@ -29944,11 +29940,6 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    block.reply_length = sizeof(header12);
    V.queue = 1;
    break;
-
-
-
-
-
   default:
    H10[2].block.block.stream = stream;
    block.header = (uint8_t*) & H10[2];
@@ -30234,14 +30225,9 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 
    ee_logger(stream, function, dtime, msg_data);
    if (function == 42) {
-
-
-
-
     V.msg_ret = 0;
     V.msg_error = MSG_ERROR_NONE;
     V.response.info = DIS_STR;
-
    }
    break;
   default:

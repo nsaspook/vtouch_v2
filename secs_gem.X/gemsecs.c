@@ -64,7 +64,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
-				//				IO_RB4_SetHigh();
 				V.uart = 1;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
@@ -74,7 +73,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		if (UART2_is_rx_ready()) {
 			rxData = UART2_Read();
 			if (rxData == ENQ) {
-				//				IO_RB5_SetHigh();
 				V.uart = 2;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
@@ -266,7 +264,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
-				//				IO_RB4_SetHigh();
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
@@ -399,7 +396,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
-		//		IO_RB5_SetHigh();
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
 		UART1_Write(ENQ);
@@ -977,11 +973,6 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.reply_length = sizeof(header12);
 			V.queue = true;
 			break;
-			//		case 14: // model and rev information
-			//			block.header = (uint8_t*) & H12[1];
-			//			block.length = sizeof(header12);
-			//			H12[1].block.block.systemb = V.systemb;
-			//			break;
 		default: // S1F0 abort
 			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
@@ -1267,14 +1258,9 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 			/* always store this message */
 			ee_logger(stream, function, dtime, msg_data);
 			if (function == 42) { // check for failed command
-				//				if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
-				//					V.msg_error = MSG_ERROR_DATA;
-				//					V.response.info = DIS_SEQUENCE; // show error message
-				//				} else {
 				V.msg_ret = 0;
 				V.msg_error = MSG_ERROR_NONE;
 				V.response.info = DIS_STR;
-				//				}
 			}
 			break;
 		default:
