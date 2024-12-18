@@ -392,7 +392,7 @@ header33 H33[] = {
 	},
 };
 
-const header33 HC33[] = {//template for VII80 stack commands
+const header33 HC33[] = {//template for vii80 stack commands
 	{ // S2F41 'ready load-lock ' command from host to equipment
 		.length = 33,
 		.block.block.rbit = 0,
@@ -647,6 +647,9 @@ void main(void)
 	}
 	mode_lamp_dim(V.mode_pwm); // 10KHz PWM 
 
+	/*
+	 * UI and link FSM
+	 */
 	while (true) {
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
@@ -659,7 +662,7 @@ void main(void)
 			set_vterm(0); // set to buffer 0
 			sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
 			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 0), " FAB SERIAL   ");
+			sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
 			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");

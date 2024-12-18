@@ -40,13 +40,17 @@ uint16_t run_checksum(const uint8_t byte_block, const bool clear)
 {
 	static uint16_t sum = 0;
 
-	if (clear)
+	if (clear) {
 		sum = 0;
+	}
 
 	sum += byte_block;
 	return sum;
 }
 
+/*
+ * Message Protocol FSM
+ */
 LINK_STATES m_protocol(LINK_STATES *m_link)
 {
 	uint8_t rxData;
@@ -200,8 +204,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		secs_II_monitor_message(V.stream, V.function, LDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
 		*m_link = LINK_STATE_DONE;
-		//		IO_RB4_SetLow();
-		//		IO_RB5_SetLow();
 		break;
 	case LINK_STATE_NAK:
 		*m_link = LINK_STATE_ERROR;
@@ -217,8 +219,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code state
 		V.failed_receive = false;
-		//		IO_RB4_Toggle();
-		//		IO_RB5_Toggle();
 	default:
 		*m_link = LINK_STATE_IDLE;
 		break;
@@ -227,6 +227,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 	return *m_link;
 }
 
+/*
+ * Serial receive data FSM
+ */
 LINK_STATES r_protocol(LINK_STATES * r_link)
 {
 	uint8_t rxData;
@@ -240,8 +243,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
-				if (TimerDone(TMR_HBIO))
+				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTS); // add short idle time
+				}
 			}
 		}
 		break;
@@ -277,8 +281,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 					/*
 					 * skip possible message data
 					 */
-					if (rxData_l <= sizeof(block10)) // save header only
+					if (rxData_l <= sizeof(block10)) { // save header only
 						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+					}
 
 					if (d <= 16) {
 						if (rxData_l == sizeof(block10) + d) { // save possible data format codes
@@ -354,6 +359,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 	return *r_link;
 }
 
+/*
+ * Transmit Serial Data FSM
+ */
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
 	uint8_t rxData;
@@ -534,6 +542,9 @@ void hb_message()
 	}
 }
 
+/*
+ * Machine remote test sequences
+ */
 bool sequence_messages(const uint8_t sid)
 {
 	V.msg_error = MSG_ERROR_NONE;
@@ -631,7 +642,7 @@ uint16_t format_display_text(const char *data)
 	k = (int16_t) strlen(data);
 
 	if (!k) // check for null string
-		return (uint16_t)k;
+		return(uint16_t) k;
 
 	/*
 	 * shift string into Terminal text array
@@ -642,9 +653,8 @@ uint16_t format_display_text(const char *data)
 		} else {
 			H153[0].data[j] = ' ';
 		}
-
 	}
-	return (uint16_t)k;
+	return(uint16_t) k;
 }
 
 /*
@@ -1162,7 +1172,7 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
 	uint16_t i = 0;
 
 	do {
-		DATAEE_WriteByte(i + ((uint16_t)(V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+		DATAEE_WriteByte(i + ((uint16_t) (V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
 	} while (++i <= 255);
 
 	sprintf(V.info, "Saved S%dF%d %d     ", stream, function, V.response.log_num);
