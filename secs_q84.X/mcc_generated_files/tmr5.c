@@ -50,11 +50,13 @@
 
 #include <xc.h>
 #include "tmr5.h"
+#include "interrupt_manager.h"
 
 /**
   Section: Global Variables Definitions
 */
 volatile uint16_t timer5ReloadVal;
+void (*TMR5_InterruptHandler)(void);
 
 /**
   Section: TMR5 APIs
@@ -70,23 +72,29 @@ void TMR5_Initialize(void)
     //GSS T5G_pin; 
     T5GATE = 0x00;
 
-    //CS T5CKIPPS; 
-    T5CLK = 0x00;
+    //CS FOSC/4; 
+    T5CLK = 0x01;
 
-    //TMR5H 0; 
-    TMR5H = 0x00;
+    //TMR5H 99; 
+    TMR5H = 0x63;
 
-    //TMR5L 0; 
-    TMR5L = 0x00;
+    //TMR5L 192; 
+    TMR5L = 0xC0;
 
-    // Clearing IF flag.
+    // Clearing IF flag before enabling the interrupt.
     PIR8bits.TMR5IF = 0;
-	
+
     // Load the TMR value to reload variable
     timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
 
-    // CKPS 1:1; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
-    T5CON = 0x01;
+    // Enabling TMR5 interrupt.
+    PIE8bits.TMR5IE = 1;
+
+    // Set Default Interrupt Handler
+    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
+
+    // CKPS 1:8; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; 
+    T5CON = 0x31;
 }
 
 void TMR5_StartTimer(void)
@@ -154,11 +162,43 @@ uint8_t TMR5_CheckGateValueStatus(void)
     return (T5GCONbits.T5GVAL);
 }
 
-bool TMR5_HasOverflowOccured(void)
+void __interrupt(irq(TMR5),base(8)) TMR5_ISR()
 {
-    // check if  overflow has occurred by checking the TMRIF bit
-    return(PIR8bits.TMR5IF);
+    static volatile unsigned int CountCallBack = 0;
+
+    // Clear the TMR5 interrupt flag
+    PIR8bits.TMR5IF = 0;
+    TMR5_WriteTimer(timer5ReloadVal);
+
+    // callback function - called every 50th pass
+    if (++CountCallBack >= TMR5_INTERRUPT_TICKER_FACTOR)
+    {
+        // ticker function call
+        TMR5_CallBack();
+
+        // reset ticker counter
+        CountCallBack = 0;
+    }
 }
+
+void TMR5_CallBack(void)
+{
+    // Add your custom callback code here
+    if(TMR5_InterruptHandler)
+    {
+        TMR5_InterruptHandler();
+    }
+}
+
+void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
+    TMR5_InterruptHandler = InterruptHandler;
+}
+
+void TMR5_DefaultInterruptHandler(void){
+    // add your TMR5 interrupt custom code
+    // or set custom function using TMR5_SetInterruptHandler()
+}
+
 /**
   End of File
 */

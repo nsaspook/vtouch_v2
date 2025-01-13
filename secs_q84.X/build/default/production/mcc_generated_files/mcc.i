@@ -39008,24 +39008,30 @@ void ADC_SetContext4ThresholdInterruptHandler(void (* InterruptHandler)(void));
 # 56 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/tmr5.h" 1
-# 100 "mcc_generated_files/tmr5.h"
+# 101 "mcc_generated_files/tmr5.h"
 void TMR5_Initialize(void);
-# 129 "mcc_generated_files/tmr5.h"
+# 130 "mcc_generated_files/tmr5.h"
 void TMR5_StartTimer(void);
-# 161 "mcc_generated_files/tmr5.h"
+# 162 "mcc_generated_files/tmr5.h"
 void TMR5_StopTimer(void);
-# 196 "mcc_generated_files/tmr5.h"
+# 197 "mcc_generated_files/tmr5.h"
 uint16_t TMR5_ReadTimer(void);
-# 235 "mcc_generated_files/tmr5.h"
+# 236 "mcc_generated_files/tmr5.h"
 void TMR5_WriteTimer(uint16_t timerVal);
-# 271 "mcc_generated_files/tmr5.h"
+# 272 "mcc_generated_files/tmr5.h"
 void TMR5_Reload(void);
-# 310 "mcc_generated_files/tmr5.h"
+# 311 "mcc_generated_files/tmr5.h"
 void TMR5_StartSinglePulseAcquisition(void);
-# 349 "mcc_generated_files/tmr5.h"
+# 350 "mcc_generated_files/tmr5.h"
 uint8_t TMR5_CheckGateValueStatus(void);
-# 387 "mcc_generated_files/tmr5.h"
-_Bool TMR5_HasOverflowOccured(void);
+# 368 "mcc_generated_files/tmr5.h"
+void TMR5_CallBack(void);
+# 386 "mcc_generated_files/tmr5.h"
+ void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
+# 404 "mcc_generated_files/tmr5.h"
+extern void (*TMR5_InterruptHandler)(void);
+# 422 "mcc_generated_files/tmr5.h"
+void TMR5_DefaultInterruptHandler(void);
 # 57 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/tmr6.h" 1
@@ -39313,8 +39319,14 @@ void TMR6_WriteTimer(uint8_t timerVal);
 void TMR6_Period8BitSet(uint8_t periodVal);
 # 858 "mcc_generated_files/tmr6.h"
 void TMR6_LoadPeriodRegister(uint8_t periodVal);
-# 896 "mcc_generated_files/tmr6.h"
-_Bool TMR6_HasOverflowOccured(void);
+# 877 "mcc_generated_files/tmr6.h"
+ void TMR6_CallBack(void);
+# 894 "mcc_generated_files/tmr6.h"
+ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
+# 912 "mcc_generated_files/tmr6.h"
+extern void (*TMR6_InterruptHandler)(void);
+# 930 "mcc_generated_files/tmr6.h"
+void TMR6_DefaultInterruptHandler(void);
 # 58 "mcc_generated_files/mcc.h" 2
 
 # 1 "mcc_generated_files/dma1.h" 1
@@ -39902,8 +39914,8 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     TMR6_Initialize();
     DMA1_Initialize();
-    TMR5_Initialize();
     TMR2_Initialize();
+    TMR5_Initialize();
     UART2_Initialize();
     UART1_Initialize();
     SPI1_Initialize();

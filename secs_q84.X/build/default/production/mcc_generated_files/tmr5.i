@@ -38716,31 +38716,43 @@ unsigned char __t3rd16on(void);
 # 54 "mcc_generated_files/tmr5.h"
 # 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdbool.h" 1 3
 # 54 "mcc_generated_files/tmr5.h" 2
-# 100 "mcc_generated_files/tmr5.h"
+# 101 "mcc_generated_files/tmr5.h"
 void TMR5_Initialize(void);
-# 129 "mcc_generated_files/tmr5.h"
+# 130 "mcc_generated_files/tmr5.h"
 void TMR5_StartTimer(void);
-# 161 "mcc_generated_files/tmr5.h"
+# 162 "mcc_generated_files/tmr5.h"
 void TMR5_StopTimer(void);
-# 196 "mcc_generated_files/tmr5.h"
+# 197 "mcc_generated_files/tmr5.h"
 uint16_t TMR5_ReadTimer(void);
-# 235 "mcc_generated_files/tmr5.h"
+# 236 "mcc_generated_files/tmr5.h"
 void TMR5_WriteTimer(uint16_t timerVal);
-# 271 "mcc_generated_files/tmr5.h"
+# 272 "mcc_generated_files/tmr5.h"
 void TMR5_Reload(void);
-# 310 "mcc_generated_files/tmr5.h"
+# 311 "mcc_generated_files/tmr5.h"
 void TMR5_StartSinglePulseAcquisition(void);
-# 349 "mcc_generated_files/tmr5.h"
+# 350 "mcc_generated_files/tmr5.h"
 uint8_t TMR5_CheckGateValueStatus(void);
-# 387 "mcc_generated_files/tmr5.h"
-_Bool TMR5_HasOverflowOccured(void);
+# 368 "mcc_generated_files/tmr5.h"
+void TMR5_CallBack(void);
+# 386 "mcc_generated_files/tmr5.h"
+ void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
+# 404 "mcc_generated_files/tmr5.h"
+extern void (*TMR5_InterruptHandler)(void);
+# 422 "mcc_generated_files/tmr5.h"
+void TMR5_DefaultInterruptHandler(void);
 # 52 "mcc_generated_files/tmr5.c" 2
+
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 53 "mcc_generated_files/tmr5.c" 2
 
 
 
 
 
 volatile uint16_t timer5ReloadVal;
+void (*TMR5_InterruptHandler)(void);
 
 
 
@@ -38757,13 +38769,13 @@ void TMR5_Initialize(void)
     T5GATE = 0x00;
 
 
-    T5CLK = 0x00;
+    T5CLK = 0x01;
 
 
-    TMR5H = 0x00;
+    TMR5H = 0x63;
 
 
-    TMR5L = 0x00;
+    TMR5L = 0xC0;
 
 
     PIR8bits.TMR5IF = 0;
@@ -38772,7 +38784,13 @@ void TMR5_Initialize(void)
     timer5ReloadVal=(uint16_t)((TMR5H << 8) | TMR5L);
 
 
-    T5CON = 0x01;
+    PIE8bits.TMR5IE = 1;
+
+
+    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);
+
+
+    T5CON = 0x31;
 }
 
 void TMR5_StartTimer(void)
@@ -38840,8 +38858,39 @@ uint8_t TMR5_CheckGateValueStatus(void)
     return (T5GCONbits.T5GVAL);
 }
 
-_Bool TMR5_HasOverflowOccured(void)
+void __attribute__((picinterrupt(("irq(TMR5),base(8)")))) TMR5_ISR()
+{
+    static volatile unsigned int CountCallBack = 0;
+
+
+    PIR8bits.TMR5IF = 0;
+    TMR5_WriteTimer(timer5ReloadVal);
+
+
+    if (++CountCallBack >= 50)
+    {
+
+        TMR5_CallBack();
+
+
+        CountCallBack = 0;
+    }
+}
+
+void TMR5_CallBack(void)
 {
 
-    return(PIR8bits.TMR5IF);
+    if(TMR5_InterruptHandler)
+    {
+        TMR5_InterruptHandler();
+    }
+}
+
+void TMR5_SetInterruptHandler(void (* InterruptHandler)(void)){
+    TMR5_InterruptHandler = InterruptHandler;
+}
+
+void TMR5_DefaultInterruptHandler(void){
+
+
 }

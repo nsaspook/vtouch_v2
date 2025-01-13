@@ -50,10 +50,13 @@
 
 #include <xc.h>
 #include "tmr6.h"
+#include "interrupt_manager.h"
 
 /**
   Section: Global Variables Definitions
 */
+
+void (*TMR6_InterruptHandler)(void);
 
 /**
   Section: TMR6 APIs
@@ -63,8 +66,8 @@ void TMR6_Initialize(void)
 {
     // Set TMR6 to the options selected in the User Interface
 
-    // T6CS HFINTOSC; 
-    T6CLKCON = 0x03;
+    // T6CS FOSC/4; 
+    T6CLKCON = 0x01;
 
     // T6PSYNC Not Synchronized; T6MODE Software control; T6CKPOL Rising Edge; T6CKSYNC Not Synchronized; 
     T6HLT = 0x00;
@@ -72,17 +75,23 @@ void TMR6_Initialize(void)
     // T6RSEL T6CKIPPS pin; 
     T6RST = 0x00;
 
-    // PR6 255; 
-    T6PR = 0xFF;
+    // PR6 127; 
+    T6PR = 0x7F;
 
     // TMR6 0; 
     T6TMR = 0x00;
 
-    // Clearing IF flag.
+    // Clearing IF flag before enabling the interrupt.
     PIR15bits.TMR6IF = 0;
 
-    // T6CKPS 1:1; T6OUTPS 1:1; TMR6ON on; 
-    T6CON = 0x80;
+    // Enabling TMR6 interrupt.
+    PIE15bits.TMR6IE = 1;
+
+    // Set Default Interrupt Handler
+    TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
+
+    // T6CKPS 1:16; T6OUTPS 1:4; TMR6ON on; 
+    T6CON = 0xC3;
 }
 
 void TMR6_ModeSet(TMR6_HLT_MODE mode)
@@ -154,17 +163,36 @@ void TMR6_LoadPeriodRegister(uint8_t periodVal)
    TMR6_Period8BitSet(periodVal);
 }
 
-bool TMR6_HasOverflowOccured(void)
+void __interrupt(irq(TMR6),base(8)) TMR6_ISR()
 {
-    // check if  overflow has occurred by checking the TMRIF bit
-    bool status = PIR15bits.TMR6IF;
-    if(status)
-    {
-        // Clearing IF flag.
-        PIR15bits.TMR6IF = 0;
-    }
-    return status;
+
+    // clear the TMR6 interrupt flag
+    PIR15bits.TMR6IF = 0;
+
+    // ticker function call;
+    // ticker is 1 -> Callback function gets called everytime this ISR executes
+    TMR6_CallBack();
 }
+
+void TMR6_CallBack(void)
+{
+    // Add your custom callback code here
+    // this code executes every TMR6_INTERRUPT_TICKER_FACTOR periods of TMR6
+    if(TMR6_InterruptHandler)
+    {
+        TMR6_InterruptHandler();
+    }
+}
+
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
+    TMR6_InterruptHandler = InterruptHandler;
+}
+
+void TMR6_DefaultInterruptHandler(void){
+    // add your TMR6 interrupt custom code
+    // or set custom function using TMR6_SetInterruptHandler()
+}
+
 /**
   End of File
 */

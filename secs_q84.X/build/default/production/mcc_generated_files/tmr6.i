@@ -38999,16 +38999,36 @@ void TMR6_WriteTimer(uint8_t timerVal);
 void TMR6_Period8BitSet(uint8_t periodVal);
 # 858 "mcc_generated_files/tmr6.h"
 void TMR6_LoadPeriodRegister(uint8_t periodVal);
-# 896 "mcc_generated_files/tmr6.h"
-_Bool TMR6_HasOverflowOccured(void);
+# 877 "mcc_generated_files/tmr6.h"
+ void TMR6_CallBack(void);
+# 894 "mcc_generated_files/tmr6.h"
+ void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
+# 912 "mcc_generated_files/tmr6.h"
+extern void (*TMR6_InterruptHandler)(void);
+# 930 "mcc_generated_files/tmr6.h"
+void TMR6_DefaultInterruptHandler(void);
 # 53 "mcc_generated_files/tmr6.c" 2
-# 62 "mcc_generated_files/tmr6.c"
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 54 "mcc_generated_files/tmr6.c" 2
+
+
+
+
+
+void (*TMR6_InterruptHandler)(void);
+
+
+
+
+
 void TMR6_Initialize(void)
 {
 
 
 
-    T6CLKCON = 0x03;
+    T6CLKCON = 0x01;
 
 
     T6HLT = 0x00;
@@ -39017,7 +39037,7 @@ void TMR6_Initialize(void)
     T6RST = 0x00;
 
 
-    T6PR = 0xFF;
+    T6PR = 0x7F;
 
 
     T6TMR = 0x00;
@@ -39026,7 +39046,13 @@ void TMR6_Initialize(void)
     PIR15bits.TMR6IF = 0;
 
 
-    T6CON = 0x80;
+    PIE15bits.TMR6IE = 1;
+
+
+    TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
+
+
+    T6CON = 0xC3;
 }
 
 void TMR6_ModeSet(TMR6_HLT_MODE mode)
@@ -39098,14 +39124,32 @@ void TMR6_LoadPeriodRegister(uint8_t periodVal)
    TMR6_Period8BitSet(periodVal);
 }
 
-_Bool TMR6_HasOverflowOccured(void)
+void __attribute__((picinterrupt(("irq(TMR6),base(8)")))) TMR6_ISR()
 {
 
-    _Bool status = PIR15bits.TMR6IF;
-    if(status)
-    {
 
-        PIR15bits.TMR6IF = 0;
+    PIR15bits.TMR6IF = 0;
+
+
+
+    TMR6_CallBack();
+}
+
+void TMR6_CallBack(void)
+{
+
+
+    if(TMR6_InterruptHandler)
+    {
+        TMR6_InterruptHandler();
     }
-    return status;
+}
+
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
+    TMR6_InterruptHandler = InterruptHandler;
+}
+
+void TMR6_DefaultInterruptHandler(void){
+
+
 }
