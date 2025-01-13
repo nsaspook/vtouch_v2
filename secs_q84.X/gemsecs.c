@@ -263,6 +263,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
 	switch (*r_link) {
 	case LINK_STATE_IDLE:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE R    ");
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
 			if (rxData == ENQ) {
@@ -276,12 +277,14 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		}
 		break;
 	case LINK_STATE_ENQ:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R    ");
 		rxData_l = 0; // message byte counter
 		d = 1; // data byte counter
 		b_block = (uint8_t*) & H254[0];
 		UART1_Write(EOT);
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R0    ");
 #ifdef DB2
 		WaitMs(1);
 		//H27[0].block.block.systemb = V.ticks; // make distinct, testing S1F13
@@ -289,8 +292,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
 		secs_send((uint8_t*) & H10[3], sizeof(header10), true, 1);
 #endif
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R1    ");
 		break;
 	case LINK_STATE_EOT:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT R    ");
 		if (TimerDone(TMR_T2)) {
 			V.timer_error++;
 			V.all_errors++;
@@ -354,6 +359,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		}
 		break;
 	case LINK_STATE_ACK:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R    ");
 		UART1_Write(ACK);
 		V.stream = H10[1].block.block.stream;
 		V.function = H10[1].block.block.function;
@@ -362,13 +368,15 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
 		secs_II_monitor_message(V.stream, V.function, SDELAY); // log selected messages
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R1    ");
 		V.g_state = secs_gem_state(V.stream, V.function);
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R2    ");
 		V.failed_receive = false;
 		*r_link = LINK_STATE_DONE;
 		V.abort = LINK_ERROR_NONE;
-		//		IO_RB4_SetLow();
 		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
 		UART1_Write(NAK);
 		*r_link = LINK_STATE_ERROR;
 		V.all_errors++;
@@ -378,8 +386,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		retry = RTY;
 		break;
 	case LINK_STATE_ERROR:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR R    ");
 		break;
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_DONE R    ");
 		V.failed_receive = false;
 		V.abort = LINK_ERROR_NONE;
 		//		IO_RB4_Toggle(); // indicate DONE state execution
@@ -399,6 +409,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE    ");
 		//		IO_RB5_SetHigh();
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
@@ -411,6 +422,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 #endif
 		break;
 	case LINK_STATE_ENQ:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ    ");
 		if (TimerDone(TMR_T2)) {
 			V.timer_error++;
 			V.all_errors++;
@@ -437,6 +449,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_EOT: // transmit the message
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT    ");
 		if (!requeue)
 			block = secs_II_message(V.stream, V.function); // parse proper response
 
@@ -472,6 +485,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 #endif
 		break;
 	case LINK_STATE_ACK:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK    ");
 		if (TimerDone(TMR_T3)) {
 			V.timer_error++;
 			V.error = LINK_ERROR_T3;
@@ -490,6 +504,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_NAK: // send failure
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
@@ -497,8 +512,10 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_ERROR:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR    ");
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_DONE    ");
 		V.failed_send = false;
 		V.abort = LINK_ERROR_NONE;
 		break;
@@ -518,6 +535,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 
 	k = (uint8_t *) byte_block;
 
+	eaDogM_WriteStringAtPos(3, 0, "secs_send           ");
 	++V.ticks; // transaction ID for host master messages
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
@@ -539,7 +557,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 
 	switch (s_uart) {
 	case 2:
-		while (UART2_is_tx_ready() < 64); // wait for tx buffer to drain
+		while (!UART2_is_tx_ready()); // wait for tx buffer to drain
 		for (i = length; i > 0; i--) {
 			if (fake) {
 				UART2_put_buffer(k[i - 1]);
@@ -548,10 +566,11 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 				UART2_Write(k[i - 1]); // -1 for array memory addressing
 			}
 		}
+		eaDogM_WriteStringAtPos(3, 0, "secs_send 2          ");
 		break;
 	case 1:
 	default:
-		while (UART1_is_tx_ready() < 64); // wait for tx buffer to drain
+		while (!UART1_is_tx_ready()); // wait for tx buffer to drain
 		for (i = length; i > 0; i--) {
 			if (fake) {
 				UART1_put_buffer(k[i - 1]);
@@ -560,6 +579,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 				UART1_Write(k[i - 1]); // -1 for array memory addressing
 			}
 		}
+		eaDogM_WriteStringAtPos(3, 0, "secs_send 1          ");
 		break;
 	}
 
@@ -676,9 +696,10 @@ void terminal_format(DISPLAY_TYPES t_format)
  */
 uint16_t format_display_text(const char *data)
 {
-	int16_t j, i = 0, k, z = 0;
+	int16_t j, i = 0, z = 0;
+	uint16_t k;
 
-	k = strlen(data);
+	k = (uint16_t) strlen(data);
 
 	if (!k) // check for null string
 		return k;
@@ -923,7 +944,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 	static response_type block;
 	uint16_t i = 0;
 
-//	IO_RB4_Toggle();
+	//	IO_RB4_Toggle();
 	V.abort = LINK_ERROR_NONE;
 	V.queue = false;
 	block.respond = false;
@@ -1309,6 +1330,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 	static GEM_STATES block = GEM_STATE_DISABLE;
 	static GEM_EQUIP equipment = GEM_GENERIC;
 
+	eaDogM_WriteStringAtPos(3, 0, "secs_gem_state    ");
 	switch (stream) { // from equipment
 	case 1:
 		switch (function) {
@@ -1316,17 +1338,22 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		case 1:
 #endif
 		case 2:
+			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2   ");
 			if (block != GEM_STATE_REMOTE) {
 				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
 				}
 				terminal_format(display_online);
+				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 tf  ");
 				format_display_text(V.terminal);
+				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 fd  ");
 				V.response.mesgid = 1;
 				V.sequences++;
 				V.sid = 10;
 				sequence_messages(V.sid); // send a hello text message
+				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sm  ");
 				set_display_info(DIS_SEQUENCE_M);
+				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sdi  ");
 			}
 
 			block = GEM_STATE_REMOTE;
@@ -1334,6 +1361,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
 			break;
 		case 13: // parse equipment model from comm request response
+			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 13   ");
 			switch (V.response.ack[4]) {
 			case 'V':
 				switch (V.response.ack[5]) {
@@ -1374,6 +1402,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			V.ticker = 0;
 			break;
 		case 14:
+			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 14   ");
 			if (block != GEM_STATE_REMOTE)
 				block = GEM_STATE_COMM;
 			V.ticker = 15;
@@ -1382,6 +1411,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		case 15:
 #endif
 		case 16:
+			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 16   ");
 			block = GEM_STATE_OFFLINE;
 			V.ticker = 0;
 			break;
@@ -1389,6 +1419,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		case 17:
 #endif
 		case 18:
+			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 18   ");
 			block = GEM_STATE_ONLINE;
 			V.ticker = 0;
 			break;
@@ -1401,6 +1432,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		}
 		break;
 	case 5: // alarms
+		eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 5   ");
 		switch (function) {
 		default:
 			V.alarm = function;
@@ -1408,6 +1440,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		}
 		break;
 	case 9:
+		eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 9   ");
 		switch (function) {
 		default:
 			V.alarm = function;
@@ -1417,6 +1450,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		}
 		break;
 	default:
+		eaDogM_WriteStringAtPos(3, 0, "secs_gem_state DEF   ");
 		if (block == GEM_STATE_DISABLE) {
 			block = GEM_STATE_COMM;
 			V.ticker = 45;

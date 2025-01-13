@@ -18,23 +18,24 @@ extern "C" {
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
-	
+
 #define NHD
 
-#define VER	"1.64G"
+#define VER	"2.00A"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
 	 * 1.22 message sequencing in secs_II_message
+	 * 2.00 Version for 47Q84
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
 
-	//#define DB1
-	//#define DB2
-	//#define DB3
-	//#define DB4
-	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
+#define DB1
+#define DB2
+#define DB3
+#define DB4
+#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
 	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
 
@@ -102,17 +103,17 @@ extern "C" {
 		struct ringBufS_t *tx1b, *tx1a;
 		volatile int32_t int_count;
 	};
-	
+
 	struct spi_link_type { // internal SPI state table
-	uint8_t SPI_LCD : 1;
-	uint8_t SPI_AUX : 1;
-	uint8_t LCD_TIMER : 1;
-	volatile uint8_t LCD_DATA : 1;
-	uint16_t delay;
-	uint8_t config;
-	uint8_t * txbuf;
-	volatile int32_t int_count;
-};
+		uint8_t SPI_LCD : 1;
+		uint8_t SPI_AUX : 1;
+		uint8_t LCD_TIMER : 1;
+		volatile uint8_t LCD_DATA : 1;
+		uint16_t delay;
+		uint8_t config;
+		uint8_t * txbuf;
+		volatile int32_t int_count;
+	};
 
 	typedef struct B_type {
 		volatile bool ten_sec_flag, one_sec_flag, FM80_charged, pv_high, pv_update, once;
@@ -256,9 +257,9 @@ extern "C" {
 	typedef struct V_help {
 		const char message[32], display[32];
 	} V_help;
-	
+
 	extern B_type B;
-	
+
 	void wdtdelay(const uint32_t);
 
 #ifdef	__cplusplus
