@@ -3,8 +3,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;./ringbufs.h: 19:  typedef struct ringBufS_t {
 [s S3280 `uc -> 64 `i `uc 1 `uc 1 `uc 1 ]
 [n S3280 ringBufS_t buf head tail count ]
-"29 /opt/microchip/xc8/v2.46/pic/include/c99/string.h
-[; ;/opt/microchip/xc8/v2.46/pic/include/c99/string.h: 29: void *memset (void *, int, size_t);
+"29 /opt/microchip/xc8/v2.50/pic/include/c99/string.h
+[; ;/opt/microchip/xc8/v2.50/pic/include/c99/string.h: 29: void *memset (void *, int, size_t);
 [v _memset `(*v ~T0 @X0 0 ef3`*v`i`ui ]
 "362 /root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/proc/pic18f47q84.h
 [; ;/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/proc/pic18f47q84.h: 362: __asm("BOOTREG equ 038h");
@@ -3623,7 +3623,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = _my_value -> + -> _value `i -> 1 `i `uc ]
 "10
 [; ;ringbufs.c: 10:  if (my_value >= modulus) {
-[e $ ! >= -> _my_value `i -> _modulus `i 3286  ]
+[e $ ! >= -> _my_value `i -> _modulus `i 3288  ]
 {
 "11
 [; ;ringbufs.c: 11:   my_value = 0;
@@ -3631,14 +3631,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "12
 [; ;ringbufs.c: 12:  }
 }
-[e :U 3286 ]
+[e :U 3288 ]
 "13
 [; ;ringbufs.c: 13:  return my_value;
 [e ) _my_value ]
-[e $UE 3285  ]
+[e $UE 3287  ]
 "14
 [; ;ringbufs.c: 14: }
-[e :UE 3285 ]
+[e :UE 3287 ]
 }
 "16
 [; ;ringbufs.c: 16: uint8_t modulo_dec(const uint8_t value, const uint8_t modulus)
@@ -3661,10 +3661,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "19
 [; ;ringbufs.c: 19:  return my_value;
 [e ) _my_value ]
-[e $UE 3287  ]
+[e $UE 3289  ]
 "20
 [; ;ringbufs.c: 20: }
-[e :UE 3287 ]
+[e :UE 3289 ]
 }
 "22
 [; ;ringbufs.c: 22: void ringBufS_init(volatile ringBufS_t *_this)
@@ -3684,7 +3684,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e ( _memset (3 , , -> __this `*v -> 0 `i -> # *U __this `ui ]
 "33
 [; ;ringbufs.c: 33: }
-[e :UE 3288 ]
+[e :UE 3290 ]
 }
 "35
 [; ;ringbufs.c: 35: int8_t ringBufS_empty(ringBufS_t *_this)
@@ -3702,10 +3702,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "37
 [; ;ringbufs.c: 37:  return(0 == _this->count);
 [e ) -> -> == -> 0 `i -> . *U __this 3 `i `i `c ]
-[e $UE 3289  ]
+[e $UE 3291  ]
 "38
 [; ;ringbufs.c: 38: }
-[e :UE 3289 ]
+[e :UE 3291 ]
 }
 "40
 [; ;ringbufs.c: 40: int8_t ringBufS_full(ringBufS_t *_this)
@@ -3723,10 +3723,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "42
 [; ;ringbufs.c: 42:  return(_this->count >= 64);
 [e ) -> -> >= -> . *U __this 3 `i -> 64 `i `i `c ]
-[e $UE 3290  ]
+[e $UE 3292  ]
 "43
 [; ;ringbufs.c: 43: }
-[e :UE 3290 ]
+[e :UE 3292 ]
 }
 "45
 [; ;ringbufs.c: 45: uint8_t ringBufS_get(ringBufS_t *_this)
@@ -3746,7 +3746,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _c `uc ~T0 @X0 1 a ]
 "48
 [; ;ringbufs.c: 48:  if (_this->count > 0) {
-[e $ ! > -> . *U __this 3 `i -> 0 `i 3292  ]
+[e $ ! > -> . *U __this 3 `i -> 0 `i 3294  ]
 {
 "49
 [; ;ringbufs.c: 49:   c = _this->buf[_this->tail];
@@ -3760,8 +3760,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "52
 [; ;ringbufs.c: 52:  } else {
 }
-[e $U 3293  ]
-[e :U 3292 ]
+[e $U 3295  ]
+[e :U 3294 ]
 {
 "53
 [; ;ringbufs.c: 53:   c = 0;
@@ -3769,14 +3769,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "54
 [; ;ringbufs.c: 54:  }
 }
-[e :U 3293 ]
+[e :U 3295 ]
 "55
 [; ;ringbufs.c: 55:  return(c);
 [e ) _c ]
-[e $UE 3291  ]
+[e $UE 3293  ]
 "56
 [; ;ringbufs.c: 56: }
-[e :UE 3291 ]
+[e :UE 3293 ]
 }
 "58
 [; ;ringbufs.c: 58: void ringBufS_put(ringBufS_t *_this, const uint8_t c)
@@ -3794,7 +3794,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "60
 [; ;ringbufs.c: 60:  if (_this->count < 64) {
-[e $ ! < -> . *U __this 3 `i -> 64 `i 3295  ]
+[e $ ! < -> . *U __this 3 `i -> 64 `i 3297  ]
 {
 "61
 [; ;ringbufs.c: 61:   _this->buf[_this->head] = c;
@@ -3808,10 +3808,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "64
 [; ;ringbufs.c: 64:  }
 }
-[e :U 3295 ]
+[e :U 3297 ]
 "65
 [; ;ringbufs.c: 65: }
-[e :UE 3294 ]
+[e :UE 3296 ]
 }
 "67
 [; ;ringbufs.c: 67: void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c)
@@ -3829,7 +3829,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [f ]
 "69
 [; ;ringbufs.c: 69:  if (_this->count < 64) {
-[e $ ! < -> . *U __this 3 `i -> 64 `i 3297  ]
+[e $ ! < -> . *U __this 3 `i -> 64 `i 3299  ]
 {
 "70
 [; ;ringbufs.c: 70:   _this->buf[_this->head] = c;
@@ -3843,10 +3843,10 @@ Version 4.0 HI-TECH Software Intermediate Code
 "73
 [; ;ringbufs.c: 73:  }
 }
-[e :U 3297 ]
+[e :U 3299 ]
 "74
 [; ;ringbufs.c: 74: }
-[e :UE 3296 ]
+[e :UE 3298 ]
 }
 "76
 [; ;ringbufs.c: 76: void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer)
@@ -3873,7 +3873,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . *U __this 2 -> -> 0 `i `uc ]
 "81
 [; ;ringbufs.c: 81:  if (clearBuffer) {
-[e $ ! != -> _clearBuffer `i -> 0 `i 3299  ]
+[e $ ! != -> _clearBuffer `i -> 0 `i 3301  ]
 {
 "82
 [; ;ringbufs.c: 82:   memset(_this->buf, 0, sizeof(_this->buf));
@@ -3881,8 +3881,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "83
 [; ;ringbufs.c: 83:  }
 }
-[e :U 3299 ]
+[e :U 3301 ]
 "84
 [; ;ringbufs.c: 84: }
-[e :UE 3298 ]
+[e :UE 3300 ]
 }

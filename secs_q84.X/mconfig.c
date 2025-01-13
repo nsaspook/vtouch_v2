@@ -11,7 +11,7 @@ static const char *build_date = __DATE__, *build_time = __TIME__;
  * hardware specific routines
  */
 void mode_lamp_dim(const uint16_t level) {
-    PWM2_16BIT_SetSlice1Output1DutyCycleRegister(0x55); //33% duty cycle
+    PWM2_16BIT_SetSlice1Output1DutyCycleRegister(level); //33% duty cycle
     PWM2_16BIT_LoadBufferRegisters();
 }
 
@@ -173,7 +173,7 @@ void vterm_sequence(void) {
  */
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr) {
     //	DLED = true;
-    IO_RB5_Toggle();
+//    IO_RB5_Toggle();
     wait_lcd_done();
     if (V.response.info == DIS_STR) {
         eaDogM_WriteStringAtPos(r, c, strPtr);

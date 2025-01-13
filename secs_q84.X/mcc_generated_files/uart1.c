@@ -55,7 +55,7 @@
   Section: Macro Declarations
 */
 #define UART1_TX_BUFFER_SIZE 64
-#define UART1_RX_BUFFER_SIZE 64
+#define UART1_RX_BUFFER_SIZE 255
 
 /**
   Section: Global Variables
@@ -324,7 +324,18 @@ void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void)){
     UART1_TxInterruptHandler = InterruptHandler;
 }
 
+/* stuff the uart1 receive buffer with testing data */
+void UART1_put_buffer(uint8_t bufData)
+{
+	PIE4bits.U1RXIE = 0;
+	uart1RxBuffer[uart1RxHead++] = bufData;
+	if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+		uart1RxHead = 0;
+	}
 
+	uart1RxCount++;
+	PIE4bits.U1RXIE = 1;
+}
 /**
   End of File
 */

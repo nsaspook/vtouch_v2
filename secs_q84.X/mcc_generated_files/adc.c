@@ -67,8 +67,8 @@ void ADC_Initialize(void)
     //ADACT disabled; 
     ADACT = 0x00;
 
-    //ADCCS FOSC/8; 
-    ADCLK = 0x03;
+    //ADCCS FOSC/2; 
+    ADCLK = 0x00;
     
     //ADC charge pump control
     ADCP = 0x00;
@@ -121,8 +121,8 @@ void ADC_Initialize(void)
     //ADCHS ANA0; 
     ADPCH = 0x00;
 
-    //ADACQL 10; 
-    ADACQL = 0x0A;
+    //ADACQL 0; 
+    ADACQL = 0x00;
 
     //ADACQH 0; 
     ADACQH = 0x00;
@@ -151,8 +151,8 @@ void ADC_Initialize(void)
     //ADMATH registers not updated; 
     ADSTAT = 0x00;
 
-    //ADNREF VSS; ADPREF VDD; 
-    ADREF = 0x00;
+    //ADNREF VSS; ADPREF external; 
+    ADREF = 0x02;
     
     //CHEN channel content is not included; SSI scan sequence continues; 
     ADCSEL1 = 0x00;
@@ -166,14 +166,16 @@ void ADC_Initialize(void)
     //Clear ADC Context Threshold Interrupt Flag
     PIR2bits.ADCH1IF = 0;
     
+    //Set ADC interrupt enable bit
+    PIE1bits.ADIE = 1;
 
     //Configure interrupt handlers
     ADC_SetADIInterruptHandler(ADC_DefaultADI_ISR);
     ADC_SetContext1ThresholdInterruptHandler(ADC_DefaultContext1Threshold_ISR);
     ADC_SetActiveClockTuningInterruptHandler(ADC_DefaultActiveClockTuning_ISR);
         
-    //ADON enabled; CSEN disabled; ADCS FOSC/ADCLK; ADFM right; GO_nDONE stop; 
-    ADCON0 = 0x84;
+    //ADON enabled; CSEN disabled; ADCS Frc; ADFM right; GO_nDONE stop; 
+    ADCON0 = 0x94;
 }
 
 inline void ADC_EnableChannelSequencer(void)

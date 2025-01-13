@@ -4,8 +4,8 @@
 # 288 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "/opt/microchip/xc8/v2.46/pic/include/language_support.h" 1 3
-# 68 "/opt/microchip/xc8/v2.46/pic/include/language_support.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/language_support.h" 1 3
+# 68 "/opt/microchip/xc8/v2.50/pic/include/language_support.h" 3
 extern char * __stack_lo;
 extern char * __stack_hi;
 
@@ -19,9 +19,153 @@ extern char * __intlo_stack_lo;
 extern char * __intlo_stack_hi;
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 44 "main.c"
+# 47 "main.c"
+#pragma config FEXTOSC = ECH
+#pragma config RSTOSC = EXTOSC_4PLL
+
+
+#pragma config CLKOUTEN = ON
+#pragma config PR1WAY = OFF
+#pragma config CSWEN = ON
+#pragma config JTAGEN = OFF
+#pragma config FCMEN = ON
+#pragma config FCMENP = ON
+#pragma config FCMENS = ON
+
+
+#pragma config MCLRE = EXTMCLR
+#pragma config PWRTS = PWRT_OFF
+#pragma config MVECEN = ON
+#pragma config IVT1WAY = ON
+#pragma config LPBOREN = OFF
+#pragma config BOREN = SBORDIS
+
+
+#pragma config BORV = VBOR_1P9
+#pragma config ZCD = OFF
+#pragma config PPS1WAY = OFF
+#pragma config STVREN = ON
+#pragma config LVP = OFF
+#pragma config XINST = OFF
+
+
+#pragma config WDTCPS = WDTCPS_31
+#pragma config WDTE = OFF
+
+
+#pragma config WDTCWS = WDTCWS_7
+#pragma config WDTCCS = SC
+
+
+#pragma config BBSIZE = BBSIZE_512
+#pragma config BBEN = OFF
+#pragma config SAFEN = OFF
+#pragma config DEBUG = OFF
+
+
+#pragma config WRTB = OFF
+#pragma config WRTC = OFF
+#pragma config WRTD = OFF
+#pragma config WRTSAF = OFF
+#pragma config WRTAPP = OFF
+
+
+#pragma config BOOTPINSEL = RC5
+#pragma config BPEN = OFF
+#pragma config ODCON = OFF
+
+
+#pragma config CP = ON
+
+
+#pragma config BOOTSCEN = OFF
+#pragma config BOOTCOE = HALT
+#pragma config APPSCEN = OFF
+#pragma config SAFSCEN = OFF
+#pragma config DATASCEN = OFF
+#pragma config CFGSCEN = OFF
+#pragma config COE = HALT
+#pragma config BOOTPOR = OFF
+
+
+#pragma config BCRCPOLT = hFF
+
+
+#pragma config BCRCPOLU = hFF
+
+
+#pragma config BCRCPOLH = hFF
+
+
+#pragma config BCRCPOLL = hFF
+
+
+#pragma config BCRCSEEDT = hFF
+
+
+#pragma config BCRCSEEDU = hFF
+
+
+#pragma config BCRCSEEDH = hFF
+
+
+#pragma config BCRCSEEDL = hFF
+
+
+#pragma config BCRCEREST = hFF
+
+
+#pragma config BCRCERESU = hFF
+
+
+#pragma config BCRCERESH = hFF
+
+
+#pragma config BCRCERESL = hFF
+
+
+#pragma config CRCPOLT = hFF
+
+
+#pragma config CRCPOLU = hFF
+
+
+#pragma config CRCPOLH = hFF
+
+
+#pragma config CRCPOLL = hFF
+
+
+#pragma config CRCSEEDT = hFF
+
+
+#pragma config CRCSEEDU = hFF
+
+
+#pragma config CRCSEEDH = hFF
+
+
+#pragma config CRCSEEDL = hFF
+
+
+#pragma config CRCEREST = hFF
+
+
+#pragma config CRCERESU = hFF
+
+
+#pragma config CRCERESH = hFF
+
+
+#pragma config CRCERESL = hFF
+
+
+
+
 #pragma warning disable 520
+#pragma warning disable 1090
 #pragma warning disable 1498
+#pragma warning disable 2053
 
 
 typedef signed long long int24_t;
@@ -29,40 +173,40 @@ typedef signed long long int24_t;
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdio.h" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/stdio.h" 1 3
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/musl_xc8.h" 1 3
-# 5 "/opt/microchip/xc8/v2.46/pic/include/c99/stdio.h" 2 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/musl_xc8.h" 1 3
+# 5 "/opt/microchip/xc8/v2.50/pic/include/c99/stdio.h" 2 3
 
 
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/features.h" 1 3
-# 11 "/opt/microchip/xc8/v2.46/pic/include/c99/stdio.h" 2 3
-# 24 "/opt/microchip/xc8/v2.46/pic/include/c99/stdio.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 1 3
-# 12 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/features.h" 1 3
+# 11 "/opt/microchip/xc8/v2.50/pic/include/c99/stdio.h" 2 3
+# 24 "/opt/microchip/xc8/v2.50/pic/include/c99/stdio.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 1 3
+# 12 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef void * va_list[1];
 
 
 
 
 typedef void * __isoc_va_list[1];
-# 128 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 128 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned size_t;
-# 143 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 143 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef __int24 ssize_t;
-# 210 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 210 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef __uint24 uint24_t;
-# 255 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 255 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef long long off_t;
-# 409 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 409 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef struct _IO_FILE FILE;
-# 25 "/opt/microchip/xc8/v2.46/pic/include/c99/stdio.h" 2 3
-# 52 "/opt/microchip/xc8/v2.46/pic/include/c99/stdio.h" 3
+# 25 "/opt/microchip/xc8/v2.50/pic/include/c99/stdio.h" 2 3
+# 52 "/opt/microchip/xc8/v2.50/pic/include/c99/stdio.h" 3
 typedef union _G_fpos64_t {
  char __opaque[16];
  double __align;
@@ -197,14 +341,14 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 52 "main.c" 2
+# 199 "main.c" 2
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/string.h" 1 3
-# 25 "/opt/microchip/xc8/v2.46/pic/include/c99/string.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 1 3
-# 421 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/string.h" 1 3
+# 25 "/opt/microchip/xc8/v2.50/pic/include/c99/string.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 1 3
+# 421 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef struct __locale_struct * locale_t;
-# 26 "/opt/microchip/xc8/v2.46/pic/include/c99/string.h" 2 3
+# 26 "/opt/microchip/xc8/v2.50/pic/include/c99/string.h" 2 3
 
 void *memcpy (void *restrict, const void *restrict, size_t);
 void *memmove (void *, const void *, size_t);
@@ -256,28 +400,28 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 53 "main.c" 2
+# 200 "main.c" 2
 
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
-# 1 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 1 3
-# 18 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 1 3
+# 18 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
 
 extern double __fpnormalize(double);
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/xc8debug.h" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/xc8debug.h" 1 3
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdlib.h" 1 3
-# 21 "/opt/microchip/xc8/v2.46/pic/include/c99/stdlib.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 1 3
-# 24 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 1 3
+# 21 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 1 3
+# 24 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef long int wchar_t;
-# 22 "/opt/microchip/xc8/v2.46/pic/include/c99/stdlib.h" 2 3
+# 22 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 2 3
 
 int atoi (const char *);
 long atol (const char *);
@@ -303,7 +447,7 @@ unsigned long long strtoull (const char *restrict, char **restrict, int);
 unsigned long __strtoxl(const char * s, char ** endptr, int base, char is_signed);
 
 unsigned long long __strtoxll(const char * s, char ** endptr, int base, char is_signed);
-# 55 "/opt/microchip/xc8/v2.46/pic/include/c99/stdlib.h" 3
+# 55 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 3
 int rand (void);
 void srand (unsigned);
 
@@ -349,7 +493,7 @@ typedef struct { unsigned int quot, rem; } udiv_t;
 typedef struct { unsigned long quot, rem; } uldiv_t;
 udiv_t udiv (unsigned int, unsigned int);
 uldiv_t uldiv (unsigned long, unsigned long);
-# 5 "/opt/microchip/xc8/v2.46/pic/include/c99/xc8debug.h" 2 3
+# 5 "/opt/microchip/xc8/v2.50/pic/include/c99/xc8debug.h" 2 3
 
 
 
@@ -359,26 +503,26 @@ uldiv_t uldiv (unsigned long, unsigned long);
 
 #pragma intrinsic(__builtin_software_breakpoint)
 extern void __builtin_software_breakpoint(void);
-# 24 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 2 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/builtins.h" 1 3
+# 24 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 2 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/builtins.h" 1 3
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdint.h" 1 3
-# 26 "/opt/microchip/xc8/v2.46/pic/include/c99/stdint.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 1 3
-# 133 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 1 3
+# 26 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 1 3
+# 133 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned __int24 uintptr_t;
-# 148 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 148 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef __int24 intptr_t;
-# 164 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 164 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef signed char int8_t;
 
 
 
 
 typedef short int16_t;
-# 179 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 179 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef long int32_t;
 
 
@@ -386,7 +530,7 @@ typedef long int32_t;
 
 
 typedef long long int64_t;
-# 194 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 194 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef long long intmax_t;
 
 
@@ -399,7 +543,7 @@ typedef unsigned char uint8_t;
 
 
 typedef unsigned short uint16_t;
-# 215 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 215 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned long uint32_t;
 
 
@@ -407,9 +551,9 @@ typedef unsigned long uint32_t;
 
 
 typedef unsigned long long uint64_t;
-# 235 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
+# 235 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
 typedef unsigned long long uintmax_t;
-# 27 "/opt/microchip/xc8/v2.46/pic/include/c99/stdint.h" 2 3
+# 27 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 2 3
 
 typedef int8_t int_fast8_t;
 
@@ -441,14 +585,14 @@ typedef uint24_t uint_fast24_t;
 typedef uint32_t uint_least32_t;
 
 typedef uint64_t uint_least64_t;
-# 148 "/opt/microchip/xc8/v2.46/pic/include/c99/stdint.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/stdint.h" 1 3
+# 148 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/stdint.h" 1 3
 typedef int16_t int_fast16_t;
 typedef int32_t int_fast32_t;
 typedef uint16_t uint_fast16_t;
 typedef uint32_t uint_fast32_t;
-# 149 "/opt/microchip/xc8/v2.46/pic/include/c99/stdint.h" 2 3
-# 5 "/opt/microchip/xc8/v2.46/pic/include/builtins.h" 2 3
+# 149 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 2 3
+# 5 "/opt/microchip/xc8/v2.50/pic/include/builtins.h" 2 3
 
 
 #pragma intrinsic(__nop)
@@ -470,7 +614,7 @@ extern __attribute__((nonreentrant)) void _delaywdt(uint32_t);
 
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(uint8_t);
-# 25 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 2 3
+# 25 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 2 3
 
 
 
@@ -484,12 +628,12 @@ extern __attribute__((nonreentrant)) void _delay3(uint8_t);
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/htc.h" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/htc.h" 1 3
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 1 3
-# 5 "/opt/microchip/xc8/v2.46/pic/include/htc.h" 2 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 1 3
+# 5 "/opt/microchip/xc8/v2.50/pic/include/htc.h" 2 3
 # 6 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/pic18.h" 2 3
 
 
@@ -497,7 +641,7 @@ extern __attribute__((nonreentrant)) void _delay3(uint8_t);
 # 284 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/pic18_chip_select.h" 3
 # 1 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/proc/pic18f47q84.h" 1 3
 # 44 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/proc/pic18f47q84.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/__at.h" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/__at.h" 1 3
 # 45 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/proc/pic18f47q84.h" 2 3
 # 360 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/proc/pic18f47q84.h" 3
 extern volatile unsigned char BOOTREG __attribute__((address(0x038)));
@@ -38920,7 +39064,7 @@ __attribute__((__unsupported__("The " "EraseFlash" " routine is no longer suppor
 
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/errata.h" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/errata.h" 1 3
 # 28 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/pic18.h" 2 3
 # 156 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/pic18.h" 3
 __attribute__((__unsupported__("The " "Read_b_eep" " routine is no longer supported. Please use the MPLAB X MCC."))) unsigned char Read_b_eep(unsigned int badd);
@@ -38931,22 +39075,22 @@ __attribute__((__unsupported__("The READTIMER" "0" "() macro is not available wi
 # 192 "/root/.mchp_packs/Microchip/PIC18F-Q_DFP/1.26.442/xc8/pic/include/pic18.h" 3
 unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
-# 34 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 2 3
+# 34 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 2 3
 # 49 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/device_config.h" 1
 # 50 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 386 "./mcc_generated_files/pin_manager.h"
+# 398 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 51 "./mcc_generated_files/mcc.h" 2
 
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdbool.h" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/stdbool.h" 1 3
 # 53 "./mcc_generated_files/mcc.h" 2
 
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/conio.h" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/conio.h" 1 3
 # 54 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/interrupt_manager.h" 1
@@ -39392,7 +39536,7 @@ void TMR6_DefaultInterruptHandler(void);
 
 # 1 "./mcc_generated_files/dma1.h" 1
 # 55 "./mcc_generated_files/dma1.h"
-uint8_t lcd_buf[64];
+uint8_t lcd_dma_buf[32];
 
 
 
@@ -39492,6 +39636,21 @@ void DMA1_StopTransfer(void);
 
 
 void DMA1_SetDMAPriority(uint8_t priority);
+
+
+
+
+
+
+void DMA1_SetSCNTIInterruptHandler(void (* InterruptHandler)(void));
+# 170 "./mcc_generated_files/dma1.h"
+void DMA1_SetORIInterruptHandler(void (* InterruptHandler)(void));
+
+
+
+
+
+void DMA1_DefaultInterruptHandler(void);
 # 59 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/tmr2.h" 1
@@ -39835,25 +39994,27 @@ uart2_status_t UART2_get_last_status(void);
 uint8_t UART2_Read(void);
 # 380 "./mcc_generated_files/uart2.h"
 void UART2_Write(uint8_t txData);
-# 401 "./mcc_generated_files/uart2.h"
+
+void UART2_put_buffer(uint8_t);
+# 403 "./mcc_generated_files/uart2.h"
 void UART2_Transmit_ISR(void);
-# 422 "./mcc_generated_files/uart2.h"
+# 424 "./mcc_generated_files/uart2.h"
 void UART2_Receive_ISR(void);
-# 443 "./mcc_generated_files/uart2.h"
+# 445 "./mcc_generated_files/uart2.h"
 void UART2_RxDataHandler(void);
-# 461 "./mcc_generated_files/uart2.h"
+# 463 "./mcc_generated_files/uart2.h"
 void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 479 "./mcc_generated_files/uart2.h"
+# 481 "./mcc_generated_files/uart2.h"
 void UART2_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 497 "./mcc_generated_files/uart2.h"
+# 499 "./mcc_generated_files/uart2.h"
 void UART2_SetErrorHandler(void (* interruptHandler)(void));
-# 517 "./mcc_generated_files/uart2.h"
+# 519 "./mcc_generated_files/uart2.h"
 void (*UART2_RxInterruptHandler)(void);
-# 535 "./mcc_generated_files/uart2.h"
+# 537 "./mcc_generated_files/uart2.h"
 void (*UART2_TxInterruptHandler)(void);
-# 555 "./mcc_generated_files/uart2.h"
+# 557 "./mcc_generated_files/uart2.h"
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 573 "./mcc_generated_files/uart2.h"
+# 575 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 62 "./mcc_generated_files/mcc.h" 2
 
@@ -39886,27 +40047,29 @@ _Bool UART1_is_tx_done(void);
 uart1_status_t UART1_get_last_status(void);
 # 355 "./mcc_generated_files/uart1.h"
 uint8_t UART1_Read(void);
-# 380 "./mcc_generated_files/uart1.h"
+
+void UART1_put_buffer(uint8_t);
+# 382 "./mcc_generated_files/uart1.h"
 void UART1_Write(uint8_t txData);
-# 401 "./mcc_generated_files/uart1.h"
+# 403 "./mcc_generated_files/uart1.h"
 void UART1_Transmit_ISR(void);
-# 422 "./mcc_generated_files/uart1.h"
+# 424 "./mcc_generated_files/uart1.h"
 void UART1_Receive_ISR(void);
-# 443 "./mcc_generated_files/uart1.h"
+# 445 "./mcc_generated_files/uart1.h"
 void UART1_RxDataHandler(void);
-# 461 "./mcc_generated_files/uart1.h"
+# 463 "./mcc_generated_files/uart1.h"
 void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 479 "./mcc_generated_files/uart1.h"
+# 481 "./mcc_generated_files/uart1.h"
 void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 497 "./mcc_generated_files/uart1.h"
+# 499 "./mcc_generated_files/uart1.h"
 void UART1_SetErrorHandler(void (* interruptHandler)(void));
-# 517 "./mcc_generated_files/uart1.h"
+# 519 "./mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
-# 535 "./mcc_generated_files/uart1.h"
+# 537 "./mcc_generated_files/uart1.h"
 void (*UART1_TxInterruptHandler)(void);
-# 555 "./mcc_generated_files/uart1.h"
+# 557 "./mcc_generated_files/uart1.h"
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 573 "./mcc_generated_files/uart1.h"
+# 575 "./mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 63 "./mcc_generated_files/mcc.h" 2
 
@@ -39962,11 +40125,11 @@ void OSCILLATOR_Initialize(void);
 void PMD_Initialize(void);
 # 118 "./mcc_generated_files/mcc.h"
 void SystemArbiter_Initialize(void);
-# 54 "main.c" 2
+# 201 "main.c" 2
 
 
 # 1 "./eadog.h" 1
-# 26 "./eadog.h"
+# 40 "./eadog.h"
 # 1 "./vconfig.h" 1
 # 20 "./vconfig.h"
 # 1 "./ringbufs.h" 1
@@ -39991,8 +40154,8 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 93 "./vconfig.h"
- struct spi_link_type {
+# 95 "./vconfig.h"
+ struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
   uint8_t LCD_TIMER : 1;
@@ -40002,6 +40165,27 @@ void SystemArbiter_Initialize(void);
   struct ringBufS_t *tx1b, *tx1a;
   volatile int32_t int_count;
  };
+
+ struct spi_link_type {
+ uint8_t SPI_LCD : 1;
+ uint8_t SPI_AUX : 1;
+ uint8_t LCD_TIMER : 1;
+ volatile uint8_t LCD_DATA : 1;
+ uint16_t delay;
+ uint8_t config;
+ uint8_t * txbuf;
+ volatile int32_t int_count;
+};
+
+ typedef struct B_type {
+  volatile _Bool ten_sec_flag, one_sec_flag, FM80_charged, pv_high, pv_update, once;
+  volatile uint16_t pacing, rx_count, flush, pv_prev, day_check, node_id, dim_delay;
+  volatile _Bool FM80_online, FM80_io, LOG, display_dim, display_update;
+  volatile uint8_t canbus_online, modbus_online, alt_display;
+  float run_time, net_balance;
+  uint16_t mui[10];
+  uint16_t fwrev[3];
+ } B_type;
 
  typedef enum {
   CODE_TS = 0,
@@ -40135,33 +40319,53 @@ void SystemArbiter_Initialize(void);
  typedef struct V_help {
   const char message[32], display[32];
  } V_help;
-# 27 "./eadog.h" 2
+
+ extern B_type B;
+
+ void wdtdelay(const uint32_t);
+# 41 "./eadog.h" 2
 
 
 
 
 
 
- void wdtdelay(uint32_t);
-
- void init_display(void);
- void init_port(void);
- void send_port_data_dma(void);
- void send_lcd_data_dma(uint8_t);
- void send_lcd_cmd_dma(uint8_t);
+ typedef struct {
+  uint8_t con0;
+  uint8_t con1;
+  uint8_t con2;
+  uint8_t baud;
+  uint8_t operation;
+ } spi1_configuration_t;
+# 100 "./eadog.h"
+ extern void wdtdelay(const uint32_t);
+ _Bool init_display(void);
+ void no_dma_set_lcd(void);
+ void send_lcd_data_dma(const uint8_t);
+ void send_lcd_cmd_dma(const uint8_t);
+ void send_lcd_pos_dma(const uint8_t);
  void start_lcd(void);
  void wait_lcd_set(void);
  _Bool wait_lcd_check(void);
  void wait_lcd_done(void);
- void eaDogM_WriteChr(int8_t);
- void eaDogM_WriteCommand(uint8_t);
- void eaDogM_SetPos(uint8_t, uint8_t);
- void eaDogM_ClearRow(uint8_t);
+ void eaDogM_WriteChr(const int8_t);
+ void eaDogM_WriteCommand(const uint8_t);
+ void eaDogM_SetPos(const uint8_t, const uint8_t);
+ void eaDogM_ClearRow(const uint8_t);
  void eaDogM_WriteString(char *);
- void eaDogM_WriteStringAtPos(uint8_t, uint8_t, char *);
- void eaDogM_WriteIntAtPos(uint8_t, uint8_t, uint8_t);
- void eaDogM_WriteByteToCGRAM(uint8_t, uint8_t);
-# 56 "main.c" 2
+ void eaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
+ void eaDogM_WriteIntAtPos(const uint8_t, const uint8_t, const uint8_t);
+ void eaDogM_WriteByteToCGRAM(const uint8_t, const uint8_t);
+ void set_lcd_dim(const _Bool);
+ void check_lcd_dim(const _Bool);
+
+ char * eaDogM_Scroll_String(char *);
+ void eaDogM_Scroll_Task(void);
+
+
+ void clear_lcd_done(void);
+ void spi_rec_done(void);
+# 203 "main.c" 2
 
 # 1 "./gemsecs.h" 1
 # 25 "./gemsecs.h"
@@ -40395,7 +40599,7 @@ void mode_lamp_bright(void);
  _Bool gem_messages(response_type *, uint8_t);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
-# 57 "main.c" 2
+# 204 "main.c" 2
 
 
 
@@ -40426,6 +40630,23 @@ V_data V = {
  .ping_count = 0,
  .sequences = 0,
  .set_sequ = 0,
+};
+
+B_type B = {
+ .one_sec_flag = 0,
+ .ten_sec_flag = 0,
+ .pacing = 0,
+ .rx_count = 0,
+ .flush = 0,
+ .canbus_online = 0,
+ .modbus_online = 0,
+ .pv_high = 0,
+ .pv_update = 0,
+ .once = 0,
+ .display_dim = 0,
+ .display_update = 0,
+ .dim_delay = 6,
+ .alt_display = 0,
 };
 
 header10 H10[] = {
@@ -40654,7 +40875,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 336 "main.c"
+# 500 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -40673,7 +40894,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 374 "main.c"
+# 538 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -41130,7 +41351,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 838 "main.c"
+# 1002 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41223,6 +41444,19 @@ void main(void)
     update_lcd(2);
    }
   }
-# 938 "main.c"
+# 1102 "main.c"
  }
+}
+
+
+
+
+void wdtdelay(const uint32_t delay)
+{
+ uint32_t dcount;
+
+ for (dcount = 0; dcount <= delay; dcount++) {
+
+  __asm(" clrwdt");
+ };
 }

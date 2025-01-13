@@ -125,6 +125,18 @@
 #define channel_ANA2_SetAnalogMode()      do { ANSELAbits.ANSELA2 = 1; } while(0)
 #define channel_ANA2_SetDigitalMode()     do { ANSELAbits.ANSELA2 = 0; } while(0)
 
+// get/set RA3 procedures
+#define RA3_SetHigh()            do { LATAbits.LATA3 = 1; } while(0)
+#define RA3_SetLow()             do { LATAbits.LATA3 = 0; } while(0)
+#define RA3_Toggle()             do { LATAbits.LATA3 = ~LATAbits.LATA3; } while(0)
+#define RA3_GetValue()              PORTAbits.RA3
+#define RA3_SetDigitalInput()    do { TRISAbits.TRISA3 = 1; } while(0)
+#define RA3_SetDigitalOutput()   do { TRISAbits.TRISA3 = 0; } while(0)
+#define RA3_SetPullup()             do { WPUAbits.WPUA3 = 1; } while(0)
+#define RA3_ResetPullup()           do { WPUAbits.WPUA3 = 0; } while(0)
+#define RA3_SetAnalogMode()         do { ANSELAbits.ANSELA3 = 1; } while(0)
+#define RA3_SetDigitalMode()        do { ANSELAbits.ANSELA3 = 0; } while(0)
+
 // get/set MLED aliases
 #define MLED_TRIS                 TRISBbits.TRISB1
 #define MLED_LAT                  LATBbits.LATB1

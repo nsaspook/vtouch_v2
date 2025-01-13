@@ -51,6 +51,8 @@
 #include <xc.h>
 #include "dma1.h"
 
+void (*DMA1_SCNTI_InterruptHandler)(void);
+void (*DMA1_ORI_InterruptHandler)(void);
 
 /**
   Section: DMA1 APIs
@@ -60,8 +62,8 @@ void DMA1_Initialize(void)
 {
     //DMA Instance Selection : 0x00
     DMASELECT = 0x00;
-    //Source Address : lcd_buf
-    DMAnSSA = &lcd_buf;
+    //Source Address : lcd_dma_buf
+    DMAnSSA = &lcd_dma_buf;
     //Destination Address : &SPI1TXB
     DMAnDSA = &SPI1TXB;
     //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
@@ -85,9 +87,11 @@ void DMA1_Initialize(void)
     PIR2bits.DMA1ORIF =0; 
     
     PIE2bits.DMA1DCNTIE = 0;
-    PIE2bits.DMA1SCNTIE = 0;
+    PIE2bits.DMA1SCNTIE = 1; 
+	DMA1_SetSCNTIInterruptHandler(DMA1_DefaultInterruptHandler);
     PIE2bits.DMA1AIE = 0;
-    PIE2bits.DMA1ORIE = 0;
+    PIE2bits.DMA1ORIE =1; 
+	DMA1_SetORIInterruptHandler(DMA1_DefaultInterruptHandler);
 	
     //EN enabled; SIRQEN enabled; DGO not in progress; AIRQEN disabled; 
     DMAnCON0 = 0xC0;
@@ -179,6 +183,38 @@ void DMA1_SetDMAPriority(uint8_t priority)
 	PRLOCKbits.PRLOCKED = 1;
 }
 
+void __interrupt(irq(IRQ_DMA1SCNT),base(8)) DMA1_DMASCNTI_ISR()
+{
+    // Clear the source count interrupt flag
+    PIR2bits.DMA1SCNTIF = 0;
+
+    if (DMA1_SCNTI_InterruptHandler)
+            DMA1_SCNTI_InterruptHandler();
+}
+
+void DMA1_SetSCNTIInterruptHandler(void (* InterruptHandler)(void))
+{
+	 DMA1_SCNTI_InterruptHandler = InterruptHandler;
+}
+
+void __interrupt(irq(IRQ_DMA1OR),base(8)) DMA1_DMAORI_ISR()
+{
+    // Clear the source count interrupt flag
+    PIR2bits.DMA1ORIF = 0;
+
+    if (DMA1_ORI_InterruptHandler)
+            DMA1_ORI_InterruptHandler();
+}
+
+void DMA1_SetORIInterruptHandler(void (* InterruptHandler)(void))
+{
+	 DMA1_ORI_InterruptHandler = InterruptHandler;
+}
+
+void DMA1_DefaultInterruptHandler(void){
+    // add your DMA1 interrupt custom code
+    // or set custom function using DMA1_SetSCNTIInterruptHandler() /DMA1_SetDCNTIInterruptHandler() /DMA1_SetAIInterruptHandler() /DMA1_SetORIInterruptHandler()
+}
 /**
  End of File
 */

@@ -48,11 +48,11 @@
 
 // CONFIG1
 #pragma config FEXTOSC = ECH    // External Oscillator Selection->EC (external clock) above 8 MHz
-#pragma config RSTOSC = EXTOSC    // Reset Oscillator Selection->EXTOSC operating per FEXTOSC bits (device manufacturing default)
+#pragma config RSTOSC = EXTOSC_4PLL    // Reset Oscillator Selection->EXTOSC with 4x PLL, with EXTOSC operating per FEXTOSC bits
 
 // CONFIG2
-#pragma config CLKOUTEN = OFF    // Clock out Enable bit->CLKOUT function is disabled
-#pragma config PR1WAY = ON    // PRLOCKED One-Way Set Enable bit->PRLOCKED bit can be cleared and set only once
+#pragma config CLKOUTEN = ON    // Clock out Enable bit->CLKOUT function is enabled
+#pragma config PR1WAY = OFF    // PRLOCKED One-Way Set Enable bit->PRLOCKED bit can be set and cleared repeatedly
 #pragma config CSWEN = ON    // Clock Switch Enable bit->Writing to NOSC and NDIV is allowed
 #pragma config JTAGEN = OFF    // JTAG Enable bit->Disable JTAG Boundary Scan mode, JTAG pins revert to user functions
 #pragma config FCMEN = ON    // Fail-Safe Clock Monitor Enable bit->Fail-Safe Clock Monitor enabled
@@ -70,9 +70,9 @@
 // CONFIG4
 #pragma config BORV = VBOR_1P9    // Brown-out Reset Voltage Selection bits->Brown-out Reset Voltage (VBOR) set to 1.9V
 #pragma config ZCD = OFF    // ZCD Disable bit->ZCD module is disabled. ZCD can be enabled by setting the ZCDSEN bit of ZCDCON
-#pragma config PPS1WAY = ON    // PPSLOCK bit One-Way Set Enable bit->PPSLOCKED bit can be cleared and set only once; PPS registers remain locked after one clear/set cycle
+#pragma config PPS1WAY = OFF    // PPSLOCK bit One-Way Set Enable bit->PPSLOCKED bit can be set and cleared repeatedly (subject to the unlock sequence)
 #pragma config STVREN = ON    // Stack Full/Underflow Reset Enable bit->Stack full/underflow will cause Reset
-#pragma config LVP = ON    // Low Voltage Programming Enable bit->Low voltage programming enabled. MCLR/VPP pin function is MCLR. MCLRE configuration bit is ignored
+#pragma config LVP = OFF    // Low Voltage Programming Enable bit->HV on MCLR/VPP must be used for programming
 #pragma config XINST = OFF    // Extended Instruction Set Enable bit->Extended Instruction Set and Indexed Addressing Mode disabled
 
 // CONFIG5
@@ -101,7 +101,7 @@
 #pragma config ODCON = OFF    // CRC on boot output pin open drain bit->Pin drives both high-going and low-going signals
 
 // CONFIG10
-#pragma config CP = OFF    // PFM and Data EEPROM Code Protection bit->PFM and Data EEPROM code protection disabled
+#pragma config CP = ON    // PFM and Data EEPROM Code Protection bit->PFM and Data EEPROM code protection enabled
 
 // CONFIG11
 #pragma config BOOTSCEN = OFF    // CRC on boot scan enable for boot area->CRC on boot will not include the boot area of program memory in its calculation

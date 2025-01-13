@@ -52,7 +52,7 @@
 */
 #include <stdint.h>
 
-uint8_t lcd_buf[64];
+uint8_t lcd_dma_buf[32];
 
 /**
  * @brief Initializes the DMA1 module
@@ -153,7 +153,25 @@ void DMA1_StopTransfer(void);
  */
 void DMA1_SetDMAPriority(uint8_t priority);
 
+/**
+ * @brief This routine is used to set the callback for the SCNTI Interrupt.
+ * @return None
+ * @param Callback Function to be called
+ */
+void DMA1_SetSCNTIInterruptHandler(void (* InterruptHandler)(void));
 
 
 
+/**
+ * @brief This routine is used to set the callback for the ORI Interrupt.
+ * @return None
+ * @param Callback Function to be called
+ */
+void DMA1_SetORIInterruptHandler(void (* InterruptHandler)(void));
+/**
+ * @brief This is the default Interrupt Handler function
+ * @return None
+ * @param None
+ */
+void DMA1_DefaultInterruptHandler(void);
 #endif //DMA1_H

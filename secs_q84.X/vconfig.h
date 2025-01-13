@@ -18,6 +18,8 @@ extern "C" {
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
+	
+#define NHD
 
 #define VER	"1.64G"
 	/*
@@ -90,7 +92,7 @@ extern "C" {
 
 #define MAX_LINE	16
 
-	struct spi_link_type { // internal SPI state table
+	struct spi_link_type_o { // internal SPI state table
 		uint8_t SPI_LCD : 1;
 		uint8_t SPI_AUX : 1;
 		uint8_t LCD_TIMER : 1;
@@ -100,6 +102,27 @@ extern "C" {
 		struct ringBufS_t *tx1b, *tx1a;
 		volatile int32_t int_count;
 	};
+	
+	struct spi_link_type { // internal SPI state table
+	uint8_t SPI_LCD : 1;
+	uint8_t SPI_AUX : 1;
+	uint8_t LCD_TIMER : 1;
+	volatile uint8_t LCD_DATA : 1;
+	uint16_t delay;
+	uint8_t config;
+	uint8_t * txbuf;
+	volatile int32_t int_count;
+};
+
+	typedef struct B_type {
+		volatile bool ten_sec_flag, one_sec_flag, FM80_charged, pv_high, pv_update, once;
+		volatile uint16_t pacing, rx_count, flush, pv_prev, day_check, node_id, dim_delay;
+		volatile bool FM80_online, FM80_io, LOG, display_dim, display_update;
+		volatile uint8_t canbus_online, modbus_online, alt_display;
+		float run_time, net_balance;
+		uint16_t mui[10];
+		uint16_t fwrev[3];
+	} B_type;
 
 	typedef enum {
 		CODE_TS = 0,
@@ -233,6 +256,10 @@ extern "C" {
 	typedef struct V_help {
 		const char message[32], display[32];
 	} V_help;
+	
+	extern B_type B;
+	
+	void wdtdelay(const uint32_t);
 
 #ifdef	__cplusplus
 }
