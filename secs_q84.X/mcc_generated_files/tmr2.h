@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for TMR2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-        Device            :  PIC18F57K42
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+        Device            :  PIC18F47Q84
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.36 and above 
+        MPLAB 	          :  MPLAB X 6.00
 */
 
 /*
@@ -242,46 +242,50 @@ typedef enum
     /* CCP2_OUT is the Timer external reset source 
      */
     TMR2_CCP2_OUT,
-    
+
     /* CCP3_OUT is the Timer external reset source 
      */
     TMR2_CCP3_OUT,
 
-    /* CCP4_OUT is the Timer external reset source 
+    /* PWM1S1P1_out is the Timer external reset source 
      */
-    TMR2_CCP4_OUT,
+    TMR2_PWM1S1P1_OUT,
 
-    /* PWM5_out is the Timer external reset source 
+    /* PWM1S1P2_out is the Timer external reset source 
      */
-    TMR2_PWM5_OUT,
+    TMR2_PWM1S1P2_OUT,
 
-     /* PWM6_out is the Timer external reset source 
+    /* PWM2S1P1_out is the Timer external reset source 
      */
-    TMR2_PWM6_OUT,
-    
-    /* PWM7_out is the Timer external reset source 
-     */
-    TMR2_PWM7_OUT,
+    TMR2_PWM2S1P1_OUT,
 
-     /* PWM8_out is the Timer external reset source 
+    /* PWM2S1P2_out is the Timer external reset source 
      */
-    TMR2_PWM8_OUT,
-    
+    TMR2_PWM2S1P2_OUT,
+
+    /* PWM3S1P1_out is the Timer external reset source 
+     */
+    TMR2_PWM3S1P1_OUT,
+
+    /* PWM3S1P2_out is the Timer external reset source 
+     */
+    TMR2_PWM3S1P2_OUT,
+
     /* Reserved enum cannot be used 
-     */
+    */
     TMR2_RESERVED_2,
 
     /* Reserved enum cannot be used 
-     */
+    */
     TMR2_RESERVED_3,
 
-    /* C1_OUT_SYNC is the Timer external reset source 
+    /* CMP1_OUT is the Timer external reset source 
      */
-    TMR2_C1_OUT_SYNC,	
+    TMR2_CMP1_OUT,
 
-    /* C2_OUT_SYNC is the Timer external reset source 
+    /* CMP2_OUT is the Timer external reset source 
      */
-    TMR2_C2_OUT_SYNC,
+    TMR2_CMP2_OUT,
 
     /* ZCD_Output is the Timer external reset source 
      */
@@ -301,7 +305,23 @@ typedef enum
 
     /* CLC4_out is the Timer external reset source 
      */
-    TMR2_CLC4_OUT,
+    TMR2_CLC4_OUT,  
+
+    /* CLC5_out is the Timer external reset source 
+     */
+    TMR2_CLC5_OUT,
+         
+    /* CLC6_out is the Timer external reset source 
+     */
+    TMR2_CLC6_OUT,
+            
+    /* CLC7_out is the Timer external reset source 
+     */
+    TMR2_CLC7_OUT,
+    
+    /* CLC8_out is the Timer external reset source 
+     */
+    TMR2_CLC8_OUT,
 
     /* UART1_rx_edge is the Timer external reset source 
      */
@@ -317,7 +337,36 @@ typedef enum
 
     /* UART2_tx_edge is the Timer external reset source 
      */
-    TMR2_UART2_TX_EDGE
+    TMR2_UART2_TX_EDGE,
+
+    /* UART3_rx_edge is the Timer external reset source 
+     */
+    TMR2_UART3_RX_EDGE,
+
+    /* UART3_tx_edge is the Timer external reset source 
+     */
+    TMR2_UART3_TX_EDGE,
+
+    /* UART4_rx_edge is the Timer external reset source 
+     */
+    TMR2_UART4_RX_EDGE,
+
+    /* UART4_tx_edge is the Timer external reset source 
+     */
+    TMR2_UART4_TX_EDGE,
+
+    /* UART5_rx_edge is the Timer external reset source 
+     */
+    TMR2_UART5_RX_EDGE,
+
+    /* UART5_tx_edge is the Timer external reset source 
+     */
+    TMR2_UART5_TX_EDGE,
+
+    /* Reserved enum cannot be used 
+    */
+    TMR2_RESERVED_4
+
 
 } TMR2_HLT_EXT_RESET_SOURCE;
 
@@ -856,4 +905,3 @@ bool TMR2_HasOverflowOccured(void);
 /**
  End of File
 */
-

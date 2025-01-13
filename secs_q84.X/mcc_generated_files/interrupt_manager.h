@@ -1,5 +1,5 @@
 /**
-  Generated Interrupt Manager Header File
+  Generated Interrupt Manager Source File
 
   @Company:
     Microchip Technology Inc.
@@ -17,7 +17,7 @@
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
         Device            :  PIC18F47Q84
-        Driver Version    :  2.03
+        Driver Version    :  2.12
     The generated drivers are tested against the following:
         Compiler          :  XC8 2.36 and above or later
         MPLAB 	          :  MPLAB X 6.00
@@ -49,6 +49,17 @@
 #ifndef INTERRUPT_MANAGER_H
 #define INTERRUPT_MANAGER_H
 
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    This macro will enable high priority global interrupts.
+ * @Example
+    INTERRUPT_GlobalInterruptHighEnable();
+ */
+#define INTERRUPT_GlobalInterruptHighEnable() (INTCON0bits.GIEH = 1)
 
 /**
  * @Param
@@ -56,11 +67,11 @@
  * @Returns
     none
  * @Description
-    This macro will enable global interrupts.
+    This macro will disable high priority global interrupts.
  * @Example
-    INTERRUPT_GlobalInterruptEnable();
+    INTERRUPT_GlobalInterruptHighDisable();
  */
-#define INTERRUPT_GlobalInterruptEnable() (INTCON0bits.GIE = 1)
+#define INTERRUPT_GlobalInterruptHighDisable() (INTCON0bits.GIEH = 0)
 
 /**
  * @Param
@@ -68,12 +79,23 @@
  * @Returns
     none
  * @Description
-    This macro will disable global interrupts.
+    This macro will enable low priority global interrupts.
  * @Example
-    INTERRUPT_GlobalInterruptDisable();
+    INTERRUPT_GlobalInterruptLowEnable();
  */
-#define INTERRUPT_GlobalInterruptDisable() (INTCON0bits.GIE = 0)
+#define INTERRUPT_GlobalInterruptLowEnable() (INTCON0bits.GIEL = 1)
 
+/**
+ * @Param
+    none
+ * @Returns
+    none
+ * @Description
+    This macro will disable low priority global interrupts.
+ * @Example
+    INTERRUPT_GlobalInterruptLowDisable();
+ */
+#define INTERRUPT_GlobalInterruptLowDisable() (INTCON0bits.GIEL = 0)
 /**
  * @Param
     none

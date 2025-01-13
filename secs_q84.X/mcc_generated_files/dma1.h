@@ -1,24 +1,24 @@
 /**
-  DMA Generated Driver API Header File
-  
+  DMA1 Generated Driver API Header File
+
   @Company
     Microchip Technology Inc.
 
   @File Name
     dma1.h
-	
+
   @Summary
-    This is the generated header file for the DMA driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+    This is the generated header file for the DMA1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description
-    This header file provides APIs for driver for DMA CHANNEL1.
+    This header file provides APIs for driver for DMA1.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-        Device            :  PIC18F57K42
-        Driver Version    :  2.10
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+        Device            :  PIC18F47Q84
+        Driver Version    :  1.0.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.36 and above or later
+        MPLAB             :  MPLAB X 6.00
 */
 
 /*
@@ -44,82 +44,116 @@
     SOFTWARE.
 */
 
-/**
-  Section: Included Files
-*/
 #ifndef DMA1_H
 #define DMA1_H
 
-#include <xc.h>
-#include <stdbool.h>
+/**
+  Section: Included Files
+*/
 #include <stdint.h>
-#include <stdlib.h>
 
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
-        
-/**
-  Section: Interface Routines
-*/
+uint8_t lcd_buf[64];
 
 /**
-  @Summary
-    This function initializes DMA channel 1 instance : 
-
-  @Description
-    This routine initializes the DMA channel driver instance for : 
-    index, making it ready for clients to open and use it. It also initializes any
-    internal data structures.
-    This routine must be called before any other DMA routine is called. 
-
-  @Preconditions
-    None.
-
-  @Param
-    None.
-
-  @Returns
-    None.
-
-  @Comment
-    
- 
-  @Example
-    <code>
-        unsigned short int srcArray[100];
-        unsigned short int dstArray[100];
-        int i;
-        int count;
-        for (i=0; i<100; i++)
-        {
-            srcArray[i] = i+1;
-            dstArray[i] = 0;
-        }
-        DMA1_Initialize();
-        // lock priority for accessing program flash
-        asm ("BANKSEL PRLOCK");
-        asm ("MOVLW 0x55");
-        asm ("MOVWF PRLOCK");
-        asm ("MOVLW 0xAA");
-        asm ("MOVWF PRLOCK");
-        asm ("BSF PRLOCK, 0");
-    //  hardware trigger source set as Timer 1
-        TMR1_StartTimer();// start the trigger source 
-    </code>
-
-*/
+ * @brief Initializes the DMA1 module
+ *        This routine must be called before any other DMA1 routine
+ * @return None.
+ * @param None.
+ */
 void DMA1_Initialize(void);
 
+/**
+ * @brief Sets the source region as per user selection
+ * @return None.
+ * @param [in] Desired source region
+ */
+void DMA1_SelectSourceRegion(uint8_t region);
+
+/**
+ * @brief Sets the Source Address for the DMA packet
+ * @return None.
+ * @param [in] Desired Source Address
+ */
+void DMA1_SetSourceAddress(uint24_t address);
+
+/**
+ * @brief Sets the destination address for the DMA packet
+ * @return None.
+ * @param [in] Desired Destination Address
+ */
+void DMA1_SetDestinationAddress(uint16_t address);
+
+/**
+ * @brief Sets the size of the Source array
+ * @return None.
+ * @param [in] Size of Source Array
+ */
+void DMA1_SetSourceSize(uint16_t size);
+
+/**
+ * @brief Sets the size of the destination array
+ * @return None.
+ * @param [in] Size of Destination array
+ */
+void DMA1_SetDestinationSize(uint16_t size);
+
+/**
+ * @brief Returns the current location from which the DMA has read
+ * @return Current Source pointer
+ * @param None
+ */
+uint24_t DMA1_GetSourcePointer(void);
+
+/**
+ * @brief Returns the current location where the DMA last wrote
+ * @return Current Destination pointer
+ * @param None
+ */
+uint16_t DMA1_GetDestinationPointer(void);
+
+/**
+ * @brief Sets the Start Trigger for DMA, doesn't start the transfer
+ * @return None.
+ * @param [in] Start Trigger Source
+ */
+void DMA1_SetStartTrigger(uint8_t sirq);
+
+/**
+ * @brief Sets the Abort Trigger for DMA, doesn't abort the transfer
+ * @return None.
+ * @param [in] Abort Trigger Source
+ */
+void DMA1_SetAbortTrigger(uint8_t airq);
+
+/**
+ * @brief Starts the DMA Transfer by setting GO bit
+ * @return None.
+ * @param None.
+ */
+void DMA1_StartTransfer(void);
+
+/**
+ * @brief Starts the DMA transfer by enabling the trigger
+ * @return None.
+ * @param None.
+ */
+void DMA1_StartTransferWithTrigger(void);	
+
+/**
+ * @brief Stops all the possible triggers and also clears the GO bit
+ * @return None.
+ * @param None.
+ */
+void DMA1_StopTransfer(void);
+
+/**
+ * @brief Unlocks Arbiter - changes priority - locks Arbiter
+ * @return None.
+ * @param [in] Priority of DMA
+ */
+void DMA1_SetDMAPriority(uint8_t priority);
 
 
 
-#ifdef __cplusplus  // Provide C++ Compatibility
 
-    }
-
-#endif
-    
-#endif  // dma1.h
+#endif //DMA1_H

@@ -38713,369 +38713,234 @@ unsigned char __t3rd16on(void);
 # 51 "mcc_generated_files/dma1.c" 2
 
 # 1 "mcc_generated_files/dma1.h" 1
-# 54 "mcc_generated_files/dma1.h"
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdbool.h" 1 3
-# 54 "mcc_generated_files/dma1.h" 2
-# 114 "mcc_generated_files/dma1.h"
+# 55 "mcc_generated_files/dma1.h"
+uint8_t lcd_buf[64];
+
+
+
+
+
+
+
 void DMA1_Initialize(void);
+
+
+
+
+
+
+void DMA1_SelectSourceRegion(uint8_t region);
+
+
+
+
+
+
+void DMA1_SetSourceAddress(uint24_t address);
+
+
+
+
+
+
+void DMA1_SetDestinationAddress(uint16_t address);
+
+
+
+
+
+
+void DMA1_SetSourceSize(uint16_t size);
+
+
+
+
+
+
+void DMA1_SetDestinationSize(uint16_t size);
+
+
+
+
+
+
+uint24_t DMA1_GetSourcePointer(void);
+
+
+
+
+
+
+uint16_t DMA1_GetDestinationPointer(void);
+
+
+
+
+
+
+void DMA1_SetStartTrigger(uint8_t sirq);
+
+
+
+
+
+
+void DMA1_SetAbortTrigger(uint8_t airq);
+
+
+
+
+
+
+void DMA1_StartTransfer(void);
+
+
+
+
+
+
+void DMA1_StartTransferWithTrigger(void);
+
+
+
+
+
+
+void DMA1_StopTransfer(void);
+
+
+
+
+
+
+void DMA1_SetDMAPriority(uint8_t priority);
 # 52 "mcc_generated_files/dma1.c" 2
 
-# 1 "mcc_generated_files/interrupt_manager.h" 1
-# 87 "mcc_generated_files/interrupt_manager.h"
-void INTERRUPT_Initialize (void);
-# 53 "mcc_generated_files/dma1.c" 2
-
-# 1 "mcc_generated_files/../vconfig.h" 1
-# 11 "mcc_generated_files/../vconfig.h"
-# 1 "./mcc_generated_files/adcc.h" 1
-# 72 "./mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
-# 89 "./mcc_generated_files/adcc.h"
-typedef enum
-{
-    channel_ANA0 = 0x0,
-    channel_ANA1 = 0x1,
-    channel_ANA2 = 0x2,
-    channel_VSS = 0x3B,
-    channel_Temp = 0x3C,
-    channel_DAC1 = 0x3D,
-    channel_FVR_Buffer1 = 0x3E,
-    channel_FVR_Buffer2 = 0x3F
-} adcc_channel_t;
-# 133 "./mcc_generated_files/adcc.h"
-void ADCC_Initialize(void);
-# 162 "./mcc_generated_files/adcc.h"
-void ADCC_StartConversion(adcc_channel_t channel);
-# 192 "./mcc_generated_files/adcc.h"
-_Bool ADCC_IsConversionDone();
-# 224 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetConversionResult(void);
-# 255 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-# 280 "./mcc_generated_files/adcc.h"
-void ADCC_StopConversion(void);
-# 307 "./mcc_generated_files/adcc.h"
-void ADCC_SetStopOnInterrupt(void);
-# 332 "./mcc_generated_files/adcc.h"
-void ADCC_DischargeSampleCapacitor(void);
-# 358 "./mcc_generated_files/adcc.h"
-void ADCC_LoadAcquisitionRegister(uint16_t);
-# 384 "./mcc_generated_files/adcc.h"
-void ADCC_SetPrechargeTime(uint16_t);
-# 409 "./mcc_generated_files/adcc.h"
-void ADCC_SetRepeatCount(uint8_t);
-# 437 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetCurrentCountofConversions(void);
-# 461 "./mcc_generated_files/adcc.h"
-void ADCC_ClearAccumulator(void);
-# 486 "./mcc_generated_files/adcc.h"
-int24_t ADCC_GetAccumulatorValue(void);
-# 514 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasAccumulatorOverflowed(void);
-# 539 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetFilterValue(void);
-# 567 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetPreviousResult(void);
-# 593 "./mcc_generated_files/adcc.h"
-void ADCC_DefineSetPoint(uint16_t);
-# 619 "./mcc_generated_files/adcc.h"
-void ADCC_SetUpperThreshold(uint16_t);
-# 645 "./mcc_generated_files/adcc.h"
-void ADCC_SetLowerThreshold(uint16_t);
-# 672 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetErrorCalculation(void);
-# 699 "./mcc_generated_files/adcc.h"
-void ADCC_EnableDoubleSampling(void);
-# 723 "./mcc_generated_files/adcc.h"
-void ADCC_EnableContinuousConversion(void);
-# 747 "./mcc_generated_files/adcc.h"
-void ADCC_DisableContinuousConversion(void);
-# 775 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedUpperThreshold(void);
-# 803 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedLowerThreshold(void);
-# 830 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetConversionStageStatus(void);
-# 847 "./mcc_generated_files/adcc.h"
-void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 867 "./mcc_generated_files/adcc.h"
-void ADCC_DefaultInterruptHandler(void);
-# 12 "mcc_generated_files/../vconfig.h" 2
 
 
 
 
 
 
-# 1 "./mcc_generated_files/spi1.h" 1
-# 55 "./mcc_generated_files/spi1.h"
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stddef.h" 1 3
-# 19 "/opt/microchip/xc8/v2.46/pic/include/c99/stddef.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 1 3
-# 138 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
-typedef int ptrdiff_t;
-# 20 "/opt/microchip/xc8/v2.46/pic/include/c99/stddef.h" 2 3
-# 55 "./mcc_generated_files/spi1.h" 2
-# 117 "./mcc_generated_files/spi1.h"
-void SPI1_Initialize(void);
-# 152 "./mcc_generated_files/spi1.h"
-uint8_t SPI1_Exchange8bit(uint8_t data);
-# 192 "./mcc_generated_files/spi1.h"
-uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 19 "mcc_generated_files/../vconfig.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 126 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 138 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_IOC(void);
-# 20 "mcc_generated_files/../vconfig.h" 2
-# 1 "./ringbufs.h" 1
-# 15 "./ringbufs.h"
-# 1 "./vconfig.h" 1
-# 16 "./ringbufs.h" 2
-
-
-
- typedef struct ringBufS_t {
-  uint8_t buf[64];
-  uint8_t head;
-  uint8_t tail;
-  uint8_t count;
- } ringBufS_t;
-
- void ringBufS_init(volatile ringBufS_t *_this);
- int8_t ringBufS_empty(ringBufS_t *_this);
- int8_t ringBufS_full(ringBufS_t *_this);
- uint8_t ringBufS_get(ringBufS_t *_this);
- void ringBufS_put(ringBufS_t *_this, const uint8_t c);
- void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
- void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 21 "./vconfig.h" 2
-# 93 "./vconfig.h"
- struct spi_link_type {
-  uint8_t SPI_LCD : 1;
-  uint8_t SPI_AUX : 1;
-  uint8_t LCD_TIMER : 1;
-  volatile uint8_t LCD_DATA : 1;
-  uint16_t delay;
-  uint8_t config;
-  struct ringBufS_t *tx1b, *tx1a;
-  volatile int32_t int_count;
- };
-
- typedef enum {
-  CODE_TS = 0,
-  CODE_TM = 1,
-  CODE_ONLOCAL = 2,
-  CODE_ONREMOTE = 3,
-  CODE_OFFLINE = 4,
-  CODE_DEBUG,
-  CODE_LOG,
-  CODE_LOAD,
-  CODE_UNLOAD,
-  CODE_PUMP,
-  CODE_HELP,
-  CODE_SEQUENCE,
-  CODE_ERR,
- } P_CODES;
-
- typedef enum {
-  DIS_STR = 0,
-  DIS_TERM,
-  DIS_LOG,
-  DIS_LOAD,
-  DIS_UNLOAD,
-  DIS_PUMP,
-  DIS_HELP,
-  DIS_SEQUENCE,
-  DIS_SEQUENCE_M,
-  DIS_ERR,
-  DIS_CLEAR,
- } D_CODES;
-
- typedef struct terminal_type {
-  uint8_t ack[32], mesgid;
-  uint8_t TID, mcode, mparm, cmdlen, log_seq;
-  uint8_t host_display_ack : 1;
-  D_CODES info, help_temp;
-  uint16_t ceid;
-  uint16_t log_num;
- } terminal_type;
-
- typedef enum {
-  SEQ_STATE_INIT = 0,
-  SEQ_STATE_RX,
-  SEQ_STATE_TX,
-  SEQ_STATE_TRIGGER,
-  SEQ_STATE_QUEUE,
-  SEQ_STATE_DONE,
-  SEQ_STATE_ERROR
- } SEQ_STATES;
-
- typedef enum {
-  UI_STATE_INIT = 0,
-  UI_STATE_HOST,
-  UI_STATE_DEBUG,
-  UI_STATE_LOG,
-  UI_STATE_ERROR
- } UI_STATES;
-
- typedef enum {
-  GEM_STATE_DISABLE = 0,
-  GEM_STATE_COMM,
-  GEM_STATE_OFFLINE,
-  GEM_STATE_ONLINE,
-  GEM_STATE_REMOTE,
-  GEM_STATE_ERROR
- } GEM_STATES;
-
- typedef enum {
-  GEM_GENERIC = 0,
-  GEM_VII80,
-  GEM_E220,
-  GEM_ERROR
- } GEM_EQUIP;
-
- typedef enum {
-  LINK_STATE_IDLE = 0,
-  LINK_STATE_ENQ,
-  LINK_STATE_EOT,
-  LINK_STATE_ACK,
-  LINK_STATE_DONE,
-  LINK_STATE_NAK,
-  LINK_STATE_ERROR
- } LINK_STATES;
-
- typedef enum {
-  LINK_ERROR_NONE = 10,
-  LINK_ERROR_T1,
-  LINK_ERROR_T2,
-  LINK_ERROR_T3,
-  LINK_ERROR_T4,
-  LINK_ERROR_CHECKSUM,
-  LINK_ERROR_NAK,
-  LINK_ERROR_ABORT,
-  LINK_ERROR_SEND
- } LINK_ERRORS;
-
- typedef enum {
-  MSG_ERROR_NONE = 0,
-  MSG_ERROR_ID = 1,
-  MSG_ERROR_STREAM = 3,
-  MSG_ERROR_FUNCTION = 5,
-  MSG_ERROR_DATA = 7,
-  MSG_ERROR_TIMEOUT = 9,
-  MSG_ERROR_DATASIZE = 11,
-  MSG_ERROR_RESET = 20
- } MSG_ERRORS;
-
- typedef struct V_data {
-  SEQ_STATES s_state;
-  UI_STATES ui_state;
-  GEM_STATES g_state;
-  GEM_EQUIP e_types;
-  LINK_STATES m_l_state;
-  LINK_STATES r_l_state;
-  LINK_STATES t_l_state;
-  char buf[64], terminal[160], info[64];
-  uint32_t ticks, systemb;
-  int32_t testing;
-  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
-  UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
-  failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
-  terminal_type response;
-  uint8_t uart, llid, sid, ping_count;
-  volatile uint8_t ticker;
-  _Bool flipper;
- } V_data;
-
- typedef struct V_help {
-  const char message[32], display[32];
- } V_help;
-# 54 "mcc_generated_files/dma1.c" 2
-
-
-
-
-
-
-extern struct spi_link_type spi_link;
-# 86 "mcc_generated_files/dma1.c"
 void DMA1_Initialize(void)
 {
- DMA1SSA = 0x001000;
- DMA1DSA = 0x3D11;
- DMA1CON1 = 0x03;
- DMA1SSZ = 0x0001;
- DMA1DSZ = 0x0001;
- DMA1SIRQ = 0x15;
- DMA1AIRQ = 0x0;
 
- PIR2bits.DMA1DCNTIF = 0;
- PIR2bits.DMA1SCNTIF = 0;
- PIR2bits.DMA1AIF = 0;
- PIR2bits.DMA1ORIF = 0;
+    DMASELECT = 0x00;
 
- PIE2bits.DMA1DCNTIE = 1;
- PIE2bits.DMA1SCNTIE = 1;
- PIE2bits.DMA1AIE = 1;
- PIE2bits.DMA1ORIE = 1;
+    DMAnSSA = &lcd_buf;
 
- ISRPR = 0;
- MAINPR = 1;
- DMA1PR = 4;
- DMA2PR = 2;
- SCANPR = 3;
+    DMAnDSA = &SPI1TXB;
 
- __asm("BCF INTCON0,7");
+    DMAnCON1 = 0x02;
 
- __asm("BANKSEL PRLOCK");
- __asm("MOVLW 0x55");
- __asm("MOVWF PRLOCK");
- __asm("MOVLW 0xAA");
- __asm("MOVWF PRLOCK");
- __asm("BSF PRLOCK, 0");
+    DMAnSSZ = 1;
 
- __asm("BSF INTCON0,7");
+    DMAnDSZ = 1;
 
- DMA1CON0 = 0x00;
-}
+    DMAnSIRQ = 0x19;
 
-void __attribute__((picinterrupt(("irq(DMA1SCNT), base(8)")))) DMA1_DMASCNT_ISR()
-{
- PIR2bits.DMA1SCNTIF = 0;
+    DMAnAIRQ = 0x00;
 
- spi_link.LCD_DATA = 0;
- DEBUG2_SetLow();
-}
 
-void __attribute__((picinterrupt(("irq(DMA1DCNT), base(8)")))) DMA1_DMADCNT_ISR()
-{
- PIR2bits.DMA1DCNTIF = 0;
+    PIR2bits.DMA1DCNTIF = 0;
+
+    PIR2bits.DMA1SCNTIF = 0;
+
+    PIR2bits.DMA1AIF = 0;
+
+    PIR2bits.DMA1ORIF =0;
+
+    PIE2bits.DMA1DCNTIE = 0;
+    PIE2bits.DMA1SCNTIE = 0;
+    PIE2bits.DMA1AIE = 0;
+    PIE2bits.DMA1ORIE = 0;
+
+
+    DMAnCON0 = 0xC0;
 
 }
 
-
-
-
-
-void __attribute__((picinterrupt(("irq(DMA1A), base(8)")))) DMA1_DMAA_ISR()
-
+void DMA1_SelectSourceRegion(uint8_t region)
 {
- PIR2bits.DMA1AIF = 0;
-
+    DMASELECT = 0x00;
+ DMAnCON1bits.SMR = region;
 }
 
-
-
-
-
-void __attribute__((picinterrupt(("irq(DMA1OR), base(8)")))) DMA1_DMAOR_ISR()
-
+void DMA1_SetSourceAddress(uint24_t address)
 {
- PIR2bits.DMA1ORIF = 0;
+    DMASELECT = 0x00;
+ DMAnSSA = address;
+}
 
+void DMA1_SetDestinationAddress(uint16_t address)
+{
+    DMASELECT = 0x00;
+ DMAnDSA = address;
+}
+
+void DMA1_SetSourceSize(uint16_t size)
+{
+    DMASELECT = 0x00;
+ DMAnSSZ= size;
+}
+
+void DMA1_SetDestinationSize(uint16_t size)
+{
+    DMASELECT = 0x00;
+ DMAnDSZ= size;
+}
+
+uint24_t DMA1_GetSourcePointer(void)
+{
+    DMASELECT = 0x00;
+ return DMAnSPTR;
+}
+
+uint16_t DMA1_GetDestinationPointer(void)
+{
+    DMASELECT = 0x00;
+ return DMAnDPTR;
+}
+
+void DMA1_SetStartTrigger(uint8_t sirq)
+{
+    DMASELECT = 0x00;
+ DMAnSIRQ = sirq;
+}
+
+void DMA1_SetAbortTrigger(uint8_t airq)
+{
+    DMASELECT = 0x00;
+ DMAnAIRQ = airq;
+}
+
+void DMA1_StartTransfer(void)
+{
+    DMASELECT = 0x00;
+ DMAnCON0bits.DGO = 1;
+}
+
+void DMA1_StartTransferWithTrigger(void)
+{
+    DMASELECT = 0x00;
+ DMAnCON0bits.SIRQEN = 1;
+}
+
+void DMA1_StopTransfer(void)
+{
+    DMASELECT = 0x00;
+ DMAnCON0bits.SIRQEN = 0;
+ DMAnCON0bits.DGO = 0;
+}
+
+void DMA1_SetDMAPriority(uint8_t priority)
+{
+
+ PRLOCK = 0x55;
+ PRLOCK = 0xAA;
+ PRLOCKbits.PRLOCKED = 0;
+ DMA1PR = priority;
+ PRLOCK = 0x55;
+ PRLOCK = 0xAA;
+ PRLOCKbits.PRLOCKED = 1;
 }

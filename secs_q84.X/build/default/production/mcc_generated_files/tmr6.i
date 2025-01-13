@@ -38853,23 +38853,27 @@ typedef enum
 
 
 
-    TMR6_CCP4_OUT,
+    TMR6_PWM1S1P1_OUT,
 
 
 
-    TMR6_PWM5_OUT,
+    TMR6_PWM1S1P2_OUT,
 
 
 
-    TMR6_PWM6_OUT,
+    TMR6_PWM2S1P1_OUT,
 
 
 
-    TMR6_PWM7_OUT,
+    TMR6_PWM2S1P2_OUT,
 
 
 
-    TMR6_PWM8_OUT,
+    TMR6_PWM3S1P1_OUT,
+
+
+
+    TMR6_PWM3S1P2_OUT,
 
 
 
@@ -38881,11 +38885,11 @@ typedef enum
 
 
 
-    TMR6_C1_OUT_SYNC,
+    TMR6_CMP1_OUT,
 
 
 
-    TMR6_C2_OUT_SYNC,
+    TMR6_CMP2_OUT,
 
 
 
@@ -38909,6 +38913,22 @@ typedef enum
 
 
 
+    TMR6_CLC5_OUT,
+
+
+
+    TMR6_CLC6_OUT,
+
+
+
+    TMR6_CLC7_OUT,
+
+
+
+    TMR6_CLC8_OUT,
+
+
+
     TMR6_UART1_RX_EDGE,
 
 
@@ -38921,495 +38941,171 @@ typedef enum
 
 
 
-    TMR6_UART2_TX_EDGE
+    TMR6_UART2_TX_EDGE,
+
+
+
+    TMR6_UART3_RX_EDGE,
+
+
+
+    TMR6_UART3_TX_EDGE,
+
+
+
+    TMR6_UART4_RX_EDGE,
+
+
+
+    TMR6_UART4_TX_EDGE,
+
+
+
+    TMR6_UART5_RX_EDGE,
+
+
+
+    TMR6_UART5_TX_EDGE,
+
+
+
+    TMR6_RESERVED_4
+
 
 } TMR6_HLT_EXT_RESET_SOURCE;
-# 365 "mcc_generated_files/tmr6.h"
+# 413 "mcc_generated_files/tmr6.h"
 void TMR6_Initialize(void);
-# 401 "mcc_generated_files/tmr6.h"
+# 449 "mcc_generated_files/tmr6.h"
 void TMR6_ModeSet(TMR6_HLT_MODE mode);
-# 436 "mcc_generated_files/tmr6.h"
+# 484 "mcc_generated_files/tmr6.h"
 void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset);
-# 465 "mcc_generated_files/tmr6.h"
+# 513 "mcc_generated_files/tmr6.h"
 void TMR6_Start(void);
-# 494 "mcc_generated_files/tmr6.h"
+# 542 "mcc_generated_files/tmr6.h"
 void TMR6_StartTimer(void);
-# 526 "mcc_generated_files/tmr6.h"
+# 574 "mcc_generated_files/tmr6.h"
 void TMR6_Stop(void);
-# 558 "mcc_generated_files/tmr6.h"
+# 606 "mcc_generated_files/tmr6.h"
 void TMR6_StopTimer(void);
-# 593 "mcc_generated_files/tmr6.h"
+# 641 "mcc_generated_files/tmr6.h"
 uint8_t TMR6_Counter8BitGet(void);
-# 628 "mcc_generated_files/tmr6.h"
+# 676 "mcc_generated_files/tmr6.h"
 uint8_t TMR6_ReadTimer(void);
-# 667 "mcc_generated_files/tmr6.h"
+# 715 "mcc_generated_files/tmr6.h"
 void TMR6_Counter8BitSet(uint8_t timerVal);
-# 706 "mcc_generated_files/tmr6.h"
+# 754 "mcc_generated_files/tmr6.h"
 void TMR6_WriteTimer(uint8_t timerVal);
-# 758 "mcc_generated_files/tmr6.h"
+# 806 "mcc_generated_files/tmr6.h"
 void TMR6_Period8BitSet(uint8_t periodVal);
-# 810 "mcc_generated_files/tmr6.h"
+# 858 "mcc_generated_files/tmr6.h"
 void TMR6_LoadPeriodRegister(uint8_t periodVal);
-# 829 "mcc_generated_files/tmr6.h"
- void TMR6_CallBack(void);
-# 846 "mcc_generated_files/tmr6.h"
- void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
-# 864 "mcc_generated_files/tmr6.h"
-extern void (*TMR6_InterruptHandler)(void);
-# 882 "mcc_generated_files/tmr6.h"
-void TMR6_DefaultInterruptHandler(void);
+# 896 "mcc_generated_files/tmr6.h"
+_Bool TMR6_HasOverflowOccured(void);
 # 53 "mcc_generated_files/tmr6.c" 2
-# 1 "mcc_generated_files/interrupt_manager.h" 1
-# 87 "mcc_generated_files/interrupt_manager.h"
-void INTERRUPT_Initialize (void);
-# 54 "mcc_generated_files/tmr6.c" 2
-# 1 "mcc_generated_files/../vconfig.h" 1
-# 11 "mcc_generated_files/../vconfig.h"
-# 1 "./mcc_generated_files/adcc.h" 1
-# 72 "./mcc_generated_files/adcc.h"
-typedef uint16_t adc_result_t;
-# 89 "./mcc_generated_files/adcc.h"
-typedef enum
-{
-    channel_ANA0 = 0x0,
-    channel_ANA1 = 0x1,
-    channel_ANA2 = 0x2,
-    channel_VSS = 0x3B,
-    channel_Temp = 0x3C,
-    channel_DAC1 = 0x3D,
-    channel_FVR_Buffer1 = 0x3E,
-    channel_FVR_Buffer2 = 0x3F
-} adcc_channel_t;
-# 133 "./mcc_generated_files/adcc.h"
-void ADCC_Initialize(void);
-# 162 "./mcc_generated_files/adcc.h"
-void ADCC_StartConversion(adcc_channel_t channel);
-# 192 "./mcc_generated_files/adcc.h"
-_Bool ADCC_IsConversionDone();
-# 224 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetConversionResult(void);
-# 255 "./mcc_generated_files/adcc.h"
-adc_result_t ADCC_GetSingleConversion(adcc_channel_t channel);
-# 280 "./mcc_generated_files/adcc.h"
-void ADCC_StopConversion(void);
-# 307 "./mcc_generated_files/adcc.h"
-void ADCC_SetStopOnInterrupt(void);
-# 332 "./mcc_generated_files/adcc.h"
-void ADCC_DischargeSampleCapacitor(void);
-# 358 "./mcc_generated_files/adcc.h"
-void ADCC_LoadAcquisitionRegister(uint16_t);
-# 384 "./mcc_generated_files/adcc.h"
-void ADCC_SetPrechargeTime(uint16_t);
-# 409 "./mcc_generated_files/adcc.h"
-void ADCC_SetRepeatCount(uint8_t);
-# 437 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetCurrentCountofConversions(void);
-# 461 "./mcc_generated_files/adcc.h"
-void ADCC_ClearAccumulator(void);
-# 486 "./mcc_generated_files/adcc.h"
-int24_t ADCC_GetAccumulatorValue(void);
-# 514 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasAccumulatorOverflowed(void);
-# 539 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetFilterValue(void);
-# 567 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetPreviousResult(void);
-# 593 "./mcc_generated_files/adcc.h"
-void ADCC_DefineSetPoint(uint16_t);
-# 619 "./mcc_generated_files/adcc.h"
-void ADCC_SetUpperThreshold(uint16_t);
-# 645 "./mcc_generated_files/adcc.h"
-void ADCC_SetLowerThreshold(uint16_t);
-# 672 "./mcc_generated_files/adcc.h"
-uint16_t ADCC_GetErrorCalculation(void);
-# 699 "./mcc_generated_files/adcc.h"
-void ADCC_EnableDoubleSampling(void);
-# 723 "./mcc_generated_files/adcc.h"
-void ADCC_EnableContinuousConversion(void);
-# 747 "./mcc_generated_files/adcc.h"
-void ADCC_DisableContinuousConversion(void);
-# 775 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedUpperThreshold(void);
-# 803 "./mcc_generated_files/adcc.h"
-_Bool ADCC_HasErrorCrossedLowerThreshold(void);
-# 830 "./mcc_generated_files/adcc.h"
-uint8_t ADCC_GetConversionStageStatus(void);
-# 847 "./mcc_generated_files/adcc.h"
-void ADCC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 867 "./mcc_generated_files/adcc.h"
-void ADCC_DefaultInterruptHandler(void);
-# 12 "mcc_generated_files/../vconfig.h" 2
-
-
-
-
-
-
-# 1 "./mcc_generated_files/spi1.h" 1
-# 55 "./mcc_generated_files/spi1.h"
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stddef.h" 1 3
-# 19 "/opt/microchip/xc8/v2.46/pic/include/c99/stddef.h" 3
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 1 3
-# 138 "/opt/microchip/xc8/v2.46/pic/include/c99/bits/alltypes.h" 3
-typedef int ptrdiff_t;
-# 20 "/opt/microchip/xc8/v2.46/pic/include/c99/stddef.h" 2 3
-# 55 "./mcc_generated_files/spi1.h" 2
-# 117 "./mcc_generated_files/spi1.h"
-void SPI1_Initialize(void);
-# 152 "./mcc_generated_files/spi1.h"
-uint8_t SPI1_Exchange8bit(uint8_t data);
-# 192 "./mcc_generated_files/spi1.h"
-uint8_t SPI1_Exchange8bitBuffer(uint8_t *dataIn, uint8_t bufLen, uint8_t *dataOut);
-# 19 "mcc_generated_files/../vconfig.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 126 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
-# 138 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_IOC(void);
-# 20 "mcc_generated_files/../vconfig.h" 2
-# 1 "./ringbufs.h" 1
-# 15 "./ringbufs.h"
-# 1 "./vconfig.h" 1
-# 16 "./ringbufs.h" 2
-
-
-
- typedef struct ringBufS_t {
-  uint8_t buf[64];
-  uint8_t head;
-  uint8_t tail;
-  uint8_t count;
- } ringBufS_t;
-
- void ringBufS_init(volatile ringBufS_t *_this);
- int8_t ringBufS_empty(ringBufS_t *_this);
- int8_t ringBufS_full(ringBufS_t *_this);
- uint8_t ringBufS_get(ringBufS_t *_this);
- void ringBufS_put(ringBufS_t *_this, const uint8_t c);
- void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
- void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 21 "./vconfig.h" 2
-# 93 "./vconfig.h"
- struct spi_link_type {
-  uint8_t SPI_LCD : 1;
-  uint8_t SPI_AUX : 1;
-  uint8_t LCD_TIMER : 1;
-  volatile uint8_t LCD_DATA : 1;
-  uint16_t delay;
-  uint8_t config;
-  struct ringBufS_t *tx1b, *tx1a;
-  volatile int32_t int_count;
- };
-
- typedef enum {
-  CODE_TS = 0,
-  CODE_TM = 1,
-  CODE_ONLOCAL = 2,
-  CODE_ONREMOTE = 3,
-  CODE_OFFLINE = 4,
-  CODE_DEBUG,
-  CODE_LOG,
-  CODE_LOAD,
-  CODE_UNLOAD,
-  CODE_PUMP,
-  CODE_HELP,
-  CODE_SEQUENCE,
-  CODE_ERR,
- } P_CODES;
-
- typedef enum {
-  DIS_STR = 0,
-  DIS_TERM,
-  DIS_LOG,
-  DIS_LOAD,
-  DIS_UNLOAD,
-  DIS_PUMP,
-  DIS_HELP,
-  DIS_SEQUENCE,
-  DIS_SEQUENCE_M,
-  DIS_ERR,
-  DIS_CLEAR,
- } D_CODES;
-
- typedef struct terminal_type {
-  uint8_t ack[32], mesgid;
-  uint8_t TID, mcode, mparm, cmdlen, log_seq;
-  uint8_t host_display_ack : 1;
-  D_CODES info, help_temp;
-  uint16_t ceid;
-  uint16_t log_num;
- } terminal_type;
-
- typedef enum {
-  SEQ_STATE_INIT = 0,
-  SEQ_STATE_RX,
-  SEQ_STATE_TX,
-  SEQ_STATE_TRIGGER,
-  SEQ_STATE_QUEUE,
-  SEQ_STATE_DONE,
-  SEQ_STATE_ERROR
- } SEQ_STATES;
-
- typedef enum {
-  UI_STATE_INIT = 0,
-  UI_STATE_HOST,
-  UI_STATE_DEBUG,
-  UI_STATE_LOG,
-  UI_STATE_ERROR
- } UI_STATES;
-
- typedef enum {
-  GEM_STATE_DISABLE = 0,
-  GEM_STATE_COMM,
-  GEM_STATE_OFFLINE,
-  GEM_STATE_ONLINE,
-  GEM_STATE_REMOTE,
-  GEM_STATE_ERROR
- } GEM_STATES;
-
- typedef enum {
-  GEM_GENERIC = 0,
-  GEM_VII80,
-  GEM_E220,
-  GEM_ERROR
- } GEM_EQUIP;
-
- typedef enum {
-  LINK_STATE_IDLE = 0,
-  LINK_STATE_ENQ,
-  LINK_STATE_EOT,
-  LINK_STATE_ACK,
-  LINK_STATE_DONE,
-  LINK_STATE_NAK,
-  LINK_STATE_ERROR
- } LINK_STATES;
-
- typedef enum {
-  LINK_ERROR_NONE = 10,
-  LINK_ERROR_T1,
-  LINK_ERROR_T2,
-  LINK_ERROR_T3,
-  LINK_ERROR_T4,
-  LINK_ERROR_CHECKSUM,
-  LINK_ERROR_NAK,
-  LINK_ERROR_ABORT,
-  LINK_ERROR_SEND
- } LINK_ERRORS;
-
- typedef enum {
-  MSG_ERROR_NONE = 0,
-  MSG_ERROR_ID = 1,
-  MSG_ERROR_STREAM = 3,
-  MSG_ERROR_FUNCTION = 5,
-  MSG_ERROR_DATA = 7,
-  MSG_ERROR_TIMEOUT = 9,
-  MSG_ERROR_DATASIZE = 11,
-  MSG_ERROR_RESET = 20
- } MSG_ERRORS;
-
- typedef struct V_data {
-  SEQ_STATES s_state;
-  UI_STATES ui_state;
-  GEM_STATES g_state;
-  GEM_EQUIP e_types;
-  LINK_STATES m_l_state;
-  LINK_STATES r_l_state;
-  LINK_STATES t_l_state;
-  char buf[64], terminal[160], info[64];
-  uint32_t ticks, systemb;
-  int32_t testing;
-  uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
-  UI_STATES ui_sw;
-  uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
-  failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
-  terminal_type response;
-  uint8_t uart, llid, sid, ping_count;
-  volatile uint8_t ticker;
-  _Bool flipper;
- } V_data;
-
- typedef struct V_help {
-  const char message[32], display[32];
- } V_help;
-# 55 "mcc_generated_files/tmr6.c" 2
-# 1 "mcc_generated_files/../timers.h" 1
-# 11 "mcc_generated_files/../timers.h"
-enum APP_TIMERS {
- TMR_INTERNAL = 0,
- TMR_T1,
- TMR_T2,
- TMR_T3,
- TMR_T4,
- TMR_MC_TX,
- TMR_HBIO,
- TMR_INFO,
- TMR_HELP,
- TMR_HELPDIS,
- TMR_DISPLAY,
- TMR_SEQ,
- TMR_FLIPPER,
-
-
-
- TMR_COUNT
-};
-
-__attribute__((inline)) void StartTimer(uint8_t timer, uint16_t count);
-__attribute__((inline)) _Bool TimerDone(uint8_t timer);
-void WaitMs(uint16_t numMilliseconds);
-# 56 "mcc_generated_files/tmr6.c" 2
-
-extern struct V_data V;
-extern volatile uint16_t tickCount[TMR_COUNT];
-
-
-
-
-
-void (*TMR6_InterruptHandler)(void);
-
-
-
-
-
+# 62 "mcc_generated_files/tmr6.c"
 void TMR6_Initialize(void)
 {
 
 
 
- T6CLKCON = 0x01;
+    T6CLKCON = 0x03;
 
 
- T6HLT = 0x00;
+    T6HLT = 0x00;
 
 
- T6RST = 0x00;
+    T6RST = 0x00;
 
 
- T6PR = 0x03;
+    T6PR = 0xFF;
 
 
- T6TMR = 0x00;
+    T6TMR = 0x00;
 
 
- PIR9bits.TMR6IF = 0;
+    PIR15bits.TMR6IF = 0;
 
 
- PIE9bits.TMR6IE = 1;
-
-
- TMR6_SetInterruptHandler(TMR6_DefaultInterruptHandler);
-
-
- T6CON = 0xFF;
+    T6CON = 0x80;
 }
 
 void TMR6_ModeSet(TMR6_HLT_MODE mode)
 {
 
- T6HLTbits.MODE = mode;
+    T6HLTbits.MODE = mode;
 }
 
 void TMR6_ExtResetSourceSet(TMR6_HLT_EXT_RESET_SOURCE reset)
 {
 
- T6RSTbits.RSEL = reset;
+    T6RSTbits.RSEL = reset;
 }
 
 void TMR6_Start(void)
 {
 
- T6CONbits.TMR6ON = 1;
+    T6CONbits.TMR6ON = 1;
 }
 
 void TMR6_StartTimer(void)
 {
- TMR6_Start();
+    TMR6_Start();
 }
 
 void TMR6_Stop(void)
 {
 
- T6CONbits.TMR6ON = 0;
+    T6CONbits.TMR6ON = 0;
 }
 
 void TMR6_StopTimer(void)
 {
- TMR6_Stop();
+    TMR6_Stop();
 }
 
 uint8_t TMR6_Counter8BitGet(void)
 {
- uint8_t readVal;
+    uint8_t readVal;
 
- readVal = TMR6;
+    readVal = TMR6;
 
- return readVal;
+    return readVal;
 }
 
 uint8_t TMR6_ReadTimer(void)
 {
- return TMR6_Counter8BitGet();
+    return TMR6_Counter8BitGet();
 }
 
 void TMR6_Counter8BitSet(uint8_t timerVal)
 {
 
- TMR6 = timerVal;
+    TMR6 = timerVal;
 }
 
 void TMR6_WriteTimer(uint8_t timerVal)
 {
- TMR6_Counter8BitSet(timerVal);
+    TMR6_Counter8BitSet(timerVal);
 }
 
 void TMR6_Period8BitSet(uint8_t periodVal)
 {
- PR6 = periodVal;
+   PR6 = periodVal;
 }
 
 void TMR6_LoadPeriodRegister(uint8_t periodVal)
 {
- TMR6_Period8BitSet(periodVal);
+   TMR6_Period8BitSet(periodVal);
 }
 
-void __attribute__((picinterrupt(("irq(TMR6), base(8)")))) TMR6_ISR()
+_Bool TMR6_HasOverflowOccured(void)
 {
 
+    _Bool status = PIR15bits.TMR6IF;
+    if(status)
+    {
 
- PIR9bits.TMR6IF = 0;
-
-
-
- TMR6_CallBack();
-}
-
-void TMR6_CallBack(void)
-{
-
-
- if (TMR6_InterruptHandler) {
-  TMR6_InterruptHandler();
- }
-}
-
-void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
-{
- TMR6_InterruptHandler = InterruptHandler;
-}
-
-void TMR6_DefaultInterruptHandler(void)
-{
- uint8_t i;
-
-
-
-
- for (i = 0; i < TMR_COUNT; i++) {
-  if (tickCount[i] != 0) {
-   tickCount[i]--;
-  }
- }
+        PIR15bits.TMR6IF = 0;
+    }
+    return status;
 }

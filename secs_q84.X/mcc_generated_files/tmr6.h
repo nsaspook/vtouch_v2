@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for TMR6.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-        Device            :  PIC18F57K42
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+        Device            :  PIC18F47Q84
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.36 and above 
+        MPLAB 	          :  MPLAB X 6.00
 */
 
 /*
@@ -242,46 +242,50 @@ typedef enum
     /* CCP2_OUT is the Timer external reset source 
      */
     TMR6_CCP2_OUT,
-    
+
     /* CCP3_OUT is the Timer external reset source 
      */
     TMR6_CCP3_OUT,
 
-    /* CCP4_OUT is the Timer external reset source 
+    /* PWM1S1P1_out is the Timer external reset source 
      */
-    TMR6_CCP4_OUT,
+    TMR6_PWM1S1P1_OUT,
 
-    /* PWM5_out is the Timer external reset source 
+    /* PWM1S1P2_out is the Timer external reset source 
      */
-    TMR6_PWM5_OUT,
+    TMR6_PWM1S1P2_OUT,
 
-     /* PWM6_out is the Timer external reset source 
+    /* PWM2S1P1_out is the Timer external reset source 
      */
-    TMR6_PWM6_OUT,
-    
-    /* PWM7_out is the Timer external reset source 
-     */
-    TMR6_PWM7_OUT,
+    TMR6_PWM2S1P1_OUT,
 
-     /* PWM8_out is the Timer external reset source 
+    /* PWM2S1P2_out is the Timer external reset source 
      */
-    TMR6_PWM8_OUT,
-    
+    TMR6_PWM2S1P2_OUT,
+
+    /* PWM3S1P1_out is the Timer external reset source 
+     */
+    TMR6_PWM3S1P1_OUT,
+
+    /* PWM3S1P2_out is the Timer external reset source 
+     */
+    TMR6_PWM3S1P2_OUT,
+
     /* Reserved enum cannot be used 
-     */
+    */
     TMR6_RESERVED_2,
 
     /* Reserved enum cannot be used 
-     */
+    */
     TMR6_RESERVED_3,
 
-    /* C1_OUT_SYNC is the Timer external reset source 
+    /* CMP1_OUT is the Timer external reset source 
      */
-    TMR6_C1_OUT_SYNC,	
+    TMR6_CMP1_OUT,
 
-    /* C2_OUT_SYNC is the Timer external reset source 
+    /* CMP2_OUT is the Timer external reset source 
      */
-    TMR6_C2_OUT_SYNC,
+    TMR6_CMP2_OUT,
 
     /* ZCD_Output is the Timer external reset source 
      */
@@ -301,7 +305,23 @@ typedef enum
 
     /* CLC4_out is the Timer external reset source 
      */
-    TMR6_CLC4_OUT,
+    TMR6_CLC4_OUT,  
+
+    /* CLC5_out is the Timer external reset source 
+     */
+    TMR6_CLC5_OUT,
+         
+    /* CLC6_out is the Timer external reset source 
+     */
+    TMR6_CLC6_OUT,
+            
+    /* CLC7_out is the Timer external reset source 
+     */
+    TMR6_CLC7_OUT,
+    
+    /* CLC8_out is the Timer external reset source 
+     */
+    TMR6_CLC8_OUT,
 
     /* UART1_rx_edge is the Timer external reset source 
      */
@@ -317,7 +337,36 @@ typedef enum
 
     /* UART2_tx_edge is the Timer external reset source 
      */
-    TMR6_UART2_TX_EDGE
+    TMR6_UART2_TX_EDGE,
+
+    /* UART3_rx_edge is the Timer external reset source 
+     */
+    TMR6_UART3_RX_EDGE,
+
+    /* UART3_tx_edge is the Timer external reset source 
+     */
+    TMR6_UART3_TX_EDGE,
+
+    /* UART4_rx_edge is the Timer external reset source 
+     */
+    TMR6_UART4_RX_EDGE,
+
+    /* UART4_tx_edge is the Timer external reset source 
+     */
+    TMR6_UART4_TX_EDGE,
+
+    /* UART5_rx_edge is the Timer external reset source 
+     */
+    TMR6_UART5_RX_EDGE,
+
+    /* UART5_tx_edge is the Timer external reset source 
+     */
+    TMR6_UART5_TX_EDGE,
+
+    /* Reserved enum cannot be used 
+    */
+    TMR6_RESERVED_4
+
 
 } TMR6_HLT_EXT_RESET_SOURCE;
 
@@ -325,7 +374,6 @@ typedef enum
 /**
   Section: Macro Declarations
 */
-#define TMR6_INTERRUPT_TICKER_FACTOR    101
 
 /**
   Section: TMR6 APIs
@@ -809,78 +857,43 @@ void TMR6_Period8BitSet(uint8_t periodVal);
 */
 void TMR6_LoadPeriodRegister(uint8_t periodVal);
 
-
 /**
   @Summary
-    CallBack function
+    Boolean routine to poll or to check for the match flag on the fly.
 
   @Description
-    This function is called from the timer ISR. User can write your code in this function.
+    This function is called to check for the timer match flag.
+    This function is usd in timer polling method.
 
   @Preconditions
-    Initialize  the TMR6 module with interrupt before calling this function.
+    Initialize  the TMR6 module before calling this routine.
 
   @Param
     None
 
   @Returns
-    None
+    true - timer match has occured.
+    false - timer match has not occured.
+
+  @Example
+    <code>
+    while(1)
+    {
+        // check the match flag
+        if(TMR6_HasOverflowOccured())
+        {
+            // Do something else...
+
+            // clear the TMR6 match interrupt flag
+            TMR6IF = 0;
+
+            // Reload the TMR6 value
+            TMR6_Reload();
+        }
+    }
+    </code>
 */
- void TMR6_CallBack(void);
-/**
-  @Summary
-    Set Timer Interrupt Handler
-
-  @Description
-    This sets the function to be called during the ISR
-
-  @Preconditions
-    Initialize  the TMR6 module with interrupt before calling this.
-
-  @Param
-    Address of function to be set
-
-  @Returns
-    None
-*/
- void TMR6_SetInterruptHandler(void (* InterruptHandler)(void));
-
-/**
-  @Summary
-    Timer Interrupt Handler
-
-  @Description
-    This is a function pointer to the function that will be called during the ISR
-
-  @Preconditions
-    Initialize  the TMR6 module with interrupt before calling this isr.
-
-  @Param
-    None
-
-  @Returns
-    None
-*/
-extern void (*TMR6_InterruptHandler)(void);
-
-/**
-  @Summary
-    Default Timer Interrupt Handler
-
-  @Description
-    This is the default Interrupt Handler function
-
-  @Preconditions
-    Initialize  the TMR6 module with interrupt before calling this isr.
-
-  @Param
-    None
-
-  @Returns
-    None
-*/
-void TMR6_DefaultInterruptHandler(void);
-
+bool TMR6_HasOverflowOccured(void);
 
  #ifdef __cplusplus  // Provide C++ Compatibility
 
@@ -892,4 +905,3 @@ void TMR6_DefaultInterruptHandler(void);
 /**
  End of File
 */
-

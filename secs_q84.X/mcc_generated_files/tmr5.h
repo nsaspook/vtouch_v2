@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for TMR5.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-        Device            :  PIC18F57K42
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+        Device            :  PIC18F47Q84
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.36 and above
+        MPLAB 	          :  MPLAB X 6.00
 */
 
 /*
@@ -60,7 +60,6 @@
 
 #endif
 
-#define TMR5_INTERRUPT_TICKER_FACTOR    5
 
 /**
   Section: TMR5 APIs
@@ -351,75 +350,41 @@ uint8_t TMR5_CheckGateValueStatus(void);
 
 /**
   @Summary
-    CallBack function.
+    Boolean routine to poll or to check for the overflow flag on the fly.
 
   @Description
-    This routine is called by the Interrupt Manager.
+    This function is called to check for the timer overflow flag.
+    This function is usd in timer polling method.
 
   @Preconditions
-    Initialize  the TMR5 module with interrupt before calling this function.
+    Initialize  the TMR5 module before calling this routine.
 
   @Param
     None
 
   @Returns
-    None
+    true - timer overflow has occured.
+    false - timer overflow has not occured.
+
+  @Example
+    <code>
+    while(1)
+    {
+        // check the overflow flag
+        if(TMR5_HasOverflowOccured())
+        {
+            // Do something else...
+
+            // clear the TMR5 interrupt flag
+            TMR5IF = 0;
+
+            // Reload the TMR5 value
+            TMR5_Reload();
+        }
+    }
+    </code>
 */
-void TMR5_CallBack(void);
-
-/**
-  @Summary
-    Set Timer Interrupt Handler
-
-  @Description
-    This sets the function to be called during the ISR
-
-  @Preconditions
-    Initialize  the TMR5 module with interrupt before calling this.
-
-  @Param
-    Address of function to be set
-
-  @Returns
-    None
-*/
- void TMR5_SetInterruptHandler(void (* InterruptHandler)(void));
-
-/**
-  @Summary
-    Timer Interrupt Handler
-
-  @Description
-    This is a function pointer to the function that will be called during the ISR
-
-  @Preconditions
-    Initialize  the TMR5 module with interrupt before calling this isr.
-
-  @Param
-    None
-
-  @Returns
-    None
-*/
-extern void (*TMR5_InterruptHandler)(void);
-
-/**
-  @Summary
-    Default Timer Interrupt Handler
-
-  @Description
-    This is the default Interrupt Handler function
-
-  @Preconditions
-    Initialize  the TMR5 module with interrupt before calling this isr.
-
-  @Param
-    None
-
-  @Returns
-    None
-*/
-void TMR5_DefaultInterruptHandler(void);
+bool TMR5_HasOverflowOccured(void);
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 

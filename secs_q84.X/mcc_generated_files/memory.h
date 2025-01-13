@@ -13,12 +13,12 @@
   @Description
     This header file provides APIs for driver for MEMORY.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-        Device            :  PIC18F57K42
-        Driver Version    :  2.11
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+        Device            :  PIC18F47Q84
+        Driver Version    :  1.1.0
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45
-        MPLAB             :  MPLAB X 4.15
+        Compiler          :  XC8 2.36 and above
+        MPLAB             :  MPLAB X 6.00
 *******************************************************************************/
 
 /*
@@ -49,241 +49,178 @@
 
 /**
   Section: Included Files
-*/
+ */
 
-#include <stdbool.h>
+#include <xc.h>
 #include <stdint.h>
-
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    extern "C" {
-
-#endif
 
 /**
   Section: Macro Declarations
-*/
+ */
 
-#define WRITE_FLASH_BLOCKSIZE    128
-#define ERASE_FLASH_BLOCKSIZE    128
+#define WRITE_FLASH_BLOCKSIZE    256
+#define ERASE_FLASH_BLOCKSIZE    256
 #define END_FLASH                0x020000
 
-/**
-  Section: Flash Module APIs
-*/
 
 /**
-  @Summary
-    Reads a data byte from Flash
+  Section: MEMORY APIs
+ */
 
-  @Description
-    This routine reads a data byte from given Flash address
-
-  @Preconditions
-    None
-
-  @Param
-    flashAddr - Flash program memory location from which data has to be read
-
-  @Returns
-    Data byte read from given Flash address
-
-  @Example
-    <code>
-    uint8_t    readByte;
-    uint32_t    flashAddr = 0x7D00;
-
-    readByte = FLASH_ReadByte(flashAddr);
-    </code>
-*/
+/**
+ * @brief This routine reads one data byte from given address of Program Flash Memory
+ * @return Data byte read from given Program Flash Memory address
+ * @param [in] Address of Program Flash Memory location to be read
+ * @example void main(void)
+ *          {
+ *              uint8_t readByte;
+ *              SYSTEM_Initialize();
+ *              readByte = FLASH_ReadByte(0x1FF00);
+ *          }
+ */
 uint8_t FLASH_ReadByte(uint32_t flashAddr);
 
 /**
-  @Summary
-    Reads a data word from Flash
-
-  @Description
-    This routine reads a data word from given Flash address
-
-  @Preconditions
-    None
-
-  @Param
-    flashAddr - Flash program memory location from which data has to be read
-
-  @Returns
-    Data word read from given Flash address
-
-  @Example
-    <code>
-    uint16_t    readWord;
-    uint32_t    flashAddr = 0x7D00;
-
-    readWord = FLASH_ReadWord(flashAddr);
-    </code>
-*/
+ * @brief This routine reads one word from given address of Program Flash Memory
+ * @return Data word read from given Program Flash Memory address
+ * @param [in] Address of Program Flash Memory location to be read
+ * @example void main(void)
+ *          {
+ *              uint16_t readWord;
+ *              SYSTEM_Initialize();
+ *              readWord = FLASH_ReadByte(0x1FF00);
+ *          }
+ */
 uint16_t FLASH_ReadWord(uint32_t flashAddr);
 
- /**
-  @Summary
-    Writes a data byte into Flash
-
-  @Description
-    This routine writes the given data byte into mentioned Flash address.
-
-    This routine intially reads block of data (from Flash) into RAM, updates
-    data values in RAM, and writes back updated values to Flash.
-
-  @Preconditions
-    None
-
-  @Param
-    flashAddr      - Flash program memory location to which data has to be written
-    *flashRdBufPtr - Pointer to RAM buffer of size 'ERASE_FLASH_BLOCKSIZE' at least
-    byte           - Data byte to be written in Flash
-
-  @Returns
-    None
-
-  @Example
-    <code>
-    uint8_t    writeData = 0xAA;
-    uint32_t    flashAddr = 0x7D00;
-    uint8_t    Buf[ERASE_FLASH_BLOCKSIZE];
-
-    FLASH_WriteWord(flashAddr, Buf, writeData);
-    </code>
-*/
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
+/**
+ * @brief This routine reads one block from given address of Program Flash Memory
+ *        into device Buffer RAM
+ * @return None
+ * @param [in] Starting address of a Program Flash Memory block
+ * @example Use case: Read one page from given PFM location into device Buffer RAM using FLASH_ReadPage()
+ *                    Transfer the contents of device Buffer RAM to U1TXB using DMA2
+ *                    
+ *          void main(void)
+ *          {   
+ *              SYSTEM_Initialize();
+ *
+ *              //Read one page from PFM into device Buffer RAM
+ *              FLASH_ReadPage();
+ *
+ *              //Initialize DMA2 to copy data from device Buffer RAM to U1TXB register
+ *              //Configure source size as 256 and destination size as 1
+ *              DMA2_Initialize();
+ *          }
+ */
+void FLASH_ReadPage(uint32_t flashAddr);
 
 /**
-  @Summary
-    Writes data to complete block of Flash
-
-  @Description
-    This routine writes data bytes to complete block in Flash program memory
-
-  @Preconditions
-    None
-
-  @Param
-    writeAddr      - A valid block starting address in Flash
-    *flashWrBufPtr - Pointer to an array of size 'WRITE_FLASH_BLOCKSIZE' at least
-
-  @Returns
-    -1, if the given address is not a valid block starting address of Flash
-    0, in case of valid block starting address
-
-  @Example
-    <code>
-    #define FLASH_ROW_ADDRESS     0x7D00
-
-    uint8_t wrBlockData[] =
-    {
-        0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
-        0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
-        0x20, 0x21, 0x22, 0x23, 0x24, 0x25, 0x26, 0x27, 0x28, 0x29, 0x2A, 0x2B, 0x2C, 0x2D, 0x2E, 0x2F,
-        0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x3A, 0x3B, 0x3C, 0x3D, 0x3E, 0x3F
-    };
-
-    // write to Flash memory block
-    FLASH_WriteBlock((uint32_t)FLASH_ROW_ADDRESS, (uint8_t *)wrBlockData);
-    </code>
-*/
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
+ * @brief This routine writes one block of data from Buffer RAM to the given address of Program Flash Memory
+ * @return None
+ * @param [in] Starting address of a Program Flash Memory block
+ * @example Use case: Data received in U1RXB is copied to device Buffer RAM using DMA1.
+ *                    Once page-sized data is copied to device Buffer RAM, 
+ *                    it will be transferred to PFM using FLASH_WritePage()
+ *          void main(void)
+ *          {   
+ *              SYSTEM_Initialize();
+ *
+ *              //Initialize DMA1 to copy data from UART receive buffer to device Buffer RAM
+ *              //Configure Source size as 1 and destination size as 256 (PFM page size)
+ *              DMA1_Initialize();
+ *
+ *              //Once 256 bytes are copied in device buffer RAM,
+ *              //Write the data available in device Buffer RAM to given PFM page
+ *              FLASH_WritePage();
+ *          }
+ */
+void FLASH_WritePage(uint32_t flashAddr);
 
 /**
-  @Summary
-    Erases complete Flash program memory block
+ * @brief This routine writes one word to given address of erased Program Flash Memory location
+ * @return None
+ * @param [in] Address of erased Program Flash Memory location to be written
+ * @param [in] Data word to be written to given address
+ * @example void main(void)
+ *          {
+ *              SYSTEM_Initialize();
+ *              FLASH_WriteWord(0x1FF00,0x55AA);
+ *          }
+ */
+void FLASH_WriteWord(uint32_t flashAddr, uint16_t word);
 
-  @Description
-    This routine erases complete Flash program memory block
+/**
+ * @brief This routine writes 128 words from given block start address
+ * @return Status of operation
+ * @param [in] Starting address of a Program Flash Memory block
+ * @param [in] Address of RAM buffer to be copied to Program Flash Memory block
+ * @example uint16_t flashWrBufPtr[WRITE_FLASH_BLOCKSIZE] =
+ *          {
+ *              0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x2, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x3, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x4, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x5, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x6, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x7, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x8, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0x9, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0xa, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0xb, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0xc, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0xd, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0xe, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0xf, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8,
+ *              0xf, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8
+ *          };
+ *          void main(void)
+ *          {
+ *              SYSTEM_Initialize();
+ *              FLASH_WriteBlock(0x1FF00,flashWrBufPtr);
+ *          }
+ */
+int8_t FLASH_WriteBlock(uint32_t flashAddr, uint16_t *flashWrBufPtr);
 
-  @Preconditions
-    None
-
-  @Param
-    baseAddr - A valid block starting address in Flash program memory
-
-  @Returns
-    None
-
-  @Example
-    <code>
-    uint32_t    flashBlockStartAddr = 0x7D00;
-
-    FLASH_EraseBlock(flashBlockStartAddr);
-    </code>
-*/
-void FLASH_EraseBlock(uint32_t baseAddr);
+/**
+ * @brief This routine erases 128-words block from given address of Program Flash Memory
+ * @return None
+ * @param [in] Starting address of Program Flash Memory block to be erased
+ * @example void main(void)
+ *          {
+ *              SYSTEM_Initialize();
+ *              FLASH_EraseBlock(0x1FF00);
+ *          }
+ */
+void FLASH_EraseBlock(uint32_t flashAddr);
 
 /**
   Section: Data EEPROM Module APIs
-*/
+ */
 
 /**
-  @Summary
-    Writes a data byte to Data EEPROM
-
-  @Description
-    This routine writes a data byte to given Data EEPROM location
-
-  @Preconditions
-    None
-
-  @Param
-    bAdd  - Data EEPROM location to which data to be written
-    bData - Data to be written to Data EEPROM location
-
-  @Returns
-    None
-
-  @Example
-    <code>
-    uint16_t dataeeAddr = 0x10;
-    uint8_t dataeeData = 0x55;
-
-    DATAEE_WriteByte(dataeeAddr, dataeeData);
-    </code>
-*/
+ * @brief This routine writes one data byte to given EEPROM address
+ * @return None
+ * @param [in] Address of EEPROM location to be written
+ * @param [in] Data byte to be written to given EEPROM location
+ * @example void main(void)
+ *          {
+ *              SYSTEM_Initialize();
+ *              DATAEE_WriteByte(0x2, 0xAB);  //Writes a byte to 0x380002
+ *          }
+ */
 void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 
 /**
-  @Summary
-    Reads a data byte from Data EEPROM
-
-  @Description
-    This routine reads a data byte from given Data EEPROM location
-
-  @Preconditions
-    None
-
-  @Param
-    bAdd  - Data EEPROM location from which data has to be read
-
-  @Returns
-    Data byte read from given Data EEPROM location
-
-  @Example
-    <code>
-    uint16_t dataeeAddr = 0x10;
-    uint8_t readData;
-
-    readData = DATAEE_ReadByte(dataeeAddr);
-    </code>
-*/
+ * @brief This routine reads one data byte from given EEPROM address
+ * @return Data byte read from given EEPROM address
+ * @param [in] Address of EEPROM location to be read
+ * @example void main(void)
+ *          {
+ *              uint8_t eepromByte;
+ *              SYSTEM_Initialize();
+ *              eepromByte = DATAEE_ReadByte(0x2);    //Reads a byte from 0x380002
+ *          }
+ */
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-    }
-
-#endif
-
-#endif // MEMORY_H
-/**
- End of File
-*/
-
+#endif  // MEMORY_H

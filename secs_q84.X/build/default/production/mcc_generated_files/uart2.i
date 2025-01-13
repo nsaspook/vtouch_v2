@@ -38767,7 +38767,12 @@ void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 573 "mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 51 "mcc_generated_files/uart2.c" 2
-# 63 "mcc_generated_files/uart2.c"
+
+# 1 "mcc_generated_files/interrupt_manager.h" 1
+# 109 "mcc_generated_files/interrupt_manager.h"
+void INTERRUPT_Initialize (void);
+# 52 "mcc_generated_files/uart2.c" 2
+# 64 "mcc_generated_files/uart2.c"
 static volatile uint8_t uart2TxHead = 0;
 static volatile uint8_t uart2TxTail = 0;
 static volatile uint8_t uart2TxBuffer[64];
@@ -38929,7 +38934,21 @@ void UART2_Write(uint8_t txData)
     PIE8bits.U2TXIE = 1;
 }
 
+void __attribute__((picinterrupt(("irq(U2TX),base(8)")))) UART2_tx_vect_isr()
+{
+    if(UART2_TxInterruptHandler)
+    {
+        UART2_TxInterruptHandler();
+    }
+}
 
+void __attribute__((picinterrupt(("irq(U2RX),base(8)")))) UART2_rx_vect_isr()
+{
+    if(UART2_RxInterruptHandler)
+    {
+        UART2_RxInterruptHandler();
+    }
+}
 
 
 

@@ -13,12 +13,12 @@
   @Description
     This source file provides APIs for TMR2.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-        Device            :  PIC18F57K42
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+        Device            :  PIC18F47Q84
         Driver Version    :  2.11
     The generated drivers are tested against the following:
-        Compiler          :  XC8 1.45 
-        MPLAB 	          :  MPLAB X 4.15
+        Compiler          :  XC8 2.36 and above 
+        MPLAB 	          :  MPLAB X 6.00
 */
 
 /*
@@ -63,26 +63,26 @@ void TMR2_Initialize(void)
 {
     // Set TMR2 to the options selected in the User Interface
 
-    // T2CS FOSC/4; 
-    T2CLKCON = 0x01;
+    // T2CS HFINTOSC; 
+    T2CLKCON = 0x03;
 
     // T2PSYNC Not Synchronized; T2MODE Software control; T2CKPOL Rising Edge; T2CKSYNC Not Synchronized; 
     T2HLT = 0x00;
 
-    // T2RSEL CLC1_out; 
-    T2RST = 0x11;
+    // T2RSEL T2CKIPPS pin; 
+    T2RST = 0x00;
 
-    // PR2 99; 
-    T2PR = 0x63;
+    // PR2 255; 
+    T2PR = 0xFF;
 
     // TMR2 0; 
     T2TMR = 0x00;
 
     // Clearing IF flag.
-    PIR4bits.TMR2IF = 0;
+    PIR3bits.TMR2IF = 0;
 
-    // T2CKPS 1:16; T2OUTPS 1:1; TMR2ON on; 
-    T2CON = 0xC0;
+    // T2CKPS 1:1; T2OUTPS 1:1; TMR2ON on; 
+    T2CON = 0x80;
 }
 
 void TMR2_ModeSet(TMR2_HLT_MODE mode)
@@ -157,11 +157,11 @@ void TMR2_LoadPeriodRegister(uint8_t periodVal)
 bool TMR2_HasOverflowOccured(void)
 {
     // check if  overflow has occurred by checking the TMRIF bit
-    bool status = PIR4bits.TMR2IF;
+    bool status = PIR3bits.TMR2IF;
     if(status)
     {
         // Clearing IF flag.
-        PIR4bits.TMR2IF = 0;
+        PIR3bits.TMR2IF = 0;
     }
     return status;
 }

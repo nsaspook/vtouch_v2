@@ -49,6 +49,7 @@
 */
 #include <xc.h>
 #include "uart1.h"
+#include "interrupt_manager.h"
 
 /**
   Section: Macro Declarations
@@ -221,7 +222,21 @@ void UART1_Write(uint8_t txData)
     PIE4bits.U1TXIE = 1;
 }
 
+void __interrupt(irq(U1TX),base(8)) UART1_tx_vect_isr()
+{   
+    if(UART1_TxInterruptHandler)
+    {
+        UART1_TxInterruptHandler();
+    }
+}
 
+void __interrupt(irq(U1RX),base(8)) UART1_rx_vect_isr()
+{
+    if(UART1_RxInterruptHandler)
+    {
+        UART1_RxInterruptHandler();
+    }
+}
 
 
 

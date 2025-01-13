@@ -1,6 +1,6 @@
 /**
-  DMA Generated Driver File
-  
+  DMA1 Generated Driver File
+
   @Company
     Microchip Technology Inc.
 
@@ -8,18 +8,18 @@
     dma1.c
 
   @Summary
-    This is the generated driver implementation file for the DMA driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+    This is the generated driver implementation file for the DMA1 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
   @Description
-    This header file provides implementations for driver APIs for DMA CHANNEL1.
+    This source file provides APIs for DMA1.
     Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.65.2
-	Device            :  PIC18F57K42
-	Driver Version    :  2.10
+        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+        Device            :  PIC18F47Q84
+        Driver Version    :  1.0.0
     The generated drivers are tested against the following:
-	Compiler          :  XC8 1.45
-	MPLAB 	          :  MPLAB X 4.15
- */
+        Compiler          :  XC8 2.36 and above
+        MPLAB 	          :  MPLAB X 6.00
+*/
 
 /*
     (c) 2018 Microchip Technology Inc. and its subsidiaries. 
@@ -42,122 +42,143 @@
     CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
     OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
     SOFTWARE.
- */
+*/
 
 /**
   Section: Included Files
- */
+*/
 
 #include <xc.h>
 #include "dma1.h"
-#include "interrupt_manager.h"
-#include "../vconfig.h"
+
 
 /**
-  Section: Global Variables Definitions
- */
+  Section: DMA1 APIs
+*/
 
-extern struct spi_link_type spi_link;
-
-//------------------------------------------------------------------------------
-#define m_ARBITER_LOCK()    \
-      do{ \
-           asm("BANKSEL PRLOCK");\
-           asm("MOVLW   0x55");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("MOVLW   0xAA");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("BSF     (PRLOCK & 0xFF),0");\
-        }while(0)
-//------------------------------------------------------------------------------
-#define m_ARBITER_UNLOCK()  \
-      do{ \
-           asm("BANKSEL PRLOCK");\
-           asm("MOVLW   0x55");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("MOVLW   0xAA");\
-           asm("MOVWF   (PRLOCK & 0xFF)");\
-           asm("BCF     (PRLOCK & 0xFF),0");\
-        }while(0)
-
-/**
-  Section: DMA APIs
- */
 void DMA1_Initialize(void)
 {
-	DMA1SSA = 0x001000; //set source start address
-	DMA1DSA = 0x3D11; //set destination start address 
-	DMA1CON1 = 0x03; //set control register1 
-	DMA1SSZ = 0x0001; //set source size
-	DMA1DSZ = 0x0001; //set destination size
-	DMA1SIRQ = 0x15; //set DMA Transfer Trigger Source
-	DMA1AIRQ = 0x0; //set DMA Transfer abort Source
-
-	PIR2bits.DMA1DCNTIF = 0; // clear Destination Count Interrupt Flag bit
-	PIR2bits.DMA1SCNTIF = 0; // clear Source Count Interrupt Flag bit
-	PIR2bits.DMA1AIF = 0; // clear abort Interrupt Flag bit
-	PIR2bits.DMA1ORIF = 0; // clear overrun Interrupt Flag bit
-
-	PIE2bits.DMA1DCNTIE = 1; // enable Destination Count 0 Interrupt
-	PIE2bits.DMA1SCNTIE = 1; // enable Source Count Interrupt
-	PIE2bits.DMA1AIE = 1; // enable abort Interrupt
-	PIE2bits.DMA1ORIE = 1; // enable overrun Interrupt 
-
-	ISRPR = 0;
-	MAINPR = 1;
-	DMA1PR = 4;
-	DMA2PR = 2;
-	SCANPR = 3;
-
-	asm("BCF INTCON0,7");
-
-	asm("BANKSEL PRLOCK");
-	asm("MOVLW 0x55");
-	asm("MOVWF PRLOCK");
-	asm("MOVLW 0xAA");
-	asm("MOVWF PRLOCK");
-	asm("BSF PRLOCK, 0");
-
-	asm("BSF INTCON0,7");
-
-	DMA1CON0 = 0x00; //set control register0
+    //DMA Instance Selection : 0x00
+    DMASELECT = 0x00;
+    //Source Address : lcd_buf
+    DMAnSSA = &lcd_buf;
+    //Destination Address : &SPI1TXB
+    DMAnDSA = &SPI1TXB;
+    //DMODE unchanged; DSTP not cleared; SMR GPR; SMODE incremented; SSTP not cleared; 
+    DMAnCON1 = 0x02;
+    //Source Message Size : 1
+    DMAnSSZ = 1;
+    //Destination Message Size : 1
+    DMAnDSZ = 1;
+    //Start Trigger : SIRQ SPI1TX; 
+    DMAnSIRQ = 0x19;
+    //Abort Trigger : AIRQ None; 
+    DMAnAIRQ = 0x00;
+	
+    // Clear Destination Count Interrupt Flag bit
+    PIR2bits.DMA1DCNTIF = 0; 
+    // Clear Source Count Interrupt Flag bit
+    PIR2bits.DMA1SCNTIF = 0; 
+    // Clear Abort Interrupt Flag bit
+    PIR2bits.DMA1AIF = 0; 
+    // Clear Overrun Interrupt Flag bit
+    PIR2bits.DMA1ORIF =0; 
+    
+    PIE2bits.DMA1DCNTIE = 0;
+    PIE2bits.DMA1SCNTIE = 0;
+    PIE2bits.DMA1AIE = 0;
+    PIE2bits.DMA1ORIE = 0;
+	
+    //EN enabled; SIRQEN enabled; DGO not in progress; AIRQEN disabled; 
+    DMAnCON0 = 0xC0;
+	
 }
 
-void __interrupt(irq(DMA1SCNT), base(8)) DMA1_DMASCNT_ISR()
+void DMA1_SelectSourceRegion(uint8_t region)
 {
-	PIR2bits.DMA1SCNTIF = 0; // clear Source Count Interrupt Flag 
-	// add your DMA channel 1 source count 0 interrupt custom code
-	spi_link.LCD_DATA = 0;
-	DEBUG2_SetLow();
+    DMASELECT = 0x00;
+	DMAnCON1bits.SMR  = region;
 }
 
-void __interrupt(irq(DMA1DCNT), base(8)) DMA1_DMADCNT_ISR()
+void DMA1_SetSourceAddress(uint24_t address)
 {
-	PIR2bits.DMA1DCNTIF = 0; // clear Destination Count Interrupt Flag 
-	// add your DMA channel 1 destination count 0 interrupt custom code
+    DMASELECT = 0x00;
+	DMAnSSA = address;
 }
 
-#if (__XC8_VERSION <= 1400)
-void __interrupt(irq(DMA1ARBT), base(8)) DMA1_DMAA_ISR()
-#else   // __XC8_VERSION
-
-void __interrupt(irq(DMA1A), base(8)) DMA1_DMAA_ISR()
-#endif // __XC8_VERSION
+void DMA1_SetDestinationAddress(uint16_t address)
 {
-	PIR2bits.DMA1AIF = 0; // clear abort Interrupt Flag 
-	// add your DMA channel 1 abort interrupt custom code
+    DMASELECT = 0x00;
+	DMAnDSA = address;
 }
 
-#if (__XC8_VERSION <= 1400)
-void __interrupt(irq(IRQ_DMA1OVR), base(8)) DMA1_DMAOR_ISR()
-#else // __XC8_VERSION
-
-void __interrupt(irq(DMA1OR), base(8)) DMA1_DMAOR_ISR()
-#endif // __XC8_VERSION
+void DMA1_SetSourceSize(uint16_t size)
 {
-	PIR2bits.DMA1ORIF = 0; // clear overrun Interrupt Flag 
-	// add your DMA channel 1 overrun interrupt custom code
+    DMASELECT = 0x00;
+	DMAnSSZ= size;
 }
+
+void DMA1_SetDestinationSize(uint16_t size)
+{                     
+    DMASELECT = 0x00;
+	DMAnDSZ= size;
+}
+
+uint24_t DMA1_GetSourcePointer(void)
+{
+    DMASELECT = 0x00;
+	return DMAnSPTR;
+}
+
+uint16_t DMA1_GetDestinationPointer(void)
+{
+    DMASELECT = 0x00;
+	return DMAnDPTR;
+}
+
+void DMA1_SetStartTrigger(uint8_t sirq)
+{
+    DMASELECT = 0x00;
+	DMAnSIRQ = sirq;
+}
+
+void DMA1_SetAbortTrigger(uint8_t airq)
+{
+    DMASELECT = 0x00;
+	DMAnAIRQ = airq;
+}
+
+void DMA1_StartTransfer(void)
+{
+    DMASELECT = 0x00;
+	DMAnCON0bits.DGO = 1;
+}
+
+void DMA1_StartTransferWithTrigger(void)
+{
+    DMASELECT = 0x00;
+	DMAnCON0bits.SIRQEN = 1;
+}
+
+void DMA1_StopTransfer(void)
+{
+    DMASELECT = 0x00;
+	DMAnCON0bits.SIRQEN = 0; 
+	DMAnCON0bits.DGO = 0;
+}
+
+void DMA1_SetDMAPriority(uint8_t priority)
+{
+    // This function is dependant on the PR1WAY CONFIG bit
+	PRLOCK = 0x55;
+	PRLOCK = 0xAA;
+	PRLOCKbits.PRLOCKED = 0;
+	DMA1PR = priority;
+	PRLOCK = 0x55;
+	PRLOCK = 0xAA;
+	PRLOCKbits.PRLOCKED = 1;
+}
+
 /**
-  End of File
- */
+ End of File
+*/

@@ -19,7 +19,7 @@ extern char * __intlo_stack_lo;
 extern char * __intlo_stack_hi;
 # 2 "<built-in>" 2
 # 1 "mcc_generated_files/memory.c" 2
-# 51 "mcc_generated_files/memory.c"
+# 50 "mcc_generated_files/memory.c"
 # 1 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -38710,42 +38710,44 @@ __attribute__((__unsupported__("The READTIMER" "0" "() macro is not available wi
 unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "/opt/microchip/xc8/v2.46/pic/include/xc.h" 2 3
-# 51 "mcc_generated_files/memory.c" 2
+# 50 "mcc_generated_files/memory.c" 2
 
 # 1 "mcc_generated_files/memory.h" 1
-# 54 "mcc_generated_files/memory.h"
-# 1 "/opt/microchip/xc8/v2.46/pic/include/c99/stdbool.h" 1 3
-# 54 "mcc_generated_files/memory.h" 2
-# 99 "mcc_generated_files/memory.h"
+# 81 "mcc_generated_files/memory.h"
 uint8_t FLASH_ReadByte(uint32_t flashAddr);
-# 125 "mcc_generated_files/memory.h"
+# 94 "mcc_generated_files/memory.h"
 uint16_t FLASH_ReadWord(uint32_t flashAddr);
-# 157 "mcc_generated_files/memory.h"
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte);
-# 193 "mcc_generated_files/memory.h"
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr);
-# 218 "mcc_generated_files/memory.h"
-void FLASH_EraseBlock(uint32_t baseAddr);
-# 249 "mcc_generated_files/memory.h"
+# 116 "mcc_generated_files/memory.h"
+void FLASH_ReadPage(uint32_t flashAddr);
+# 138 "mcc_generated_files/memory.h"
+void FLASH_WritePage(uint32_t flashAddr);
+# 151 "mcc_generated_files/memory.h"
+void FLASH_WriteWord(uint32_t flashAddr, uint16_t word);
+# 183 "mcc_generated_files/memory.h"
+int8_t FLASH_WriteBlock(uint32_t flashAddr, uint16_t *flashWrBufPtr);
+# 195 "mcc_generated_files/memory.h"
+void FLASH_EraseBlock(uint32_t flashAddr);
+# 212 "mcc_generated_files/memory.h"
 void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
-# 275 "mcc_generated_files/memory.h"
+# 225 "mcc_generated_files/memory.h"
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
-
-void MEMORY_Tasks(void);
-# 52 "mcc_generated_files/memory.c" 2
+# 51 "mcc_generated_files/memory.c" 2
 
 
 
 
 
 
+
+uint16_t bufferRAM __attribute__((address(0x3700)));
 
 uint8_t FLASH_ReadByte(uint32_t flashAddr)
 {
- NVMCON1bits.NVMREG = 2;
-    TBLPTRU = (uint8_t)((flashAddr & 0x00FF0000) >> 16);
-    TBLPTRH = (uint8_t)((flashAddr & 0x0000FF00)>> 8);
-    TBLPTRL = (uint8_t)(flashAddr & 0x000000FF);
+
+    TBLPTRU = (uint8_t) ((flashAddr & 0x00FF0000) >> 16);
+    TBLPTRH = (uint8_t) ((flashAddr & 0x0000FF00) >> 8);
+    TBLPTRL = (uint8_t) (flashAddr & 0x000000FF);
+
 
     __asm("TBLRD");
 
@@ -38754,141 +38756,211 @@ uint8_t FLASH_ReadByte(uint32_t flashAddr)
 
 uint16_t FLASH_ReadWord(uint32_t flashAddr)
 {
-    return ((((uint16_t)FLASH_ReadByte(flashAddr+1))<<8)|(FLASH_ReadByte(flashAddr)));
+    uint8_t readWordL, readWordH;
+
+
+    TBLPTRU = (uint8_t) ((flashAddr & 0x00FF0000) >> 16);
+    TBLPTRH = (uint8_t) ((flashAddr & 0x0000FF00) >> 8);
+    TBLPTRL = (uint8_t) (flashAddr & 0x000000FF);
+
+
+    __asm("TBLRD*+");
+    readWordL = TABLAT;
+
+
+    __asm("TBLRD");
+    readWordH = TABLAT;
+
+    return (((uint16_t) readWordH << 8) | (readWordL));
 }
 
-void FLASH_WriteByte(uint32_t flashAddr, uint8_t *flashRdBufPtr, uint8_t byte)
+void FLASH_ReadPage(uint32_t flashAddr)
 {
-    uint32_t blockStartAddr = (uint32_t)(flashAddr & ((0x020000 -1) ^ (128 -1)));
-    uint8_t offset = (uint8_t)(flashAddr & (128 -1));
-    uint8_t i;
-
-
-    for (i=0; i<128; i++)
-    {
-        flashRdBufPtr[i] = FLASH_ReadByte((blockStartAddr+i));
-    }
-
-
-    flashRdBufPtr[offset] = byte;
-
-
-    FLASH_WriteBlock(blockStartAddr, flashRdBufPtr);
-}
-
-int8_t FLASH_WriteBlock(uint32_t writeAddr, uint8_t *flashWrBufPtr)
-{
-    uint32_t blockStartAddr = (uint32_t )(writeAddr & ((0x020000 -1) ^ (128 -1)));
     uint8_t GIEBitValue = INTCON0bits.GIE;
+
+
+    NVMADRU = (uint8_t) ((flashAddr & 0x00FF0000) >> 16);
+    NVMADRH = (uint8_t) ((flashAddr & 0x0000FF00) >> 8);
+    NVMADRL = (uint8_t) (flashAddr & 0x000000FF);
+
+
+    NVMCON1bits.NVMCMD = 0b010;
+
+
+    INTCON0bits.GIE = 0;
+
+
+    NVMLOCK = 0x55;
+    NVMLOCK = 0xAA;
+
+
+    NVMCON0bits.GO = 1;
+    while (NVMCON0bits.GO);
+
+
+    INTCON0bits.GIE = GIEBitValue;
+
+
+    NVMCON1bits.NVMCMD = 0b000;
+}
+
+void FLASH_WritePage(uint32_t flashAddr)
+{
+    uint8_t GIEBitValue = INTCON0bits.GIE;
+
+
+    NVMADRU = (uint8_t) ((flashAddr & 0x00FF0000) >> 16);
+    NVMADRH = (uint8_t) ((flashAddr & 0x0000FF00) >> 8);
+    NVMADRL = (uint8_t) (flashAddr & 0x000000FF);
+
+
+    NVMCON1bits.NVMCMD = 0b101;
+
+
+    INTCON0bits.GIE = 0;
+
+
+    NVMLOCK = 0x55;
+    NVMLOCK = 0xAA;
+
+
+    NVMCON0bits.GO = 1;
+    while (NVMCON0bits.GO);
+
+
+    INTCON0bits.GIE = GIEBitValue;
+
+
+    NVMCON1bits.NVMCMD = 0b000;
+}
+
+void FLASH_WriteWord(uint32_t flashAddr, uint16_t word)
+{
+    uint16_t *bufferRamPtr = (uint16_t*) & bufferRAM;
+    uint32_t blockStartAddr = (uint32_t) (flashAddr & ((0x020000 - 1) ^ ((256 * 2) - 1)));
+    uint8_t offset = (uint8_t) ((flashAddr & ((256 * 2) - 1)) / 2);
+
+
+    FLASH_ReadPage(blockStartAddr);
+
+
+    FLASH_EraseBlock(blockStartAddr);
+
+
+    bufferRamPtr += offset;
+    *bufferRamPtr = word;
+
+
+    FLASH_WritePage(blockStartAddr);
+}
+
+int8_t FLASH_WriteBlock(uint32_t flashAddr, uint16_t *flashWrBufPtr)
+{
+    uint16_t *bufferRamPtr = (uint16_t*) & bufferRAM;
+    uint32_t blockStartAddr = (uint32_t) (flashAddr & ((0x020000 - 1) ^ ((256 * 2) - 1)));
     uint8_t i;
 
 
-    if( writeAddr != blockStartAddr )
+    if (flashAddr != blockStartAddr)
     {
         return -1;
     }
 
 
-    FLASH_EraseBlock(writeAddr);
-
-
-    TBLPTRU = (uint8_t)((writeAddr & 0x00FF0000) >> 16);
-    TBLPTRH = (uint8_t)((writeAddr & 0x0000FF00)>> 8);
-    TBLPTRL = (uint8_t)(writeAddr & 0x000000FF);
-
-
-    for (i=0; i<128; i++)
+    for (i = 0; i < 256; i++)
     {
-        TABLAT = flashWrBufPtr[i];
-
-        if (i == (128 -1))
-        {
-            __asm("TBLWT");
-        }
-        else
-        {
-            __asm("TBLWTPOSTINC");
-        }
+        *bufferRamPtr++ = flashWrBufPtr[i];
     }
 
-    NVMCON1bits.NVMREG = 2;
-    NVMCON1bits.WREN = 1;
-    __asm("BCF INTCON0,7");
-    __asm("BANKSEL NVMCON1");
-    __asm("BSF NVMCON1,2");
-    __asm("MOVLW 0x55");
-    __asm("MOVWF NVMCON2");
-    __asm("MOVLW 0xAA");
-    __asm("MOVWF NVMCON2");
-    __asm("BSF NVMCON1,1");
-    __asm("BSF INTCON0,7");
-    __asm("BCF NVMCON1,2");
+
+    FLASH_EraseBlock(flashAddr);
+
+
+    FLASH_WritePage(flashAddr);
 
     return 0;
 }
 
-void FLASH_EraseBlock(uint32_t baseAddr)
+void FLASH_EraseBlock(uint32_t flashAddr)
 {
+    uint32_t blockStartAddr = (uint32_t) (flashAddr & ((0x020000 - 1) ^ ((256 * 2) - 1)));
     uint8_t GIEBitValue = INTCON0bits.GIE;
 
-    TBLPTRU = (uint8_t)((baseAddr & 0x00FF0000) >> 16);
-    TBLPTRH = (uint8_t)((baseAddr & 0x0000FF00)>> 8);
-    TBLPTRL = (uint8_t)(baseAddr & 0x000000FF);
 
-    NVMCON1bits.NVMREG = 2;
-    NVMCON1bits.WREN = 1;
-    NVMCON1bits.FREE = 1;
-    __asm("BCF INTCON0,7");
-    __asm("BANKSEL NVMCON1");
-    __asm("BSF NVMCON1,2");
-    __asm("MOVLW 0x55");
-    __asm("MOVWF NVMCON2");
-    __asm("MOVLW 0xAA");
-    __asm("MOVWF NVMCON2");
-    __asm("BSF NVMCON1,1");
-    __asm("BSF INTCON0,7");
+
+    NVMADRU = (uint8_t) ((blockStartAddr & 0x00FF0000) >> 16);
+    NVMADRH = (uint8_t) ((blockStartAddr & 0x0000FF00) >> 8);
+
+
+    NVMCON1bits.NVMCMD = 0b110;
+
+
+    INTCON0bits.GIE = 0;
+
+
+    NVMLOCK = 0x55;
+    NVMLOCK = 0xAA;
+
+
+    NVMCON0bits.GO = 1;
+    while (NVMCON0bits.GO);
+
+
+    INTCON0bits.GIE = GIEBitValue;
+
+
+    NVMCON1bits.NVMCMD = 0b000;
 }
-
-
-
-
 
 void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData)
 {
     uint8_t GIEBitValue = INTCON0bits.GIE;
 
-    NVMADRH = (uint8_t)((bAdd >> 8) & 0x03);
-    NVMADRL = (uint8_t)(bAdd & 0xFF);
-    NVMDAT = bData;
-    NVMCON1bits.NVMREG = 0;
-    NVMCON1bits.WREN = 1;
+
+    NVMADRU = 0x38;
+    NVMADRH = (uint8_t) ((bAdd & 0xFF00) >> 8);
+    NVMADRL = (uint8_t) (bAdd & 0x00FF);
+
+
+    NVMDATL = bData;
+
+
+    NVMCON1bits.NVMCMD = 0b011;
+
+
     INTCON0bits.GIE = 0;
-    NVMCON2 = 0x55;
-    NVMCON2 = 0xAA;
-    NVMCON1bits.WR = 1;
 
-    while (NVMCON1bits.WR)
-    {
-    }
 
-    NVMCON1bits.WREN = 0;
+    NVMLOCK = 0x55;
+    NVMLOCK = 0xAA;
+
+
+    NVMCON0bits.GO = 1;
+    while (NVMCON0bits.GO);
+
+
     INTCON0bits.GIE = GIEBitValue;
+
+
+    NVMCON1bits.NVMCMD = 0b000;
 }
 
 uint8_t DATAEE_ReadByte(uint16_t bAdd)
 {
-    NVMADRH = (uint8_t)((bAdd >> 8) & 0x03);
-    NVMADRL = (uint8_t)(bAdd & 0xFF);
-    NVMCON1bits.NVMREG = 0;
-    NVMCON1bits.RD = 1;
-    __nop();
-    __nop();
 
-    return (NVMDAT);
+    NVMADRU = 0x38;
+    NVMADRH = (uint8_t) ((bAdd & 0xFF00) >> 8);
+    NVMADRL = (uint8_t) (bAdd & 0x00FF);
+
+
+    NVMCON1bits.NVMCMD = 0b000;
+    NVMCON0bits.GO = 1;
+
+    return NVMDATL;
 }
 
-void MEMORY_Tasks( void )
+void __attribute__((picinterrupt(("irq(NVM),base(8)")))) MEMORY_ISR()
 {
 
-    PIR0bits.NVMIF = 0;
+    PIR15bits.NVMIF = 0;
 }

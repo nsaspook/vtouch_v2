@@ -1,11 +1,11 @@
 /**
-  Generated Interrupt Manager Source File
+  Generated Interrupt Manager Header File
 
   @Company:
     Microchip Technology Inc.
 
   @File Name:
-    interrupt_manager.c
+    interrupt_manager.h
 
   @Summary:
     This is the Interrupt Manager file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
@@ -17,7 +17,7 @@
     Generation Information :
         Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
         Device            :  PIC18F47Q84
-        Driver Version    :  2.04
+        Driver Version    :  2.12
     The generated drivers are tested against the following:
         Compiler          :  XC8 2.36 and above or later
         MPLAB 	          :  MPLAB X 6.00
@@ -51,34 +51,35 @@
 
 void  INTERRUPT_Initialize (void)
 {
-    // Disable Interrupt Priority Vectors (16CXXX Compatibility Mode)
-    INTCON0bits.IPEN = 0;
+    INTCON0bits.IPEN = 1;
+
+    bool state = (unsigned char)GIE;
+    GIE = 0;
+    IVTLOCK = 0x55;
+    IVTLOCK = 0xAA;
+    IVTLOCKbits.IVTLOCKED = 0x00; // unlock IVT
+
+    IVTBASEU = 0;
+    IVTBASEH = 0;
+    IVTBASEL = 8;
+
+    IVTLOCK = 0x55;
+    IVTLOCK = 0xAA;
+    IVTLOCKbits.IVTLOCKED = 0x01; // lock IVT
+
+    GIE = state;
+
+    // Assign peripheral interrupt priority vectors
+    IPR8bits.U2TXIP = 1;
+    IPR8bits.U2RXIP = 1;
+    IPR4bits.U1TXIP = 1;
+    IPR4bits.U1RXIP = 1;
 }
 
-void __interrupt() INTERRUPT_InterruptManager (void)
+void __interrupt(irq(default),base(8)) Default_ISR()
 {
-    // interrupt handler
-    if(PIE8bits.U2TXIE == 1 && PIR8bits.U2TXIF == 1)
-    {
-        UART2_TxInterruptHandler();
-    }
-    else if(PIE8bits.U2RXIE == 1 && PIR8bits.U2RXIF == 1)
-    {
-        UART2_RxInterruptHandler();
-    }
-    else if(PIE4bits.U1TXIE == 1 && PIR4bits.U1TXIF == 1)
-    {
-        UART1_TxInterruptHandler();
-    }
-    else if(PIE4bits.U1RXIE == 1 && PIR4bits.U1RXIF == 1)
-    {
-        UART1_RxInterruptHandler();
-    }
-    else
-    {
-        //Unhandled Interrupt
-    }
 }
+
 /**
  End of File
 */

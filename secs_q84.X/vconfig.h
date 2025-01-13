@@ -8,7 +8,7 @@
 #ifndef VCONFIG_H
 #define	VCONFIG_H
 
-#include "mcc_generated_files/adcc.h"
+//#include "mcc_generated_files/adcc.h"
 
 #ifdef	__cplusplus
 extern "C" {
@@ -36,8 +36,8 @@ extern "C" {
 	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
 
-#define SLED	LED0_LAT
-#define DLED	DEBUG2_LAT
+#define SLED	MLED_LAT
+#define DLED	DLED_LAT
 
 #define EADOGM_CMD_CLR		1
 #define EADOGM_CMD_CURSOR_ON     0b00001111
