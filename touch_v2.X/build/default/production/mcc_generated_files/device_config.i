@@ -1,10 +1,22 @@
 # 1 "mcc_generated_files/device_config.c"
 # 1 "<built-in>" 1
 # 1 "<built-in>" 3
-# 288 "<built-in>" 3
+# 285 "<built-in>" 3
 # 1 "<command line>" 1
 # 1 "<built-in>" 2
-# 1 "/opt/microchip/xc8/v2.10/pic/include/language_support.h" 1 3
+# 1 "/opt/microchip/xc8/v3.00/pic/include/language_support.h" 1 3
+# 46 "/opt/microchip/xc8/v3.00/pic/include/language_support.h" 3
+extern char * __stack_lo;
+extern char * __stack_hi;
+
+
+
+
+
+extern char * __inthi_stack_lo;
+extern char * __inthi_stack_hi;
+extern char * __intlo_stack_lo;
+extern char * __intlo_stack_hi;
 # 2 "<built-in>" 2
 # 1 "mcc_generated_files/device_config.c" 2
 # 50 "mcc_generated_files/device_config.c"
@@ -56,5 +68,3 @@
 
 
 #pragma config CP = OFF
-# 97 "mcc_generated_files/device_config.c"
-

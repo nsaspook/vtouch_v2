@@ -539,7 +539,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 
 	switch (s_uart) {
 	case 2:
-		while (UART2_is_tx_ready() < 64); // wait for tx buffer to drain
+		while (!UART2_is_tx_ready()); // wait for tx buffer to drain
 		for (i = length; i > 0; i--) {
 			if (fake) {
 				UART2_put_buffer(k[i - 1]);
@@ -551,7 +551,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 		break;
 	case 1:
 	default:
-		while (UART1_is_tx_ready() < 64); // wait for tx buffer to drain
+		while (!UART1_is_tx_ready()); // wait for tx buffer to drain
 		for (i = length; i > 0; i--) {
 			if (fake) {
 				UART1_put_buffer(k[i - 1]);
@@ -676,9 +676,10 @@ void terminal_format(DISPLAY_TYPES t_format)
  */
 uint16_t format_display_text(const char *data)
 {
-	int16_t j, i = 0, k, z = 0;
+	int16_t j, i = 0, z = 0;
+	uint16_t k;
 
-	k = strlen(data);
+	k = (uint16_t) strlen(data);
 
 	if (!k) // check for null string
 		return k;
