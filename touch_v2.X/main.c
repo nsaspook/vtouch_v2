@@ -626,6 +626,7 @@ header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
+uint8_t faker = 0;
 
 /*
  * Main application
@@ -666,6 +667,11 @@ void main(void)
 	mode_lamp_dim(V.mode_pwm); // 10KHz PWM 
 
 	while (true) {
+		if (!faker++) {
+#ifdef FAKER
+			UART2_Write(ENQ);
+#endif
+		}
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			/*

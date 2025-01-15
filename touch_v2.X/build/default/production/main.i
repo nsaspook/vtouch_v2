@@ -29497,6 +29497,7 @@ header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = 0;
+uint8_t faker = 0;
 
 
 
@@ -29537,6 +29538,9 @@ void main(void)
  mode_lamp_dim(V.mode_pwm);
 
  while (1) {
+  if (!faker++) {
+  UART2_Write(0x05);
+  }
   switch (V.ui_state) {
   case UI_STATE_INIT:
 
@@ -29698,7 +29702,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 838 "main.c"
+# 842 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -29791,6 +29795,6 @@ void main(void)
     update_lcd(2);
    }
   }
-# 938 "main.c"
+# 942 "main.c"
  }
 }

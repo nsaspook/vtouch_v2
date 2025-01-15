@@ -29,6 +29,7 @@ extern "C" {
 	//#define TESTING
 	//#define DISPLAY_SLOW
 
+#define	FAKER
 	//	#define DB1
 	//	#define DB2
 	//	#define DB3
