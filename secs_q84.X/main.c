@@ -13,8 +13,8 @@
   Description:
     This header file provides implementations for driver APIs for all modules selected in the GUI.
     Generation Information :
-        Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
-        Device            :  PIC18F47Q84
+	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
+	Device            :  PIC18F47Q84
 	Driver Version    :  2.00
  */
 
@@ -790,6 +790,7 @@ header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false;
+void onesec_io(void);
 
 /*
  * Main application
@@ -814,30 +815,17 @@ void main(void)
 	 * RS-232 link I/O relay defaults to monitor/log mode with no power
 	 */
 	WaitMs(300); // wait for mode switch to settle
-	if (RB0_GetValue()) {
-		mode = UI_STATE_HOST;
-	} else {
-		mode = UI_STATE_LOG;
-	}
 
-	if (mode == UI_STATE_HOST) {
-		RELAY0_SetHigh();
-		V.mode_pwm = 70; // mode switch indicator lamp normal level
-	} else {
-		RELAY0_SetLow();
-		V.mode_pwm = 0;
-	}
-	mode_lamp_dim(V.mode_pwm); // 10KHz PWM 
+	mode = UI_STATE_HOST;
+
+	TMR2_StartTimer();
+	TMR5_SetInterruptHandler(onesec_io);
+	TMR5_StartTimer();
+	TMR6_StartTimer();
 
 	while (true) {
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
-			/*
-			 * DMA I/O testing
-			 */
-			//			init_port();
-			//			send_port_data_dma();
-
 			init_display();
 			eaDogM_CursorOff();
 
@@ -858,10 +846,13 @@ void main(void)
 			StartTimer(TMR_INFO, TDELAY);
 			StartTimer(TMR_FLIPPER, DFLIP);
 			StartTimer(TMR_HELPDIS, TDELAY);
+			eaDogM_WriteStringAtPos(3, 0, " UI_STATE_INIT   ");
 			break;
 		case UI_STATE_HOST: //slave
+			eaDogM_WriteStringAtPos(3, 0, " UI_STATE_HOST   ");
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_INIT    ");
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
@@ -877,10 +868,12 @@ void main(void)
 #endif
 				break;
 			case SEQ_STATE_RX:
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX    ");
 				/*
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX0    ");
 					set_display_info(DIS_STR);
 					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
@@ -891,6 +884,7 @@ void main(void)
 						sprintf(s, " S%dF%d #           ", V.stream, V.function);
 					}
 					s[16] = 0;
+					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX1    ");
 					MyeaDogM_WriteStringAtPos(0, 0, s);
 #ifdef DB1
 					WaitMs(5);
@@ -902,11 +896,13 @@ void main(void)
 					} else { // don't send a reply
 						V.s_state = SEQ_STATE_TRIGGER;
 					}
+					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX2    ");
 				}
 				if (V.r_l_state == LINK_STATE_ERROR)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TX:
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
 				/*
 				 * send response message to equipment
 				 */
@@ -917,6 +913,7 @@ void main(void)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TRIGGER:
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TRIGGER    ");
 				set_display_info(DIS_STR);
 				s = get_vterm_ptr(0, 0);
 				if (V.queue) {
@@ -933,10 +930,12 @@ void main(void)
 				MyeaDogM_WriteStringAtPos(0, 0, s);
 				break;
 			case SEQ_STATE_DONE:
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_DONE    ");
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			case SEQ_STATE_ERROR:
 			default:
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR    ");
 				V.s_state = SEQ_STATE_INIT;
 				sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
 				update_lcd(0);
@@ -983,6 +982,7 @@ void main(void)
 			}
 			break;
 		case UI_STATE_LOG: // monitor
+			eaDogM_WriteStringAtPos(3, 0, "UI_STATE_LOG    ");
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
@@ -1036,30 +1036,30 @@ void main(void)
 		}
 		if (V.ticks) {
 			if (V.failed_receive) {
-//				BILED1_1_SetLow(); // red
-//				BILED1_2_SetHigh();
+				//				BILED1_1_SetLow(); // red
+				//				BILED1_2_SetHigh();
 				if (V.error == LINK_ERROR_CHECKSUM) {
-//					BILED3_1_SetLow(); // red
-//					BILED3_2_SetHigh();
+					//					BILED3_1_SetLow(); // red
+					//					BILED3_2_SetHigh();
 				}
 			} else {
-//				BILED1_1_SetHigh(); //green
-//				BILED1_2_SetLow();
-//				BILED3_1_SetHigh(); //green
-//				BILED3_2_SetLow();
+				//				BILED1_1_SetHigh(); //green
+				//				BILED1_2_SetLow();
+				//				BILED3_1_SetHigh(); //green
+				//				BILED3_2_SetLow();
 			}
 			if (V.failed_send) {
-//				BILED2_1_SetLow(); // red
-//				BILED2_2_SetHigh();
+				//				BILED2_1_SetLow(); // red
+				//				BILED2_2_SetHigh();
 				if (V.error == LINK_ERROR_CHECKSUM) {
-//					BILED4_1_SetLow(); // red
-//					BILED4_2_SetHigh();
+					//					BILED4_1_SetLow(); // red
+					//					BILED4_2_SetHigh();
 				}
 			} else {
-//				BILED2_1_SetHigh(); //green
-//				BILED2_2_SetLow();
-//				BILED4_1_SetHigh(); //green
-//				BILED4_2_SetLow();
+				//				BILED2_1_SetHigh(); //green
+				//				BILED2_2_SetLow();
+				//				BILED4_1_SetHigh(); //green
+				//				BILED4_2_SetLow();
 			}
 		}
 
@@ -1113,6 +1113,13 @@ void wdtdelay(const uint32_t delay)
 
 		ClrWdt(); // reset the WDT timer
 	};
+}
+
+void onesec_io(void)
+{
+	RLED_Toggle();
+	MLED_SetLow();
+	B.one_sec_flag = true;
 }
 /**
  End of File

@@ -75,11 +75,11 @@ void TMR5_Initialize(void)
     //CS FOSC/4; 
     T5CLK = 0x01;
 
-    //TMR5H 99; 
-    TMR5H = 0x63;
+    //TMR5H 158; 
+    TMR5H = 0x9E;
 
-    //TMR5L 192; 
-    TMR5L = 0xC0;
+    //TMR5L 88; 
+    TMR5L = 0x58;
 
     // Clearing IF flag before enabling the interrupt.
     PIR8bits.TMR5IF = 0;
