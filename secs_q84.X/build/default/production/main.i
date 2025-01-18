@@ -41227,7 +41227,7 @@ void main(void)
    eaDogM_WriteStringAtPos(3, 0, " UI_STATE_HOST   ");
    switch (V.s_state) {
    case SEQ_STATE_INIT:
-    eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_INIT    ");
+
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
@@ -41243,7 +41243,7 @@ void main(void)
 
     break;
    case SEQ_STATE_RX:
-    eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX    ");
+
 
 
 
@@ -41271,13 +41271,13 @@ void main(void)
      } else {
       V.s_state = SEQ_STATE_TRIGGER;
      }
-     eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX2    ");
+
     }
     if (V.r_l_state == LINK_STATE_ERROR)
      V.s_state = SEQ_STATE_ERROR;
     break;
    case SEQ_STATE_TX:
-    eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
+
 
 
 
@@ -41288,7 +41288,7 @@ void main(void)
      V.s_state = SEQ_STATE_ERROR;
     break;
    case SEQ_STATE_TRIGGER:
-    eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TRIGGER    ");
+
     set_display_info(DIS_STR);
     s = get_vterm_ptr(0, 0);
     if (V.queue) {
@@ -41305,7 +41305,7 @@ void main(void)
     MyeaDogM_WriteStringAtPos(0, 0, s);
     break;
    case SEQ_STATE_DONE:
-    eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_DONE    ");
+
     V.s_state = SEQ_STATE_INIT;
     break;
    case SEQ_STATE_ERROR:
@@ -41357,7 +41357,7 @@ void main(void)
    }
    break;
   case UI_STATE_LOG:
-   eaDogM_WriteStringAtPos(3, 0, "UI_STATE_LOG    ");
+
    switch (V.s_state) {
    case SEQ_STATE_INIT:
     V.m_l_state = LINK_STATE_IDLE;

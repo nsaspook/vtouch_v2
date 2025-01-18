@@ -40690,7 +40690,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
  switch (*r_link) {
  case LINK_STATE_IDLE:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE R    ");
+
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
    if (rxData == 0x05) {
@@ -40704,7 +40704,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   }
   break;
  case LINK_STATE_ENQ:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R    ");
+
   rxData_l = 0;
   d = 1;
   b_block = (uint8_t*) & H254[0];
@@ -40718,7 +40718,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
   break;
  case LINK_STATE_EOT:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT R    ");
+
   if (TimerDone(TMR_T2)) {
    V.timer_error++;
    V.all_errors++;
@@ -40782,7 +40782,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   }
   break;
  case LINK_STATE_ACK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R    ");
+
   UART1_Write(0x06);
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -40799,7 +40799,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.abort = LINK_ERROR_NONE;
   break;
  case LINK_STATE_NAK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+
   UART1_Write(0x15);
   *r_link = LINK_STATE_ERROR;
   V.all_errors++;
@@ -40812,7 +40812,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR R    ");
   break;
  case LINK_STATE_DONE:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_DONE R    ");
+
   V.failed_receive = 0;
   V.abort = LINK_ERROR_NONE;
 
@@ -40832,7 +40832,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE    ");
+
 
   V.error = LINK_ERROR_NONE;
   retry = 3;
@@ -40845,7 +40845,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
   break;
  case LINK_STATE_ENQ:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ    ");
+
   if (TimerDone(TMR_T2)) {
    V.timer_error++;
    V.all_errors++;
@@ -40872,7 +40872,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_EOT:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT    ");
+
   if (!requeue)
    block = secs_II_message(V.stream, V.function);
 
@@ -40908,7 +40908,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
   break;
  case LINK_STATE_ACK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK    ");
+
   if (TimerDone(TMR_T3)) {
    V.timer_error++;
    V.error = LINK_ERROR_T3;
@@ -40927,7 +40927,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_NAK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
+
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
@@ -40938,7 +40938,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR    ");
   break;
  case LINK_STATE_DONE:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_DONE    ");
+
   V.failed_send = 0;
   V.abort = LINK_ERROR_NONE;
   break;
