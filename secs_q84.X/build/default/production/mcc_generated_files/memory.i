@@ -38857,7 +38857,7 @@ int8_t FLASH_WriteBlock(uint32_t flashAddr, uint16_t *flashWrBufPtr)
 {
     uint16_t *bufferRamPtr = (uint16_t*) & bufferRAM;
     uint32_t blockStartAddr = (uint32_t) (flashAddr & ((0x020000 - 1) ^ ((256 * 2) - 1)));
-    uint8_t i;
+    uint16_t i;
 
 
     if (flashAddr != blockStartAddr)

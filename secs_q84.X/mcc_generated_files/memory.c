@@ -174,7 +174,7 @@ int8_t FLASH_WriteBlock(uint32_t flashAddr, uint16_t *flashWrBufPtr)
 {
     uint16_t *bufferRamPtr = (uint16_t*) & bufferRAM;
     uint32_t blockStartAddr = (uint32_t) (flashAddr & ((END_FLASH - 1) ^ ((ERASE_FLASH_BLOCKSIZE * 2) - 1)));
-    uint8_t i;
+    uint16_t i; // change to uint16_t so i in for loop will not always be true
 
     //Block write must start at the beginning of a row
     if (flashAddr != blockStartAddr)
