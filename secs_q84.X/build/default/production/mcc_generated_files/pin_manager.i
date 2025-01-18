@@ -38745,7 +38745,7 @@ void PIN_MANAGER_Initialize(void)
 
 
 
-    ANSELD = 0x36;
+    ANSELD = 0x30;
     ANSELC = 0xC4;
     ANSELB = 0xD1;
     ANSELE = 0x06;

@@ -39014,6 +39014,15 @@ void PIN_MANAGER_Initialize (void);
   GEM_STATE_ERROR
  } GEM_STATES;
 
+ const char * GEM_TEXT [] = {
+  "DISABLE",
+  "COMM   ",
+  "OFFLINE",
+  "ONLIINE",
+  "REMOTE ",
+  "ERROR  "
+ };
+
  typedef enum {
   GEM_GENERIC = 0,
   GEM_VII80,
@@ -39072,7 +39081,7 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count;
+  uint8_t uart, llid, sid, ping_count, euart;
   volatile uint8_t ticker;
   _Bool flipper;
  } V_data;

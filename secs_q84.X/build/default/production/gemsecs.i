@@ -39071,6 +39071,15 @@ void PIN_MANAGER_Initialize (void);
   GEM_STATE_ERROR
  } GEM_STATES;
 
+ const char * GEM_TEXT [] = {
+  "DISABLE",
+  "COMM   ",
+  "OFFLINE",
+  "ONLIINE",
+  "REMOTE ",
+  "ERROR  "
+ };
+
  typedef enum {
   GEM_GENERIC = 0,
   GEM_VII80,
@@ -39129,7 +39138,7 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count;
+  uint8_t uart, llid, sid, ping_count, euart;
   volatile uint8_t ticker;
   _Bool flipper;
  } V_data;
@@ -40265,10 +40274,10 @@ void mode_lamp_bright(void);
 
 
 
- const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
+ const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
+ const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
+ const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
+ const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@     %s   ";
 
  V_help T[] = {
   {
@@ -40430,6 +40439,7 @@ void mode_lamp_bright(void);
  _Bool gem_messages(response_type *, uint8_t);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
+ void equip_tx(uint8_t);
 # 2 "gemsecs.c" 2
 
 extern struct V_data V;
@@ -40701,15 +40711,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R0    ");
+# 296 "gemsecs.c"
+  H10[3].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
 
 
-
-
-
-
-
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R1    ");
   break;
  case LINK_STATE_EOT:
   eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT R    ");
@@ -40785,9 +40791,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
   secs_II_monitor_message(V.stream, V.function, 500);
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R1    ");
+
   V.g_state = secs_gem_state(V.stream, V.function);
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R2    ");
+
   V.failed_receive = 0;
   *r_link = LINK_STATE_DONE;
   V.abort = LINK_ERROR_NONE;
@@ -40983,7 +40989,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
     UART2_Write(k[i - 1]);
    }
   }
-  eaDogM_WriteStringAtPos(3, 0, "secs_send 2          ");
+
   break;
  case 1:
  default:
@@ -40996,7 +41002,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
     UART1_Write(k[i - 1]);
    }
   }
-  eaDogM_WriteStringAtPos(3, 0, "secs_send 1          ");
+
   break;
  }
 
@@ -41752,7 +41758,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-
+  case 1:
 
   case 2:
    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2   ");
@@ -41761,16 +41767,16 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
      StartTimer(TMR_HBIO, 30000);
     }
     terminal_format(display_online);
-    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 tf  ");
+
     format_display_text(V.terminal);
-    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 fd  ");
+
     V.response.mesgid = 1;
     V.sequences++;
     V.sid = 10;
     sequence_messages(V.sid);
-    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sm  ");
+
     set_display_info(DIS_SEQUENCE_M);
-    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sdi  ");
+
    }
 
    block = GEM_STATE_REMOTE;
@@ -41877,4 +41883,16 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
  V.e_types = equipment;
  return(block);
+}
+
+void equip_tx(uint8_t data)
+{
+ switch (V.euart) {
+ case 1:
+  UART1_Write(data);
+  break;
+ default:
+  UART2_Write(data);
+  break;
+ }
 }

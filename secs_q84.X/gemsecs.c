@@ -284,7 +284,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		UART1_Write(EOT);
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R0    ");
+//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R0    ");
 #ifdef DB2
 		WaitMs(1);
 		//H27[0].block.block.systemb = V.ticks; // make distinct, testing S1F13
@@ -292,7 +292,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
 		secs_send((uint8_t*) & H10[3], sizeof(header10), true, 1);
 #endif
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R1    ");
+#ifdef FAKER
+		H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
+		secs_send((uint8_t*) & H10[3], sizeof(header10), false, 2);
+#endif
+//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R1    ");
 		break;
 	case LINK_STATE_EOT:
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT R    ");
@@ -368,9 +372,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
 		secs_II_monitor_message(V.stream, V.function, SDELAY); // log selected messages
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R1    ");
+//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R1    ");
 		V.g_state = secs_gem_state(V.stream, V.function);
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R2    ");
+//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R2    ");
 		V.failed_receive = false;
 		*r_link = LINK_STATE_DONE;
 		V.abort = LINK_ERROR_NONE;
@@ -566,7 +570,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 				UART2_Write(k[i - 1]); // -1 for array memory addressing
 			}
 		}
-		eaDogM_WriteStringAtPos(3, 0, "secs_send 2          ");
+//		eaDogM_WriteStringAtPos(3, 0, "secs_send 2          ");
 		break;
 	case 1:
 	default:
@@ -579,7 +583,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 				UART1_Write(k[i - 1]); // -1 for array memory addressing
 			}
 		}
-		eaDogM_WriteStringAtPos(3, 0, "secs_send 1          ");
+//		eaDogM_WriteStringAtPos(3, 0, "secs_send 1          ");
 		break;
 	}
 
@@ -1334,7 +1338,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 	switch (stream) { // from equipment
 	case 1:
 		switch (function) {
-#ifdef DB2
+#if defined(DB2) || defined(FAKER)
 		case 1:
 #endif
 		case 2:
@@ -1344,16 +1348,16 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
 				}
 				terminal_format(display_online);
-				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 tf  ");
+//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 tf  ");
 				format_display_text(V.terminal);
-				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 fd  ");
+//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 fd  ");
 				V.response.mesgid = 1;
 				V.sequences++;
 				V.sid = 10;
 				sequence_messages(V.sid); // send a hello text message
-				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sm  ");
+//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sm  ");
 				set_display_info(DIS_SEQUENCE_M);
-				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sdi  ");
+//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sdi  ");
 			}
 
 			block = GEM_STATE_REMOTE;
@@ -1460,4 +1464,16 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
 	V.e_types = equipment;
 	return(block);
+}
+
+void equip_tx(uint8_t data)
+{
+	switch (V.euart) {
+	case 1:
+		UART1_Write(data);
+		break;
+	default:
+		UART2_Write(data);
+		break;
+	}
 }

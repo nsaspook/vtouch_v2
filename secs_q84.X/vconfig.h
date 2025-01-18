@@ -32,12 +32,12 @@ extern "C" {
 	//#define DISPLAY_SLOW
 
 #define FAKER
-	
-//#define DB1
-//#define DB2
-//#define DB3
-//#define DB4
-//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
+
+	//#define DB1
+	//#define DB2
+	//#define DB3
+	//#define DB4
+	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
 	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
 
@@ -93,7 +93,7 @@ extern "C" {
 #define S10F3_STR_POS	135
 #define S10F3_TID_POS	138
 
-#define MAX_LINE	16
+#define MAX_LINE	21
 
 	struct spi_link_type_o { // internal SPI state table
 		uint8_t SPI_LCD : 1;
@@ -192,6 +192,15 @@ extern "C" {
 		GEM_STATE_REMOTE,
 		GEM_STATE_ERROR
 	} GEM_STATES;
+	
+	const char * GEM_TEXT [] = {
+		"DISABLE",
+		"COMM   ",
+		"OFFLINE",
+		"ONLIINE",
+		"REMOTE ",
+		"ERROR  "
+	};
 
 	typedef enum {
 		GEM_GENERIC = 0,
@@ -251,7 +260,7 @@ extern "C" {
 		failed_send : 4, failed_receive : 4,
 		queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
 		terminal_type response;
-		uint8_t uart, llid, sid, ping_count;
+		uint8_t uart, llid, sid, ping_count, euart;
 		volatile uint8_t ticker;
 		bool flipper;
 	} V_data;

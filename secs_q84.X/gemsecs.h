@@ -166,6 +166,7 @@ extern "C" {
 	bool gem_messages(response_type *, uint8_t);
 	void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
 	GEM_STATES secs_gem_state(uint8_t, uint8_t);
+	void equip_tx(uint8_t);
 
 #ifdef	__cplusplus
 }

@@ -41,6 +41,11 @@
     SOFTWARE.
  */
 
+/*
+ * UART1 HOST RS-232 comms, ANALOG header, TX-PIN 7 MB_TX, RX-PIN 6 MB_RX
+ * UART2 Equipment Testing RS-232 comms, TTL serial HEADER, TX-PIN 2 PC_TX, RX-PIN 3 PC_RX
+ */
+
 // PIC18F47Q84 Configuration Bit Settings
 // 'C' source line config statements
 // CONFIG1
@@ -231,6 +236,7 @@ V_data V = {
 	.ping_count = 0,
 	.sequences = 0,
 	.set_sequ = false,
+	.euart = 2,
 };
 
 B_type B = {
@@ -517,7 +523,7 @@ header26 H26[] = {
 };
 #endif
 
-#ifdef DB2
+#if defined(DB2) || defined(FAKER)
 header27 H27[] = {
 	{ // S1F13 send 'online request ' from equipment to host for TESTING
 		.length = 27,
@@ -826,8 +832,7 @@ void main(void)
 	while (true) {
 		if (!faker++) {
 #ifdef FAKER
-			UART2_Write(ENQ);
-			UART1_Write(ENQ);
+			equip_tx(ENQ); // simulate equipment comm data
 #endif
 		}
 		switch (V.ui_state) {
@@ -841,7 +846,7 @@ void main(void)
 			set_vterm(0); // set to buffer 0
 			sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
 			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
+			sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
 			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
@@ -866,7 +871,7 @@ void main(void)
 					if (V.debug)
 						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
 					else
-						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
+						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
 				}
 #ifdef DB1
 				WaitMs(50);
@@ -879,7 +884,7 @@ void main(void)
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX0    ");
+//					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX0    ");
 					set_display_info(DIS_STR);
 					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
@@ -890,7 +895,7 @@ void main(void)
 						sprintf(s, " S%dF%d #           ", V.stream, V.function);
 					}
 					s[16] = 0;
-					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX1    ");
+//					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX1    ");
 					MyeaDogM_WriteStringAtPos(0, 0, s);
 #ifdef DB1
 					WaitMs(5);
@@ -943,7 +948,7 @@ void main(void)
 			default:
 				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR    ");
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
+				sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G:%s #", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
 				update_lcd(0);
 				WaitMs(2000);
 				break;
@@ -953,7 +958,7 @@ void main(void)
 					if (V.debug)
 						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
 					else
-						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
+						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
 
 				}
 				/*

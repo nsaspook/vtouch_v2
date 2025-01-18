@@ -19,7 +19,7 @@ extern char * __intlo_stack_lo;
 extern char * __intlo_stack_hi;
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 47 "main.c"
+# 52 "main.c"
 #pragma config FEXTOSC = ECH
 #pragma config RSTOSC = EXTOSC_4PLL
 
@@ -340,7 +340,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 200 "main.c" 2
+# 205 "main.c" 2
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v3.00/pic/include/c99/string.h" 3
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 1 3
@@ -398,7 +398,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 201 "main.c" 2
+# 206 "main.c" 2
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 1 3
@@ -40108,7 +40108,7 @@ void OSCILLATOR_Initialize(void);
 void PMD_Initialize(void);
 # 118 "./mcc_generated_files/mcc.h"
 void SystemArbiter_Initialize(void);
-# 202 "main.c" 2
+# 207 "main.c" 2
 
 # 1 "./eadog.h" 1
 # 40 "./eadog.h"
@@ -40235,6 +40235,15 @@ void SystemArbiter_Initialize(void);
   GEM_STATE_ERROR
  } GEM_STATES;
 
+ const char * GEM_TEXT [] = {
+  "DISABLE",
+  "COMM   ",
+  "OFFLINE",
+  "ONLIINE",
+  "REMOTE ",
+  "ERROR  "
+ };
+
  typedef enum {
   GEM_GENERIC = 0,
   GEM_VII80,
@@ -40293,7 +40302,7 @@ void SystemArbiter_Initialize(void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count;
+  uint8_t uart, llid, sid, ping_count, euart;
   volatile uint8_t ticker;
   _Bool flipper;
  } V_data;
@@ -40347,7 +40356,7 @@ void SystemArbiter_Initialize(void);
 
  void clear_lcd_done(void);
  void spi_rec_done(void);
-# 204 "main.c" 2
+# 209 "main.c" 2
 # 1 "./gemsecs.h" 1
 # 25 "./gemsecs.h"
 # 1 "./timers.h" 1
@@ -40415,10 +40424,10 @@ void mode_lamp_bright(void);
 
 
 
- const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@MCHP %s";
- const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@MCHP %s   ";
+ const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
+ const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
+ const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
+ const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@     %s   ";
 
  V_help T[] = {
   {
@@ -40580,7 +40589,8 @@ void mode_lamp_bright(void);
  _Bool gem_messages(response_type *, uint8_t);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
-# 205 "main.c" 2
+ void equip_tx(uint8_t);
+# 210 "main.c" 2
 
 
 
@@ -40610,6 +40620,7 @@ V_data V = {
  .ping_count = 0,
  .sequences = 0,
  .set_sequ = 0,
+ .euart = 2,
 };
 
 B_type B = {
@@ -40855,7 +40866,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 500 "main.c"
+# 506 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -40874,7 +40885,26 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 538 "main.c"
+
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
 header33 H33[] = {
  {
   .length = 33,
@@ -41166,8 +41196,7 @@ void main(void)
  while (1) {
   if (!faker++) {
 
-   UART2_Write(0x05);
-   UART1_Write(0x05);
+   equip_tx(0x05);
 
   }
   switch (V.ui_state) {
@@ -41181,7 +41210,7 @@ void main(void)
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
    sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.00A");
-   sprintf(get_vterm_ptr(2, 0), " FGB@MCHP FAB4  ");
+   sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.00A");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
@@ -41206,7 +41235,7 @@ void main(void)
      if (V.debug)
       sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
      else
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
+      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
     }
 
 
@@ -41219,7 +41248,7 @@ void main(void)
 
 
     if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-     eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX0    ");
+
      set_display_info(DIS_STR);
      s = get_vterm_ptr(0, 0);
      if (V.stream == 9) {
@@ -41230,7 +41259,7 @@ void main(void)
       sprintf(s, " S%dF%d #           ", V.stream, V.function);
      }
      s[16] = 0;
-     eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX1    ");
+
      MyeaDogM_WriteStringAtPos(0, 0, s);
 
 
@@ -41283,7 +41312,7 @@ void main(void)
    default:
     eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR    ");
     V.s_state = SEQ_STATE_INIT;
-    sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G%d #", V.error, V.abort, V.timer_error, V.g_state);
+    sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G:%s #", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
     update_lcd(0);
     WaitMs(2000);
     break;
@@ -41293,7 +41322,7 @@ void main(void)
      if (V.debug)
       sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
      else
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
+      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
 
     }
 
@@ -41337,7 +41366,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1008 "main.c"
+# 1013 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41430,7 +41459,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1108 "main.c"
+# 1113 "main.c"
  }
 }
 
