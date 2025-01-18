@@ -789,7 +789,7 @@ gem_display_type D[2]; // equipment display message stack
 header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile uint8_t mode_sw = false;
+volatile uint8_t mode_sw = false, faker;
 void onesec_io(void);
 
 /*
@@ -824,6 +824,12 @@ void main(void)
 	TMR6_StartTimer();
 
 	while (true) {
+		if (!faker++) {
+#ifdef FAKER
+			UART2_Write(ENQ);
+			UART1_Write(ENQ);
+#endif
+		}
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			init_display();

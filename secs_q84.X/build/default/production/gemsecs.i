@@ -38972,7 +38972,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 96 "./vconfig.h"
+# 98 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40463,8 +40463,8 @@ uint16_t block_checksum(uint8_t *byte_block, const uint16_t byte_count)
   sum += byte_block[i];
  }
 
- if (rand() > 31500)
-  sum++;
+
+
 
  return sum;
 }
@@ -40491,7 +40491,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
  switch (*m_link) {
  case LINK_STATE_IDLE:
 
-  WaitMs(50);
+
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
@@ -40523,22 +40523,24 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
   } else {
+# 110 "gemsecs.c"
+   if (V.uart == 2 && UART1_is_rx_ready()) {
+    rxData = UART1_Read();
+    if (rxData == 0x04) {
+     StartTimer(TMR_T2, 3000);
+     V.error = LINK_ERROR_NONE;
+     *m_link = LINK_STATE_EOT;
+    }
+   }
+   if (V.uart == 1 && UART2_is_rx_ready()) {
+    rxData = UART2_Read();
+    if (rxData == 0x04) {
+     StartTimer(TMR_T2, 3000);
+     V.error = LINK_ERROR_NONE;
+     *m_link = LINK_STATE_EOT;
+    }
+   }
 
-   WaitMs(1);
-   if (V.uart == 1)
-
-    if (rand() < 31500)
-
-     secs_send((uint8_t*) & H27[0], sizeof(header27), 1, V.uart);
-   if (V.uart == 2)
-
-    if (rand() < 31500)
-
-     secs_send((uint8_t*) & H10[0], sizeof(header10), 1, V.uart);
-   V.error = LINK_ERROR_NONE;
-   *m_link = LINK_STATE_EOT;
-   StartTimer(TMR_T2, 3000);
-# 127 "gemsecs.c"
   }
   break;
  case LINK_STATE_EOT:
@@ -40632,7 +40634,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ACK:
 
-  WaitMs(1);
+
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -40701,11 +40703,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   *r_link = LINK_STATE_EOT;
   eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R0    ");
 
-  WaitMs(1);
 
 
-  H10[3].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H10[3], sizeof(header10), 1, 1);
+
+
+
 
   eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R1    ");
   break;
@@ -40832,8 +40834,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   StartTimer(TMR_T2, 3000);
   *t_link = LINK_STATE_ENQ;
 
-  WaitMs(1);
-  UART1_put_buffer(0x04);
+
+
 
   break;
  case LINK_STATE_ENQ:
@@ -40892,11 +40894,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
   }
 
-  WaitMs(1);
 
-  if (rand() < 31500)
 
-   UART1_put_buffer(0x06);
+
+
+
 
   break;
  case LINK_STATE_ACK:
@@ -41750,7 +41752,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-  case 1:
+
 
   case 2:
    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2   ");
@@ -41823,7 +41825,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    V.ticker = 15;
    break;
 
-  case 15:
+
 
   case 16:
    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 16   ");
@@ -41831,7 +41833,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    V.ticker = 0;
    break;
 
-  case 17:
+
 
   case 18:
    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 18   ");

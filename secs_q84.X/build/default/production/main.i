@@ -40136,7 +40136,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 96 "./vconfig.h"
+# 98 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40874,26 +40874,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-
-
-
-header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 538 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -41148,7 +41129,7 @@ gem_display_type D[2];
 header10 r_block;
 
 volatile uint16_t tickCount[TMR_COUNT] = {0};
-volatile uint8_t mode_sw = 0;
+volatile uint8_t mode_sw = 0, faker;
 void onesec_io(void);
 
 
@@ -41183,6 +41164,12 @@ void main(void)
  TMR6_StartTimer();
 
  while (1) {
+  if (!faker++) {
+
+   UART2_Write(0x05);
+   UART1_Write(0x05);
+
+  }
   switch (V.ui_state) {
   case UI_STATE_INIT:
    init_display();
@@ -41222,8 +41209,8 @@ void main(void)
       sprintf(get_vterm_ptr(2, 0), "HOST: %ld G%d      #", V.ticks, V.g_state);
     }
 
-    WaitMs(50);
-    UART1_put_buffer(0x05);
+
+
 
     break;
    case SEQ_STATE_RX:
@@ -41246,7 +41233,7 @@ void main(void)
      eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX1    ");
      MyeaDogM_WriteStringAtPos(0, 0, s);
 
-     WaitMs(5);
+
 
      if (V.wbit) {
       V.s_state = SEQ_STATE_TX;
@@ -41350,14 +41337,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-
-
-    if (LATBbits.LATB1) {
-     UART2_put_buffer(0x05);
-    } else {
-     UART1_put_buffer(0x05);
-    }
-
+# 1008 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41450,7 +41430,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1102 "main.c"
+# 1108 "main.c"
  }
 }
 
