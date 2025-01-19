@@ -19,7 +19,7 @@ extern char * __intlo_stack_lo;
 extern char * __intlo_stack_hi;
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 52 "main.c"
+# 13 "main.c"
 #pragma config FEXTOSC = ECH
 #pragma config RSTOSC = EXTOSC_4PLL
 
@@ -340,7 +340,7 @@ char *ctermid(char *);
 
 
 char *tempnam(const char *, const char *);
-# 205 "main.c" 2
+# 166 "main.c" 2
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/string.h" 1 3
 # 25 "/opt/microchip/xc8/v3.00/pic/include/c99/string.h" 3
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 1 3
@@ -398,7 +398,7 @@ size_t strxfrm_l (char *restrict, const char *restrict, size_t, locale_t);
 
 
 void *memccpy (void *restrict, const void *restrict, int, size_t);
-# 206 "main.c" 2
+# 167 "main.c" 2
 # 1 "./mcc_generated_files/mcc.h" 1
 # 49 "./mcc_generated_files/mcc.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 1 3
@@ -40108,7 +40108,7 @@ void OSCILLATOR_Initialize(void);
 void PMD_Initialize(void);
 # 118 "./mcc_generated_files/mcc.h"
 void SystemArbiter_Initialize(void);
-# 207 "main.c" 2
+# 168 "main.c" 2
 
 # 1 "./eadog.h" 1
 # 40 "./eadog.h"
@@ -40356,7 +40356,7 @@ void SystemArbiter_Initialize(void);
 
  void clear_lcd_done(void);
  void spi_rec_done(void);
-# 209 "main.c" 2
+# 170 "main.c" 2
 # 1 "./gemsecs.h" 1
 # 25 "./gemsecs.h"
 # 1 "./timers.h" 1
@@ -40412,6 +40412,8 @@ D_CODES set_temp_display_help(const D_CODES);
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
+
+const char *build_date, *build_time;
 # 15 "./msg_text.h" 2
 
 
@@ -40590,7 +40592,7 @@ void mode_lamp_bright(void);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
  void equip_tx(uint8_t);
-# 210 "main.c" 2
+# 171 "main.c" 2
 
 
 
@@ -40866,7 +40868,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 506 "main.c"
+# 467 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -41193,12 +41195,18 @@ void main(void)
  TMR5_StartTimer();
  TMR6_StartTimer();
 
+
+
+
  while (1) {
   if (!faker++) {
 
    equip_tx(0x05);
 
   }
+
+
+
   switch (V.ui_state) {
   case UI_STATE_INIT:
    init_display();
@@ -41214,6 +41222,7 @@ void main(void)
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.01A");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
+   eaDogM_WriteStringAtPos(3, 0, (char *)build_date);
    update_lcd(0);
    WaitMs(3000);
    StartTimer(TMR_DISPLAY, 100);
@@ -41366,7 +41375,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1013 "main.c"
+# 981 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41404,30 +41413,14 @@ void main(void)
   }
   if (V.ticks) {
    if (V.failed_receive) {
-
-
     if (V.error == LINK_ERROR_CHECKSUM) {
-
-
     }
    } else {
-
-
-
-
    }
    if (V.failed_send) {
-
-
     if (V.error == LINK_ERROR_CHECKSUM) {
-
-
     }
    } else {
-
-
-
-
    }
   }
 
@@ -41459,7 +41452,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1113 "main.c"
+# 1065 "main.c"
  }
 }
 
@@ -41471,10 +41464,12 @@ void wdtdelay(const uint32_t delay)
  uint32_t dcount;
 
  for (dcount = 0; dcount <= delay; dcount++) {
-
   __asm(" clrwdt");
  };
 }
+
+
+
 
 void onesec_io(void)
 {

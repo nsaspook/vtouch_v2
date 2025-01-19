@@ -19,6 +19,9 @@ extern char * __intlo_stack_lo;
 extern char * __intlo_stack_hi;
 # 2 "<built-in>" 2
 # 1 "gemsecs.c" 2
+
+
+
 # 1 "./gemsecs.h" 1
 # 20 "./gemsecs.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/stdio.h" 1 3
@@ -40262,6 +40265,8 @@ D_CODES set_temp_display_help(const D_CODES);
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
+
+const char *build_date, *build_time;
 # 15 "./msg_text.h" 2
 
 
@@ -40440,7 +40445,7 @@ void mode_lamp_bright(void);
  void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
  void equip_tx(uint8_t);
-# 2 "gemsecs.c" 2
+# 5 "gemsecs.c" 2
 
 extern struct V_data V;
 extern header10 r_block;
@@ -40473,8 +40478,8 @@ uint16_t block_checksum(uint8_t *byte_block, const uint16_t byte_count)
   sum += byte_block[i];
  }
 
- if (rand() > 31500)
-  sum++;
+
+
 
  return sum;
 }
@@ -40535,7 +40540,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    *m_link = LINK_STATE_NAK;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
-# 112 "gemsecs.c"
+# 115 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
     do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
@@ -40578,14 +40583,22 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
 
      if (rxData_l <= sizeof(block10))
+     {
       H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+     }
      if (rxData_l <= r_block.length)
+     {
       V.r_checksum = run_checksum(rxData, 0);
+     }
 
      if (rxData_l == r_block.length + 1)
+     {
       H10[1].checksum = (uint16_t) rxData << 8;
+     }
      if (rxData_l == r_block.length + 2)
+     {
       H10[1].checksum += rxData;
+     }
 
      rxData_l++;
      b_block[sizeof(header254) - rxData_l] = rxData;
@@ -40663,8 +40676,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   secs_II_monitor_message(V.stream, V.function, 1000);
   V.g_state = secs_gem_state(V.stream, V.function);
   *m_link = LINK_STATE_DONE;
-
-
   break;
  case LINK_STATE_NAK:
   *m_link = LINK_STATE_ERROR;
@@ -40681,8 +40692,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_DONE:
   V.failed_receive = 0;
-
-
  default:
   *m_link = LINK_STATE_IDLE;
   break;
@@ -40720,7 +40729,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 305 "gemsecs.c"
+# 312 "gemsecs.c"
   H10[3].block.block.systemb = V.ticks;
   secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
 
@@ -40977,7 +40986,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
  k = (uint8_t *) byte_block;
 
  eaDogM_WriteStringAtPos(3, 0, "secs_send           ");
- ++V.ticks;
+
  V.error = LINK_ERROR_NONE;
  if ((length - 3) != k[length - 1]) {
   V.error = LINK_ERROR_SEND;
@@ -40986,6 +40995,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
   do { LATBbits.LATB1 = 1; } while(0);
   return 0;
  }
+ ++V.ticks;
 
 
 
@@ -41144,7 +41154,9 @@ uint16_t format_display_text(const char *data)
  k = (uint16_t) strlen(data);
 
  if (!k)
+ {
   return k;
+ }
 
 
 
@@ -41226,11 +41238,13 @@ P_CODES s10f1_opcmd(void)
  V.response.mcode = V.response.ack[7];
  V.response.mparm = V.response.ack[8];
 
- if (V.response.cmdlen == 0)
+ if (V.response.cmdlen == 0) {
   return CODE_ERR;
+ }
 
- if (V.response.mcode == 'M' || V.response.mcode == 'm')
+ if (V.response.mcode == 'M' || V.response.mcode == 'm') {
   return CODE_TS;
+ }
 
  if (V.response.mcode == 'C' || V.response.mcode == 'c') {
   parse_ll();
@@ -41680,7 +41694,7 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
  uint16_t i = 0;
 
  do {
-  DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+  DATAEE_WriteByte(i + (uint16_t) ((V.response.log_seq & 0x03) << (uint8_t) 8), msg_data[254 + 2 - i]);
  } while (++i <= 255);
 
  sprintf(V.info, "Saved S%dF%d %d     ", stream, function, V.response.log_num);
@@ -41689,7 +41703,9 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
  V.response.log_num++;
  V.response.log_seq++;
  if (V.response.log_seq >= 3)
+ {
   V.response.log_seq = 0;
+ }
 }
 
 
@@ -41706,17 +41722,17 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
  case 1:
   switch (function) {
   case 1:
-   if (!store1_1)
+   if (!store1_1) {
     break;
+   }
    store1_1 = 0;
-
    ee_logger(stream, function, dtime, msg_data);
    break;
   case 13:
-   if (!store1_13)
+   if (!store1_13) {
     break;
+   }
    store1_13 = 0;
-
    ee_logger(stream, function, dtime, msg_data);
    break;
   default:
@@ -41730,14 +41746,9 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 
    ee_logger(stream, function, dtime, msg_data);
    if (function == 42) {
-
-
-
-
     V.msg_ret = 0;
     V.msg_error = MSG_ERROR_NONE;
     V.response.info = DIS_STR;
-
    }
    break;
   default:
@@ -41746,10 +41757,10 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
  case 6:
   switch (function) {
   case 11:
-   if (!store6_11)
+   if (!store6_11) {
     break;
+   }
    store6_11 = 0;
-
    ee_logger(stream, function, dtime, msg_data);
    break;
   default:
@@ -41845,8 +41856,9 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    break;
   case 14:
    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 14   ");
-   if (block != GEM_STATE_REMOTE)
+   if (block != GEM_STATE_REMOTE) {
     block = GEM_STATE_COMM;
+   }
    V.ticker = 15;
    break;
 
@@ -41886,8 +41898,9 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
   switch (function) {
   default:
    V.alarm = function;
-   if (V.ticker != 45)
+   if (V.ticker != 45) {
     V.ticker = 15;
+   }
    break;
   }
   break;

@@ -1,44 +1,5 @@
-/**
-  Generated Main Source File
-
-  Company:
-    Microchip Technology Inc.
-
-  File Name:
-    main.c
-
-  Summary:
-    This is the main file generated using PIC10 / PIC12 / PIC16 / PIC18 MCUs
-
-  Description:
-    This header file provides implementations for driver APIs for all modules selected in the GUI.
-    Generation Information :
-	Product Revision  :  PIC10 / PIC12 / PIC16 / PIC18 MCUs - 1.81.8
-	Device            :  PIC18F47Q84
-	Driver Version    :  2.00
- */
-
 /*
-    (c) 2018 Microchip Technology Inc. and its subsidiaries. 
-    
-    Subject to your compliance with these terms, you may use Microchip software and any 
-    derivatives exclusively with Microchip products. It is your responsibility to comply with third party 
-    license terms applicable to your use of third party software (including open source software) that 
-    may accompany Microchip software.
-    
-    THIS SOFTWARE IS SUPPLIED BY MICROCHIP "AS IS". NO WARRANTIES, WHETHER 
-    EXPRESS, IMPLIED OR STATUTORY, APPLY TO THIS SOFTWARE, INCLUDING ANY 
-    IMPLIED WARRANTIES OF NON-INFRINGEMENT, MERCHANTABILITY, AND FITNESS 
-    FOR A PARTICULAR PURPOSE.
-    
-    IN NO EVENT WILL MICROCHIP BE LIABLE FOR ANY INDIRECT, SPECIAL, PUNITIVE, 
-    INCIDENTAL OR CONSEQUENTIAL LOSS, DAMAGE, COST OR EXPENSE OF ANY KIND 
-    WHATSOEVER RELATED TO THE SOFTWARE, HOWEVER CAUSED, EVEN IF MICROCHIP 
-    HAS BEEN ADVISED OF THE POSSIBILITY OR THE DAMAGES ARE FORESEEABLE. TO 
-    THE FULLEST EXTENT ALLOWED BY LAW, MICROCHIP'S TOTAL LIABILITY ON ALL 
-    CLAIMS IN ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT 
-    OF FEES, IF ANY, THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS 
-    SOFTWARE.
+ * SECS-II RS232 link tester
  */
 
 /*
@@ -829,12 +790,18 @@ void main(void)
 	TMR5_StartTimer();
 	TMR6_StartTimer();
 
+	/*
+	 * master processing I/O loop
+	 */
 	while (true) {
 		if (!faker++) {
 #ifdef FAKER
 			equip_tx(ENQ); // simulate equipment comm data
 #endif
 		}
+		/*
+		 * protocol state machine for HOST emulation
+		 */
 		switch (V.ui_state) {
 		case UI_STATE_INIT:
 			init_display();
@@ -850,6 +817,7 @@ void main(void)
 			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
+			eaDogM_WriteStringAtPos(3, 0, (char *)build_date);
 			update_lcd(0);
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -1047,30 +1015,14 @@ void main(void)
 		}
 		if (V.ticks) {
 			if (V.failed_receive) {
-				//				BILED1_1_SetLow(); // red
-				//				BILED1_2_SetHigh();
 				if (V.error == LINK_ERROR_CHECKSUM) {
-					//					BILED3_1_SetLow(); // red
-					//					BILED3_2_SetHigh();
 				}
 			} else {
-				//				BILED1_1_SetHigh(); //green
-				//				BILED1_2_SetLow();
-				//				BILED3_1_SetHigh(); //green
-				//				BILED3_2_SetLow();
 			}
 			if (V.failed_send) {
-				//				BILED2_1_SetLow(); // red
-				//				BILED2_2_SetHigh();
 				if (V.error == LINK_ERROR_CHECKSUM) {
-					//					BILED4_1_SetLow(); // red
-					//					BILED4_2_SetHigh();
 				}
 			} else {
-				//				BILED2_1_SetHigh(); //green
-				//				BILED2_2_SetLow();
-				//				BILED4_1_SetHigh(); //green
-				//				BILED4_2_SetLow();
 			}
 		}
 
@@ -1121,11 +1073,13 @@ void wdtdelay(const uint32_t delay)
 	uint32_t dcount;
 
 	for (dcount = 0; dcount <= delay; dcount++) { // delay a bit
-
 		ClrWdt(); // reset the WDT timer
 	};
 }
 
+/*
+ * run LED and status indicators
+ */
 void onesec_io(void)
 {
 	RLED_Toggle();
@@ -1133,6 +1087,7 @@ void onesec_io(void)
 	DLED_SetLow();
 	B.one_sec_flag = true;
 }
+
 /**
  End of File
  */

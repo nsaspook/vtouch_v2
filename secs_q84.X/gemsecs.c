@@ -1,3 +1,6 @@
+/*
+ * the main secs/gem protocol functions
+ */
 #include "gemsecs.h"
 
 extern struct V_data V;
@@ -151,14 +154,22 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 					 * skip possible message data
 					 */
 					if (rxData_l <= sizeof(block10)) // save header only
+					{
 						H10[1].block.b[sizeof(block10) - rxData_l] = rxData;
+					}
 					if (rxData_l <= r_block.length) // generate checksum from data stream
+					{
 						V.r_checksum = run_checksum(rxData, false);
+					}
 
 					if (rxData_l == r_block.length + 1) // checksum high byte
+					{
 						H10[1].checksum = (uint16_t) rxData << 8;
+					}
 					if (rxData_l == r_block.length + 2) // checksum low byte
+					{
 						H10[1].checksum += rxData;
+					}
 
 					rxData_l++;
 					b_block[sizeof(header254) - rxData_l] = rxData;
@@ -236,8 +247,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		secs_II_monitor_message(V.stream, V.function, LDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
 		*m_link = LINK_STATE_DONE;
-		//		IO_RB4_SetLow();
-		//		IO_RB5_SetLow();
 		break;
 	case LINK_STATE_NAK:
 		*m_link = LINK_STATE_ERROR;
@@ -254,8 +263,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code state
 		V.failed_receive = false;
-		//		IO_RB4_Toggle();
-		//		IO_RB5_Toggle();
 	default:
 		*m_link = LINK_STATE_IDLE;
 		break;
@@ -558,7 +565,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 	k = (uint8_t *) byte_block;
 
 	eaDogM_WriteStringAtPos(3, 0, "secs_send           ");
-	++V.ticks; // transaction ID for host master messages
+
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
 		V.error = LINK_ERROR_SEND;
@@ -567,6 +574,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 		MLED_SetHigh();
 		return false; // don't send and return mismatch error
 	}
+	++V.ticks; // transaction ID for host master messages
 
 	/*
 	 * space up from bottom two bytes and don't include last byte
@@ -725,7 +733,9 @@ uint16_t format_display_text(const char *data)
 	k = (uint16_t) strlen(data);
 
 	if (!k) // check for null string
+	{
 		return k;
+	}
 
 	/*
 	 * shift string into Terminal text array
@@ -807,11 +817,13 @@ P_CODES s10f1_opcmd(void)
 	V.response.mcode = V.response.ack[7]; // first char of equipment message
 	V.response.mparm = V.response.ack[8]; // second char
 
-	if (V.response.cmdlen == 0)
+	if (V.response.cmdlen == 0) {
 		return CODE_ERR;
+	}
 
-	if (V.response.mcode == 'M' || V.response.mcode == 'm')
+	if (V.response.mcode == 'M' || V.response.mcode == 'm') {
 		return CODE_TS;
+	}
 
 	if (V.response.mcode == 'C' || V.response.mcode == 'c') { // ready cassette load-lock control
 		parse_ll();
@@ -1261,7 +1273,7 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
 	uint16_t i = 0;
 
 	do {
-		DATAEE_WriteByte(i + ((V.response.log_seq & 0x03) << 8), msg_data[254 + 2 - i]);
+		DATAEE_WriteByte(i + (uint16_t) ((V.response.log_seq & 0x03) << (uint8_t) 8), msg_data[254 + 2 - i]);
 	} while (++i <= 255);
 
 	sprintf(V.info, "Saved S%dF%d %d     ", stream, function, V.response.log_num);
@@ -1270,7 +1282,9 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
 	V.response.log_num++;
 	V.response.log_seq++;
 	if (V.response.log_seq >= 3) // limit saving to first three positions, last position is for program settings
+	{
 		V.response.log_seq = 0;
+	}
 }
 
 /*
@@ -1287,17 +1301,17 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 	case 1:
 		switch (function) { // from equipment
 		case 1:
-			if (!store1_1)
+			if (!store1_1) {
 				break;
+			}
 			store1_1 = false;
-
 			ee_logger(stream, function, dtime, msg_data);
 			break;
 		case 13:
-			if (!store1_13)
+			if (!store1_13) {
 				break;
+			}
 			store1_13 = false;
-
 			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
@@ -1311,14 +1325,9 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 			/* always store this message */
 			ee_logger(stream, function, dtime, msg_data);
 			if (function == 42) { // check for failed command
-				//				if ((H254[0].length == 0x11) && ((V.msg_ret = H254[0].data[(sizeof(H254[0].data) - 1) - 4]) != 0x00)) {
-				//					V.msg_error = MSG_ERROR_DATA;
-				//					V.response.info = DIS_SEQUENCE; // show error message
-				//				} else {
 				V.msg_ret = 0;
 				V.msg_error = MSG_ERROR_NONE;
 				V.response.info = DIS_STR;
-				//				}
 			}
 			break;
 		default:
@@ -1327,10 +1336,10 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 	case 6:
 		switch (function) {
 		case 11: // S6F11 // from host
-			if (!store6_11)
+			if (!store6_11) {
 				break;
+			}
 			store6_11 = false;
-
 			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
@@ -1426,8 +1435,9 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			break;
 		case 14:
 			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 14   ");
-			if (block != GEM_STATE_REMOTE)
+			if (block != GEM_STATE_REMOTE) {
 				block = GEM_STATE_COMM;
+			}
 			V.ticker = 15;
 			break;
 #ifdef DB2
@@ -1467,8 +1477,9 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		switch (function) {
 		default:
 			V.alarm = function;
-			if (V.ticker != 45)
+			if (V.ticker != 45) {
 				V.ticker = 15;
+			}
 			break;
 		}
 		break;
