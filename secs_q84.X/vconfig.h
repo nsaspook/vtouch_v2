@@ -21,12 +21,13 @@ extern "C" {
 
 #define NHD
 
-#define VER	"2.00A"
+#define VER	"2.01A"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
 	 * 1.22 message sequencing in secs_II_message
 	 * 2.00 Version for 47Q84
+	 * 2.01 uart to uart loopback testing with FAKER define
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -37,7 +38,7 @@ extern "C" {
 	//#define DB2
 	//#define DB3
 	//#define DB4
-	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
+#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
 	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
 
@@ -192,7 +193,7 @@ extern "C" {
 		GEM_STATE_REMOTE,
 		GEM_STATE_ERROR
 	} GEM_STATES;
-	
+
 	const char * GEM_TEXT [] = {
 		"DISABLE",
 		"COMM   ",

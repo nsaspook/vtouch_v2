@@ -38972,7 +38972,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 98 "./vconfig.h"
+# 99 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40473,8 +40473,8 @@ uint16_t block_checksum(uint8_t *byte_block, const uint16_t byte_count)
   sum += byte_block[i];
  }
 
-
-
+ if (rand() > 31500)
+  sum++;
 
  return sum;
 }
@@ -40505,6 +40505,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
+   do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
    if (rxData == 0x05) {
 
     V.uart = 1;
@@ -40532,10 +40533,12 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.timer_error++;
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
+   do { LATBbits.LATB1 = 1; } while(0);
   } else {
-# 110 "gemsecs.c"
+# 112 "gemsecs.c"
    if (V.uart == 2 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
+    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData == 0x04) {
      StartTimer(TMR_T2, 3000);
      V.error = LINK_ERROR_NONE;
@@ -40560,9 +40563,11 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.all_errors++;
    V.failed_receive = 2;
    *m_link = LINK_STATE_NAK;
+   do { LATBbits.LATB1 = 1; } while(0);
   } else {
    if (V.uart == 1 && UART1_is_rx_ready()) {
     rxData = UART1_Read();
+    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData_l == 0) {
      r_block.length = rxData;
      run_checksum(0, 1);
@@ -40596,6 +40601,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
        V.all_errors++;
        V.failed_receive = 3;
        *m_link = LINK_STATE_NAK;
+       do { LATBbits.LATB1 = 1; } while(0);
       }
      }
     }
@@ -40636,6 +40642,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
        V.all_errors++;
        V.failed_receive = 4;
        *m_link = LINK_STATE_NAK;
+       do { LATBbits.LATB1 = 1; } while(0);
       }
      }
     }
@@ -40670,6 +40677,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   break;
  case LINK_STATE_ERROR:
+  do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
   V.failed_receive = 0;
@@ -40693,6 +40701,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
+   do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
    if (rxData == 0x05) {
 
     do { LATDbits.LATD7 = 1; } while(0);
@@ -40711,7 +40720,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 296 "gemsecs.c"
+# 305 "gemsecs.c"
   H10[3].block.block.systemb = V.ticks;
   secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
 
@@ -40727,12 +40736,14 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     V.failed_receive = 1;
     V.all_errors++;
     *r_link = LINK_STATE_NAK;
+    do { LATBbits.LATB1 = 1; } while(0);
    } else {
     *r_link = LINK_STATE_IDLE;
    }
   } else {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
+    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData_l == 0) {
      r_block.length = rxData;
      run_checksum(0, 1);
@@ -40775,6 +40786,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
        V.all_errors++;
        V.failed_receive = 2;
        *r_link = LINK_STATE_NAK;
+       do { LATBbits.LATB1 = 1; } while(0);
       }
      }
     }
@@ -40810,6 +40822,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_ERROR:
   eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR R    ");
+  do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
 
@@ -40854,6 +40867,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
     V.all_errors++;
     V.failed_send = 1;
     *t_link = LINK_STATE_NAK;
+    do { LATBbits.LATB1 = 1; } while(0);
    } else {
     StartTimer(TMR_T2, 3000);
    }
@@ -40881,6 +40895,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    V.failed_send = 2;
    *t_link = LINK_STATE_ERROR;
    V.all_errors++;
+   do { LATBbits.LATB1 = 1; } while(0);
   } else {
    if (!requeue) {
     secs_send((uint8_t*) block.header, block.length, 0, 1);
@@ -40897,6 +40912,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
     V.failed_send = 3;
     *t_link = LINK_STATE_ERROR;
     V.all_errors++;
+    do { LATBbits.LATB1 = 1; } while(0);
    }
   }
 
@@ -40936,6 +40952,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_ERROR:
   eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR    ");
+  do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
 
@@ -40956,6 +40973,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
  uint8_t i, *k;
  uint16_t checksum;
 
+ do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
  k = (uint8_t *) byte_block;
 
  eaDogM_WriteStringAtPos(3, 0, "secs_send           ");
@@ -40965,6 +40983,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
   V.error = LINK_ERROR_SEND;
   V.all_errors++;
   V.failed_send = 1;
+  do { LATBbits.LATB1 = 1; } while(0);
   return 0;
  }
 
@@ -41096,19 +41115,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   sprintf(V.terminal, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.00A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.01A");
   break;
  case display_online:
   sprintf(V.terminal, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.00A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.01A");
   break;
  case display_comm:
   sprintf(V.terminal, msg2,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.00A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.01A");
   break;
  default:
   sprintf(V.terminal, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.00A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.01A");
   break;
  }
 
@@ -41895,4 +41914,5 @@ void equip_tx(uint8_t data)
   UART2_Write(data);
   break;
  }
+ do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
 }

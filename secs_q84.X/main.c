@@ -1130,6 +1130,7 @@ void onesec_io(void)
 {
 	RLED_Toggle();
 	MLED_SetLow();
+	DLED_SetLow();
 	B.one_sec_flag = true;
 }
 /**
