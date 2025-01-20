@@ -38975,7 +38975,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 99 "./vconfig.h"
+# 100 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39150,7 +39150,23 @@ void PIN_MANAGER_Initialize (void);
   const char message[32], display[32];
  } V_help;
 
+ extern char spinners(uint8_t, const uint8_t);
+
+
+ const char spin[6][20] = {
+  "||//--",
+  "||//--\\\\",
+  "OOOOOO--__-",
+  "vv<<^^>>",
+  "..**x#x#XX||--",
+  "..ooOOoo"
+ };
+
+
+
  extern B_type B;
+
+ const char *build_date, *build_time;
 
  void wdtdelay(const uint32_t);
 # 23 "./gemsecs.h" 2
@@ -40265,8 +40281,6 @@ D_CODES set_temp_display_help(const D_CODES);
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
-
-const char *build_date, *build_time;
 # 15 "./msg_text.h" 2
 
 

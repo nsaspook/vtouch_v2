@@ -173,6 +173,7 @@ typedef signed long long int24_t;
 #include "mydisplay.h"
 
 extern struct spi_link_type spi_link;
+const char *build_date = __DATE__, *build_time = __TIME__;
 
 V_data V = {
 	.error = LINK_ERROR_NONE,
@@ -817,7 +818,7 @@ void main(void)
 			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
 			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
 			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
-			eaDogM_WriteStringAtPos(3, 0, (char *)build_date);
+			eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
 			update_lcd(0);
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -862,7 +863,7 @@ void main(void)
 						V.msg_error = MSG_ERROR_NONE;
 						sprintf(s, " S%dF%d #           ", V.stream, V.function);
 					}
-					s[16] = 0;
+					s[MAX_LINE] = 0;
 					//					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX1    ");
 					MyeaDogM_WriteStringAtPos(0, 0, s);
 #ifdef DB1
@@ -905,7 +906,8 @@ void main(void)
 					sprintf(s, " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
 				}
 
-				s[16] = 0;
+				s[MAX_LINE] = 0;
+				s[SPIN_CHAR] = spinners(3, false);
 				MyeaDogM_WriteStringAtPos(0, 0, s);
 				break;
 			case SEQ_STATE_DONE:
@@ -1086,6 +1088,23 @@ void onesec_io(void)
 	MLED_SetLow();
 	DLED_SetLow();
 	B.one_sec_flag = true;
+}
+
+/* Misc ACSII spinner character generator, stores position for each shape */
+char spinners(uint8_t shape, const uint8_t reset)
+{
+	static uint8_t s[MAX_SHAPES];
+	char c;
+
+	if (shape > (MAX_SHAPES - 1))
+		shape = 0;
+	if (reset)
+		s[shape] = 0;
+	c = spin[shape][s[shape]];
+	if (++s[shape] >= strlen(spin[shape]))
+		s[shape] = 0;
+
+	return c;
 }
 
 /**

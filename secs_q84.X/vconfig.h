@@ -95,6 +95,7 @@ extern "C" {
 #define S10F3_TID_POS	138
 
 #define MAX_LINE	21
+#define SPIN_CHAR	19
 
 	struct spi_link_type_o { // internal SPI state table
 		uint8_t SPI_LCD : 1;
@@ -270,7 +271,23 @@ extern "C" {
 		const char message[32], display[32];
 	} V_help;
 
+	extern char spinners(uint8_t, const uint8_t);
+	/* spinner defines */
+#define MAX_SHAPES  6
+	const char spin[MAX_SHAPES][20] = {
+		"||//--", // classic LCD version with no \ character
+		"||//--\\\\", // classic
+		"OOOOOO--__-", // eye blink
+		"vv<<^^>>", // point spinner
+		"..**x#x#XX||--", // warp portal
+		"..ooOOoo" // ball bouncer
+	};
+
+#define SPIN_VAL_UPDATE	5
+
 	extern B_type B;
+
+	const char *build_date, *build_time;
 
 	void wdtdelay(const uint32_t);
 

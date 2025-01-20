@@ -38,7 +38,5 @@
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
 
-const char *build_date, *build_time;
-
 #endif
 

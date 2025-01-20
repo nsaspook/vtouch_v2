@@ -40136,7 +40136,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 99 "./vconfig.h"
+# 100 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40311,7 +40311,23 @@ void SystemArbiter_Initialize(void);
   const char message[32], display[32];
  } V_help;
 
+ extern char spinners(uint8_t, const uint8_t);
+
+
+ const char spin[6][20] = {
+  "||//--",
+  "||//--\\\\",
+  "OOOOOO--__-",
+  "vv<<^^>>",
+  "..**x#x#XX||--",
+  "..ooOOoo"
+ };
+
+
+
  extern B_type B;
+
+ const char *build_date, *build_time;
 
  void wdtdelay(const uint32_t);
 # 41 "./eadog.h" 2
@@ -40412,8 +40428,6 @@ D_CODES set_temp_display_help(const D_CODES);
 # 38 "./mconfig.h"
 void mode_lamp_dim(uint16_t);
 void mode_lamp_bright(void);
-
-const char *build_date, *build_time;
 # 15 "./msg_text.h" 2
 
 
@@ -40598,6 +40612,7 @@ const char *build_date, *build_time;
 
 
 extern struct spi_link_type spi_link;
+const char *build_date = "Jan 19 2025", *build_time = "18:49:57";
 
 V_data V = {
  .error = LINK_ERROR_NONE,
@@ -40868,7 +40883,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 467 "main.c"
+# 468 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -41222,7 +41237,7 @@ void main(void)
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
    sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.01A");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
-   eaDogM_WriteStringAtPos(3, 0, (char *)build_date);
+   eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
    update_lcd(0);
    WaitMs(3000);
    StartTimer(TMR_DISPLAY, 100);
@@ -41267,7 +41282,7 @@ void main(void)
       V.msg_error = MSG_ERROR_NONE;
       sprintf(s, " S%dF%d #           ", V.stream, V.function);
      }
-     s[16] = 0;
+     s[21] = 0;
 
      MyeaDogM_WriteStringAtPos(0, 0, s);
 
@@ -41310,7 +41325,8 @@ void main(void)
      sprintf(s, " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
     }
 
-    s[16] = 0;
+    s[21] = 0;
+    s[19] = spinners(3, 0);
     MyeaDogM_WriteStringAtPos(0, 0, s);
     break;
    case SEQ_STATE_DONE:
@@ -41375,7 +41391,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 981 "main.c"
+# 983 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41452,7 +41468,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1065 "main.c"
+# 1067 "main.c"
  }
 }
 
@@ -41477,4 +41493,21 @@ void onesec_io(void)
  do { LATBbits.LATB1 = 0; } while(0);
  do { LATBbits.LATB3 = 0; } while(0);
  B.one_sec_flag = 1;
+}
+
+
+char spinners(uint8_t shape, const uint8_t reset)
+{
+ static uint8_t s[6];
+ char c;
+
+ if (shape > (6 - 1))
+  shape = 0;
+ if (reset)
+  s[shape] = 0;
+ c = spin[shape][s[shape]];
+ if (++s[shape] >= strlen(spin[shape]))
+  s[shape] = 0;
+
+ return c;
 }
