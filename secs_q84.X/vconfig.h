@@ -32,7 +32,7 @@ extern "C" {
 	//#define TESTING
 	//#define DISPLAY_SLOW
 
-#define FAKER
+//#define FAKER
 
 	//#define DB1
 	//#define DB2

@@ -40743,11 +40743,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 312 "gemsecs.c"
-  H10[3].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
-
-
+# 316 "gemsecs.c"
   break;
  case LINK_STATE_EOT:
 
@@ -41802,7 +41798,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-  case 1:
+
 
   case 2:
    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2   ");
