@@ -5,7 +5,6 @@
 extern V_data V;
 static D_data D = {0};
 
-
 /*
  * hardware specific routines
  */
@@ -28,12 +27,14 @@ bool help_button(void)
 {
 	if (!RB0_GetValue()) { // debounce and delay for button press
 		V.help = true;
-		if (TimerDone(TMR_HELP))
+		if (TimerDone(TMR_HELP)) {
 			return true;
+		}
 	}
 
-	if (!V.help)
+	if (!V.help) {
 		StartTimer(TMR_HELP, BDELAY);
+	}
 
 	return false;
 }
@@ -45,8 +46,9 @@ void check_help(bool flipper)
 	 */
 	if (help_button() && display_info() != DIS_HELP) {
 		StartTimer(TMR_FLIPPER, DFLIP);
-		if (V.debug)
+		if (V.debug) {
 			vterm_dump();
+		}
 
 		set_vterm(1);
 		set_temp_display_help(display_info());
@@ -84,8 +86,9 @@ uint8_t update_lcd(uint8_t vterm)
 {
 	vterm = vterm & 0x03;
 
-	if (D.vterm >= 1 && vterm == 0)
+	if (D.vterm >= 1 && vterm == 0) {
 		return D.vterm;
+	}
 
 	D.lcd[vterm][0][MAX_LINE] = 0;
 	D.lcd[vterm][1][MAX_LINE] = 0;
@@ -177,7 +180,7 @@ void vterm_sequence(void)
 }
 
 /*
- * update possible command messages
+ * update possible command messages from equipment
  */
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
@@ -197,8 +200,9 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 			}
 		}
 
-		if ((V.response.info != DIS_STR) && TimerDone(TMR_INFO))
+		if ((V.response.info != DIS_STR) && TimerDone(TMR_INFO)) {
 			V.response.info = DIS_STR;
+		}
 	}
 
 	/*

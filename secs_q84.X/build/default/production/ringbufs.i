@@ -38953,7 +38953,7 @@ void PIN_MANAGER_Initialize (void);
 # 20 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 21 "./vconfig.h" 2
-# 100 "./vconfig.h"
+# 102 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -38977,13 +38977,9 @@ void PIN_MANAGER_Initialize (void);
  };
 
  typedef struct B_type {
-  volatile _Bool ten_sec_flag, one_sec_flag, FM80_charged, pv_high, pv_update, once;
-  volatile uint16_t pacing, rx_count, flush, pv_prev, day_check, node_id, dim_delay;
-  volatile _Bool FM80_online, FM80_io, LOG, display_dim, display_update;
-  volatile uint8_t canbus_online, modbus_online, alt_display;
-  float run_time, net_balance;
-  uint16_t mui[10];
-  uint16_t fwrev[3];
+  volatile _Bool one_sec_flag;
+  volatile uint16_t dim_delay;
+  volatile _Bool display_update;
  } B_type;
 
  typedef enum {

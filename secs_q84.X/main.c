@@ -203,19 +203,8 @@ V_data V = {
 
 B_type B = {
 	.one_sec_flag = false,
-	.ten_sec_flag = false,
-	.pacing = 0,
-	.rx_count = 0,
-	.flush = 0,
-	.canbus_online = 0,
-	.modbus_online = 0,
-	.pv_high = false,
-	.pv_update = false,
-	.once = false,
-	.display_dim = false,
 	.display_update = false,
 	.dim_delay = DIM_DELAY,
-	.alt_display = 0,
 };
 
 header10 H10[] = {
@@ -828,8 +817,12 @@ void main(void)
 			StartTimer(TMR_HELPDIS, TDELAY);
 			eaDogM_WriteStringAtPos(3, 0, " UI_STATE_INIT   ");
 			break;
-		case UI_STATE_HOST: //slave
-			eaDogM_WriteStringAtPos(3, 0, " UI_STATE_HOST   ");
+		case UI_STATE_HOST: // equipment starts communications to host
+#ifdef FAKER
+			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST 2EQIP ");
+#else
+			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST       ");
+#endif
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
 				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_INIT    ");
@@ -853,7 +846,6 @@ void main(void)
 				 * receive message from equipment
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-					//					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX0    ");
 					set_display_info(DIS_STR);
 					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
@@ -864,7 +856,6 @@ void main(void)
 						sprintf(s, " S%dF%d #           ", V.stream, V.function);
 					}
 					s[MAX_LINE] = 0;
-					//					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX1    ");
 					MyeaDogM_WriteStringAtPos(0, 0, s);
 #ifdef DB1
 					WaitMs(5);
@@ -876,7 +867,6 @@ void main(void)
 					} else { // don't send a reply
 						V.s_state = SEQ_STATE_TRIGGER;
 					}
-					//					eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX2    ");
 				}
 				if (V.r_l_state == LINK_STATE_ERROR)
 					V.s_state = SEQ_STATE_ERROR;
@@ -911,7 +901,6 @@ void main(void)
 				MyeaDogM_WriteStringAtPos(0, 0, s);
 				break;
 			case SEQ_STATE_DONE:
-				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_DONE    ");
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			case SEQ_STATE_ERROR:
@@ -987,7 +976,7 @@ void main(void)
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
 					sprintf(V.buf, "S%dF%d #%ld       ", V.stream, V.function, V.ticks);
-					V.buf[13] = 0; // string size limit
+					V.buf[VBUF_MAX] = 0; // string size limit
 					MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
 					V.s_state = SEQ_STATE_TRIGGER;
 				}

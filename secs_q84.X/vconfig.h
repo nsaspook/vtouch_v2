@@ -21,18 +21,19 @@ extern "C" {
 
 #define NHD
 
-#define VER	"2.01A"
+#define VER	"2.02A"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
 	 * 1.22 message sequencing in secs_II_message
 	 * 2.00 Version for 47Q84
 	 * 2.01 uart to uart loopback testing with FAKER define
+	 * 2.02 more cleanups of code
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
 
-//#define FAKER
+#define FAKER
 
 	//#define DB1
 	//#define DB2
@@ -95,6 +96,7 @@ extern "C" {
 #define S10F3_TID_POS	138
 
 #define MAX_LINE	21
+#define VBUF_MAX	21
 #define SPIN_CHAR	19
 
 	struct spi_link_type_o { // internal SPI state table
@@ -120,13 +122,9 @@ extern "C" {
 	};
 
 	typedef struct B_type {
-		volatile bool ten_sec_flag, one_sec_flag, FM80_charged, pv_high, pv_update, once;
-		volatile uint16_t pacing, rx_count, flush, pv_prev, day_check, node_id, dim_delay;
-		volatile bool FM80_online, FM80_io, LOG, display_dim, display_update;
-		volatile uint8_t canbus_online, modbus_online, alt_display;
-		float run_time, net_balance;
-		uint16_t mui[10];
-		uint16_t fwrev[3];
+		volatile bool one_sec_flag;
+		volatile uint16_t dim_delay;
+		volatile bool display_update;
 	} B_type;
 
 	typedef enum {
