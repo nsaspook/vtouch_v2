@@ -40136,7 +40136,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 102 "./vconfig.h"
+# 90 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40608,7 +40608,7 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "Jan 20 2025", *build_time = "20:03:15";
+const char *build_date = "Jan 21 2025", *build_time = "08:33:53";
 
 V_data V = {
  .error = LINK_ERROR_NONE,
@@ -40887,26 +40887,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-
-
-
-header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 495 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -41201,7 +41182,7 @@ void main(void)
  while (1) {
   if (!faker++) {
 
-   equip_tx(0x05);
+
 
   }
 
@@ -41234,9 +41215,9 @@ void main(void)
    break;
   case UI_STATE_HOST:
 
-   eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST 2EQIP ");
 
 
+   eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST       ");
 
    switch (V.s_state) {
    case SEQ_STATE_INIT:

@@ -292,6 +292,7 @@ void UART2_RxDataHandler(void){
         uart2RxHead = 0;
     }
     uart2RxCount++;
+    do { LATBbits.LATB2 = ~LATBbits.LATB2; } while(0);
 }
 
 void UART2_DefaultFramingErrorHandler(void){}
