@@ -39068,14 +39068,7 @@ void PIN_MANAGER_Initialize (void);
   GEM_STATE_ERROR
  } GEM_STATES;
 
- const char * GEM_TEXT [] = {
-  "DISABLE",
-  "COMM   ",
-  "OFFLINE",
-  "ONLIINE",
-  "REMOTE ",
-  "ERROR  "
- };
+ extern const char * GEM_TEXT [];
 
  typedef enum {
   GEM_GENERIC = 0,

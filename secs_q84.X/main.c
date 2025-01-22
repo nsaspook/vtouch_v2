@@ -175,6 +175,15 @@ typedef signed long long int24_t;
 extern struct spi_link_type spi_link;
 const char *build_date = __DATE__, *build_time = __TIME__;
 
+const char * GEM_TEXT [] = {
+	"DISABLE",
+	"COMM   ",
+	"OFFLINE",
+	"ONLIINE",
+	"REMOTE ",
+	"ERROR  "
+};
+
 V_data V = {
 	.error = LINK_ERROR_NONE,
 	.abort = LINK_ERROR_NONE,

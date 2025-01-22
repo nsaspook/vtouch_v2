@@ -33,7 +33,7 @@ extern "C" {
 	//#define TESTING
 	//#define DISPLAY_SLOW
 
-	//#define FAKER
+#define FAKER
 
 	//#define DB1
 	//#define DB2
@@ -181,14 +181,7 @@ extern "C" {
 		GEM_STATE_ERROR
 	} GEM_STATES;
 
-	const char * GEM_TEXT [] = {
-		"DISABLE",
-		"COMM   ",
-		"OFFLINE",
-		"ONLIINE",
-		"REMOTE ",
-		"ERROR  "
-	};
+	extern const char * GEM_TEXT [];
 
 	typedef enum {
 		GEM_GENERIC = 0,

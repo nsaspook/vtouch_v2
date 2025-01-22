@@ -39070,14 +39070,7 @@ void PIN_MANAGER_Initialize (void);
   GEM_STATE_ERROR
  } GEM_STATES;
 
- const char * GEM_TEXT [] = {
-  "DISABLE",
-  "COMM   ",
-  "OFFLINE",
-  "ONLIINE",
-  "REMOTE ",
-  "ERROR  "
- };
+ extern const char * GEM_TEXT [];
 
  typedef enum {
   GEM_GENERIC = 0,
@@ -40739,7 +40732,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 316 "gemsecs.c"
+# 312 "gemsecs.c"
+  H10[3].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
+
+
   break;
  case LINK_STATE_EOT:
 
@@ -40826,7 +40823,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.abort = LINK_ERROR_NONE;
   break;
  case LINK_STATE_NAK:
-
+    eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
   UART1_Write(0x15);
   *r_link = LINK_STATE_ERROR;
   V.all_errors++;
@@ -40860,7 +40857,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
-
 
   V.error = LINK_ERROR_NONE;
   retry = 3;
@@ -40958,7 +40954,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_NAK:
-
+    eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
@@ -41794,7 +41790,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-
+  case 1:
 
   case 2:
    eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2   ");

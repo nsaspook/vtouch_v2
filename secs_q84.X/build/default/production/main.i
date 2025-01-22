@@ -40231,14 +40231,7 @@ void SystemArbiter_Initialize(void);
   GEM_STATE_ERROR
  } GEM_STATES;
 
- const char * GEM_TEXT [] = {
-  "DISABLE",
-  "COMM   ",
-  "OFFLINE",
-  "ONLIINE",
-  "REMOTE ",
-  "ERROR  "
- };
+ extern const char * GEM_TEXT [];
 
  typedef enum {
   GEM_GENERIC = 0,
@@ -40608,7 +40601,16 @@ void mode_lamp_bright(void);
 
 
 extern struct spi_link_type spi_link;
-const char *build_date = "Jan 21 2025", *build_time = "08:33:53";
+const char *build_date = "Jan 21 2025", *build_time = "18:06:17";
+
+const char * GEM_TEXT [] = {
+ "DISABLE",
+ "COMM   ",
+ "OFFLINE",
+ "ONLIINE",
+ "REMOTE ",
+ "ERROR  "
+};
 
 V_data V = {
  .error = LINK_ERROR_NONE,
@@ -40868,7 +40870,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 457 "main.c"
+# 466 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -40887,7 +40889,26 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 495 "main.c"
+
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
 header33 H33[] = {
  {
   .length = 33,
@@ -41182,7 +41203,7 @@ void main(void)
  while (1) {
   if (!faker++) {
 
-
+   equip_tx(0x05);
 
   }
 
@@ -41215,9 +41236,9 @@ void main(void)
    break;
   case UI_STATE_HOST:
 
+   eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST 2EQIP ");
 
 
-   eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST       ");
 
    switch (V.s_state) {
    case SEQ_STATE_INIT:
@@ -41357,7 +41378,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 972 "main.c"
+# 981 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41434,7 +41455,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1056 "main.c"
+# 1065 "main.c"
  }
 }
 

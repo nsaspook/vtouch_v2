@@ -399,7 +399,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.abort = LINK_ERROR_NONE;
 		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
 		UART1_Write(NAK);
 		*r_link = LINK_STATE_ERROR;
 		V.all_errors++;
@@ -434,7 +434,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
 		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE    ");
-		//		IO_RB5_SetHigh();
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
 		UART1_Write(ENQ);
@@ -531,7 +530,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_NAK: // send failure
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
+				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
@@ -1366,7 +1365,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 	switch (stream) { // from equipment
 	case 1:
 		switch (function) {
-#if defined(DB2) || defined(FAKER)
+#if defined(DB2) || defined(FAKER) // basic comm exchange sets GEM state to remote
 		case 1:
 #endif
 		case 2:
