@@ -40136,7 +40136,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 90 "./vconfig.h"
+# 98 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40596,12 +40596,9 @@ void mode_lamp_bright(void);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
  void equip_tx(uint8_t);
 # 171 "main.c" 2
-
-
-
-
+# 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Jan 21 2025", *build_time = "18:06:17";
+const char *build_date = "Jan 22 2025", *build_time = "20:09:19";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -40870,7 +40867,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 466 "main.c"
+# 474 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -41184,6 +41181,7 @@ void main(void)
  (INTCON0bits.GIEL = 1);
 
  V.ui_state = UI_STATE_INIT;
+ do { TRISDbits.TRISD5 = 0; } while(0);
 
 
 
@@ -41201,6 +41199,7 @@ void main(void)
 
 
  while (1) {
+  do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
   if (!faker++) {
 
    equip_tx(0x05);
@@ -41219,10 +41218,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.02A");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.03A");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.02A");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.03A");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
    update_lcd(0);
@@ -41378,7 +41377,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 981 "main.c"
+# 991 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41455,7 +41454,8 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1065 "main.c"
+# 1075 "main.c"
+  do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }
 

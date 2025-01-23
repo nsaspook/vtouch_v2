@@ -21,7 +21,7 @@ extern "C" {
 
 #define NHD
 
-#define VER	"2.02A"
+#define VER	"2.03A"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -29,6 +29,7 @@ extern "C" {
 	 * 2.00 Version for 47Q84
 	 * 2.01 uart to uart loopback testing with FAKER define
 	 * 2.02 more cleanups of code
+	 * 2.03 rework trace code
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW
@@ -45,6 +46,13 @@ extern "C" {
 
 #define SLED	MLED_LAT
 #define DLED	DLED_LAT
+
+#define TRACE
+	// EXT_IO PIN 5, RB6 PGC
+	// EXT_IO pin 6, RB7 PGD, I_TRACE
+	// EXT_IO pin 2, MISC_IO pin 5, RD5 M_TRACE
+	// EXT_IO pin 3, MISC_IO pin 7, RD7 DEBUG1/E_TRACE
+
 
 #define T1	500
 #define T2	3000

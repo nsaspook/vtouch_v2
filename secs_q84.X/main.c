@@ -172,6 +172,14 @@ typedef signed long long int24_t;
 #include "mconfig.h"
 #include "mydisplay.h"
 
+#ifdef TRACE
+#define M_TRACE	do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0)
+#define I_TRACE	RB7_Toggle()
+#else
+#define M_TRACE	""
+#define I_TRACE	""
+#endif
+
 extern struct spi_link_type spi_link;
 const char *build_date = __DATE__, *build_time = __TIME__;
 
@@ -776,6 +784,7 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	V.ui_state = UI_STATE_INIT;
+	do { TRISDbits.TRISD5 = 0; } while(0);
 
 	/*
 	 * RS-232 link I/O relay defaults to monitor/log mode with no power
@@ -793,6 +802,7 @@ void main(void)
 	 * master processing I/O loop
 	 */
 	while (true) {
+		M_TRACE;
 		if (!faker++) {
 #ifdef FAKER
 			equip_tx(ENQ); // simulate equipment comm data
@@ -1062,6 +1072,7 @@ void main(void)
 			V.set_sequ = true;
 		}
 #endif
+		M_TRACE;
 	}
 }
 

@@ -38973,7 +38973,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 90 "./vconfig.h"
+# 98 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40320,8 +40320,8 @@ void eaDogM_WriteString(char *strPtr)
 {
  uint8_t len = (uint8_t) strlen(strPtr);
 
- "";
- "";
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
  wait_lcd_done();
  wait_lcd_set();
  do { LATDbits.LATD3 = 0; } while(0);
@@ -40354,9 +40354,9 @@ void send_lcd_cmd_dma(const uint8_t strPtr)
 
 void send_lcd_data_dma(const uint8_t strPtr)
 {
- "";
- "";
- "";
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
  wait_lcd_done();
  wait_lcd_set();
  do { LATDbits.LATD3 = 0; } while(0);
@@ -40373,7 +40373,7 @@ void send_lcd_data_dma(const uint8_t strPtr)
 
 void send_lcd_pos_dma(const uint8_t strPtr)
 {
- "";
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
  wait_lcd_done();
  wait_lcd_set();
  do { LATDbits.LATD3 = 0; } while(0);
@@ -40418,7 +40418,7 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 
  send_lcd_pos_dma(row + c);
  wdtdelay(200);
- "";
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
 
 
 
@@ -40517,12 +40517,11 @@ void wait_lcd_done(void)
 
 void clear_lcd_done(void)
 {
-
  spi_link.LCD_DATA = 0;
- "";
- "";
- "";
- "";
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
 }
 
 void spi_rec_done(void)
@@ -40536,7 +40535,6 @@ void spi_rec_done(void)
 
 static void spi_byte(void)
 {
-
  do { LATBbits.LATB1 = ~LATBbits.LATB1; } while(0);
 }
 
@@ -40601,7 +40599,7 @@ void check_lcd_dim(const _Bool dim)
    send_lcd_cmd_dma(0x53);
    send_lcd_data_dma(8);
   }
-# 437 "eadog.c"
+# 435 "eadog.c"
  }
 }
 
@@ -40618,7 +40616,7 @@ void set_lcd_dim(const _Bool dim)
    send_lcd_cmd_dma(0x53);
    send_lcd_data_dma(8);
   }
-# 462 "eadog.c"
+# 460 "eadog.c"
  }
 
  if (B.dim_delay++ >= 6) {

@@ -5,7 +5,7 @@
 
 
 #ifdef TRACE
-#define E_TRACE	IO_RB5_Toggle()
+#define E_TRACE	DEBUG1_Toggle()
 #else
 #define E_TRACE	""
 #endif
@@ -341,7 +341,6 @@ void wait_lcd_done(void)
  */
 void clear_lcd_done(void)
 {
-//	INT_TRACE; // GPIO interrupt scope trace
 	spi_link.LCD_DATA = false;
 	E_TRACE;
 	E_TRACE;
@@ -360,7 +359,6 @@ void spi_rec_done(void)
  */
 static void spi_byte(void)
 {
-//	INT_TRACE; // GPIO interrupt scope trace
 	MLED_Toggle();
 }
 
