@@ -288,12 +288,22 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			}
 			DLED_Toggle();
 			if (rxData == ENQ) {
-				//				IO_RB4_SetHigh();
+				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE ENQ    ");
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
-				if (TimerDone(TMR_HBIO))
+				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTS); // add short idle time
+				}
+			}
+			if (rxData == EOT) {
+				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE EOT    ");
+				DEBUG1_SetHigh();
+				V.error = LINK_ERROR_NONE; // reset error status
+				*r_link = LINK_STATE_EOT;
+				if (TimerDone(TMR_HBIO)) {
+					StartTimer(TMR_HBIO, HBTS); // add short idle time
+				}
 			}
 		}
 		break;
@@ -303,6 +313,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		d = 1; // data byte counter
 		b_block = (uint8_t*) & H254[0];
 		UART1_Write(EOT);
+#ifdef	FAKER
+		UART2_Write(EOT);
+#endif
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
 		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R0    ");
@@ -396,6 +409,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 	case LINK_STATE_ACK:
 		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R    ");
 		UART1_Write(ACK);
+#ifdef FAKER
+		UART2_Write(ACK);
+#endif
 		V.stream = H10[1].block.block.stream;
 		V.function = H10[1].block.block.function;
 		V.systemb = H10[1].block.block.systemb;
@@ -413,6 +429,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 	case LINK_STATE_NAK:
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
 		UART1_Write(NAK);
+#ifdef FAKER
+		UART2_Write(NAK);
+#endif
 		*r_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
@@ -442,7 +461,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
 LINK_STATES t_protocol(LINK_STATES * t_link)
 {
-	uint8_t rxData;
+	uint8_t rxData, uart_num = 1;
 	static uint8_t retry, requeue = false;
 	static response_type block;
 
@@ -452,6 +471,12 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
 		UART1_Write(ENQ);
+#ifdef FAKER
+		UART2_Write(ENQ);
+		V.stream = 1;
+		V.function = 1; // S1F1 host ping
+		uart_num = 2;
+#endif
 		StartTimer(TMR_T2, T2);
 		*t_link = LINK_STATE_ENQ;
 #ifdef DB3
@@ -504,20 +529,20 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			block = secs_II_message(V.stream, V.function); // parse proper response
 
 		if (V.abort == LINK_ERROR_ABORT) {
-			secs_send((uint8_t*) block.header, block.length, false, 1);
+			secs_send((uint8_t*) block.header, block.length, false, uart_num);
 			V.failed_send = 2;
 			*t_link = LINK_STATE_ERROR;
 			V.all_errors++;
 			MLED_SetHigh();
 		} else {
 			if (!requeue) {
-				secs_send((uint8_t*) block.header, block.length, false, 1);
+				secs_send((uint8_t*) block.header, block.length, false, uart_num);
 				if (V.queue)
 					requeue = true;
 			} else {
 				requeue = false;
 				V.queue = false;
-				secs_send((uint8_t*) block.reply, block.reply_length, false, 1);
+				secs_send((uint8_t*) block.reply, block.reply_length, false, uart_num);
 			}
 			if (V.error == LINK_ERROR_NONE) {
 				*t_link = LINK_STATE_ACK;
@@ -537,7 +562,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 #endif
 		break;
 	case LINK_STATE_ACK:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK    ");
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK    ");
 		if (TimerDone(TMR_T3)) {
 			V.timer_error++;
 			V.error = LINK_ERROR_T3;
@@ -600,7 +625,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 	DLED_Toggle();
 	k = (uint8_t *) byte_block;
 
-	eaDogM_WriteStringAtPos(3, 0, "secs_send           ");
+	//	eaDogM_WriteStringAtPos(3, 0, "secs_send           ");
 
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
@@ -608,6 +633,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 		V.all_errors++;
 		V.failed_send = true;
 		MLED_SetHigh();
+		eaDogM_WriteStringAtPos(3, 0, "secs_send ERROR          ");
 		return false; // don't send and return mismatch error
 	}
 	++V.ticks; // transaction ID for host master messages
@@ -633,7 +659,6 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 				UART2_Write(k[i - 1]); // -1 for array memory addressing
 			}
 		}
-		//		eaDogM_WriteStringAtPos(3, 0, "secs_send 2          ");
 		break;
 	case 1:
 	default:
@@ -644,9 +669,11 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 			} else {
 
 				UART1_Write(k[i - 1]); // -1 for array memory addressing
+#ifdef FAKER
+				UART2_Write(k[i - 1]); // -1 for array memory addressing
+#endif
 			}
 		}
-		//		eaDogM_WriteStringAtPos(3, 0, "secs_send 1          ");
 		break;
 	}
 

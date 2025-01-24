@@ -40136,7 +40136,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 98 "./vconfig.h"
+# 99 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40598,7 +40598,7 @@ void mode_lamp_bright(void);
 # 171 "main.c" 2
 # 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Jan 23 2025", *build_time = "16:05:30";
+const char *build_date = "Jan 23 2025", *build_time = "20:07:04";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41181,7 +41181,9 @@ void main(void)
  (INTCON0bits.GIEL = 1);
 
  V.ui_state = UI_STATE_INIT;
- do { TRISDbits.TRISD5 = 0; } while(0);
+ do {
+  TRISDbits.TRISD5 = 0;
+ } while (0);
 
 
 
@@ -41202,6 +41204,7 @@ void main(void)
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
   if (!faker++) {
 
+   V.euart = 2;
    equip_tx(0x05);
 
   }
@@ -41218,10 +41221,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.03A");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.04A");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.03A");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.04A");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
    update_lcd(0);
@@ -41235,7 +41238,8 @@ void main(void)
    break;
   case UI_STATE_HOST:
 
-   eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST 2EQIP ");
+   eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
+   sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
 
 
 
@@ -41244,7 +41248,11 @@ void main(void)
 
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
-    V.s_state = SEQ_STATE_RX;
+
+    V.s_state = SEQ_STATE_TX;
+
+
+
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
      if (V.debug)
       sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
@@ -41266,10 +41274,10 @@ void main(void)
      s = get_vterm_ptr(0, 0);
      if (V.stream == 9) {
       V.msg_error = V.function;
-      sprintf(s, " S%dF%d Err         ", V.stream, V.function);
+      sprintf(s, " S%dF%d Err            ", V.stream, V.function);
      } else {
       V.msg_error = MSG_ERROR_NONE;
-      sprintf(s, " S%dF%d #           ", V.stream, V.function);
+      sprintf(s, " S%dF%d # Rec          ", V.stream, V.function);
      }
      s[21] = 0;
      MyeaDogM_WriteStringAtPos(0, 0, s);
@@ -41293,7 +41301,11 @@ void main(void)
 
 
     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
-     V.s_state = SEQ_STATE_TRIGGER;
+
+     V.s_state = SEQ_STATE_RX;
+
+
+
     }
     if (V.t_l_state == LINK_STATE_ERROR)
      V.s_state = SEQ_STATE_ERROR;
@@ -41306,10 +41318,10 @@ void main(void)
      V.r_l_state = LINK_STATE_IDLE;
      V.t_l_state = LINK_STATE_IDLE;
      V.s_state = SEQ_STATE_TX;
-     sprintf(s, " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
+     sprintf(s, " S%dF%d # OK %d QTx      ", V.stream, V.function, V.e_types);
     } else {
      V.s_state = SEQ_STATE_DONE;
-     sprintf(s, " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
+     sprintf(s, " S%dF%d # OK %d Tx       ", V.stream, V.function, V.e_types);
     }
 
     s[21] = 0;
@@ -41377,7 +41389,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 991 "main.c"
+# 1003 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41454,7 +41466,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1075 "main.c"
+# 1087 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

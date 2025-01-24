@@ -21,7 +21,7 @@ extern "C" {
 
 #define NHD
 
-#define VER	"2.03A"
+#define VER	"2.04A"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -30,6 +30,7 @@ extern "C" {
 	 * 2.01 uart to uart loopback testing with FAKER define
 	 * 2.02 more cleanups of code
 	 * 2.03 rework trace code
+	 * 2.04 program FAKER equipment side emulation
 	 */
 	//#define TESTING
 	//#define DISPLAY_SLOW

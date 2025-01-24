@@ -784,7 +784,9 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	V.ui_state = UI_STATE_INIT;
-	do { TRISDbits.TRISD5 = 0; } while(0);
+	do {
+		TRISDbits.TRISD5 = 0;
+	} while (0);
 
 	/*
 	 * RS-232 link I/O relay defaults to monitor/log mode with no power
@@ -805,6 +807,7 @@ void main(void)
 		M_TRACE;
 		if (!faker++) {
 #ifdef FAKER
+			V.euart = 2;
 			equip_tx(ENQ); // simulate equipment comm data
 #endif
 		}
@@ -838,7 +841,8 @@ void main(void)
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
 #ifdef FAKER
-			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST 2EQIP ");
+			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
+			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
 #else
 			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST       ");
 #endif
@@ -847,7 +851,11 @@ void main(void)
 				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_INIT    ");
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
+#ifdef FAKER
+				V.s_state = SEQ_STATE_TX;
+#else
 				V.s_state = SEQ_STATE_RX;
+#endif
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 					if (V.debug)
 						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
@@ -869,10 +877,10 @@ void main(void)
 					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
-						sprintf(s, " S%dF%d Err         ", V.stream, V.function);
+						sprintf(s, " S%dF%d Err            ", V.stream, V.function);
 					} else {
 						V.msg_error = MSG_ERROR_NONE;
-						sprintf(s, " S%dF%d #           ", V.stream, V.function);
+						sprintf(s, " S%dF%d # Rec          ", V.stream, V.function);
 					}
 					s[MAX_LINE] = 0;
 					MyeaDogM_WriteStringAtPos(0, 0, s);
@@ -896,7 +904,11 @@ void main(void)
 				 * send response message to equipment
 				 */
 				if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
+#ifdef FAKER
+					V.s_state = SEQ_STATE_RX;
+#else
 					V.s_state = SEQ_STATE_TRIGGER;
+#endif
 				}
 				if (V.t_l_state == LINK_STATE_ERROR)
 					V.s_state = SEQ_STATE_ERROR;
@@ -909,10 +921,10 @@ void main(void)
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
-					sprintf(s, " S%dF%d # OKQ%d        ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OK %d QTx      ", V.stream, V.function, V.e_types);
 				} else {
 					V.s_state = SEQ_STATE_DONE;
-					sprintf(s, " S%dF%d # OK %d        ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OK %d Tx       ", V.stream, V.function, V.e_types);
 				}
 
 				s[MAX_LINE] = 0;
