@@ -19,7 +19,7 @@ extern "C" {
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
 
-#define NHD
+#define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
 #define VER	"2.04A"
 	/*
@@ -32,10 +32,9 @@ extern "C" {
 	 * 2.03 rework trace code
 	 * 2.04 program FAKER equipment side emulation
 	 */
-	//#define TESTING
-	//#define DISPLAY_SLOW
 
-#define FAKER
+
+#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2

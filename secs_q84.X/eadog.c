@@ -145,7 +145,6 @@ void eaDogM_WriteString(char *strPtr)
 	uint8_t len = (uint8_t) strlen(strPtr);
 
 	E_TRACE;
-	E_TRACE;
 	wait_lcd_done();
 	wait_lcd_set();
 	CS_SetLow(); /* SPI select display */
@@ -178,8 +177,6 @@ void send_lcd_cmd_dma(const uint8_t strPtr)
  */
 void send_lcd_data_dma(const uint8_t strPtr)
 {
-	E_TRACE;
-	E_TRACE;
 	E_TRACE;
 	wait_lcd_done();
 	wait_lcd_set();
@@ -342,9 +339,6 @@ void wait_lcd_done(void)
 void clear_lcd_done(void)
 {
 	spi_link.LCD_DATA = false;
-	E_TRACE;
-	E_TRACE;
-	E_TRACE;
 	E_TRACE;
 }
 

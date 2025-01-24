@@ -877,10 +877,10 @@ void main(void)
 					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
-						sprintf(s, " S%dF%d Err            ", V.stream, V.function);
+						sprintf(s, " S%dF%d Err %d           ", V.stream, V.function, V.all_errors);
 					} else {
 						V.msg_error = MSG_ERROR_NONE;
-						sprintf(s, " S%dF%d # Rec          ", V.stream, V.function);
+						sprintf(s, " S%dF%d # Rx %d          ", V.stream, V.function, V.all_errors);
 					}
 					s[MAX_LINE] = 0;
 					MyeaDogM_WriteStringAtPos(0, 0, s);
@@ -921,10 +921,10 @@ void main(void)
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
-					sprintf(s, " S%dF%d # OK %d QTx      ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OK %d Q Tx      ", V.stream, V.function, V.e_types);
 				} else {
 					V.s_state = SEQ_STATE_DONE;
-					sprintf(s, " S%dF%d # OK %d Tx       ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OK %d Tx        ", V.stream, V.function, V.e_types);
 				}
 
 				s[MAX_LINE] = 0;
@@ -1048,7 +1048,7 @@ void main(void)
 			}
 		}
 
-		if (mode != UI_STATE_LOG)
+		if (mode != UI_STATE_LOG) {
 			if (TimerDone(TMR_DISPLAY)) { // limit update rate
 				if (TimerDone(TMR_HELPDIS)) {
 					set_display_info(DIS_STR);
@@ -1057,7 +1057,7 @@ void main(void)
 				StartTimer(TMR_DISPLAY, DDELAY);
 				update_lcd(0);
 			}
-
+		}
 		/*
 		 * show help display if button pressed
 		 */

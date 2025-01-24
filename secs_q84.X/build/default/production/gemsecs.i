@@ -38975,7 +38975,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 99 "./vconfig.h"
+# 98 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40949,8 +40949,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_EOT:
 
-  if (!requeue)
+  if (!requeue) {
    block = secs_II_message(V.stream, V.function);
+  }
 
   if (V.abort == LINK_ERROR_ABORT) {
    secs_send((uint8_t*) block.header, block.length, 0, uart_num);
@@ -41431,8 +41432,9 @@ uint16_t s6f11_opcmd(void)
 
 _Bool gem_messages(response_type *block, const uint8_t sid)
 {
- if (!V.stack)
+ if (!V.stack) {
   return 0;
+ }
 
  switch (sid) {
  case 1:
@@ -41465,7 +41467,6 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 {
  static response_type block;
  uint16_t i = 0;
-
 
  V.abort = LINK_ERROR_NONE;
  V.queue = 0;
@@ -41849,7 +41850,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  static GEM_STATES block = GEM_STATE_DISABLE;
  static GEM_EQUIP equipment = GEM_GENERIC;
 
- eaDogM_WriteStringAtPos(3, 0, "secs_gem_state    ");
  switch (stream) {
  case 1:
   switch (function) {
@@ -41863,16 +41863,12 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
      StartTimer(TMR_HBIO, 30000);
     }
     terminal_format(display_online);
-
     format_display_text(V.terminal);
-
     V.response.mesgid = 1;
     V.sequences++;
     V.sid = 10;
     sequence_messages(V.sid);
-
     set_display_info(DIS_SEQUENCE_M);
-
    }
 
    block = GEM_STATE_REMOTE;

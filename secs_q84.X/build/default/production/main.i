@@ -40136,7 +40136,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 99 "./vconfig.h"
+# 98 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40598,7 +40598,7 @@ void mode_lamp_bright(void);
 # 171 "main.c" 2
 # 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Jan 23 2025", *build_time = "20:07:04";
+const char *build_date = "Jan 24 2025", *build_time = "10:16:02";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41274,10 +41274,10 @@ void main(void)
      s = get_vterm_ptr(0, 0);
      if (V.stream == 9) {
       V.msg_error = V.function;
-      sprintf(s, " S%dF%d Err            ", V.stream, V.function);
+      sprintf(s, " S%dF%d Err %d           ", V.stream, V.function, V.all_errors);
      } else {
       V.msg_error = MSG_ERROR_NONE;
-      sprintf(s, " S%dF%d # Rec          ", V.stream, V.function);
+      sprintf(s, " S%dF%d # Rx %d          ", V.stream, V.function, V.all_errors);
      }
      s[21] = 0;
      MyeaDogM_WriteStringAtPos(0, 0, s);
@@ -41318,10 +41318,10 @@ void main(void)
      V.r_l_state = LINK_STATE_IDLE;
      V.t_l_state = LINK_STATE_IDLE;
      V.s_state = SEQ_STATE_TX;
-     sprintf(s, " S%dF%d # OK %d QTx      ", V.stream, V.function, V.e_types);
+     sprintf(s, " S%dF%d # OK %d Q Tx      ", V.stream, V.function, V.e_types);
     } else {
      V.s_state = SEQ_STATE_DONE;
-     sprintf(s, " S%dF%d # OK %d Tx       ", V.stream, V.function, V.e_types);
+     sprintf(s, " S%dF%d # OK %d Tx        ", V.stream, V.function, V.e_types);
     }
 
     s[21] = 0;
@@ -41438,7 +41438,7 @@ void main(void)
    }
   }
 
-  if (mode != UI_STATE_LOG)
+  if (mode != UI_STATE_LOG) {
    if (TimerDone(TMR_DISPLAY)) {
     if (TimerDone(TMR_HELPDIS)) {
      set_display_info(DIS_STR);
@@ -41447,7 +41447,7 @@ void main(void)
     StartTimer(TMR_DISPLAY, 100);
     update_lcd(0);
    }
-
+  }
 
 
 

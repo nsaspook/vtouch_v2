@@ -525,8 +525,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_EOT: // transmit the message
 		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT    ");
-		if (!requeue)
+		if (!requeue) {
 			block = secs_II_message(V.stream, V.function); // parse proper response
+		}
 
 		if (V.abort == LINK_ERROR_ABORT) {
 			secs_send((uint8_t*) block.header, block.length, false, uart_num);
@@ -1007,8 +1008,9 @@ uint16_t s6f11_opcmd(void)
  */
 bool gem_messages(response_type *block, const uint8_t sid)
 {
-	if (!V.stack)
+	if (!V.stack) {
 		return false;
+	}
 
 	switch (sid) {
 	case 1: // close doors sequence
@@ -1042,7 +1044,6 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 	static response_type block;
 	uint16_t i = 0;
 
-	//	IO_RB4_Toggle();
 	V.abort = LINK_ERROR_NONE;
 	V.queue = false;
 	block.respond = false;
@@ -1063,7 +1064,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		StartTimer(TMR_HBIO, HBTS); // add short idle time
 	}
 
-	switch (stream) { // from equipment
+	switch (stream) { // make proper response blocks
 	case 1:
 		switch (function) { // from equipment
 		case 1: // S1F2 host response and S1F1 send
@@ -1425,7 +1426,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 	static GEM_STATES block = GEM_STATE_DISABLE;
 	static GEM_EQUIP equipment = GEM_GENERIC;
 
-	eaDogM_WriteStringAtPos(3, 0, "secs_gem_state    ");
 	switch (stream) { // from equipment
 	case 1:
 		switch (function) {
@@ -1439,16 +1439,12 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
 				}
 				terminal_format(display_online);
-				//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 tf  ");
 				format_display_text(V.terminal);
-				//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 fd  ");
 				V.response.mesgid = 1;
 				V.sequences++;
 				V.sid = 10;
 				sequence_messages(V.sid); // send a hello text message
-				//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sm  ");
 				set_display_info(DIS_SEQUENCE_M);
-				//				eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2 sdi  ");
 			}
 
 			block = GEM_STATE_REMOTE;
