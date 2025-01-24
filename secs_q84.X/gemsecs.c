@@ -68,7 +68,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			rxData = UART1_Read();
 			DLED_Toggle();
 			if (rxData == ENQ) {
-				//				IO_RB4_SetHigh();
 				V.uart = 1;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
@@ -77,8 +76,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		}
 		if (UART2_is_rx_ready()) {
 			rxData = UART2_Read();
+			DLED_Toggle();
 			if (rxData == ENQ) {
-				//				IO_RB5_SetHigh();
 				V.uart = 2;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
@@ -112,7 +111,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			*m_link = LINK_STATE_EOT;
 			StartTimer(TMR_T2, T2);
 #else
-			if (V.uart == 2 && UART1_is_rx_ready()) {
+			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
 				DLED_Toggle();
 				if (rxData == EOT) {
@@ -121,8 +120,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 					*m_link = LINK_STATE_EOT;
 				}
 			}
-			if (V.uart == 1 && UART2_is_rx_ready()) {
+			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
+				DLED_Toggle();
 				if (rxData == EOT) {
 					StartTimer(TMR_T2, T2);
 					V.error = LINK_ERROR_NONE; // reset error status
@@ -141,7 +141,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			*m_link = LINK_STATE_NAK;
 			MLED_SetHigh();
 		} else {
-			if (V.uart == 1 && UART1_is_rx_ready()) {
+			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
 				DLED_Toggle();
 				if (rxData_l == 0) { // start header reads
@@ -191,7 +191,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 				}
 			}
 
-			if (V.uart == 2 && UART2_is_rx_ready()) {
+			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes
@@ -279,8 +279,13 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 	switch (*r_link) {
 	case LINK_STATE_IDLE:
 		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE R    ");
-		if (UART1_is_rx_ready()) {
-			rxData = UART1_Read();
+		if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
+			if (UART1_is_rx_ready()) {
+				rxData = UART1_Read();
+			}
+			if (UART2_is_rx_ready()) {
+				rxData = UART2_Read();
+			}
 			DLED_Toggle();
 			if (rxData == ENQ) {
 				//				IO_RB4_SetHigh();
@@ -329,8 +334,13 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 				*r_link = LINK_STATE_IDLE; // retry
 			}
 		} else {
-			if (UART1_is_rx_ready()) {
-				rxData = UART1_Read();
+			if (UART1_is_rx_ready() || UART1_is_rx_ready()) {
+				if (UART1_is_rx_ready()) {
+					rxData = UART1_Read();
+				}
+				if (UART2_is_rx_ready()) {
+					rxData = UART2_Read();
+				}
 				DLED_Toggle();
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes
@@ -368,6 +378,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 						} else { // bad checksum
 							while (UART1_is_rx_ready()) // dump receive buffer of bad data
 								rxData = UART1_Read();
+							while (UART2_is_rx_ready()) // dump receive buffer of bad data
+								rxData = UART2_Read();
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
@@ -399,12 +411,15 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.abort = LINK_ERROR_NONE;
 		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
-				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
 		UART1_Write(NAK);
 		*r_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
+		}
+		while (UART2_DataReady) { // dump the receive buffer
+			UART2_Read();
 		}
 		retry = RTY;
 		break;
@@ -470,6 +485,17 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 					*t_link = LINK_STATE_DONE;
 				}
 			}
+			if (UART2_is_rx_ready()) {
+				rxData = UART2_Read();
+				if (rxData == EOT) {
+					StartTimer(TMR_T3, T3);
+					*t_link = LINK_STATE_EOT;
+				}
+				if (rxData == ENQ) { // contention with equipment master
+					UART2_put_buffer(EOT);
+					*t_link = LINK_STATE_DONE;
+				}
+			}
 		}
 		break;
 	case LINK_STATE_EOT: // transmit the message
@@ -527,14 +553,25 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 					V.abort = LINK_ERROR_NONE;
 				}
 			}
+			if (UART2_is_rx_ready()) {
+				rxData = UART2_Read();
+				if (rxData == ACK) {
+					V.failed_send = false;
+					*t_link = LINK_STATE_DONE;
+					V.abort = LINK_ERROR_NONE;
+				}
+			}
 		}
 		break;
 	case LINK_STATE_NAK: // send failure
-				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
+		}
+		while (UART2_DataReady) { // dump the receive buffer
+			UART2_Read();
 		}
 		break;
 	case LINK_STATE_ERROR:

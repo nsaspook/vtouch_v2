@@ -40515,7 +40515,6 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    rxData = UART1_Read();
    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
    if (rxData == 0x05) {
-
     V.uart = 1;
     StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
@@ -40524,8 +40523,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   if (UART2_is_rx_ready()) {
    rxData = UART2_Read();
+   do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
    if (rxData == 0x05) {
-
     V.uart = 2;
     StartTimer(TMR_T2, 3000);
     V.error = LINK_ERROR_NONE;
@@ -40543,8 +40542,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    *m_link = LINK_STATE_NAK;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
-# 115 "gemsecs.c"
-   if (V.uart == 2 && UART1_is_rx_ready()) {
+# 114 "gemsecs.c"
+   if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData == 0x04) {
@@ -40553,8 +40552,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
      *m_link = LINK_STATE_EOT;
     }
    }
-   if (V.uart == 1 && UART2_is_rx_ready()) {
+   if (UART2_is_rx_ready()) {
     rxData = UART2_Read();
+    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData == 0x04) {
      StartTimer(TMR_T2, 3000);
      V.error = LINK_ERROR_NONE;
@@ -40573,7 +40573,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    *m_link = LINK_STATE_NAK;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
-   if (V.uart == 1 && UART1_is_rx_ready()) {
+   if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData_l == 0) {
@@ -40623,7 +40623,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
     }
    }
 
-   if (V.uart == 2 && UART2_is_rx_ready()) {
+   if (UART2_is_rx_ready()) {
     rxData = UART2_Read();
     if (rxData_l == 0) {
      r_block.length = rxData;
@@ -40711,8 +40711,13 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
  switch (*r_link) {
  case LINK_STATE_IDLE:
 
-  if (UART1_is_rx_ready()) {
-   rxData = UART1_Read();
+  if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
+   if (UART1_is_rx_ready()) {
+    rxData = UART1_Read();
+   }
+   if (UART2_is_rx_ready()) {
+    rxData = UART2_Read();
+   }
    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
    if (rxData == 0x05) {
 
@@ -40732,7 +40737,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 312 "gemsecs.c"
+# 317 "gemsecs.c"
   H10[3].block.block.systemb = V.ticks;
   secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
 
@@ -40753,8 +40758,13 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     *r_link = LINK_STATE_IDLE;
    }
   } else {
-   if (UART1_is_rx_ready()) {
-    rxData = UART1_Read();
+   if (UART1_is_rx_ready() || UART1_is_rx_ready()) {
+    if (UART1_is_rx_ready()) {
+     rxData = UART1_Read();
+    }
+    if (UART2_is_rx_ready()) {
+     rxData = UART2_Read();
+    }
     do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData_l == 0) {
      r_block.length = rxData;
@@ -40792,6 +40802,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
       } else {
        while (UART1_is_rx_ready())
         rxData = UART1_Read();
+       while (UART2_is_rx_ready())
+        rxData = UART2_Read();
        WaitMs(500);
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
@@ -40823,12 +40835,15 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.abort = LINK_ERROR_NONE;
   break;
  case LINK_STATE_NAK:
-    eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
   UART1_Write(0x15);
   *r_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
    UART1_Read();
+  }
+  while ((UART2_is_rx_ready())) {
+   UART2_Read();
   }
   retry = 3;
   break;
@@ -40894,6 +40909,17 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
      *t_link = LINK_STATE_DONE;
     }
    }
+   if (UART2_is_rx_ready()) {
+    rxData = UART2_Read();
+    if (rxData == 0x04) {
+     StartTimer(TMR_T3, 5000);
+     *t_link = LINK_STATE_EOT;
+    }
+    if (rxData == 0x05) {
+     UART2_put_buffer(0x04);
+     *t_link = LINK_STATE_DONE;
+    }
+   }
   }
   break;
  case LINK_STATE_EOT:
@@ -40951,14 +40977,25 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
      V.abort = LINK_ERROR_NONE;
     }
    }
+   if (UART2_is_rx_ready()) {
+    rxData = UART2_Read();
+    if (rxData == 0x06) {
+     V.failed_send = 0;
+     *t_link = LINK_STATE_DONE;
+     V.abort = LINK_ERROR_NONE;
+    }
+   }
   }
   break;
  case LINK_STATE_NAK:
-    eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
+  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
    UART1_Read();
+  }
+  while ((UART2_is_rx_ready())) {
+   UART2_Read();
   }
   break;
  case LINK_STATE_ERROR:
