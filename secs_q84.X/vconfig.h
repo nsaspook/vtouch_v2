@@ -21,7 +21,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.04A"
+#define VER	"2.05B"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -31,6 +31,7 @@ extern "C" {
 	 * 2.02 more cleanups of code
 	 * 2.03 rework trace code
 	 * 2.04 program FAKER equipment side emulation
+	 * 2.05 Beta
 	 */
 
 

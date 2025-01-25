@@ -38975,7 +38975,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 98 "./vconfig.h"
+# 99 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40691,6 +40691,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   break;
  case LINK_STATE_ERROR:
+  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR  M  ");
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
@@ -40720,19 +40721,25 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
    }
    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
    if (rxData == 0x05) {
-    eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE ENQ    ");
+
     do { LATDbits.LATD7 = 1; } while(0);
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
+
+    V.g_state = GEM_STATE_ONLINE;
+
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
     }
    }
    if (rxData == 0x04) {
-    eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE EOT    ");
+
     do { LATDbits.LATD7 = 1; } while(0);
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_EOT;
+
+    V.g_state = GEM_STATE_COMM;
+
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
     }
@@ -40740,7 +40747,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   }
   break;
  case LINK_STATE_ENQ:
-
   rxData_l = 0;
   d = 1;
   b_block = (uint8_t*) & H254[0];
@@ -40750,14 +40756,12 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 330 "gemsecs.c"
+# 335 "gemsecs.c"
   H10[3].block.block.systemb = V.ticks;
   secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
 
-
   break;
  case LINK_STATE_EOT:
-
   if (TimerDone(TMR_T2)) {
    V.timer_error++;
    V.all_errors++;
@@ -40831,7 +40835,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   }
   break;
  case LINK_STATE_ACK:
-
   UART1_Write(0x06);
 
   UART2_Write(0x06);
@@ -40871,10 +40874,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
-
   V.failed_receive = 0;
   V.abort = LINK_ERROR_NONE;
-
  default:
   *r_link = LINK_STATE_IDLE;
   break;
@@ -40891,7 +40892,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
-
+  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE T   ");
   V.error = LINK_ERROR_NONE;
   retry = 3;
   UART1_Write(0x05);
@@ -40987,7 +40988,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
   break;
  case LINK_STATE_ACK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK    ");
+  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK T   ");
   if (TimerDone(TMR_T3)) {
    V.timer_error++;
    V.error = LINK_ERROR_T3;
@@ -41014,7 +41015,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_NAK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
+  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK T   ");
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
@@ -41025,7 +41026,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_ERROR:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR    ");
+  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR T   ");
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
@@ -41192,19 +41193,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   sprintf(V.terminal, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.04A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.05B");
   break;
  case display_online:
   sprintf(V.terminal, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.04A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.05B");
   break;
  case display_comm:
   sprintf(V.terminal, msg2,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.04A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.05B");
   break;
  default:
   sprintf(V.terminal, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.04A");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.05B");
   break;
  }
 

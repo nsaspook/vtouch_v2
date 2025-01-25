@@ -40136,7 +40136,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 98 "./vconfig.h"
+# 99 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40598,7 +40598,7 @@ void mode_lamp_bright(void);
 # 171 "main.c" 2
 # 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Jan 24 2025", *build_time = "10:16:02";
+const char *build_date = "Jan 24 2025", *build_time = "19:01:26";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41221,10 +41221,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.04A");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.05B");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.04A");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.05B");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
    update_lcd(0);
@@ -41254,10 +41254,15 @@ void main(void)
 
 
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-     if (V.debug)
+     if (V.debug) {
       sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
-     else
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+     } else {
+
+      sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+
+
+
+     }
     }
 
 
@@ -41342,11 +41347,15 @@ void main(void)
    }
    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
     if (TimerDone(TMR_DISPLAY)) {
-     if (V.debug)
+     if (V.debug) {
       sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-     else
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+     } else {
 
+      sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+
+
+
+     }
     }
 
 
@@ -41389,7 +41398,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1003 "main.c"
+# 1012 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41466,7 +41475,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1087 "main.c"
+# 1096 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

@@ -857,10 +857,15 @@ void main(void)
 				V.s_state = SEQ_STATE_RX;
 #endif
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-					if (V.debug)
+					if (V.debug) {
 						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
-					else
+					} else {
+#ifdef FAKER
+						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+#else
 						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+#endif
+					}
 				}
 #ifdef DB1
 				WaitMs(50);
@@ -945,11 +950,15 @@ void main(void)
 			}
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (TimerDone(TMR_DISPLAY)) { // limit update rate
-					if (V.debug)
+					if (V.debug) {
 						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-					else
+					} else {
+#ifdef FAKER
+						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+#else
 						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
-
+#endif
+					}
 				}
 				/*
 				 * HeartBeat ping or sequence during idle times

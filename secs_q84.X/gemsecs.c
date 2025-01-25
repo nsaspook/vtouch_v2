@@ -259,6 +259,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		}
 		break;
 	case LINK_STATE_ERROR:
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR  M  ");
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code state
@@ -288,19 +289,25 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			}
 			DLED_Toggle();
 			if (rxData == ENQ) {
-				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE ENQ    ");
+//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE ENQ R   ");
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
+#ifdef FAKER
+				V.g_state = GEM_STATE_ONLINE;
+#endif
 				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTS); // add short idle time
 				}
 			}
 			if (rxData == EOT) {
-				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE EOT    ");
+//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE EOT R   ");
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_EOT;
+#ifdef FAKER
+				V.g_state = GEM_STATE_COMM;
+#endif
 				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTS); // add short idle time
 				}
@@ -308,7 +315,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		}
 		break;
 	case LINK_STATE_ENQ:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R    ");
 		rxData_l = 0; // message byte counter
 		d = 1; // data byte counter
 		b_block = (uint8_t*) & H254[0];
@@ -318,7 +324,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 #endif
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R0    ");
 #ifdef DB2
 		WaitMs(1);
 		//H27[0].block.block.systemb = V.ticks; // make distinct, testing S1F13
@@ -330,10 +335,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		H10[3].block.block.systemb = V.ticks; // make distinct, testing S1F1
 		secs_send((uint8_t*) & H10[3], sizeof(header10), false, 2);
 #endif
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ R1    ");
 		break;
 	case LINK_STATE_EOT:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT R    ");
 		if (TimerDone(TMR_T2)) {
 			V.timer_error++;
 			V.all_errors++;
@@ -407,7 +410,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		}
 		break;
 	case LINK_STATE_ACK:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R    ");
 		UART1_Write(ACK);
 #ifdef FAKER
 		UART2_Write(ACK);
@@ -447,10 +449,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_DONE R    ");
 		V.failed_receive = false;
 		V.abort = LINK_ERROR_NONE;
-		//		IO_RB4_Toggle(); // indicate DONE state execution
 	default:
 		*r_link = LINK_STATE_IDLE;
 		break;
@@ -467,7 +467,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE    ");
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE T   ");
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
 		UART1_Write(ENQ);
@@ -563,7 +563,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 #endif
 		break;
 	case LINK_STATE_ACK:
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK    ");
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK T   ");
 		if (TimerDone(TMR_T3)) {
 			V.timer_error++;
 			V.error = LINK_ERROR_T3;
@@ -590,7 +590,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_NAK: // send failure
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK    ");
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK T   ");
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
@@ -601,7 +601,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_ERROR:
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR    ");
+		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR T   ");
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code
