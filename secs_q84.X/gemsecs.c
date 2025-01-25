@@ -259,7 +259,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		}
 		break;
 	case LINK_STATE_ERROR:
+#ifdef FAKER
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR  M  ");
+#endif
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code state
@@ -289,7 +291,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			}
 			DLED_Toggle();
 			if (rxData == ENQ) {
-//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE ENQ R   ");
+				//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE ENQ R   ");
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
@@ -301,7 +303,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 				}
 			}
 			if (rxData == EOT) {
-//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE EOT R   ");
+				//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE EOT R   ");
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_EOT;
@@ -421,15 +423,15 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
 		secs_II_monitor_message(V.stream, V.function, SDELAY); // log selected messages
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R1    ");
 		V.g_state = secs_gem_state(V.stream, V.function);
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK R2    ");
 		V.failed_receive = false;
 		*r_link = LINK_STATE_DONE;
 		V.abort = LINK_ERROR_NONE;
 		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
+#ifdef FAKER
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+#endif
 		UART1_Write(NAK);
 #ifdef FAKER
 		UART2_Write(NAK);
@@ -445,7 +447,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		retry = RTY;
 		break;
 	case LINK_STATE_ERROR:
+#ifdef FAKER
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR R    ");
+#endif
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
@@ -467,7 +471,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
+#ifdef FAKER
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE T   ");
+#endif
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
 		UART1_Write(ENQ);
@@ -547,6 +553,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			}
 			if (V.error == LINK_ERROR_NONE) {
 				*t_link = LINK_STATE_ACK;
+#ifdef FAKER
+				UART2_Write(ACK);
+#endif
 			} else {
 				V.failed_send = 3;
 				*t_link = LINK_STATE_ERROR;
@@ -563,7 +572,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 #endif
 		break;
 	case LINK_STATE_ACK:
+#ifdef FAKER
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK T   ");
+#endif
 		if (TimerDone(TMR_T3)) {
 			V.timer_error++;
 			V.error = LINK_ERROR_T3;
@@ -590,7 +601,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_NAK: // send failure
+#ifdef FAKER
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK T   ");
+#endif
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
@@ -601,7 +614,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_ERROR:
+#ifdef FAKER
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR T   ");
+#endif
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code
@@ -626,15 +641,12 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 	DLED_Toggle();
 	k = (uint8_t *) byte_block;
 
-	//	eaDogM_WriteStringAtPos(3, 0, "secs_send           ");
-
 	V.error = LINK_ERROR_NONE;
 	if ((length - 3) != k[length - 1]) { // check header length field byte
 		V.error = LINK_ERROR_SEND;
 		V.all_errors++;
 		V.failed_send = true;
 		MLED_SetHigh();
-		eaDogM_WriteStringAtPos(3, 0, "secs_send ERROR          ");
 		return false; // don't send and return mismatch error
 	}
 	++V.ticks; // transaction ID for host master messages
@@ -1433,7 +1445,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		case 1:
 #endif
 		case 2:
-			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2   ");
 			if (block != GEM_STATE_REMOTE) {
 				if (TimerDone(TMR_HBIO)) {
 					StartTimer(TMR_HBIO, HBTL); // restart the heartbeat
@@ -1452,7 +1463,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
 			break;
 		case 13: // parse equipment model from comm request response
-			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 13   ");
 			switch (V.response.ack[4]) {
 			case 'V':
 				switch (V.response.ack[5]) {
@@ -1493,7 +1503,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			V.ticker = 0;
 			break;
 		case 14:
-			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 14   ");
 			if (block != GEM_STATE_REMOTE) {
 				block = GEM_STATE_COMM;
 			}
@@ -1503,7 +1512,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		case 15:
 #endif
 		case 16:
-			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 16   ");
 			block = GEM_STATE_OFFLINE;
 			V.ticker = 0;
 			break;
@@ -1511,7 +1519,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		case 17:
 #endif
 		case 18:
-			eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 18   ");
 			block = GEM_STATE_ONLINE;
 			V.ticker = 0;
 			break;
@@ -1524,7 +1531,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		}
 		break;
 	case 5: // alarms
-		eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 5   ");
 		switch (function) {
 		default:
 			V.alarm = function;
@@ -1532,7 +1538,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		}
 		break;
 	case 9:
-		eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 9   ");
 		switch (function) {
 		default:
 			V.alarm = function;
@@ -1543,7 +1548,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		}
 		break;
 	default:
-		eaDogM_WriteStringAtPos(3, 0, "secs_gem_state DEF   ");
 		if (block == GEM_STATE_DISABLE) {
 			block = GEM_STATE_COMM;
 			V.ticker = 45;
@@ -1555,15 +1559,23 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 	return(block);
 }
 
+/*
+ * send equipment emulation data in some state and timing conditions
+ */
 void equip_tx(uint8_t data)
 {
-	switch (V.euart) {
-	case 1:
-		UART1_Write(data);
-		break;
-	default:
-		UART2_Write(data);
-		break;
+	static uint8_t pinger = 0;
+
+	if (++pinger > PINGER || V.g_state != GEM_STATE_ONLINE || V.t_l_state == LINK_STATE_NAK) {
+		switch (V.euart) {
+		case 1:
+			UART1_Write(data);
+			break;
+		default:
+			UART2_Write(data);
+			break;
+		}
+		pinger = 0;
+		DLED_Toggle();
 	}
-	DLED_Toggle();
 }

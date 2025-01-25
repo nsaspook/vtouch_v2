@@ -171,8 +171,8 @@ void vterm_sequence(void)
 		break;
 	case DIS_CLEAR:
 	default:
-		sprintf(get_vterm_ptr(0, 0), "                  ");
-		sprintf(get_vterm_ptr(1, 0), "                  ");
+		sprintf(get_vterm_ptr(0, 0), "                      ");
+		sprintf(get_vterm_ptr(1, 0), "                      ");
 		sprintf(get_vterm_ptr(0, 2), "                  ");
 		sprintf(get_vterm_ptr(1, 2), "                  ");
 		break;

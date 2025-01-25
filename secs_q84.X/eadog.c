@@ -340,6 +340,9 @@ void clear_lcd_done(void)
 {
 	spi_link.LCD_DATA = false;
 	E_TRACE;
+	E_TRACE;
+	E_TRACE;
+	E_TRACE;
 }
 
 void spi_rec_done(void)

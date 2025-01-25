@@ -38973,7 +38973,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 99 "./vconfig.h"
+# 101 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40516,6 +40516,9 @@ void clear_lcd_done(void)
 {
  spi_link.LCD_DATA = 0;
  do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
+ do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
 }
 
 void spi_rec_done(void)
@@ -40593,7 +40596,7 @@ void check_lcd_dim(const _Bool dim)
    send_lcd_cmd_dma(0x53);
    send_lcd_data_dma(8);
   }
-# 429 "eadog.c"
+# 432 "eadog.c"
  }
 }
 
@@ -40610,7 +40613,7 @@ void set_lcd_dim(const _Bool dim)
    send_lcd_cmd_dma(0x53);
    send_lcd_data_dma(8);
   }
-# 454 "eadog.c"
+# 457 "eadog.c"
  }
 
  if (B.dim_delay++ >= 6) {

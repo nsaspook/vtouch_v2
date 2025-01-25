@@ -844,7 +844,7 @@ void main(void)
 			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
 			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
 #else
-			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST       ");
+			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST         ");
 #endif
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
@@ -858,12 +858,12 @@ void main(void)
 #endif
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 					if (V.debug) {
-						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld  ", sizeof(header254), V.testing);
+						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
 					} else {
 #ifdef FAKER
-						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 #else
-						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 #endif
 					}
 				}
@@ -882,10 +882,10 @@ void main(void)
 					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
-						sprintf(s, " S%dF%d Err %d           ", V.stream, V.function, V.all_errors);
+						sprintf(s, " S%dF%d Err %d             ", V.stream, V.function, V.all_errors);
 					} else {
 						V.msg_error = MSG_ERROR_NONE;
-						sprintf(s, " S%dF%d # Rx %d          ", V.stream, V.function, V.all_errors);
+						sprintf(s, " S%dF%d # Rx %d            ", V.stream, V.function, V.all_errors);
 					}
 					s[MAX_LINE] = 0;
 					MyeaDogM_WriteStringAtPos(0, 0, s);
@@ -926,10 +926,10 @@ void main(void)
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
-					sprintf(s, " S%dF%d # OK %d Q Tx      ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OK %d Q Tx        ", V.stream, V.function, V.e_types);
 				} else {
 					V.s_state = SEQ_STATE_DONE;
-					sprintf(s, " S%dF%d # OK %d Tx        ", V.stream, V.function, V.e_types);
+					sprintf(s, " S%dF%d # OK %d Tx         ", V.stream, V.function, V.e_types);
 				}
 
 				s[MAX_LINE] = 0;
@@ -941,9 +941,9 @@ void main(void)
 				break;
 			case SEQ_STATE_ERROR:
 			default:
-				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR    ");
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR      ");
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G:%s #", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
+				sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
 				update_lcd(0);
 				WaitMs(2000);
 				break;
@@ -951,12 +951,12 @@ void main(void)
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (TimerDone(TMR_DISPLAY)) { // limit update rate
 					if (V.debug) {
-						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
+						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld          ", sizeof(header254), V.testing);
 					} else {
 #ifdef FAKER
-						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 #else
-						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s      #", V.ticks, GEM_TEXT[V.g_state]);
+						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 #endif
 					}
 				}
@@ -979,7 +979,7 @@ void main(void)
 								if (V.ping_count++ > 4) {
 									set_display_info(DIS_STR);
 									hb_message();
-									sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d    ", V.g_state, V.equip_timeout);
+									sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d      ", V.g_state, V.equip_timeout);
 									update_lcd(0);
 									WaitMs(250);
 									V.ping_count = 0;
@@ -1015,7 +1015,7 @@ void main(void)
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, "S%dF%d #%ld       ", V.stream, V.function, V.ticks);
+					sprintf(V.buf, "S%dF%d #%ld           ", V.stream, V.function, V.ticks);
 					V.buf[VBUF_MAX] = 0; // string size limit
 					MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
 					V.s_state = SEQ_STATE_TRIGGER;
@@ -1035,7 +1035,7 @@ void main(void)
 				break;
 			}
 			if (V.debug)
-				sprintf(get_vterm_ptr(2, 0), "Equip type %d       ", V.e_types);
+				sprintf(get_vterm_ptr(2, 0), "Equip type %d            ", V.e_types);
 			else
 				sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			break;

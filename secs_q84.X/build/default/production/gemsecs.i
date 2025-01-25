@@ -38975,7 +38975,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 99 "./vconfig.h"
+# 101 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40691,7 +40691,9 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   }
   break;
  case LINK_STATE_ERROR:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR  M  ");
+
+
+
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
@@ -40726,7 +40728,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
 
-    V.g_state = GEM_STATE_ONLINE;
+
 
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
@@ -40738,7 +40740,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_EOT;
 
-    V.g_state = GEM_STATE_COMM;
+
 
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
@@ -40752,14 +40754,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   b_block = (uint8_t*) & H254[0];
   UART1_Write(0x04);
 
-  UART2_Write(0x04);
+
 
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 335 "gemsecs.c"
-  H10[3].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
-
+# 340 "gemsecs.c"
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
@@ -40837,7 +40836,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
  case LINK_STATE_ACK:
   UART1_Write(0x06);
 
-  UART2_Write(0x06);
+
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -40846,18 +40845,18 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
   secs_II_monitor_message(V.stream, V.function, 500);
-
   V.g_state = secs_gem_state(V.stream, V.function);
-
   V.failed_receive = 0;
   *r_link = LINK_STATE_DONE;
   V.abort = LINK_ERROR_NONE;
   break;
  case LINK_STATE_NAK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+
+
+
   UART1_Write(0x15);
 
-  UART2_Write(0x15);
+
 
   *r_link = LINK_STATE_ERROR;
   V.all_errors++;
@@ -40870,7 +40869,9 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   retry = 3;
   break;
  case LINK_STATE_ERROR:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR R    ");
+
+
+
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
@@ -40892,15 +40893,17 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
  switch (*t_link) {
  case LINK_STATE_IDLE:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE T   ");
+
+
+
   V.error = LINK_ERROR_NONE;
   retry = 3;
   UART1_Write(0x05);
 
-  UART2_Write(0x05);
-  V.stream = 1;
-  V.function = 1;
-  uart_num = 2;
+
+
+
+
 
   StartTimer(TMR_T2, 3000);
   *t_link = LINK_STATE_ENQ;
@@ -40972,6 +40975,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    }
    if (V.error == LINK_ERROR_NONE) {
     *t_link = LINK_STATE_ACK;
+
+
+
    } else {
     V.failed_send = 3;
     *t_link = LINK_STATE_ERROR;
@@ -40988,7 +40994,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
   break;
  case LINK_STATE_ACK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK T   ");
+
+
+
   if (TimerDone(TMR_T3)) {
    V.timer_error++;
    V.error = LINK_ERROR_T3;
@@ -41015,7 +41023,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_NAK:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK T   ");
+
+
+
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
@@ -41026,7 +41036,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   }
   break;
  case LINK_STATE_ERROR:
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR T   ");
+
+
+
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
@@ -41051,15 +41063,12 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
  do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
  k = (uint8_t *) byte_block;
 
-
-
  V.error = LINK_ERROR_NONE;
  if ((length - 3) != k[length - 1]) {
   V.error = LINK_ERROR_SEND;
   V.all_errors++;
   V.failed_send = 1;
   do { LATBbits.LATB1 = 1; } while(0);
-  eaDogM_WriteStringAtPos(3, 0, "secs_send ERROR          ");
   return 0;
  }
  ++V.ticks;
@@ -41096,7 +41105,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
 
     UART1_Write(k[i - 1]);
 
-    UART2_Write(k[i - 1]);
+
 
    }
   }
@@ -41855,10 +41864,9 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-  case 1:
+
 
   case 2:
-   eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 2   ");
    if (block != GEM_STATE_REMOTE) {
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 30000);
@@ -41877,7 +41885,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
    break;
   case 13:
-   eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 13   ");
    switch (V.response.ack[4]) {
    case 'V':
     switch (V.response.ack[5]) {
@@ -41918,7 +41925,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    V.ticker = 0;
    break;
   case 14:
-   eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 14   ");
    if (block != GEM_STATE_REMOTE) {
     block = GEM_STATE_COMM;
    }
@@ -41928,7 +41934,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
 
   case 16:
-   eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 16   ");
    block = GEM_STATE_OFFLINE;
    V.ticker = 0;
    break;
@@ -41936,7 +41941,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
 
   case 18:
-   eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 18   ");
    block = GEM_STATE_ONLINE;
    V.ticker = 0;
    break;
@@ -41949,7 +41953,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
   }
   break;
  case 5:
-  eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 5   ");
   switch (function) {
   default:
    V.alarm = function;
@@ -41957,7 +41960,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
   }
   break;
  case 9:
-  eaDogM_WriteStringAtPos(3, 0, "secs_gem_state 9   ");
   switch (function) {
   default:
    V.alarm = function;
@@ -41968,7 +41970,6 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
   }
   break;
  default:
-  eaDogM_WriteStringAtPos(3, 0, "secs_gem_state DEF   ");
   if (block == GEM_STATE_DISABLE) {
    block = GEM_STATE_COMM;
    V.ticker = 45;
@@ -41980,15 +41981,23 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  return(block);
 }
 
+
+
+
 void equip_tx(uint8_t data)
 {
- switch (V.euart) {
- case 1:
-  UART1_Write(data);
-  break;
- default:
-  UART2_Write(data);
-  break;
+ static uint8_t pinger = 0;
+
+ if (++pinger > 8 || V.g_state != GEM_STATE_ONLINE || V.t_l_state == LINK_STATE_NAK) {
+  switch (V.euart) {
+  case 1:
+   UART1_Write(data);
+   break;
+  default:
+   UART2_Write(data);
+   break;
+  }
+  pinger = 0;
+  do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
  }
- do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
 }
