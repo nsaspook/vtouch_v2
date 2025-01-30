@@ -40598,7 +40598,7 @@ void mode_lamp_bright(void);
 # 171 "main.c" 2
 # 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Jan 25 2025", *build_time = "12:08:48";
+const char *build_date = "Jan 29 2025", *build_time = "13:09:54";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41218,11 +41218,9 @@ void main(void)
    eaDogM_WriteStringAtPos(3, 0, " UI_STATE_INIT   ");
    break;
   case UI_STATE_HOST:
-
-
-
-
+# 851 "main.c"
    eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST         ");
+
 
    switch (V.s_state) {
    case SEQ_STATE_INIT:
@@ -41379,7 +41377,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1012 "main.c"
+# 1017 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -41456,7 +41454,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1096 "main.c"
+# 1101 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

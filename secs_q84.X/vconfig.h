@@ -35,12 +35,12 @@ extern "C" {
 	 */
 
 
-//#define FAKER			// emulate equipment protocol
+	//#define FAKER			// emulate equipment protocol
 
-	//#define DB1
-	//#define DB2
-	//#define DB3
-	//#define DB4
+//#define DB1
+//#define DB2
+//#define DB3
+//#define DB4
 	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
 	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
@@ -72,7 +72,7 @@ extern "C" {
 #define BDELAY	300
 #define DDELAY	100 // display update spacing
 #define DFLIP	1500 // display info flipping spacing
-	
+
 #define PINGER	8
 
 #define Y2KTIME

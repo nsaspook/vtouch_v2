@@ -844,7 +844,12 @@ void main(void)
 			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
 			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
 #else
+#if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
+			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
+			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
+#else
 			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST         ");
+#endif
 #endif
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
