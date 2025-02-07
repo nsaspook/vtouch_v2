@@ -620,7 +620,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_DONE    ");
 		V.failed_send = false;
 		V.abort = LINK_ERROR_NONE;
 		break;
@@ -668,8 +667,8 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 			if (fake) {
 				UART2_put_buffer(k[i - 1]);
 			} else {
-
 				UART2_Write(k[i - 1]); // -1 for array memory addressing
+				V.tx_total++;
 			}
 		}
 		break;
@@ -680,8 +679,8 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 			if (fake) {
 				UART1_put_buffer(k[i - 1]);
 			} else {
-
 				UART1_Write(k[i - 1]); // -1 for array memory addressing
+				V.tx_total++;
 #ifdef FAKER
 				UART2_Write(k[i - 1]); // -1 for array memory addressing
 #endif
@@ -1458,7 +1457,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				set_display_info(DIS_SEQUENCE_M);
 			}
 
-			block = GEM_STATE_REMOTE;
+			block = GEM_STATE_ONLINE;
 			V.ticker = 0;
 
 			break;
@@ -1498,13 +1497,13 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				V.sid = 11;
 				sequence_messages(V.sid); // send hello text message to equipment screen
 				set_display_info(DIS_SEQUENCE_M);
-				block = GEM_STATE_COMM;
+				block = GEM_STATE_REMOTE;
 			}
 			V.ticker = 0;
 			break;
 		case 14:
 			if (block != GEM_STATE_REMOTE) {
-				block = GEM_STATE_COMM;
+				block = GEM_STATE_REMOTE;
 			}
 			V.ticker = 15;
 			break;

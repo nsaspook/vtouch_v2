@@ -216,6 +216,7 @@ V_data V = {
 	.sequences = 0,
 	.set_sequ = false,
 	.euart = 2,
+	.tx_total = 0,
 };
 
 B_type B = {
@@ -909,7 +910,7 @@ void main(void)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TX:
-				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
+				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
 				/*
 				 * send response message to equipment
 				 */
@@ -931,10 +932,10 @@ void main(void)
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
-					sprintf(s, " S%dF%d # OK %d Q Tx        ", V.stream, V.function, V.e_types);
+					sprintf(s, "S%dF%d # OK %d Q Tx %lu       ", V.stream, V.function, V.e_types, V.tx_total);
 				} else {
 					V.s_state = SEQ_STATE_DONE;
-					sprintf(s, " S%dF%d # OK %d Tx         ", V.stream, V.function, V.e_types);
+					sprintf(s, "S%dF%d # OK %d Tx %lu        ", V.stream, V.function, V.e_types, V.tx_total);
 				}
 
 				s[MAX_LINE] = 0;
@@ -984,7 +985,7 @@ void main(void)
 								if (V.ping_count++ > 4) {
 									set_display_info(DIS_STR);
 									hb_message();
-									sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d      ", V.g_state, V.equip_timeout);
+									sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
 									update_lcd(0);
 									WaitMs(250);
 									V.ping_count = 0;
