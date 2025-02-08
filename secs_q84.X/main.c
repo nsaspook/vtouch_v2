@@ -209,7 +209,7 @@ V_data V = {
 	.response.log_seq = 0,
 	.response.host_display_ack = false,
 	.queue = false,
-	.stack = false, // 0 no messages, 1-10 messages in queue
+	.stack = 0, // 0 no messages, 1-10 messages in queue
 	.sid = 1,
 	.help_id = 0,
 	.ping_count = 0,
@@ -218,6 +218,8 @@ V_data V = {
 	.euart = 2,
 	.tx_total = 0,
 	.rx_total = 0,
+	.failed_receive = RECV_ERROR_NONE,
+	.failed_send = SEND_ERROR_NONE,
 };
 
 B_type B = {
@@ -843,15 +845,15 @@ void main(void)
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
 #ifdef FAKER
-			sprintf(get_vterm_ptr(0, 0), "FAKER T%lu R%lu      ",V.tx_total, V.rx_total);
+			sprintf(get_vterm_ptr(0, 0), "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
 			eaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
 #else
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
 			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
 			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
 #else
-			sprintf(get_vterm_ptr(3, 0), "1UI_STATE_HOST RX %lu        ",V.rx_total);
-			eaDogM_WriteStringAtPos(3, 0, get_vterm_ptr(0, 0));
+			sprintf(get_vterm_ptr(3, 0), "RS232 R%lu T%lu E%u           ", V.rx_total, V.tx_total, V.e_types);
+			eaDogM_WriteStringAtPos(3, 0, get_vterm_ptr(3, 0));
 #endif
 #endif
 			switch (V.s_state) {
@@ -902,7 +904,7 @@ void main(void)
 #endif
 					if (V.wbit) { // check for receive only messages
 						V.s_state = SEQ_STATE_TX;
-						V.failed_send = false;
+						V.failed_send = SEND_ERROR_NONE;
 						V.t_l_state = LINK_STATE_IDLE;
 					} else { // don't send a reply
 						V.s_state = SEQ_STATE_TRIGGER;
@@ -976,7 +978,7 @@ void main(void)
 						if (TimerDone(TMR_HBIO)) {
 							set_display_info(DIS_STR); // reset display configuration
 							// send ping or sequence message
-							if (V.stack) {
+							if (V.stack > 0) {
 								hb_message(); // prime the TX state machine
 								V.msg_error = MSG_ERROR_NONE;
 								V.ping_count = 0;
@@ -1053,12 +1055,12 @@ void main(void)
 			break;
 		}
 		if (V.ticks) {
-			if (V.failed_receive) {
+			if (V.failed_receive != RECV_ERROR_NONE) {
 				if (V.error == LINK_ERROR_CHECKSUM) {
 				}
 			} else {
 			}
-			if (V.failed_send) {
+			if (V.failed_send != SEND_ERROR_NONE) {
 				if (V.error == LINK_ERROR_CHECKSUM) {
 				}
 			} else {
@@ -1070,7 +1072,7 @@ void main(void)
 				if (TimerDone(TMR_HELPDIS)) {
 					set_display_info(DIS_STR);
 				}
-				sprintf(get_vterm_ptr(1, 0), "R%d %d, T%d %d C%d %d      #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+				sprintf(get_vterm_ptr(1, 0), "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				StartTimer(TMR_DISPLAY, DDELAY);
 				update_lcd(0);
 			}

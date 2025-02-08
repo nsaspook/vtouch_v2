@@ -39558,7 +39558,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 103 "./vconfig.h"
+# 104 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39659,7 +39659,7 @@ void PIN_MANAGER_Initialize (void);
   GEM_GENERIC = 0,
   GEM_VII80,
   GEM_E220,
-  GEM_ERROR
+  GEM_ERROR = 9
  } GEM_EQUIP;
 
  typedef enum {
@@ -39695,6 +39695,25 @@ void PIN_MANAGER_Initialize (void);
   MSG_ERROR_RESET = 20
  } MSG_ERRORS;
 
+ typedef enum {
+  SEND_ERROR_NONE = 0,
+  SEND_ERROR_ABORT,
+  SEND_ERROR_EOT,
+  SEND_ERROR_T2,
+  SEND_ERROR_T3,
+  SEND_ERROR_DATA,
+ } SEND_ERRORS;
+
+ typedef enum {
+  RECV_ERROR_NONE = 0,
+  RECV_ERROR_NAK,
+  RECV_ERROR_EOT,
+  RECV_ERROR_T2,
+  RECV_ERROR_T3,
+  RECV_ERROR_CKSUM,
+  RECV_ERROR_DATA,
+ } RECV_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -39711,7 +39730,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart;
   volatile uint8_t ticker;
@@ -41123,7 +41142,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.error = LINK_ERROR_T2;
    V.all_errors++;
    V.timer_error++;
-   V.failed_receive = 2;
+   V.failed_receive = RECV_ERROR_T2;
    *m_link = LINK_STATE_NAK;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
@@ -41156,7 +41175,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    V.error = LINK_ERROR_T2;
    V.timer_error++;
    V.all_errors++;
-   V.failed_receive = 2;
+   V.failed_receive = RECV_ERROR_T2;
    *m_link = LINK_STATE_NAK;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
@@ -41205,7 +41224,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.all_errors++;
-       V.failed_receive = 3;
+       V.failed_receive = RECV_ERROR_CKSUM;
        *m_link = LINK_STATE_NAK;
        do { LATBbits.LATB1 = 1; } while(0);
       }
@@ -41249,7 +41268,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.all_errors++;
-       V.failed_receive = 4;
+       V.failed_receive = RECV_ERROR_NAK;
        *m_link = LINK_STATE_NAK;
        do { LATBbits.LATB1 = 1; } while(0);
       }
@@ -41268,7 +41287,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   V.rbit = H10[1].block.block.rbit;
   V.wbit = H10[1].block.block.wbit;
   V.ebit = H10[1].block.block.ebit;
-  V.failed_receive = 0;
+  V.failed_receive = RECV_ERROR_NONE;
   secs_II_monitor_message(V.stream, V.function, 1000);
   V.g_state = secs_gem_state(V.stream, V.function);
   *m_link = LINK_STATE_DONE;
@@ -41287,12 +41306,12 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ERROR:
 
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR  M  ");
+
 
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
-  V.failed_receive = 0;
+  V.failed_receive = RECV_ERROR_NONE;
  default:
   *m_link = LINK_STATE_IDLE;
   break;
@@ -41325,7 +41344,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
 
-    V.g_state = GEM_STATE_ONLINE;
+
 
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
@@ -41337,7 +41356,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_EOT;
 
-    V.g_state = GEM_STATE_COMM;
+
 
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
@@ -41352,15 +41371,12 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   V.tx_total++;
 
-  UART2_Write(0x04);
-  V.tx_total++;
+
+
 
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 353 "gemsecs.c"
-  H10[3].block.block.systemb = V.ticks;
-  secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
-
+# 356 "gemsecs.c"
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
@@ -41368,7 +41384,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
    V.all_errors++;
    if (!retry--) {
     V.error = LINK_ERROR_T2;
-    V.failed_receive = 1;
+    V.failed_receive = RECV_ERROR_T2;
     V.all_errors++;
     *r_link = LINK_STATE_NAK;
     do { LATBbits.LATB1 = 1; } while(0);
@@ -41432,7 +41448,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
        V.error = LINK_ERROR_CHECKSUM;
        V.checksum_error++;
        V.all_errors++;
-       V.failed_receive = 2;
+       V.failed_receive = RECV_ERROR_NAK;
        *r_link = LINK_STATE_NAK;
        do { LATBbits.LATB1 = 1; } while(0);
       }
@@ -41445,8 +41461,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x06);
   V.tx_total++;
 
-  UART2_Write(0x06);
-  V.tx_total++;
+
+
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -41456,19 +41472,19 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.ebit = H10[1].block.block.ebit;
   secs_II_monitor_message(V.stream, V.function, 500);
   V.g_state = secs_gem_state(V.stream, V.function);
-  V.failed_receive = 0;
+  V.failed_receive = RECV_ERROR_NONE;
   *r_link = LINK_STATE_DONE;
   V.abort = LINK_ERROR_NONE;
   break;
  case LINK_STATE_NAK:
 
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+
 
   UART1_Write(0x15);
   V.tx_total++;
 
-  UART2_Write(0x15);
-  V.tx_total++;
+
+
 
   *r_link = LINK_STATE_ERROR;
   V.all_errors++;
@@ -41484,12 +41500,12 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_ERROR:
 
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR R    ");
+
 
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
-  V.failed_receive = 0;
+  V.failed_receive = RECV_ERROR_NONE;
   V.abort = LINK_ERROR_NONE;
  default:
   *r_link = LINK_STATE_IDLE;
@@ -41508,18 +41524,18 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  switch (*t_link) {
  case LINK_STATE_IDLE:
 
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE T   ");
+
 
   V.error = LINK_ERROR_NONE;
   retry = 3;
   UART1_Write(0x05);
   V.tx_total++;
 
-  UART2_Write(0x05);
-  V.tx_total++;
-  V.stream = 1;
-  V.function = 1;
-  uart_num = 2;
+
+
+
+
+
 
   StartTimer(TMR_T2, 3000);
   *t_link = LINK_STATE_ENQ;
@@ -41536,7 +41552,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    if (!retry--) {
     V.error = LINK_ERROR_T2;
     V.all_errors++;
-    V.failed_send = 1;
+    V.failed_send = SEND_ERROR_T2;
     *t_link = LINK_STATE_NAK;
     do { LATBbits.LATB1 = 1; } while(0);
    } else {
@@ -41576,15 +41592,16 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
   if (V.abort == LINK_ERROR_ABORT) {
    secs_send((uint8_t*) block.header, block.length, 0, uart_num);
-   V.failed_send = 2;
+   V.failed_send = SEND_ERROR_ABORT;
    *t_link = LINK_STATE_ERROR;
    V.all_errors++;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
    if (!requeue) {
     secs_send((uint8_t*) block.header, block.length, 0, uart_num);
-    if (V.queue)
+    if (V.queue) {
      requeue = 1;
+    }
    } else {
     requeue = 0;
     V.queue = 0;
@@ -41593,11 +41610,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    if (V.error == LINK_ERROR_NONE) {
     *t_link = LINK_STATE_ACK;
 
-    UART2_Write(0x06);
-    V.tx_total++;
+
+
 
    } else {
-    V.failed_send = 3;
+    V.failed_send = SEND_ERROR_EOT;
     *t_link = LINK_STATE_ERROR;
     V.all_errors++;
     do { LATBbits.LATB1 = 1; } while(0);
@@ -41613,20 +41630,20 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_ACK:
 
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK T   ");
+
 
   if (TimerDone(TMR_T3)) {
    V.timer_error++;
    V.error = LINK_ERROR_T3;
    V.all_errors++;
-   V.failed_send = 4;
+   V.failed_send = SEND_ERROR_T3;
    *t_link = LINK_STATE_NAK;
   } else {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     V.rx_total++;
     if (rxData == 0x06) {
-     V.failed_send = 0;
+     V.failed_send = SEND_ERROR_NONE;
      *t_link = LINK_STATE_DONE;
      V.abort = LINK_ERROR_NONE;
     }
@@ -41635,7 +41652,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
     rxData = UART2_Read();
     V.rx_total++;
     if (rxData == 0x06) {
-     V.failed_send = 0;
+     V.failed_send = SEND_ERROR_NONE;
      *t_link = LINK_STATE_DONE;
      V.abort = LINK_ERROR_NONE;
     }
@@ -41644,7 +41661,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_NAK:
 
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK T   ");
+
 
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
@@ -41659,12 +41676,12 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_ERROR:
 
-  eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR T   ");
+
 
   do { LATBbits.LATB1 = 1; } while(0);
   break;
  case LINK_STATE_DONE:
-  V.failed_send = 0;
+  V.failed_send = SEND_ERROR_NONE;
   V.abort = LINK_ERROR_NONE;
   break;
  default:
@@ -41688,7 +41705,7 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
  if ((length - 3) != k[length - 1]) {
   V.error = LINK_ERROR_SEND;
   V.all_errors++;
-  V.failed_send = 1;
+  V.failed_send = SEND_ERROR_DATA;
   do { LATBbits.LATB1 = 1; } while(0);
   return 0;
  }
@@ -41726,8 +41743,8 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
     UART1_Write(k[i - 1]);
     V.tx_total++;
 
-    UART2_Write(k[i - 1]);
-    V.tx_total++;
+
+
 
    }
   }
@@ -41744,7 +41761,7 @@ void hb_message()
 {
  V.ping++;
  V.s_state = SEQ_STATE_TX;
- V.failed_send = 0;
+ V.failed_send = SEND_ERROR_NONE;
  V.t_l_state = LINK_STATE_IDLE;
  if (V.msg_error == MSG_ERROR_NONE) {
   V.stream = 1;
@@ -41824,19 +41841,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   sprintf(V.terminal, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.07B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
   break;
  case display_online:
   sprintf(V.terminal, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.07B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
   break;
  case display_comm:
   sprintf(V.terminal, msg2,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.07B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
   break;
  default:
   sprintf(V.terminal, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.07B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
   break;
  }
 
@@ -42053,7 +42070,6 @@ uint16_t s6f11_opcmd(void)
 {
  V.response.ceid = V.response.ack[9];
  V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9];
-
  V.testing = (sizeof(H254[0].data) - 1) - 9;
 
  return V.response.ceid;
@@ -42064,7 +42080,7 @@ uint16_t s6f11_opcmd(void)
 
 _Bool gem_messages(response_type *block, const uint8_t sid)
 {
- if (!V.stack) {
+ if (V.stack == 0) {
   return 0;
  }
 
@@ -42105,7 +42121,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
  block.respond = 0;
 
  if (TimerDone(TMR_HBIO)) {
-  if (V.stack) {
+  if (V.stack > 0) {
    gem_messages(&block, V.sid);
    if (V.sid >= 10) {
     set_display_info(DIS_SEQUENCE_M);
@@ -42486,7 +42502,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-  case 1:
+
 
   case 2:
    if (block != GEM_STATE_REMOTE) {

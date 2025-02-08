@@ -21,7 +21,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.07B"
+#define VER	"2.08B"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -34,15 +34,16 @@ extern "C" {
 	 * 2.05 Beta
 	 * 2.06 add TX bytes transmitted counter and display
 	 * 2.07 more info messages to equipment terminal display from host
+	 * 2.08 reformat LCD messages
 	 */
 
 
-	#define FAKER			// emulate equipment protocol
+	//	#define FAKER			// emulate equipment protocol
 
-//#define DB1
-//#define DB2
-//#define DB3
-//#define DB4
+	//#define DB1
+	//#define DB2
+	//#define DB3
+	//#define DB4
 	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
 	//#define DISP_TRIG
 #define SEQ_TEST	false	// testing message template transfers
@@ -200,7 +201,7 @@ extern "C" {
 		GEM_GENERIC = 0,
 		GEM_VII80,
 		GEM_E220,
-		GEM_ERROR
+		GEM_ERROR = 9
 	} GEM_EQUIP;
 
 	typedef enum {
@@ -236,6 +237,25 @@ extern "C" {
 		MSG_ERROR_RESET = 20
 	} MSG_ERRORS;
 
+	typedef enum {
+		SEND_ERROR_NONE = 0,
+		SEND_ERROR_ABORT,
+		SEND_ERROR_EOT,
+		SEND_ERROR_T2,
+		SEND_ERROR_T3,
+		SEND_ERROR_DATA,
+	} SEND_ERRORS;
+
+	typedef enum {
+		RECV_ERROR_NONE = 0,
+		RECV_ERROR_NAK,
+		RECV_ERROR_EOT,
+		RECV_ERROR_T2,
+		RECV_ERROR_T3,
+		RECV_ERROR_CKSUM,
+		RECV_ERROR_DATA,
+	} RECV_ERRORS;
+
 	typedef struct V_data { // control data structure 
 		SEQ_STATES s_state;
 		UI_STATES ui_state;
@@ -252,7 +272,7 @@ extern "C" {
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
 		uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2;
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count, euart;
 		volatile uint8_t ticker;

@@ -93,7 +93,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			V.error = LINK_ERROR_T2;
 			V.all_errors++;
 			V.timer_error++;
-			V.failed_receive = 2;
+			V.failed_receive = RECV_ERROR_T2;
 			*m_link = LINK_STATE_NAK;
 			MLED_SetHigh();
 		} else {
@@ -141,7 +141,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			V.error = LINK_ERROR_T2;
 			V.timer_error++;
 			V.all_errors++;
-			V.failed_receive = 2;
+			V.failed_receive = RECV_ERROR_T2;
 			*m_link = LINK_STATE_NAK;
 			MLED_SetHigh();
 		} else {
@@ -190,7 +190,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
 							V.all_errors++;
-							V.failed_receive = 3;
+							V.failed_receive = RECV_ERROR_CKSUM;
 							*m_link = LINK_STATE_NAK;
 							MLED_SetHigh();
 						}
@@ -234,7 +234,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
 							V.all_errors++;
-							V.failed_receive = 4;
+							V.failed_receive = RECV_ERROR_NAK;
 							*m_link = LINK_STATE_NAK;
 							MLED_SetHigh();
 						}
@@ -253,7 +253,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		V.rbit = H10[1].block.block.rbit;
 		V.wbit = H10[1].block.block.wbit;
 		V.ebit = H10[1].block.block.ebit;
-		V.failed_receive = false;
+		V.failed_receive = RECV_ERROR_NONE;
 		secs_II_monitor_message(V.stream, V.function, LDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
 		*m_link = LINK_STATE_DONE;
@@ -277,7 +277,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code state
-		V.failed_receive = false;
+		V.failed_receive = RECV_ERROR_NONE;
 	default:
 		*m_link = LINK_STATE_IDLE;
 		break;
@@ -360,7 +360,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			V.all_errors++;
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
-				V.failed_receive = 1;
+				V.failed_receive = RECV_ERROR_T2;
 				V.all_errors++;
 				*r_link = LINK_STATE_NAK;
 				MLED_SetHigh();
@@ -424,7 +424,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
 							V.all_errors++;
-							V.failed_receive = 2;
+							V.failed_receive = RECV_ERROR_NAK;
 							*r_link = LINK_STATE_NAK;
 							MLED_SetHigh();
 						}
@@ -448,7 +448,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.ebit = H10[1].block.block.ebit;
 		secs_II_monitor_message(V.stream, V.function, SDELAY); // log selected messages
 		V.g_state = secs_gem_state(V.stream, V.function);
-		V.failed_receive = false;
+		V.failed_receive = RECV_ERROR_NONE;
 		*r_link = LINK_STATE_DONE;
 		V.abort = LINK_ERROR_NONE;
 		break; // normally we don't execute LINK_STATE_DONE commands
@@ -481,7 +481,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // auto move to idle to receive data from link
-		V.failed_receive = false;
+		V.failed_receive = RECV_ERROR_NONE;
 		V.abort = LINK_ERROR_NONE;
 	default:
 		*r_link = LINK_STATE_IDLE;
@@ -528,7 +528,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			if (!retry--) { // check for stalls
 				V.error = LINK_ERROR_T2;
 				V.all_errors++;
-				V.failed_send = 1;
+				V.failed_send = SEND_ERROR_T2;
 				*t_link = LINK_STATE_NAK;
 				MLED_SetHigh();
 			} else {
@@ -561,22 +561,23 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			}
 		}
 		break;
-	case LINK_STATE_EOT: // transmit the message
+	case LINK_STATE_EOT: // transmit the message block
 		if (!requeue) {
 			block = secs_II_message(V.stream, V.function); // parse proper response
 		}
 
 		if (V.abort == LINK_ERROR_ABORT) {
 			secs_send((uint8_t*) block.header, block.length, false, uart_num);
-			V.failed_send = 2;
+			V.failed_send = SEND_ERROR_ABORT;
 			*t_link = LINK_STATE_ERROR;
 			V.all_errors++;
 			MLED_SetHigh();
 		} else {
 			if (!requeue) {
 				secs_send((uint8_t*) block.header, block.length, false, uart_num);
-				if (V.queue)
+				if (V.queue) {
 					requeue = true;
+				}
 			} else {
 				requeue = false;
 				V.queue = false;
@@ -589,7 +590,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 				V.tx_total++;
 #endif
 			} else {
-				V.failed_send = 3;
+				V.failed_send = SEND_ERROR_EOT;
 				*t_link = LINK_STATE_ERROR;
 				V.all_errors++;
 				MLED_SetHigh();
@@ -611,14 +612,14 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			V.timer_error++;
 			V.error = LINK_ERROR_T3;
 			V.all_errors++;
-			V.failed_send = 4;
+			V.failed_send = SEND_ERROR_T3;
 			*t_link = LINK_STATE_NAK;
 		} else {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
 				V.rx_total++;
 				if (rxData == ACK) {
-					V.failed_send = false;
+					V.failed_send = SEND_ERROR_NONE;
 					*t_link = LINK_STATE_DONE;
 					V.abort = LINK_ERROR_NONE;
 				}
@@ -627,7 +628,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 				rxData = UART2_Read();
 				V.rx_total++;
 				if (rxData == ACK) {
-					V.failed_send = false;
+					V.failed_send = SEND_ERROR_NONE;
 					*t_link = LINK_STATE_DONE;
 					V.abort = LINK_ERROR_NONE;
 				}
@@ -656,7 +657,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		MLED_SetHigh();
 		break;
 	case LINK_STATE_DONE: // normally we don't execute this code
-		V.failed_send = false;
+		V.failed_send = SEND_ERROR_NONE;
 		V.abort = LINK_ERROR_NONE;
 		break;
 	default:
@@ -680,7 +681,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 	if ((length - 3) != k[length - 1]) { // check header length field byte
 		V.error = LINK_ERROR_SEND;
 		V.all_errors++;
-		V.failed_send = true;
+		V.failed_send = SEND_ERROR_DATA;
 		MLED_SetHigh();
 		return false; // don't send and return mismatch error
 	}
@@ -736,7 +737,7 @@ void hb_message()
 {
 	V.ping++;
 	V.s_state = SEQ_STATE_TX;
-	V.failed_send = false;
+	V.failed_send = SEND_ERROR_NONE;
 	V.t_l_state = LINK_STATE_IDLE;
 	if (V.msg_error == MSG_ERROR_NONE) { // set ping message, not for streams
 		V.stream = 1;
@@ -800,7 +801,7 @@ bool sequence_messages(const uint8_t sid)
 		StartTimer(TMR_HBIO, D[V.stack - 1].delay); // restart sequence timer
 		break;
 	default:
-		V.stack = false;
+		V.stack = 0;
 		return false;
 		break;
 	}
@@ -1045,7 +1046,6 @@ uint16_t s6f11_opcmd(void)
 {
 	V.response.ceid = V.response.ack[9]; // CEID
 	V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9]; // get CEID using full message block buffer
-
 	V.testing = (sizeof(H254[0].data) - 1) - 9;
 
 	return V.response.ceid;
@@ -1056,7 +1056,7 @@ uint16_t s6f11_opcmd(void)
  */
 bool gem_messages(response_type *block, const uint8_t sid)
 {
-	if (!V.stack) {
+	if (V.stack == 0) {
 		return false;
 	}
 
@@ -1097,7 +1097,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 	block.respond = false;
 
 	if (TimerDone(TMR_HBIO)) { // hold sequences during equipment messages
-		if (V.stack) {
+		if (V.stack > 0) {
 			gem_messages(&block, V.sid);
 			if (V.sid >= 10) {
 				set_display_info(DIS_SEQUENCE_M);

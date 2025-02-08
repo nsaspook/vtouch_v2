@@ -39536,7 +39536,7 @@ void PIN_MANAGER_Initialize (void);
 # 20 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 21 "./vconfig.h" 2
-# 103 "./vconfig.h"
+# 104 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39637,7 +39637,7 @@ void PIN_MANAGER_Initialize (void);
   GEM_GENERIC = 0,
   GEM_VII80,
   GEM_E220,
-  GEM_ERROR
+  GEM_ERROR = 9
  } GEM_EQUIP;
 
  typedef enum {
@@ -39673,6 +39673,25 @@ void PIN_MANAGER_Initialize (void);
   MSG_ERROR_RESET = 20
  } MSG_ERRORS;
 
+ typedef enum {
+  SEND_ERROR_NONE = 0,
+  SEND_ERROR_ABORT,
+  SEND_ERROR_EOT,
+  SEND_ERROR_T2,
+  SEND_ERROR_T3,
+  SEND_ERROR_DATA,
+ } SEND_ERRORS;
+
+ typedef enum {
+  RECV_ERROR_NONE = 0,
+  RECV_ERROR_NAK,
+  RECV_ERROR_EOT,
+  RECV_ERROR_T2,
+  RECV_ERROR_T3,
+  RECV_ERROR_CKSUM,
+  RECV_ERROR_DATA,
+ } RECV_ERRORS;
+
  typedef struct V_data {
   SEQ_STATES s_state;
   UI_STATES ui_state;
@@ -39689,7 +39708,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 3, help_id : 2;
+  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart;
   volatile uint8_t ticker;
