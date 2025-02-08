@@ -21,7 +21,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.06B"
+#define VER	"2.07B"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -33,10 +33,11 @@ extern "C" {
 	 * 2.04 program FAKER equipment side emulation
 	 * 2.05 Beta
 	 * 2.06 add TX bytes transmitted counter and display
+	 * 2.07 more info messages to equipment terminal display from host
 	 */
 
 
-	//#define FAKER			// emulate equipment protocol
+	#define FAKER			// emulate equipment protocol
 
 //#define DB1
 //#define DB2
@@ -244,7 +245,7 @@ extern "C" {
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
 		char buf[64], terminal[160], info[64];
-		uint32_t ticks, systemb, tx_total;
+		uint32_t ticks, systemb, tx_total, rx_total;
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;

@@ -66,6 +66,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 #endif
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
+			V.rx_total++;
 			DLED_Toggle();
 			if (rxData == ENQ) {
 				V.uart = 1;
@@ -76,6 +77,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		}
 		if (UART2_is_rx_ready()) {
 			rxData = UART2_Read();
+			V.rx_total++;
 			DLED_Toggle();
 			if (rxData == ENQ) {
 				V.uart = 2;
@@ -113,6 +115,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 #else
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				V.rx_total++;
 				DLED_Toggle();
 				if (rxData == EOT) {
 					StartTimer(TMR_T2, T2);
@@ -122,6 +125,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			}
 			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
+				V.rx_total++;
 				DLED_Toggle();
 				if (rxData == EOT) {
 					StartTimer(TMR_T2, T2);
@@ -143,6 +147,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		} else {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				V.rx_total++;
 				DLED_Toggle();
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes
@@ -177,8 +182,10 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 						if (V.r_checksum == H10[1].checksum) {
 							*m_link = LINK_STATE_ACK;
 						} else { // bad checksum
-							while (UART1_is_rx_ready()) // dump receive buffer of bad data
+							while (UART1_is_rx_ready()) { // dump receive buffer of bad data
 								rxData = UART1_Read();
+								V.rx_total++;
+							}
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
@@ -193,6 +200,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
 			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
+				V.rx_total++;
 				if (rxData_l == 0) { // start header reads
 					r_block.length = rxData; // header+message bytes
 					run_checksum(0, true);
@@ -218,8 +226,10 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 						if (V.r_checksum == H10[1].checksum) {
 							*m_link = LINK_STATE_ACK;
 						} else { // bad checksum
-							while (UART2_is_rx_ready()) // dump receive buffer of bad data
+							while (UART2_is_rx_ready()) { // dump receive buffer of bad data
 								rxData = UART2_Read();
+								V.rx_total++;
+							}
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
@@ -253,9 +263,11 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
+			V.rx_total++;
 		}
 		while (UART2_DataReady) { // dump the receive buffer
 			UART2_Read();
+			V.rx_total++;
 		}
 		break;
 	case LINK_STATE_ERROR:
@@ -285,9 +297,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				V.rx_total++;
 			}
 			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
+				V.rx_total++;
 			}
 			DLED_Toggle();
 			if (rxData == ENQ) {
@@ -321,8 +335,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		d = 1; // data byte counter
 		b_block = (uint8_t*) & H254[0];
 		UART1_Write(EOT);
+		V.tx_total++;
 #ifdef	FAKER
 		UART2_Write(EOT);
+		V.tx_total++;
 #endif
 		StartTimer(TMR_T2, T2);
 		*r_link = LINK_STATE_EOT;
@@ -355,9 +371,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			if (UART1_is_rx_ready() || UART1_is_rx_ready()) {
 				if (UART1_is_rx_ready()) {
 					rxData = UART1_Read();
+					V.rx_total++;
 				}
 				if (UART2_is_rx_ready()) {
 					rxData = UART2_Read();
+					V.rx_total++;
 				}
 				DLED_Toggle();
 				if (rxData_l == 0) { // start header reads
@@ -394,10 +412,14 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 							*r_link = LINK_STATE_ACK;
 							DEBUG1_SetHigh();
 						} else { // bad checksum
-							while (UART1_is_rx_ready()) // dump receive buffer of bad data
+							while (UART1_is_rx_ready()) { // dump receive buffer of bad data
 								rxData = UART1_Read();
-							while (UART2_is_rx_ready()) // dump receive buffer of bad data
+								V.rx_total++;
+							}
+							while (UART2_is_rx_ready()) { // dump receive buffer of bad data
 								rxData = UART2_Read();
+								V.rx_total++;
+							}
 							WaitMs(T1); // inter-character timeout
 							V.error = LINK_ERROR_CHECKSUM;
 							V.checksum_error++;
@@ -413,8 +435,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break;
 	case LINK_STATE_ACK:
 		UART1_Write(ACK);
+		V.tx_total++;
 #ifdef FAKER
 		UART2_Write(ACK);
+		V.tx_total++;
 #endif
 		V.stream = H10[1].block.block.stream;
 		V.function = H10[1].block.block.function;
@@ -433,16 +457,20 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
 #endif
 		UART1_Write(NAK);
+		V.tx_total++;
 #ifdef FAKER
 		UART2_Write(NAK);
+		V.tx_total++;
 #endif
 		*r_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
+			V.rx_total++;
 		}
 		while (UART2_DataReady) { // dump the receive buffer
 			UART2_Read();
+			V.rx_total++;
 		}
 		retry = RTY;
 		break;
@@ -477,8 +505,10 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
 		UART1_Write(ENQ);
+		V.tx_total++;
 #ifdef FAKER
 		UART2_Write(ENQ);
+		V.tx_total++;
 		V.stream = 1;
 		V.function = 1; // S1F1 host ping
 		uart_num = 2;
@@ -507,6 +537,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		} else {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				V.rx_total++;
 				if (rxData == EOT) {
 					StartTimer(TMR_T3, T3);
 					*t_link = LINK_STATE_EOT;
@@ -518,6 +549,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			}
 			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
+				V.rx_total++;
 				if (rxData == EOT) {
 					StartTimer(TMR_T3, T3);
 					*t_link = LINK_STATE_EOT;
@@ -530,7 +562,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 		break;
 	case LINK_STATE_EOT: // transmit the message
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_EOT    ");
 		if (!requeue) {
 			block = secs_II_message(V.stream, V.function); // parse proper response
 		}
@@ -555,6 +586,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 				*t_link = LINK_STATE_ACK;
 #ifdef FAKER
 				UART2_Write(ACK);
+				V.tx_total++;
 #endif
 			} else {
 				V.failed_send = 3;
@@ -584,6 +616,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		} else {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				V.rx_total++;
 				if (rxData == ACK) {
 					V.failed_send = false;
 					*t_link = LINK_STATE_DONE;
@@ -592,6 +625,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			}
 			if (UART2_is_rx_ready()) {
 				rxData = UART2_Read();
+				V.rx_total++;
 				if (rxData == ACK) {
 					V.failed_send = false;
 					*t_link = LINK_STATE_DONE;
@@ -608,9 +642,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
 			UART1_Read();
+			V.rx_total++;
 		}
 		while (UART2_DataReady) { // dump the receive buffer
 			UART2_Read();
+			V.rx_total++;
 		}
 		break;
 	case LINK_STATE_ERROR:
@@ -683,6 +719,7 @@ static bool secs_send(uint8_t *byte_block, const uint8_t length, const bool fake
 				V.tx_total++;
 #ifdef FAKER
 				UART2_Write(k[i - 1]); // -1 for array memory addressing
+				V.tx_total++;
 #endif
 			}
 		}
@@ -1569,9 +1606,11 @@ void equip_tx(uint8_t data)
 		switch (V.euart) {
 		case 1:
 			UART1_Write(data);
+			V.tx_total++;
 			break;
 		default:
 			UART2_Write(data);
+			V.tx_total++;
 			break;
 		}
 		pinger = 0;

@@ -40719,7 +40719,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 21 "./vconfig.h" 2
-# 102 "./vconfig.h"
+# 103 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40865,7 +40865,7 @@ void SystemArbiter_Initialize(void);
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[64], terminal[160], info[64];
-  uint32_t ticks, systemb, tx_total;
+  uint32_t ticks, systemb, tx_total, rx_total;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -41181,7 +41181,7 @@ void mode_lamp_bright(void);
 # 171 "main.c" 2
 # 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb  7 2025", *build_time = "09:43:19";
+const char *build_date = "Feb  8 2025", *build_time = "11:17:06";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41217,6 +41217,7 @@ V_data V = {
  .set_sequ = 0,
  .euart = 2,
  .tx_total = 0,
+ .rx_total = 0,
 };
 
 B_type B = {
@@ -41451,7 +41452,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 475 "main.c"
+# 476 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -41470,7 +41471,26 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 513 "main.c"
+
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
 header33 H33[] = {
  {
   .length = 33,
@@ -41769,8 +41789,8 @@ void main(void)
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
   if (!faker++) {
 
-
-
+   V.euart = 2;
+   equip_tx(0x05);
 
   }
 
@@ -41786,10 +41806,10 @@ void main(void)
    srand(1957);
    set_vterm(0);
    sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.06B");
+   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.07B");
    sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
    sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.06B");
+   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.07B");
    sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
    eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
    update_lcd(0);
@@ -41802,28 +41822,28 @@ void main(void)
    eaDogM_WriteStringAtPos(3, 0, " UI_STATE_INIT   ");
    break;
   case UI_STATE_HOST:
-# 852 "main.c"
-   eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST         ");
 
-
+   sprintf(get_vterm_ptr(0, 0), "FAKER T%lu R%lu      ",V.tx_total, V.rx_total);
+   eaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
+# 857 "main.c"
    switch (V.s_state) {
    case SEQ_STATE_INIT:
 
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
 
+    V.s_state = SEQ_STATE_TX;
 
 
-    V.s_state = SEQ_STATE_RX;
 
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
      if (V.debug) {
       sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
      } else {
 
+      sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
 
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }
@@ -41870,9 +41890,9 @@ void main(void)
 
     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
 
+     V.s_state = SEQ_STATE_RX;
 
 
-     V.s_state = SEQ_STATE_TRIGGER;
 
     }
     if (V.t_l_state == LINK_STATE_ERROR)
@@ -41914,9 +41934,9 @@ void main(void)
       sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld          ", sizeof(header254), V.testing);
      } else {
 
+      sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
 
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }
@@ -41961,7 +41981,7 @@ void main(void)
      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1018 "main.c"
+# 1020 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -42038,7 +42058,7 @@ void main(void)
     update_lcd(2);
    }
   }
-# 1102 "main.c"
+# 1104 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

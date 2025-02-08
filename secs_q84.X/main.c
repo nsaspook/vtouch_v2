@@ -217,6 +217,7 @@ V_data V = {
 	.set_sequ = false,
 	.euart = 2,
 	.tx_total = 0,
+	.rx_total = 0,
 };
 
 B_type B = {
@@ -842,14 +843,15 @@ void main(void)
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
 #ifdef FAKER
-			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
-			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
+			sprintf(get_vterm_ptr(0, 0), "FAKER T%lu R%lu      ",V.tx_total, V.rx_total);
+			eaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
 #else
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
 			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
 			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
 #else
-			eaDogM_WriteStringAtPos(3, 0, "1UI_STATE_HOST         ");
+			sprintf(get_vterm_ptr(3, 0), "1UI_STATE_HOST RX %lu        ",V.rx_total);
+			eaDogM_WriteStringAtPos(3, 0, get_vterm_ptr(0, 0));
 #endif
 #endif
 			switch (V.s_state) {
