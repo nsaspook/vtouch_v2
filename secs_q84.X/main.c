@@ -832,10 +832,19 @@ void main(void)
 			snprintf(get_vterm_ptr(0, 0), MAX_TEXT, " RVI HOST TESTER     ");
 			snprintf(get_vterm_ptr(1, 0), MAX_TEXT, " Version %s          ", VER);
 			snprintf(get_vterm_ptr(2, 0), MAX_TEXT, " NSASPOOK            ");
-			snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " SEQUENCE TEST       ");
+			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, 1), MAX_TEXT, " INFO                ");
+			snprintf(get_vterm_ptr(1, 1), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, 1), MAX_TEXT, " VTERM #1            ");
+			snprintf(get_vterm_ptr(3, 1), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " HELP                ");
 			snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " Version %s          ", VER);
 			snprintf(get_vterm_ptr(2, 2), MAX_TEXT, " VTERM #2            ");
-			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(3, 2), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, 3), MAX_TEXT, " DEBUG               ");
+			snprintf(get_vterm_ptr(1, 3), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, 3), MAX_TEXT, " VTERM #3            ");
+			snprintf(get_vterm_ptr(3, 3), MAX_TEXT, "%s                   ", (char *) build_date);
 			refresh_lcd();
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -953,7 +962,7 @@ void main(void)
 				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "SEQ_STATE_ERROR         ");
 				V.s_state = SEQ_STATE_INIT;
 				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
-				update_lcd(0);
+				refresh_lcd();
 				WaitMs(2000);
 				break;
 			}
@@ -989,7 +998,7 @@ void main(void)
 									set_display_info(DIS_STR);
 									hb_message();
 									snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
-									update_lcd(0);
+									refresh_lcd();
 									WaitMs(250);
 									V.ping_count = 0;
 								}
@@ -1063,6 +1072,7 @@ void main(void)
 
 		if (mode != UI_STATE_LOG) {
 			if (TimerDone(TMR_DISPLAY)) { // limit update rate
+				static uint8_t switcher = INFO_VTERM;
 				if (TimerDone(TMR_HELPDIS)) {
 					set_display_info(DIS_STR);
 				}
@@ -1080,13 +1090,25 @@ void main(void)
 					V.v_rx_line = ADC_GetConversionResult();
 				};
 				StartTimer(TMR_DISPLAY, DDELAY);
+				if (V.vterm_switch++ >SWITCH_VTERM) {
+					set_vterm(switcher);
+					if (V.vterm_switch > SWITCH_VTERM + 9) {
+						switcher++;
+						if ((switcher & 0x03) == MAIN_VTERM) { // mask [0..3]]
+							switcher = INFO_VTERM; // skip short display of the main vterm
+						}
+						V.vterm_switch = 0;
+					}
+				} else {
+					set_vterm(V.vterm);
+				}
 				refresh_lcd();
 			}
 		}
 		/*
 		 * show help display if button pressed
 		 */
-		check_help(V.flipper);
+		//		check_help(V.flipper);
 
 		/*
 		 * show command messages if flag is set for timer duration

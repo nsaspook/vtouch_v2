@@ -272,7 +272,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR  M  ");
+		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_ERROR  M  ");
 #endif
 		MLED_SetHigh();
 		break;
@@ -293,7 +293,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
 	switch (*r_link) {
 	case LINK_STATE_IDLE:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE R    ");
 		if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
@@ -305,7 +304,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			}
 			DLED_Toggle();
 			if (rxData == ENQ) {
-				//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE ENQ R   ");
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_ENQ;
@@ -317,7 +315,6 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 				}
 			}
 			if (rxData == EOT) {
-				//				eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE EOT R   ");
 				DEBUG1_SetHigh();
 				V.error = LINK_ERROR_NONE; // reset error status
 				*r_link = LINK_STATE_EOT;
@@ -454,7 +451,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
 #ifdef FAKER
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NACK R    ");
+		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_NACK R    ");
 #endif
 		UART1_Write(NAK);
 		V.tx_total++;
@@ -476,7 +473,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR R    ");
+		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_ERROR R    ");
 #endif
 		MLED_SetHigh();
 		break;
@@ -500,7 +497,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
 #ifdef FAKER
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_IDLE T   ");
+		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_IDLE T   ");
 #endif
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
@@ -521,7 +518,6 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 #endif
 		break;
 	case LINK_STATE_ENQ:
-		//		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ENQ    ");
 		if (TimerDone(TMR_T2)) {
 			V.timer_error++;
 			V.all_errors++;
@@ -606,7 +602,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_ACK:
 #ifdef FAKER
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ACK T   ");
+		snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "LINK_STATE_ACK T   ");
 #endif
 		if (TimerDone(TMR_T3)) {
 			V.timer_error++;
@@ -637,7 +633,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_NAK: // send failure
 #ifdef FAKER
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_NAK T   ");
+		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_NAK T   ");
 #endif
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
@@ -652,7 +648,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		eaDogM_WriteStringAtPos(3, 0, "LINK_STATE_ERROR T   ");
+		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_ERROR T   ");
 #endif
 		MLED_SetHigh();
 		break;

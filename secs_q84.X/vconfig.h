@@ -37,7 +37,7 @@ extern "C" {
 	 */
 
 
-#define FAKER			// emulate equipment protocol
+//#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -105,8 +105,12 @@ extern "C" {
 #define MAX_VTERM	4
 #define MAX_LCD_LINES	4
 
-#define INFO_VTERM	2
-#define HELP_VTERM	1
+#define DBUG_VTERM	3
+#define HELP_VTERM	2
+#define INFO_VTERM	1
+#define MAIN_VTERM	0
+
+#define SWITCH_VTERM	20
 
 #define SPIN_CHAR	19
 
@@ -283,7 +287,7 @@ extern "C" {
 		failed_send : 4, failed_receive : 4,
 		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2;
 		terminal_type response;
-		uint8_t uart, llid, sid, ping_count, euart, vterm;
+		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch;
 		volatile uint8_t ticker;
 		bool flipper;
 		adc_result_t v_tx_line, v_rx_line;
