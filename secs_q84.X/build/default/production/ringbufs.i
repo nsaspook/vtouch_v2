@@ -98,7 +98,7 @@ void *memccpy (void *restrict, const void *restrict, int, size_t);
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
-# 17 "./vconfig.h"
+# 15 "./vconfig.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 1 3
 # 18 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -39355,7 +39355,7 @@ __attribute__((__unsupported__("The READTIMER" "0" "() macro is not available wi
 unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 2 3
-# 18 "./vconfig.h" 2
+# 16 "./vconfig.h" 2
 # 1 "./mcc_generated_files/adc.h" 1
 # 58 "./mcc_generated_files/adc.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/stdbool.h" 1 3
@@ -39475,7 +39475,7 @@ void ADC_SetContext2ThresholdInterruptHandler(void (* InterruptHandler)(void));
 void ADC_SetContext3ThresholdInterruptHandler(void (* InterruptHandler)(void));
 # 1132 "./mcc_generated_files/adc.h"
 void ADC_SetContext4ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 19 "./vconfig.h" 2
+# 17 "./vconfig.h" 2
 # 1 "./mcc_generated_files/spi1.h" 1
 # 54 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/stdio.h" 1 3
@@ -39648,14 +39648,14 @@ void SPI1_WriteBlock(void *block, size_t blockSize);
 void SPI1_ReadBlock(void *block, size_t blockSize);
 void SPI1_WriteByte(uint8_t byte);
 uint8_t SPI1_ReadByte(void);
-# 20 "./vconfig.h" 2
+# 18 "./vconfig.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
 # 366 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
-# 21 "./vconfig.h" 2
+# 19 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
-# 22 "./vconfig.h" 2
-# 105 "./vconfig.h"
+# 20 "./vconfig.h" 2
+# 103 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;

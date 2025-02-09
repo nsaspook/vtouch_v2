@@ -8,8 +8,6 @@
 #ifndef VCONFIG_H
 #define	VCONFIG_H
 
-//#include "mcc_generated_files/adcc.h"
-
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -35,7 +33,7 @@ extern "C" {
 	 * 2.05 Beta
 	 * 2.06 add TX bytes transmitted counter and display
 	 * 2.07 more info messages to equipment terminal display from host
-	 * 2.08 reformat LCD messages
+	 * 2.08 reformat LCD messages, add ADC 1 and 2 for RS232 line voltage checks
 	 */
 
 
