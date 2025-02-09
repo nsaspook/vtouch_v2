@@ -38,7 +38,7 @@ extern "C" {
 	 */
 
 
-	//	#define FAKER			// emulate equipment protocol
+//		#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2

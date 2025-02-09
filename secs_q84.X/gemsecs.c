@@ -576,7 +576,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			if (!requeue) {
 				secs_send((uint8_t*) block.header, block.length, false, uart_num);
 				if (V.queue) {
-					requeue = true;
+					requeue = true; // send a reply message
 				}
 			} else {
 				requeue = false;
@@ -748,6 +748,9 @@ void hb_message()
 	}
 }
 
+/*
+ * send messages as a machine operation sequence
+ */
 bool sequence_messages(const uint8_t sid)
 {
 	V.msg_error = MSG_ERROR_NONE;
@@ -1467,7 +1470,7 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 /*
  * parse received stream and response codes for host operational state and
  * equipment model types
- * Be permissive, almost any stream command make us online/remote
+ * Be permissive, almost any stream command makes us online
  */
 GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 {
