@@ -39655,7 +39655,7 @@ void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 20 "./vconfig.h" 2
-# 103 "./vconfig.h"
+# 113 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39819,7 +39819,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[64], terminal[160], info[64];
+  char buf[63 + 1], terminal[159 + 1], info[63 + 1];
   uint32_t ticks, systemb, tx_total, rx_total;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -39829,10 +39829,10 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 4, help_id : 2;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count, euart;
+  uint8_t uart, llid, sid, ping_count, euart, vterm;
   volatile uint8_t ticker;
   _Bool flipper;
-        adc_result_t v_tx_line, v_rx_line;
+  adc_result_t v_tx_line, v_rx_line;
  } V_data;
 
  typedef struct V_help {

@@ -220,6 +220,7 @@ V_data V = {
 	.rx_total = 0,
 	.failed_receive = RECV_ERROR_NONE,
 	.failed_send = SEND_ERROR_NONE,
+	.vterm = 0,
 };
 
 B_type B = {
@@ -827,39 +828,35 @@ void main(void)
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
-			set_vterm(0); // set to buffer 0
-			sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-			sprintf(get_vterm_ptr(1, 0), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
-			sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-			sprintf(get_vterm_ptr(1, 2), " Version %s   ", VER);
-			sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
-			eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
-			update_lcd(0);
+			set_vterm(V.vterm); // set to buffer 0
+			snprintf(get_vterm_ptr(0, 0), MAX_TEXT, " RVI HOST TESTER     ");
+			snprintf(get_vterm_ptr(1, 0), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, 0), MAX_TEXT, " NSASPOOK            ");
+			snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " SEQUENCE TEST       ");
+			snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, 2), MAX_TEXT, " VTERM #2            ");
+			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "%s                   ", (char *) build_date);
+			refresh_lcd();
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			StartTimer(TMR_SEQ, 10000);
 			StartTimer(TMR_INFO, TDELAY);
 			StartTimer(TMR_FLIPPER, DFLIP);
 			StartTimer(TMR_HELPDIS, TDELAY);
-			eaDogM_WriteStringAtPos(3, 0, " UI_STATE_INIT   ");
+			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, " UI_STATE_INIT   ");
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
 #ifdef FAKER
-			sprintf(get_vterm_ptr(0, 0), "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
-			eaDogM_WriteStringAtPos(0, 0, get_vterm_ptr(0, 0));
+			snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
 #else
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
-			eaDogM_WriteStringAtPos(0, 0, "1UI_STATE_HOST 2EQIP ");
-			sprintf(get_vterm_ptr(0, 0), "1UI_STATE_HOST 2EQIP ");
+			snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "1UI_STATE_HOST 2EQIP ");
 #else
-			sprintf(get_vterm_ptr(3, 0), "RS232 R%lu T%lu E%u %u %u        ", V.rx_total, V.tx_total, V.e_types, V.v_tx_line, V.v_rx_line);
-			eaDogM_WriteStringAtPos(3, 0, get_vterm_ptr(3, 0));
+			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "RS232 R%lu T%lu E%u %u %u        ", V.rx_total, V.tx_total, V.e_types, V.v_tx_line, V.v_rx_line);
 #endif
 #endif
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
-				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_INIT    ");
 				V.r_l_state = LINK_STATE_IDLE;
 				V.t_l_state = LINK_STATE_IDLE;
 #ifdef FAKER
@@ -869,12 +866,12 @@ void main(void)
 #endif
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 					if (V.debug) {
-						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
+						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "H254 %d, T%ld       ", sizeof(header254), V.testing);
 					} else {
 #ifdef FAKER
-						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 #else
-						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 #endif
 					}
 				}
@@ -884,7 +881,6 @@ void main(void)
 #endif
 				break;
 			case SEQ_STATE_RX:
-				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_RX    ");
 				/*
 				 * receive message from equipment
 				 */
@@ -893,13 +889,13 @@ void main(void)
 					s = get_vterm_ptr(0, 0);
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
-						sprintf(s, " S%dF%d Err %d             ", V.stream, V.function, V.all_errors);
+						snprintf(s, MAX_TEXT, " S%dF%d Err %d             ", V.stream, V.function, V.all_errors);
 					} else {
 						V.msg_error = MSG_ERROR_NONE;
-						sprintf(s, " S%dF%d # Rx %d            ", V.stream, V.function, V.all_errors);
+						snprintf(s, MAX_TEXT, " S%dF%d # Rx %d            ", V.stream, V.function, V.all_errors);
 					}
 					s[MAX_LINE] = 0;
-					MyeaDogM_WriteStringAtPos(0, 0, s);
+					//					MyeaDogM_WriteStringAtPos(0, 0, s);
 #ifdef DB1
 					WaitMs(5);
 #endif
@@ -915,7 +911,8 @@ void main(void)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TX:
-				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
+				snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "SEQ_STATE_TX           ");
+				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
 				/*
 				 * send response message to equipment
 				 */
@@ -937,24 +934,25 @@ void main(void)
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
 					V.s_state = SEQ_STATE_TX;
-					sprintf(s, "S%dF%d # OK %d Q Tx %lu       ", V.stream, V.function, V.e_types, V.tx_total);
+					snprintf(s, MAX_TEXT, "S%dF%d # OK %d Q Tx %lu       ", V.stream, V.function, V.e_types, V.tx_total);
 				} else {
 					V.s_state = SEQ_STATE_DONE;
-					sprintf(s, "S%dF%d # OK %d Tx %lu        ", V.stream, V.function, V.e_types, V.tx_total);
+					snprintf(s, MAX_TEXT, "S%dF%d # OK %d Tx %lu        ", V.stream, V.function, V.e_types, V.tx_total);
 				}
 
 				s[MAX_LINE] = 0;
 				s[SPIN_CHAR] = spinners(3, false);
-				MyeaDogM_WriteStringAtPos(0, 0, s);
+				//				MyeaDogM_WriteStringAtPos(0, 0, s);
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			case SEQ_STATE_ERROR:
 			default:
-				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR      ");
+				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR      ");
+				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "SEQ_STATE_ERROR         ");
 				V.s_state = SEQ_STATE_INIT;
-				sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
+				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
 				update_lcd(0);
 				WaitMs(2000);
 				break;
@@ -962,12 +960,12 @@ void main(void)
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (TimerDone(TMR_DISPLAY)) { // limit update rate
 					if (V.debug) {
-						sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld          ", sizeof(header254), V.testing);
+						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "H254 %d, T%ld          ", sizeof(header254), V.testing);
 					} else {
 #ifdef FAKER
-						sprintf(get_vterm_ptr(2, 0), "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 #else
-						sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 #endif
 					}
 				}
@@ -990,7 +988,7 @@ void main(void)
 								if (V.ping_count++ > 4) {
 									set_display_info(DIS_STR);
 									hb_message();
-									sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
+									snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
 									update_lcd(0);
 									WaitMs(250);
 									V.ping_count = 0;
@@ -1003,15 +1001,14 @@ void main(void)
 			}
 			break;
 		case UI_STATE_LOG: // monitor
-			//			eaDogM_WriteStringAtPos(3, 0, "UI_STATE_LOG    ");
 			switch (V.s_state) {
 			case SEQ_STATE_INIT:
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				if (V.debug)
-					sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
+					snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "H254 %d, T%ld       ", sizeof(header254), V.testing);
 				else
-					sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+					snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 
 #ifdef DB1
 				if (SLED) {
@@ -1026,9 +1023,7 @@ void main(void)
 				 * receive rx and tx messages from comm link
 				 */
 				if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-					sprintf(V.buf, "S%dF%d #%ld           ", V.stream, V.function, V.ticks);
-					V.buf[VBUF_MAX] = 0; // string size limit
-					MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
+					snprintf(get_vterm_ptr(V.uart - 1, 0), MAX_TEXT, "S%dF%d #%ld OK          ", V.stream, V.function, V.ticks);
 					V.s_state = SEQ_STATE_TRIGGER;
 				}
 				if (V.m_l_state == LINK_STATE_ERROR)
@@ -1036,8 +1031,6 @@ void main(void)
 				break;
 			case SEQ_STATE_TRIGGER:
 				V.s_state = SEQ_STATE_DONE;
-				sprintf(V.buf, "OK ");
-				MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
 				break;
 			case SEQ_STATE_DONE:
 			case SEQ_STATE_ERROR:
@@ -1046,9 +1039,9 @@ void main(void)
 				break;
 			}
 			if (V.debug)
-				sprintf(get_vterm_ptr(2, 0), "Equip type %d            ", V.e_types);
+				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "Equip type %d            ", V.e_types);
 			else
-				sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			break;
 		case UI_STATE_ERROR:
 		default:
@@ -1073,7 +1066,7 @@ void main(void)
 				if (TimerDone(TMR_HELPDIS)) {
 					set_display_info(DIS_STR);
 				}
-				sprintf(get_vterm_ptr(1, 0), "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+				snprintf(get_vterm_ptr(1, 0), MAX_TEXT, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA1);
 				WaitMs(1);
@@ -1087,7 +1080,7 @@ void main(void)
 					V.v_rx_line = ADC_GetConversionResult();
 				};
 				StartTimer(TMR_DISPLAY, DDELAY);
-				update_lcd(0);
+				refresh_lcd();
 			}
 		}
 		/*
@@ -1101,11 +1094,11 @@ void main(void)
 		if (V.set_sequ) {
 			if (TimerDone(TMR_INFO)) {
 				V.set_sequ = false;
-				set_vterm(0);
-				update_lcd(0);
+				set_vterm(V.vterm);
+				refresh_lcd();
 			} else {
-				set_vterm(2);
-				update_lcd(2);
+				set_vterm(INFO_VTERM);
+				refresh_lcd();
 			}
 		}
 

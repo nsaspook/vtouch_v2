@@ -37,7 +37,7 @@ extern "C" {
 	 */
 
 
-//		#define FAKER			// emulate equipment protocol
+#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -97,7 +97,17 @@ extern "C" {
 #define S10F3_TID_POS	138
 
 #define MAX_LINE	21
-#define VBUF_MAX	21
+#define MAX_TEXT	MAX_LINE-1
+
+#define MAX_INFO	63
+#define MAX_BUF		63
+#define MAX_TERM	159
+#define MAX_VTERM	4
+#define MAX_LCD_LINES	4
+
+#define INFO_VTERM	2
+#define HELP_VTERM	1
+
 #define SPIN_CHAR	19
 
 	struct spi_link_type_o { // internal SPI state table
@@ -263,7 +273,7 @@ extern "C" {
 		LINK_STATES m_l_state;
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
-		char buf[64], terminal[160], info[64];
+		char buf[MAX_BUF + 1], terminal[MAX_TERM + 1], info[MAX_INFO + 1];
 		uint32_t ticks, systemb, tx_total, rx_total;
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -273,10 +283,10 @@ extern "C" {
 		failed_send : 4, failed_receive : 4,
 		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2;
 		terminal_type response;
-		uint8_t uart, llid, sid, ping_count, euart;
+		uint8_t uart, llid, sid, ping_count, euart, vterm;
 		volatile uint8_t ticker;
 		bool flipper;
-        adc_result_t v_tx_line, v_rx_line;
+		adc_result_t v_tx_line, v_rx_line;
 	} V_data;
 
 	typedef struct V_help {

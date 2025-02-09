@@ -819,19 +819,19 @@ void terminal_format(DISPLAY_TYPES t_format)
 {
 	switch (t_format) {
 	case display_message:
-		sprintf(V.terminal, msg0,
+		snprintf(V.terminal, MAX_TERM, msg0,
 			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	case display_online:
-		sprintf(V.terminal, msg1,
+		snprintf(V.terminal, MAX_TERM, msg1,
 			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	case display_comm:
-		sprintf(V.terminal, msg2,
+		snprintf(V.terminal, MAX_TERM, msg2,
 			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	default:
-		sprintf(V.terminal, msg99,
+		snprintf(V.terminal, MAX_TERM, msg99,
 			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
 	}
@@ -927,7 +927,7 @@ static void parse_sid(void)
  */
 P_CODES s10f1_opcmd(void)
 {
-	sprintf(V.info, " Terminal          ");
+	snprintf(V.info, MAX_INFO, " Terminal          ");
 	V.response.cmdlen = V.response.ack[6]; // length of command string
 	V.response.TID = V.response.ack[4]; // TID of equipment message
 	V.response.mcode = V.response.ack[7]; // first char of equipment message
@@ -1018,7 +1018,7 @@ P_CODES s10f1_opcmd(void)
 	}
 
 	if (V.response.mcode == 'L' || V.response.mcode == 'l') {
-		sprintf(V.info, " Log file reset          ");
+		snprintf(V.info, MAX_INFO, " Log file reset          ");
 		return CODE_LOG;
 	}
 
@@ -1035,7 +1035,7 @@ P_CODES s10f1_opcmd(void)
 	}
 
 	if (V.response.mcode == 'D' || V.response.mcode == 'd') {
-		sprintf(V.info, " Debug Toggle            ");
+		snprintf(V.info, MAX_INFO, " Debug Toggle            ");
 		return CODE_DEBUG;
 	}
 
@@ -1391,7 +1391,7 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
 		DATAEE_WriteByte(i + (uint16_t) ((V.response.log_seq & 0x03) << (uint8_t) 8), msg_data[254 + 2 - i]);
 	} while (++i <= 255);
 
-	sprintf(V.info, "Saved S%dF%d %d     ", stream, function, V.response.log_num);
+	snprintf(V.info, MAX_INFO, "Saved S%dF%d %d     ", stream, function, V.response.log_num);
 	StartTimer(TMR_INFO, dtime);
 	V.response.info = DIS_LOG;
 	V.response.log_num++;
