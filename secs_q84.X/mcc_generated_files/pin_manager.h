@@ -65,26 +65,6 @@
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
-// get/set channel_ANA0 aliases
-#define channel_ANA0_TRIS                 TRISAbits.TRISA0
-#define channel_ANA0_LAT                  LATAbits.LATA0
-#define channel_ANA0_PORT                 PORTAbits.RA0
-#define channel_ANA0_WPU                  WPUAbits.WPUA0
-#define channel_ANA0_OD                   ODCONAbits.ODCA0
-#define channel_ANA0_ANS                  ANSELAbits.ANSELA0
-#define channel_ANA0_SetHigh()            do { LATAbits.LATA0 = 1; } while(0)
-#define channel_ANA0_SetLow()             do { LATAbits.LATA0 = 0; } while(0)
-#define channel_ANA0_Toggle()             do { LATAbits.LATA0 = ~LATAbits.LATA0; } while(0)
-#define channel_ANA0_GetValue()           PORTAbits.RA0
-#define channel_ANA0_SetDigitalInput()    do { TRISAbits.TRISA0 = 1; } while(0)
-#define channel_ANA0_SetDigitalOutput()   do { TRISAbits.TRISA0 = 0; } while(0)
-#define channel_ANA0_SetPullup()          do { WPUAbits.WPUA0 = 1; } while(0)
-#define channel_ANA0_ResetPullup()        do { WPUAbits.WPUA0 = 0; } while(0)
-#define channel_ANA0_SetPushPull()        do { ODCONAbits.ODCA0 = 0; } while(0)
-#define channel_ANA0_SetOpenDrain()       do { ODCONAbits.ODCA0 = 1; } while(0)
-#define channel_ANA0_SetAnalogMode()      do { ANSELAbits.ANSELA0 = 1; } while(0)
-#define channel_ANA0_SetDigitalMode()     do { ANSELAbits.ANSELA0 = 0; } while(0)
-
 // get/set channel_ANA1 aliases
 #define channel_ANA1_TRIS                 TRISAbits.TRISA1
 #define channel_ANA1_LAT                  LATAbits.LATA1
@@ -124,18 +104,6 @@
 #define channel_ANA2_SetOpenDrain()       do { ODCONAbits.ODCA2 = 1; } while(0)
 #define channel_ANA2_SetAnalogMode()      do { ANSELAbits.ANSELA2 = 1; } while(0)
 #define channel_ANA2_SetDigitalMode()     do { ANSELAbits.ANSELA2 = 0; } while(0)
-
-// get/set RA3 procedures
-#define RA3_SetHigh()            do { LATAbits.LATA3 = 1; } while(0)
-#define RA3_SetLow()             do { LATAbits.LATA3 = 0; } while(0)
-#define RA3_Toggle()             do { LATAbits.LATA3 = ~LATAbits.LATA3; } while(0)
-#define RA3_GetValue()              PORTAbits.RA3
-#define RA3_SetDigitalInput()    do { TRISAbits.TRISA3 = 1; } while(0)
-#define RA3_SetDigitalOutput()   do { TRISAbits.TRISA3 = 0; } while(0)
-#define RA3_SetPullup()             do { WPUAbits.WPUA3 = 1; } while(0)
-#define RA3_ResetPullup()           do { WPUAbits.WPUA3 = 0; } while(0)
-#define RA3_SetAnalogMode()         do { ANSELAbits.ANSELA3 = 1; } while(0)
-#define RA3_SetDigitalMode()        do { ANSELAbits.ANSELA3 = 0; } while(0)
 
 // get/set MLED aliases
 #define MLED_TRIS                 TRISBbits.TRISB1

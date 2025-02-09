@@ -39300,7 +39300,7 @@ unsigned char __t3rd16on(void);
 # 1 "mcc_generated_files/device_config.h" 1
 # 51 "mcc_generated_files/mcc.h" 2
 # 1 "mcc_generated_files/pin_manager.h" 1
-# 398 "mcc_generated_files/pin_manager.h"
+# 366 "mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 52 "mcc_generated_files/mcc.h" 2
 
@@ -39482,7 +39482,6 @@ typedef uint16_t adc_result_t;
 
 typedef enum
 {
-    channel_ANA0 = 0x0,
     channel_ANA1 = 0x1,
     channel_ANA2 = 0x2,
     channel_VSS = 0x3B,
@@ -39501,87 +39500,87 @@ typedef enum
 {
     CONTEXT_1,
 } ADC_context_t;
-# 115 "mcc_generated_files/adc.h"
+# 114 "mcc_generated_files/adc.h"
 void ADC_Initialize(void);
-# 146 "mcc_generated_files/adc.h"
+# 145 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableChannelSequencer(void);
-# 168 "mcc_generated_files/adc.h"
+# 167 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DisableChannelSequencer(void);
-# 200 "mcc_generated_files/adc.h"
+# 199 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_StartChannelSequencer(void);
-# 223 "mcc_generated_files/adc.h"
+# 222 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_SelectContext(ADC_context_t context);
-# 245 "mcc_generated_files/adc.h"
+# 244 "mcc_generated_files/adc.h"
 void ADC_EnableChannelScan(ADC_context_t context);
-# 269 "mcc_generated_files/adc.h"
+# 268 "mcc_generated_files/adc.h"
 void ADC_DisableChannelScan(ADC_context_t context);
-# 296 "mcc_generated_files/adc.h"
+# 295 "mcc_generated_files/adc.h"
 void ADC_StartConversion(ADC_channel_t channel);
-# 322 "mcc_generated_files/adc.h"
+# 321 "mcc_generated_files/adc.h"
 _Bool ADC_IsConversionDone(void);
-# 348 "mcc_generated_files/adc.h"
+# 347 "mcc_generated_files/adc.h"
 adc_result_t ADC_GetConversionResult(void);
-# 374 "mcc_generated_files/adc.h"
+# 373 "mcc_generated_files/adc.h"
 adc_result_t ADC_GetSingleConversion(ADC_channel_t channel);
-# 399 "mcc_generated_files/adc.h"
+# 398 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_StopConversion(void);
-# 423 "mcc_generated_files/adc.h"
+# 422 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_SetStopOnInterrupt(void);
-# 451 "mcc_generated_files/adc.h"
+# 450 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DischargeSampleCapacitor(void);
-# 475 "mcc_generated_files/adc.h"
+# 474 "mcc_generated_files/adc.h"
 void ADC_LoadAcquisitionRegister(uint16_t acquisitionValue);
-# 499 "mcc_generated_files/adc.h"
+# 498 "mcc_generated_files/adc.h"
 void ADC_SetPrechargeTime(uint16_t prechargeTime);
-# 523 "mcc_generated_files/adc.h"
+# 522 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_SetRepeatCount(uint8_t repeatCount);
-# 547 "mcc_generated_files/adc.h"
+# 546 "mcc_generated_files/adc.h"
 uint8_t ADC_GetCurrentCountofConversions(void);
-# 570 "mcc_generated_files/adc.h"
+# 569 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_ClearAccumulator(void);
-# 594 "mcc_generated_files/adc.h"
+# 593 "mcc_generated_files/adc.h"
 uint24_t ADC_GetAccumulatorValue(void);
-# 621 "mcc_generated_files/adc.h"
+# 620 "mcc_generated_files/adc.h"
 _Bool ADC_HasAccumulatorOverflowed(void);
-# 645 "mcc_generated_files/adc.h"
+# 644 "mcc_generated_files/adc.h"
 uint16_t ADC_GetFilterValue(void);
-# 669 "mcc_generated_files/adc.h"
+# 668 "mcc_generated_files/adc.h"
 uint16_t ADC_GetPreviousResult(void);
-# 693 "mcc_generated_files/adc.h"
+# 692 "mcc_generated_files/adc.h"
 void ADC_DefineSetPoint(uint16_t setPoint);
-# 717 "mcc_generated_files/adc.h"
+# 716 "mcc_generated_files/adc.h"
 void ADC_SetUpperThreshold(uint16_t upperThreshold);
-# 741 "mcc_generated_files/adc.h"
+# 740 "mcc_generated_files/adc.h"
 void ADC_SetLowerThreshold(uint16_t lowerThreshold);
-# 766 "mcc_generated_files/adc.h"
+# 765 "mcc_generated_files/adc.h"
 uint16_t ADC_GetErrorCalculation(void);
-# 790 "mcc_generated_files/adc.h"
+# 789 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableDoubleSampling(void);
-# 814 "mcc_generated_files/adc.h"
+# 813 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableContinuousConversion(void);
-# 838 "mcc_generated_files/adc.h"
+# 837 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DisableContinuousConversion(void);
-# 865 "mcc_generated_files/adc.h"
+# 864 "mcc_generated_files/adc.h"
 _Bool ADC_HasErrorCrossedUpperThreshold(void);
-# 892 "mcc_generated_files/adc.h"
+# 891 "mcc_generated_files/adc.h"
 _Bool ADC_HasErrorCrossedLowerThreshold(void);
-# 917 "mcc_generated_files/adc.h"
+# 916 "mcc_generated_files/adc.h"
 uint8_t ADC_GetConversionStageStatus(void);
-# 938 "mcc_generated_files/adc.h"
+# 937 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableChargePump(void);
-# 959 "mcc_generated_files/adc.h"
+# 958 "mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DisableChargePump(void);
-# 988 "mcc_generated_files/adc.h"
+# 987 "mcc_generated_files/adc.h"
 void ADC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 1017 "mcc_generated_files/adc.h"
+# 1016 "mcc_generated_files/adc.h"
 void ADC_SetActiveClockTuningInterruptHandler(void (* InterruptHandler)(void));
-# 1046 "mcc_generated_files/adc.h"
+# 1045 "mcc_generated_files/adc.h"
 void ADC_SetContext1ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 1075 "mcc_generated_files/adc.h"
+# 1074 "mcc_generated_files/adc.h"
 void ADC_SetContext2ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 1104 "mcc_generated_files/adc.h"
+# 1103 "mcc_generated_files/adc.h"
 void ADC_SetContext3ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 1133 "mcc_generated_files/adc.h"
+# 1132 "mcc_generated_files/adc.h"
 void ADC_SetContext4ThresholdInterruptHandler(void (* InterruptHandler)(void));
 # 57 "mcc_generated_files/mcc.h" 2
 # 1 "mcc_generated_files/tmr5.h" 1
@@ -40501,8 +40500,8 @@ void SYSTEM_Initialize(void)
     OSCILLATOR_Initialize();
     TMR6_Initialize();
     DMA1_Initialize();
-    TMR5_Initialize();
     TMR2_Initialize();
+    TMR5_Initialize();
     UART2_Initialize();
     UART1_Initialize();
     SPI1_Initialize();

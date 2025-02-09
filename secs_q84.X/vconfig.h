@@ -15,6 +15,7 @@ extern "C" {
 #endif
 
 #include <xc.h>
+#include "mcc_generated_files/adc.h"
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
 #include "ringbufs.h"
@@ -277,6 +278,7 @@ extern "C" {
 		uint8_t uart, llid, sid, ping_count, euart;
 		volatile uint8_t ticker;
 		bool flipper;
+        adc_result_t v_tx_line, v_rx_line;
 	} V_data;
 
 	typedef struct V_help {

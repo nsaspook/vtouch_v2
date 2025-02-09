@@ -39661,7 +39661,7 @@ unsigned char __t3rd16on(void);
 # 1 "./mcc_generated_files/device_config.h" 1
 # 51 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/pin_manager.h" 1
-# 398 "./mcc_generated_files/pin_manager.h"
+# 366 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 52 "./mcc_generated_files/mcc.h" 2
 
@@ -39684,7 +39684,6 @@ typedef uint16_t adc_result_t;
 
 typedef enum
 {
-    channel_ANA0 = 0x0,
     channel_ANA1 = 0x1,
     channel_ANA2 = 0x2,
     channel_VSS = 0x3B,
@@ -39703,87 +39702,87 @@ typedef enum
 {
     CONTEXT_1,
 } ADC_context_t;
-# 115 "./mcc_generated_files/adc.h"
+# 114 "./mcc_generated_files/adc.h"
 void ADC_Initialize(void);
-# 146 "./mcc_generated_files/adc.h"
+# 145 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableChannelSequencer(void);
-# 168 "./mcc_generated_files/adc.h"
+# 167 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DisableChannelSequencer(void);
-# 200 "./mcc_generated_files/adc.h"
+# 199 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_StartChannelSequencer(void);
-# 223 "./mcc_generated_files/adc.h"
+# 222 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_SelectContext(ADC_context_t context);
-# 245 "./mcc_generated_files/adc.h"
+# 244 "./mcc_generated_files/adc.h"
 void ADC_EnableChannelScan(ADC_context_t context);
-# 269 "./mcc_generated_files/adc.h"
+# 268 "./mcc_generated_files/adc.h"
 void ADC_DisableChannelScan(ADC_context_t context);
-# 296 "./mcc_generated_files/adc.h"
+# 295 "./mcc_generated_files/adc.h"
 void ADC_StartConversion(ADC_channel_t channel);
-# 322 "./mcc_generated_files/adc.h"
+# 321 "./mcc_generated_files/adc.h"
 _Bool ADC_IsConversionDone(void);
-# 348 "./mcc_generated_files/adc.h"
+# 347 "./mcc_generated_files/adc.h"
 adc_result_t ADC_GetConversionResult(void);
-# 374 "./mcc_generated_files/adc.h"
+# 373 "./mcc_generated_files/adc.h"
 adc_result_t ADC_GetSingleConversion(ADC_channel_t channel);
-# 399 "./mcc_generated_files/adc.h"
+# 398 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_StopConversion(void);
-# 423 "./mcc_generated_files/adc.h"
+# 422 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_SetStopOnInterrupt(void);
-# 451 "./mcc_generated_files/adc.h"
+# 450 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DischargeSampleCapacitor(void);
-# 475 "./mcc_generated_files/adc.h"
+# 474 "./mcc_generated_files/adc.h"
 void ADC_LoadAcquisitionRegister(uint16_t acquisitionValue);
-# 499 "./mcc_generated_files/adc.h"
+# 498 "./mcc_generated_files/adc.h"
 void ADC_SetPrechargeTime(uint16_t prechargeTime);
-# 523 "./mcc_generated_files/adc.h"
+# 522 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_SetRepeatCount(uint8_t repeatCount);
-# 547 "./mcc_generated_files/adc.h"
+# 546 "./mcc_generated_files/adc.h"
 uint8_t ADC_GetCurrentCountofConversions(void);
-# 570 "./mcc_generated_files/adc.h"
+# 569 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_ClearAccumulator(void);
-# 594 "./mcc_generated_files/adc.h"
+# 593 "./mcc_generated_files/adc.h"
 uint24_t ADC_GetAccumulatorValue(void);
-# 621 "./mcc_generated_files/adc.h"
+# 620 "./mcc_generated_files/adc.h"
 _Bool ADC_HasAccumulatorOverflowed(void);
-# 645 "./mcc_generated_files/adc.h"
+# 644 "./mcc_generated_files/adc.h"
 uint16_t ADC_GetFilterValue(void);
-# 669 "./mcc_generated_files/adc.h"
+# 668 "./mcc_generated_files/adc.h"
 uint16_t ADC_GetPreviousResult(void);
-# 693 "./mcc_generated_files/adc.h"
+# 692 "./mcc_generated_files/adc.h"
 void ADC_DefineSetPoint(uint16_t setPoint);
-# 717 "./mcc_generated_files/adc.h"
+# 716 "./mcc_generated_files/adc.h"
 void ADC_SetUpperThreshold(uint16_t upperThreshold);
-# 741 "./mcc_generated_files/adc.h"
+# 740 "./mcc_generated_files/adc.h"
 void ADC_SetLowerThreshold(uint16_t lowerThreshold);
-# 766 "./mcc_generated_files/adc.h"
+# 765 "./mcc_generated_files/adc.h"
 uint16_t ADC_GetErrorCalculation(void);
-# 790 "./mcc_generated_files/adc.h"
+# 789 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableDoubleSampling(void);
-# 814 "./mcc_generated_files/adc.h"
+# 813 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableContinuousConversion(void);
-# 838 "./mcc_generated_files/adc.h"
+# 837 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DisableContinuousConversion(void);
-# 865 "./mcc_generated_files/adc.h"
+# 864 "./mcc_generated_files/adc.h"
 _Bool ADC_HasErrorCrossedUpperThreshold(void);
-# 892 "./mcc_generated_files/adc.h"
+# 891 "./mcc_generated_files/adc.h"
 _Bool ADC_HasErrorCrossedLowerThreshold(void);
-# 917 "./mcc_generated_files/adc.h"
+# 916 "./mcc_generated_files/adc.h"
 uint8_t ADC_GetConversionStageStatus(void);
-# 938 "./mcc_generated_files/adc.h"
+# 937 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_EnableChargePump(void);
-# 959 "./mcc_generated_files/adc.h"
+# 958 "./mcc_generated_files/adc.h"
 __attribute__((inline)) void ADC_DisableChargePump(void);
-# 988 "./mcc_generated_files/adc.h"
+# 987 "./mcc_generated_files/adc.h"
 void ADC_SetADIInterruptHandler(void (* InterruptHandler)(void));
-# 1017 "./mcc_generated_files/adc.h"
+# 1016 "./mcc_generated_files/adc.h"
 void ADC_SetActiveClockTuningInterruptHandler(void (* InterruptHandler)(void));
-# 1046 "./mcc_generated_files/adc.h"
+# 1045 "./mcc_generated_files/adc.h"
 void ADC_SetContext1ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 1075 "./mcc_generated_files/adc.h"
+# 1074 "./mcc_generated_files/adc.h"
 void ADC_SetContext2ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 1104 "./mcc_generated_files/adc.h"
+# 1103 "./mcc_generated_files/adc.h"
 void ADC_SetContext3ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 1133 "./mcc_generated_files/adc.h"
+# 1132 "./mcc_generated_files/adc.h"
 void ADC_SetContext4ThresholdInterruptHandler(void (* InterruptHandler)(void));
 # 57 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/tmr5.h" 1
@@ -40696,7 +40695,7 @@ void SystemArbiter_Initialize(void);
 # 1 "./eadog.h" 1
 # 40 "./eadog.h"
 # 1 "./vconfig.h" 1
-# 20 "./vconfig.h"
+# 21 "./vconfig.h"
 # 1 "./ringbufs.h" 1
 # 15 "./ringbufs.h"
 # 1 "./vconfig.h" 1
@@ -40718,8 +40717,8 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put(ringBufS_t *_this, const uint8_t c);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 21 "./vconfig.h" 2
-# 104 "./vconfig.h"
+# 22 "./vconfig.h" 2
+# 105 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40896,6 +40895,7 @@ void SystemArbiter_Initialize(void);
   uint8_t uart, llid, sid, ping_count, euart;
   volatile uint8_t ticker;
   _Bool flipper;
+        adc_result_t v_tx_line, v_rx_line;
  } V_data;
 
  typedef struct V_help {
@@ -41200,545 +41200,545 @@ void mode_lamp_bright(void);
 # 171 "main.c" 2
 # 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb  8 2025", *build_time = "16:00:59";
+const char *build_date = "Feb  8 2025", *build_time = "18:00:55";
 
 const char * GEM_TEXT [] = {
- "DISABLE",
- "COMM   ",
- "OFFLINE",
- "ONLIINE",
- "REMOTE ",
- "ERROR  "
+    "DISABLE",
+    "COMM   ",
+    "OFFLINE",
+    "ONLIINE",
+    "REMOTE ",
+    "ERROR  "
 };
 
 V_data V = {
- .error = LINK_ERROR_NONE,
- .abort = LINK_ERROR_NONE,
- .msg_error = MSG_ERROR_RESET,
- .uart = 1,
- .g_state = GEM_STATE_DISABLE,
- .e_types = GEM_GENERIC,
- .ticker = 45,
- .checksum_error = 0,
- .all_errors = 0,
- .timer_error = 0,
- .debug = 0,
- .response.info = DIS_STR,
- .response.log_num = 0,
- .response.log_seq = 0,
- .response.host_display_ack = 0,
- .queue = 0,
- .stack = 0,
- .sid = 1,
- .help_id = 0,
- .ping_count = 0,
- .sequences = 0,
- .set_sequ = 0,
- .euart = 2,
- .tx_total = 0,
- .rx_total = 0,
- .failed_receive = RECV_ERROR_NONE,
- .failed_send = SEND_ERROR_NONE,
+    .error = LINK_ERROR_NONE,
+    .abort = LINK_ERROR_NONE,
+    .msg_error = MSG_ERROR_RESET,
+    .uart = 1,
+    .g_state = GEM_STATE_DISABLE,
+    .e_types = GEM_GENERIC,
+    .ticker = 45,
+    .checksum_error = 0,
+    .all_errors = 0,
+    .timer_error = 0,
+    .debug = 0,
+    .response.info = DIS_STR,
+    .response.log_num = 0,
+    .response.log_seq = 0,
+    .response.host_display_ack = 0,
+    .queue = 0,
+    .stack = 0,
+    .sid = 1,
+    .help_id = 0,
+    .ping_count = 0,
+    .sequences = 0,
+    .set_sequ = 0,
+    .euart = 2,
+    .tx_total = 0,
+    .rx_total = 0,
+    .failed_receive = RECV_ERROR_NONE,
+    .failed_send = SEND_ERROR_NONE,
 };
 
 B_type B = {
- .one_sec_flag = 0,
- .display_update = 0,
- .dim_delay = 6,
+    .one_sec_flag = 0,
+    .display_update = 0,
+    .dim_delay = 6,
 };
 
 header10 H10[] = {
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 1,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 0,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 1,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 17,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 15,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
- {
-  .length = 10,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 17,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
+    {
+        .length = 10,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 1,
+        .block.block.function = 1,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+    },
+    {
+        .length = 10,
+    },
+    {
+        .length = 10,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 1,
+        .block.block.function = 0,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+    },
+    {
+        .length = 10,
+        .block.block.rbit = 1,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 1,
+        .block.block.function = 1,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+    },
+    {
+        .length = 10,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 2,
+        .block.block.function = 17,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+    },
+    {
+        .length = 10,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 1,
+        .block.block.function = 15,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+    },
+    {
+        .length = 10,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 1,
+        .block.block.function = 17,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+    },
 };
 
 header12 H12[] = {
- {
-  .length = 12,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 2,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[1] = 1,
-  .data[0] = 0,
- },
- {
-  .length = 12,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[1] = 1,
-  .data[0] = 0,
- },
+    {
+        .length = 12,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 1,
+        .block.block.function = 2,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[1] = 1,
+        .data[0] = 0,
+    },
+    {
+        .length = 12,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 1,
+        .block.block.function = 13,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[1] = 1,
+        .data[0] = 0,
+    },
 };
 
 header13 H13[] = {
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 6,
-  .block.block.function = 12,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 10,
-  .block.block.function = 2,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 5,
-  .block.block.function = 2,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
- {
-  .length = 13,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 2,
-  .block.block.function = 26,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[2] = 0x21,
-  .data[1] = 0x01,
-  .data[0] = 0xff,
- },
+    {
+        .length = 13,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 6,
+        .block.block.function = 12,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[2] = 0x21,
+        .data[1] = 0x01,
+        .data[0] = 0x00,
+    },
+    {
+        .length = 13,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 10,
+        .block.block.function = 2,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[2] = 0x21,
+        .data[1] = 0x01,
+        .data[0] = 0x00,
+    },
+    {
+        .length = 13,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 5,
+        .block.block.function = 2,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[2] = 0x21,
+        .data[1] = 0x01,
+        .data[0] = 0x00,
+    },
+    {
+        .length = 13,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 2,
+        .block.block.function = 26,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[2] = 0x21,
+        .data[1] = 0x01,
+        .data[0] = 0xff,
+    },
 };
 
 header14 H14[] = {
- {
-  .length = 14,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 4,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[3] = 0x01,
-  .data[2] = 0x11,
-  .data[1] = 0x41,
-  .data[0] = 0x00,
- },
+    {
+        .length = 14,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 1,
+        .block.block.function = 4,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[3] = 0x01,
+        .data[2] = 0x11,
+        .data[1] = 0x41,
+        .data[0] = 0x00,
+    },
 };
 
 header17 H17[] = {
- {
-  .length = 17,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 1,
-  .block.block.function = 14,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[6] = 0x01,
-  .data[5] = 0x02,
-  .data[4] = 0x21,
-  .data[3] = 0x01,
-  .data[2] = 0x00,
-  .data[1] = 0x01,
-  .data[0] = 0x00,
- },
+    {
+        .length = 17,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 1,
+        .block.block.function = 14,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[6] = 0x01,
+        .data[5] = 0x02,
+        .data[4] = 0x21,
+        .data[3] = 0x01,
+        .data[2] = 0x00,
+        .data[1] = 0x01,
+        .data[0] = 0x00,
+    },
 };
 # 478 "main.c"
 header26 H26[] = {
- {
-  .length = 26,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 0,
-  .block.block.stream = 2,
-  .block.block.function = 18,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data = "01091108460000",
-  .datam[1] = 0x41,
-  .datam[0] = 14,
- },
+    {
+        .length = 26,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 0,
+        .block.block.stream = 2,
+        .block.block.function = 18,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data = "01091108460000",
+        .datam[1] = 0x41,
+        .datam[0] = 14,
+    },
 };
 # 516 "main.c"
 header33 H33[] = {
- {
-  .length = 33,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 41,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[22] = 0x01,
-  .data[21] = 0x02,
-  .data[20] = 0x41,
-  .data[19] = 0x02,
-  .data[18] = 0x31,
-  .data[17] = 0x37,
-  .data[16] = 0x01,
-  .data[15] = 0x01,
-  .data[14] = 0x01,
-  .data[13] = 0x02,
-  .data[12] = 0x41,
-  .data[11] = 0x08,
-  .data[10] = 0x4c,
-  .data[9] = 0x4f,
-  .data[8] = 0x41,
-  .data[7] = 0x44,
-  .data[6] = 0x4c,
-  .data[5] = 0x4f,
-  .data[4] = 0x43,
-  .data[3] = 0x4b,
-  .data[2] = 0xa5,
-  .data[1] = 0x01,
-  .data[0] = 0x01,
- },
+    {
+        .length = 33,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 2,
+        .block.block.function = 41,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[22] = 0x01,
+        .data[21] = 0x02,
+        .data[20] = 0x41,
+        .data[19] = 0x02,
+        .data[18] = 0x31,
+        .data[17] = 0x37,
+        .data[16] = 0x01,
+        .data[15] = 0x01,
+        .data[14] = 0x01,
+        .data[13] = 0x02,
+        .data[12] = 0x41,
+        .data[11] = 0x08,
+        .data[10] = 0x4c,
+        .data[9] = 0x4f,
+        .data[8] = 0x41,
+        .data[7] = 0x44,
+        .data[6] = 0x4c,
+        .data[5] = 0x4f,
+        .data[4] = 0x43,
+        .data[3] = 0x4b,
+        .data[2] = 0xa5,
+        .data[1] = 0x01,
+        .data[0] = 0x01,
+    },
 };
 
 const header33 HC33[] = {
- {
-  .length = 33,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 41,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[22] = 0x01,
-  .data[21] = 0x02,
-  .data[20] = 0x41,
-  .data[19] = 0x02,
-  .data[18] = 0x31,
-  .data[17] = 0x37,
-  .data[16] = 0x01,
-  .data[15] = 0x01,
-  .data[14] = 0x01,
-  .data[13] = 0x02,
-  .data[12] = 0x41,
-  .data[11] = 0x08,
-  .data[10] = 0x4c,
-  .data[9] = 0x4f,
-  .data[8] = 0x41,
-  .data[7] = 0x44,
-  .data[6] = 0x4c,
-  .data[5] = 0x4f,
-  .data[4] = 0x43,
-  .data[3] = 0x4b,
-  .data[2] = 0xa5,
-  .data[1] = 0x01,
-  .data[0] = 0x01,
- },
- {
-  .length = 33,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 2,
-  .block.block.function = 41,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[22] = 0x01,
-  .data[21] = 0x02,
-  .data[20] = 0x41,
-  .data[19] = 0x02,
-  .data[18] = 0x31,
-  .data[17] = 0x32,
-  .data[16] = 0x01,
-  .data[15] = 0x01,
-  .data[14] = 0x01,
-  .data[13] = 0x02,
-  .data[12] = 0x41,
-  .data[11] = 0x08,
-  .data[10] = 0x4c,
-  .data[9] = 0x4f,
-  .data[8] = 0x41,
-  .data[7] = 0x44,
-  .data[6] = 0x4c,
-  .data[5] = 0x4f,
-  .data[4] = 0x43,
-  .data[3] = 0x4b,
-  .data[2] = 0xa5,
-  .data[1] = 0x01,
-  .data[0] = 0x01,
- },
+    {
+        .length = 33,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 2,
+        .block.block.function = 41,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[22] = 0x01,
+        .data[21] = 0x02,
+        .data[20] = 0x41,
+        .data[19] = 0x02,
+        .data[18] = 0x31,
+        .data[17] = 0x37,
+        .data[16] = 0x01,
+        .data[15] = 0x01,
+        .data[14] = 0x01,
+        .data[13] = 0x02,
+        .data[12] = 0x41,
+        .data[11] = 0x08,
+        .data[10] = 0x4c,
+        .data[9] = 0x4f,
+        .data[8] = 0x41,
+        .data[7] = 0x44,
+        .data[6] = 0x4c,
+        .data[5] = 0x4f,
+        .data[4] = 0x43,
+        .data[3] = 0x4b,
+        .data[2] = 0xa5,
+        .data[1] = 0x01,
+        .data[0] = 0x01,
+    },
+    {
+        .length = 33,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 2,
+        .block.block.function = 41,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[22] = 0x01,
+        .data[21] = 0x02,
+        .data[20] = 0x41,
+        .data[19] = 0x02,
+        .data[18] = 0x31,
+        .data[17] = 0x32,
+        .data[16] = 0x01,
+        .data[15] = 0x01,
+        .data[14] = 0x01,
+        .data[13] = 0x02,
+        .data[12] = 0x41,
+        .data[11] = 0x08,
+        .data[10] = 0x4c,
+        .data[9] = 0x4f,
+        .data[8] = 0x41,
+        .data[7] = 0x44,
+        .data[6] = 0x4c,
+        .data[5] = 0x4f,
+        .data[4] = 0x43,
+        .data[3] = 0x4b,
+        .data[2] = 0xa5,
+        .data[1] = 0x01,
+        .data[0] = 0x01,
+    },
 };
 
 header153 H153[] = {
- {
-  .length = 153,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 10,
-  .block.block.function = 3,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[142] = 0x01,
-  .data[141] = 0x02,
-  .data[140] = 0x21,
-  .data[139] = 0x01,
-  .data[138] = 1,
-  .data[137] = 0x41,
-  .data[136] = 44,
-  .data[35] = ' ',
-  .data[34] = 'F',
-  .data[33] = 'R',
-  .data[32] = 'E',
-  .data[31] = 'D',
-  .data[30] = '1',
-  .data[29] = '2',
-  .data[28] = '3',
-  .data[27] = '0',
-  .data[26] = '0',
-  .data[25] = '4',
-  .data[24] = 'B',
-  .data[23] = 'B',
-  .data[22] = 'B',
-  .data[21] = 'B',
-  .data[20] = 'R',
-  .data[19] = 'O',
-  .data[18] = 'O',
-  .data[17] = 'K',
-  .data[16] = 'S',
-  .data[15] = '1',
-  .data[14] = '2',
-  .data[13] = 'E',
-  .data[12] = 'D',
-  .data[11] = '1',
-  .data[10] = '2',
-  .data[9] = '3',
-  .data[8] = '4',
-  .data[7] = 'B',
-  .data[6] = 'B',
-  .data[5] = 'B',
-  .data[4] = 'B',
-  .data[3] = 'R',
-  .data[2] = 'O',
-  .data[1] = 'O',
-  .data[0] = 'K',
- },
- {
-  .length = 153,
-  .block.block.rbit = 0,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 10,
-  .block.block.function = 5,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .data[142] = 0x01,
-  .data[141] = 0x02,
-  .data[140] = 0x21,
-  .data[139] = 0x01,
-  .data[138] = 1,
-  .data[137] = 0x01,
-  .data[136] = 0x02,
-  .data[135] = 0x41,
-  .data[134] = 9,
-  .data[33] = '*',
-  .data[32] = 'F',
-  .data[31] = 'R',
-  .data[30] = 'E',
-  .data[29] = 'D',
-  .data[28] = '1',
-  .data[27] = '2',
-  .data[26] = '3',
-  .data[25] = '4',
-  .data[24] = 0x41,
-  .data[23] = 23,
-  .data[22] = '*',
-  .data[21] = 'B',
-  .data[20] = 'R',
-  .data[19] = 'K',
-  .data[18] = 'S',
-  .data[17] = '1',
-  .data[16] = '2',
-  .data[15] = 'E',
-  .data[14] = 'D',
-  .data[13] = '1',
-  .data[12] = '2',
-  .data[11] = '3',
-  .data[10] = '4',
-  .data[9] = 'B',
-  .data[8] = 'B',
-  .data[7] = 'B',
-  .data[6] = 'B',
-  .data[5] = 'R',
-  .data[4] = 'O',
-  .data[3] = 'O',
-  .data[2] = 'K',
-  .data[1] = 'S',
-  .data[0] = 'o',
- },
+    {
+        .length = 153,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 10,
+        .block.block.function = 3,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[142] = 0x01,
+        .data[141] = 0x02,
+        .data[140] = 0x21,
+        .data[139] = 0x01,
+        .data[138] = 1,
+        .data[137] = 0x41,
+        .data[136] = 44,
+        .data[35] = ' ',
+        .data[34] = 'F',
+        .data[33] = 'R',
+        .data[32] = 'E',
+        .data[31] = 'D',
+        .data[30] = '1',
+        .data[29] = '2',
+        .data[28] = '3',
+        .data[27] = '0',
+        .data[26] = '0',
+        .data[25] = '4',
+        .data[24] = 'B',
+        .data[23] = 'B',
+        .data[22] = 'B',
+        .data[21] = 'B',
+        .data[20] = 'R',
+        .data[19] = 'O',
+        .data[18] = 'O',
+        .data[17] = 'K',
+        .data[16] = 'S',
+        .data[15] = '1',
+        .data[14] = '2',
+        .data[13] = 'E',
+        .data[12] = 'D',
+        .data[11] = '1',
+        .data[10] = '2',
+        .data[9] = '3',
+        .data[8] = '4',
+        .data[7] = 'B',
+        .data[6] = 'B',
+        .data[5] = 'B',
+        .data[4] = 'B',
+        .data[3] = 'R',
+        .data[2] = 'O',
+        .data[1] = 'O',
+        .data[0] = 'K',
+    },
+    {
+        .length = 153,
+        .block.block.rbit = 0,
+        .block.block.didh = 0,
+        .block.block.didl = 0,
+        .block.block.wbit = 1,
+        .block.block.stream = 10,
+        .block.block.function = 5,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .data[142] = 0x01,
+        .data[141] = 0x02,
+        .data[140] = 0x21,
+        .data[139] = 0x01,
+        .data[138] = 1,
+        .data[137] = 0x01,
+        .data[136] = 0x02,
+        .data[135] = 0x41,
+        .data[134] = 9,
+        .data[33] = '*',
+        .data[32] = 'F',
+        .data[31] = 'R',
+        .data[30] = 'E',
+        .data[29] = 'D',
+        .data[28] = '1',
+        .data[27] = '2',
+        .data[26] = '3',
+        .data[25] = '4',
+        .data[24] = 0x41,
+        .data[23] = 23,
+        .data[22] = '*',
+        .data[21] = 'B',
+        .data[20] = 'R',
+        .data[19] = 'K',
+        .data[18] = 'S',
+        .data[17] = '1',
+        .data[16] = '2',
+        .data[15] = 'E',
+        .data[14] = 'D',
+        .data[13] = '1',
+        .data[12] = '2',
+        .data[11] = '3',
+        .data[10] = '4',
+        .data[9] = 'B',
+        .data[8] = 'B',
+        .data[7] = 'B',
+        .data[6] = 'B',
+        .data[5] = 'R',
+        .data[4] = 'O',
+        .data[3] = 'O',
+        .data[2] = 'K',
+        .data[1] = 'S',
+        .data[0] = 'o',
+    },
 };
 
 header254 H254[] = {
- {
-  .length = 254,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0xEF,
-  .block.block.wbit = 1,
-  .block.block.stream = 10,
-  .block.block.function = 3,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
-  .checksum = 0x2019,
-  .data[1] = 0x19,
-  .data[0] = 0x57,
- },
+    {
+        .length = 254,
+        .block.block.rbit = 1,
+        .block.block.didh = 0,
+        .block.block.didl = 0xEF,
+        .block.block.wbit = 1,
+        .block.block.stream = 10,
+        .block.block.function = 3,
+        .block.block.ebit = 1,
+        .block.block.bidh = 0,
+        .block.block.bidl = 1,
+        .block.block.systemb = 1,
+        .checksum = 0x2019,
+        .data[1] = 0x19,
+        .data[0] = 0x57,
+    },
 };
 
 gem_message_type S[10];
@@ -41753,355 +41753,364 @@ void onesec_io(void);
 
 
 
-void main(void)
-{
- UI_STATES mode;
- char * s;
+void main(void) {
+    UI_STATES mode;
+    char * s;
 
 
- SYSTEM_Initialize();
+    SYSTEM_Initialize();
 
 
- (INTCON0bits.GIEH = 1);
+    (INTCON0bits.GIEH = 1);
 
 
- (INTCON0bits.GIEL = 1);
+    (INTCON0bits.GIEL = 1);
 
- V.ui_state = UI_STATE_INIT;
- do {
-  TRISDbits.TRISD5 = 0;
- } while (0);
+    V.ui_state = UI_STATE_INIT;
+    do {
+        TRISDbits.TRISD5 = 0;
+    } while (0);
 
 
 
 
- WaitMs(300);
+    WaitMs(300);
 
- mode = UI_STATE_HOST;
+    mode = UI_STATE_HOST;
 
- TMR2_StartTimer();
- TMR5_SetInterruptHandler(onesec_io);
- TMR5_StartTimer();
- TMR6_StartTimer();
+    TMR2_StartTimer();
+    TMR5_SetInterruptHandler(onesec_io);
+    TMR5_StartTimer();
+    TMR6_StartTimer();
+    ADC_SelectContext(CONTEXT_1);
 
 
 
 
- while (1) {
-  do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
-  if (!faker++) {
+    while (1) {
+        do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
+        if (!faker++) {
 
 
 
 
-  }
-
-
-
-  switch (V.ui_state) {
-  case UI_STATE_INIT:
-   init_display();
-   eaDogM_WriteCommand(0b00001100);
-
-   V.ui_state = mode;
-   V.s_state = SEQ_STATE_INIT;
-   srand(1957);
-   set_vterm(0);
-   sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
-   sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.08B");
-   sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
-   sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
-   sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.08B");
-   sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
-   eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
-   update_lcd(0);
-   WaitMs(3000);
-   StartTimer(TMR_DISPLAY, 100);
-   StartTimer(TMR_SEQ, 10000);
-   StartTimer(TMR_INFO, 3000);
-   StartTimer(TMR_FLIPPER, 1500);
-   StartTimer(TMR_HELPDIS, 3000);
-   eaDogM_WriteStringAtPos(3, 0, " UI_STATE_INIT   ");
-   break;
-  case UI_STATE_HOST:
-# 855 "main.c"
-   sprintf(get_vterm_ptr(3, 0), "RS232 R%lu T%lu E%u           ", V.rx_total, V.tx_total, V.e_types);
-   eaDogM_WriteStringAtPos(3, 0, get_vterm_ptr(3, 0));
-
-
-   switch (V.s_state) {
-   case SEQ_STATE_INIT:
-
-    V.r_l_state = LINK_STATE_IDLE;
-    V.t_l_state = LINK_STATE_IDLE;
-
-
-
-    V.s_state = SEQ_STATE_RX;
-
-    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-     if (V.debug) {
-      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-     } else {
-
-
-
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
-
-     }
-    }
-
-
-
-
-    break;
-   case SEQ_STATE_RX:
-
-
-
-
-    if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
-     set_display_info(DIS_STR);
-     s = get_vterm_ptr(0, 0);
-     if (V.stream == 9) {
-      V.msg_error = V.function;
-      sprintf(s, " S%dF%d Err %d             ", V.stream, V.function, V.all_errors);
-     } else {
-      V.msg_error = MSG_ERROR_NONE;
-      sprintf(s, " S%dF%d # Rx %d            ", V.stream, V.function, V.all_errors);
-     }
-     s[21] = 0;
-     MyeaDogM_WriteStringAtPos(0, 0, s);
-
-
-
-     if (V.wbit) {
-      V.s_state = SEQ_STATE_TX;
-      V.failed_send = SEND_ERROR_NONE;
-      V.t_l_state = LINK_STATE_IDLE;
-     } else {
-      V.s_state = SEQ_STATE_TRIGGER;
-     }
-    }
-    if (V.r_l_state == LINK_STATE_ERROR)
-     V.s_state = SEQ_STATE_ERROR;
-    break;
-   case SEQ_STATE_TX:
-    eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
-
-
-
-    if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
-
-
-
-     V.s_state = SEQ_STATE_TRIGGER;
-
-    }
-    if (V.t_l_state == LINK_STATE_ERROR)
-     V.s_state = SEQ_STATE_ERROR;
-    break;
-   case SEQ_STATE_TRIGGER:
-
-    set_display_info(DIS_STR);
-    s = get_vterm_ptr(0, 0);
-    if (V.queue) {
-     V.r_l_state = LINK_STATE_IDLE;
-     V.t_l_state = LINK_STATE_IDLE;
-     V.s_state = SEQ_STATE_TX;
-     sprintf(s, "S%dF%d # OK %d Q Tx %lu       ", V.stream, V.function, V.e_types, V.tx_total);
-    } else {
-     V.s_state = SEQ_STATE_DONE;
-     sprintf(s, "S%dF%d # OK %d Tx %lu        ", V.stream, V.function, V.e_types, V.tx_total);
-    }
-
-    s[21] = 0;
-    s[19] = spinners(3, 0);
-    MyeaDogM_WriteStringAtPos(0, 0, s);
-    break;
-   case SEQ_STATE_DONE:
-    V.s_state = SEQ_STATE_INIT;
-    break;
-   case SEQ_STATE_ERROR:
-   default:
-    eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR      ");
-    V.s_state = SEQ_STATE_INIT;
-    sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
-    update_lcd(0);
-    WaitMs(2000);
-    break;
-   }
-   if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
-    if (TimerDone(TMR_DISPLAY)) {
-     if (V.debug) {
-      sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld          ", sizeof(header254), V.testing);
-     } else {
-
-
-
-      sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
-
-     }
-    }
-
-
-
-    if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
-     if ((V.r_l_state == LINK_STATE_IDLE) && (V.t_l_state == LINK_STATE_IDLE)) {
-      if (TimerDone(TMR_HBIO)) {
-       set_display_info(DIS_STR);
-
-       if (V.stack > 0) {
-        hb_message();
-        V.msg_error = MSG_ERROR_NONE;
-        V.ping_count = 0;
-        V.error = LINK_ERROR_NONE;
-        V.abort = LINK_ERROR_NONE;
-       } else {
-        StartTimer(TMR_HBIO, 30000);
-        if (V.ping_count++ > 4) {
-         set_display_info(DIS_STR);
-         hb_message();
-         sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
-         update_lcd(0);
-         WaitMs(250);
-         V.ping_count = 0;
         }
-        set_display_info(DIS_STR);
-       }
-      }
-     }
-    }
-   }
-   break;
-  case UI_STATE_LOG:
 
-   switch (V.s_state) {
-   case SEQ_STATE_INIT:
-    V.m_l_state = LINK_STATE_IDLE;
-    V.s_state = SEQ_STATE_RX;
-    if (V.debug)
-     sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof(header254), V.testing);
-    else
-     sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+
+
+        switch (V.ui_state) {
+            case UI_STATE_INIT:
+                init_display();
+                eaDogM_WriteCommand(0b00001100);
+
+                V.ui_state = mode;
+                V.s_state = SEQ_STATE_INIT;
+                srand(1957);
+                set_vterm(0);
+                sprintf(get_vterm_ptr(0, 0), " RVI HOST TESTER");
+                sprintf(get_vterm_ptr(1, 0), " Version %s   ", "2.08B");
+                sprintf(get_vterm_ptr(2, 0), " NSASPOOK     ");
+                sprintf(get_vterm_ptr(0, 2), " SEQUENCE TEST  ");
+                sprintf(get_vterm_ptr(1, 2), " Version %s   ", "2.08B");
+                sprintf(get_vterm_ptr(2, 2), " VTERM #2       ");
+                eaDogM_WriteStringAtPos(3, 0, (char *) build_date);
+                update_lcd(0);
+                WaitMs(3000);
+                StartTimer(TMR_DISPLAY, 100);
+                StartTimer(TMR_SEQ, 10000);
+                StartTimer(TMR_INFO, 3000);
+                StartTimer(TMR_FLIPPER, 1500);
+                StartTimer(TMR_HELPDIS, 3000);
+                eaDogM_WriteStringAtPos(3, 0, " UI_STATE_INIT   ");
+                break;
+            case UI_STATE_HOST:
+# 855 "main.c"
+                sprintf(get_vterm_ptr(3, 0), "RS232 R%lu T%lu E%u           ", V.rx_total, V.tx_total, V.e_types);
+                eaDogM_WriteStringAtPos(3, 0, get_vterm_ptr(3, 0));
+
+
+                switch (V.s_state) {
+                    case SEQ_STATE_INIT:
+
+                        V.r_l_state = LINK_STATE_IDLE;
+                        V.t_l_state = LINK_STATE_IDLE;
+
+
+
+                        V.s_state = SEQ_STATE_RX;
+
+                        if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+                            if (V.debug) {
+                                sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof (header254), V.testing);
+                            } else {
+
+
+
+                                sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
+
+                            }
+                        }
+
+
+
+
+                        break;
+                    case SEQ_STATE_RX:
+
+
+
+
+                        if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
+                            set_display_info(DIS_STR);
+                            s = get_vterm_ptr(0, 0);
+                            if (V.stream == 9) {
+                                V.msg_error = V.function;
+                                sprintf(s, " S%dF%d Err %d             ", V.stream, V.function, V.all_errors);
+                            } else {
+                                V.msg_error = MSG_ERROR_NONE;
+                                sprintf(s, " S%dF%d # Rx %d            ", V.stream, V.function, V.all_errors);
+                            }
+                            s[21] = 0;
+                            MyeaDogM_WriteStringAtPos(0, 0, s);
+
+
+
+                            if (V.wbit) {
+                                V.s_state = SEQ_STATE_TX;
+                                V.failed_send = SEND_ERROR_NONE;
+                                V.t_l_state = LINK_STATE_IDLE;
+                            } else {
+                                V.s_state = SEQ_STATE_TRIGGER;
+                            }
+                        }
+                        if (V.r_l_state == LINK_STATE_ERROR)
+                            V.s_state = SEQ_STATE_ERROR;
+                        break;
+                    case SEQ_STATE_TX:
+                        eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
+
+
+
+                        if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
+
+
+
+                            V.s_state = SEQ_STATE_TRIGGER;
+
+                        }
+                        if (V.t_l_state == LINK_STATE_ERROR)
+                            V.s_state = SEQ_STATE_ERROR;
+                        break;
+                    case SEQ_STATE_TRIGGER:
+
+                        set_display_info(DIS_STR);
+                        s = get_vterm_ptr(0, 0);
+                        if (V.queue) {
+                            V.r_l_state = LINK_STATE_IDLE;
+                            V.t_l_state = LINK_STATE_IDLE;
+                            V.s_state = SEQ_STATE_TX;
+                            sprintf(s, "S%dF%d # OK %d Q Tx %lu       ", V.stream, V.function, V.e_types, V.tx_total);
+                        } else {
+                            V.s_state = SEQ_STATE_DONE;
+                            sprintf(s, "S%dF%d # OK %d Tx %lu        ", V.stream, V.function, V.e_types, V.tx_total);
+                        }
+
+                        s[21] = 0;
+                        s[19] = spinners(3, 0);
+                        MyeaDogM_WriteStringAtPos(0, 0, s);
+                        break;
+                    case SEQ_STATE_DONE:
+                        V.s_state = SEQ_STATE_INIT;
+                        break;
+                    case SEQ_STATE_ERROR:
+                    default:
+                        eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR      ");
+                        V.s_state = SEQ_STATE_INIT;
+                        sprintf(get_vterm_ptr(2, 0), "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
+                        update_lcd(0);
+                        WaitMs(2000);
+                        break;
+                }
+                if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
+                    if (TimerDone(TMR_DISPLAY)) {
+                        if (V.debug) {
+                            sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld          ", sizeof (header254), V.testing);
+                        } else {
+
+
+
+                            sprintf(get_vterm_ptr(2, 0), "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
+
+                        }
+                    }
+
+
+
+                    if (((V.g_state == GEM_STATE_REMOTE) && (V.s_state == SEQ_STATE_RX) && !V.queue)) {
+                        if ((V.r_l_state == LINK_STATE_IDLE) && (V.t_l_state == LINK_STATE_IDLE)) {
+                            if (TimerDone(TMR_HBIO)) {
+                                set_display_info(DIS_STR);
+
+                                if (V.stack > 0) {
+                                    hb_message();
+                                    V.msg_error = MSG_ERROR_NONE;
+                                    V.ping_count = 0;
+                                    V.error = LINK_ERROR_NONE;
+                                    V.abort = LINK_ERROR_NONE;
+                                } else {
+                                    StartTimer(TMR_HBIO, 30000);
+                                    if (V.ping_count++ > 4) {
+                                        set_display_info(DIS_STR);
+                                        hb_message();
+                                        sprintf(get_vterm_ptr(0, 0), "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
+                                        update_lcd(0);
+                                        WaitMs(250);
+                                        V.ping_count = 0;
+                                    }
+                                    set_display_info(DIS_STR);
+                                }
+                            }
+                        }
+                    }
+                }
+                break;
+            case UI_STATE_LOG:
+
+                switch (V.s_state) {
+                    case SEQ_STATE_INIT:
+                        V.m_l_state = LINK_STATE_IDLE;
+                        V.s_state = SEQ_STATE_RX;
+                        if (V.debug)
+                            sprintf(get_vterm_ptr(2, 0), "H254 %d, T%ld       ", sizeof (header254), V.testing);
+                        else
+                            sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 # 1022 "main.c"
-    break;
-   case SEQ_STATE_RX:
+                        break;
+                    case SEQ_STATE_RX:
 
 
 
-    if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
-     sprintf(V.buf, "S%dF%d #%ld           ", V.stream, V.function, V.ticks);
-     V.buf[21] = 0;
-     MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
-     V.s_state = SEQ_STATE_TRIGGER;
+                        if (m_protocol(&V.m_l_state) == LINK_STATE_DONE) {
+                            sprintf(V.buf, "S%dF%d #%ld           ", V.stream, V.function, V.ticks);
+                            V.buf[21] = 0;
+                            MyeaDogM_WriteStringAtPos(V.uart - 1, 0, V.buf);
+                            V.s_state = SEQ_STATE_TRIGGER;
+                        }
+                        if (V.m_l_state == LINK_STATE_ERROR)
+                            V.s_state = SEQ_STATE_ERROR;
+                        break;
+                    case SEQ_STATE_TRIGGER:
+                        V.s_state = SEQ_STATE_DONE;
+                        sprintf(V.buf, "OK ");
+                        MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
+                        break;
+                    case SEQ_STATE_DONE:
+                    case SEQ_STATE_ERROR:
+                    default:
+                        V.s_state = SEQ_STATE_INIT;
+                        break;
+                }
+                if (V.debug)
+                    sprintf(get_vterm_ptr(2, 0), "Equip type %d            ", V.e_types);
+                else
+                    sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+                break;
+            case UI_STATE_ERROR:
+            default:
+                V.ui_state = UI_STATE_INIT;
+                break;
+        }
+        if (V.ticks) {
+            if (V.failed_receive != RECV_ERROR_NONE) {
+                if (V.error == LINK_ERROR_CHECKSUM) {
+                }
+            } else {
+            }
+            if (V.failed_send != SEND_ERROR_NONE) {
+                if (V.error == LINK_ERROR_CHECKSUM) {
+                }
+            } else {
+            }
+        }
+
+        if (mode != UI_STATE_LOG) {
+            if (TimerDone(TMR_DISPLAY)) {
+                if (TimerDone(TMR_HELPDIS)) {
+                    set_display_info(DIS_STR);
+                }
+                sprintf(get_vterm_ptr(1, 0), "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+                ADC_DischargeSampleCapacitor();
+                ADC_StartConversion(channel_ANA1);
+                WaitMs(1);
+                if (ADC_IsConversionDone()) {
+                    V.v_tx_line = ADC_GetConversionResult();
+                };
+                ADC_DischargeSampleCapacitor();
+                ADC_StartConversion(channel_ANA2);
+                WaitMs(1);
+                if (ADC_IsConversionDone()) {
+                    V.v_rx_line = ADC_GetConversionResult();
+                };
+                StartTimer(TMR_DISPLAY, 100);
+                update_lcd(0);
+            }
+        }
+
+
+
+        check_help(V.flipper);
+
+
+
+
+        if (V.set_sequ) {
+            if (TimerDone(TMR_INFO)) {
+                V.set_sequ = 0;
+                set_vterm(0);
+                update_lcd(0);
+            } else {
+                set_vterm(2);
+                update_lcd(2);
+            }
+        }
+# 1118 "main.c"
+        do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
     }
-    if (V.m_l_state == LINK_STATE_ERROR)
-     V.s_state = SEQ_STATE_ERROR;
-    break;
-   case SEQ_STATE_TRIGGER:
-    V.s_state = SEQ_STATE_DONE;
-    sprintf(V.buf, "OK ");
-    MyeaDogM_WriteStringAtPos(V.uart - 1, 13, V.buf);
-    break;
-   case SEQ_STATE_DONE:
-   case SEQ_STATE_ERROR:
-   default:
-    V.s_state = SEQ_STATE_INIT;
-    break;
-   }
-   if (V.debug)
-    sprintf(get_vterm_ptr(2, 0), "Equip type %d            ", V.e_types);
-   else
-    sprintf(get_vterm_ptr(2, 0), "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-   break;
-  case UI_STATE_ERROR:
-  default:
-   V.ui_state = UI_STATE_INIT;
-   break;
-  }
-  if (V.ticks) {
-   if (V.failed_receive != RECV_ERROR_NONE) {
-    if (V.error == LINK_ERROR_CHECKSUM) {
-    }
-   } else {
-   }
-   if (V.failed_send != SEND_ERROR_NONE) {
-    if (V.error == LINK_ERROR_CHECKSUM) {
-    }
-   } else {
-   }
-  }
-
-  if (mode != UI_STATE_LOG) {
-   if (TimerDone(TMR_DISPLAY)) {
-    if (TimerDone(TMR_HELPDIS)) {
-     set_display_info(DIS_STR);
-    }
-    sprintf(get_vterm_ptr(1, 0), "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
-    StartTimer(TMR_DISPLAY, 100);
-    update_lcd(0);
-   }
-  }
-
-
-
-  check_help(V.flipper);
-
-
-
-
-  if (V.set_sequ) {
-   if (TimerDone(TMR_INFO)) {
-    V.set_sequ = 0;
-    set_vterm(0);
-    update_lcd(0);
-   } else {
-    set_vterm(2);
-    update_lcd(2);
-   }
-  }
-# 1106 "main.c"
-  do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
- }
 }
 
 
 
 
-void wdtdelay(const uint32_t delay)
-{
- uint32_t dcount;
+void wdtdelay(const uint32_t delay) {
+    uint32_t dcount;
 
- for (dcount = 0; dcount <= delay; dcount++) {
-  __asm(" clrwdt");
- };
+    for (dcount = 0; dcount <= delay; dcount++) {
+        __asm(" clrwdt");
+    };
 }
 
 
 
 
-void onesec_io(void)
-{
- do { LATBbits.LATB2 = ~LATBbits.LATB2; } while(0);
- do { LATBbits.LATB1 = 0; } while(0);
- do { LATBbits.LATB3 = 0; } while(0);
- B.one_sec_flag = 1;
+void onesec_io(void) {
+    do { LATBbits.LATB2 = ~LATBbits.LATB2; } while(0);
+    do { LATBbits.LATB1 = 0; } while(0);
+    do { LATBbits.LATB3 = 0; } while(0);
+    B.one_sec_flag = 1;
 }
 
 
-char spinners(uint8_t shape, const uint8_t reset)
-{
- static uint8_t s[6];
- char c;
+char spinners(uint8_t shape, const uint8_t reset) {
+    static uint8_t s[6];
+    char c;
 
- if (shape > (6 - 1))
-  shape = 0;
- if (reset)
-  s[shape] = 0;
- c = spin[shape][s[shape]];
- if (++s[shape] >= strlen(spin[shape]))
-  s[shape] = 0;
+    if (shape > (6 - 1))
+        shape = 0;
+    if (reset)
+        s[shape] = 0;
+    c = spin[shape][s[shape]];
+    if (++s[shape] >= strlen(spin[shape]))
+        s[shape] = 0;
 
- return c;
+    return c;
 }
