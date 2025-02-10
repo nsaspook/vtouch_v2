@@ -40852,12 +40852,6 @@ void WaitMs(uint16_t numMilliseconds);
 # 40 "./mydisplay.h" 2
 
 
-typedef struct D_data {
- char lcd[4][4][63 + 1];
- uint8_t vterm : 2;
- D_CODES last_info;
-} D_data;
-
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 uint8_t update_lcd(uint8_t);
 uint8_t refresh_lcd(void);
@@ -40876,7 +40870,9 @@ D_CODES set_temp_display_help(const D_CODES);
 # 14 "./msg_text.h"
 # 1 "./mconfig.h" 1
 # 38 "./mconfig.h"
-void mode_lamp_dim(uint16_t);
+void mconfig_init(void);
+
+void mode_lamp_dim(void);
 void mode_lamp_bright(void);
 # 15 "./msg_text.h" 2
 

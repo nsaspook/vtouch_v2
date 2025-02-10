@@ -40994,12 +40994,6 @@ void WaitMs(uint16_t numMilliseconds);
 # 26 "./gemsecs.h" 2
 # 1 "./mydisplay.h" 1
 # 42 "./mydisplay.h"
-typedef struct D_data {
- char lcd[4][4][63 + 1];
- uint8_t vterm : 2;
- D_CODES last_info;
-} D_data;
-
 void MyeaDogM_WriteStringAtPos(const uint8_t, const uint8_t, char *);
 uint8_t update_lcd(uint8_t);
 uint8_t refresh_lcd(void);
@@ -41018,7 +41012,9 @@ D_CODES set_temp_display_help(const D_CODES);
 # 14 "./msg_text.h"
 # 1 "./mconfig.h" 1
 # 38 "./mconfig.h"
-void mode_lamp_dim(uint16_t);
+void mconfig_init(void);
+
+void mode_lamp_dim(void);
 void mode_lamp_bright(void);
 # 15 "./msg_text.h" 2
 
@@ -41201,7 +41197,7 @@ void mode_lamp_bright(void);
 # 171 "main.c" 2
 # 183 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb  9 2025", *build_time = "12:46:38";
+const char *build_date = "Feb  9 2025", *build_time = "17:08:14";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41769,6 +41765,8 @@ void main(void)
 
  (INTCON0bits.GIEL = 1);
 
+ mconfig_init();
+
  V.ui_state = UI_STATE_INIT;
  do {
   TRISDbits.TRISD5 = 0;
@@ -41999,7 +41997,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 21 -1, "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      snprintf(get_vterm_ptr(2, 0), 21 -1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1029 "main.c"
+# 1031 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -42079,7 +42077,7 @@ void main(void)
     refresh_lcd();
    }
   }
-# 1116 "main.c"
+# 1118 "main.c"
   if (V.set_sequ) {
    if (TimerDone(TMR_INFO)) {
     V.set_sequ = 0;
@@ -42090,7 +42088,7 @@ void main(void)
     refresh_lcd();
    }
   }
-# 1134 "main.c"
+# 1136 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

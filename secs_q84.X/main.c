@@ -787,6 +787,8 @@ void main(void)
 
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
+	
+	mconfig_init();
 
 	V.ui_state = UI_STATE_INIT;
 	do {

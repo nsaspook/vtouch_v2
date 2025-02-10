@@ -35,7 +35,9 @@
 #include "mcc_generated_files/mcc.h"
 #include "vconfig.h"
 
-void mode_lamp_dim(uint16_t);
+void mconfig_init(void);
+
+void mode_lamp_dim(void);
 void mode_lamp_bright(void);
 
 #endif

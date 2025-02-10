@@ -1,27 +1,41 @@
 #include "mconfig.h"
 #include "mydisplay.h"
 #include "msg_text.h"
+#include <string.h>
+
+typedef struct D_data { // control data structure 
+	char lcd[MAX_VTERM][MAX_LCD_LINES][MAX_BUF + 1];
+	uint8_t vterm : 2; // line to 4 possible lines
+	D_CODES last_info;
+} D_data;
 
 extern V_data V;
 static D_data D = {0};
 
 /*
+ * This MUST run first to clear the vterm buffers before using any other functions
+ */
+void mconfig_init(void)
+{
+	memset(&D, 0, sizeof(D));
+}
+
+/*
  * hardware specific routines
  */
-void mode_lamp_dim(const uint16_t level)
+void mode_lamp_dim(void)
 {
-	PWM2_16BIT_SetSlice1Output1DutyCycleRegister(level); //33% duty cycle
-	PWM2_16BIT_LoadBufferRegisters();
+	set_lcd_dim(true);
 }
 
 void mode_lamp_bright(void)
 {
-	PWM2_16BIT_SetSlice1Output1DutyCycleRegister(0x55); //33% duty cycle
-	PWM2_16BIT_LoadBufferRegisters();
+	set_lcd_dim(false);
 }
 
 /*
  * mode button help mode select
+ * Not used
  */
 bool help_button(void)
 {
@@ -39,6 +53,9 @@ bool help_button(void)
 	return false;
 }
 
+/*
+ * Not used
+ */
 void check_help(bool flipper)
 {
 	/*
@@ -70,7 +87,7 @@ void check_help(bool flipper)
 			set_vterm(V.vterm);
 			V.help = false;
 			set_display_info(display_help());
-			mode_lamp_dim(V.mode_pwm);
+			mode_lamp_bright();
 			if (TimerDone(TMR_FLIPPER)) {
 				V.flipper = !V.flipper;
 				StartTimer(TMR_FLIPPER, DFLIP);
@@ -80,7 +97,7 @@ void check_help(bool flipper)
 }
 
 /*
- * write character data to LCD from vterm buffers
+ * write character data to LCD from the selected vterm buffers
  * 20x4 lines, returns the current default terminal buffer number
  */
 uint8_t update_lcd(uint8_t vterm)
@@ -102,13 +119,16 @@ uint8_t update_lcd(uint8_t vterm)
 	return D.vterm;
 }
 
+/*
+ * update the LCD screen with the current vterm buffers
+ */
 uint8_t refresh_lcd(void)
 {
 	return update_lcd(D.vterm);
 }
 
 /*
- * set terminal window to 0..3
+ * set terminal window to 0..3 to internal vterm
  */
 uint8_t set_vterm(const uint8_t vterm)
 {
@@ -118,6 +138,7 @@ uint8_t set_vterm(const uint8_t vterm)
 
 /*
  * return pointer to vterm line buffer
+ * Software diagnostic function, get address of pointers
  */
 char * get_vterm_ptr(uint8_t line, const uint8_t vterm)
 {
@@ -126,72 +147,74 @@ char * get_vterm_ptr(uint8_t line, const uint8_t vterm)
 
 /*
  * 20x4 lines
+ * Software diagnostic function, print address of pointers
  */
 void vterm_dump(void)
 {
-	snprintf(V.buf, MAX_TEXT, "vterm %x:%x   ", (uint16_t) get_vterm_ptr(0, 0), (uint16_t) get_vterm_ptr(0, 1));
+	snprintf(V.buf, MAX_TEXT, "vterm %x:%x            ", (uint16_t) get_vterm_ptr(0, MAIN_VTERM), (uint16_t) get_vterm_ptr(0, INFO_VTERM));
 	wait_lcd_done();
-	eaDogM_WriteStringAtPos(0, 0, V.buf);
-	snprintf(V.buf, MAX_TEXT, "vterm %x:%x   ", (uint16_t) get_vterm_ptr(1, 0), (uint16_t) get_vterm_ptr(1, 1));
+	eaDogM_WriteStringAtPos(0, MAIN_VTERM, V.buf);
+	snprintf(V.buf, MAX_TEXT, "vterm %x:%x            ", (uint16_t) get_vterm_ptr(1, MAIN_VTERM), (uint16_t) get_vterm_ptr(1, INFO_VTERM));
 	wait_lcd_done();
-	eaDogM_WriteStringAtPos(1, 0, V.buf);
-	snprintf(V.buf, MAX_TEXT, "vterm %x:%x   ", (uint16_t) get_vterm_ptr(2, 0), (uint16_t) get_vterm_ptr(2, 1));
+	eaDogM_WriteStringAtPos(1, MAIN_VTERM, V.buf);
+	snprintf(V.buf, MAX_TEXT, "vterm %x:%x            ", (uint16_t) get_vterm_ptr(2, MAIN_VTERM), (uint16_t) get_vterm_ptr(2, INFO_VTERM));
 	wait_lcd_done();
-	eaDogM_WriteStringAtPos(2, 0, V.buf);
-	snprintf(V.buf, MAX_TEXT, "vterm %x:%x   ", (uint16_t) get_vterm_ptr(3, 0), (uint16_t) get_vterm_ptr(3, 1));
+	eaDogM_WriteStringAtPos(2, MAIN_VTERM, V.buf);
+	snprintf(V.buf, MAX_TEXT, "vterm %x:%x            ", (uint16_t) get_vterm_ptr(3, MAIN_VTERM), (uint16_t) get_vterm_ptr(3, INFO_VTERM));
 	wait_lcd_done();
-	eaDogM_WriteStringAtPos(3, 0, V.buf);
+	eaDogM_WriteStringAtPos(3, MAIN_VTERM, V.buf);
 	WaitMs(3000);
 }
 
 void vterm_sequence(void)
 {
-	snprintf(get_vterm_ptr(2, 2), MAX_TEXT, " Mesg %d Stack %d      ", V.msg_error, V.stack);
+	snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, " Mesg %d Stack %d              ", V.msg_error, V.stack);
 	switch (V.response.info) {
 	case DIS_LOG:
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " S%dF%d log    %d    ", V.stream, V.function, V.response.log_seq & 0x03);
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " Stored #%d        ", V.response.log_num);
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " S%dF%d log    %d      ", V.stream, V.function, V.response.log_seq & 0x03);
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Stored #%d            ", V.response.log_num);
 		break;
 	case DIS_LOAD:
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " Ready LL        ");
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " S2F41 #%c         ", V.response.mcode);
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " Ready LL              ");
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " S2F41 #%c             ", V.response.mcode);
 		break;
 	case DIS_PUMP:
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " Pump LL         ");
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " S2F41 #%c         ", V.response.mcode);
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " Pump LL               ");
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " S2F41 #%c             ", V.response.mcode);
 		break;
 	case DIS_UNLOAD:
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " Open LL         ");
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " S2F41 #%c         ", V.response.mcode);
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " Open LL               ");
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " S2F41 #%c             ", V.response.mcode);
 		break;
 	case DIS_HELP:
-		snprintf(get_vterm_ptr(0, 1), MAX_TEXT, "HELP %s           ", build_date);
-		snprintf(get_vterm_ptr(1, 1), MAX_TEXT, "DISPLAY %s        ", build_time);
+		snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, "HELP %s                ", build_date);
+		snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, "DISPLAY %s             ", build_time);
 		break;
 	case DIS_SEQUENCE:
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " Load-lock num %d      ", V.llid);
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " SEQUENCE %d        ", V.sequences);
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " Load-lock num %d      ", V.llid);
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " SEQUENCE %d           ", V.sequences);
 		break;
 	case DIS_SEQUENCE_M:
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " Display num %d      ", V.response.mesgid);
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " SEQUENCE %d        ", V.sequences);
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " Display num %d        ", V.response.mesgid);
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " SEQUENCE %d           ", V.sequences);
 		break;
 	case DIS_TERM:
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " Terminal %d             ", V.response.TID);
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " CMD %c %c Len %d       ", V.response.mcode, V.response.mparm, V.response.cmdlen);
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " Terminal %d             ", V.response.TID);
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " CMD %c %c Len %d        ", V.response.mcode, V.response.mparm, V.response.cmdlen);
 		break;
 	case DIS_CLEAR:
 	default:
-		snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "                      ");
-		snprintf(get_vterm_ptr(1, 0), MAX_TEXT, "                      ");
-		snprintf(get_vterm_ptr(0, 2), MAX_TEXT, "                      ");
-		snprintf(get_vterm_ptr(1, 2), MAX_TEXT, "                      ");
+		snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "                      ");
+		snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "                      ");
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "                      ");
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "                      ");
 		break;
 	}
 }
 
 /*
  * update possible command messages from equipment
+ * not being used now
  */
 void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 {
@@ -200,14 +223,14 @@ void MyeaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 		eaDogM_WriteStringAtPos(r, c, strPtr);
 	} else {
 		if (V.response.info == DIS_HELP) {
-			snprintf(get_vterm_ptr(2, 1), MAX_TEXT, "%s", V.info);
-			update_lcd(1);
+			snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, "%s", V.info);
+			update_lcd(HELP_VTERM);
 		} else {
 			if ((V.response.info != DIS_STR)) {
-				update_lcd(2);
+				update_lcd(INFO_VTERM);
 			} else {
-				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "%s", V.info);
-				update_lcd(0);
+				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "%s", V.info);
+				update_lcd(MAIN_VTERM);
 			}
 		}
 
