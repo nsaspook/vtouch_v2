@@ -222,6 +222,8 @@ V_data V = {
 	.failed_receive = RECV_ERROR_NONE,
 	.failed_send = SEND_ERROR_NONE,
 	.vterm = 0,
+	.tx_rs232 = 'O',
+	.rx_rs232 = 'O',
 };
 
 B_type B = {
@@ -864,7 +866,7 @@ void main(void)
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
 			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "1UI_STATE_HOST 2EQIP ");
 #else
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "RS232 R%lu T%lu E%u %u %u        ", V.rx_total, V.tx_total, V.e_types, V.v_tx_line, V.v_rx_line);
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "RS232 R%lu T%lu E%u %c:%c        ", V.rx_total, V.tx_total, V.e_types, V.rx_rs232, V.tx_rs232);
 #endif
 #endif
 			switch (V.s_state) {
@@ -1092,10 +1094,13 @@ void main(void)
 				if (ADC_IsConversionDone()) {
 					V.v_rx_line = ADC_GetConversionResult();
 				};
+				// convert ADC values to char for display
+				update_rs232_line_status();
+				
 				StartTimer(TMR_DISPLAY, DDELAY);
 				if (V.vterm_switch++ >SWITCH_VTERM) {
 					set_vterm(switcher);
-					if (V.vterm_switch > SWITCH_VTERM + 9) {
+					if (V.vterm_switch > SWITCH_VTERM + SWITCH_DURATION) {
 						switcher++;
 						if ((switcher & 0x03) == HELP_VTERM) { // mask [0..3]]
 							switcher = INFO_VTERM; // skip short display of the main vterm
@@ -1108,10 +1113,10 @@ void main(void)
 				/*
 				 * update info screen data points
 				 */
-				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "RS232 %hu %hu                ", V.v_rx_line, V.v_tx_line);
-				snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
-				snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
-				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks T%lu R%lu               ", V.ticks, V.bt_total, V.br_total);
+				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "RS232 %hu:%c %hu:%c                ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
+				snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
+				snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
+				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks R%lu T%lu               ", V.ticks, V.bt_total, V.br_total);
 				refresh_lcd();
 			}
 		}

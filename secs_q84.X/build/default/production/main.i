@@ -40718,7 +40718,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 123 "./vconfig.h"
+# 128 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -41205,7 +41205,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 10 2025", *build_time = "16:23:06";
+const char *build_date = "Feb 10 2025", *build_time = "20:21:51";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41245,6 +41245,8 @@ V_data V = {
  .failed_receive = RECV_ERROR_NONE,
  .failed_send = SEND_ERROR_NONE,
  .vterm = 0,
+ .tx_rs232 = 'O',
+ .rx_rs232 = 'O',
 };
 
 B_type B = {
@@ -41479,7 +41481,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 480 "main.c"
+# 482 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -41498,7 +41500,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 518 "main.c"
+# 520 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -41848,7 +41850,7 @@ void main(void)
 
 
 
-   snprintf(get_vterm_ptr(3, 0), 21 -1, "RS232 R%lu T%lu E%u %u %u        ", V.rx_total, V.tx_total, V.e_types, V.v_tx_line, V.v_rx_line);
+   snprintf(get_vterm_ptr(3, 0), 21 -1, "RS232 R%lu T%lu E%u %c:%c        ", V.rx_total, V.tx_total, V.e_types, V.rx_rs232, V.tx_rs232);
 
 
    switch (V.s_state) {
@@ -42005,7 +42007,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 21 -1, "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      snprintf(get_vterm_ptr(2, 0), 21 -1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1032 "main.c"
+# 1034 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -42069,10 +42071,13 @@ void main(void)
     if (ADC_IsConversionDone()) {
      V.v_rx_line = ADC_GetConversionResult();
     };
+
+    update_rs232_line_status();
+
     StartTimer(TMR_DISPLAY, 100);
-    if (V.vterm_switch++ >20) {
+    if (V.vterm_switch++ >40) {
      set_vterm(switcher);
-     if (V.vterm_switch > 20 + 9) {
+     if (V.vterm_switch > 40 + 16) {
       switcher++;
       if ((switcher & 0x03) == 2) {
        switcher = 1;
@@ -42085,14 +42090,14 @@ void main(void)
 
 
 
-    snprintf(get_vterm_ptr(0, 1), 21 -1, "RS232 %hu %hu                ", V.v_rx_line, V.v_tx_line);
-    snprintf(get_vterm_ptr(1, 1), 21 -1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
-    snprintf(get_vterm_ptr(2, 1), 21 -1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
-    snprintf(get_vterm_ptr(3, 1), 21 -1, "Seq %lu Blks T%lu R%lu               ", V.ticks, V.bt_total, V.br_total);
+    snprintf(get_vterm_ptr(0, 1), 21 -1, "RS232 %hu:%c %hu:%c                ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
+    snprintf(get_vterm_ptr(1, 1), 21 -1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
+    snprintf(get_vterm_ptr(2, 1), 21 -1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
+    snprintf(get_vterm_ptr(3, 1), 21 -1, "Seq %lu Blks R%lu T%lu               ", V.ticks, V.bt_total, V.br_total);
     refresh_lcd();
    }
   }
-# 1126 "main.c"
+# 1131 "main.c"
   if (V.set_sequ) {
    if (TimerDone(TMR_INFO)) {
     V.set_sequ = 0;
@@ -42103,7 +42108,7 @@ void main(void)
     refresh_lcd();
    }
   }
-# 1144 "main.c"
+# 1149 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

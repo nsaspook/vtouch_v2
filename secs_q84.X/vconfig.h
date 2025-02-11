@@ -38,7 +38,7 @@ extern "C" {
 	 */
 
 
-//#define FAKER			// emulate equipment protocol
+	//#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -111,12 +111,17 @@ extern "C" {
 #define INFO_VTERM	1
 #define MAIN_VTERM	0
 
-#define SWITCH_VTERM	20
-	
+#define SWITCH_VTERM	40 // time between main to info screen switches
+#define SWITCH_DURATION	16 // time in the info screen
+
 #define LINE_OPEN_V	2048 // open wire
 #define LINE_RECV_V	1920 // connected to recever input only
 #define LINE_MARK_V	1425 // xmit -8 volts
 #define LINE_SPACE_V	2390 // xmit +9 volts
+#define LINE_LIMIT_H	500
+#define LINE_LIMIT_LOW	100
+#define LINE_LIMIT_MARK	300
+#define LINE_LIMIT_OPEN	50
 
 #define SPIN_CHAR	19
 
