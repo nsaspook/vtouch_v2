@@ -20,7 +20,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.08B"
+#define VER	"2.09B"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -34,6 +34,7 @@ extern "C" {
 	 * 2.06 add TX bytes transmitted counter and display
 	 * 2.07 more info messages to equipment terminal display from host
 	 * 2.08 reformat LCD messages, add ADC 1 and 2 for RS232 line voltage checks
+	 * 2.09 add link stats for info screen
 	 */
 
 
@@ -111,6 +112,11 @@ extern "C" {
 #define MAIN_VTERM	0
 
 #define SWITCH_VTERM	20
+	
+#define LINE_OPEN_V	2048 // open wire
+#define LINE_RECV_V	1920 // connected to recever input only
+#define LINE_MARK_V	1425 // xmit -8 volts
+#define LINE_SPACE_V	2390 // xmit +9 volts
 
 #define SPIN_CHAR	19
 
@@ -278,7 +284,7 @@ extern "C" {
 		LINK_STATES r_l_state;
 		LINK_STATES t_l_state;
 		char buf[MAX_BUF + 1], terminal[MAX_TERM + 1], info[MAX_INFO + 1];
-		uint32_t ticks, systemb, tx_total, rx_total;
+		uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
@@ -291,6 +297,7 @@ extern "C" {
 		volatile uint8_t ticker;
 		bool flipper;
 		adc_result_t v_tx_line, v_rx_line;
+		char tx_rs232, rx_rs232;
 	} V_data;
 
 	typedef struct V_help {

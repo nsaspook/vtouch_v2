@@ -272,7 +272,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_ERROR  M  ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_ERROR  M  ");
 #endif
 		MLED_SetHigh();
 		break;
@@ -448,10 +448,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		V.failed_receive = RECV_ERROR_NONE;
 		*r_link = LINK_STATE_DONE;
 		V.abort = LINK_ERROR_NONE;
+		V.br_total++;
 		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_NACK R    ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_NACK R    ");
 #endif
 		UART1_Write(NAK);
 		V.tx_total++;
@@ -470,10 +471,11 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 			V.rx_total++;
 		}
 		retry = RTY;
+		V.brn_total++;
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_ERROR R    ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_ERROR R    ");
 #endif
 		MLED_SetHigh();
 		break;
@@ -497,7 +499,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_IDLE T   ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_IDLE T   ");
 #endif
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
@@ -602,7 +604,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_ACK:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "LINK_STATE_ACK T   ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "LINK_STATE_ACK T   ");
 #endif
 		if (TimerDone(TMR_T3)) {
 			V.timer_error++;
@@ -618,6 +620,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 					V.failed_send = SEND_ERROR_NONE;
 					*t_link = LINK_STATE_DONE;
 					V.abort = LINK_ERROR_NONE;
+					V.bt_total++;
 				}
 			}
 			if (UART2_is_rx_ready()) {
@@ -627,13 +630,14 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 					V.failed_send = SEND_ERROR_NONE;
 					*t_link = LINK_STATE_DONE;
 					V.abort = LINK_ERROR_NONE;
+					V.bt_total++;
 				}
 			}
 		}
 		break;
 	case LINK_STATE_NAK: // send failure
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_NAK T   ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_NAK T   ");
 #endif
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
@@ -645,10 +649,11 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 			UART2_Read();
 			V.rx_total++;
 		}
+		V.btn_total++;
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, 0), MAX_TEXT,"LINK_STATE_ERROR T   ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_ERROR T   ");
 #endif
 		MLED_SetHigh();
 		break;

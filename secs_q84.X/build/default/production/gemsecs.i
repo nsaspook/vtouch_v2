@@ -39674,7 +39674,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 117 "./vconfig.h"
+# 123 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39839,7 +39839,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[63 + 1], terminal[159 + 1], info[63 + 1];
-  uint32_t ticks, systemb, tx_total, rx_total;
+  uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -39852,6 +39852,7 @@ void PIN_MANAGER_Initialize (void);
   volatile uint8_t ticker;
   _Bool flipper;
   adc_result_t v_tx_line, v_rx_line;
+  char tx_rs232, rx_rs232;
  } V_data;
 
  typedef struct V_help {
@@ -41474,6 +41475,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   V.failed_receive = RECV_ERROR_NONE;
   *r_link = LINK_STATE_DONE;
   V.abort = LINK_ERROR_NONE;
+  V.br_total++;
   break;
  case LINK_STATE_NAK:
 
@@ -41496,6 +41498,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
    V.rx_total++;
   }
   retry = 3;
+  V.brn_total++;
   break;
  case LINK_STATE_ERROR:
 
@@ -41644,6 +41647,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
      V.failed_send = SEND_ERROR_NONE;
      *t_link = LINK_STATE_DONE;
      V.abort = LINK_ERROR_NONE;
+     V.bt_total++;
     }
    }
    if (UART2_is_rx_ready()) {
@@ -41653,6 +41657,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
      V.failed_send = SEND_ERROR_NONE;
      *t_link = LINK_STATE_DONE;
      V.abort = LINK_ERROR_NONE;
+     V.bt_total++;
     }
    }
   }
@@ -41671,6 +41676,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    UART2_Read();
    V.rx_total++;
   }
+  V.btn_total++;
   break;
  case LINK_STATE_ERROR:
 
@@ -41842,19 +41848,19 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   snprintf(V.terminal, 159, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.09B");
   break;
  case display_online:
   snprintf(V.terminal, 159, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.09B");
   break;
  case display_comm:
   snprintf(V.terminal, 159, msg2,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.09B");
   break;
  default:
   snprintf(V.terminal, 159, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.08B");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.09B");
   break;
  }
 

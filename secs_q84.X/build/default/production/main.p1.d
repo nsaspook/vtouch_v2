@@ -21,4 +21,5 @@ gemsecs.h  \
 timers.h  \
 mydisplay.h  \
 msg_text.h  \
-mconfig.h 
+mconfig.h  \
+rs232.h 

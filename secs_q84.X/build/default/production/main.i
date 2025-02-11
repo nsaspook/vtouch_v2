@@ -40718,7 +40718,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 117 "./vconfig.h"
+# 123 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40883,7 +40883,7 @@ void SystemArbiter_Initialize(void);
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[63 + 1], terminal[159 + 1], info[63 + 1];
-  uint32_t ticks, systemb, tx_total, rx_total;
+  uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -40896,6 +40896,7 @@ void SystemArbiter_Initialize(void);
   volatile uint8_t ticker;
   _Bool flipper;
   adc_result_t v_tx_line, v_rx_line;
+  char tx_rs232, rx_rs232;
  } V_data;
 
  typedef struct V_help {
@@ -41195,9 +41196,16 @@ void mode_lamp_bright(void);
  GEM_STATES secs_gem_state(uint8_t, uint8_t);
  void equip_tx(uint8_t);
 # 171 "main.c" 2
-# 183 "main.c"
+
+
+
+# 1 "./rs232.h" 1
+# 17 "./rs232.h"
+ void update_rs232_line_status(void);
+# 175 "main.c" 2
+# 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb  9 2025", *build_time = "17:08:14";
+const char *build_date = "Feb 10 2025", *build_time = "16:23:06";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41471,7 +41479,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 479 "main.c"
+# 480 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -41490,7 +41498,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 517 "main.c"
+# 518 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -41809,19 +41817,19 @@ void main(void)
    srand(1957);
    set_vterm(V.vterm);
    snprintf(get_vterm_ptr(0, 0), 21 -1, " RVI HOST TESTER     ");
-   snprintf(get_vterm_ptr(1, 0), 21 -1, " Version %s          ", "2.08B");
+   snprintf(get_vterm_ptr(1, 0), 21 -1, " Version %s          ", "2.09B");
    snprintf(get_vterm_ptr(2, 0), 21 -1, " NSASPOOK            ");
    snprintf(get_vterm_ptr(3, 0), 21 -1, "%s                   ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 1), 21 -1, " INFO                ");
-   snprintf(get_vterm_ptr(1, 1), 21 -1, " Version %s          ", "2.08B");
+   snprintf(get_vterm_ptr(1, 1), 21 -1, " Version %s          ", "2.09B");
    snprintf(get_vterm_ptr(2, 1), 21 -1, " VTERM #1            ");
    snprintf(get_vterm_ptr(3, 1), 21 -1, "%s                   ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 2), 21 -1, " HELP                ");
-   snprintf(get_vterm_ptr(1, 2), 21 -1, " Version %s          ", "2.08B");
+   snprintf(get_vterm_ptr(1, 2), 21 -1, " Version %s          ", "2.09B");
    snprintf(get_vterm_ptr(2, 2), 21 -1, " VTERM #2            ");
    snprintf(get_vterm_ptr(3, 2), 21 -1, "%s                   ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 3), 21 -1, " DEBUG               ");
-   snprintf(get_vterm_ptr(1, 3), 21 -1, " Version %s          ", "2.08B");
+   snprintf(get_vterm_ptr(1, 3), 21 -1, " Version %s          ", "2.09B");
    snprintf(get_vterm_ptr(2, 3), 21 -1, " VTERM #3            ");
    snprintf(get_vterm_ptr(3, 3), 21 -1, "%s                   ", (char *) build_date);
    refresh_lcd();
@@ -41997,7 +42005,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 21 -1, "H254 %d, T%ld       ", sizeof(header254), V.testing);
     else
      snprintf(get_vterm_ptr(2, 0), 21 -1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1031 "main.c"
+# 1032 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -42066,7 +42074,7 @@ void main(void)
      set_vterm(switcher);
      if (V.vterm_switch > 20 + 9) {
       switcher++;
-      if ((switcher & 0x03) == 0) {
+      if ((switcher & 0x03) == 2) {
        switcher = 1;
       }
       V.vterm_switch = 0;
@@ -42074,10 +42082,17 @@ void main(void)
     } else {
      set_vterm(V.vterm);
     }
+
+
+
+    snprintf(get_vterm_ptr(0, 1), 21 -1, "RS232 %hu %hu                ", V.v_rx_line, V.v_tx_line);
+    snprintf(get_vterm_ptr(1, 1), 21 -1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
+    snprintf(get_vterm_ptr(2, 1), 21 -1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
+    snprintf(get_vterm_ptr(3, 1), 21 -1, "Seq %lu Blks T%lu R%lu               ", V.ticks, V.bt_total, V.br_total);
     refresh_lcd();
    }
   }
-# 1118 "main.c"
+# 1126 "main.c"
   if (V.set_sequ) {
    if (TimerDone(TMR_INFO)) {
     V.set_sequ = 0;
@@ -42088,7 +42103,7 @@ void main(void)
     refresh_lcd();
    }
   }
-# 1136 "main.c"
+# 1144 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

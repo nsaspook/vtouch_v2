@@ -171,6 +171,7 @@ typedef signed long long int24_t;
 #include "timers.h"
 #include "mconfig.h"
 #include "mydisplay.h"
+#include "rs232.h"
 
 #ifdef TRACE
 #define M_TRACE	do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0)
@@ -787,7 +788,7 @@ void main(void)
 
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
-	
+
 	mconfig_init();
 
 	V.ui_state = UI_STATE_INIT;
@@ -831,22 +832,22 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
 			set_vterm(V.vterm); // set to buffer 0
-			snprintf(get_vterm_ptr(0, 0), MAX_TEXT, " RVI HOST TESTER     ");
-			snprintf(get_vterm_ptr(1, 0), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, 0), MAX_TEXT, " NSASPOOK            ");
-			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "%s                   ", (char *) build_date);
-			snprintf(get_vterm_ptr(0, 1), MAX_TEXT, " INFO                ");
-			snprintf(get_vterm_ptr(1, 1), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, 1), MAX_TEXT, " VTERM #1            ");
-			snprintf(get_vterm_ptr(3, 1), MAX_TEXT, "%s                   ", (char *) build_date);
-			snprintf(get_vterm_ptr(0, 2), MAX_TEXT, " HELP                ");
-			snprintf(get_vterm_ptr(1, 2), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, 2), MAX_TEXT, " VTERM #2            ");
-			snprintf(get_vterm_ptr(3, 2), MAX_TEXT, "%s                   ", (char *) build_date);
-			snprintf(get_vterm_ptr(0, 3), MAX_TEXT, " DEBUG               ");
-			snprintf(get_vterm_ptr(1, 3), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, 3), MAX_TEXT, " VTERM #3            ");
-			snprintf(get_vterm_ptr(3, 3), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER     ");
+			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, " NSASPOOK            ");
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " INFO                ");
+			snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, " VTERM #1            ");
+			snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, " HELP                ");
+			snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, " VTERM #2            ");
+			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, " DEBUG               ");
+			snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, " Version %s          ", VER);
+			snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, " VTERM #3            ");
+			snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
 			refresh_lcd();
 			WaitMs(3000);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -854,16 +855,16 @@ void main(void)
 			StartTimer(TMR_INFO, TDELAY);
 			StartTimer(TMR_FLIPPER, DFLIP);
 			StartTimer(TMR_HELPDIS, TDELAY);
-			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, " UI_STATE_INIT   ");
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " UI_STATE_INIT   ");
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
 #ifdef FAKER
-			snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
 #else
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
-			snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "1UI_STATE_HOST 2EQIP ");
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "1UI_STATE_HOST 2EQIP ");
 #else
-			snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "RS232 R%lu T%lu E%u %u %u        ", V.rx_total, V.tx_total, V.e_types, V.v_tx_line, V.v_rx_line);
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "RS232 R%lu T%lu E%u %u %u        ", V.rx_total, V.tx_total, V.e_types, V.v_tx_line, V.v_rx_line);
 #endif
 #endif
 			switch (V.s_state) {
@@ -877,12 +878,12 @@ void main(void)
 #endif
 				if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 					if (V.debug) {
-						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "H254 %d, T%ld       ", sizeof(header254), V.testing);
 					} else {
 #ifdef FAKER
-						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 #else
-						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 #endif
 					}
 				}
@@ -922,7 +923,7 @@ void main(void)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TX:
-				snprintf(get_vterm_ptr(3, 0), MAX_TEXT, "SEQ_STATE_TX           ");
+				snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "SEQ_STATE_TX           ");
 				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TX    ");
 				/*
 				 * send response message to equipment
@@ -961,9 +962,9 @@ void main(void)
 			case SEQ_STATE_ERROR:
 			default:
 				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR      ");
-				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "SEQ_STATE_ERROR         ");
+				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "SEQ_STATE_ERROR         ");
 				V.s_state = SEQ_STATE_INIT;
-				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
+				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
 				refresh_lcd();
 				WaitMs(2000);
 				break;
@@ -971,12 +972,12 @@ void main(void)
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (TimerDone(TMR_DISPLAY)) { // limit update rate
 					if (V.debug) {
-						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "H254 %d, T%ld          ", sizeof(header254), V.testing);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "H254 %d, T%ld          ", sizeof(header254), V.testing);
 					} else {
 #ifdef FAKER
-						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 #else
-						snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 #endif
 					}
 				}
@@ -999,7 +1000,7 @@ void main(void)
 								if (V.ping_count++ > 4) {
 									set_display_info(DIS_STR);
 									hb_message();
-									snprintf(get_vterm_ptr(0, 0), MAX_TEXT, "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
+									snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
 									refresh_lcd();
 									WaitMs(250);
 									V.ping_count = 0;
@@ -1017,9 +1018,9 @@ void main(void)
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				if (V.debug)
-					snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+					snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "H254 %d, T%ld       ", sizeof(header254), V.testing);
 				else
-					snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+					snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 
 #ifdef DB1
 				if (SLED) {
@@ -1050,9 +1051,9 @@ void main(void)
 				break;
 			}
 			if (V.debug)
-				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "Equip type %d            ", V.e_types);
+				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "Equip type %d            ", V.e_types);
 			else
-				snprintf(get_vterm_ptr(2, 0), MAX_TEXT, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
+				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 			break;
 		case UI_STATE_ERROR:
 		default:
@@ -1078,7 +1079,7 @@ void main(void)
 				if (TimerDone(TMR_HELPDIS)) {
 					set_display_info(DIS_STR);
 				}
-				snprintf(get_vterm_ptr(1, 0), MAX_TEXT, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
+				snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA1);
 				WaitMs(1);
@@ -1096,7 +1097,7 @@ void main(void)
 					set_vterm(switcher);
 					if (V.vterm_switch > SWITCH_VTERM + 9) {
 						switcher++;
-						if ((switcher & 0x03) == MAIN_VTERM) { // mask [0..3]]
+						if ((switcher & 0x03) == HELP_VTERM) { // mask [0..3]]
 							switcher = INFO_VTERM; // skip short display of the main vterm
 						}
 						V.vterm_switch = 0;
@@ -1104,6 +1105,13 @@ void main(void)
 				} else {
 					set_vterm(V.vterm);
 				}
+				/*
+				 * update info screen data points
+				 */
+				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "RS232 %hu %hu                ", V.v_rx_line, V.v_tx_line);
+				snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
+				snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
+				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks T%lu R%lu               ", V.ticks, V.bt_total, V.br_total);
 				refresh_lcd();
 			}
 		}

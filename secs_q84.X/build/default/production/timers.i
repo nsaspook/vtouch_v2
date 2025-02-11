@@ -39610,7 +39610,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 117 "./vconfig.h"
+# 123 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39775,7 +39775,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
   char buf[63 + 1], terminal[159 + 1], info[63 + 1];
-  uint32_t ticks, systemb, tx_total, rx_total;
+  uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -39788,6 +39788,7 @@ void PIN_MANAGER_Initialize (void);
   volatile uint8_t ticker;
   _Bool flipper;
   adc_result_t v_tx_line, v_rx_line;
+  char tx_rs232, rx_rs232;
  } V_data;
 
  typedef struct V_help {
