@@ -30,7 +30,7 @@
   Active          =    1
   ; Cost Factors:
 
-  cfVia           =   90
+  cfVia           =   60
   cfNonPref       =    5
   cfChangeDir     =    2
   cfOrthStep      =    2
@@ -43,7 +43,7 @@
   cfBusImpact     =    0
   cfHugging       =    3
   cfAvoid         =    4
-  cfPolygon       =   40
+  cfPolygon       =   75
 
   cfBase.1        =    0
   cfBase.2        =    1
@@ -101,7 +101,7 @@
   @Route
 
   Active          =    1
-  cfVia           =   99
+  cfVia           =   69
 
 [Optimize2]
 

@@ -41205,7 +41205,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 10 2025", *build_time = "20:21:51";
+const char *build_date = "Feb 12 2025", *build_time = "14:21:30";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41841,7 +41841,7 @@ void main(void)
    StartTimer(TMR_INFO, 3000);
    StartTimer(TMR_FLIPPER, 1500);
    StartTimer(TMR_HELPDIS, 3000);
-   snprintf(get_vterm_ptr(3, 0), 21 -1, " UI_STATE_INIT   ");
+   snprintf(get_vterm_ptr(3, 0), 21 -1, " UI_STATE_INIT        ");
    break;
   case UI_STATE_HOST:
 
@@ -41850,7 +41850,7 @@ void main(void)
 
 
 
-   snprintf(get_vterm_ptr(3, 0), 21 -1, "RS232 R%lu T%lu E%u %c:%c        ", V.rx_total, V.tx_total, V.e_types, V.rx_rs232, V.tx_rs232);
+   snprintf(get_vterm_ptr(3, 0), 21 -1, "Equip %u SID %u %c:%c             ", V.e_types, V.sid,V.rx_rs232, V.tx_rs232);
 
 
    switch (V.s_state) {
@@ -41958,7 +41958,7 @@ void main(void)
    if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
     if (TimerDone(TMR_DISPLAY)) {
      if (V.debug) {
-      snprintf(get_vterm_ptr(2, 0), 21 -1, "H254 %d, T%ld          ", sizeof(header254), V.testing);
+      snprintf(get_vterm_ptr(2, 0), 21 -1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
      } else {
 
 
@@ -42004,7 +42004,7 @@ void main(void)
     V.m_l_state = LINK_STATE_IDLE;
     V.s_state = SEQ_STATE_RX;
     if (V.debug)
-     snprintf(get_vterm_ptr(2, 0), 21 -1, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+     snprintf(get_vterm_ptr(2, 0), 21 -1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
     else
      snprintf(get_vterm_ptr(2, 0), 21 -1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 # 1034 "main.c"

@@ -857,7 +857,7 @@ void main(void)
 			StartTimer(TMR_INFO, TDELAY);
 			StartTimer(TMR_FLIPPER, DFLIP);
 			StartTimer(TMR_HELPDIS, TDELAY);
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " UI_STATE_INIT   ");
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " UI_STATE_INIT        ");
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
 #ifdef FAKER
@@ -866,7 +866,7 @@ void main(void)
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
 			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "1UI_STATE_HOST 2EQIP ");
 #else
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "RS232 R%lu T%lu E%u %c:%c        ", V.rx_total, V.tx_total, V.e_types, V.rx_rs232, V.tx_rs232);
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "Equip %u SID %u %c:%c             ", V.e_types, V.sid,V.rx_rs232, V.tx_rs232);
 #endif
 #endif
 			switch (V.s_state) {
@@ -974,7 +974,7 @@ void main(void)
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (TimerDone(TMR_DISPLAY)) { // limit update rate
 					if (V.debug) {
-						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "H254 %d, T%ld          ", sizeof(header254), V.testing);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
 					} else {
 #ifdef FAKER
 						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
@@ -1020,7 +1020,7 @@ void main(void)
 				V.m_l_state = LINK_STATE_IDLE;
 				V.s_state = SEQ_STATE_RX;
 				if (V.debug)
-					snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "H254 %d, T%ld       ", sizeof(header254), V.testing);
+					snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
 				else
 					snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
 
@@ -1096,7 +1096,7 @@ void main(void)
 				};
 				// convert ADC values to char for display
 				update_rs232_line_status();
-				
+
 				StartTimer(TMR_DISPLAY, DDELAY);
 				if (V.vterm_switch++ >SWITCH_VTERM) {
 					set_vterm(switcher);
