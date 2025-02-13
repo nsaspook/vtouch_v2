@@ -1,25 +1,25 @@
 EAGLE AutoRouter Statistics:
 
-Job           : /root/vtouch_v2/secs_q84.X/secs_q84 v2.brd
+Job           : C:/Users/nsasp/vtouch_v2/secs_q84.X/secs_q84 v2.brd
 
-Start at      : 20:12:21 (2/12/25)
-End at        : 20:13:59 (2/12/25)
-Elapsed time  : 00:01:36
+Start at      : 21:02:31 (2/12/2025)
+End at        : 21:06:24 (2/12/2025)
+Elapsed time  : 00:03:47
 
-Signals       :    54   RoutingGrid: 3 mil  Layers: 2
-Connections   :   157   predefined:  156 ( 258 Vias )
+Signals       :    54   RoutingGrid: 3 mil  Layers: 4
+Connections   :   157   predefined:  25 ( 5 Vias )
 
-Router memory :   3221952
+Router memory :   6443904
 
-Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4
+Passname          : TopRouter     Route Optimize1 Optimize2 Optimize3 Optimize4 Optimize5 Optimize6 Optimize7 Optimize8 Optimize9Optimize10Optimize11Optimize12
 
-Time per pass     :  00:01:34  00:00:00  00:00:01  00:00:00  00:00:01  00:00:00
-Number of Ripups  :         0         0         0         0         0         0
-max. Level        :         0         0         0         0         0         0
-max. Total        :         0         0         0         0         0         0
+Time per pass     :  00:00:16  00:00:41  00:00:16  00:00:14  00:00:13  00:00:13  00:00:14  00:00:13  00:00:15  00:00:14  00:00:15  00:00:14  00:00:14  00:00:15
+Number of Ripups  :         0        30         0         0         0         0         0         0         0         0         0         0         0         0
+max. Level        :         0         2         0         0         0         0         0         0         0         0         0         0         0         0
+max. Total        :         0        23         0         0         0         0         0         0         0         0         0         0         0         0
 
-Routed            :         0         1         1         1         1         1
-Vias              :         0         0         0         0         0         0
-Resolution        :    99.4 %   100.0 %   100.0 %   100.0 %   100.0 %   100.0 %
+Routed            :        31       132       130       131       131       131       131       131       131       131       131       131       131       131
+Vias              :         0        87        77        77        76        74        75        73        75        72        72        72        72        72
+Resolution        :    35.7 %   100.0 %    98.7 %    99.4 %    99.4 %    99.4 %    99.4 %    99.4 %    99.4 %    99.4 %    99.4 %    99.4 %    99.4 %    99.4 %
 
-Final             : 100.0% finished
+Final             : 99.4% finished
