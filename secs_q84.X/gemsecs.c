@@ -272,7 +272,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_ERROR  M  ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "LINK_STATE_ERROR  M  ");
 #endif
 		MLED_SetHigh();
 		break;
@@ -452,7 +452,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break; // normally we don't execute LINK_STATE_DONE commands
 	case LINK_STATE_NAK:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_NACK R    ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "LINK_STATE_NACK R    ");
 #endif
 		UART1_Write(NAK);
 		V.tx_total++;
@@ -475,7 +475,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_ERROR R    ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "LINK_STATE_ERROR R    ");
 #endif
 		MLED_SetHigh();
 		break;
@@ -499,7 +499,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 	switch (*t_link) {
 	case LINK_STATE_IDLE:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_IDLE T   ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "LINK_STATE_IDLE T   ");
 #endif
 		V.error = LINK_ERROR_NONE; // reset error status
 		retry = RTY;
@@ -637,7 +637,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_NAK: // send failure
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_NAK T   ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "LINK_STATE_NAK T   ");
 #endif
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
@@ -653,7 +653,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		break;
 	case LINK_STATE_ERROR:
 #ifdef FAKER
-		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT,"LINK_STATE_ERROR T   ");
+		snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "LINK_STATE_ERROR T   ");
 #endif
 		MLED_SetHigh();
 		break;
@@ -929,6 +929,8 @@ static void parse_sid(void)
 P_CODES s10f1_opcmd(void)
 {
 	snprintf(V.info, MAX_INFO, " Terminal          ");
+	V.vterm = DBUG_VTERM;
+	set_vterm(V.vterm);
 	V.response.cmdlen = V.response.ack[6]; // length of command string
 	V.response.TID = V.response.ack[4]; // TID of equipment message
 	V.response.mcode = V.response.ack[7]; // first char of equipment message

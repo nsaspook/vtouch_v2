@@ -41956,6 +41956,8 @@ static void parse_sid(void)
 P_CODES s10f1_opcmd(void)
 {
  snprintf(V.info, 63, " Terminal          ");
+ V.vterm = 2;
+ set_vterm(V.vterm);
  V.response.cmdlen = V.response.ack[6];
  V.response.TID = V.response.ack[4];
  V.response.mcode = V.response.ack[7];
