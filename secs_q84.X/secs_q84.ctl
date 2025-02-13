@@ -30,7 +30,7 @@
   Active          =    1
   ; Cost Factors:
 
-  cfVia           =   60
+  cfVia           =   90
   cfNonPref       =    5
   cfChangeDir     =    2
   cfOrthStep      =    2
@@ -64,7 +64,7 @@
 
   ; Maximum Number of...:
 
-  mnVias          =   20
+  mnVias          =   40
   mnSegments      = 9999
   mnExtdSteps     = 9999
   mnRipupLevel    =   10
@@ -78,6 +78,7 @@
   Active          =    1
   cfVia           =    8
   cfPolygon       =   10
+  mnVias          =   20
 
 [Busses]
 
@@ -101,7 +102,7 @@
   @Route
 
   Active          =    1
-  cfVia           =   69
+  cfVia           =   99
 
 [Optimize2]
 
@@ -114,6 +115,7 @@
   @Optimize2
 
   Active          =    1
+  cfVia           =    8
   cfBonusStep     =    0
   cfMalusStep     =    0
   cfPadImpact     =    0
