@@ -20,7 +20,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.09B"
+#define VER	"2.10B"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -35,10 +35,11 @@ extern "C" {
 	 * 2.07 more info messages to equipment terminal display from host
 	 * 2.08 reformat LCD messages, add ADC 1 and 2 for RS232 line voltage checks
 	 * 2.09 add link stats for info screen
+	 * 2.10 data screens reformatting
 	 */
 
 
-	//#define FAKER			// emulate equipment protocol
+//	#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -106,8 +107,8 @@ extern "C" {
 #define MAX_VTERM	4
 #define MAX_LCD_LINES	4
 
-#define DBUG_VTERM	3
-#define HELP_VTERM	2
+#define HELP_VTERM	3
+#define DBUG_VTERM	2
 #define INFO_VTERM	1
 #define MAIN_VTERM	0
 

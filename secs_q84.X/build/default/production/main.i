@@ -40718,7 +40718,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 128 "./vconfig.h"
+# 129 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -41205,7 +41205,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 12 2025", *build_time = "14:21:30";
+const char *build_date = "Feb 12 2025", *build_time = "19:50:51";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41819,21 +41819,21 @@ void main(void)
    srand(1957);
    set_vterm(V.vterm);
    snprintf(get_vterm_ptr(0, 0), 21 -1, " RVI HOST TESTER     ");
-   snprintf(get_vterm_ptr(1, 0), 21 -1, " Version %s          ", "2.09B");
+   snprintf(get_vterm_ptr(1, 0), 21 -1, " Version %s          ", "2.10B");
    snprintf(get_vterm_ptr(2, 0), 21 -1, " NSASPOOK            ");
    snprintf(get_vterm_ptr(3, 0), 21 -1, "%s                   ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 1), 21 -1, " INFO                ");
-   snprintf(get_vterm_ptr(1, 1), 21 -1, " Version %s          ", "2.09B");
+   snprintf(get_vterm_ptr(1, 1), 21 -1, " Version %s          ", "2.10B");
    snprintf(get_vterm_ptr(2, 1), 21 -1, " VTERM #1            ");
    snprintf(get_vterm_ptr(3, 1), 21 -1, "%s                   ", (char *) build_date);
-   snprintf(get_vterm_ptr(0, 2), 21 -1, " HELP                ");
-   snprintf(get_vterm_ptr(1, 2), 21 -1, " Version %s          ", "2.09B");
-   snprintf(get_vterm_ptr(2, 2), 21 -1, " VTERM #2            ");
-   snprintf(get_vterm_ptr(3, 2), 21 -1, "%s                   ", (char *) build_date);
-   snprintf(get_vterm_ptr(0, 3), 21 -1, " DEBUG               ");
-   snprintf(get_vterm_ptr(1, 3), 21 -1, " Version %s          ", "2.09B");
-   snprintf(get_vterm_ptr(2, 3), 21 -1, " VTERM #3            ");
+   snprintf(get_vterm_ptr(0, 3), 21 -1, " HELP                ");
+   snprintf(get_vterm_ptr(1, 3), 21 -1, " Version %s          ", "2.10B");
+   snprintf(get_vterm_ptr(2, 3), 21 -1, " VTERM #2            ");
    snprintf(get_vterm_ptr(3, 3), 21 -1, "%s                   ", (char *) build_date);
+   snprintf(get_vterm_ptr(0, 2), 21 -1, " DEBUG               ");
+   snprintf(get_vterm_ptr(1, 2), 21 -1, " Version %s          ", "2.10B");
+   snprintf(get_vterm_ptr(2, 2), 21 -1, " VTERM #3            ");
+   snprintf(get_vterm_ptr(3, 2), 21 -1, "%s                   ", (char *) build_date);
    refresh_lcd();
    WaitMs(3000);
    StartTimer(TMR_DISPLAY, 100);
@@ -41850,7 +41850,7 @@ void main(void)
 
 
 
-   snprintf(get_vterm_ptr(3, 0), 21 -1, "Equip %u SID %u %c:%c             ", V.e_types, V.sid,V.rx_rs232, V.tx_rs232);
+   snprintf(get_vterm_ptr(3, 0), 21 -1, "Equip %u SID %u %c:%c             ", V.e_types, V.sid, V.rx_rs232, V.tx_rs232);
 
 
    switch (V.s_state) {
@@ -42079,7 +42079,7 @@ void main(void)
      set_vterm(switcher);
      if (V.vterm_switch > 40 + 16) {
       switcher++;
-      if ((switcher & 0x03) == 2) {
+      if ((switcher & 0x03) == 3) {
        switcher = 1;
       }
       V.vterm_switch = 0;
@@ -42090,14 +42090,18 @@ void main(void)
 
 
 
-    snprintf(get_vterm_ptr(0, 1), 21 -1, "RS232 %hu:%c %hu:%c                ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
+    snprintf(get_vterm_ptr(0, 1), 21 -1, "I RS %hu:%c %hu:%c                     ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
     snprintf(get_vterm_ptr(1, 1), 21 -1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
     snprintf(get_vterm_ptr(2, 1), 21 -1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
-    snprintf(get_vterm_ptr(3, 1), 21 -1, "Seq %lu Blks R%lu T%lu               ", V.ticks, V.bt_total, V.br_total);
+    snprintf(get_vterm_ptr(3, 1), 21 -1, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
+    snprintf(get_vterm_ptr(0, 2), 21 -1, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
+    snprintf(get_vterm_ptr(1, 2), 21 -1, "RX CKSUM 0X%04X                        ", V.r_checksum);
+    snprintf(get_vterm_ptr(2, 2), 21 -1, "TX CKSUM 0X%04X                        ", V.t_checksum);
+    snprintf(get_vterm_ptr(3, 2), 21 -1, "Queue %u Debug %u                      ", V.queue, V.debug);
     refresh_lcd();
    }
   }
-# 1131 "main.c"
+# 1135 "main.c"
   if (V.set_sequ) {
    if (TimerDone(TMR_INFO)) {
     V.set_sequ = 0;
@@ -42108,7 +42112,7 @@ void main(void)
     refresh_lcd();
    }
   }
-# 1149 "main.c"
+# 1153 "main.c"
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
  }
 }

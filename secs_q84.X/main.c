@@ -866,7 +866,7 @@ void main(void)
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
 			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "1UI_STATE_HOST 2EQIP ");
 #else
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "Equip %u SID %u %c:%c             ", V.e_types, V.sid,V.rx_rs232, V.tx_rs232);
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "Equip %u SID %u %c:%c             ", V.e_types, V.sid, V.rx_rs232, V.tx_rs232);
 #endif
 #endif
 			switch (V.s_state) {
@@ -1113,10 +1113,14 @@ void main(void)
 				/*
 				 * update info screen data points
 				 */
-				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "RS232 %hu:%c %hu:%c                ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
+				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "I RS %hu:%c %hu:%c                     ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
 				snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
 				snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
-				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks R%lu T%lu               ", V.ticks, V.bt_total, V.br_total);
+				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
+				snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
+				snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, "RX CKSUM 0X%04X                        ", V.r_checksum);
+				snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, "TX CKSUM 0X%04X                        ", V.t_checksum);
+				snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "Queue %u Debug %u                      ", V.queue, V.debug);
 				refresh_lcd();
 			}
 		}
