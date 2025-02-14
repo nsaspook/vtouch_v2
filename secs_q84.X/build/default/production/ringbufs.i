@@ -39655,7 +39655,7 @@ void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 20 "./vconfig.h" 2
-# 129 "./vconfig.h"
+# 130 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39810,6 +39810,12 @@ void PIN_MANAGER_Initialize (void);
   RECV_ERROR_CKSUM,
   RECV_ERROR_DATA,
  } RECV_ERRORS;
+
+ typedef enum {
+  TICKER_ZERO = 0,
+  TICKER_LOW = 20,
+  TICKER_HIGH = 40,
+ } TICKER_VAL;
 
  typedef struct V_data {
   SEQ_STATES s_state;

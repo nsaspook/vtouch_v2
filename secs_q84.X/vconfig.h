@@ -20,7 +20,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.10B"
+#define VER	"2.11B"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -36,10 +36,11 @@ extern "C" {
 	 * 2.08 reformat LCD messages, add ADC 1 and 2 for RS232 line voltage checks
 	 * 2.09 add link stats for info screen
 	 * 2.10 data screens reformatting
+	 * 2.11 screen flipping timing adjustments
 	 */
 
 
-//	#define FAKER			// emulate equipment protocol
+		#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -280,6 +281,12 @@ extern "C" {
 		RECV_ERROR_CKSUM,
 		RECV_ERROR_DATA,
 	} RECV_ERRORS;
+
+	typedef enum {
+		TICKER_ZERO = 0,
+		TICKER_LOW = 20,
+		TICKER_HIGH = 40,
+	} TICKER_VAL;
 
 	typedef struct V_data { // control data structure 
 		SEQ_STATES s_state;

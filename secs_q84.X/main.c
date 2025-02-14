@@ -200,7 +200,7 @@ V_data V = {
 	.uart = 1,
 	.g_state = GEM_STATE_DISABLE,
 	.e_types = GEM_GENERIC,
-	.ticker = 45,
+	.ticker = TICKER_ZERO,
 	.checksum_error = 0,
 	.all_errors = 0,
 	.timer_error = 0,
@@ -221,7 +221,7 @@ V_data V = {
 	.rx_total = 0,
 	.failed_receive = RECV_ERROR_NONE,
 	.failed_send = SEND_ERROR_NONE,
-	.vterm = 0,
+	.vterm = MAIN_VTERM,
 	.tx_rs232 = 'O',
 	.rx_rs232 = 'O',
 };
@@ -1098,9 +1098,9 @@ void main(void)
 				update_rs232_line_status();
 
 				StartTimer(TMR_DISPLAY, DDELAY);
-				if (V.vterm_switch++ >SWITCH_VTERM) {
+				if (V.vterm_switch++ > (SWITCH_VTERM)) {
 					set_vterm(switcher);
-					if (V.vterm_switch > SWITCH_VTERM + SWITCH_DURATION) {
+					if (V.vterm_switch > (SWITCH_VTERM + V.ticker + SWITCH_DURATION)) {
 						switcher++;
 						if ((switcher & 0x03) == HELP_VTERM) { // mask [0..3]]
 							switcher = INFO_VTERM; // skip short display of the main vterm

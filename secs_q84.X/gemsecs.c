@@ -929,7 +929,6 @@ static void parse_sid(void)
 P_CODES s10f1_opcmd(void)
 {
 	snprintf(V.info, MAX_INFO, " Terminal          ");
-	V.vterm = DBUG_VTERM;
 	set_vterm(V.vterm);
 	V.response.cmdlen = V.response.ack[6]; // length of command string
 	V.response.TID = V.response.ack[4]; // TID of equipment message
@@ -1353,6 +1352,16 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				break;
 			case CODE_DEBUG:
 				V.debug = !V.debug;
+				if (V.debug) {
+					V.ticker = TICKER_HIGH;
+					V.vterm_switch = 0;
+					refresh_lcd();
+				} else {
+					V.vterm = MAIN_VTERM;
+					V.ticker = TICKER_ZERO;
+					V.vterm_switch = 0;
+					refresh_lcd();
+				}
 			default:
 				break;
 			}
@@ -1500,8 +1509,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				set_display_info(DIS_SEQUENCE_M);
 			}
 
-			block = GEM_STATE_ONLINE;
-			V.ticker = 0;
+			if (block != GEM_STATE_REMOTE) {
+				block = GEM_STATE_ONLINE;
+				V.ticker = TICKER_ZERO;
+			}
+
 
 			break;
 		case 13: // parse equipment model from comm request response
@@ -1542,32 +1554,32 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				set_display_info(DIS_SEQUENCE_M);
 				block = GEM_STATE_REMOTE;
 			}
-			V.ticker = 0;
+			V.ticker = TICKER_ZERO;
 			break;
 		case 14:
 			if (block != GEM_STATE_REMOTE) {
 				block = GEM_STATE_REMOTE;
 			}
-			V.ticker = 15;
+			V.ticker = TICKER_ZERO;
 			break;
 #ifdef DB2
 		case 15:
 #endif
 		case 16:
 			block = GEM_STATE_OFFLINE;
-			V.ticker = 0;
+			V.ticker = TICKER_HIGH;
 			break;
 #ifdef DB2
 		case 17:
 #endif
 		case 18:
 			block = GEM_STATE_ONLINE;
-			V.ticker = 0;
+			V.ticker = TICKER_LOW;
 			break;
 		default:
 			if (block == GEM_STATE_DISABLE) {
 				block = GEM_STATE_COMM;
-				V.ticker = 15;
+				V.ticker = TICKER_HIGH;
 			}
 			break;
 		}
@@ -1583,8 +1595,8 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		switch (function) {
 		default:
 			V.alarm = function;
-			if (V.ticker != 45) {
-				V.ticker = 15;
+			if (V.ticker != TICKER_HIGH) {
+				V.ticker = TICKER_LOW;
 			}
 			break;
 		}
@@ -1592,7 +1604,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 	default:
 		if (block == GEM_STATE_DISABLE) {
 			block = GEM_STATE_COMM;
-			V.ticker = 45;
+			V.ticker = TICKER_HIGH;
 		}
 		break;
 	}
