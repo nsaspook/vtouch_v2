@@ -900,7 +900,7 @@ void main(void)
 				 */
 				if (r_protocol(&V.r_l_state) == LINK_STATE_DONE) {
 					set_display_info(DIS_STR);
-					s = get_vterm_ptr(0, 0);
+					s = get_vterm_ptr(0, MAIN_VTERM);
 					if (V.stream == 9) { // error message from equipment
 						V.msg_error = V.function;
 						snprintf(s, MAX_TEXT, " S%dF%d Err %d             ", V.stream, V.function, V.all_errors);
@@ -909,7 +909,7 @@ void main(void)
 						snprintf(s, MAX_TEXT, " S%dF%d # Rx %d            ", V.stream, V.function, V.all_errors);
 					}
 					s[MAX_LINE] = 0;
-					//					MyeaDogM_WriteStringAtPos(0, 0, s);
+					s[SPIN_CHAR] = spinners(3, false);
 #ifdef DB1
 					WaitMs(5);
 #endif
@@ -941,9 +941,8 @@ void main(void)
 					V.s_state = SEQ_STATE_ERROR;
 				break;
 			case SEQ_STATE_TRIGGER:
-				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_TRIGGER    ");
 				set_display_info(DIS_STR);
-				s = get_vterm_ptr(0, 0);
+				s = get_vterm_ptr(0, MAIN_VTERM);
 				if (V.queue) {
 					V.r_l_state = LINK_STATE_IDLE;
 					V.t_l_state = LINK_STATE_IDLE;
@@ -956,14 +955,12 @@ void main(void)
 
 				s[MAX_LINE] = 0;
 				s[SPIN_CHAR] = spinners(3, false);
-				//				MyeaDogM_WriteStringAtPos(0, 0, s);
 				break;
 			case SEQ_STATE_DONE:
 				V.s_state = SEQ_STATE_INIT;
 				break;
 			case SEQ_STATE_ERROR:
 			default:
-				//				eaDogM_WriteStringAtPos(3, 0, "SEQ_STATE_ERROR      ");
 				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "SEQ_STATE_ERROR         ");
 				V.s_state = SEQ_STATE_INIT;
 				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
@@ -1124,10 +1121,6 @@ void main(void)
 				refresh_lcd();
 			}
 		}
-		/*
-		 * show help display if button pressed
-		 */
-		//		check_help(V.flipper);
 
 		/*
 		 * show command messages if flag is set for timer duration
