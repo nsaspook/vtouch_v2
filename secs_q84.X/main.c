@@ -197,7 +197,7 @@ V_data V = {
 	.error = LINK_ERROR_NONE,
 	.abort = LINK_ERROR_NONE,
 	.msg_error = MSG_ERROR_RESET,
-	.uart = 1,
+	.uart = HOST_UART,
 	.g_state = GEM_STATE_DISABLE,
 	.e_types = GEM_GENERIC,
 	.ticker = TICKER_ZERO,
@@ -215,7 +215,7 @@ V_data V = {
 	.ping_count = 0,
 	.sequences = 0,
 	.set_sequ = false,
-	.euart = 2,
+	.euart = EQUIP_UART,
 	.tx_total = 0,
 	.rx_total = 0,
 	.failed_receive = RECV_ERROR_NONE,
@@ -811,7 +811,7 @@ void main(void)
 		M_TRACE;
 		if (!faker++) {
 #ifdef FAKER
-			V.euart = 2;
+			V.euart = EQUIP_UART;
 			equip_tx(ENQ); // simulate equipment comm data
 #endif
 		}

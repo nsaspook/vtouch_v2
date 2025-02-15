@@ -17,33 +17,35 @@ extern "C" {
 	typedef enum {
 		display_message = 0,
 		display_online,
-		display_comm,
+		display_remote,
+		display_gemhelp,
 	} DISPLAY_TYPES;
 
 	/*
 	 * *****************|*********|**********|**********|*********|***|
 	 */
-	const char msg0[] = "MESSAGE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
-	const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
-	const char msg2[] = "COMM All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d  FGB@     %s";
-	const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d FGB@     %s   ";
+	const char msg0[] = "Host: All %d, R%d F%d, T%d F%d, Cksum%d %s    ";
+	const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d         %s  ";
+	const char msg2[] = "%s %s  ";
+	const char msg_gemhelp[] = "%s %s  ";
+	const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d          %s   ";
 
 	V_help T[] = {
 		{
-			.message = "commands 1",
-			.display = "displays 1",
+			.message = "CMD: M C              ",
+			.display = "M: message, C: close  ",
 		},
 		{
-			.message = "commands 2",
-			.display = "displays 2",
+			.message = "CMD: R P O            ",
+			.display = "R: rdy P: pump O: open",
 		},
 		{
-			.message = "commands 3",
-			.display = "displays 3",
+			.message = "CMD: L S D            ",
+			.display = "L: log S: set D: debug",
 		},
 		{
-			.message = "commands 4",
-			.display = "displays 4",
+			.message = "CMD: E H              ",
+			.display = "E: Errors H: help mesg",
 		},
 	};
 

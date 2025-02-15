@@ -26,6 +26,12 @@ extern "C" {
 #include "mydisplay.h"
 #include "msg_text.h"
 
+#define HOST_UART	1
+#define EQUIP_UART	2
+	
+	const char msg_gemcmds[] = "Host CMDS: M C R P O L S D E H ";
+	const char msg_gemremote[] = "Host CMDS: ENABLED REMOTE";
+
 	typedef struct block10_type {
 		uint32_t systemb;
 		uint8_t bidl;

@@ -70,7 +70,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			V.rx_total++;
 			DLED_Toggle();
 			if (rxData == ENQ) {
-				V.uart = 1;
+				V.uart = HOST_UART;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
 				*m_link = LINK_STATE_ENQ;
@@ -81,7 +81,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			V.rx_total++;
 			DLED_Toggle();
 			if (rxData == ENQ) {
-				V.uart = 2;
+				V.uart = EQUIP_UART;
 				StartTimer(TMR_T2, T2);
 				V.error = LINK_ERROR_NONE; // reset error status
 				*m_link = LINK_STATE_ENQ;
@@ -100,11 +100,11 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		} else {
 #ifdef DB2
 			WaitMs(1);
-			if (V.uart == 1)
+			if (V.uart == HOST_UART)
 				if (V.rerror && (rand() < ERROR_COMM)) {
 					secs_send((uint8_t*) & H27[0], sizeof(header27), true, V.uart);
 				}
-			if (V.uart == 2)
+			if (V.uart == EQUIP_UART)
 				if (V.rerror && rand() < ERROR_COMM) {
 					secs_send((uint8_t*) & H10[0], sizeof(header10), true, V.uart);
 				}
@@ -825,9 +825,11 @@ void terminal_format(DISPLAY_TYPES t_format)
 		snprintf(V.terminal, MAX_TERM, msg1,
 			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
 		break;
-	case display_comm:
-		snprintf(V.terminal, MAX_TERM, msg2,
-			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+	case display_remote:
+		snprintf(V.terminal, MAX_TERM, msg2, msg_gemremote, VER);
+		break;
+	case display_gemhelp:
+		snprintf(V.terminal, MAX_TERM, msg_gemhelp, msg_gemcmds, VER);
 		break;
 	default:
 		snprintf(V.terminal, MAX_TERM, msg99,
@@ -839,6 +841,7 @@ void terminal_format(DISPLAY_TYPES t_format)
 
 /*
  * format S10F3 Terminal Display, Single in H153[0]
+ * move string data into a terminal H153 type GME message
  */
 uint16_t format_display_text(const char *data)
 {
@@ -1382,6 +1385,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 					V.vterm_switch = 0;
 					refresh_lcd();
 				}
+				block.respond = true;
+				block.reply = (uint8_t*) & H153[0]; // S10F3 send Terminal Display, Single, queue
+				block.reply_length = sizeof(header153);
+				H153[0].data[S10F3_TID_POS] = V.response.TID;
+				terminal_format(display_gemhelp);
+				format_display_text(V.terminal);
+				V.queue = true;
 			case CODE_DEBUG:
 				V.debug = !V.debug;
 				if (V.debug) {
@@ -1520,6 +1530,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 {
 	static GEM_STATES block = GEM_STATE_DISABLE;
 	static GEM_EQUIP equipment = GEM_GENERIC;
+	static response_type res_block;
+
+	V.abort = LINK_ERROR_NONE;
+	V.queue = false;
+	res_block.respond = false;
 
 	switch (stream) { // from equipment
 	case 1:
@@ -1577,13 +1592,13 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			}
 
 			if (block != GEM_STATE_REMOTE) {
-				terminal_format(display_online);
-				format_display_text(V.terminal);
-				V.response.mesgid = 1;
-				V.sequences++;
-				V.sid = 11;
-				sequence_messages(V.sid); // send hello text message to equipment screen
-				set_display_info(DIS_SEQUENCE_M);
+				res_block.respond = true;
+				res_block.reply = (uint8_t*) & H153[0]; // S10F3 send Terminal Display, Single, queue
+				res_block.reply_length = sizeof(header153);
+				H153[0].data[S10F3_TID_POS] = V.response.TID;
+				terminal_format(display_remote);
+				format_display_text(V.terminal); // move into H153 GEM message buffer
+				V.queue = true; // notify block transfer layer wer have a message to send
 				block = GEM_STATE_REMOTE;
 			}
 			V.ticker = TICKER_ZERO;
@@ -1654,7 +1669,7 @@ void equip_tx(uint8_t data)
 
 	if (++pinger > PINGER || V.g_state != GEM_STATE_ONLINE || V.t_l_state == LINK_STATE_NAK) {
 		switch (V.euart) {
-		case 1:
+		case HOST_UART:
 			UART1_Write(data);
 			V.tx_total++;
 			break;
