@@ -33,10 +33,11 @@ uint16_t block_checksum(uint8_t *byte_block, const uint16_t byte_count)
 	for (i = 0; i < byte_count; i++) {
 		sum += byte_block[i];
 	}
-#ifdef RERROR
-	if (rand() > ERROR_CHECKSUM)
+
+	if (V.rerror && (rand() > ERROR_CHECKSUM)) {
 		sum++;
-#endif
+	}
+
 	return sum;
 }
 
@@ -1041,6 +1042,11 @@ P_CODES s10f1_opcmd(void)
 		return CODE_DEBUG;
 	}
 
+	if (V.response.mcode == 'E' || V.response.mcode == 'e') {
+		snprintf(V.info, MAX_INFO, " Error Toggle            ");
+		return CODE_RERROR;
+	}
+
 	return CODE_TS;
 }
 
@@ -1350,6 +1356,18 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				V.response.log_seq = 0;
 				set_display_info(DIS_LOG);
 				break;
+			case CODE_RERROR:
+				V.rerror = !V.rerror;
+				if (V.debug) {
+					V.ticker = TICKER_HIGH;
+					V.vterm_switch = 0;
+					refresh_lcd();
+				} else {
+					V.vterm = MAIN_VTERM;
+					V.ticker = TICKER_ZERO;
+					V.vterm_switch = 0;
+					refresh_lcd();
+				}
 			case CODE_DEBUG:
 				V.debug = !V.debug;
 				if (V.debug) {

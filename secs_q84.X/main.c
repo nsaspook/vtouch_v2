@@ -224,6 +224,8 @@ V_data V = {
 	.vterm = MAIN_VTERM,
 	.tx_rs232 = 'O',
 	.rx_rs232 = 'O',
+	.debug = false,
+	.rerror = false,
 };
 
 B_type B = {

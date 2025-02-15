@@ -20,7 +20,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.11B"
+#define VER	"2.12B"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -37,10 +37,11 @@ extern "C" {
 	 * 2.09 add link stats for info screen
 	 * 2.10 data screens reformatting
 	 * 2.11 screen flipping timing adjustments
+	 * 2.12 remote set random error generation
 	 */
 
 
-		#define FAKER			// emulate equipment protocol
+	//		#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -168,6 +169,7 @@ extern "C" {
 		CODE_PUMP,
 		CODE_HELP,
 		CODE_SEQUENCE,
+		CODE_RERROR,
 		CODE_ERR,
 	} P_CODES;
 
@@ -304,7 +306,7 @@ extern "C" {
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
 		uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2;
+		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch;
 		volatile uint8_t ticker;
