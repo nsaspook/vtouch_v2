@@ -54,45 +54,22 @@ bool help_button(void)
 }
 
 /*
- * Not used
+ * Help Messages, show date or time with flipper
  */
 void check_help(bool flipper)
 {
 	/*
 	 * show help display
 	 */
-	if (help_button() && display_info() != DIS_HELP) {
-		StartTimer(TMR_FLIPPER, DFLIP);
-		if (V.debug) {
-			vterm_dump();
-		}
-
-		set_vterm(HELP_VTERM);
-		set_temp_display_help(display_info());
-		set_display_info(DIS_HELP);
+	if (V.help) {
 		if (flipper) {
-			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, "HELP %s           ", build_date);
+			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "HELP %s              ", build_date);
 		} else {
-			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, "HELP %s           ", build_time);
+			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "HELP %s              ", build_time);
 		}
-		snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, "%s       ", T[V.help_id].display);
-		snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, "%s       ", T[V.help_id].message);
+		snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].display);
+		snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].message);
 		V.help_id++; // cycle help text messages to LCD
-		StartTimer(TMR_HELPDIS, TDELAY);
-		StartTimer(TMR_INFO, TDELAY);
-		mode_lamp_bright(); // mode switch indicator lamp 'button' level
-		update_lcd(HELP_VTERM);
-	} else {
-		if (TimerDone(TMR_HELPDIS)) {
-			set_vterm(V.vterm);
-			V.help = false;
-			set_display_info(display_help());
-			mode_lamp_bright();
-			if (TimerDone(TMR_FLIPPER)) {
-				V.flipper = !V.flipper;
-				StartTimer(TMR_FLIPPER, DFLIP);
-			}
-		}
 	}
 }
 
@@ -163,7 +140,7 @@ void vterm_dump(void)
 	snprintf(V.buf, MAX_TEXT, "vterm %x:%x            ", (uint16_t) get_vterm_ptr(3, MAIN_VTERM), (uint16_t) get_vterm_ptr(3, INFO_VTERM));
 	wait_lcd_done();
 	eaDogM_WriteStringAtPos(3, MAIN_VTERM, V.buf);
-	WaitMs(3000);
+	WaitMs(TDELAY);
 }
 
 void vterm_sequence(void)

@@ -41,15 +41,13 @@ extern "C" {
 	 */
 
 
-	//		#define FAKER			// emulate equipment protocol
+			#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
 	//#define DB3
 	//#define DB4
-	//#define RERROR	// generate 'random' checksum/link errors to simulate rs-232 bit errors
-	//#define DISP_TRIG
-#define SEQ_TEST	false	// testing message template transfers
+	// generate 'random' checksum/link errors to simulate rs-232 bit errors, set V.rerror to true in the code init for V or the equipment can send a E terminal message to the host
 
 #define SLED	MLED_LAT
 #define DLED	DLED_LAT
@@ -72,12 +70,13 @@ extern "C" {
 #define ERROR_COMM	31500
 
 #define DEFAULT_TID	1
-#define TDELAY	3000
-#define LDELAY	1000
-#define SDELAY	500
-#define BDELAY	300
-#define DDELAY	100 // display update spacing
-#define DFLIP	1500 // display info flipping spacing
+#define TDELAY		3000
+#define SEQDELAY	10000
+#define LDELAY		1000
+#define SDELAY		500
+#define BDELAY		300
+#define DDELAY		100 // display update spacing
+#define DFLIP		1500 // display info flipping spacing
 
 #define PINGER	8
 

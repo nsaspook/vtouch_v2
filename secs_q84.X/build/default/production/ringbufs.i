@@ -39655,7 +39655,7 @@ void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 20 "./vconfig.h" 2
-# 131 "./vconfig.h"
+# 130 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;

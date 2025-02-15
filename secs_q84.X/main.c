@@ -204,7 +204,6 @@ V_data V = {
 	.checksum_error = 0,
 	.all_errors = 0,
 	.timer_error = 0,
-	.debug = false,
 	.response.info = DIS_STR,
 	.response.log_num = 0,
 	.response.log_seq = 0,
@@ -226,6 +225,7 @@ V_data V = {
 	.rx_rs232 = 'O',
 	.debug = false,
 	.rerror = false,
+	.help = true,
 };
 
 B_type B = {
@@ -793,18 +793,9 @@ void main(void)
 	// Enable low priority global interrupts.
 	INTERRUPT_GlobalInterruptLowEnable();
 
-	mconfig_init();
+	mconfig_init(); // zero the entire text buffer
 
 	V.ui_state = UI_STATE_INIT;
-	do {
-		TRISDbits.TRISD5 = 0;
-	} while (0);
-
-	/*
-	 * RS-232 link I/O relay defaults to monitor/log mode with no power
-	 */
-	WaitMs(300); // wait for mode switch to settle
-
 	mode = UI_STATE_HOST;
 
 	TMR2_StartTimer();
@@ -839,21 +830,21 @@ void main(void)
 			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER     ");
 			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, " Version %s          ", VER);
 			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, " NSASPOOK            ");
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
 			snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " INFO                ");
 			snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, " VTERM #1            ");
-			snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, " VTERM INFO          ");
+			snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
 			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, " HELP                ");
 			snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, " VTERM #2            ");
-			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, " VTERM HELP          ");
+			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
 			snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, " DEBUG               ");
 			snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, " VTERM #3            ");
-			snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "%s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, " VTERM DEBUG         ");
+			snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
 			refresh_lcd();
-			WaitMs(3000);
+			WaitMs(TDELAY);
 			StartTimer(TMR_DISPLAY, DDELAY);
 			StartTimer(TMR_SEQ, 10000);
 			StartTimer(TMR_INFO, TDELAY);
@@ -967,7 +958,7 @@ void main(void)
 				V.s_state = SEQ_STATE_INIT;
 				snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "E%d A%d T%d G:%s #    ", V.error, V.abort, V.timer_error, GEM_TEXT[V.g_state]);
 				refresh_lcd();
-				WaitMs(2000);
+				WaitMs(TDELAY);
 				break;
 			}
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
@@ -1003,7 +994,7 @@ void main(void)
 									hb_message();
 									snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "Ping P%d RTO %d TX %lu     ", V.g_state, V.equip_timeout, V.tx_total);
 									refresh_lcd();
-									WaitMs(250);
+									WaitMs(BDELAY);
 									V.ping_count = 0;
 								}
 								set_display_info(DIS_STR);
@@ -1119,32 +1110,31 @@ void main(void)
 				snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
 				snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, "RX CKSUM 0X%04X                        ", V.r_checksum);
 				snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, "TX CKSUM 0X%04X                        ", V.t_checksum);
-				snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "Queue %u Debug %u                      ", V.queue, V.debug);
+				snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "Que %u Dbug %u Rerr %u               ", V.queue, V.debug, V.rerror);
 				refresh_lcd();
 			}
 		}
 
 		/*
-		 * show command messages if flag is set for timer duration
+		 * show help messages if flag is set for timer duration
 		 */
 		if (V.set_sequ) {
-			if (TimerDone(TMR_INFO)) {
+			if (TimerDone(TMR_HELP)) {
 				V.set_sequ = false;
 				set_vterm(V.vterm);
 				refresh_lcd();
 			} else {
-				set_vterm(INFO_VTERM);
+				set_vterm(HELP_VTERM);
 				refresh_lcd();
 			}
 		}
 
-#ifdef DISP_TRIG
-		if (TimerDone(TMR_SEQ)) {
-			StartTimer(TMR_SEQ, 10000);
-			StartTimer(TMR_INFO, TDELAY);
+		if (V.help && TimerDone(TMR_SEQ)) {
+			StartTimer(TMR_SEQ, SEQDELAY);
+			StartTimer(TMR_HELP, TDELAY);
 			V.set_sequ = true;
+			check_help(true);
 		}
-#endif
 		M_TRACE;
 	}
 }

@@ -101,15 +101,13 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 #ifdef DB2
 			WaitMs(1);
 			if (V.uart == 1)
-#ifdef RERROR
-				if (rand() < ERROR_COMM)
-#endif
+				if (V.rerror && (rand() < ERROR_COMM)) {
 					secs_send((uint8_t*) & H27[0], sizeof(header27), true, V.uart);
+				}
 			if (V.uart == 2)
-#ifdef RERROR
-				if (rand() < ERROR_COMM)
-#endif
+				if (V.rerror && rand() < ERROR_COMM) {
 					secs_send((uint8_t*) & H10[0], sizeof(header10), true, V.uart);
+				}
 			V.error = LINK_ERROR_NONE; // reset error status
 			*m_link = LINK_STATE_EOT;
 			StartTimer(TMR_T2, T2);
@@ -597,10 +595,9 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		}
 #ifdef DB4
 		WaitMs(1);
-#ifdef RERROR
-		if (rand() < ERROR_COMM)
-#endif
+		if (V.rerror && (rand() < ERROR_COMM)) {
 			UART1_put_buffer(ACK);
+		}
 #endif
 		break;
 	case LINK_STATE_ACK:
@@ -1047,6 +1044,11 @@ P_CODES s10f1_opcmd(void)
 		return CODE_RERROR;
 	}
 
+	if (V.response.mcode == 'H' || V.response.mcode == 'h' || V.response.mcode == '?') {
+		snprintf(V.info, MAX_INFO, " Help Toggle            ");
+		return CODE_HELP;
+	}
+
 	return CODE_TS;
 }
 
@@ -1358,6 +1360,18 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				break;
 			case CODE_RERROR:
 				V.rerror = !V.rerror;
+				if (V.debug) {
+					V.ticker = TICKER_HIGH;
+					V.vterm_switch = 0;
+					refresh_lcd();
+				} else {
+					V.vterm = MAIN_VTERM;
+					V.ticker = TICKER_ZERO;
+					V.vterm_switch = 0;
+					refresh_lcd();
+				}
+			case CODE_HELP:
+				V.help = !V.help;
 				if (V.debug) {
 					V.ticker = TICKER_HIGH;
 					V.vterm_switch = 0;

@@ -39674,7 +39674,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 131 "./vconfig.h"
+# 130 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -41157,7 +41157,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    *m_link = LINK_STATE_NAK;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
-# 117 "gemsecs.c"
+# 115 "gemsecs.c"
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
     V.rx_total++;
@@ -41317,7 +41317,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   break;
  case LINK_STATE_ERROR:
 
-
+  snprintf(get_vterm_ptr(3, 0), 21 -1, "LINK_STATE_ERROR  M  ");
 
   do { LATBbits.LATB1 = 1; } while(0);
   break;
@@ -41353,7 +41353,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_ENQ;
 
-
+    V.g_state = GEM_STATE_ONLINE;
 
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
@@ -41364,7 +41364,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
     V.error = LINK_ERROR_NONE;
     *r_link = LINK_STATE_EOT;
 
-
+    V.g_state = GEM_STATE_COMM;
 
     if (TimerDone(TMR_HBIO)) {
      StartTimer(TMR_HBIO, 5000);
@@ -41379,12 +41379,15 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   V.tx_total++;
 
-
-
+  UART2_Write(0x04);
+  V.tx_total++;
 
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 354 "gemsecs.c"
+# 349 "gemsecs.c"
+  H10[3].block.block.systemb = V.ticks;
+  secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
+
   break;
  case LINK_STATE_EOT:
   if (TimerDone(TMR_T2)) {
@@ -41469,8 +41472,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x06);
   V.tx_total++;
 
-
-
+  UART2_Write(0x06);
+  V.tx_total++;
 
   V.stream = H10[1].block.block.stream;
   V.function = H10[1].block.block.function;
@@ -41487,13 +41490,13 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_NAK:
 
-
+  snprintf(get_vterm_ptr(3, 0), 21 -1, "LINK_STATE_NACK R    ");
 
   UART1_Write(0x15);
   V.tx_total++;
 
-
-
+  UART2_Write(0x15);
+  V.tx_total++;
 
   *r_link = LINK_STATE_ERROR;
   V.all_errors++;
@@ -41510,7 +41513,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   break;
  case LINK_STATE_ERROR:
 
-
+  snprintf(get_vterm_ptr(3, 0), 21 -1, "LINK_STATE_ERROR R    ");
 
   do { LATBbits.LATB1 = 1; } while(0);
   break;
@@ -41534,18 +41537,18 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
  switch (*t_link) {
  case LINK_STATE_IDLE:
 
-
+  snprintf(get_vterm_ptr(3, 0), 21 -1, "LINK_STATE_IDLE T   ");
 
   V.error = LINK_ERROR_NONE;
   retry = 3;
   UART1_Write(0x05);
   V.tx_total++;
 
-
-
-
-
-
+  UART2_Write(0x05);
+  V.tx_total++;
+  V.stream = 1;
+  V.function = 1;
+  uart_num = 2;
 
   StartTimer(TMR_T2, 3000);
   *t_link = LINK_STATE_ENQ;
@@ -41619,8 +41622,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
    if (V.error == LINK_ERROR_NONE) {
     *t_link = LINK_STATE_ACK;
 
-
-
+    UART2_Write(0x06);
+    V.tx_total++;
 
    } else {
     V.failed_send = SEND_ERROR_EOT;
@@ -41635,11 +41638,10 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 
 
 
-
   break;
  case LINK_STATE_ACK:
 
-
+  snprintf(get_vterm_ptr(3, 0), 21 -1, "LINK_STATE_ACK T   ");
 
   if (TimerDone(TMR_T3)) {
    V.timer_error++;
@@ -41672,7 +41674,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_NAK:
 
-
+  snprintf(get_vterm_ptr(3, 0), 21 -1, "LINK_STATE_NAK T   ");
 
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
@@ -41688,7 +41690,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   break;
  case LINK_STATE_ERROR:
 
-
+  snprintf(get_vterm_ptr(3, 0), 21 -1, "LINK_STATE_ERROR T   ");
 
   do { LATBbits.LATB1 = 1; } while(0);
   break;
@@ -41755,8 +41757,8 @@ static _Bool secs_send(uint8_t *byte_block, const uint8_t length, const _Bool fa
     UART1_Write(k[i - 1]);
     V.tx_total++;
 
-
-
+    UART2_Write(k[i - 1]);
+    V.tx_total++;
 
    }
   }
@@ -42081,6 +42083,11 @@ P_CODES s10f1_opcmd(void)
   return CODE_RERROR;
  }
 
+ if (V.response.mcode == 'H' || V.response.mcode == 'h' || V.response.mcode == '?') {
+  snprintf(V.info, 63, " Help Toggle            ");
+  return CODE_HELP;
+ }
+
  return CODE_TS;
 }
 
@@ -42402,6 +42409,18 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
      V.vterm_switch = 0;
      refresh_lcd();
     }
+   case CODE_HELP:
+    V.help = !V.help;
+    if (V.debug) {
+     V.ticker = TICKER_HIGH;
+     V.vterm_switch = 0;
+     refresh_lcd();
+    } else {
+     V.vterm = 0;
+     V.ticker = TICKER_ZERO;
+     V.vterm_switch = 0;
+     refresh_lcd();
+    }
    case CODE_DEBUG:
     V.debug = !V.debug;
     if (V.debug) {
@@ -42545,7 +42564,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
  case 1:
   switch (function) {
 
-
+  case 1:
 
   case 2:
    if (block != GEM_STATE_REMOTE) {
