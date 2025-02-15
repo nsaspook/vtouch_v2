@@ -67,8 +67,8 @@ void check_help(bool flipper)
 		} else {
 			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "HELP %s              ", build_time);
 		}
-		snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].display);
-		snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].message);
+		snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].display);
+		snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].message);
 		V.help_id++; // cycle help text messages to LCD
 	}
 }

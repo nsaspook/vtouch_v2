@@ -835,7 +835,7 @@ void main(void)
 			snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Version %s          ", VER);
 			snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, " VTERM INFO          ");
 			snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
-			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, " HELP                ");
+			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, " HELP Build %s       ", VER);
 			snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, " Version %s          ", VER);
 			snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, " VTERM HELP          ");
 			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
@@ -1137,18 +1137,6 @@ void main(void)
 		}
 		M_TRACE;
 	}
-}
-
-/*
- * busy loop delay with WDT reset
- */
-void wdtdelay(const uint32_t delay)
-{
-	uint32_t dcount;
-
-	for (dcount = 0; dcount <= delay; dcount++) { // delay a bit
-		ClrWdt(); // reset the WDT timer
-	};
 }
 
 /*

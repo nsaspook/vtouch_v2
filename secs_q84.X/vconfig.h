@@ -41,7 +41,7 @@ extern "C" {
 	 */
 
 
-			#define FAKER			// emulate equipment protocol
+#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -99,8 +99,13 @@ extern "C" {
 #define S10F3_STR_POS	135
 #define S10F3_TID_POS	138
 
-#define MAX_LINE	21
-#define MAX_TEXT	MAX_LINE-1
+	/*
+	 * characters per line on the display
+	 */
+#define MAX_STRLEN	20
+#define MAX_LINE	MAX_STRLEN+1
+#define MAX_TEXT	MAX_STRLEN
+#define MAX_HELP_STRLEN	32
 
 #define MAX_INFO	63
 #define MAX_BUF		63
@@ -315,13 +320,13 @@ extern "C" {
 	} V_data;
 
 	typedef struct V_help {
-		const char message[32], display[32];
+		const char message[MAX_HELP_STRLEN], display[MAX_HELP_STRLEN];
 	} V_help;
 
 	extern char spinners(uint8_t, const uint8_t);
 	/* spinner defines */
 #define MAX_SHAPES  6
-	const char spin[MAX_SHAPES][20] = {
+	const char spin[MAX_SHAPES][MAX_STRLEN] = {
 		"||//--", // classic LCD version with no \ character
 		"||//--\\\\", // classic
 		"OOOOOO--__-", // eye blink
@@ -335,8 +340,6 @@ extern "C" {
 	extern B_type B;
 
 	const char *build_date, *build_time;
-
-	void wdtdelay(const uint32_t);
 
 #ifdef	__cplusplus
 }

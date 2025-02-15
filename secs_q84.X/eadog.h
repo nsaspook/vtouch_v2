@@ -7,6 +7,7 @@
 
 /* Parts taken from:
  * Modified for XC8 and with SPI using ring buffers with interrupts
+ * or DMA directly from buffer memory to the SPI device
  *
  *            file: EA-DOGM_MIO.c
  *         version: 2.03
@@ -16,6 +17,8 @@
  *   contributions: Imaginos (CCS forum), Emil Nad (8Bit testing)
  *                  jgschmidt (CCS forum)
  * 
+ * 
+ * For NHD-0420D3Z-NSW-BBW-V3 20X4 CHARACTER display
 Pin No. Symbol External Connection Function Description
 1 SPISS MPU SPI Slave Select (NC in I2C mode)
 2 SDO NC No Connect
@@ -97,7 +100,6 @@ extern "C" {
 
 #define LCD_PWR_DELAY	350000
 
-	extern void wdtdelay(const uint32_t);
 	bool init_display(void);
 	void no_dma_set_lcd(void);
 	void send_lcd_data_dma(const uint8_t);
@@ -134,10 +136,6 @@ extern "C" {
 #define eaDogM_DisplayOn()       eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_ON)
 #define eaDogM_DisplayOff()      eaDogM_WriteCommand(EADOGM_CMD_DISPLAY_OFF)
 
-	/*
-	 * characters per line on the display
-	 */
-#define max_strlen	20
 
 #ifdef	__cplusplus
 }

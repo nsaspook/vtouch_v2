@@ -32,20 +32,20 @@ extern "C" {
 
 	V_help T[] = {
 		{
-			.message = "CMD: M C              ",
-			.display = "M: message, C: close  ",
+			.message = "CMD: M, C               ",
+			.display = "Message, Close          ",
 		},
 		{
-			.message = "CMD: R P O            ",
-			.display = "R: rdy P: pump O: open",
+			.message = "CMD: R, P, O            ",
+			.display = "Ready, Pump, Open       ",
 		},
 		{
-			.message = "CMD: L S D            ",
-			.display = "L: log S: set D: debug",
+			.message = "CMD: L, S, D            ",
+			.display = "Log, Set, Debug         ",
 		},
 		{
-			.message = "CMD: E H              ",
-			.display = "E: Errors H: help mesg",
+			.message = "CMD: E, H               ",
+			.display = "Errors, Help            ",
 		},
 	};
 

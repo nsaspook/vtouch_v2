@@ -32,6 +32,7 @@ static void send_lcd_cmd_long(const uint8_t); // for display init only
 static void send_lcd_data(const uint8_t);
 static void send_lcd_cmd(const uint8_t);
 static void spi_byte(void);
+static void wdtdelay(const uint32_t);
 
 /*
  * Init the NHD-0420D3Z-NSW-BBW-V3 in 8-bit serial mode
@@ -148,8 +149,8 @@ void eaDogM_WriteString(char *strPtr)
 	wait_lcd_done();
 	wait_lcd_set();
 	CS_SetLow(); /* SPI select display */
-	if (len > (uint8_t) max_strlen) {
-		len = max_strlen;
+	if (len > (uint8_t) MAX_STRLEN) {
+		len = MAX_STRLEN;
 	}
 	memcpy(spi_link.txbuf, strPtr, len);
 #ifdef USE_LCD_DMA
@@ -365,11 +366,11 @@ static void spi_byte(void)
 char * eaDogM_Scroll_String(char *strPtr)
 {
 	scroll_lock = true;
-	memcpy((void *) &Sstr[4][0], &Sstr[0][0], 20); // move top line to old line buffer
-	memcpy((void *) &Sstr[0][0], &Sstr[1][0], 20);
-	memcpy((void *) &Sstr[1][0], &Sstr[2][0], 20);
-	memcpy((void *) &Sstr[2][0], &Sstr[3][0], 20);
-	memcpy((void *) &Sstr[3][0], strPtr, 20); // place new text on the bottom line
+	memcpy((void *) &Sstr[4][0], &Sstr[0][0], MAX_STRLEN); // move top line to old line buffer
+	memcpy((void *) &Sstr[0][0], &Sstr[1][0], MAX_STRLEN);
+	memcpy((void *) &Sstr[1][0], &Sstr[2][0], MAX_STRLEN);
+	memcpy((void *) &Sstr[2][0], &Sstr[3][0], MAX_STRLEN);
+	memcpy((void *) &Sstr[3][0], strPtr, MAX_STRLEN); // place new text on the bottom line
 	scroll_line_pos = 4;
 	return &Sstr[4][0];
 }
@@ -466,4 +467,16 @@ void set_lcd_dim(const bool dim)
 		send_lcd_data(NHD_BL_LOW);
 #endif
 	}
+}
+
+/*
+ * busy loop delay with WDT reset
+ */
+static void wdtdelay(const uint32_t delay)
+{
+	uint32_t dcount;
+
+	for (dcount = 0; dcount <= delay; dcount++) { // delay a bit
+		ClrWdt(); // reset the WDT timer
+	};
 }
