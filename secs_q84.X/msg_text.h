@@ -32,20 +32,24 @@ extern "C" {
 
 	V_help T[] = {
 		{
-			.message = "CMD: M, C               ",
-			.display = "Message, Close          ",
+			.message = "CMD: M, C           ",
+			.display = "Message, Close      ",
+			.extrams = "Text Message to Host",
 		},
 		{
-			.message = "CMD: R, P, O            ",
-			.display = "Ready, Pump, Open       ",
+			.message = "CMD: R, P, O        ",
+			.display = "Ready, Pump, Open   ",
+			.extrams = "Load Lock commands  ",
 		},
 		{
-			.message = "CMD: L, S, D            ",
-			.display = "Log, Set, Debug         ",
+			.message = "CMD: L, S, D        ",
+			.display = "Log, Set, Debug     ",
+			.extrams = "                    ",
 		},
 		{
-			.message = "CMD: E, H               ",
-			.display = "Errors, Help            ",
+			.message = "CMD: E, H           ",
+			.display = "Errors, Help        ",
+			.extrams = "E: random test errs ",
 		},
 	};
 

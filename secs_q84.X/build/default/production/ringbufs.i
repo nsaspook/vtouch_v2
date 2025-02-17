@@ -39643,7 +39643,7 @@ void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 20 "./vconfig.h" 2
-# 135 "./vconfig.h"
+# 136 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39832,7 +39832,7 @@ void PIN_MANAGER_Initialize (void);
  } V_data;
 
  typedef struct V_help {
-  const char message[32], display[32];
+  const char message[32], display[32], extrams[32];
  } V_help;
 
  extern char spinners(uint8_t, const uint8_t);

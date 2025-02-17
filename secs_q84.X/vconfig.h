@@ -20,7 +20,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.12B"
+#define VER	"2.13G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -38,10 +38,11 @@ extern "C" {
 	 * 2.10 data screens reformatting
 	 * 2.11 screen flipping timing adjustments
 	 * 2.12 remote set random error generation
+	 * 2.13 clear up display errors and make this a GAMMA software release version
 	 */
 
 
-#define FAKER			// emulate equipment protocol
+//#define FAKER			// emulate equipment protocol
 
 	//#define DB1
 	//#define DB2
@@ -104,7 +105,7 @@ extern "C" {
 	 */
 #define MAX_STRLEN	20
 #define MAX_LINE	MAX_STRLEN+1
-#define MAX_TEXT	MAX_STRLEN
+#define MAX_TEXT	MAX_STRLEN+1
 #define MAX_HELP_STRLEN	32
 
 #define MAX_INFO	63
@@ -320,7 +321,7 @@ extern "C" {
 	} V_data;
 
 	typedef struct V_help {
-		const char message[MAX_HELP_STRLEN], display[MAX_HELP_STRLEN];
+		const char message[MAX_HELP_STRLEN], display[MAX_HELP_STRLEN], extrams[MAX_HELP_STRLEN];
 	} V_help;
 
 	extern char spinners(uint8_t, const uint8_t);

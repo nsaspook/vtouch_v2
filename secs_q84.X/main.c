@@ -225,7 +225,7 @@ V_data V = {
 	.rx_rs232 = 'O',
 	.debug = false,
 	.rerror = false,
-	.help = true,
+	.help = false,
 };
 
 B_type B = {
@@ -850,6 +850,8 @@ void main(void)
 			StartTimer(TMR_INFO, TDELAY);
 			StartTimer(TMR_FLIPPER, DFLIP);
 			StartTimer(TMR_HELPDIS, TDELAY);
+			StartTimer(TMR_SEQ, SEQDELAY);
+			StartTimer(TMR_HELP, TDELAY);
 			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " UI_STATE_INIT        ");
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
@@ -1110,8 +1112,14 @@ void main(void)
 				snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
 				snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, "RX CKSUM 0X%04X                        ", V.r_checksum);
 				snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, "TX CKSUM 0X%04X                        ", V.t_checksum);
-				snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "Que %u Dbug %u Rerr %u               ", V.queue, V.debug, V.rerror);
-				refresh_lcd();
+				snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "Hlp %u Dbg %u Rer %u                   ", V.help, V.debug, V.rerror);
+
+				/*
+				 * don't default update the LCD when displaying HELP text
+				 */
+				if (!V.set_sequ) {
+					refresh_lcd();
+				}
 			}
 		}
 
@@ -1133,7 +1141,7 @@ void main(void)
 			StartTimer(TMR_SEQ, SEQDELAY);
 			StartTimer(TMR_HELP, TDELAY);
 			V.set_sequ = true;
-			check_help(true);
+			check_help(false);
 		}
 		M_TRACE;
 	}

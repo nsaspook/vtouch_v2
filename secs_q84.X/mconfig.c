@@ -54,7 +54,7 @@ bool help_button(void)
 }
 
 /*
- * Help Messages, show date or time with flipper
+ * Help Messages, show program compile date or extra message with flipper flag
  */
 void check_help(bool flipper)
 {
@@ -62,10 +62,11 @@ void check_help(bool flipper)
 	 * show help display
 	 */
 	if (V.help) {
+		snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, " HELP Screen: %u           ", V.help_id + 1);
 		if (flipper) {
 			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "HELP %s              ", build_date);
 		} else {
-			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "HELP %s              ", build_time);
+			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, "%s                   ", T[V.help_id].extrams);
 		}
 		snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].display);
 		snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, "%s                 ", T[V.help_id].message);
