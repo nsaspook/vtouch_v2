@@ -8,8 +8,8 @@
 # 2 "<built-in>" 2
 # 1 "mcc_generated_files/device_config.c" 2
 # 50 "mcc_generated_files/device_config.c"
-#pragma config FEXTOSC = ECH
-#pragma config RSTOSC = EXTOSC_4PLL
+#pragma config FEXTOSC = OFF
+#pragma config RSTOSC = HFINTOSC_64MHZ
 
 
 #pragma config CLKOUTEN = ON

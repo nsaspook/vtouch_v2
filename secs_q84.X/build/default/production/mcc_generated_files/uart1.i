@@ -39406,10 +39406,10 @@ void UART1_Initialize(void)
  U1CON2 = 0x00;
 
 
- U1BRGL = 0x11;
+    U1BRGL = 0x40;
 
 
- U1BRGH = 0x04;
+    U1BRGH = 0x03;
 
 
  U1FIFO = 0x00;

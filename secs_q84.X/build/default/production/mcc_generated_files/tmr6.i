@@ -39636,7 +39636,7 @@ void TMR6_Initialize(void)
  T6RST = 0x00;
 
 
- T6PR = 0x4F;
+    T6PR = 0x7F;
 
 
  T6TMR = 0x00;

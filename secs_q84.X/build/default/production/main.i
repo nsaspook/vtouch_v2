@@ -7,11 +7,7 @@
 # 1 "/opt/microchip/xc8/v3.00/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 13 "main.c"
-#pragma config FEXTOSC = ECH
-#pragma config RSTOSC = EXTOSC_4PLL
-
-
+# 17 "main.c"
 #pragma config CLKOUTEN = ON
 #pragma config PR1WAY = OFF
 #pragma config CSWEN = ON
@@ -41211,7 +41207,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 18 2025", *build_time = "19:11:24";
+const char *build_date = "Feb 18 2025", *build_time = "19:45:54";
 
 const char * GEM_TEXT [] = {
  "DISABLE",

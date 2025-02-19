@@ -39341,10 +39341,10 @@ void TMR5_Initialize(void)
     T5CLK = 0x01;
 
 
-    TMR5H = 0x9E;
+    TMR5H = 0x63;
 
 
-    TMR5L = 0x58;
+    TMR5L = 0xC0;
 
 
     PIR8bits.TMR5IF = 0;

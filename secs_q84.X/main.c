@@ -10,8 +10,8 @@
 // PIC18F47Q84 Configuration Bit Settings
 // 'C' source line config statements
 // CONFIG1
-#pragma config FEXTOSC = ECH    // External Oscillator Selection (EC (external clock) above 8 MHz)
-#pragma config RSTOSC = EXTOSC_4PLL// Reset Oscillator Selection (EXTOSC with 4x PLL, with EXTOSC operating per FEXTOSC bits)
+//#pragma config FEXTOSC = ECH    // External Oscillator Selection (EC (external clock) above 8 MHz)
+//#pragma config RSTOSC = EXTOSC_4PLL// Reset Oscillator Selection (EXTOSC with 4x PLL, with EXTOSC operating per FEXTOSC bits)
 
 // CONFIG2
 #pragma config CLKOUTEN = ON    // Clock out Enable bit (CLKOUT function is enabled)

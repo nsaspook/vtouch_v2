@@ -39406,10 +39406,10 @@ void UART2_Initialize(void)
  U2CON2 = 0x00;
 
 
- U2BRGL = 0x11;
+    U2BRGL = 0x40;
 
 
- U2BRGH = 0x04;
+    U2BRGH = 0x03;
 
 
  U2FIFO = 0x00;
