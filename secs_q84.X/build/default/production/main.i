@@ -41209,7 +41209,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 17 2025", *build_time = "11:51:06";
+const char *build_date = "Feb 17 2025", *build_time = "18:36:18";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41250,9 +41250,9 @@ V_data V = {
  .vterm = 0,
  .tx_rs232 = 'O',
  .rx_rs232 = 'O',
- .debug = 1,
- .rerror = 1,
- .help = 1,
+ .debug = 0,
+ .rerror = 0,
+ .help = 0,
 };
 
 B_type B = {
