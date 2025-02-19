@@ -122,8 +122,8 @@ extern "C" {
 #define INFO_VTERM	1
 #define MAIN_VTERM	0
 
-#define SWITCH_VTERM	40 // time between main to info screen switches
-#define SWITCH_DURATION	16 // time in the info screen
+#define SWITCH_VTERM	70 // time between main to info screen switches
+#define SWITCH_DURATION	32 // time in the info screen
 
 #define LINE_OPEN_V	2048 // open wire
 #define LINE_RECV_V	1920 // connected to recever input only
@@ -322,6 +322,7 @@ extern "C" {
 		volatile uint8_t ticker;
 		bool flipper, uart_speed_fast;
 		adc_result_t v_tx_line, v_rx_line;
+		int16_t tx_volts, rx_volts;
 		char tx_rs232, rx_rs232;
 	} V_data;
 

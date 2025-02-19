@@ -39406,10 +39406,10 @@ void UART2_Initialize(void)
  U2CON2 = 0x00;
 
 
-    U2BRGL = 0x40;
+ U2BRGL = 0x82;
 
 
-    U2BRGH = 0x03;
+ U2BRGH = 0x06;
 
 
  U2FIFO = 0x00;
@@ -39573,6 +39573,7 @@ void UART2_DefaultFramingErrorHandler(void)
 
 void UART2_DefaultOverrunErrorHandler(void)
 {
+ U2ERRIRbits.RXFOIF=0;
 }
 
 void UART2_DefaultErrorHandler(void)

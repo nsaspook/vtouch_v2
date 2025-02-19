@@ -39403,13 +39403,13 @@ void UART1_Initialize(void)
  U1CON1 = 0x80;
 
 
- U1CON2 = 0x00;
+    U1CON2 = 0x00;
 
 
-    U1BRGL = 0x40;
+    U1BRGL = 0x82;
 
 
-    U1BRGH = 0x03;
+    U1BRGH = 0x06;
 
 
  U1FIFO = 0x00;
@@ -39573,6 +39573,7 @@ void UART1_DefaultFramingErrorHandler(void)
 
 void UART1_DefaultOverrunErrorHandler(void)
 {
+ U1ERRIRbits.RXFOIF=0;
 }
 
 void UART1_DefaultErrorHandler(void)

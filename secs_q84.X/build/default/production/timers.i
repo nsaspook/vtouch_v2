@@ -39783,6 +39783,7 @@ void PIN_MANAGER_Initialize (void);
   volatile uint8_t ticker;
   _Bool flipper, uart_speed_fast;
   adc_result_t v_tx_line, v_rx_line;
+  int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
  } V_data;
 

@@ -40887,6 +40887,7 @@ void SystemArbiter_Initialize(void);
   volatile uint8_t ticker;
   _Bool flipper, uart_speed_fast;
   adc_result_t v_tx_line, v_rx_line;
+  int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
  } V_data;
 
@@ -41207,7 +41208,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 18 2025", *build_time = "21:35:56";
+const char *build_date = "Feb 19 2025", *build_time = "15:33:31";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -42088,9 +42089,9 @@ void main(void)
     update_rs232_line_status();
 
     StartTimer(TMR_DISPLAY, 100);
-    if (V.vterm_switch++ > (40)) {
+    if (V.vterm_switch++ > (70)) {
      set_vterm(switcher);
-     if (V.vterm_switch > (40 + V.ticker + 16)) {
+     if (V.vterm_switch > (70 + V.ticker + 32)) {
       switcher++;
       if ((switcher & 0x03) == 3) {
        switcher = 1;
@@ -42103,7 +42104,7 @@ void main(void)
 
 
 
-    snprintf(get_vterm_ptr(0, 1), 20 +1, "I RS %hu:%c %hu:%c                     ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
+    snprintf(get_vterm_ptr(0, 1), 20 +1, "I RS %3dV:%c %3dV:%c                   ", V.rx_volts, V.rx_rs232, V.tx_volts, V.tx_rs232);
     snprintf(get_vterm_ptr(1, 1), 20 +1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
     snprintf(get_vterm_ptr(2, 1), 20 +1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
     snprintf(get_vterm_ptr(3, 1), 20 +1, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
