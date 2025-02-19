@@ -794,6 +794,8 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	mconfig_init(); // zero the entire text buffer
+	UART1_Initialize_9600_19200(false);
+	UART2_Initialize_9600_19200(false);
 
 	V.ui_state = UI_STATE_INIT;
 	mode = UI_STATE_HOST;

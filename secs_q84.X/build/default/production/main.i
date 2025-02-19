@@ -40915,6 +40915,8 @@ void SystemArbiter_Initialize(void);
  extern B_type B;
 
  const char *build_date, *build_time;
+ extern void UART1_Initialize_9600_19200(_Bool);
+ extern void UART2_Initialize_9600_19200(_Bool);
 # 44 "./eadog.h" 2
 
 
@@ -41209,7 +41211,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 17 2025", *build_time = "18:36:18";
+const char *build_date = "Feb 18 2025", *build_time = "16:24:35";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41782,6 +41784,8 @@ void main(void)
  (INTCON0bits.GIEL = 1);
 
  mconfig_init();
+ UART1_Initialize_9600_19200(0);
+ UART2_Initialize_9600_19200(0);
 
  V.ui_state = UI_STATE_INIT;
  mode = UI_STATE_HOST;
@@ -42003,7 +42007,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
     else
      snprintf(get_vterm_ptr(2, 0), 20 +1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1026 "main.c"
+# 1028 "main.c"
     break;
    case SEQ_STATE_RX:
 

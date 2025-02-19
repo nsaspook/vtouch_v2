@@ -39371,175 +39371,161 @@ void UART1_DefaultErrorHandler(void);
 void UART1_Initialize(void)
 {
 
-    PIE4bits.U1RXIE = 0;
-    UART1_SetRxInterruptHandler(UART1_Receive_ISR);
-    PIE4bits.U1TXIE = 0;
-    UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
+ PIE4bits.U1RXIE = 0;
+ UART1_SetRxInterruptHandler(UART1_Receive_ISR);
+ PIE4bits.U1TXIE = 0;
+ UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
 
 
 
 
-    U1P1L = 0x00;
+ U1P1L = 0x00;
 
 
-    U1P1H = 0x00;
+ U1P1H = 0x00;
 
 
-    U1P2L = 0x00;
+ U1P2L = 0x00;
 
 
-    U1P2H = 0x00;
+ U1P2H = 0x00;
 
 
-    U1P3L = 0x00;
+ U1P3L = 0x00;
 
 
-    U1P3H = 0x00;
+ U1P3H = 0x00;
 
 
-    U1CON0 = 0xB0;
+ U1CON0 = 0xB0;
 
 
-    U1CON1 = 0x80;
+ U1CON1 = 0x80;
 
 
-    U1CON2 = 0x00;
+ U1CON2 = 0x00;
 
 
-    U1BRGL = 0x11;
+ U1BRGL = 0x11;
 
 
-    U1BRGH = 0x04;
+ U1BRGH = 0x04;
 
 
-    U1FIFO = 0x00;
+ U1FIFO = 0x00;
 
 
-    U1UIR = 0x00;
+ U1UIR = 0x00;
 
 
-    U1ERRIR = 0x00;
+ U1ERRIR = 0x00;
 
 
-    U1ERRIE = 0x00;
+ U1ERRIE = 0x00;
 
 
-    UART1_SetFramingErrorHandler(UART1_DefaultFramingErrorHandler);
-    UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
-    UART1_SetErrorHandler(UART1_DefaultErrorHandler);
+ UART1_SetFramingErrorHandler(UART1_DefaultFramingErrorHandler);
+ UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
+ UART1_SetErrorHandler(UART1_DefaultErrorHandler);
 
-    uart1RxLastError.status = 0;
-
-
-    uart1TxHead = 0;
-    uart1TxTail = 0;
-    uart1TxBufferRemaining = sizeof(uart1TxBuffer);
-    uart1RxHead = 0;
-    uart1RxTail = 0;
-    uart1RxCount = 0;
+ uart1RxLastError.status = 0;
 
 
-    PIE4bits.U1RXIE = 1;
+ uart1TxHead = 0;
+ uart1TxTail = 0;
+ uart1TxBufferRemaining = sizeof(uart1TxBuffer);
+ uart1RxHead = 0;
+ uart1RxTail = 0;
+ uart1RxCount = 0;
+
+
+ PIE4bits.U1RXIE = 1;
 }
 
 _Bool UART1_is_rx_ready(void)
 {
-    return (uart1RxCount ? 1 : 0);
+ return(uart1RxCount ? 1 : 0);
 }
 
 _Bool UART1_is_tx_ready(void)
 {
-    return (uart1TxBufferRemaining ? 1 : 0);
+ return(uart1TxBufferRemaining ? 1 : 0);
 }
 
 _Bool UART1_is_tx_done(void)
 {
-    return U1ERRIRbits.TXMTIF;
+ return U1ERRIRbits.TXMTIF;
 }
 
-uart1_status_t UART1_get_last_status(void){
-    return uart1RxLastError;
+uart1_status_t UART1_get_last_status(void)
+{
+ return uart1RxLastError;
 }
 
 uint8_t UART1_Read(void)
 {
-    uint8_t readValue = 0;
+ uint8_t readValue = 0;
 
-    while(0 == uart1RxCount)
-    {
-    }
+ while (0 == uart1RxCount) {
+ }
 
-    uart1RxLastError = uart1RxStatusBuffer[uart1RxTail];
+ uart1RxLastError = uart1RxStatusBuffer[uart1RxTail];
 
-    readValue = uart1RxBuffer[uart1RxTail++];
-    if(sizeof(uart1RxBuffer) <= uart1RxTail)
-    {
-        uart1RxTail = 0;
-    }
-    PIE4bits.U1RXIE = 0;
-    uart1RxCount--;
-    PIE4bits.U1RXIE = 1;
+ readValue = uart1RxBuffer[uart1RxTail++];
+ if (sizeof(uart1RxBuffer) <= uart1RxTail) {
+  uart1RxTail = 0;
+ }
+ PIE4bits.U1RXIE = 0;
+ uart1RxCount--;
+ PIE4bits.U1RXIE = 1;
 
-    return readValue;
+ return readValue;
 }
 
 void UART1_Write(uint8_t txData)
 {
-    while(0 == uart1TxBufferRemaining)
-    {
-    }
+ while (0 == uart1TxBufferRemaining) {
+ }
 
-    if(0 == PIE4bits.U1TXIE)
-    {
-        U1TXB = txData;
-    }
-    else
-    {
-        PIE4bits.U1TXIE = 0;
-        uart1TxBuffer[uart1TxHead++] = txData;
-        if(sizeof(uart1TxBuffer) <= uart1TxHead)
-        {
-            uart1TxHead = 0;
-        }
-        uart1TxBufferRemaining--;
-    }
-    PIE4bits.U1TXIE = 1;
+ if (0 == PIE4bits.U1TXIE) {
+  U1TXB = txData;
+ } else {
+  PIE4bits.U1TXIE = 0;
+  uart1TxBuffer[uart1TxHead++] = txData;
+  if (sizeof(uart1TxBuffer) <= uart1TxHead) {
+   uart1TxHead = 0;
+  }
+  uart1TxBufferRemaining--;
+ }
+ PIE4bits.U1TXIE = 1;
 }
 
-void __attribute__((picinterrupt(("irq(U1TX),base(8)")))) UART1_tx_vect_isr()
+void __attribute__((picinterrupt(("irq(U1TX), base(8)")))) UART1_tx_vect_isr()
 {
-    if(UART1_TxInterruptHandler)
-    {
-        UART1_TxInterruptHandler();
-    }
+ if (UART1_TxInterruptHandler) {
+  UART1_TxInterruptHandler();
+ }
 }
 
-void __attribute__((picinterrupt(("irq(U1RX),base(8)")))) UART1_rx_vect_isr()
+void __attribute__((picinterrupt(("irq(U1RX), base(8)")))) UART1_rx_vect_isr()
 {
-    if(UART1_RxInterruptHandler)
-    {
-        UART1_RxInterruptHandler();
-    }
+ if (UART1_RxInterruptHandler) {
+  UART1_RxInterruptHandler();
+ }
 }
-
-
 
 void UART1_Transmit_ISR(void)
 {
 
-    if(sizeof(uart1TxBuffer) > uart1TxBufferRemaining)
-    {
-        U1TXB = uart1TxBuffer[uart1TxTail++];
-       if(sizeof(uart1TxBuffer) <= uart1TxTail)
-        {
-            uart1TxTail = 0;
-        }
-        uart1TxBufferRemaining++;
-    }
-    else
-    {
-        PIE4bits.U1TXIE = 0;
-    }
+ if (sizeof(uart1TxBuffer) > uart1TxBufferRemaining) {
+  U1TXB = uart1TxBuffer[uart1TxTail++];
+  if (sizeof(uart1TxBuffer) <= uart1TxTail) {
+   uart1TxTail = 0;
+  }
+  uart1TxBufferRemaining++;
+ } else {
+  PIE4bits.U1TXIE = 0;
+ }
 
 
 }
@@ -39547,66 +39533,76 @@ void UART1_Transmit_ISR(void)
 void UART1_Receive_ISR(void)
 {
 
-    uart1RxStatusBuffer[uart1RxHead].status = 0;
+ uart1RxStatusBuffer[uart1RxHead].status = 0;
 
-    if(U1ERRIRbits.FERIF){
-        uart1RxStatusBuffer[uart1RxHead].ferr = 1;
-        UART1_FramingErrorHandler();
-    }
+ if (U1ERRIRbits.FERIF) {
+  uart1RxStatusBuffer[uart1RxHead].ferr = 1;
+  UART1_FramingErrorHandler();
+ }
 
-    if(U1ERRIRbits.RXFOIF){
-        uart1RxStatusBuffer[uart1RxHead].oerr = 1;
-        UART1_OverrunErrorHandler();
-    }
+ if (U1ERRIRbits.RXFOIF) {
+  uart1RxStatusBuffer[uart1RxHead].oerr = 1;
+  UART1_OverrunErrorHandler();
+ }
 
-    if(uart1RxStatusBuffer[uart1RxHead].status){
-        UART1_ErrorHandler();
-    } else {
-        UART1_RxDataHandler();
-    }
+ if (uart1RxStatusBuffer[uart1RxHead].status) {
+  UART1_ErrorHandler();
+ } else {
+  UART1_RxDataHandler();
+ }
 
 
 }
 
-void UART1_RxDataHandler(void){
+void UART1_RxDataHandler(void)
+{
 
-    uart1RxBuffer[uart1RxHead++] = U1RXB;
-    if(sizeof(uart1RxBuffer) <= uart1RxHead)
-    {
-        uart1RxHead = 0;
-    }
-    uart1RxCount++;
-    do { LATBbits.LATB2 = ~LATBbits.LATB2; } while(0);
+ uart1RxBuffer[uart1RxHead++] = U1RXB;
+ if (sizeof(uart1RxBuffer) <= uart1RxHead) {
+  uart1RxHead = 0;
+ }
+ uart1RxCount++;
+ do {
+  LATBbits.LATB2 = ~LATBbits.LATB2;
+ } while (0);
 }
 
-void UART1_DefaultFramingErrorHandler(void){}
-
-void UART1_DefaultOverrunErrorHandler(void){}
-
-void UART1_DefaultErrorHandler(void){
-    UART1_RxDataHandler();
+void UART1_DefaultFramingErrorHandler(void)
+{
 }
 
-void UART1_SetFramingErrorHandler(void (* interruptHandler)(void)){
-    UART1_FramingErrorHandler = interruptHandler;
+void UART1_DefaultOverrunErrorHandler(void)
+{
 }
 
-void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void)){
-    UART1_OverrunErrorHandler = interruptHandler;
+void UART1_DefaultErrorHandler(void)
+{
+ UART1_RxDataHandler();
 }
 
-void UART1_SetErrorHandler(void (* interruptHandler)(void)){
-    UART1_ErrorHandler = interruptHandler;
+void UART1_SetFramingErrorHandler(void (* interruptHandler)(void))
+{
+ UART1_FramingErrorHandler = interruptHandler;
 }
 
-
-
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void)){
-    UART1_RxInterruptHandler = InterruptHandler;
+void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void))
+{
+ UART1_OverrunErrorHandler = interruptHandler;
 }
 
-void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void)){
-    UART1_TxInterruptHandler = InterruptHandler;
+void UART1_SetErrorHandler(void (* interruptHandler)(void))
+{
+ UART1_ErrorHandler = interruptHandler;
+}
+
+void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void))
+{
+ UART1_RxInterruptHandler = InterruptHandler;
+}
+
+void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void))
+{
+ UART1_TxInterruptHandler = InterruptHandler;
 }
 
 
@@ -39619,5 +39615,90 @@ void UART1_put_buffer(uint8_t bufData)
  }
 
  uart1RxCount++;
+ PIE4bits.U1RXIE = 1;
+}
+
+
+
+
+void UART1_Initialize_9600_19200(_Bool fast)
+{
+
+ PIE4bits.U1RXIE = 0;
+ UART1_SetRxInterruptHandler(UART1_Receive_ISR);
+ PIE4bits.U1TXIE = 0;
+ UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
+
+
+
+
+ U1P1L = 0x00;
+
+
+ U1P1H = 0x00;
+
+
+ U1P2L = 0x00;
+
+
+ U1P2H = 0x00;
+
+
+ U1P3L = 0x00;
+
+
+ U1P3H = 0x00;
+
+
+ U1CON0 = 0xB0;
+
+
+ U1CON1 = 0x80;
+
+
+ U1CON2 = 0x00;
+
+ if (fast) {
+
+  U1BRGL = 0x08;
+
+
+  U1BRGH = 0x02;
+ } else {
+
+  U1BRGL = 0x11;
+
+
+  U1BRGH = 0x04;
+ }
+
+
+ U1FIFO = 0x00;
+
+
+ U1UIR = 0x00;
+
+
+ U1ERRIR = 0x00;
+
+
+ U1ERRIE = 0x00;
+
+
+ UART1_SetFramingErrorHandler(UART1_DefaultFramingErrorHandler);
+ UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
+ UART1_SetErrorHandler(UART1_DefaultErrorHandler);
+
+ uart1RxLastError.status = 0;
+
+
+ uart1TxHead = 0;
+ uart1TxTail = 0;
+ uart1TxBufferRemaining = sizeof(uart1TxBuffer);
+ uart1RxHead = 0;
+ uart1RxTail = 0;
+ uart1RxCount = 0;
+
+
  PIE4bits.U1RXIE = 1;
 }
