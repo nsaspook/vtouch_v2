@@ -1355,7 +1355,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 				break;
 			case CODE_LOG:
 				do {
-					DATAEE_WriteByte(i, 0xff);
+//					DATAEE_WriteByte(i, 0xff);
 				} while (++i <= 764); // overwrite EEPROM data but leave program data intact in the top 256 bytes
 				V.response.log_num = 0;
 				V.response.log_seq = 0;
@@ -1474,14 +1474,14 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 				break;
 			}
 			store1_1 = false;
-			ee_logger(stream, function, dtime, msg_data);
+//			ee_logger(stream, function, dtime, msg_data);
 			break;
 		case 13:
 			if (!store1_13) {
 				break;
 			}
 			store1_13 = false;
-			ee_logger(stream, function, dtime, msg_data);
+//			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
 			break;
@@ -1492,7 +1492,7 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 		case 41: // S2F41 remote command from host
 		case 42: // S2F42 response from equipment
 			/* always store this message */
-			ee_logger(stream, function, dtime, msg_data);
+//			ee_logger(stream, function, dtime, msg_data);
 			if (function == 42) { // check for failed command
 				V.msg_ret = 0;
 				V.msg_error = MSG_ERROR_NONE;
@@ -1509,7 +1509,7 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 				break;
 			}
 			store6_11 = false;
-			ee_logger(stream, function, dtime, msg_data);
+//			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
 			break;

@@ -40706,7 +40706,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 136 "./vconfig.h"
+# 139 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40889,7 +40889,7 @@ void SystemArbiter_Initialize(void);
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch;
   volatile uint8_t ticker;
-  _Bool flipper;
+  _Bool flipper, uart_speed_fast;
   adc_result_t v_tx_line, v_rx_line;
   char tx_rs232, rx_rs232;
  } V_data;
@@ -41211,7 +41211,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 18 2025", *build_time = "16:24:35";
+const char *build_date = "Feb 18 2025", *build_time = "19:11:24";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41508,7 +41508,26 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-# 522 "main.c"
+
+
+
+header27 H27[] = {
+ {
+  .length = 27,
+  .block.block.rbit = 1,
+  .block.block.didh = 0,
+  .block.block.didl = 0,
+  .block.block.wbit = 1,
+  .block.block.stream = 1,
+  .block.block.function = 13,
+  .block.block.ebit = 1,
+  .block.block.bidh = 0,
+  .block.block.bidl = 1,
+  .block.block.systemb = 1,
+ },
+};
+
+
 header33 H33[] = {
  {
   .length = 33,
@@ -41772,10 +41791,17 @@ void onesec_io(void);
 void main(void)
 {
  UI_STATES mode;
- char * s;
+ char * s, * speed_text;
 
 
  SYSTEM_Initialize();
+
+
+
+
+ V.uart_speed_fast = (_Bool) DATAEE_ReadByte(0x03F0);
+ UART1_Initialize_9600_19200(V.uart_speed_fast);
+ UART2_Initialize_9600_19200(V.uart_speed_fast);
 
 
  (INTCON0bits.GIEH = 1);
@@ -41784,8 +41810,18 @@ void main(void)
  (INTCON0bits.GIEL = 1);
 
  mconfig_init();
- UART1_Initialize_9600_19200(0);
- UART2_Initialize_9600_19200(0);
+
+
+
+ if (V.uart_speed_fast) {
+  speed_text = "19200bps";
+ } else {
+  speed_text = "9600bps";
+ }
+
+
+
+ DATAEE_WriteByte(0x03F0, (uint8_t) !V.uart_speed_fast);
 
  V.ui_state = UI_STATE_INIT;
  mode = UI_STATE_HOST;
@@ -41803,8 +41839,8 @@ void main(void)
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
   if (!faker++) {
 
-
-
+   V.euart = 2;
+   equip_tx(0x05);
 
   }
 
@@ -41815,24 +41851,32 @@ void main(void)
    init_display();
    eaDogM_WriteCommand(0b00001100);
 
+   set_vterm(V.vterm);
+   snprintf(get_vterm_ptr(0, 0), 20 +1, "Serial  %s             ", speed_text);
+   snprintf(get_vterm_ptr(1, 0), 20 +1, "Serial  %s             ", speed_text);
+   snprintf(get_vterm_ptr(2, 0), 20 +1, "Serial  %s             ", speed_text);
+   snprintf(get_vterm_ptr(3, 0), 20 +1, "Serial  %s             ", speed_text);
+   refresh_lcd();
+   WaitMs(1000);
+
    V.ui_state = mode;
    V.s_state = SEQ_STATE_INIT;
    srand(1957);
    set_vterm(V.vterm);
-   snprintf(get_vterm_ptr(0, 0), 20 +1, " RVI HOST TESTER     ");
-   snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s          ", "2.13G");
+   snprintf(get_vterm_ptr(0, 0), 20 +1, " RVI HOST TESTER %u  ",V.uart_speed_fast);
+   snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s          ", "2.14G");
    snprintf(get_vterm_ptr(2, 0), 20 +1, " NSASPOOK            ");
    snprintf(get_vterm_ptr(3, 0), 20 +1, " %s                  ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 1), 20 +1, " INFO                ");
-   snprintf(get_vterm_ptr(1, 1), 20 +1, " Version %s          ", "2.13G");
+   snprintf(get_vterm_ptr(1, 1), 20 +1, " Version %s          ", "2.14G");
    snprintf(get_vterm_ptr(2, 1), 20 +1, " VTERM INFO          ");
    snprintf(get_vterm_ptr(3, 1), 20 +1, " %s                  ", (char *) build_date);
-   snprintf(get_vterm_ptr(0, 3), 20 +1, " HELP Build %s       ", "2.13G");
-   snprintf(get_vterm_ptr(1, 3), 20 +1, " Version %s          ", "2.13G");
+   snprintf(get_vterm_ptr(0, 3), 20 +1, " HELP Build %s       ", "2.14G");
+   snprintf(get_vterm_ptr(1, 3), 20 +1, " Version %s          ", "2.14G");
    snprintf(get_vterm_ptr(2, 3), 20 +1, " VTERM HELP          ");
    snprintf(get_vterm_ptr(3, 3), 20 +1, " %s                  ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 2), 20 +1, " DEBUG               ");
-   snprintf(get_vterm_ptr(1, 2), 20 +1, " Version %s          ", "2.13G");
+   snprintf(get_vterm_ptr(1, 2), 20 +1, " Version %s          ", "2.14G");
    snprintf(get_vterm_ptr(2, 2), 20 +1, " VTERM DEBUG         ");
    snprintf(get_vterm_ptr(3, 2), 20 +1, " %s                  ", (char *) build_date);
    refresh_lcd();
@@ -41848,12 +41892,12 @@ void main(void)
    break;
   case UI_STATE_HOST:
 
+   snprintf(get_vterm_ptr(0, 0), 20 +1, "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
 
 
 
 
 
-   snprintf(get_vterm_ptr(3, 0), 20 +1, "Equip %u SID %u %c:%c             ", V.e_types, V.sid, V.rx_rs232, V.tx_rs232);
 
 
    switch (V.s_state) {
@@ -41861,18 +41905,18 @@ void main(void)
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
 
+    V.s_state = SEQ_STATE_TX;
 
 
-    V.s_state = SEQ_STATE_RX;
 
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
      if (V.debug) {
       snprintf(get_vterm_ptr(2, 0), 20 +1, "H254 %d, T%ld       ", sizeof(header254), V.testing);
      } else {
 
+      snprintf(get_vterm_ptr(2, 0), 20 +1, "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
 
-      snprintf(get_vterm_ptr(2, 0), 20 +1, "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }
@@ -41919,9 +41963,9 @@ void main(void)
 
     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
 
+     V.s_state = SEQ_STATE_RX;
 
 
-     V.s_state = SEQ_STATE_TRIGGER;
 
     }
     if (V.t_l_state == LINK_STATE_ERROR)
@@ -41961,9 +42005,9 @@ void main(void)
       snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
      } else {
 
+      snprintf(get_vterm_ptr(2, 0), 20 +1, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
 
-      snprintf(get_vterm_ptr(2, 0), 20 +1, "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }
@@ -42007,7 +42051,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
     else
      snprintf(get_vterm_ptr(2, 0), 20 +1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1028 "main.c"
+# 1053 "main.c"
     break;
    case SEQ_STATE_RX:
 

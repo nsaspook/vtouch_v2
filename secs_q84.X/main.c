@@ -782,10 +782,17 @@ void onesec_io(void);
 void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
-	char * s;
+	char * s, * speed_text;
 
 	// Initialize the device
 	SYSTEM_Initialize();
+	
+		/*
+	 * read the saved EEPROM USART setting
+	 */
+	V.uart_speed_fast = (bool) DATAEE_ReadByte(UART_SPEED_EADR);
+	UART1_Initialize_9600_19200(V.uart_speed_fast);
+	UART2_Initialize_9600_19200(V.uart_speed_fast);
 
 	// Enable high priority global interrupts
 	INTERRUPT_GlobalInterruptHighEnable();
@@ -794,8 +801,18 @@ void main(void)
 	INTERRUPT_GlobalInterruptLowEnable();
 
 	mconfig_init(); // zero the entire text buffer
-	UART1_Initialize_9600_19200(false);
-	UART2_Initialize_9600_19200(false);
+
+
+
+	if (V.uart_speed_fast) {
+		speed_text = "19200bps";
+	} else {
+		speed_text = "9600bps";
+	}
+	/*
+	 * ALternate the speed setting with each restart
+	 */
+	DATAEE_WriteByte(UART_SPEED_EADR, (uint8_t) !V.uart_speed_fast);
 
 	V.ui_state = UI_STATE_INIT;
 	mode = UI_STATE_HOST;
@@ -825,11 +842,19 @@ void main(void)
 			init_display();
 			eaDogM_CursorOff();
 
+			set_vterm(V.vterm); // set to buffer 0
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
+			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
+			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
+			refresh_lcd();
+			WaitMs(LDELAY);
+
 			V.ui_state = mode;
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
 			set_vterm(V.vterm); // set to buffer 0
-			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER     ");
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER %u  ",V.uart_speed_fast);
 			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, " Version %s          ", VER);
 			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, " NSASPOOK            ");
 			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
