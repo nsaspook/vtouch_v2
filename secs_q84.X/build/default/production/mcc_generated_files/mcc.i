@@ -40479,65 +40479,75 @@ void SystemArbiter_Initialize(void);
 # 48 "mcc_generated_files/mcc.c" 2
 
 
+extern void UART1_Initialize_9600_19200(_Bool);
+extern void UART2_Initialize_9600_19200(_Bool);
+
 void SYSTEM_Initialize(void)
 {
-    INTERRUPT_Initialize();
-    PMD_Initialize();
-    ADC_Initialize();
-    PIN_MANAGER_Initialize();
-    OSCILLATOR_Initialize();
-    TMR6_Initialize();
-    DMA1_Initialize();
-    TMR2_Initialize();
-    TMR5_Initialize();
-    UART2_Initialize();
-    UART1_Initialize();
-    SPI1_Initialize();
-    PWM2_16BIT_Initialize();
-    SystemArbiter_Initialize();
+ _Bool uart_speed_fast;
+ INTERRUPT_Initialize();
+ PMD_Initialize();
+ ADC_Initialize();
+ PIN_MANAGER_Initialize();
+ OSCILLATOR_Initialize();
+ TMR6_Initialize();
+ DMA1_Initialize();
+ TMR2_Initialize();
+ TMR5_Initialize();
+
+
+ uart_speed_fast = (_Bool) DATAEE_ReadByte(0x03F0);
+ UART2_Initialize_9600_19200(uart_speed_fast);
+ UART1_Initialize_9600_19200(uart_speed_fast);
+
+
+
+ DATAEE_WriteByte(0x03F0, (uint8_t) !uart_speed_fast);
+ SPI1_Initialize();
+ PWM2_16BIT_Initialize();
+ SystemArbiter_Initialize();
 }
 
 void OSCILLATOR_Initialize(void)
 {
 
-    OSCCON1 = 0x60;
+ OSCCON1 = 0x60;
 
-    OSCCON3 = 0x00;
+ OSCCON3 = 0x00;
 
-    OSCEN = 0x00;
+ OSCEN = 0x00;
 
-    OSCFRQ = 0x08;
+ OSCFRQ = 0x08;
 
-    OSCTUNE = 0x00;
+ OSCTUNE = 0x00;
 }
 
 void PMD_Initialize(void)
 {
 
-    PMD0 = 0x00;
+ PMD0 = 0x00;
 
-    PMD1 = 0x00;
+ PMD1 = 0x00;
 
-    PMD2 = 0x00;
+ PMD2 = 0x00;
 
-    PMD3 = 0x00;
+ PMD3 = 0x00;
 
-    PMD4 = 0x00;
+ PMD4 = 0x00;
 
-    PMD5 = 0x00;
+ PMD5 = 0x00;
 
-    PMD6 = 0x00;
+ PMD6 = 0x00;
 
-    PMD7 = 0x00;
+ PMD7 = 0x00;
 
-    PMD8 = 0x00;
+ PMD8 = 0x00;
 }
-
 
 void SystemArbiter_Initialize(void)
 {
 
-    PRLOCK = 0x55;
-    PRLOCK = 0xAA;
-    PRLOCKbits.PRLOCKED = 1;
+ PRLOCK = 0x55;
+ PRLOCK = 0xAA;
+ PRLOCKbits.PRLOCKED = 1;
 }

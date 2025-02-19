@@ -376,16 +376,16 @@ void UART2_Initialize_9600_19200(bool fast)
 
 	if (fast) { // 19200
 		// BRGL 8; 
-		U1BRGL = 0x08;
+		U1BRGL = 0x40;
 
 		// BRGH 2; 
-		U1BRGH = 0x02;
+		U1BRGH = 0x03;
 	} else { // 9600
 		// BRGL 17; 
-		U2BRGL = 0x11;
+		U2BRGL = 0x82;
 
 		// BRGH 4; 
-		U2BRGH = 0x04;
+		U2BRGH = 0x06;
 	}
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 

@@ -85,8 +85,8 @@ extern "C" {
 #define NHD_CONT	35
 
 #define NHD_T_DELAY	8
-#define NHD_S_DELAY	200
-#define NHD_L_DELAY	800
+#define NHD_S_DELAY	400
+#define NHD_L_DELAY	1500
 
 #define LCD0		0
 #define LCD1		1
@@ -98,7 +98,7 @@ extern "C" {
 #define NSB		5
 #define LSB		21
 
-#define LCD_PWR_DELAY	350000
+#define LCD_PWR_DELAY	600000
 
 	bool init_display(void);
 	void no_dma_set_lcd(void);

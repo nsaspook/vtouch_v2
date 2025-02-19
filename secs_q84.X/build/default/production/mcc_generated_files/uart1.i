@@ -39660,16 +39660,16 @@ void UART1_Initialize_9600_19200(_Bool fast)
 
  if (fast) {
 
-  U1BRGL = 0x08;
+  U1BRGL = 0x40;
 
 
-  U1BRGH = 0x02;
+  U1BRGH = 0x03;
  } else {
 
-  U1BRGL = 0x11;
+  U1BRGL = 0x82;
 
 
-  U1BRGH = 0x04;
+  U1BRGH = 0x06;
  }
 
 

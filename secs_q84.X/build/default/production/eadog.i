@@ -39663,7 +39663,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 139 "./vconfig.h"
+# 141 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40856,7 +40856,7 @@ _Bool init_display(void)
  DMA1_SetDMAPriority(2);
 # 67 "eadog.c"
  if (powerup) {
-  wdtdelay(350000);
+  wdtdelay(600000);
  }
 
 
@@ -40881,7 +40881,7 @@ _Bool init_display(void)
  send_lcd_data_dma(35);
  send_lcd_cmd_dma(0x41);
  send_lcd_cmd_dma(0x51);
- wdtdelay(800);
+ wdtdelay(1500);
  DMA1_StopTransfer();
 # 106 "eadog.c"
  powerup = 0;
@@ -40916,7 +40916,7 @@ static void send_lcd_cmd_long(const uint8_t cmd)
  SPI1_ExchangeByte(0xFE);
  wdtdelay(8);
  SPI1_ExchangeByte(cmd);
- wdtdelay(800);
+ wdtdelay(1500);
 }
 
 
@@ -41020,7 +41020,7 @@ void eaDogM_WriteStringAtPos(const uint8_t r, const uint8_t c, char *strPtr)
 
 
  send_lcd_pos_dma(row + c);
- wdtdelay(200);
+ wdtdelay(400);
  do { LATDbits.LATD7 = ~LATDbits.LATD7; } while(0);
 
 
@@ -41186,7 +41186,7 @@ void no_dma_set_lcd(void)
  send_lcd_data(35);
  send_lcd_cmd(0x41);
  send_lcd_cmd(0x51);
- wdtdelay(800);
+ wdtdelay(1500);
 }
 
 void check_lcd_dim(const _Bool dim)

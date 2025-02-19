@@ -43,7 +43,9 @@ extern "C" {
 	 */
 
 
-	#define FAKER			// emulate equipment protocol
+	//#define FAKER			// emulate equipment protocol
+
+	//#define	FRAME_OVERRUN
 
 	//#define DB1
 	//#define DB2
