@@ -540,7 +540,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 					*t_link = LINK_STATE_EOT;
 				}
 				if (rxData == ENQ) { // contention with equipment master
-					UART1_put_buffer(EOT);
+
 					*t_link = LINK_STATE_DONE;
 				}
 			}
@@ -552,7 +552,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 					*t_link = LINK_STATE_EOT;
 				}
 				if (rxData == ENQ) { // contention with equipment master
-					UART2_put_buffer(EOT);
+
 					*t_link = LINK_STATE_DONE;
 				}
 			}

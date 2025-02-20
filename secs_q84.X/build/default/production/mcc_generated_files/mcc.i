@@ -40484,7 +40484,6 @@ extern void UART2_Initialize19200(void);
 
 void SYSTEM_Initialize(void)
 {
- _Bool uart_speed_fast;
  INTERRUPT_Initialize();
  PMD_Initialize();
  ADC_Initialize();
@@ -40494,22 +40493,8 @@ void SYSTEM_Initialize(void)
  DMA1_Initialize();
  TMR2_Initialize();
  TMR5_Initialize();
-
-
-
-
- uart_speed_fast = (_Bool) DATAEE_ReadByte(0x00FF);
- if (uart_speed_fast) {
-  UART2_Initialize19200();
-  UART1_Initialize19200();
- } else {
-  UART2_Initialize();
-  UART1_Initialize();
- }
-
-
-
- DATAEE_WriteByte(0x00FF, (uint8_t) !uart_speed_fast);
+ UART2_Initialize();
+ UART1_Initialize();
  SPI1_Initialize();
  PWM2_16BIT_Initialize();
  SystemArbiter_Initialize();
@@ -40550,7 +40535,6 @@ void PMD_Initialize(void)
 
  PMD8 = 0x00;
 }
-
 
 void SystemArbiter_Initialize(void)
 {

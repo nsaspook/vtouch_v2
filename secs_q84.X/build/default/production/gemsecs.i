@@ -39662,7 +39662,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 141 "./vconfig.h"
+# 142 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39843,9 +39843,9 @@ void PIN_MANAGER_Initialize (void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch;
+  uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
-  _Bool flipper, uart_speed_fast;
+  _Bool flipper;
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
@@ -41579,7 +41579,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
      *t_link = LINK_STATE_EOT;
     }
     if (rxData == 0x05) {
-     UART1_put_buffer(0x04);
+
      *t_link = LINK_STATE_DONE;
     }
    }
@@ -41591,7 +41591,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
      *t_link = LINK_STATE_EOT;
     }
     if (rxData == 0x05) {
-     UART2_put_buffer(0x04);
+
      *t_link = LINK_STATE_DONE;
     }
    }
@@ -41858,21 +41858,21 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   snprintf(V.terminal, 159, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.14G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.15G");
   break;
  case display_online:
   snprintf(V.terminal, 159, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.14G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.15G");
   break;
  case display_remote:
-  snprintf(V.terminal, 159, msg2, msg_gemremote, "2.14G");
+  snprintf(V.terminal, 159, msg2, msg_gemremote, "2.15G");
   break;
  case display_gemhelp:
-  snprintf(V.terminal, 159, msg_gemhelp, msg_gemcmds, "2.14G");
+  snprintf(V.terminal, 159, msg_gemhelp, msg_gemcmds, "2.15G");
   break;
  default:
   snprintf(V.terminal, 159, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.14G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.15G");
   break;
  }
 

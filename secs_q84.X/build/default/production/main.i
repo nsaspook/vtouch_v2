@@ -40702,7 +40702,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 141 "./vconfig.h"
+# 142 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40883,9 +40883,9 @@ void SystemArbiter_Initialize(void);
   failed_send : 4, failed_receive : 4,
   queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
   terminal_type response;
-  uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch;
+  uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
-  _Bool flipper, uart_speed_fast;
+  _Bool flipper;
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
@@ -41208,7 +41208,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 19 2025", *build_time = "20:37:02";
+const char *build_date = "Feb 19 2025", *build_time = "22:27:45";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41794,11 +41794,6 @@ void main(void)
  SYSTEM_Initialize();
 
 
-
-
- V.uart_speed_fast = !(_Bool) DATAEE_ReadByte(0x03F0);
-
-
  (INTCON0bits.GIEH = 1);
 
 
@@ -41806,11 +41801,27 @@ void main(void)
 
  mconfig_init();
 
- if (V.uart_speed_fast) {
-  speed_text = "19200bps";
+
+
+
+ V.uart_speed_fast = DATAEE_ReadByte(0x03F0);
+ if (V.uart_speed_fast % 2 == 0) {
+  UART2_Initialize();
+  UART1_Initialize();
  } else {
-  speed_text = "9600bps";
+  UART2_Initialize19200();
+  UART1_Initialize19200();
  }
+
+ if (V.uart_speed_fast % 2 == 0) {
+  speed_text = "9600bps";
+ } else {
+  speed_text = "19200bps";
+ }
+
+
+
+ DATAEE_WriteByte(0x03F0, ++V.uart_speed_fast);
 
  V.ui_state = UI_STATE_INIT;
  mode = UI_STATE_HOST;
@@ -41853,19 +41864,19 @@ void main(void)
    srand(1957);
    set_vterm(V.vterm);
    snprintf(get_vterm_ptr(0, 0), 20 +1, " RVI HOST TESTER %u  ", V.uart_speed_fast);
-   snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s          ", "2.14G");
+   snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s          ", "2.15G");
    snprintf(get_vterm_ptr(2, 0), 20 +1, " NSASPOOK            ");
    snprintf(get_vterm_ptr(3, 0), 20 +1, " %s                  ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 1), 20 +1, " INFO                ");
-   snprintf(get_vterm_ptr(1, 1), 20 +1, " Version %s          ", "2.14G");
+   snprintf(get_vterm_ptr(1, 1), 20 +1, " Version %s          ", "2.15G");
    snprintf(get_vterm_ptr(2, 1), 20 +1, " VTERM INFO          ");
    snprintf(get_vterm_ptr(3, 1), 20 +1, " %s                  ", (char *) build_date);
-   snprintf(get_vterm_ptr(0, 3), 20 +1, " HELP Build %s       ", "2.14G");
-   snprintf(get_vterm_ptr(1, 3), 20 +1, " Version %s          ", "2.14G");
+   snprintf(get_vterm_ptr(0, 3), 20 +1, " HELP Build %s       ", "2.15G");
+   snprintf(get_vterm_ptr(1, 3), 20 +1, " Version %s          ", "2.15G");
    snprintf(get_vterm_ptr(2, 3), 20 +1, " VTERM HELP          ");
    snprintf(get_vterm_ptr(3, 3), 20 +1, " %s                  ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 2), 20 +1, " DEBUG               ");
-   snprintf(get_vterm_ptr(1, 2), 20 +1, " Version %s          ", "2.14G");
+   snprintf(get_vterm_ptr(1, 2), 20 +1, " Version %s          ", "2.15G");
    snprintf(get_vterm_ptr(2, 2), 20 +1, " VTERM DEBUG         ");
    snprintf(get_vterm_ptr(3, 2), 20 +1, " %s                  ", (char *) build_date);
    refresh_lcd();
@@ -42040,7 +42051,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
     else
      snprintf(get_vterm_ptr(2, 0), 20 +1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1045 "main.c"
+# 1056 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -42094,13 +42105,15 @@ void main(void)
     snprintf(get_vterm_ptr(1, 0), 20 +1, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
     ADC_DischargeSampleCapacitor();
     ADC_StartConversion(channel_ANA1);
-    WaitMs(1);
+
+    while (!ADC_IsConversionDone()) {};
     if (ADC_IsConversionDone()) {
      V.v_tx_line = ADC_GetConversionResult();
     };
     ADC_DischargeSampleCapacitor();
     ADC_StartConversion(channel_ANA2);
-    WaitMs(1);
+
+    while (!ADC_IsConversionDone()) {};
     if (ADC_IsConversionDone()) {
      V.v_rx_line = ADC_GetConversionResult();
     };

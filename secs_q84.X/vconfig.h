@@ -20,7 +20,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.14G"
+#define VER	"2.15G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -40,6 +40,7 @@ extern "C" {
 	 * 2.12 remote set random error generation
 	 * 2.13 clear up display errors and make this a GAMMA software release version
 	 * 2.14 add 19200 or 9600 speed switching with reboot
+	 * 2.15 fix speed switching bugs
 	 */
 
 
@@ -318,9 +319,9 @@ extern "C" {
 		failed_send : 4, failed_receive : 4,
 		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
 		terminal_type response;
-		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch;
+		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
 		volatile uint8_t ticker;
-		bool flipper, uart_speed_fast;
+		bool flipper;
 		adc_result_t v_tx_line, v_rx_line;
 		int16_t tx_volts, rx_volts;
 		char tx_rs232, rx_rs232;

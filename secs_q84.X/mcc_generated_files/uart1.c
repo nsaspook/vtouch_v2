@@ -55,7 +55,7 @@
   Section: Macro Declarations
 */
 #define UART1_TX_BUFFER_SIZE 64
-#define UART1_RX_BUFFER_SIZE 128
+#define UART1_RX_BUFFER_SIZE 255
 
 /**
   Section: Global Variables
@@ -122,10 +122,10 @@ void UART1_Initialize(void)
     U1CON2 = 0x00;
 
     // BRGL 130; 
-    U1BRGL = 0x82;
+    U1BRGL = 0x82; // 82
 
     // BRGH 6; 
-    U1BRGH = 0x06;
+    U1BRGH = 0x06; // 06
 
     // STPMD in middle of first Stop bit; TXWRE No error; 
     U1FIFO = 0x00;

@@ -787,11 +787,6 @@ void main(void)
 	// Initialize the device
 	SYSTEM_Initialize();
 
-	/*
-	 * read the saved EEPROM USART setting
-	 */
-	V.uart_speed_fast = !(bool) DATAEE_ReadByte(UART_SPEED_EADR);
-
 	// Enable high priority global interrupts
 	INTERRUPT_GlobalInterruptHighEnable();
 
@@ -800,11 +795,27 @@ void main(void)
 
 	mconfig_init(); // zero the entire text buffer
 
-	if (V.uart_speed_fast) {
-		speed_text = "19200bps";
+	/*
+	 * get saved state of serial speed flag
+	 */
+	V.uart_speed_fast = DATAEE_ReadByte(UART_SPEED_EADR);
+	if (V.uart_speed_fast % 2 == 0) {
+		UART2_Initialize();
+		UART1_Initialize();
 	} else {
-		speed_text = "9600bps";
+		UART2_Initialize19200();
+		UART1_Initialize19200();
 	}
+
+	if (V.uart_speed_fast % 2 == 0) {
+		speed_text = "9600bps";
+	} else {
+		speed_text = "19200bps";
+	}
+	/*
+	 * ALternate the speed setting with each restart
+	 */
+	DATAEE_WriteByte(UART_SPEED_EADR, ++V.uart_speed_fast);
 
 	V.ui_state = UI_STATE_INIT;
 	mode = UI_STATE_HOST;
@@ -1095,13 +1106,15 @@ void main(void)
 				snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA1);
-				WaitMs(1);
+//				WaitMs(1);
+				while (!ADC_IsConversionDone()) {};
 				if (ADC_IsConversionDone()) {
 					V.v_tx_line = ADC_GetConversionResult();
 				};
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA2);
-				WaitMs(1);
+//				WaitMs(1);
+				while (!ADC_IsConversionDone()) {};
 				if (ADC_IsConversionDone()) {
 					V.v_rx_line = ADC_GetConversionResult();
 				};

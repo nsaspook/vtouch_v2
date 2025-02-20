@@ -52,7 +52,6 @@ extern void UART2_Initialize19200(void);
 
 void SYSTEM_Initialize(void)
 {
-	bool uart_speed_fast;
 	INTERRUPT_Initialize();
 	PMD_Initialize();
 	ADC_Initialize();
@@ -62,22 +61,8 @@ void SYSTEM_Initialize(void)
 	DMA1_Initialize();
 	TMR2_Initialize();
 	TMR5_Initialize();
-
-	/*
-	 * get saved state of serial speed flag
-	 */
-	uart_speed_fast = (bool) DATAEE_ReadByte(UART_SPEED_EADR);
-	if (uart_speed_fast) {
-		UART2_Initialize19200();
-		UART1_Initialize19200();
-	} else {
-		UART2_Initialize();
-		UART1_Initialize();
-	}
-	/*
-	 * ALternate the speed setting with each restart
-	 */
-	DATAEE_WriteByte(UART_SPEED_EADR, (uint8_t) !uart_speed_fast);
+	UART2_Initialize();
+	UART1_Initialize();
 	SPI1_Initialize();
 	PWM2_16BIT_Initialize();
 	SystemArbiter_Initialize();
@@ -118,7 +103,6 @@ void PMD_Initialize(void)
 	// DMA5MD DMA5 enabled; DMA6MD DMA6 enabled; DMA8MD DMA8 enabled; DMA7MD DMA7 enabled; DMA1MD DMA1 enabled; DMA2MD DMA2 enabled; DMA3MD DMA3 enabled; DMA4MD DMA4 enabled; 
 	PMD8 = 0x00;
 }
-
 
 void SystemArbiter_Initialize(void)
 {
