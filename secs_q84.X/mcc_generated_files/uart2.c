@@ -121,11 +121,11 @@ void UART2_Initialize(void)
 	// TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
 	U2CON2 = 0x00;
 
-    // BRGL 64; 
-    U2BRGL = 0x40;
+	// BRGL 130; 
+	U2BRGL = 0x82;
 
-    // BRGH 3; 
-    U2BRGH = 0x03;
+	// BRGH 6; 
+	U2BRGH = 0x06;
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 
 	U2FIFO = 0x00;
@@ -289,6 +289,7 @@ void UART2_DefaultFramingErrorHandler(void)
 
 void UART2_DefaultOverrunErrorHandler(void)
 {
+	U2ERRIRbits.RXFOIF=0;
 }
 
 void UART2_DefaultErrorHandler(void)
@@ -376,16 +377,16 @@ void UART2_Initialize_9600_19200(bool fast)
 
 	if (fast) { // 19200
 		// BRGL 8; 
-		U1BRGL = 0x08;
+		U1BRGL = 0x40;
 
 		// BRGH 2; 
-		U1BRGH = 0x02;
+		U1BRGH = 0x03;
 	} else { // 9600
 		// BRGL 17; 
-		U2BRGL = 0x11;
+		U2BRGL = 0x82;
 
 		// BRGH 4; 
-		U2BRGH = 0x04;
+		U2BRGH = 0x06;
 	}
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 

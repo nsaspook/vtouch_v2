@@ -786,13 +786,11 @@ void main(void)
 
 	// Initialize the device
 	SYSTEM_Initialize();
-	
-		/*
+
+	/*
 	 * read the saved EEPROM USART setting
 	 */
-	V.uart_speed_fast = (bool) DATAEE_ReadByte(UART_SPEED_EADR);
-	UART1_Initialize_9600_19200(V.uart_speed_fast);
-	UART2_Initialize_9600_19200(V.uart_speed_fast);
+	V.uart_speed_fast = !(bool) DATAEE_ReadByte(UART_SPEED_EADR);
 
 	// Enable high priority global interrupts
 	INTERRUPT_GlobalInterruptHighEnable();
@@ -802,17 +800,11 @@ void main(void)
 
 	mconfig_init(); // zero the entire text buffer
 
-
-
 	if (V.uart_speed_fast) {
 		speed_text = "19200bps";
 	} else {
 		speed_text = "9600bps";
 	}
-	/*
-	 * ALternate the speed setting with each restart
-	 */
-	DATAEE_WriteByte(UART_SPEED_EADR, (uint8_t) !V.uart_speed_fast);
 
 	V.ui_state = UI_STATE_INIT;
 	mode = UI_STATE_HOST;
@@ -854,7 +846,7 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
 			set_vterm(V.vterm); // set to buffer 0
-			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER %u  ",V.uart_speed_fast);
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER %u  ", V.uart_speed_fast);
 			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, " Version %s          ", VER);
 			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, " NSASPOOK            ");
 			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
@@ -1132,7 +1124,7 @@ void main(void)
 				/*
 				 * update info screen data points
 				 */
-				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "I RS %hu:%c %hu:%c                     ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
+				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "I RS %3dV:%c %3dV:%c                   ", V.rx_volts, V.rx_rs232, V.tx_volts, V.tx_rs232);
 				snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
 				snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
 				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
@@ -1146,6 +1138,10 @@ void main(void)
 				 */
 				if (!V.set_sequ) {
 					refresh_lcd();
+#ifdef FRAME_OVERRUN
+					UART1_Write(0x19);
+					UART2_Write(0x57);
+#endif
 				}
 			}
 		}

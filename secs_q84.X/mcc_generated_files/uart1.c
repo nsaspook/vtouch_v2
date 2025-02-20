@@ -118,14 +118,14 @@ void UART1_Initialize(void)
 	// RXBIMD Set RXBKIF on rising RX input; BRKOVR disabled; WUE disabled; SENDB disabled; ON enabled; 
 	U1CON1 = 0x80;
 
-	// TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
-	U1CON2 = 0x00;
+    // TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
+    U1CON2 = 0x00;
 
-    // BRGL 64; 
-    U1BRGL = 0x40;
+    // BRGL 130; 
+    U1BRGL = 0x82;
 
-    // BRGH 3; 
-    U1BRGH = 0x03;
+    // BRGH 6; 
+    U1BRGH = 0x06;
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 
 	U1FIFO = 0x00;
@@ -289,6 +289,7 @@ void UART1_DefaultFramingErrorHandler(void)
 
 void UART1_DefaultOverrunErrorHandler(void)
 {
+	U1ERRIRbits.RXFOIF=0;
 }
 
 void UART1_DefaultErrorHandler(void)
@@ -372,20 +373,20 @@ void UART1_Initialize_9600_19200(bool fast)
 	U1CON1 = 0x80;
 
 	// TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
-	U1CON2 = 0x00;
+	U1CON2 = 0x00; // U1CON2 = 0x04; for inverted TX
 
 	if (fast) { // 19200
 		// BRGL 8; 
-		U1BRGL = 0x08;
+		U1BRGL = 0x40;
 
 		// BRGH 2; 
-		U1BRGH = 0x02;
+		U1BRGH = 0x03;
 	} else { // 9600
 		// BRGL 17; 
-		U1BRGL = 0x11;
+		U1BRGL = 0x82;
 
 		// BRGH 4; 
-		U1BRGH = 0x04;
+		U1BRGH = 0x06;
 	}
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 

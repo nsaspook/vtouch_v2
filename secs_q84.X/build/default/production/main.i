@@ -40702,7 +40702,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 139 "./vconfig.h"
+# 141 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -40887,6 +40887,7 @@ void SystemArbiter_Initialize(void);
   volatile uint8_t ticker;
   _Bool flipper, uart_speed_fast;
   adc_result_t v_tx_line, v_rx_line;
+  int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
  } V_data;
 
@@ -41207,7 +41208,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 18 2025", *build_time = "19:45:54";
+const char *build_date = "Feb 19 2025", *build_time = "15:33:31";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41504,26 +41505,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-
-
-
-header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 522 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -41795,9 +41777,7 @@ void main(void)
 
 
 
- V.uart_speed_fast = (_Bool) DATAEE_ReadByte(0x03F0);
- UART1_Initialize_9600_19200(V.uart_speed_fast);
- UART2_Initialize_9600_19200(V.uart_speed_fast);
+ V.uart_speed_fast = !(_Bool) DATAEE_ReadByte(0x03F0);
 
 
  (INTCON0bits.GIEH = 1);
@@ -41807,17 +41787,11 @@ void main(void)
 
  mconfig_init();
 
-
-
  if (V.uart_speed_fast) {
   speed_text = "19200bps";
  } else {
   speed_text = "9600bps";
  }
-
-
-
- DATAEE_WriteByte(0x03F0, (uint8_t) !V.uart_speed_fast);
 
  V.ui_state = UI_STATE_INIT;
  mode = UI_STATE_HOST;
@@ -41835,8 +41809,8 @@ void main(void)
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
   if (!faker++) {
 
-   V.euart = 2;
-   equip_tx(0x05);
+
+
 
   }
 
@@ -41859,7 +41833,7 @@ void main(void)
    V.s_state = SEQ_STATE_INIT;
    srand(1957);
    set_vterm(V.vterm);
-   snprintf(get_vterm_ptr(0, 0), 20 +1, " RVI HOST TESTER %u  ",V.uart_speed_fast);
+   snprintf(get_vterm_ptr(0, 0), 20 +1, " RVI HOST TESTER %u  ", V.uart_speed_fast);
    snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s          ", "2.14G");
    snprintf(get_vterm_ptr(2, 0), 20 +1, " NSASPOOK            ");
    snprintf(get_vterm_ptr(3, 0), 20 +1, " %s                  ", (char *) build_date);
@@ -41888,12 +41862,12 @@ void main(void)
    break;
   case UI_STATE_HOST:
 
-   snprintf(get_vterm_ptr(0, 0), 20 +1, "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
 
 
 
 
 
+   snprintf(get_vterm_ptr(3, 0), 20 +1, "Equip %u SID %u %c:%c             ", V.e_types, V.sid, V.rx_rs232, V.tx_rs232);
 
 
    switch (V.s_state) {
@@ -41901,18 +41875,18 @@ void main(void)
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
 
-    V.s_state = SEQ_STATE_TX;
 
 
+    V.s_state = SEQ_STATE_RX;
 
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
      if (V.debug) {
       snprintf(get_vterm_ptr(2, 0), 20 +1, "H254 %d, T%ld       ", sizeof(header254), V.testing);
      } else {
 
-      snprintf(get_vterm_ptr(2, 0), 20 +1, "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
 
+      snprintf(get_vterm_ptr(2, 0), 20 +1, "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }
@@ -41959,9 +41933,9 @@ void main(void)
 
     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
 
-     V.s_state = SEQ_STATE_RX;
 
 
+     V.s_state = SEQ_STATE_TRIGGER;
 
     }
     if (V.t_l_state == LINK_STATE_ERROR)
@@ -42001,9 +41975,9 @@ void main(void)
       snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
      } else {
 
-      snprintf(get_vterm_ptr(2, 0), 20 +1, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
 
+      snprintf(get_vterm_ptr(2, 0), 20 +1, "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }
@@ -42047,7 +42021,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
     else
      snprintf(get_vterm_ptr(2, 0), 20 +1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1053 "main.c"
+# 1045 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -42115,9 +42089,9 @@ void main(void)
     update_rs232_line_status();
 
     StartTimer(TMR_DISPLAY, 100);
-    if (V.vterm_switch++ > (40)) {
+    if (V.vterm_switch++ > (70)) {
      set_vterm(switcher);
-     if (V.vterm_switch > (40 + V.ticker + 16)) {
+     if (V.vterm_switch > (70 + V.ticker + 32)) {
       switcher++;
       if ((switcher & 0x03) == 3) {
        switcher = 1;
@@ -42130,7 +42104,7 @@ void main(void)
 
 
 
-    snprintf(get_vterm_ptr(0, 1), 20 +1, "I RS %hu:%c %hu:%c                     ", V.v_rx_line, V.rx_rs232, V.v_tx_line, V.tx_rs232);
+    snprintf(get_vterm_ptr(0, 1), 20 +1, "I RS %3dV:%c %3dV:%c                   ", V.rx_volts, V.rx_rs232, V.tx_volts, V.tx_rs232);
     snprintf(get_vterm_ptr(1, 1), 20 +1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
     snprintf(get_vterm_ptr(2, 1), 20 +1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
     snprintf(get_vterm_ptr(3, 1), 20 +1, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
@@ -42144,6 +42118,10 @@ void main(void)
 
     if (!V.set_sequ) {
      refresh_lcd();
+
+
+
+
     }
    }
   }
