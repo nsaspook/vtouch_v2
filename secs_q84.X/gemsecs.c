@@ -1672,7 +1672,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 /*
  * send equipment emulation data in some state and timing conditions
  */
-void equip_tx(uint8_t data)
+void equip_tx(const uint8_t data)
 {
 	static uint8_t pinger = 0;
 

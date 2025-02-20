@@ -40860,7 +40860,7 @@ void vterm_sequence(void);
 __attribute__((inline)) D_CODES display_info(void);
 __attribute__((inline)) D_CODES display_help(void);
 _Bool help_button(void);
-void check_help(_Bool);
+void check_help(const _Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 # 27 "./gemsecs.h" 2
@@ -41056,12 +41056,12 @@ void mode_lamp_bright(void);
  uint16_t format_display_text(const char *);
  P_CODES s10f1_opcmd(void);
  uint16_t s6f11_opcmd(void);
- response_type secs_II_message(uint8_t, uint8_t);
- _Bool sequence_messages(uint8_t);
- _Bool gem_messages(response_type *, uint8_t);
- void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
- GEM_STATES secs_gem_state(uint8_t, uint8_t);
- void equip_tx(uint8_t);
+ response_type secs_II_message(const uint8_t, const uint8_t);
+ _Bool sequence_messages(const uint8_t);
+ _Bool gem_messages(response_type *, const uint8_t);
+ void secs_II_monitor_message(const uint8_t, const uint8_t, const uint16_t);
+ GEM_STATES secs_gem_state(const uint8_t, const uint8_t);
+ void equip_tx(const uint8_t);
 # 5 "gemsecs.c" 2
 
 extern struct V_data V;
@@ -42713,7 +42713,7 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 
 
 
-void equip_tx(uint8_t data)
+void equip_tx(const uint8_t data)
 {
  static uint8_t pinger = 0;
 

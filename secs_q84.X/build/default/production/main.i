@@ -40998,7 +40998,7 @@ void vterm_sequence(void);
 __attribute__((inline)) D_CODES display_info(void);
 __attribute__((inline)) D_CODES display_help(void);
 _Bool help_button(void);
-void check_help(_Bool);
+void check_help(const _Bool);
 D_CODES set_display_info(const D_CODES);
 D_CODES set_temp_display_help(const D_CODES);
 # 27 "./gemsecs.h" 2
@@ -41194,23 +41194,27 @@ void mode_lamp_bright(void);
  uint16_t format_display_text(const char *);
  P_CODES s10f1_opcmd(void);
  uint16_t s6f11_opcmd(void);
- response_type secs_II_message(uint8_t, uint8_t);
- _Bool sequence_messages(uint8_t);
- _Bool gem_messages(response_type *, uint8_t);
- void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
- GEM_STATES secs_gem_state(uint8_t, uint8_t);
- void equip_tx(uint8_t);
+ response_type secs_II_message(const uint8_t, const uint8_t);
+ _Bool sequence_messages(const uint8_t);
+ _Bool gem_messages(response_type *, const uint8_t);
+ void secs_II_monitor_message(const uint8_t, const uint8_t, const uint16_t);
+ GEM_STATES secs_gem_state(const uint8_t, const uint8_t);
+ void equip_tx(const uint8_t);
 # 171 "main.c" 2
 
 
 
 # 1 "./rs232.h" 1
-# 17 "./rs232.h"
+# 16 "./rs232.h"
+ const int16_t pos_scale = 40,
+  neg_scale = 70,
+  line_zero_limit = -24,
+  adc_scale_zero = -2048;
  void update_rs232_line_status(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 20 2025", *build_time = "08:50:26";
+const char *build_date = "Feb 20 2025", *build_time = "12:01:07";
 
 const char * GEM_TEXT [] = {
  "DISABLE",

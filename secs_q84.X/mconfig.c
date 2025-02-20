@@ -56,7 +56,7 @@ bool help_button(void)
 /*
  * Help Messages, show program compile date or extra message with flipper flag
  */
-void check_help(bool flipper)
+void check_help(const bool flipper)
 {
 	/*
 	 * show help display
@@ -80,7 +80,7 @@ void check_help(bool flipper)
  */
 uint8_t update_lcd(uint8_t vterm)
 {
-	vterm = vterm & 0x03; // mask to 2 bits
+	vterm = vterm & 0x03; // mask to 2 bits for buffer array
 
 	D.lcd[vterm][0][MAX_LINE] = 0;
 	D.lcd[vterm][1][MAX_LINE] = 0;

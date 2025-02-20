@@ -28,7 +28,7 @@ extern "C" {
 
 #define HOST_UART	1
 #define EQUIP_UART	2
-	
+
 	const char msg_gemcmds[] = "Host CMDS: M C R P O L S D E H F";
 	const char msg_gemremote[] = "Host CMDS: ENABLED REMOTE";
 
@@ -167,12 +167,12 @@ extern "C" {
 	uint16_t format_display_text(const char *);
 	P_CODES s10f1_opcmd(void);
 	uint16_t s6f11_opcmd(void);
-	response_type secs_II_message(uint8_t, uint8_t);
-	bool sequence_messages(uint8_t);
-	bool gem_messages(response_type *, uint8_t);
-	void secs_II_monitor_message(uint8_t, uint8_t, uint16_t);
-	GEM_STATES secs_gem_state(uint8_t, uint8_t);
-	void equip_tx(uint8_t);
+	response_type secs_II_message(const uint8_t, const uint8_t);
+	bool sequence_messages(const uint8_t);
+	bool gem_messages(response_type *, const uint8_t);
+	void secs_II_monitor_message(const uint8_t, const uint8_t, const uint16_t);
+	GEM_STATES secs_gem_state(const uint8_t, const uint8_t);
+	void equip_tx(const uint8_t);
 
 #ifdef	__cplusplus
 }
