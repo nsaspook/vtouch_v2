@@ -39406,10 +39406,10 @@ void UART2_Initialize(void)
  U2CON2 = 0x00;
 
 
-    U2BRGL = 0x40;
+    U2BRGL = 0x82;
 
 
-    U2BRGH = 0x03;
+    U2BRGH = 0x06;
 
 
  U2FIFO = 0x00;
@@ -39564,9 +39564,6 @@ void UART2_RxDataHandler(void)
   uart2RxHead = 0;
  }
  uart2RxCount++;
- do {
-  LATBbits.LATB2 = ~LATBbits.LATB2;
- } while (0);
 }
 
 void UART2_DefaultFramingErrorHandler(void)

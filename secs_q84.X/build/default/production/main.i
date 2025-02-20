@@ -40612,6 +40612,8 @@ void UART1_RxDataHandler(void);
 void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
 # 498 "./mcc_generated_files/uart1.h"
 void UART1_SetErrorHandler(void (* interruptHandler)(void));
+
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
 # 518 "./mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
 # 536 "./mcc_generated_files/uart1.h"
@@ -41206,7 +41208,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 19 2025", *build_time = "18:49:30";
+const char *build_date = "Feb 19 2025", *build_time = "20:09:30";
 
 const char * GEM_TEXT [] = {
  "DISABLE",

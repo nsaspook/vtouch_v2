@@ -497,7 +497,7 @@ void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
 */
 void UART1_SetErrorHandler(void (* interruptHandler)(void));
 
-
+void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
 
 /**
   @Summary

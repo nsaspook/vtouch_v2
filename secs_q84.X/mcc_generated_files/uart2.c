@@ -121,11 +121,11 @@ void UART2_Initialize(void)
 	// TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
 	U2CON2 = 0x00;
 
-    // BRGL 64; 
-    U2BRGL = 0x40;
+    // BRGL 130; 
+    U2BRGL = 0x82;
 
-    // BRGH 3; 
-    U2BRGH = 0x03;
+    // BRGH 6; 
+    U2BRGH = 0x06;
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 
 	U2FIFO = 0x00;
@@ -280,9 +280,6 @@ void UART2_RxDataHandler(void)
 		uart2RxHead = 0;
 	}
 	uart2RxCount++;
-	do {
-		LATBbits.LATB2 = ~LATBbits.LATB2;
-	} while (0);
 }
 
 void UART2_DefaultFramingErrorHandler(void)
