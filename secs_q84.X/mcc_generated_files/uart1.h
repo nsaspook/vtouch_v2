@@ -354,8 +354,6 @@ uart1_status_t UART1_get_last_status(void);
 */
 uint8_t UART1_Read(void);
 
-void UART1_put_buffer(uint8_t);
-
  /**
   @Summary
     Writes a byte of data to the UART1.
@@ -460,6 +458,7 @@ void UART1_RxDataHandler(void);
   @Returns
     None
 */
+void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
 
 /**
   @Summary
@@ -497,7 +496,7 @@ void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
 */
 void UART1_SetErrorHandler(void (* interruptHandler)(void));
 
-void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
+
 
 /**
   @Summary
@@ -573,7 +572,7 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 */
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
-
+void UART1_put_buffer(uint8_t);
 
 #ifdef __cplusplus  // Provide C++ Compatibility
 

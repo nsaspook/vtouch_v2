@@ -119,6 +119,7 @@ void PMD_Initialize(void)
 	PMD8 = 0x00;
 }
 
+
 void SystemArbiter_Initialize(void)
 {
 	// This function is dependant on the PR1WAY CONFIG bit

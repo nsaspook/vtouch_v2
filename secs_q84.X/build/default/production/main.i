@@ -40598,30 +40598,30 @@ _Bool UART1_is_tx_done(void);
 uart1_status_t UART1_get_last_status(void);
 # 355 "./mcc_generated_files/uart1.h"
 uint8_t UART1_Read(void);
+# 380 "./mcc_generated_files/uart1.h"
+void UART1_Write(uint8_t txData);
+# 401 "./mcc_generated_files/uart1.h"
+void UART1_Transmit_ISR(void);
+# 422 "./mcc_generated_files/uart1.h"
+void UART1_Receive_ISR(void);
+# 443 "./mcc_generated_files/uart1.h"
+void UART1_RxDataHandler(void);
+# 461 "./mcc_generated_files/uart1.h"
+void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 479 "./mcc_generated_files/uart1.h"
+void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 497 "./mcc_generated_files/uart1.h"
+void UART1_SetErrorHandler(void (* interruptHandler)(void));
+# 517 "./mcc_generated_files/uart1.h"
+void (*UART1_RxInterruptHandler)(void);
+# 535 "./mcc_generated_files/uart1.h"
+void (*UART1_TxInterruptHandler)(void);
+# 555 "./mcc_generated_files/uart1.h"
+void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 573 "./mcc_generated_files/uart1.h"
+void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
 void UART1_put_buffer(uint8_t);
-# 382 "./mcc_generated_files/uart1.h"
-void UART1_Write(uint8_t txData);
-# 403 "./mcc_generated_files/uart1.h"
-void UART1_Transmit_ISR(void);
-# 424 "./mcc_generated_files/uart1.h"
-void UART1_Receive_ISR(void);
-# 445 "./mcc_generated_files/uart1.h"
-void UART1_RxDataHandler(void);
-# 480 "./mcc_generated_files/uart1.h"
-void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 498 "./mcc_generated_files/uart1.h"
-void UART1_SetErrorHandler(void (* interruptHandler)(void));
-
-void UART2_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 518 "./mcc_generated_files/uart1.h"
-void (*UART1_RxInterruptHandler)(void);
-# 536 "./mcc_generated_files/uart1.h"
-void (*UART1_TxInterruptHandler)(void);
-# 556 "./mcc_generated_files/uart1.h"
-void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 574 "./mcc_generated_files/uart1.h"
-void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 64 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/spi1.h" 1
 # 59 "./mcc_generated_files/spi1.h"
@@ -41208,7 +41208,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 19 2025", *build_time = "20:13:09";
+const char *build_date = "Feb 19 2025", *build_time = "20:37:02";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
