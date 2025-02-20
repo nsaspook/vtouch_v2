@@ -39615,13 +39615,15 @@ void UART1_put_buffer(uint8_t bufData)
 
 
 
-void UART1_Initialize_9600_19200(_Bool fast)
+void UART1_Initialize19200(void)
 {
 
  PIE4bits.U1RXIE = 0;
  UART1_SetRxInterruptHandler(UART1_Receive_ISR);
  PIE4bits.U1TXIE = 0;
  UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
+    PIE4bits.U1EIE = 0;
+
 
 
 
@@ -39650,21 +39652,13 @@ void UART1_Initialize_9600_19200(_Bool fast)
  U1CON1 = 0x80;
 
 
- U1CON2 = 0x00;
-
- if (fast) {
-
-  U1BRGL = 0x40;
+    U1CON2 = 0x00;
 
 
-  U1BRGH = 0x03;
- } else {
-
-  U1BRGL = 0x82;
+    U1BRGL = 0x40;
 
 
-  U1BRGH = 0x06;
- }
+    U1BRGH = 0x03;
 
 
  U1FIFO = 0x00;
@@ -39677,6 +39671,7 @@ void UART1_Initialize_9600_19200(_Bool fast)
 
 
  U1ERRIE = 0x00;
+
 
  UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
  UART1_SetErrorHandler(UART1_DefaultErrorHandler);
@@ -39693,4 +39688,6 @@ void UART1_Initialize_9600_19200(_Bool fast)
 
 
  PIE4bits.U1RXIE = 1;
+
+    PIE4bits.U1EIE = 1;
 }

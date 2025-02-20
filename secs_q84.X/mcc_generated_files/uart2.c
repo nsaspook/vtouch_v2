@@ -340,7 +340,7 @@ void UART2_put_buffer(uint8_t bufData)
 /*
  * on the fly bps selection
  */
-void UART2_Initialize_9600_19200(bool fast)
+void UART2_Initialize19200(void)
 {
 	// Disable interrupts before changing states
 	PIE8bits.U2RXIE = 0;
@@ -377,19 +377,11 @@ void UART2_Initialize_9600_19200(bool fast)
 	// TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
 	U2CON2 = 0x00;
 
-	if (fast) { // 19200
-		// BRGL 8; 
-		U1BRGL = 0x40;
+    // BRGL 64; 
+    U2BRGL = 0x40;
 
-		// BRGH 2; 
-		U1BRGH = 0x03;
-	} else { // 9600
-		// BRGL 17; 
-		U2BRGL = 0x82;
-
-		// BRGH 4; 
-		U2BRGH = 0x06;
-	}
+    // BRGH 3; 
+    U2BRGH = 0x03;
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 
 	U2FIFO = 0x00;

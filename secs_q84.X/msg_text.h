@@ -43,7 +43,7 @@ extern "C" {
 		},
 		{
 			.message = "CMD: L, S, D        ",
-			.display = "Log, Set, Debug     ",
+			.display = "Log, Sequence, Debug",
 			.extrams = "                    ",
 		},
 		{

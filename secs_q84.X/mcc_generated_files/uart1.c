@@ -333,13 +333,15 @@ void UART1_put_buffer(uint8_t bufData)
 /*
  * on the fly bps selection
  */
-void UART1_Initialize_9600_19200(bool fast)
+void UART1_Initialize19200(void)
 {
 	// Disable interrupts before changing states
 	PIE4bits.U1RXIE = 0;
 	UART1_SetRxInterruptHandler(UART1_Receive_ISR);
 	PIE4bits.U1TXIE = 0;
 	UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
+    PIE4bits.U1EIE = 0;
+
 
 	// Set the UART1 module to the options selected in the user interface.
 
@@ -367,22 +369,14 @@ void UART1_Initialize_9600_19200(bool fast)
 	// RXBIMD Set RXBKIF on rising RX input; BRKOVR disabled; WUE disabled; SENDB disabled; ON enabled; 
 	U1CON1 = 0x80;
 
-	// TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
-	U1CON2 = 0x00; // U1CON2 = 0x04; for inverted TX
+    // TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
+    U1CON2 = 0x00;
 
-	if (fast) { // 19200
-		// BRGL 8; 
-		U1BRGL = 0x40;
+    // BRGL 64; 
+    U1BRGL = 0x40;
 
-		// BRGH 2; 
-		U1BRGH = 0x03;
-	} else { // 9600
-		// BRGL 17; 
-		U1BRGL = 0x82;
-
-		// BRGH 4; 
-		U1BRGH = 0x06;
-	}
+    // BRGH 3; 
+    U1BRGH = 0x03;
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 
 	U1FIFO = 0x00;
@@ -395,6 +389,7 @@ void UART1_Initialize_9600_19200(bool fast)
 
 	// TXCIE disabled; FERIE disabled; TXMTIE disabled; ABDOVE disabled; CERIE disabled; RXFOIE disabled; PERIE disabled; RXBKIE disabled; 
 	U1ERRIE = 0x00;
+
 
 	UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
 	UART1_SetErrorHandler(UART1_DefaultErrorHandler);
@@ -411,6 +406,8 @@ void UART1_Initialize_9600_19200(bool fast)
 
 	// enable receive interrupt
 	PIE4bits.U1RXIE = 1;
+    // enable error interrupt
+    PIE4bits.U1EIE = 1;
 }
 /**
   End of File

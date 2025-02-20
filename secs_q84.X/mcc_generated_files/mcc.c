@@ -47,8 +47,8 @@
 #include "mcc.h"
 #define UART_SPEED_EADR	0x03F0 // offset from 0x380000
 
-extern void UART1_Initialize_9600_19200(bool);
-extern void UART2_Initialize_9600_19200(bool);
+extern void UART1_Initialize19200(void);
+extern void UART2_Initialize19200(void);
 
 void SYSTEM_Initialize(void)
 {
@@ -62,11 +62,18 @@ void SYSTEM_Initialize(void)
 	DMA1_Initialize();
 	TMR2_Initialize();
 	TMR5_Initialize();
-//	    UART2_Initialize();
-//	    UART1_Initialize();
+
+	/*
+	 * get saved state of serial speed flag
+	 */
 	uart_speed_fast = (bool) DATAEE_ReadByte(UART_SPEED_EADR);
-	UART2_Initialize_9600_19200(uart_speed_fast);
-	UART1_Initialize_9600_19200(uart_speed_fast);
+	if (uart_speed_fast) {
+		UART2_Initialize19200();
+		UART1_Initialize19200();
+	} else {
+		UART2_Initialize();
+		UART1_Initialize();
+	}
 	/*
 	 * ALternate the speed setting with each restart
 	 */

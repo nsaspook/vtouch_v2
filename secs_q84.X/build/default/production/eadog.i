@@ -39873,8 +39873,8 @@ void PIN_MANAGER_Initialize (void);
  extern B_type B;
 
  const char *build_date, *build_time;
- extern void UART1_Initialize_9600_19200(_Bool);
- extern void UART2_Initialize_9600_19200(_Bool);
+ extern void UART1_Initialize19200(void);
+ extern void UART2_Initialize19200(void);
 # 44 "./eadog.h" 2
 
 

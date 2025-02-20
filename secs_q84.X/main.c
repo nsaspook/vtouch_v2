@@ -520,7 +520,7 @@ header27 H27[] = {
 #endif
 
 header33 H33[] = {
-	{ // S2F41 'ready load-lock ' command from host to equipment
+	{ // S2F41 'ready load-lock ' command from host to equipment, read/write
 		.length = 33,
 		.block.block.rbit = 0,
 		.block.block.didh = 0,
@@ -558,7 +558,7 @@ header33 H33[] = {
 	},
 };
 
-const header33 HC33[] = {//template for vii80 stack commands
+const header33 HC33[] = {//template for vii80 stack commands, read-only
 	{ // S2F41 'ready load-lock ' command from host to equipment
 		.length = 33,
 		.block.block.rbit = 0,

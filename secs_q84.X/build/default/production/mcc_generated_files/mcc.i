@@ -40477,8 +40477,8 @@ void SystemArbiter_Initialize(void);
 # 48 "mcc_generated_files/mcc.c" 2
 
 
-extern void UART1_Initialize_9600_19200(_Bool);
-extern void UART2_Initialize_9600_19200(_Bool);
+extern void UART1_Initialize19200(void);
+extern void UART2_Initialize19200(void);
 
 void SYSTEM_Initialize(void)
 {
@@ -40494,9 +40494,16 @@ void SYSTEM_Initialize(void)
  TMR5_Initialize();
 
 
+
+
  uart_speed_fast = (_Bool) DATAEE_ReadByte(0x03F0);
- UART2_Initialize_9600_19200(uart_speed_fast);
- UART1_Initialize_9600_19200(uart_speed_fast);
+ if (uart_speed_fast) {
+  UART2_Initialize19200();
+  UART1_Initialize19200();
+ } else {
+  UART2_Initialize();
+  UART1_Initialize();
+ }
 
 
 

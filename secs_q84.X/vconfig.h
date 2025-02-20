@@ -43,7 +43,7 @@ extern "C" {
 	 */
 
 
-	//#define FAKER			// emulate equipment protocol
+	#define FAKER			// emulate equipment protocol
 
 	//#define	FRAME_OVERRUN
 
@@ -347,8 +347,8 @@ extern "C" {
 	extern B_type B;
 
 	const char *build_date, *build_time;
-	extern void UART1_Initialize_9600_19200(bool);
-	extern void UART2_Initialize_9600_19200(bool);
+	extern void UART1_Initialize19200(void);
+	extern void UART2_Initialize19200(void);
 
 #ifdef	__cplusplus
 }

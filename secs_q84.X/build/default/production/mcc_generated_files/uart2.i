@@ -39624,7 +39624,7 @@ void UART2_put_buffer(uint8_t bufData)
 
 
 
-void UART2_Initialize_9600_19200(_Bool fast)
+void UART2_Initialize19200(void)
 {
 
  PIE8bits.U2RXIE = 0;
@@ -39661,19 +39661,11 @@ void UART2_Initialize_9600_19200(_Bool fast)
 
  U2CON2 = 0x00;
 
- if (fast) {
 
-  U1BRGL = 0x40;
-
-
-  U1BRGH = 0x03;
- } else {
-
-  U2BRGL = 0x82;
+    U2BRGL = 0x40;
 
 
-  U2BRGH = 0x06;
- }
+    U2BRGH = 0x03;
 
 
  U2FIFO = 0x00;
