@@ -188,7 +188,7 @@ const char * GEM_TEXT [] = {
 	"DISABLE",
 	"COMM   ",
 	"OFFLINE",
-	"ONLIINE",
+	"ONLINE ",
 	"REMOTE ",
 	"ERROR  "
 };
@@ -783,6 +783,7 @@ void main(void)
 {
 	UI_STATES mode; /* link configuration host/equipment/etc ... */
 	char * s, * speed_text;
+	uint8_t temp_lock = false;
 
 	// Initialize the device
 	SYSTEM_Initialize();
@@ -795,27 +796,7 @@ void main(void)
 
 	mconfig_init(); // zero the entire text buffer
 
-	/*
-	 * get saved state of serial speed flag
-	 */
-	V.uart_speed_fast = DATAEE_ReadByte(UART_SPEED_EADR);
-	if (V.uart_speed_fast % 2 == 0) {
-		UART2_Initialize();
-		UART1_Initialize();
-	} else {
-		UART2_Initialize19200();
-		UART1_Initialize19200();
-	}
 
-	if (V.uart_speed_fast % 2 == 0) {
-		speed_text = "9600bps";
-	} else {
-		speed_text = "19200bps";
-	}
-	/*
-	 * ALternate the speed setting with each restart
-	 */
-	DATAEE_WriteByte(UART_SPEED_EADR, ++V.uart_speed_fast);
 
 	V.ui_state = UI_STATE_INIT;
 	mode = UI_STATE_HOST;
@@ -825,6 +806,69 @@ void main(void)
 	TMR5_StartTimer();
 	TMR6_StartTimer();
 	ADC_SelectContext(CONTEXT_1);
+
+	/*
+	 * Use a few EEPROM bytes to cycle or lock the serial port baud rate
+	 * during a power-up.
+	 * 9600 and 19200 are the normal speeds for SECS-I serial communications
+	 */
+	V.speed_spin = DATAEE_ReadByte(UART_SPEED_LOCK_EADR);
+	V.uart_speed_fast = DATAEE_ReadByte(UART_SPEED_EADR);
+	DATAEE_WriteByte(UART_SPEED_LOCK_EADR, temp_lock);
+	DATAEE_WriteByte(UART_SPEED_EADR, V.uart_speed_fast + 1);
+
+	if (V.uart_speed_fast % 2 == 0) { // Even/Odd selection for just two speeds
+		speed_text = "Locked 9600bps";
+	} else {
+		speed_text = "Locked 19200bps";
+	}
+	// as soon as you see all LEDS ON, power down, quickly POWER CYCLE to LOCK baud rate
+	MLED_SetHigh();
+	RLED_SetHigh();
+	DLED_SetHigh();
+	WaitMs(TDELAY);
+	RLED_SetLow(); // start complete power-up serial speed setups, LEDS OFF
+	MLED_SetLow();
+	DLED_SetLow();
+	temp_lock = true;
+	if (V.speed_spin) { // update the speed lock status byte
+		DATAEE_WriteByte(UART_SPEED_LOCK_EADR, temp_lock);
+	}
+	DATAEE_WriteByte(UART_SPEED_EADR, V.uart_speed_fast); // update the speed setting byte
+
+	if (V.speed_spin) { // serial speed with alternate with every power cycle
+		/*
+		 * get saved state of serial speed flag
+		 */
+		V.uart_speed_fast = DATAEE_ReadByte(UART_SPEED_EADR);
+		if (V.uart_speed_fast % 2 == 0) {
+			UART2_Initialize();
+			UART1_Initialize();
+		} else {
+			UART2_Initialize19200();
+			UART1_Initialize19200();
+		}
+
+		if (V.uart_speed_fast % 2 == 0) {
+			speed_text = "9600bps";
+		} else {
+			speed_text = "19200bps";
+		}
+		/*
+		 * ALternate the speed setting with each restart
+		 */
+		DATAEE_WriteByte(UART_SPEED_EADR, ++V.uart_speed_fast);
+		DATAEE_WriteByte(UART_SPEED_LOCK_EADR, V.speed_spin);
+	} else { // serial port speed is locked
+		V.uart_speed_fast = DATAEE_ReadByte(UART_SPEED_EADR); // just read and set the speed setting
+		if (V.uart_speed_fast % 2 == 0) {
+			UART2_Initialize();
+			UART1_Initialize();
+		} else {
+			UART2_Initialize19200();
+			UART1_Initialize19200();
+		}
+	}
 
 	/*
 	 * master processing I/O loop
@@ -846,10 +890,10 @@ void main(void)
 			eaDogM_CursorOff();
 
 			set_vterm(V.vterm); // set to buffer 0
-			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
-			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
-			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "Serial  %s             ", speed_text);
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "Port %s             ", speed_text);
+			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "Port %s             ", speed_text);
+			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "Port %s             ", speed_text);
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, "Port %s             ", speed_text);
 			refresh_lcd();
 			WaitMs(LDELAY);
 
@@ -857,22 +901,22 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
 			set_vterm(V.vterm); // set to buffer 0
-			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER %u  ", V.uart_speed_fast);
-			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, " NSASPOOK            ");
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
-			snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " INFO                ");
-			snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, " VTERM INFO          ");
-			snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
-			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, " HELP Build %s       ", VER);
-			snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, " VTERM HELP          ");
-			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
-			snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, " DEBUG               ");
-			snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, " Version %s          ", VER);
-			snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, " VTERM DEBUG         ");
-			snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, " %s                  ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER %u   ", V.uart_speed_fast & 0x01);
+			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, " Version %s           ", VER);
+			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, " NSASPOOK             ");
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " %s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " INFO                 ");
+			snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Version %s           ", VER);
+			snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, " VTERM INFO           ");
+			snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, " %s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, HELP_VTERM), MAX_TEXT, " HELP Build %s        ", VER);
+			snprintf(get_vterm_ptr(1, HELP_VTERM), MAX_TEXT, " Version %s           ", VER);
+			snprintf(get_vterm_ptr(2, HELP_VTERM), MAX_TEXT, " VTERM HELP           ");
+			snprintf(get_vterm_ptr(3, HELP_VTERM), MAX_TEXT, " %s                   ", (char *) build_date);
+			snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, " DEBUG                ");
+			snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, " Version %s           ", VER);
+			snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, " VTERM DEBUG          ");
+			snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, " %s                   ", (char *) build_date);
 			refresh_lcd();
 			WaitMs(TDELAY);
 			StartTimer(TMR_DISPLAY, DDELAY);
@@ -882,11 +926,11 @@ void main(void)
 			StartTimer(TMR_HELPDIS, TDELAY);
 			StartTimer(TMR_SEQ, SEQDELAY);
 			StartTimer(TMR_HELP, TDELAY);
-			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " UI_STATE_INIT        ");
+			snprintf(get_vterm_ptr(3, MAIN_VTERM), MAX_TEXT, " UI_STATE_INIT         ");
 			break;
 		case UI_STATE_HOST: // equipment starts communications to host
 #ifdef FAKER
-			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "FAKER T%lu R%lu      ", V.tx_total, V.rx_total);
+			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "FAKER T%lu R%lu         ", V.tx_total, V.rx_total);
 #else
 #if defined(DB1) && defined(DB2) && defined(DB3) && defined(DB3)
 			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, "1UI_STATE_HOST 2EQIP ");
@@ -1106,15 +1150,17 @@ void main(void)
 				snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA1);
-//				WaitMs(1);
-				while (!ADC_IsConversionDone()) {};
+				//				WaitMs(1);
+				while (!ADC_IsConversionDone()) {
+				};
 				if (ADC_IsConversionDone()) {
 					V.v_tx_line = ADC_GetConversionResult();
 				};
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA2);
-//				WaitMs(1);
-				while (!ADC_IsConversionDone()) {};
+				//				WaitMs(1);
+				while (!ADC_IsConversionDone()) {
+				};
 				if (ADC_IsConversionDone()) {
 					V.v_rx_line = ADC_GetConversionResult();
 				};

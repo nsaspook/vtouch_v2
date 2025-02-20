@@ -40,11 +40,11 @@ extern "C" {
 	 * 2.12 remote set random error generation
 	 * 2.13 clear up display errors and make this a GAMMA software release version
 	 * 2.14 add 19200 or 9600 speed switching with reboot
-	 * 2.15 fix speed switching bugs
+	 * 2.15 fix USART speed switching bugs
 	 */
 
 
-	#define FAKER			// emulate equipment protocol
+#define FAKER			// emulate equipment protocol
 
 	//#define	FRAME_OVERRUN
 
@@ -137,7 +137,8 @@ extern "C" {
 
 #define SPIN_CHAR	19
 
-#define UART_SPEED_EADR	0x03F0 // offset from 0x380000
+#define UART_SPEED_EADR		0x03F0 // offset from 0x380000
+#define UART_SPEED_LOCK_EADR	0x03F1 // offset from 0x380000
 
 	struct spi_link_type_o { // internal SPI state table
 		uint8_t SPI_LCD : 1;
@@ -181,6 +182,7 @@ extern "C" {
 		CODE_HELP,
 		CODE_SEQUENCE,
 		CODE_RERROR,
+		CODE_FREE,
 		CODE_ERR,
 	} P_CODES;
 
@@ -195,6 +197,7 @@ extern "C" {
 		DIS_SEQUENCE,
 		DIS_SEQUENCE_M,
 		DIS_ERR,
+		DIS_FREE,
 		DIS_CLEAR,
 	} D_CODES;
 
@@ -317,7 +320,7 @@ extern "C" {
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
 		uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
 		failed_send : 4, failed_receive : 4,
-		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
+		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1, speed_spin : 1;
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
 		volatile uint8_t ticker;

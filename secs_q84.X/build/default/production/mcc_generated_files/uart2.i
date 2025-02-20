@@ -39406,10 +39406,10 @@ void UART2_Initialize(void)
  U2CON2 = 0x00;
 
 
-    U2BRGL = 0x82;
+ U2BRGL = 0x82;
 
 
-    U2BRGH = 0x06;
+ U2BRGH = 0x06;
 
 
  U2FIFO = 0x00;
@@ -39514,8 +39514,6 @@ void __attribute__((picinterrupt(("irq(U2RX), base(8)")))) UART2_rx_vect_isr()
  }
 }
 
-
-
 void UART2_Transmit_ISR(void)
 {
 
@@ -39572,7 +39570,7 @@ void UART2_DefaultFramingErrorHandler(void)
 
 void UART2_DefaultOverrunErrorHandler(void)
 {
- U2ERRIRbits.RXFOIF=0;
+ U2ERRIRbits.RXFOIF = 0;
 }
 
 void UART2_DefaultErrorHandler(void)
@@ -39608,6 +39606,8 @@ void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void))
 
 void UART2_put_buffer(uint8_t bufData)
 {
+ (INTCON0bits.GIEH = 0);
+ (INTCON0bits.GIEL = 0);
  PIE8bits.U2RXIE = 0;
  uart2RxBuffer[uart2RxHead++] = bufData;
  if (sizeof(uart2RxBuffer) <= uart2RxHead) {
@@ -39616,6 +39616,8 @@ void UART2_put_buffer(uint8_t bufData)
 
  uart2RxCount++;
  PIE8bits.U2RXIE = 1;
+ (INTCON0bits.GIEL = 1);
+ (INTCON0bits.GIEH = 1);
 }
 
 
@@ -39659,10 +39661,10 @@ void UART2_Initialize19200(void)
  U2CON2 = 0x00;
 
 
-    U2BRGL = 0x40;
+ U2BRGL = 0x40;
 
 
-    U2BRGH = 0x03;
+ U2BRGH = 0x03;
 
 
  U2FIFO = 0x00;

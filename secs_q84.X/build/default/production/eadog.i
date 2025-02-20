@@ -39663,7 +39663,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 142 "./vconfig.h"
+# 143 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39706,6 +39706,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_HELP,
   CODE_SEQUENCE,
   CODE_RERROR,
+  CODE_FREE,
   CODE_ERR,
  } P_CODES;
 
@@ -39720,6 +39721,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_SEQUENCE,
   DIS_SEQUENCE_M,
   DIS_ERR,
+  DIS_FREE,
   DIS_CLEAR,
  } D_CODES;
 
@@ -39842,7 +39844,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
+  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1, speed_spin : 1;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
@@ -41099,20 +41101,19 @@ void wait_lcd_done(void)
 
  uint32_t delay = 0;
  while (spi_link.LCD_DATA) {
-  if (delay++ > 99999) {
+  if (delay++ > 9999) {
    do { LATBbits.LATB1 = 1; } while(0);
    return;
   }
  };
  delay = 0;
  while (!SPI1STATUSbits.TXBE) {
-  if (delay++ > 99999) {
+  if (delay++ > 9999) {
    do { LATBbits.LATB1 = 1; } while(0);
    return;
   }
  };
  do { LATBbits.LATB1 = 0; } while(0);
- do { LATDbits.LATD3 = 1; } while(0);
 
 }
 
@@ -41203,7 +41204,7 @@ void check_lcd_dim(const _Bool dim)
    send_lcd_cmd_dma(0x53);
    send_lcd_data_dma(8);
   }
-# 433 "eadog.c"
+# 432 "eadog.c"
  }
 }
 
@@ -41220,7 +41221,7 @@ void set_lcd_dim(const _Bool dim)
    send_lcd_cmd_dma(0x53);
    send_lcd_data_dma(8);
   }
-# 458 "eadog.c"
+# 457 "eadog.c"
  }
 
  if (B.dim_delay++ >= 6) {

@@ -47,9 +47,9 @@ extern "C" {
 			.extrams = "                    ",
 		},
 		{
-			.message = "CMD: E, H           ",
-			.display = "Errors, Help        ",
-			.extrams = "E: random test errs ",
+			.message = "CMD: E, H, F        ",
+			.display = "Errors, Help, Free  ",
+			.extrams = "E: Test  F: Speed   ",
 		},
 	};
 

@@ -152,6 +152,10 @@ void vterm_sequence(void)
 		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " S%dF%d log    %d      ", V.stream, V.function, V.response.log_seq & 0x03);
 		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Stored #%d            ", V.response.log_num);
 		break;
+	case DIS_FREE:
+		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " S%dF%d log    %d      ", V.stream, V.function, V.response.log_seq & 0x03);
+		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " Port Lock #%d            ", V.speed_spin);
+		break;
 	case DIS_LOAD:
 		snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, " Ready LL              ");
 		snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, " S2F41 #%c             ", V.response.mcode);

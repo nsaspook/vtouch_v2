@@ -13,7 +13,7 @@
 #ifdef CAN_REMOTE // SPI DMA wait timeout counts
 #define DONE_DELAY	99999
 #else
-#define DONE_DELAY	99999
+#define DONE_DELAY	9999
 #endif
 
 volatile struct spi_link_type spi_link = {
@@ -330,7 +330,6 @@ void wait_lcd_done(void)
 		}
 	};
 	MLED_SetLow();
-	CS_SetHigh();
 #endif
 }
 

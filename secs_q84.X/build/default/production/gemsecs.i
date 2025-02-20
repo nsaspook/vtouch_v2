@@ -39662,7 +39662,7 @@ void PIN_MANAGER_Initialize (void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 142 "./vconfig.h"
+# 143 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39705,6 +39705,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_HELP,
   CODE_SEQUENCE,
   CODE_RERROR,
+  CODE_FREE,
   CODE_ERR,
  } P_CODES;
 
@@ -39719,6 +39720,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_SEQUENCE,
   DIS_SEQUENCE_M,
   DIS_ERR,
+  DIS_FREE,
   DIS_CLEAR,
  } D_CODES;
 
@@ -39841,7 +39843,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
+  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1, speed_spin : 1;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
@@ -40906,9 +40908,9 @@ void mode_lamp_bright(void);
    .extrams = "                    ",
   },
   {
-   .message = "CMD: E, H           ",
-   .display = "Errors, Help        ",
-   .extrams = "E: random test errs ",
+   .message = "CMD: E, H, F        ",
+   .display = "Errors, Help, Free  ",
+   .extrams = "E: Test  F: Speed   ",
   },
  };
 # 28 "./gemsecs.h" 2
@@ -40916,7 +40918,7 @@ void mode_lamp_bright(void);
 
 
 
- const char msg_gemcmds[] = "Host CMDS: M C R P O L S D E H ";
+ const char msg_gemcmds[] = "Host CMDS: M C R P O L S D E H F";
  const char msg_gemremote[] = "Host CMDS: ENABLED REMOTE";
 
  typedef struct block10_type {
@@ -42059,6 +42061,11 @@ P_CODES s10f1_opcmd(void)
   return CODE_UNLOAD;
  }
 
+ if (V.response.mcode == 'F' || V.response.mcode == 'f') {
+  snprintf(V.info, 63, " Speed Lock reset          ");
+  return CODE_FREE;
+ }
+
  if (V.response.mcode == 'L' || V.response.mcode == 'l') {
   snprintf(V.info, 63, " Log file reset          ");
   return CODE_LOG;
@@ -42391,6 +42398,10 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
     terminal_format(display_message);
     format_display_text(V.terminal);
     V.queue = 1;
+    break;
+   case CODE_FREE:
+    DATAEE_WriteByte(0x03F1, 1);
+    set_display_info(DIS_FREE);
     break;
    case CODE_LOG:
     do {

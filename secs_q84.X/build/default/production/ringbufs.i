@@ -39643,7 +39643,7 @@ void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
 # 1 "./ringbufs.h" 1
 # 20 "./vconfig.h" 2
-# 142 "./vconfig.h"
+# 143 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39686,6 +39686,7 @@ void PIN_MANAGER_Initialize (void);
   CODE_HELP,
   CODE_SEQUENCE,
   CODE_RERROR,
+  CODE_FREE,
   CODE_ERR,
  } P_CODES;
 
@@ -39700,6 +39701,7 @@ void PIN_MANAGER_Initialize (void);
   DIS_SEQUENCE,
   DIS_SEQUENCE_M,
   DIS_ERR,
+  DIS_FREE,
   DIS_CLEAR,
  } D_CODES;
 
@@ -39822,7 +39824,7 @@ void PIN_MANAGER_Initialize (void);
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
   uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
   failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1;
+  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1, speed_spin : 1;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
