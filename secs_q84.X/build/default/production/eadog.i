@@ -40771,19 +40771,17 @@ void UART1_Transmit_ISR(void);
 void UART1_Receive_ISR(void);
 # 445 "./mcc_generated_files/uart1.h"
 void UART1_RxDataHandler(void);
-# 463 "./mcc_generated_files/uart1.h"
-void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 481 "./mcc_generated_files/uart1.h"
+# 480 "./mcc_generated_files/uart1.h"
 void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 499 "./mcc_generated_files/uart1.h"
+# 498 "./mcc_generated_files/uart1.h"
 void UART1_SetErrorHandler(void (* interruptHandler)(void));
-# 519 "./mcc_generated_files/uart1.h"
+# 518 "./mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
-# 537 "./mcc_generated_files/uart1.h"
+# 536 "./mcc_generated_files/uart1.h"
 void (*UART1_TxInterruptHandler)(void);
-# 557 "./mcc_generated_files/uart1.h"
+# 556 "./mcc_generated_files/uart1.h"
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 575 "./mcc_generated_files/uart1.h"
+# 574 "./mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 64 "./mcc_generated_files/mcc.h" 2
 

@@ -76,11 +76,9 @@ static volatile uart1_status_t uart1RxLastError;
 /**
   Section: UART1 APIs
  */
-void (*UART1_FramingErrorHandler)(void);
 void (*UART1_OverrunErrorHandler)(void);
 void (*UART1_ErrorHandler)(void);
 
-void UART1_DefaultFramingErrorHandler(void);
 void UART1_DefaultOverrunErrorHandler(void);
 void UART1_DefaultErrorHandler(void);
 
@@ -91,6 +89,8 @@ void UART1_Initialize(void)
 	UART1_SetRxInterruptHandler(UART1_Receive_ISR);
 	PIE4bits.U1TXIE = 0;
 	UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
+    PIE4bits.U1EIE = 0;
+
 
 	// Set the UART1 module to the options selected in the user interface.
 
@@ -121,11 +121,11 @@ void UART1_Initialize(void)
     // TXPOL not inverted; FLO off; C0EN Checksum Mode 0; RXPOL not inverted; RUNOVF RX input shifter stops all activity; STP Transmit 1Stop bit, receiver verifies first Stop bit; 
     U1CON2 = 0x00;
 
-    // BRGL 130; 
-    U1BRGL = 0x82;
+    // BRGL 64; 
+    U1BRGL = 0x40;
 
-    // BRGH 6; 
-    U1BRGH = 0x06;
+    // BRGH 3; 
+    U1BRGH = 0x03;
 
 	// STPMD in middle of first Stop bit; TXWRE No error; 
 	U1FIFO = 0x00;
@@ -140,7 +140,6 @@ void UART1_Initialize(void)
 	U1ERRIE = 0x00;
 
 
-	UART1_SetFramingErrorHandler(UART1_DefaultFramingErrorHandler);
 	UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
 	UART1_SetErrorHandler(UART1_DefaultErrorHandler);
 
@@ -156,6 +155,8 @@ void UART1_Initialize(void)
 
 	// enable receive interrupt
 	PIE4bits.U1RXIE = 1;
+    // enable error interrupt
+    PIE4bits.U1EIE = 1;
 }
 
 bool UART1_is_rx_ready(void)
@@ -230,6 +231,8 @@ void __interrupt(irq(U1RX), base(8)) UART1_rx_vect_isr()
 	}
 }
 
+
+
 void UART1_Transmit_ISR(void)
 {
 	// use this default transmit interrupt handler code
@@ -253,7 +256,6 @@ void UART1_Receive_ISR(void)
 
 	if (U1ERRIRbits.FERIF) {
 		uart1RxStatusBuffer[uart1RxHead].ferr = 1;
-		UART1_FramingErrorHandler();
 	}
 
 	if (U1ERRIRbits.RXFOIF) {
@@ -283,9 +285,6 @@ void UART1_RxDataHandler(void)
 	} while (0);
 }
 
-void UART1_DefaultFramingErrorHandler(void)
-{
-}
 
 void UART1_DefaultOverrunErrorHandler(void)
 {
@@ -297,10 +296,6 @@ void UART1_DefaultErrorHandler(void)
 	UART1_RxDataHandler();
 }
 
-void UART1_SetFramingErrorHandler(void (* interruptHandler)(void))
-{
-	UART1_FramingErrorHandler = interruptHandler;
-}
 
 void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void))
 {
@@ -401,8 +396,6 @@ void UART1_Initialize_9600_19200(bool fast)
 	// TXCIE disabled; FERIE disabled; TXMTIE disabled; ABDOVE disabled; CERIE disabled; RXFOIE disabled; PERIE disabled; RXBKIE disabled; 
 	U1ERRIE = 0x00;
 
-
-	UART1_SetFramingErrorHandler(UART1_DefaultFramingErrorHandler);
 	UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
 	UART1_SetErrorHandler(UART1_DefaultErrorHandler);
 

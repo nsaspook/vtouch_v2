@@ -39406,10 +39406,10 @@ void UART2_Initialize(void)
  U2CON2 = 0x00;
 
 
- U2BRGL = 0x82;
+    U2BRGL = 0x40;
 
 
- U2BRGH = 0x06;
+    U2BRGH = 0x03;
 
 
  U2FIFO = 0x00;
@@ -39513,6 +39513,8 @@ void __attribute__((picinterrupt(("irq(U2RX), base(8)")))) UART2_rx_vect_isr()
   UART2_RxInterruptHandler();
  }
 }
+
+
 
 void UART2_Transmit_ISR(void)
 {

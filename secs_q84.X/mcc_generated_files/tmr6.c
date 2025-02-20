@@ -165,7 +165,7 @@ void TMR6_LoadPeriodRegister(uint8_t periodVal)
 	TMR6_Period8BitSet(periodVal);
 }
 
-void __interrupt(irq(TMR6), base(8)) TMR6_ISR()
+void __interrupt(irq(TMR6),base(8),low_priority) TMR6_ISR()
 {
 
 	// clear the TMR6 interrupt flag
@@ -180,13 +180,13 @@ void TMR6_CallBack(void)
 {
 	// Add your custom callback code here
 	// this code executes every TMR6_INTERRUPT_TICKER_FACTOR periods of TMR6
-	if (TMR6_InterruptHandler) {
+    if(TMR6_InterruptHandler)
+    {
 		TMR6_InterruptHandler();
 	}
 }
 
-void TMR6_SetInterruptHandler(void (* InterruptHandler)(void))
-{
+void TMR6_SetInterruptHandler(void (* InterruptHandler)(void)){
 	TMR6_InterruptHandler = InterruptHandler;
 }
 

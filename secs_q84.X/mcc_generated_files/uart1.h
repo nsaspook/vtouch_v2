@@ -460,7 +460,6 @@ void UART1_RxDataHandler(void);
   @Returns
     None
 */
-void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
 
 /**
   @Summary

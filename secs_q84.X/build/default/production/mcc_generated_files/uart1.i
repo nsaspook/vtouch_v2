@@ -39325,19 +39325,17 @@ void UART1_Transmit_ISR(void);
 void UART1_Receive_ISR(void);
 # 445 "mcc_generated_files/uart1.h"
 void UART1_RxDataHandler(void);
-# 463 "mcc_generated_files/uart1.h"
-void UART1_SetFramingErrorHandler(void (* interruptHandler)(void));
-# 481 "mcc_generated_files/uart1.h"
+# 480 "mcc_generated_files/uart1.h"
 void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void));
-# 499 "mcc_generated_files/uart1.h"
+# 498 "mcc_generated_files/uart1.h"
 void UART1_SetErrorHandler(void (* interruptHandler)(void));
-# 519 "mcc_generated_files/uart1.h"
+# 518 "mcc_generated_files/uart1.h"
 void (*UART1_RxInterruptHandler)(void);
-# 537 "mcc_generated_files/uart1.h"
+# 536 "mcc_generated_files/uart1.h"
 void (*UART1_TxInterruptHandler)(void);
-# 557 "mcc_generated_files/uart1.h"
+# 556 "mcc_generated_files/uart1.h"
 void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
-# 575 "mcc_generated_files/uart1.h"
+# 574 "mcc_generated_files/uart1.h"
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 # 52 "mcc_generated_files/uart1.c" 2
 # 1 "mcc_generated_files/interrupt_manager.h" 1
@@ -39360,11 +39358,9 @@ static volatile uart1_status_t uart1RxLastError;
 
 
 
-void (*UART1_FramingErrorHandler)(void);
 void (*UART1_OverrunErrorHandler)(void);
 void (*UART1_ErrorHandler)(void);
 
-void UART1_DefaultFramingErrorHandler(void);
 void UART1_DefaultOverrunErrorHandler(void);
 void UART1_DefaultErrorHandler(void);
 
@@ -39375,6 +39371,8 @@ void UART1_Initialize(void)
  UART1_SetRxInterruptHandler(UART1_Receive_ISR);
  PIE4bits.U1TXIE = 0;
  UART1_SetTxInterruptHandler(UART1_Transmit_ISR);
+    PIE4bits.U1EIE = 0;
+
 
 
 
@@ -39406,10 +39404,10 @@ void UART1_Initialize(void)
     U1CON2 = 0x00;
 
 
-    U1BRGL = 0x82;
+    U1BRGL = 0x40;
 
 
-    U1BRGH = 0x06;
+    U1BRGH = 0x03;
 
 
  U1FIFO = 0x00;
@@ -39424,7 +39422,6 @@ void UART1_Initialize(void)
  U1ERRIE = 0x00;
 
 
- UART1_SetFramingErrorHandler(UART1_DefaultFramingErrorHandler);
  UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
  UART1_SetErrorHandler(UART1_DefaultErrorHandler);
 
@@ -39440,6 +39437,8 @@ void UART1_Initialize(void)
 
 
  PIE4bits.U1RXIE = 1;
+
+    PIE4bits.U1EIE = 1;
 }
 
 _Bool UART1_is_rx_ready(void)
@@ -39514,6 +39513,8 @@ void __attribute__((picinterrupt(("irq(U1RX), base(8)")))) UART1_rx_vect_isr()
  }
 }
 
+
+
 void UART1_Transmit_ISR(void)
 {
 
@@ -39537,7 +39538,6 @@ void UART1_Receive_ISR(void)
 
  if (U1ERRIRbits.FERIF) {
   uart1RxStatusBuffer[uart1RxHead].ferr = 1;
-  UART1_FramingErrorHandler();
  }
 
  if (U1ERRIRbits.RXFOIF) {
@@ -39567,9 +39567,6 @@ void UART1_RxDataHandler(void)
  } while (0);
 }
 
-void UART1_DefaultFramingErrorHandler(void)
-{
-}
 
 void UART1_DefaultOverrunErrorHandler(void)
 {
@@ -39581,10 +39578,6 @@ void UART1_DefaultErrorHandler(void)
  UART1_RxDataHandler();
 }
 
-void UART1_SetFramingErrorHandler(void (* interruptHandler)(void))
-{
- UART1_FramingErrorHandler = interruptHandler;
-}
 
 void UART1_SetOverrunErrorHandler(void (* interruptHandler)(void))
 {
@@ -39685,8 +39678,6 @@ void UART1_Initialize_9600_19200(_Bool fast)
 
  U1ERRIE = 0x00;
 
-
- UART1_SetFramingErrorHandler(UART1_DefaultFramingErrorHandler);
  UART1_SetOverrunErrorHandler(UART1_DefaultOverrunErrorHandler);
  UART1_SetErrorHandler(UART1_DefaultErrorHandler);
 
