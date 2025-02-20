@@ -40498,7 +40498,7 @@ void SYSTEM_Initialize(void)
 
 
 
- uart_speed_fast = (_Bool) DATAEE_ReadByte(0x03F0);
+ uart_speed_fast = (_Bool) DATAEE_ReadByte(0x00FF);
  if (uart_speed_fast) {
   UART2_Initialize19200();
   UART1_Initialize19200();
@@ -40509,7 +40509,7 @@ void SYSTEM_Initialize(void)
 
 
 
- DATAEE_WriteByte(0x03F0, (uint8_t) !uart_speed_fast);
+ DATAEE_WriteByte(0x00FF, (uint8_t) !uart_speed_fast);
  SPI1_Initialize();
  PWM2_16BIT_Initialize();
  SystemArbiter_Initialize();

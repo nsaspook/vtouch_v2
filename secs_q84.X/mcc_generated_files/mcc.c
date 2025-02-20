@@ -45,7 +45,7 @@
  */
 
 #include "mcc.h"
-#define UART_SPEED_EADR	0x03F0 // offset from 0x380000
+#define UART_SPEED_EADR	0x00FF // offset from 0x380000
 
 extern void UART1_Initialize19200(void);
 extern void UART2_Initialize19200(void);
