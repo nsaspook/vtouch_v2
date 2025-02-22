@@ -13613,14 +13613,16 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <part name="VSS14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R0805" package3d_urn="urn:adsk.eagle:package:23553/2" value="0ohm"/>
 <part name="VDD8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
+<part name="SV2" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA06-1" device="" package3d_urn="urn:adsk.eagle:package:8340/1" value="CANBUS"/>
+<part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 </plain>
 <instances>
-<instance part="VDD1" gate="G$1" x="93.98" y="0" smashed="yes">
-<attribute name="VALUE" x="101.6" y="0" size="1.778" layer="96" rot="R180"/>
+<instance part="VDD1" gate="G$1" x="99.06" y="0" smashed="yes">
+<attribute name="VALUE" x="106.68" y="0" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="OS1_10MHZ" gate="A" x="134.62" y="-27.94" smashed="yes">
 <attribute name="NAME" x="127" y="-19.685" size="1.778" layer="95"/>
@@ -13847,11 +13849,11 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <attribute name="NAME" x="54.61" y="20.32" size="1.778" layer="95" align="center-left"/>
 <attribute name="VALUE" x="46.99" y="-2.54" size="1.778" layer="96" align="center-left"/>
 </instance>
-<instance part="VSS47" gate="G$1" x="68.58" y="0" smashed="yes">
-<attribute name="VALUE" x="71.12" y="-5.08" size="1.778" layer="96" rot="R180"/>
+<instance part="VSS47" gate="G$1" x="71.12" y="2.54" smashed="yes" rot="R90">
+<attribute name="VALUE" x="73.66" y="2.54" size="1.778" layer="96"/>
 </instance>
 <instance part="VSS48" gate="G$1" x="71.12" y="5.08" smashed="yes" rot="R90">
-<attribute name="VALUE" x="76.2" y="7.62" size="1.778" layer="96" rot="R270"/>
+<attribute name="VALUE" x="73.66" y="5.08" size="1.778" layer="96"/>
 </instance>
 <instance part="R3" gate="G$1" x="223.52" y="114.3" smashed="yes" rot="R90">
 <attribute name="NAME" x="222.0214" y="110.49" size="1.778" layer="95" rot="R90"/>
@@ -13961,6 +13963,13 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <instance part="VDD8" gate="G$1" x="353.06" y="104.14" smashed="yes" rot="R270">
 <attribute name="VALUE" x="350.52" y="106.68" size="1.778" layer="96"/>
 </instance>
+<instance part="SV2" gate="1" x="307.34" y="-17.78" smashed="yes" rot="R180">
+<attribute name="VALUE" x="308.61" y="-5.08" size="1.778" layer="96" rot="R180"/>
+<attribute name="NAME" x="308.61" y="-26.162" size="1.778" layer="95" rot="R180"/>
+</instance>
+<instance part="P+4" gate="VCC" x="93.98" y="0" smashed="yes">
+<attribute name="VALUE" x="91.44" y="-2.54" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -13968,11 +13977,8 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <net name="VDD" class="1">
 <segment>
 <pinref part="VDD1" gate="G$1" pin="VDD"/>
-<wire x1="93.98" y1="-2.54" x2="99.06" y2="-2.54" width="0.1524" layer="91"/>
-<junction x="93.98" y="-2.54"/>
-<junction x="99.06" y="-2.54"/>
-<pinref part="C2" gate="G$1" pin="1"/>
 <pinref part="C4" gate="G$1" pin="1"/>
+<junction x="99.06" y="-2.54"/>
 </segment>
 <segment>
 <wire x1="86.36" y1="45.72" x2="104.14" y2="45.72" width="0.1524" layer="91"/>
@@ -14086,6 +14092,13 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <pinref part="R1" gate="G$1" pin="2"/>
 <pinref part="VDD8" gate="G$1" pin="VDD"/>
 <junction x="350.52" y="104.14"/>
+</segment>
+<segment>
+<wire x1="287.02" y1="-20.32" x2="299.72" y2="-20.32" width="0.1524" layer="91"/>
+<pinref part="SV2" gate="1" pin="5"/>
+<junction x="299.72" y="-20.32"/>
+<junction x="287.02" y="-20.32"/>
+<label x="289.56" y="-20.32" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="VSS" class="1">
@@ -14292,6 +14305,13 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <wire x1="345.44" y1="99.06" x2="332.74" y2="99.06" width="0.1524" layer="91"/>
 <junction x="332.74" y="99.06"/>
 <junction x="345.44" y="99.06"/>
+</segment>
+<segment>
+<wire x1="287.02" y1="-10.16" x2="299.72" y2="-10.16" width="0.1524" layer="91"/>
+<pinref part="SV2" gate="1" pin="1"/>
+<junction x="299.72" y="-10.16"/>
+<junction x="287.02" y="-10.16"/>
+<label x="289.56" y="-10.16" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="CPU_CLK" class="0">
@@ -14661,6 +14681,13 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <junction x="180.34" y="-20.32"/>
 <label x="182.88" y="-20.32" size="1.778" layer="95"/>
 </segment>
+<segment>
+<wire x1="287.02" y1="-12.7" x2="299.72" y2="-12.7" width="0.1524" layer="91"/>
+<pinref part="SV2" gate="1" pin="2"/>
+<junction x="299.72" y="-12.7"/>
+<junction x="287.02" y="-12.7"/>
+<label x="289.56" y="-12.7" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="CANTX" class="0">
 <segment>
@@ -14675,6 +14702,13 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <junction x="205.74" y="-55.88"/>
 <junction x="205.74" y="-68.58"/>
 <label x="205.74" y="-66.04" size="1.778" layer="95" rot="R90"/>
+</segment>
+<segment>
+<wire x1="299.72" y1="-15.24" x2="287.02" y2="-15.24" width="0.1524" layer="91"/>
+<pinref part="SV2" gate="1" pin="3"/>
+<junction x="299.72" y="-15.24"/>
+<junction x="287.02" y="-15.24"/>
+<label x="289.56" y="-15.24" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="PC_TX2" class="0">
@@ -15078,6 +15112,13 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <junction x="220.98" y="25.4"/>
 <label x="220.98" y="15.24" size="1.778" layer="95" rot="R90"/>
 </segment>
+<segment>
+<wire x1="287.02" y1="-17.78" x2="299.72" y2="-17.78" width="0.1524" layer="91"/>
+<pinref part="SV2" gate="1" pin="4"/>
+<junction x="299.72" y="-17.78"/>
+<junction x="287.02" y="-17.78"/>
+<label x="289.56" y="-17.78" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="N$4" class="0">
 <segment>
@@ -15235,7 +15276,7 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <label x="180.34" y="-2.54" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="PVP_B" class="0">
+<net name="RS232_RX_IN" class="0">
 <segment>
 <pinref part="A+REV" gate="1" pin="1"/>
 <wire x1="-17.78" y1="-25.4" x2="-15.24" y2="-25.4" width="0.1524" layer="91"/>
@@ -15250,14 +15291,14 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <junction x="7.62" y="-25.4"/>
 </segment>
 <segment>
-<wire x1="68.58" y1="10.16" x2="91.44" y2="10.16" width="0.1524" layer="91"/>
-<pinref part="PVP_0" gate="G$1" pin="7"/>
-<junction x="68.58" y="10.16"/>
-<junction x="91.44" y="10.16"/>
-<label x="81.28" y="10.16" size="1.778" layer="95"/>
+<wire x1="22.86" y1="5.08" x2="45.72" y2="5.08" width="0.1524" layer="91"/>
+<pinref part="PVP_0" gate="G$1" pin="4"/>
+<label x="25.4" y="5.08" size="1.778" layer="95"/>
+<junction x="22.86" y="5.08"/>
+<junction x="45.72" y="5.08"/>
 </segment>
 </net>
-<net name="PVP_A" class="0">
+<net name="RS232_TX_OUT" class="0">
 <segment>
 <pinref part="A+NORM" gate="1" pin="1"/>
 <wire x1="-17.78" y1="-20.32" x2="-12.7" y2="-20.32" width="0.1524" layer="91"/>
@@ -15272,11 +15313,11 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <junction x="7.62" y="-20.32"/>
 </segment>
 <segment>
-<wire x1="25.4" y1="2.54" x2="45.72" y2="2.54" width="0.1524" layer="91"/>
+<wire x1="22.86" y1="2.54" x2="45.72" y2="2.54" width="0.1524" layer="91"/>
 <pinref part="PVP_0" gate="G$1" pin="5"/>
 <junction x="45.72" y="2.54"/>
-<junction x="25.4" y="2.54"/>
-<label x="30.48" y="2.54" size="1.778" layer="95"/>
+<junction x="22.86" y="2.54"/>
+<label x="25.4" y="2.54" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="RS232TX" class="0">
@@ -15367,6 +15408,11 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <pinref part="R19" gate="G$1" pin="1"/>
 <pinref part="P+3" gate="VCC" pin="VCC"/>
 <junction x="266.7" y="68.58"/>
+</segment>
+<segment>
+<pinref part="C2" gate="G$1" pin="1"/>
+<pinref part="P+4" gate="VCC" pin="VCC"/>
+<junction x="93.98" y="-2.54"/>
 </segment>
 </net>
 <net name="RS232EQTX" class="0">
@@ -15464,10 +15510,6 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 </nets>
 </sheet>
 </sheets>
-<errors>
-<approved hash="106,1,193.04,-20.32,CANRX,,,,,"/>
-<approved hash="106,1,205.74,-55.88,CANTX,,,,,"/>
-</errors>
 </schematic>
 </drawing>
 <compatibility>

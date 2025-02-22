@@ -13580,7 +13580,7 @@ Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt;
 </classes>
 <parts>
 <part name="VDD1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
-<part name="OS1_10MHZ" library="IQD-Frequency-Products" library_urn="urn:adsk.eagle:library:90" deviceset="OSC-OE" device="-CFPS-72" package3d_urn="urn:adsk.eagle:package:3365/1"/>
+<part name="OS1_16MHZ" library="IQD-Frequency-Products" library_urn="urn:adsk.eagle:library:90" deviceset="OSC-OE" device="-CFPS-72" package3d_urn="urn:adsk.eagle:package:3365/1"/>
 <part name="VDD3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="VSS4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VDD4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
@@ -13695,7 +13695,7 @@ Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt;
 <instance part="VDD1" gate="G$1" x="99.06" y="0" smashed="yes">
 <attribute name="VALUE" x="106.68" y="0" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="OS1_10MHZ" gate="A" x="134.62" y="-27.94" smashed="yes">
+<instance part="OS1_16MHZ" gate="A" x="134.62" y="-27.94" smashed="yes">
 <attribute name="NAME" x="127" y="-19.685" size="1.778" layer="95"/>
 <attribute name="VALUE" x="127" y="-38.1" size="1.778" layer="96"/>
 </instance>
@@ -14092,13 +14092,13 @@ Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt;
 <junction x="38.1" y="40.64"/>
 </segment>
 <segment>
-<pinref part="OS1_10MHZ" gate="A" pin="VDD"/>
+<pinref part="OS1_16MHZ" gate="A" pin="VDD"/>
 <pinref part="VDD3" gate="G$1" pin="VDD"/>
 <junction x="121.92" y="-22.86"/>
 <pinref part="C3" gate="G$1" pin="1"/>
 </segment>
 <segment>
-<pinref part="OS1_10MHZ" gate="A" pin="CON"/>
+<pinref part="OS1_16MHZ" gate="A" pin="CON"/>
 <pinref part="VDD4" gate="G$1" pin="VDD"/>
 <junction x="147.32" y="-22.86"/>
 </segment>
@@ -14219,7 +14219,7 @@ Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt;
 <junction x="38.1" y="38.1"/>
 </segment>
 <segment>
-<pinref part="OS1_10MHZ" gate="A" pin="VSS"/>
+<pinref part="OS1_16MHZ" gate="A" pin="VSS"/>
 <pinref part="VSS4" gate="G$1" pin="VSS"/>
 <junction x="121.92" y="-33.02"/>
 <pinref part="C3" gate="G$1" pin="2"/>
@@ -14437,7 +14437,7 @@ Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt;
 </net>
 <net name="CPU_CLK" class="0">
 <segment>
-<pinref part="OS1_10MHZ" gate="A" pin="OUT"/>
+<pinref part="OS1_16MHZ" gate="A" pin="OUT"/>
 <wire x1="147.32" y1="-27.94" x2="157.48" y2="-27.94" width="0.1524" layer="91"/>
 <label x="149.86" y="-33.02" size="1.778" layer="95"/>
 <junction x="147.32" y="-27.94"/>
