@@ -39835,7 +39835,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[63 + 1], terminal[159 + 1], info[63 + 1];
+  char buf[127 + 1], terminal[159 + 1], info[63 + 1];
   uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -41905,7 +41905,6 @@ uint16_t format_display_text(const char *data)
   } else {
    H153[0].data[j] = ' ';
   }
-
  }
  return k;
 }
@@ -41978,16 +41977,18 @@ P_CODES s10f1_opcmd(void)
  V.response.mparm = V.response.ack[8];
 
  if (V.response.cmdlen == 0) {
+  snprintf(V.info, 63, " S10F1 CMD Error             ");
   return CODE_ERR;
  }
 
  if (V.response.mcode == 'M' || V.response.mcode == 'm') {
+  snprintf(V.info, 63, " Message Terminal            ");
   return CODE_TS;
  }
 
  if (V.response.mcode == 'C' || V.response.mcode == 'c') {
   parse_ll();
-
+  snprintf(V.info, 63, " Cassette Ready              ");
   switch (V.e_types) {
   case GEM_VII80:
    H33[0].data[18] = '1';
@@ -42006,7 +42007,7 @@ P_CODES s10f1_opcmd(void)
 
  if (V.response.mcode == 'R' || V.response.mcode == 'r') {
   parse_ll();
-
+  snprintf(V.info, 63, " Ready Door                ");
   switch (V.e_types) {
   case GEM_VII80:
    H33[0].data[18] = '1';
@@ -42025,7 +42026,7 @@ P_CODES s10f1_opcmd(void)
 
  if (V.response.mcode == 'P' || V.response.mcode == 'p') {
   parse_ll();
-
+  snprintf(V.info, 63, " Pump                      ");
   switch (V.e_types) {
   case GEM_VII80:
    H33[0].data[18] = '1';
@@ -42044,7 +42045,7 @@ P_CODES s10f1_opcmd(void)
 
  if (V.response.mcode == 'O' || V.response.mcode == 'o') {
   parse_ll();
-
+  snprintf(V.info, 63, " Open                      ");
   switch (V.e_types) {
   case GEM_VII80:
    H33[0].data[18] = '1';
@@ -42072,6 +42073,7 @@ P_CODES s10f1_opcmd(void)
  }
 
  if (V.response.mcode == 'S' || V.response.mcode == 's') {
+  snprintf(V.info, 63, " Sequence                ");
   switch (V.e_types) {
   case GEM_VII80:
    break;

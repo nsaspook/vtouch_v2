@@ -99,7 +99,7 @@ extern "C" {
 #define V_OSCREEN	93
 #define V_SSCREEN	94
 #define E_OSCREEN	81
-#define E_OSCREEN	81
+#define E_SSCREEN	81
 
 #define S10F3_STR_POS	135
 #define S10F3_TID_POS	138
@@ -113,7 +113,7 @@ extern "C" {
 #define MAX_HELP_STRLEN	32
 
 #define MAX_INFO	63
-#define MAX_BUF		63
+#define MAX_BUF		127
 #define MAX_TERM	159
 #define MAX_VTERM	4
 #define MAX_LCD_LINES	4

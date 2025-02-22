@@ -40875,7 +40875,7 @@ void SystemArbiter_Initialize(void);
   LINK_STATES m_l_state;
   LINK_STATES r_l_state;
   LINK_STATES t_l_state;
-  char buf[63 + 1], terminal[159 + 1], info[63 + 1];
+  char buf[127 + 1], terminal[159 + 1], info[63 + 1];
   uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
@@ -41214,7 +41214,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 20 2025", *build_time = "12:01:07";
+const char *build_date = "Feb 21 2025", *build_time = "18:43:48";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41913,6 +41913,7 @@ void main(void)
    V.s_state = SEQ_STATE_INIT;
    srand(1957);
    set_vterm(V.vterm);
+   snprintf(V.info, 63, " Terminal Info               ");
    snprintf(get_vterm_ptr(0, 0), 20 +1, " RVI HOST TESTER %u   ", V.uart_speed_fast & 0x01);
    snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s           ", "2.15G");
    snprintf(get_vterm_ptr(2, 0), 20 +1, " NSASPOOK             ");
@@ -42101,7 +42102,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
     else
      snprintf(get_vterm_ptr(2, 0), 20 +1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1100 "main.c"
+# 1101 "main.c"
     break;
    case SEQ_STATE_RX:
 
@@ -42194,7 +42195,7 @@ void main(void)
     snprintf(get_vterm_ptr(3, 1), 20 +1, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
     snprintf(get_vterm_ptr(0, 2), 20 +1, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
     snprintf(get_vterm_ptr(1, 2), 20 +1, "RX CKSUM 0X%04X                        ", V.r_checksum);
-    snprintf(get_vterm_ptr(2, 2), 20 +1, "TX CKSUM 0X%04X                        ", V.t_checksum);
+    snprintf(get_vterm_ptr(2, 2), 20 +1, "%s                                     ", V.info);
     snprintf(get_vterm_ptr(3, 2), 20 +1, "Hlp %u Dbg %u Rer %u                   ", V.help, V.debug, V.rerror);
 
 

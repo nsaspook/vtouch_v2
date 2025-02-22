@@ -901,6 +901,7 @@ void main(void)
 			V.s_state = SEQ_STATE_INIT;
 			srand(1957);
 			set_vterm(V.vterm); // set to buffer 0
+			snprintf(V.info, MAX_INFO, " Terminal Info               ");
 			snprintf(get_vterm_ptr(0, MAIN_VTERM), MAX_TEXT, " RVI HOST TESTER %u   ", V.uart_speed_fast & 0x01);
 			snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, " Version %s           ", VER);
 			snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, " NSASPOOK             ");
@@ -1189,7 +1190,7 @@ void main(void)
 				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
 				snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
 				snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, "RX CKSUM 0X%04X                        ", V.r_checksum);
-				snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, "TX CKSUM 0X%04X                        ", V.t_checksum);
+				snprintf(get_vterm_ptr(2, DBUG_VTERM), MAX_TEXT, "%s                                     ", V.info);
 				snprintf(get_vterm_ptr(3, DBUG_VTERM), MAX_TEXT, "Hlp %u Dbg %u Rer %u                   ", V.help, V.debug, V.rerror);
 
 				/*

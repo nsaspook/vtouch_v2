@@ -841,7 +841,7 @@ void terminal_format(DISPLAY_TYPES t_format)
 
 /*
  * format S10F3 Terminal Display, Single in H153[0]
- * move string data into a terminal H153 type GME message
+ * move string data into a terminal H153 type GEM message
  */
 uint16_t format_display_text(const char *data)
 {
@@ -864,7 +864,6 @@ uint16_t format_display_text(const char *data)
 		} else {
 			H153[0].data[j] = ' ';
 		}
-
 	}
 	return k;
 }
@@ -937,16 +936,18 @@ P_CODES s10f1_opcmd(void)
 	V.response.mparm = V.response.ack[8]; // second char
 
 	if (V.response.cmdlen == 0) {
+		snprintf(V.info, MAX_INFO, " S10F1 CMD Error             ");
 		return CODE_ERR;
 	}
 
 	if (V.response.mcode == 'M' || V.response.mcode == 'm') {
+		snprintf(V.info, MAX_INFO, " Message Terminal            ");
 		return CODE_TS;
 	}
 
 	if (V.response.mcode == 'C' || V.response.mcode == 'c') { // ready cassette load-lock control
 		parse_ll();
-
+		snprintf(V.info, MAX_INFO, " Cassette Ready              ");
 		switch (V.e_types) {
 		case GEM_VII80:
 			H33[0].data[18] = '1';
@@ -965,7 +966,7 @@ P_CODES s10f1_opcmd(void)
 
 	if (V.response.mcode == 'R' || V.response.mcode == 'r') { // close door load-lock control
 		parse_ll();
-
+		snprintf(V.info, MAX_INFO, " Ready Door                ");
 		switch (V.e_types) {
 		case GEM_VII80:
 			H33[0].data[18] = '1';
@@ -984,7 +985,7 @@ P_CODES s10f1_opcmd(void)
 
 	if (V.response.mcode == 'P' || V.response.mcode == 'p') { // close door, rough and hivac load-lock control
 		parse_ll();
-
+		snprintf(V.info, MAX_INFO, " Pump                      ");
 		switch (V.e_types) {
 		case GEM_VII80:
 			H33[0].data[18] = '1';
@@ -1003,7 +1004,7 @@ P_CODES s10f1_opcmd(void)
 
 	if (V.response.mcode == 'O' || V.response.mcode == 'o') { // vent & open load-lock control
 		parse_ll();
-
+		snprintf(V.info, MAX_INFO, " Open                      ");
 		switch (V.e_types) {
 		case GEM_VII80:
 			H33[0].data[18] = '1';
@@ -1031,6 +1032,7 @@ P_CODES s10f1_opcmd(void)
 	}
 
 	if (V.response.mcode == 'S' || V.response.mcode == 's') {
+		snprintf(V.info, MAX_INFO, " Sequence                ");
 		switch (V.e_types) {
 		case GEM_VII80:
 			break;
