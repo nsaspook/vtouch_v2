@@ -20,7 +20,7 @@ extern "C" {
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.15G"
+#define VER	"2.16G"
 	/*
 	 * 1.13G wafer load-lock control
 	 * 1.15 add specific equipment types V.e_types
@@ -41,6 +41,7 @@ extern "C" {
 	 * 2.13 clear up display errors and make this a GAMMA software release version
 	 * 2.14 add 19200 or 9600 speed switching with reboot
 	 * 2.15 fix USART speed switching bugs
+     * 2.16 switch to 16MHz external clock chip for 64MHz FOSC because CAN is not being used
 	 */
 
 

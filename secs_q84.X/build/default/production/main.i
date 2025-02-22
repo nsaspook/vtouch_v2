@@ -40702,7 +40702,7 @@ void SystemArbiter_Initialize(void);
  void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
  void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
 # 20 "./vconfig.h" 2
-# 143 "./vconfig.h"
+# 144 "./vconfig.h"
  struct spi_link_type_o {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -41214,7 +41214,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 22 2025", *build_time = "12:08:41";
+const char *build_date = "Feb 22 2025", *build_time = "14:45:20";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41896,19 +41896,19 @@ void main(void)
    set_vterm(V.vterm);
    snprintf(V.info, 63, " Terminal Info               ");
    snprintf(get_vterm_ptr(0, 0), 20 +1, " RVI HOST TESTER %u   ", V.uart_speed_fast & 0x01);
-   snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s           ", "2.15G");
+   snprintf(get_vterm_ptr(1, 0), 20 +1, " Version %s           ", "2.16G");
    snprintf(get_vterm_ptr(2, 0), 20 +1, " NSASPOOK             ");
    snprintf(get_vterm_ptr(3, 0), 20 +1, " %s                   ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 1), 20 +1, " INFO                 ");
-   snprintf(get_vterm_ptr(1, 1), 20 +1, " Version %s           ", "2.15G");
+   snprintf(get_vterm_ptr(1, 1), 20 +1, " Version %s           ", "2.16G");
    snprintf(get_vterm_ptr(2, 1), 20 +1, " VTERM INFO           ");
    snprintf(get_vterm_ptr(3, 1), 20 +1, " %s                   ", (char *) build_date);
-   snprintf(get_vterm_ptr(0, 3), 20 +1, " HELP Build %s        ", "2.15G");
-   snprintf(get_vterm_ptr(1, 3), 20 +1, " Version %s           ", "2.15G");
+   snprintf(get_vterm_ptr(0, 3), 20 +1, " HELP Build %s        ", "2.16G");
+   snprintf(get_vterm_ptr(1, 3), 20 +1, " Version %s           ", "2.16G");
    snprintf(get_vterm_ptr(2, 3), 20 +1, " VTERM HELP           ");
    snprintf(get_vterm_ptr(3, 3), 20 +1, " %s                   ", (char *) build_date);
    snprintf(get_vterm_ptr(0, 2), 20 +1, " DEBUG                ");
-   snprintf(get_vterm_ptr(1, 2), 20 +1, " Version %s           ", "2.15G");
+   snprintf(get_vterm_ptr(1, 2), 20 +1, " Version %s           ", "2.16G");
    snprintf(get_vterm_ptr(2, 2), 20 +1, " VTERM DEBUG          ");
    snprintf(get_vterm_ptr(3, 2), 20 +1, " %s                   ", (char *) build_date);
    refresh_lcd();

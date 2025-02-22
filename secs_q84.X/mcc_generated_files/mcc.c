@@ -45,10 +45,7 @@
  */
 
 #include "mcc.h"
-#define UART_SPEED_EADR	0x00FF // offset from 0x380000
 
-extern void UART1_Initialize19200(void);
-extern void UART2_Initialize19200(void);
 
 void SYSTEM_Initialize(void)
 {
@@ -70,16 +67,20 @@ void SYSTEM_Initialize(void)
 
 void OSCILLATOR_Initialize(void)
 {
-	// NOSC HFINTOSC; NDIV 1; 
-	OSCCON1 = 0x60;
+    // NOSC EXTOSC   with 4x PLL; NDIV 1; 
+    OSCCON1 = 0x20;
 	// CSWHOLD may proceed; SOSCPWR Low power; 
 	OSCCON3 = 0x00;
-	// MFOEN disabled; LFOEN disabled; ADOEN disabled; PLLEN disabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
-	OSCEN = 0x00;
+    // MFOEN disabled; LFOEN disabled; ADOEN disabled; PLLEN enabled; SOSCEN disabled; EXTOEN disabled; HFOEN disabled; 
+    OSCEN = 0x01;
 	// HFFRQ 64_MHz; 
 	OSCFRQ = 0x08;
 	// TUN 0; 
 	OSCTUNE = 0x00;
+    // Wait for PLL to stabilize
+    while(PLLR == 0)
+    {
+}
 }
 
 void PMD_Initialize(void)
@@ -103,6 +104,7 @@ void PMD_Initialize(void)
 	// DMA5MD DMA5 enabled; DMA6MD DMA6 enabled; DMA8MD DMA8 enabled; DMA7MD DMA7 enabled; DMA1MD DMA1 enabled; DMA2MD DMA2 enabled; DMA3MD DMA3 enabled; DMA4MD DMA4 enabled; 
 	PMD8 = 0x00;
 }
+
 
 void SystemArbiter_Initialize(void)
 {

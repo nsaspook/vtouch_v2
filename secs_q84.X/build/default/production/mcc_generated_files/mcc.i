@@ -40479,9 +40479,6 @@ void SystemArbiter_Initialize(void);
 # 48 "mcc_generated_files/mcc.c" 2
 
 
-extern void UART1_Initialize19200(void);
-extern void UART2_Initialize19200(void);
-
 void SYSTEM_Initialize(void)
 {
  INTERRUPT_Initialize();
@@ -40503,15 +40500,19 @@ void SYSTEM_Initialize(void)
 void OSCILLATOR_Initialize(void)
 {
 
- OSCCON1 = 0x60;
+    OSCCON1 = 0x20;
 
  OSCCON3 = 0x00;
 
- OSCEN = 0x00;
+    OSCEN = 0x01;
 
  OSCFRQ = 0x08;
 
  OSCTUNE = 0x00;
+
+    while(PLLR == 0)
+    {
+}
 }
 
 void PMD_Initialize(void)
@@ -40535,6 +40536,7 @@ void PMD_Initialize(void)
 
  PMD8 = 0x00;
 }
+
 
 void SystemArbiter_Initialize(void)
 {
