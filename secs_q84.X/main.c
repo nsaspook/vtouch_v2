@@ -10,8 +10,8 @@
 // PIC18F47Q84 Configuration Bit Settings
 // 'C' source line config statements
 // CONFIG1
-//#pragma config FEXTOSC = ECH    // External Oscillator Selection (EC (external clock) above 8 MHz)
-//#pragma config RSTOSC = EXTOSC_4PLL// Reset Oscillator Selection (EXTOSC with 4x PLL, with EXTOSC operating per FEXTOSC bits)
+#pragma config FEXTOSC = ECH    // External Oscillator Selection (EC (external clock) above 8 MHz)
+#pragma config RSTOSC = EXTOSC_4PLL// Reset Oscillator Selection (EXTOSC with 4x PLL, with EXTOSC operating per FEXTOSC bits)
 
 // CONFIG2
 #pragma config CLKOUTEN = ON    // Clock out Enable bit (CLKOUT function is enabled)
@@ -1151,7 +1151,6 @@ void main(void)
 				snprintf(get_vterm_ptr(1, MAIN_VTERM), MAX_TEXT, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA1);
-				//				WaitMs(1);
 				while (!ADC_IsConversionDone()) {
 				};
 				if (ADC_IsConversionDone()) {
@@ -1159,7 +1158,6 @@ void main(void)
 				};
 				ADC_DischargeSampleCapacitor();
 				ADC_StartConversion(channel_ANA2);
-				//				WaitMs(1);
 				while (!ADC_IsConversionDone()) {
 				};
 				if (ADC_IsConversionDone()) {

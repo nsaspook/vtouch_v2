@@ -7,7 +7,11 @@
 # 1 "/opt/microchip/xc8/v3.00/pic/include/language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "main.c" 2
-# 17 "main.c"
+# 13 "main.c"
+#pragma config FEXTOSC = ECH
+#pragma config RSTOSC = EXTOSC_4PLL
+
+
 #pragma config CLKOUTEN = ON
 #pragma config PR1WAY = OFF
 #pragma config CSWEN = ON
@@ -41214,7 +41218,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 22 2025", *build_time = "17:20:17";
+const char *build_date = "Feb 22 2025", *build_time = "18:27:32";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -42156,7 +42160,6 @@ void main(void)
     snprintf(get_vterm_ptr(1, 0), 20 +1, "R%d %d T%d %d C%d S%d       #", V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.stack);
     ADC_DischargeSampleCapacitor();
     ADC_StartConversion(channel_ANA1);
-
     while (!ADC_IsConversionDone()) {
     };
     if (ADC_IsConversionDone()) {
@@ -42164,7 +42167,6 @@ void main(void)
     };
     ADC_DischargeSampleCapacitor();
     ADC_StartConversion(channel_ANA2);
-
     while (!ADC_IsConversionDone()) {
     };
     if (ADC_IsConversionDone()) {

@@ -333,7 +333,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		UART1_Write(EOT);
 		V.tx_total++;
 #ifdef	FAKER
-		UART2_Write(ENQ);
+		UART2_Write(EOT);
 		V.tx_total++;
 #endif
 		StartTimer(TMR_T2, T2);
@@ -456,7 +456,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		UART1_Write(NAK);
 		V.tx_total++;
 #ifdef FAKER
-		UART2_Write(ACK);
+		UART2_Write(NAK);
 		V.tx_total++;
 #endif
 		*r_link = LINK_STATE_ERROR;

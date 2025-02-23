@@ -270,7 +270,11 @@ Version 4.0 HI-TECH Software Intermediate Code
 "54 /opt/microchip/xc8/v3.00/pic/include/c99/string.h
 [; ;/opt/microchip/xc8/v3.00/pic/include/c99/string.h: 54: size_t strlen (const char *);
 [v _strlen `(ui ~T0 @X0 0 ef1`*Cuc ]
-"17 main.c
+"13 main.c
+[p x FEXTOSC  =  ECH     ]
+"14
+[p x RSTOSC  =  EXTOSC_4PLL ]
+"17
 [p x CLKOUTEN  =  ON     ]
 "18
 [p x PR1WAY  =  OFF      ]
@@ -4742,7 +4746,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> -U -> 2048 `i `s
 ]
 "185 main.c
-[; ;main.c: 185: const char *build_date = "Feb 22 2025", *build_time = "17:20:17";
+[; ;main.c: 185: const char *build_date = "Feb 22 2025", *build_time = "18:27:32";
 [v _build_date `*Cuc ~T0 @X0 1 e ]
 [i _build_date
 :s 1C
@@ -7320,314 +7324,314 @@ Version 4.0 HI-TECH Software Intermediate Code
 "1153
 [; ;main.c: 1153:     ADC_StartConversion(channel_ANA1);
 [e ( _ADC_StartConversion (1 . `E23769 0 ]
-"1155
-[; ;main.c: 1155:     while (!ADC_IsConversionDone()) {
+"1154
+[; ;main.c: 1154:     while (!ADC_IsConversionDone()) {
 [e $U 3476  ]
 [e :U 3477 ]
 {
-"1156
-[; ;main.c: 1156:     };
+"1155
+[; ;main.c: 1155:     };
 }
 [e :U 3476 ]
-"1155
-[; ;main.c: 1155:     while (!ADC_IsConversionDone()) {
+"1154
+[; ;main.c: 1154:     while (!ADC_IsConversionDone()) {
 [e $ ! != -> ( _ADC_IsConversionDone ..  `i -> 0 `i 3477  ]
 [e :U 3478 ]
-"1157
-[; ;main.c: 1157:     if (ADC_IsConversionDone()) {
+"1156
+[; ;main.c: 1156:     if (ADC_IsConversionDone()) {
 [e $ ! != -> ( _ADC_IsConversionDone ..  `i -> 0 `i 3479  ]
 {
-"1158
-[; ;main.c: 1158:      V.v_tx_line = ADC_GetConversionResult();
+"1157
+[; ;main.c: 1157:      V.v_tx_line = ADC_GetConversionResult();
 [e = . _V 60 ( _ADC_GetConversionResult ..  ]
-"1159
-[; ;main.c: 1159:     };
+"1158
+[; ;main.c: 1158:     };
 }
 [e :U 3479 ]
-"1160
-[; ;main.c: 1160:     ADC_DischargeSampleCapacitor();
+"1159
+[; ;main.c: 1159:     ADC_DischargeSampleCapacitor();
 [e ( _ADC_DischargeSampleCapacitor ..  ]
-"1161
-[; ;main.c: 1161:     ADC_StartConversion(channel_ANA2);
+"1160
+[; ;main.c: 1160:     ADC_StartConversion(channel_ANA2);
 [e ( _ADC_StartConversion (1 . `E23769 1 ]
-"1163
-[; ;main.c: 1163:     while (!ADC_IsConversionDone()) {
+"1161
+[; ;main.c: 1161:     while (!ADC_IsConversionDone()) {
 [e $U 3480  ]
 [e :U 3481 ]
 {
-"1164
-[; ;main.c: 1164:     };
+"1162
+[; ;main.c: 1162:     };
 }
 [e :U 3480 ]
-"1163
-[; ;main.c: 1163:     while (!ADC_IsConversionDone()) {
+"1161
+[; ;main.c: 1161:     while (!ADC_IsConversionDone()) {
 [e $ ! != -> ( _ADC_IsConversionDone ..  `i -> 0 `i 3481  ]
 [e :U 3482 ]
-"1165
-[; ;main.c: 1165:     if (ADC_IsConversionDone()) {
+"1163
+[; ;main.c: 1163:     if (ADC_IsConversionDone()) {
 [e $ ! != -> ( _ADC_IsConversionDone ..  `i -> 0 `i 3483  ]
 {
-"1166
-[; ;main.c: 1166:      V.v_rx_line = ADC_GetConversionResult();
+"1164
+[; ;main.c: 1164:      V.v_rx_line = ADC_GetConversionResult();
 [e = . _V 61 ( _ADC_GetConversionResult ..  ]
-"1167
-[; ;main.c: 1167:     };
+"1165
+[; ;main.c: 1165:     };
 }
 [e :U 3483 ]
-"1169
-[; ;main.c: 1169:     update_rs232_line_status();
+"1167
+[; ;main.c: 1167:     update_rs232_line_status();
 [e ( _update_rs232_line_status ..  ]
-"1171
-[; ;main.c: 1171:     StartTimer(TMR_DISPLAY, 100);
+"1169
+[; ;main.c: 1169:     StartTimer(TMR_DISPLAY, 100);
 [e ( _StartTimer (2 , -> . `E24557 10 `uc -> -> 100 `i `us ]
-"1172
-[; ;main.c: 1172:     if (V.vterm_switch++ > (70)) {
+"1170
+[; ;main.c: 1170:     if (V.vterm_switch++ > (70)) {
 [e $ ! > -> ++ . _V 56 -> -> 1 `i `uc `i -> 70 `i 3484  ]
 {
-"1173
-[; ;main.c: 1173:      set_vterm(switcher);
+"1171
+[; ;main.c: 1171:      set_vterm(switcher);
 [e ( _set_vterm (1 F24802 ]
-"1174
-[; ;main.c: 1174:      if (V.vterm_switch > (70 + V.ticker + 32)) {
+"1172
+[; ;main.c: 1172:      if (V.vterm_switch > (70 + V.ticker + 32)) {
 [e $ ! > -> . _V 56 `i + + -> 70 `i -> . _V 58 `i -> 32 `i 3485  ]
 {
-"1175
-[; ;main.c: 1175:       switcher++;
+"1173
+[; ;main.c: 1173:       switcher++;
 [e ++ F24802 -> -> 1 `i `uc ]
-"1176
-[; ;main.c: 1176:       if ((switcher & 0x03) == 3) {
+"1174
+[; ;main.c: 1174:       if ((switcher & 0x03) == 3) {
 [e $ ! == & -> F24802 `i -> 3 `i -> 3 `i 3486  ]
 {
-"1177
-[; ;main.c: 1177:        switcher = 1;
+"1175
+[; ;main.c: 1175:        switcher = 1;
 [e = F24802 -> -> 1 `i `uc ]
-"1178
-[; ;main.c: 1178:       }
+"1176
+[; ;main.c: 1176:       }
 }
 [e :U 3486 ]
-"1179
-[; ;main.c: 1179:       V.vterm_switch = 0;
+"1177
+[; ;main.c: 1177:       V.vterm_switch = 0;
 [e = . _V 56 -> -> 0 `i `uc ]
-"1180
-[; ;main.c: 1180:      }
+"1178
+[; ;main.c: 1178:      }
 }
 [e :U 3485 ]
-"1181
-[; ;main.c: 1181:     } else {
+"1179
+[; ;main.c: 1179:     } else {
 }
 [e $U 3487  ]
 [e :U 3484 ]
 {
-"1182
-[; ;main.c: 1182:      set_vterm(V.vterm);
+"1180
+[; ;main.c: 1180:      set_vterm(V.vterm);
 [e ( _set_vterm (1 . _V 55 ]
-"1183
-[; ;main.c: 1183:     }
+"1181
+[; ;main.c: 1181:     }
 }
 [e :U 3487 ]
-"1187
-[; ;main.c: 1187:     snprintf(get_vterm_ptr(0, 1), 20 +1, "I RS %3dV:%c %3dV:%c                   ", V.rx_volts, V.rx_rs232, V.tx_volts, V.tx_rs232);
+"1185
+[; ;main.c: 1185:     snprintf(get_vterm_ptr(0, 1), 20 +1, "I RS %3dV:%c %3dV:%c                   ", V.rx_volts, V.rx_rs232, V.tx_volts, V.tx_rs232);
 [e ( _snprintf (2 , , , , (. , , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 1 `i `uc -> + -> 20 `i -> 1 `i `ui :s 59C -> . _V 63 `i -> . _V 65 `i -> . _V 62 `i -> . _V 64 `i ]
-"1188
-[; ;main.c: 1188:     snprintf(get_vterm_ptr(1, 1), 20 +1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
+"1186
+[; ;main.c: 1186:     snprintf(get_vterm_ptr(1, 1), 20 +1, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
 [e ( _snprintf (2 , , (. , , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 1 `i `uc -> + -> 20 `i -> 1 `i `ui :s 60C . _V 13 . _V 16 ]
-"1189
-[; ;main.c: 1189:     snprintf(get_vterm_ptr(2, 1), 20 +1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
+"1187
+[; ;main.c: 1187:     snprintf(get_vterm_ptr(2, 1), 20 +1, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
 [e ( _snprintf (2 , , (. , , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 1 `i `uc -> + -> 20 `i -> 1 `i `ui :s 61C . _V 12 . _V 17 ]
-"1190
-[; ;main.c: 1190:     snprintf(get_vterm_ptr(3, 1), 20 +1, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
+"1188
+[; ;main.c: 1188:     snprintf(get_vterm_ptr(3, 1), 20 +1, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
 [e ( _snprintf (2 , , , (. , , ( _get_vterm_ptr (2 , -> -> 3 `i `uc -> -> 1 `i `uc -> + -> 20 `i -> 1 `i `ui :s 62C . _V 10 . _V 14 . _V 15 ]
-"1191
-[; ;main.c: 1191:     snprintf(get_vterm_ptr(0, 2), 20 +1, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
+"1189
+[; ;main.c: 1189:     snprintf(get_vterm_ptr(0, 2), 20 +1, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
 [e ( _snprintf (2 , , , , , , (. , , ( _get_vterm_ptr (2 , -> -> 0 `i `uc -> -> 2 `i `uc -> + -> 20 `i -> 1 `i `ui :s 63C -> . _V 19 `i -> . _V 20 `i . _V 11 -> . _V 36 `i -> . _V 37 `i -> . _V 38 `i ]
-"1192
-[; ;main.c: 1192:     snprintf(get_vterm_ptr(1, 2), 20 +1, "RX CKSUM 0X%04X                        ", V.r_checksum);
+"1190
+[; ;main.c: 1190:     snprintf(get_vterm_ptr(1, 2), 20 +1, "RX CKSUM 0X%04X                        ", V.r_checksum);
 [e ( _snprintf (2 , (. , , ( _get_vterm_ptr (2 , -> -> 1 `i `uc -> -> 2 `i `uc -> + -> 20 `i -> 1 `i `ui :s 64C -> . _V 27 `ui ]
-"1193
-[; ;main.c: 1193:     snprintf(get_vterm_ptr(2, 2), 20 +1, "%s                                     ", V.info);
+"1191
+[; ;main.c: 1191:     snprintf(get_vterm_ptr(2, 2), 20 +1, "%s                                     ", V.info);
 [e ( _snprintf (2 , (. , , ( _get_vterm_ptr (2 , -> -> 2 `i `uc -> -> 2 `i `uc -> + -> 20 `i -> 1 `i `ui :s 65C &U . _V 9 ]
-"1194
-[; ;main.c: 1194:     snprintf(get_vterm_ptr(3, 2), 20 +1, "Hlp %u Dbg %u Rer %u                   ", V.help, V.debug, V.rerror);
+"1192
+[; ;main.c: 1192:     snprintf(get_vterm_ptr(3, 2), 20 +1, "Hlp %u Dbg %u Rer %u                   ", V.help, V.debug, V.rerror);
 [e ( _snprintf (2 , , , (. , , ( _get_vterm_ptr (2 , -> -> 3 `i `uc -> -> 2 `i `uc -> + -> 20 `i -> 1 `i `ui :s 66C -> . _V 44 `i -> . _V 43 `i -> . _V 47 `i ]
-"1199
-[; ;main.c: 1199:     if (!V.set_sequ) {
+"1197
+[; ;main.c: 1197:     if (!V.set_sequ) {
 [e $ ! ! != -> . _V 39 `i -> 0 `i 3488  ]
 {
-"1200
-[; ;main.c: 1200:      refresh_lcd();
+"1198
+[; ;main.c: 1198:      refresh_lcd();
 [e ( _refresh_lcd ..  ]
-"1205
-[; ;main.c: 1205:     }
+"1203
+[; ;main.c: 1203:     }
 }
 [e :U 3488 ]
-"1206
-[; ;main.c: 1206:    }
+"1204
+[; ;main.c: 1204:    }
 }
 [e :U 3474 ]
-"1207
-[; ;main.c: 1207:   }
+"1205
+[; ;main.c: 1205:   }
 }
 [e :U 3473 ]
-"1212
-[; ;main.c: 1212:   if (V.set_sequ) {
+"1210
+[; ;main.c: 1210:   if (V.set_sequ) {
 [e $ ! != -> . _V 39 `i -> 0 `i 3489  ]
 {
-"1213
-[; ;main.c: 1213:    if (TimerDone(TMR_HELP)) {
+"1211
+[; ;main.c: 1211:    if (TimerDone(TMR_HELP)) {
 [e $ ! != -> ( _TimerDone (1 -> . `E24557 8 `uc `i -> 0 `i 3490  ]
 {
-"1214
-[; ;main.c: 1214:     V.set_sequ = 0;
+"1212
+[; ;main.c: 1212:     V.set_sequ = 0;
 [e = . _V 39 -> -> 0 `i `uc ]
-"1215
-[; ;main.c: 1215:     set_vterm(V.vterm);
+"1213
+[; ;main.c: 1213:     set_vterm(V.vterm);
 [e ( _set_vterm (1 . _V 55 ]
-"1216
-[; ;main.c: 1216:     refresh_lcd();
+"1214
+[; ;main.c: 1214:     refresh_lcd();
 [e ( _refresh_lcd ..  ]
-"1217
-[; ;main.c: 1217:    } else {
+"1215
+[; ;main.c: 1215:    } else {
 }
 [e $U 3491  ]
 [e :U 3490 ]
 {
-"1218
-[; ;main.c: 1218:     set_vterm(3);
+"1216
+[; ;main.c: 1216:     set_vterm(3);
 [e ( _set_vterm (1 -> -> 3 `i `uc ]
-"1219
-[; ;main.c: 1219:     refresh_lcd();
+"1217
+[; ;main.c: 1217:     refresh_lcd();
 [e ( _refresh_lcd ..  ]
-"1220
-[; ;main.c: 1220:    }
+"1218
+[; ;main.c: 1218:    }
 }
 [e :U 3491 ]
-"1221
-[; ;main.c: 1221:   }
+"1219
+[; ;main.c: 1219:   }
 }
 [e :U 3489 ]
-"1223
-[; ;main.c: 1223:   if (V.help && TimerDone(TMR_SEQ)) {
+"1221
+[; ;main.c: 1221:   if (V.help && TimerDone(TMR_SEQ)) {
 [e $ ! && != -> . _V 44 `i -> 0 `i != -> ( _TimerDone (1 -> . `E24557 11 `uc `i -> 0 `i 3492  ]
 {
-"1224
-[; ;main.c: 1224:    StartTimer(TMR_SEQ, 10000);
+"1222
+[; ;main.c: 1222:    StartTimer(TMR_SEQ, 10000);
 [e ( _StartTimer (2 , -> . `E24557 11 `uc -> -> 10000 `i `us ]
-"1225
-[; ;main.c: 1225:    StartTimer(TMR_HELP, 3000);
+"1223
+[; ;main.c: 1223:    StartTimer(TMR_HELP, 3000);
 [e ( _StartTimer (2 , -> . `E24557 8 `uc -> -> 3000 `i `us ]
-"1226
-[; ;main.c: 1226:    V.set_sequ = 1;
+"1224
+[; ;main.c: 1224:    V.set_sequ = 1;
 [e = . _V 39 -> -> 1 `i `uc ]
-"1227
-[; ;main.c: 1227:    check_help(0);
+"1225
+[; ;main.c: 1225:    check_help(0);
 [e ( _check_help (1 -> -> 0 `i `a ]
-"1228
-[; ;main.c: 1228:   }
+"1226
+[; ;main.c: 1226:   }
 }
 [e :U 3492 ]
-"1229
-[; ;main.c: 1229:   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
+"1227
+[; ;main.c: 1227:   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
 [e :U 3495 ]
 {
 [e = . . _LATDbits 0 5 -> ~ -> . . _LATDbits 0 5 `i `uc ]
 }
 [e :U 3494 ]
-"1230
-[; ;main.c: 1230:  }
+"1228
+[; ;main.c: 1228:  }
 }
 [e :U 3406 ]
 [e $U 3407  ]
 [e :U 3408 ]
-"1231
-[; ;main.c: 1231: }
+"1229
+[; ;main.c: 1229: }
 [e :UE 3377 ]
 }
-"1236
-[; ;main.c: 1236: void onesec_io(void)
+"1234
+[; ;main.c: 1234: void onesec_io(void)
 [v _onesec_io `(v ~T0 @X0 1 ef ]
-"1237
-[; ;main.c: 1237: {
+"1235
+[; ;main.c: 1235: {
 {
 [e :U _onesec_io ]
 [f ]
-"1238
-[; ;main.c: 1238:  do { LATBbits.LATB2 = ~LATBbits.LATB2; } while(0);
+"1236
+[; ;main.c: 1236:  do { LATBbits.LATB2 = ~LATBbits.LATB2; } while(0);
 [e :U 3499 ]
 {
 [e = . . _LATBbits 0 2 -> ~ -> . . _LATBbits 0 2 `i `uc ]
 }
 [e :U 3498 ]
-"1239
-[; ;main.c: 1239:  do { LATBbits.LATB1 = 0; } while(0);
+"1237
+[; ;main.c: 1237:  do { LATBbits.LATB1 = 0; } while(0);
 [e :U 3502 ]
 {
 [e = . . _LATBbits 0 1 -> -> 0 `i `uc ]
 }
 [e :U 3501 ]
-"1240
-[; ;main.c: 1240:  do { LATBbits.LATB3 = 0; } while(0);
+"1238
+[; ;main.c: 1238:  do { LATBbits.LATB3 = 0; } while(0);
 [e :U 3505 ]
 {
 [e = . . _LATBbits 0 3 -> -> 0 `i `uc ]
 }
 [e :U 3504 ]
-"1241
-[; ;main.c: 1241:  B.one_sec_flag = 1;
+"1239
+[; ;main.c: 1239:  B.one_sec_flag = 1;
 [e = . _B 0 -> -> 1 `i `a ]
-"1242
-[; ;main.c: 1242: }
+"1240
+[; ;main.c: 1240: }
 [e :UE 3496 ]
 }
-"1245
-[; ;main.c: 1245: char spinners(uint8_t shape, const uint8_t reset)
+"1243
+[; ;main.c: 1243: char spinners(uint8_t shape, const uint8_t reset)
 [v _spinners `(uc ~T0 @X0 1 ef2`uc`Cuc ]
-"1246
-[; ;main.c: 1246: {
+"1244
+[; ;main.c: 1244: {
 {
 [e :U _spinners ]
-"1245
-[; ;main.c: 1245: char spinners(uint8_t shape, const uint8_t reset)
+"1243
+[; ;main.c: 1243: char spinners(uint8_t shape, const uint8_t reset)
 [v _shape `uc ~T0 @X0 1 r1 ]
 [v _reset `Cuc ~T0 @X0 1 r2 ]
-"1246
-[; ;main.c: 1246: {
+"1244
+[; ;main.c: 1244: {
 [f ]
-"1247
-[; ;main.c: 1247:  static uint8_t s[6];
+"1245
+[; ;main.c: 1245:  static uint8_t s[6];
 [v F24807 `uc ~T0 @X0 -> 6 `i s s ]
-"1248
-[; ;main.c: 1248:  char c;
+"1246
+[; ;main.c: 1246:  char c;
 [v _c `uc ~T0 @X0 1 a ]
-"1250
-[; ;main.c: 1250:  if (shape > (6 - 1))
+"1248
+[; ;main.c: 1248:  if (shape > (6 - 1))
 [e $ ! > -> _shape `i - -> 6 `i -> 1 `i 3507  ]
-"1251
-[; ;main.c: 1251:   shape = 0;
+"1249
+[; ;main.c: 1249:   shape = 0;
 [e = _shape -> -> 0 `i `uc ]
 [e :U 3507 ]
-"1252
-[; ;main.c: 1252:  if (reset)
+"1250
+[; ;main.c: 1250:  if (reset)
 [e $ ! != -> _reset `i -> 0 `i 3508  ]
-"1253
-[; ;main.c: 1253:   s[shape] = 0;
+"1251
+[; ;main.c: 1251:   s[shape] = 0;
 [e = *U + &U F24807 * -> _shape `ux -> -> # *U &U F24807 `ui `ux -> -> 0 `i `uc ]
 [e :U 3508 ]
-"1254
-[; ;main.c: 1254:  c = spin[shape][s[shape]];
+"1252
+[; ;main.c: 1252:  c = spin[shape][s[shape]];
 [e = _c *U + &U *U + &U _spin * -> _shape `ux -> * -> # *U &U *U &U _spin `ui -> -> 20 `i `ui `ux * -> *U + &U F24807 * -> _shape `ux -> -> # *U &U F24807 `ui `ux `ux -> -> # *U &U *U + &U _spin * -> _shape `ux -> * -> # *U &U *U &U _spin `ui -> -> 20 `i `ui `ux `ui `ux ]
-"1255
-[; ;main.c: 1255:  if (++s[shape] >= strlen(spin[shape]))
+"1253
+[; ;main.c: 1253:  if (++s[shape] >= strlen(spin[shape]))
 [e $ ! >= -> =+ *U + &U F24807 * -> _shape `ux -> -> # *U &U F24807 `ui `ux -> -> 1 `i `uc `ui ( _strlen (1 &U *U + &U _spin * -> _shape `ux -> * -> # *U &U *U &U _spin `ui -> -> 20 `i `ui `ux 3509  ]
-"1256
-[; ;main.c: 1256:   s[shape] = 0;
+"1254
+[; ;main.c: 1254:   s[shape] = 0;
 [e = *U + &U F24807 * -> _shape `ux -> -> # *U &U F24807 `ui `ux -> -> 0 `i `uc ]
 [e :U 3509 ]
-"1258
-[; ;main.c: 1258:  return c;
+"1256
+[; ;main.c: 1256:  return c;
 [e ) _c ]
 [e $UE 3506  ]
-"1259
-[; ;main.c: 1259: }
+"1257
+[; ;main.c: 1257: }
 [e :UE 3506 ]
 }
 [p f _snprintf 11306132 ]
@@ -7642,8 +7646,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [a 36C 50 46 49 54 71 0 ]
 [a 5C 79 70 70 76 73 78 69 0 ]
 [a 3C 68 73 83 65 66 76 69 0 ]
-[a 2C 49 55 58 50 48 58 49 55 0 ]
 [a 1C 70 101 98 32 50 50 32 50 48 50 53 0 ]
+[a 2C 49 56 58 50 55 58 51 50 0 ]
 [a 54C 76 79 71 58 32 85 37 100 32 71 37 100 32 37 100 32 37 100 32 32 32 32 32 32 35 0 ]
 [a 57C 76 79 71 58 32 85 37 100 32 71 37 100 32 37 100 32 37 100 32 32 32 32 32 32 35 0 ]
 [a 58C 82 37 100 32 37 100 32 84 37 100 32 37 100 32 67 37 100 32 83 37 100 32 32 32 32 32 32 32 35 0 ]

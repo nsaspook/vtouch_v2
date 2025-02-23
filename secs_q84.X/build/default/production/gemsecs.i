@@ -41381,7 +41381,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x04);
   V.tx_total++;
 
-  UART2_Write(0x05);
+  UART2_Write(0x04);
   V.tx_total++;
 
   StartTimer(TMR_T2, 3000);
@@ -41497,7 +41497,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   UART1_Write(0x15);
   V.tx_total++;
 
-  UART2_Write(0x06);
+  UART2_Write(0x15);
   V.tx_total++;
 
   *r_link = LINK_STATE_ERROR;
