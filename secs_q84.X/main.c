@@ -1183,8 +1183,8 @@ void main(void)
 				 * update info screen data points
 				 */
 				snprintf(get_vterm_ptr(0, INFO_VTERM), MAX_TEXT, "I RS %3dV:%c %3dV:%c                   ", V.rx_volts, V.rx_rs232, V.tx_volts, V.tx_rs232);
-				snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "RX bytes %lu NAK %lu                   ", V.rx_total, V.brn_total);
-				snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, "TX bytes %lu NAK %lu                   ", V.tx_total, V.btn_total);
+				snprintf(get_vterm_ptr(1, INFO_VTERM), MAX_TEXT, "RXB %lu NAK %lu                        ", V.rx_total, V.brn_total);
+				snprintf(get_vterm_ptr(2, INFO_VTERM), MAX_TEXT, "TXB %lu NAK %lu                        ", V.tx_total, V.btn_total);
 				snprintf(get_vterm_ptr(3, INFO_VTERM), MAX_TEXT, "Seq %lu Blks R%lu T%lu                 ", V.ticks, V.bt_total, V.br_total);
 				snprintf(get_vterm_ptr(0, DBUG_VTERM), MAX_TEXT, "D S%uF%u SB%lu %d%d%d                  ", V.stream, V.function, V.systemb, V.rbit, V.wbit, V.ebit);
 				snprintf(get_vterm_ptr(1, DBUG_VTERM), MAX_TEXT, "RX CKSUM 0X%04X                        ", V.r_checksum);
