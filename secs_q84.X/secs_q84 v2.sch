@@ -13998,7 +13998,7 @@ Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt;
 <attribute name="VALUE" x="330.2" y="88.9" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="VSS49" gate="G$1" x="347.98" y="109.22" smashed="yes" rot="R90">
-<attribute name="VALUE" x="355.6" y="111.76" size="1.778" layer="96" rot="R180"/>
+<attribute name="VALUE" x="355.6" y="109.22" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="R18" gate="G$1" x="294.64" y="116.84" smashed="yes">
 <attribute name="NAME" x="290.83" y="118.3386" size="1.778" layer="95"/>
@@ -14022,17 +14022,17 @@ Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt;
 <attribute name="VALUE" x="272.415" y="51.308" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="VSS2" gate="G$1" x="347.98" y="106.68" smashed="yes" rot="R90">
-<attribute name="VALUE" x="355.6" y="109.22" size="1.778" layer="96" rot="R180"/>
+<attribute name="VALUE" x="355.6" y="106.68" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="VSS14" gate="G$1" x="347.98" y="99.06" smashed="yes" rot="R90">
-<attribute name="VALUE" x="355.6" y="101.6" size="1.778" layer="96" rot="R180"/>
+<attribute name="VALUE" x="355.6" y="99.06" size="1.778" layer="96" rot="R180"/>
 </instance>
 <instance part="R1" gate="G$1" x="345.44" y="104.14" smashed="yes">
 <attribute name="NAME" x="341.63" y="105.6386" size="1.778" layer="95"/>
 <attribute name="VALUE" x="341.63" y="100.838" size="1.778" layer="96"/>
 </instance>
 <instance part="VDD8" gate="G$1" x="353.06" y="104.14" smashed="yes" rot="R270">
-<attribute name="VALUE" x="350.52" y="106.68" size="1.778" layer="96"/>
+<attribute name="VALUE" x="353.06" y="101.6" size="1.778" layer="96"/>
 </instance>
 <instance part="SV2" gate="1" x="307.34" y="-17.78" smashed="yes" rot="R180">
 <attribute name="VALUE" x="308.61" y="-5.08" size="1.778" layer="96" rot="R180"/>

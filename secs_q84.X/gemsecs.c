@@ -333,7 +333,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		UART1_Write(EOT);
 		V.tx_total++;
 #ifdef	FAKER
-		UART2_Write(EOT);
+		UART2_Write(ENQ);
 		V.tx_total++;
 #endif
 		StartTimer(TMR_T2, T2);
@@ -456,7 +456,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		UART1_Write(NAK);
 		V.tx_total++;
 #ifdef FAKER
-		UART2_Write(NAK);
+		UART2_Write(ACK);
 		V.tx_total++;
 #endif
 		*r_link = LINK_STATE_ERROR;
@@ -505,7 +505,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		UART1_Write(ENQ);
 		V.tx_total++;
 #ifdef FAKER
-		UART2_Write(ENQ);
+		UART2_Write(ACK);
 		V.tx_total++;
 		V.stream = 1;
 		V.function = 1; // S1F1 host ping

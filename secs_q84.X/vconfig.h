@@ -41,11 +41,11 @@ extern "C" {
 	 * 2.13 clear up display errors and make this a GAMMA software release version
 	 * 2.14 add 19200 or 9600 speed switching with reboot
 	 * 2.15 fix USART speed switching bugs
-     * 2.16 switch to 16MHz external clock chip for 64MHz FOSC because CAN is not being used
+	 * 2.16 switch to 16MHz external clock chip for 64MHz FOSC because CAN is not being used
 	 */
 
 
-//#define FAKER			// emulate equipment protocol
+	#define FAKER			// emulate equipment protocol
 
 	//#define	FRAME_OVERRUN
 

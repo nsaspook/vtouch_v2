@@ -13615,6 +13615,10 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <part name="VDD8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
 <part name="SV2" library="con-lstb" library_urn="urn:adsk.eagle:library:162" deviceset="MA06-1" device="" package3d_urn="urn:adsk.eagle:package:8340/1" value="CANBUS"/>
 <part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device=""/>
+<part name="D1" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="ZENER-DIODE" device="SMB" package3d_urn="urn:adsk.eagle:package:43404/2" value="5.6V"/>
+<part name="D2" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="ZENER-DIODE" device="SMB" package3d_urn="urn:adsk.eagle:package:43404/2" value="5.6V"/>
+<part name="VSS15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="VSS16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13970,6 +13974,20 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <instance part="P+4" gate="VCC" x="93.98" y="0" smashed="yes">
 <attribute name="VALUE" x="91.44" y="-2.54" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="D1" gate="G$1" x="218.44" y="101.6" smashed="yes" rot="R90">
+<attribute name="NAME" x="216.535" y="99.822" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="221.869" y="99.822" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="D2" gate="G$1" x="256.54" y="101.6" smashed="yes" rot="R90">
+<attribute name="NAME" x="254.635" y="99.822" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="259.969" y="99.822" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS15" gate="G$1" x="218.44" y="96.52" smashed="yes">
+<attribute name="VALUE" x="215.9" y="91.44" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="VSS16" gate="G$1" x="256.54" y="96.52" smashed="yes">
+<attribute name="VALUE" x="254" y="91.44" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -14313,6 +14331,16 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <junction x="287.02" y="-10.16"/>
 <label x="289.56" y="-10.16" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="D1" gate="G$1" pin="A"/>
+<pinref part="VSS15" gate="G$1" pin="VSS"/>
+<junction x="218.44" y="99.06"/>
+</segment>
+<segment>
+<pinref part="D2" gate="G$1" pin="A"/>
+<pinref part="VSS16" gate="G$1" pin="VSS"/>
+<junction x="256.54" y="99.06"/>
+</segment>
 </net>
 <net name="CPU_CLK" class="0">
 <segment>
@@ -14519,12 +14547,15 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <wire x1="223.52" y1="104.14" x2="223.52" y2="99.06" width="0.1524" layer="91"/>
 <wire x1="228.6" y1="104.14" x2="223.52" y2="104.14" width="0.1524" layer="91"/>
 <junction x="223.52" y="104.14"/>
-<wire x1="223.52" y1="104.14" x2="215.9" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="223.52" y1="104.14" x2="218.44" y2="104.14" width="0.1524" layer="91"/>
 <junction x="228.6" y="104.14"/>
 <junction x="215.9" y="104.14"/>
 <junction x="223.52" y="99.06"/>
 <junction x="223.52" y="109.22"/>
 <label x="210.82" y="101.6" size="1.778" layer="95"/>
+<pinref part="D1" gate="G$1" pin="C"/>
+<wire x1="218.44" y1="104.14" x2="215.9" y2="104.14" width="0.1524" layer="91"/>
+<junction x="218.44" y="104.14"/>
 </segment>
 </net>
 <net name="AN2" class="0">
@@ -14556,12 +14587,15 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <wire x1="261.62" y1="104.14" x2="261.62" y2="96.52" width="0.1524" layer="91"/>
 <wire x1="266.7" y1="104.14" x2="261.62" y2="104.14" width="0.1524" layer="91"/>
 <junction x="261.62" y="104.14"/>
-<wire x1="261.62" y1="104.14" x2="254" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="261.62" y1="104.14" x2="256.54" y2="104.14" width="0.1524" layer="91"/>
 <junction x="266.7" y="104.14"/>
 <junction x="254" y="104.14"/>
 <junction x="261.62" y="109.22"/>
 <junction x="261.62" y="96.52"/>
 <label x="248.92" y="101.6" size="1.778" layer="95"/>
+<pinref part="D2" gate="G$1" pin="C"/>
+<wire x1="256.54" y1="104.14" x2="254" y2="104.14" width="0.1524" layer="91"/>
+<junction x="256.54" y="104.14"/>
 </segment>
 </net>
 <net name="PC_RX2" class="0">

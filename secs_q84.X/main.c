@@ -841,18 +841,18 @@ void main(void)
 		 * get saved state of serial speed flag
 		 */
 		V.uart_speed_fast = DATAEE_ReadByte(UART_SPEED_EADR);
+		if (V.uart_speed_fast == 0xFF) { // programmer fill number
+			V.uart_speed_fast=0;
+			DATAEE_WriteByte(UART_SPEED_EADR, V.uart_speed_fast); // start at zero
+		}
 		if (V.uart_speed_fast % 2 == 0) {
-			UART2_Initialize();
-			UART1_Initialize();
-		} else {
 			UART2_Initialize19200();
 			UART1_Initialize19200();
-		}
-
-		if (V.uart_speed_fast % 2 == 0) {
-			speed_text = "9600bps";
-		} else {
 			speed_text = "19200bps";
+		} else {
+			UART2_Initialize();
+			UART1_Initialize();
+			speed_text = "9600bps";
 		}
 		/*
 		 * ALternate the speed setting with each restart

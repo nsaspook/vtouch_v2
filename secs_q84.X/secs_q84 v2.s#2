@@ -13504,6 +13504,69 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 </deviceset>
 </devicesets>
 </library>
+<library name="0805L075WR">
+<description>&lt;PTC Resettable Fuse 0.75A(hold) 1.5A(trip) 6VDC 40A 0.6W 0.2s 0.09Ohm SMD Solder Pad 0805 T/R&lt;/b&gt;&lt;p&gt;
+&lt;author&gt;Created by SamacSys&lt;/author&gt;</description>
+<packages>
+<package name="FUSC2114X125N">
+<description>&lt;b&gt;0805L075&lt;/b&gt;&lt;br&gt;
+</description>
+<smd name="1" x="-1" y="0" dx="1.52" dy="0.93" layer="1" rot="R90"/>
+<smd name="2" x="1" y="0" dx="1.52" dy="0.93" layer="1" rot="R90"/>
+<text x="0" y="0" size="1.27" layer="25" align="center">&gt;NAME</text>
+<text x="0" y="0" size="1.27" layer="27" align="center">&gt;VALUE</text>
+<wire x1="-1.715" y1="1.01" x2="1.715" y2="1.01" width="0.05" layer="51"/>
+<wire x1="1.715" y1="1.01" x2="1.715" y2="-1.01" width="0.05" layer="51"/>
+<wire x1="1.715" y1="-1.01" x2="-1.715" y2="-1.01" width="0.05" layer="51"/>
+<wire x1="-1.715" y1="-1.01" x2="-1.715" y2="1.01" width="0.05" layer="51"/>
+<wire x1="-1.05" y1="0.675" x2="1.05" y2="0.675" width="0.1" layer="51"/>
+<wire x1="1.05" y1="0.675" x2="1.05" y2="-0.675" width="0.1" layer="51"/>
+<wire x1="1.05" y1="-0.675" x2="-1.05" y2="-0.675" width="0.1" layer="51"/>
+<wire x1="-1.05" y1="-0.675" x2="-1.05" y2="0.675" width="0.1" layer="51"/>
+<wire x1="0" y1="0.575" x2="0" y2="-0.575" width="0.2" layer="21"/>
+</package>
+</packages>
+<symbols>
+<symbol name="0805L075WR">
+<wire x1="5.08" y1="1.27" x2="12.7" y2="1.27" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-1.27" x2="12.7" y2="1.27" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-1.27" x2="5.08" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="5.08" y1="1.27" x2="5.08" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="5.08" y1="0" x2="12.7" y2="0" width="0.254" layer="94"/>
+<text x="13.97" y="6.35" size="1.778" layer="95" align="center-left">&gt;NAME</text>
+<text x="13.97" y="3.81" size="1.778" layer="96" align="center-left">&gt;VALUE</text>
+<pin name="1" x="0" y="0" visible="pad" length="middle"/>
+<pin name="2" x="17.78" y="0" visible="pad" length="middle" rot="R180"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="0805L075WR" prefix="F">
+<description>&lt;b&gt;PTC Resettable Fuse 0.75A(hold) 1.5A(trip) 6VDC 40A 0.6W 0.2s 0.09Ohm SMD Solder Pad 0805 T/R&lt;/b&gt;&lt;p&gt;
+Source: &lt;a href="https://www.arrow.com/en/products/0805l075wr/littelfuse"&gt; Datasheet &lt;/a&gt;</description>
+<gates>
+<gate name="G$1" symbol="0805L075WR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="FUSC2114X125N">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DESCRIPTION" value="PTC Resettable Fuse 0.75A(hold) 1.5A(trip) 6VDC 40A 0.6W 0.2s 0.09Ohm SMD Solder Pad 0805 T/R" constant="no"/>
+<attribute name="HEIGHT" value="1.25mm" constant="no"/>
+<attribute name="MANUFACTURER_NAME" value="LITTELFUSE" constant="no"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="0805L075WR" constant="no"/>
+<attribute name="MOUSER_PART_NUMBER" value="576-0805L075WR" constant="no"/>
+<attribute name="MOUSER_PRICE-STOCK" value="https://www.mouser.co.uk/ProductDetail/Littelfuse/0805L075WR?qs=gOdenYySUw5wkBcmg2CY4A%3D%3D" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -13619,6 +13682,10 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <part name="D2" library="diode" library_urn="urn:adsk.eagle:library:210" deviceset="ZENER-DIODE" device="SMB" package3d_urn="urn:adsk.eagle:package:43404/2" value="5.6V"/>
 <part name="VSS15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
 <part name="VSS16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="GLORY" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X2" device="" package3d_urn="urn:adsk.eagle:package:22435/2" value="GLORY"/>
+<part name="VSS17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VSS" device=""/>
+<part name="VDD10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VDD" device=""/>
+<part name="F1" library="0805L075WR" deviceset="0805L075WR" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13988,6 +14055,20 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <instance part="VSS16" gate="G$1" x="256.54" y="96.52" smashed="yes">
 <attribute name="VALUE" x="254" y="91.44" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="GLORY" gate="G$1" x="83.82" y="88.9" smashed="yes" rot="R180">
+<attribute name="NAME" x="90.17" y="83.185" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="80.01" y="88.9" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="VSS17" gate="G$1" x="101.6" y="83.82" smashed="yes">
+<attribute name="VALUE" x="104.14" y="81.28" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="VDD10" gate="G$1" x="111.76" y="91.44" smashed="yes">
+<attribute name="VALUE" x="114.3" y="96.52" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="F1" gate="G$1" x="93.98" y="88.9" smashed="yes">
+<attribute name="NAME" x="90.17" y="95.25" size="1.778" layer="95" align="center-left"/>
+<attribute name="VALUE" x="95.25" y="95.25" size="1.778" layer="96" align="center-left"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -14117,6 +14198,11 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <junction x="299.72" y="-20.32"/>
 <junction x="287.02" y="-20.32"/>
 <label x="289.56" y="-20.32" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="F1" gate="G$1" pin="2"/>
+<pinref part="VDD10" gate="G$1" pin="VDD"/>
+<junction x="111.76" y="88.9"/>
 </segment>
 </net>
 <net name="VSS" class="1">
@@ -14340,6 +14426,13 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <pinref part="D2" gate="G$1" pin="A"/>
 <pinref part="VSS16" gate="G$1" pin="VSS"/>
 <junction x="256.54" y="99.06"/>
+</segment>
+<segment>
+<pinref part="GLORY" gate="G$1" pin="1"/>
+<wire x1="86.36" y1="86.36" x2="101.6" y2="86.36" width="0.1524" layer="91"/>
+<pinref part="VSS17" gate="G$1" pin="VSS"/>
+<junction x="86.36" y="86.36"/>
+<junction x="101.6" y="86.36"/>
 </segment>
 </net>
 <net name="CPU_CLK" class="0">
@@ -15539,6 +15632,16 @@ Source: &lt;a href="https://www.te.com/commerce/DocumentDelivery/DDEController?A
 <wire x1="340.36" y1="101.6" x2="340.36" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="1"/>
 <junction x="340.36" y="104.14"/>
+</segment>
+</net>
+<net name="POWERIN" class="1">
+<segment>
+<pinref part="GLORY" gate="G$1" pin="2"/>
+<pinref part="F1" gate="G$1" pin="1"/>
+<wire x1="86.36" y1="88.9" x2="93.98" y2="88.9" width="0.1524" layer="91"/>
+<junction x="93.98" y="88.9"/>
+<junction x="86.36" y="88.9"/>
+<label x="76.2" y="93.98" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
