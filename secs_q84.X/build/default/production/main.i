@@ -41218,7 +41218,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 23 2025", *build_time = "09:00:47";
+const char *build_date = "Feb 24 2025", *build_time = "11:35:44";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41515,26 +41515,7 @@ header26 H26[] = {
   .datam[0] = 14,
  },
 };
-
-
-
-header27 H27[] = {
- {
-  .length = 27,
-  .block.block.rbit = 1,
-  .block.block.didh = 0,
-  .block.block.didl = 0,
-  .block.block.wbit = 1,
-  .block.block.stream = 1,
-  .block.block.function = 13,
-  .block.block.ebit = 1,
-  .block.block.bidh = 0,
-  .block.block.bidl = 1,
-  .block.block.systemb = 1,
- },
-};
-
-
+# 522 "main.c"
 header33 H33[] = {
  {
   .length = 33,
@@ -41893,8 +41874,8 @@ void main(void)
   do { LATDbits.LATD5 = ~LATDbits.LATD5; } while(0);
   if (!faker++) {
 
-   V.euart = 2;
-   equip_tx(0x05);
+
+
 
   }
 
@@ -41947,12 +41928,12 @@ void main(void)
    break;
   case UI_STATE_HOST:
 
-   snprintf(get_vterm_ptr(0, 0), 20 +1, "FAKER T%lu R%lu         ", V.tx_total, V.rx_total);
 
 
 
 
 
+   snprintf(get_vterm_ptr(3, 0), 20 +1, "Equip %u SID %u %c:%c             ", V.e_types, V.sid, V.rx_rs232, V.tx_rs232);
 
 
    switch (V.s_state) {
@@ -41960,18 +41941,18 @@ void main(void)
     V.r_l_state = LINK_STATE_IDLE;
     V.t_l_state = LINK_STATE_IDLE;
 
-    V.s_state = SEQ_STATE_TX;
 
 
+    V.s_state = SEQ_STATE_RX;
 
     if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
      if (V.debug) {
       snprintf(get_vterm_ptr(2, 0), 20 +1, "H254 %d, T%ld       ", sizeof(header254), V.testing);
      } else {
 
-      snprintf(get_vterm_ptr(2, 0), 20 +1, "EQUI: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
 
+      snprintf(get_vterm_ptr(2, 0), 20 +1, "HOST: %ld G:%s        #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }
@@ -42018,9 +41999,9 @@ void main(void)
 
     if (t_protocol(&V.t_l_state) == LINK_STATE_DONE) {
 
-     V.s_state = SEQ_STATE_RX;
 
 
+     V.s_state = SEQ_STATE_TRIGGER;
 
     }
     if (V.t_l_state == LINK_STATE_ERROR)
@@ -42060,9 +42041,9 @@ void main(void)
       snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
      } else {
 
-      snprintf(get_vterm_ptr(2, 0), 20 +1, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
 
+      snprintf(get_vterm_ptr(2, 0), 20 +1, "HOST: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
 
      }
     }

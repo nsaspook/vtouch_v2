@@ -45,7 +45,7 @@ extern "C" {
 	 */
 
 
-	#define FAKER			// emulate equipment protocol to host loopback
+	//#define FAKER			// emulate equipment protocol to host loopback
 
 	//#define	FRAME_OVERRUN
 
