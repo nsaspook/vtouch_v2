@@ -40880,6 +40880,7 @@ void mode_lamp_bright(void);
   display_online,
   display_remote,
   display_gemhelp,
+  display_free,
  } DISPLAY_TYPES;
 
 
@@ -40889,6 +40890,7 @@ void mode_lamp_bright(void);
  const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d         %s  ";
  const char msg2[] = "%s %s  ";
  const char msg_gemhelp[] = "%s %s  ";
+ const char msg_free[] = "%s %s  ";
  const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d          %s   ";
 
  V_help T[] = {
@@ -40919,7 +40921,9 @@ void mode_lamp_bright(void);
 
 
  const char msg_gemcmds[] = "Host CMDS: M C R P O L S D E H F";
+ const char msg_freecmds[] = "Port baud rate unlocked        ";
  const char msg_gemremote[] = "Host CMDS: ENABLED REMOTE";
+
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -41869,6 +41873,9 @@ void terminal_format(DISPLAY_TYPES t_format)
  case display_gemhelp:
   snprintf(V.terminal, 159, msg_gemhelp, msg_gemcmds, "2.16G");
   break;
+ case display_free:
+  snprintf(V.terminal, 159, msg_free, msg_freecmds, "2.16G");
+  break;
  default:
   snprintf(V.terminal, 159, msg99,
    V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.16G");
@@ -42401,6 +42408,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    case CODE_FREE:
     DATAEE_WriteByte(0x03F1, 1);
     set_display_info(DIS_FREE);
+    terminal_format(display_free);
+    format_display_text(V.terminal);
+    V.queue = 1;
     break;
    case CODE_LOG:
     do {
@@ -42654,6 +42664,9 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
    break;
   case 14:
    if (block != GEM_STATE_REMOTE) {
+    terminal_format(display_remote);
+    format_display_text(V.terminal);
+    V.queue = 1;
     block = GEM_STATE_REMOTE;
    }
    V.ticker = TICKER_ZERO;

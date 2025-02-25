@@ -19,6 +19,7 @@ extern "C" {
 		display_online,
 		display_remote,
 		display_gemhelp,
+		display_free,
 	} DISPLAY_TYPES;
 
 	/*
@@ -28,6 +29,7 @@ extern "C" {
 	const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d         %s  ";
 	const char msg2[] = "%s %s  ";
 	const char msg_gemhelp[] = "%s %s  ";
+	const char msg_free[] = "%s %s  ";
 	const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d          %s   ";
 
 	V_help T[] = {

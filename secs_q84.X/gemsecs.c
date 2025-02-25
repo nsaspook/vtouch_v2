@@ -831,6 +831,9 @@ void terminal_format(DISPLAY_TYPES t_format)
 	case display_gemhelp:
 		snprintf(V.terminal, MAX_TERM, msg_gemhelp, msg_gemcmds, VER);
 		break;
+	case display_free:
+		snprintf(V.terminal, MAX_TERM, msg_free, msg_freecmds, VER);
+		break;
 	default:
 		snprintf(V.terminal, MAX_TERM, msg99,
 			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
@@ -1363,6 +1366,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			case CODE_FREE:
 				DATAEE_WriteByte(UART_SPEED_LOCK_EADR, true);
 				set_display_info(DIS_FREE);
+				terminal_format(display_free);
+				format_display_text(V.terminal);
+				V.queue = true;
 				break;
 			case CODE_LOG:
 				do {
@@ -1609,13 +1615,16 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				H153[0].data[S10F3_TID_POS] = V.response.TID;
 				terminal_format(display_remote);
 				format_display_text(V.terminal); // move into H153 GEM message buffer
-				V.queue = true; // notify block transfer layer wer have a message to send
+				V.queue = true; // notify block transfer layer we have a message to send
 				block = GEM_STATE_REMOTE;
 			}
 			V.ticker = TICKER_ZERO;
 			break;
 		case 14:
 			if (block != GEM_STATE_REMOTE) {
+				terminal_format(display_remote);
+				format_display_text(V.terminal); // move into H153 GEM message buffer
+				V.queue = true; // notify block transfer layer we have a message to send
 				block = GEM_STATE_REMOTE;
 			}
 			V.ticker = TICKER_ZERO;

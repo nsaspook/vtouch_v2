@@ -41022,6 +41022,7 @@ void mode_lamp_bright(void);
   display_online,
   display_remote,
   display_gemhelp,
+  display_free,
  } DISPLAY_TYPES;
 
 
@@ -41031,6 +41032,7 @@ void mode_lamp_bright(void);
  const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d         %s  ";
  const char msg2[] = "%s %s  ";
  const char msg_gemhelp[] = "%s %s  ";
+ const char msg_free[] = "%s %s  ";
  const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d          %s   ";
 
  V_help T[] = {
@@ -41061,7 +41063,9 @@ void mode_lamp_bright(void);
 
 
  const char msg_gemcmds[] = "Host CMDS: M C R P O L S D E H F";
+ const char msg_freecmds[] = "Port baud rate unlocked        ";
  const char msg_gemremote[] = "Host CMDS: ENABLED REMOTE";
+
 
  typedef struct block10_type {
   uint32_t systemb;
@@ -41218,7 +41222,7 @@ void mode_lamp_bright(void);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Feb 24 2025", *build_time = "11:35:44";
+const char *build_date = "Feb 24 2025", *build_time = "20:03:03";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
