@@ -16,7 +16,7 @@ extern "C" {
 #include "mcc_generated_files/adc.h"
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
-#include "ringbufs.h"
+//#include "ringbufs.h"
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
@@ -45,7 +45,7 @@ extern "C" {
 	 */
 
 
-	#define FAKER			// emulate equipment protocol to host loopback
+#define FAKER			// emulate equipment protocol to host loopback
 
 	//#define	FRAME_OVERRUN
 
@@ -140,17 +140,6 @@ extern "C" {
 
 #define UART_SPEED_EADR		0x03F0 // offset from 0x380000
 #define UART_SPEED_LOCK_EADR	0x03F1 // offset from 0x380000
-
-	struct spi_link_type_o { // internal SPI state table
-		uint8_t SPI_LCD : 1;
-		uint8_t SPI_AUX : 1;
-		uint8_t LCD_TIMER : 1;
-		volatile uint8_t LCD_DATA : 1;
-		uint16_t delay;
-		uint8_t config;
-		struct ringBufS_t *tx1b, *tx1a;
-		volatile int32_t int_count;
-	};
 
 	struct spi_link_type { // internal SPI state table
 		uint8_t SPI_LCD : 1;
@@ -319,13 +308,11 @@ extern "C" {
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
-		uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
-		failed_send : 4, failed_receive : 4,
-		queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1, speed_spin : 1;
+		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
 		volatile uint8_t ticker;
-		bool flipper;
+		bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ;
 		adc_result_t v_tx_line, v_rx_line;
 		int16_t tx_volts, rx_volts;
 		char tx_rs232, rx_rs232;

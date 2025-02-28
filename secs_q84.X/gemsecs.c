@@ -819,14 +819,14 @@ void terminal_format(DISPLAY_TYPES t_format)
 	switch (t_format) {
 	case display_message:
 		snprintf(V.terminal, MAX_TERM, msg0,
-			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.sequences, VER);
 		break;
 	case display_online:
 		snprintf(V.terminal, MAX_TERM, msg1,
-			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, VER);
+			V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.sequences, VER);
 		break;
 	case display_remote:
-		snprintf(V.terminal, MAX_TERM, msg2, msg_gemremote, VER);
+		snprintf(V.terminal, MAX_TERM, msg2, msg_gemremote, V.sequences, VER);
 		break;
 	case display_gemhelp:
 		snprintf(V.terminal, MAX_TERM, msg_gemhelp, msg_gemcmds, VER);
@@ -1615,7 +1615,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 				H153[0].data[S10F3_TID_POS] = V.response.TID;
 				terminal_format(display_remote);
 				format_display_text(V.terminal); // move into H153 GEM message buffer
-				V.queue = true; // notify block transfer layer we have a message to send
+				V.response.mesgid = 1;
+				V.sequences++;
+				V.sid = 10;
+				sequence_messages(V.sid); // send text message
+				set_display_info(DIS_SEQUENCE_M);
 				block = GEM_STATE_REMOTE;
 			}
 			V.ticker = TICKER_ZERO;
@@ -1624,7 +1628,11 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 			if (block != GEM_STATE_REMOTE) {
 				terminal_format(display_remote);
 				format_display_text(V.terminal); // move into H153 GEM message buffer
-				V.queue = true; // notify block transfer layer we have a message to send
+				V.response.mesgid = 1;
+				V.sequences++;
+				V.sid = 10;
+				sequence_messages(V.sid); // send text message
+				set_display_info(DIS_SEQUENCE_M);
 				block = GEM_STATE_REMOTE;
 			}
 			V.ticker = TICKER_ZERO;

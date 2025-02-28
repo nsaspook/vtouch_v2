@@ -39641,40 +39641,7 @@ uint8_t SPI1_ReadByte(void);
 # 366 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
-# 1 "./ringbufs.h" 1
-# 15 "./ringbufs.h"
-# 1 "./vconfig.h" 1
-# 16 "./ringbufs.h" 2
-
-
-
- typedef struct ringBufS_t {
-  uint8_t buf[64];
-  uint8_t head;
-  uint8_t tail;
-  uint8_t count;
- } ringBufS_t;
-
- void ringBufS_init(volatile ringBufS_t *_this);
- int8_t ringBufS_empty(ringBufS_t *_this);
- int8_t ringBufS_full(ringBufS_t *_this);
- uint8_t ringBufS_get(ringBufS_t *_this);
- void ringBufS_put(ringBufS_t *_this, const uint8_t c);
- void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
- void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 20 "./vconfig.h" 2
 # 144 "./vconfig.h"
- struct spi_link_type_o {
-  uint8_t SPI_LCD : 1;
-  uint8_t SPI_AUX : 1;
-  uint8_t LCD_TIMER : 1;
-  volatile uint8_t LCD_DATA : 1;
-  uint16_t delay;
-  uint8_t config;
-  struct ringBufS_t *tx1b, *tx1a;
-  volatile int32_t int_count;
- };
-
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39842,13 +39809,11 @@ void PIN_MANAGER_Initialize (void);
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
-  failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1, speed_spin : 1;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
-  _Bool flipper;
+  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ;
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
@@ -40372,294 +40337,6 @@ void DMA1_SetORIInterruptHandler(void (* InterruptHandler)(void));
 
 void DMA1_DefaultInterruptHandler(void);
 # 60 "./mcc_generated_files/mcc.h" 2
-# 1 "./mcc_generated_files/tmr4.h" 1
-# 79 "./mcc_generated_files/tmr4.h"
-typedef enum
-{
-# 89 "./mcc_generated_files/tmr4.h"
-   TMR4_ROP_STARTS_TMRON,
-
-
-
-
-   TMR4_ROP_STARTS_TMRON_ERSHIGH,
-
-
-
-
-   TMR4_ROP_STARTS_TMRON_ERSLOW,
-
-
-
-
-   TMR4_ROP_RESETS_ERSBOTHEDGE,
-
-
-
-
-   TMR4_ROP_RESETS_ERSRISINGEDGE,
-
-
-
-
-   TMR4_ROP_RESETS_ERSFALLINGEDGE,
-
-
-
-
-   TMR4_ROP_RESETS_ERSLOW,
-
-
-
-
-   TMR4_ROP_RESETS_ERSHIGH,
-# 135 "./mcc_generated_files/tmr4.h"
-   TMR4_OS_STARTS_TMRON,
-
-
-
-
-   TMR4_OS_STARTS_ERSRISINGEDGE ,
-
-
-
-
-   TMR4_OS_STARTS_ERSFALLINGEDGE ,
-
-
-
-
-   TMR4_OS_STARTS_ERSBOTHEDGE,
-
-
-
-
-
-   TMR4_OS_STARTS_ERSFIRSTRISINGEDGE,
-
-
-
-
-
-   TMR4_OS_STARTS_ERSFIRSTFALLINGEDGE,
-
-
-
-
-
-   TMR4_OS_STARTS_ERSRISINGEDGEDETECT,
-
-
-
-
-   TMR4_OS_STARTS_ERSFALLINGEDGEDETECT,
-
-
-
-
-   TMR4_OS_STARTS_TMRON_ERSHIGH = 0x16,
-
-
-
-
-   TMR4_OS_STARTS_TMRON_ERSLOW = 0x17,
-# 192 "./mcc_generated_files/tmr4.h"
-   TMR4_MS_STARTS_TMRON_ERSRISINGEDGEDETECT = 0x11,
-
-
-
-
-   TMR4_MS_STARTS_TMRON_ERSFALLINGEDGEDETECT = 0x12,
-
-
-
-
-
-   TMR4_MS_STARTS_TMRON_ERSBOTHEDGE = 0x13
-
-} TMR4_HLT_MODE;
-# 220 "./mcc_generated_files/tmr4.h"
-typedef enum
-{
-
-
-    TMR4_T4INPPS,
-
-
-
-    TMR4_T2POSTSCALED,
-
-
-
-    TMR4_RESERVED,
-
-
-
-    TMR4_T6POSTSCALED,
-
-
-
-    TMR4_CCP1_OUT,
-
-
-
-    TMR4_CCP2_OUT,
-
-
-
-    TMR4_CCP3_OUT,
-
-
-
-    TMR4_PWM1S1P1_OUT,
-
-
-
-    TMR4_PWM1S1P2_OUT,
-
-
-
-    TMR4_PWM2S1P1_OUT,
-
-
-
-    TMR4_PWM2S1P2_OUT,
-
-
-
-    TMR4_PWM3S1P1_OUT,
-
-
-
-    TMR4_PWM3S1P2_OUT,
-
-
-
-    TMR4_RESERVED_2,
-
-
-
-    TMR4_RESERVED_3,
-
-
-
-    TMR4_CMP1_OUT,
-
-
-
-    TMR4_CMP2_OUT,
-
-
-
-    TMR4_ZCD_OUTPUT,
-
-
-
-    TMR4_CLC1_OUT,
-
-
-
-    TMR4_CLC2_OUT,
-
-
-
-    TMR4_CLC3_OUT,
-
-
-
-    TMR4_CLC4_OUT,
-
-
-
-    TMR4_CLC5_OUT,
-
-
-
-    TMR4_CLC6_OUT,
-
-
-
-    TMR4_CLC7_OUT,
-
-
-
-    TMR4_CLC8_OUT,
-
-
-
-    TMR4_UART1_RX_EDGE,
-
-
-
-    TMR4_UART1_TX_EDGE,
-
-
-
-    TMR4_UART2_RX_EDGE,
-
-
-
-    TMR4_UART2_TX_EDGE,
-
-
-
-    TMR4_UART3_RX_EDGE,
-
-
-
-    TMR4_UART3_TX_EDGE,
-
-
-
-    TMR4_UART4_RX_EDGE,
-
-
-
-    TMR4_UART4_TX_EDGE,
-
-
-
-    TMR4_UART5_RX_EDGE,
-
-
-
-    TMR4_UART5_TX_EDGE,
-
-
-
-    TMR4_RESERVED_4
-
-
-} TMR4_HLT_EXT_RESET_SOURCE;
-# 413 "./mcc_generated_files/tmr4.h"
-void TMR4_Initialize(void);
-# 449 "./mcc_generated_files/tmr4.h"
-void TMR4_ModeSet(TMR4_HLT_MODE mode);
-# 484 "./mcc_generated_files/tmr4.h"
-void TMR4_ExtResetSourceSet(TMR4_HLT_EXT_RESET_SOURCE reset);
-# 513 "./mcc_generated_files/tmr4.h"
-void TMR4_Start(void);
-# 542 "./mcc_generated_files/tmr4.h"
-void TMR4_StartTimer(void);
-# 574 "./mcc_generated_files/tmr4.h"
-void TMR4_Stop(void);
-# 606 "./mcc_generated_files/tmr4.h"
-void TMR4_StopTimer(void);
-# 641 "./mcc_generated_files/tmr4.h"
-uint8_t TMR4_Counter8BitGet(void);
-# 676 "./mcc_generated_files/tmr4.h"
-uint8_t TMR4_ReadTimer(void);
-# 715 "./mcc_generated_files/tmr4.h"
-void TMR4_Counter8BitSet(uint8_t timerVal);
-# 754 "./mcc_generated_files/tmr4.h"
-void TMR4_WriteTimer(uint8_t timerVal);
-# 806 "./mcc_generated_files/tmr4.h"
-void TMR4_Period8BitSet(uint8_t periodVal);
-# 858 "./mcc_generated_files/tmr4.h"
-void TMR4_LoadPeriodRegister(uint8_t periodVal);
-# 896 "./mcc_generated_files/tmr4.h"
-_Bool TMR4_HasOverflowOccured(void);
-# 61 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/tmr2.h" 1
 # 79 "./mcc_generated_files/tmr2.h"
 typedef enum
@@ -40947,7 +40624,7 @@ void TMR2_Period8BitSet(uint8_t periodVal);
 void TMR2_LoadPeriodRegister(uint8_t periodVal);
 # 896 "./mcc_generated_files/tmr2.h"
 _Bool TMR2_HasOverflowOccured(void);
-# 62 "./mcc_generated_files/mcc.h" 2
+# 61 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/memory.h" 1
 # 81 "./mcc_generated_files/memory.h"
 uint8_t FLASH_ReadByte(uint32_t flashAddr);
@@ -40967,7 +40644,7 @@ void FLASH_EraseBlock(uint32_t flashAddr);
 void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 # 225 "./mcc_generated_files/memory.h"
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
-# 63 "./mcc_generated_files/mcc.h" 2
+# 62 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/uart2.h" 1
 # 74 "./mcc_generated_files/uart2.h"
 typedef union {
@@ -41021,7 +40698,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 575 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 64 "./mcc_generated_files/mcc.h" 2
+# 63 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/uart1.h" 1
 # 74 "./mcc_generated_files/uart1.h"
 typedef union {
@@ -41075,7 +40752,7 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
 void UART1_put_buffer(uint8_t);
-# 65 "./mcc_generated_files/mcc.h" 2
+# 64 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pwm2_16bit.h" 1
 # 63 "./mcc_generated_files/pwm2_16bit.h"
@@ -41103,14 +40780,14 @@ void PWM2_16BIT_Slice1Output1_SetInterruptHandler(void (* InterruptHandler)(void
 void PWM2_16BIT_Slice1Output2_SetInterruptHandler(void (* InterruptHandler)(void));
 # 209 "./mcc_generated_files/pwm2_16bit.h"
 void PWM2_16BIT_Period_SetInterruptHandler(void (* InterruptHandler)(void));
-# 67 "./mcc_generated_files/mcc.h" 2
-# 81 "./mcc_generated_files/mcc.h"
+# 66 "./mcc_generated_files/mcc.h" 2
+# 80 "./mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 94 "./mcc_generated_files/mcc.h"
+# 93 "./mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 107 "./mcc_generated_files/mcc.h"
+# 106 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 119 "./mcc_generated_files/mcc.h"
+# 118 "./mcc_generated_files/mcc.h"
 void SystemArbiter_Initialize(void);
 # 5 "eadog.c" 2
 # 19 "eadog.c"

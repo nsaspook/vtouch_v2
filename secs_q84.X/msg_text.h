@@ -25,12 +25,12 @@ extern "C" {
 	/*
 	 * *****************|*********|**********|**********|*********|***|
 	 */
-	const char msg0[] = "Host: All %d, R%d F%d, T%d F%d, Cksum%d %s    ";
-	const char msg1[] = "ONLINE All %d, Read %d Failed %d, Transmit %d Failed %d, Checksum error %d         %s  ";
-	const char msg2[] = "%s %s  ";
-	const char msg_gemhelp[] = "%s %s  ";
-	const char msg_free[] = "%s %s  ";
-	const char msg99[] = "UNK FORMAT All %d, R%d F%d, T%d F%d, C%d          %s   ";
+	const char msg0[] = "Host A%d, R%d RF%d, T%d TF%d, C%d %d %s       ";
+	const char msg1[] = "ONLINE A%d, R%d RF%d, T%d TF%d, C%d %d %s     ";
+	const char msg2[] = "%s %d %s                                      ";
+	const char msg_gemhelp[] = "%s %s                                  ";
+	const char msg_free[] = "%s %s                                     ";
+	const char msg99[] = "UNK FORMAT A%d, R%d RF%d, T%d TF%d, C%d %s   ";
 
 	V_help T[] = {
 		{

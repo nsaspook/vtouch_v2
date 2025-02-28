@@ -39576,40 +39576,7 @@ uint8_t SPI1_ReadByte(void);
 # 366 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
-# 1 "./ringbufs.h" 1
-# 15 "./ringbufs.h"
-# 1 "./vconfig.h" 1
-# 16 "./ringbufs.h" 2
-
-
-
- typedef struct ringBufS_t {
-  uint8_t buf[64];
-  uint8_t head;
-  uint8_t tail;
-  uint8_t count;
- } ringBufS_t;
-
- void ringBufS_init(volatile ringBufS_t *_this);
- int8_t ringBufS_empty(ringBufS_t *_this);
- int8_t ringBufS_full(ringBufS_t *_this);
- uint8_t ringBufS_get(ringBufS_t *_this);
- void ringBufS_put(ringBufS_t *_this, const uint8_t c);
- void ringBufS_put_dma(ringBufS_t *_this, const uint8_t c);
- void ringBufS_flush(ringBufS_t *_this, const int8_t clearBuffer);
-# 20 "./vconfig.h" 2
 # 144 "./vconfig.h"
- struct spi_link_type_o {
-  uint8_t SPI_LCD : 1;
-  uint8_t SPI_AUX : 1;
-  uint8_t LCD_TIMER : 1;
-  volatile uint8_t LCD_DATA : 1;
-  uint16_t delay;
-  uint8_t config;
-  struct ringBufS_t *tx1b, *tx1a;
-  volatile int32_t int_count;
- };
-
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39777,13 +39744,11 @@ void PIN_MANAGER_Initialize (void);
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
   uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
-  uint8_t rbit : 1, wbit : 1, ebit : 1, set_sequ : 1,
-  failed_send : 4, failed_receive : 4,
-  queue : 1, debug : 1, help : 1, stack : 4, help_id : 2, rerror : 1, speed_spin : 1;
+  uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
-  _Bool flipper;
+  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ;
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
