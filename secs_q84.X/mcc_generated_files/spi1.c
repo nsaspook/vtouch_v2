@@ -69,8 +69,8 @@ void SPI1_Initialize(void)
     SPI1CON1 = 0x20;
     //SSET disabled; TXR required for a transfer; RXR suspended if the RxFIFO is full; 
     SPI1CON2 = 0x03;
-    //CLKSEL MFINTOSC; 
-    SPI1CLK = 0x02;
+    //CLKSEL TMR4_Postscaled; 
+    SPI1CLK = 0x07;
     //BAUD 4; 
     SPI1BAUD = 0x04;
     TRISCbits.TRISC3 = 0;

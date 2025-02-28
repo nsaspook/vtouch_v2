@@ -39481,7 +39481,7 @@ void SPI1_Initialize(void)
 
     SPI1CON2 = 0x03;
 
-    SPI1CLK = 0x02;
+    SPI1CLK = 0x07;
 
     SPI1BAUD = 0x04;
     TRISCbits.TRISC3 = 0;
