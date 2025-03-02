@@ -81,7 +81,7 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">pwm2_16bit.c</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="pwm2__16bit_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">    (c) 2018 Microchip Technology Inc. and its subsidiaries. </span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">    </span></div>
@@ -106,7 +106,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &lt;xc.h&gt;</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;<a class="code" href="pwm2__16bit_8h.html">pwm2_16bit.h</a>&quot;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;pwm2_16bit.h&quot;</span></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="comment">//Pointers to PWM2_16BIT interrupt handlers</span></div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="comment">//User can use them in application code to initialize with custom ISRs</span></div>
@@ -117,8 +117,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">static</span> <span class="keywordtype">void</span> PWM2_16BIT_Slice1Output2_DefaultInterruptHandler(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">static</span> <span class="keywordtype">void</span> PWM2_16BIT_Period_DefaultInterruptHandler(<span class="keywordtype">void</span>);</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="foldopen" id="foldopen00063" data-start="{" data-end="}">
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#aff5023293658af3413b265271d548346">   63</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#aff5023293658af3413b265271d548346">PWM2_16BIT_Initialize</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keywordtype">void</span> PWM2_16BIT_Initialize(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>{</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="comment">//PWMERS External Reset Disabled; </span></div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    PWM2ERS = 0x00;</div>
@@ -181,63 +180,49 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    PIE5bits.PWM2PIE = 0;</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    </div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="comment">//Set default interrupt handlers</span></div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <a class="code hl_function" href="pwm2__16bit_8c.html#aa6044fd4b7a33bc7ca775ff7549f8509">PWM2_16BIT_Slice1Output1_SetInterruptHandler</a>(PWM2_16BIT_Slice1Output1_DefaultInterruptHandler);</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <a class="code hl_function" href="pwm2__16bit_8c.html#afbeca3886fbe898629cb9000b3dae4fc">PWM2_16BIT_Slice1Output2_SetInterruptHandler</a>(PWM2_16BIT_Slice1Output2_DefaultInterruptHandler);</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <a class="code hl_function" href="pwm2__16bit_8c.html#a3fa801705ee3260702197e7a691c2d89">PWM2_16BIT_Period_SetInterruptHandler</a>(PWM2_16BIT_Period_DefaultInterruptHandler);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    PWM2_16BIT_Slice1Output1_SetInterruptHandler(PWM2_16BIT_Slice1Output1_DefaultInterruptHandler);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    PWM2_16BIT_Slice1Output2_SetInterruptHandler(PWM2_16BIT_Slice1Output2_DefaultInterruptHandler);</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    PWM2_16BIT_Period_SetInterruptHandler(PWM2_16BIT_Period_DefaultInterruptHandler);</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="comment">//PWMEN enabled; PWMLD disabled; PWMERSPOL disabled; PWMERSNOW disabled; </span></div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    PWM2CON = 0x80;</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}</div>
-</div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="foldopen" id="foldopen00134" data-start="{" data-end="}">
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#ab59aa195e7b3026c08cbaebbeed17f1a">  134</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#ab59aa195e7b3026c08cbaebbeed17f1a">PWM2_16BIT_Enable</a>()</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="keywordtype">void</span> PWM2_16BIT_Enable()</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>{</div>
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    PWM2CON |= _PWM2CON_EN_MASK;</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>}</div>
-</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="foldopen" id="foldopen00139" data-start="{" data-end="}">
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#a80579b9df22088420de98bcd6b9da269">  139</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#a80579b9df22088420de98bcd6b9da269">PWM2_16BIT_Disable</a>()</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="keywordtype">void</span> PWM2_16BIT_Disable()</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>{</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    PWM2CON &amp;= (~_PWM2CON_EN_MASK);</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>}</div>
-</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
-<div class="foldopen" id="foldopen00144" data-start="{" data-end="}">
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#ade0f01e3ece79145d1ad61aebd448611">  144</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#ade0f01e3ece79145d1ad61aebd448611">PWM2_16BIT_WritePeriodRegister</a>(uint16_t periodCount)</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="keywordtype">void</span> PWM2_16BIT_WritePeriodRegister(uint16_t periodCount)</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>{</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    PWM2PRL = (uint8_t)periodCount;</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    PWM2PRH = (uint8_t)(periodCount &gt;&gt; 8);</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>}</div>
-</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#a718af79b2fcaaaf2e44e06ac5c84de49">  150</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#a718af79b2fcaaaf2e44e06ac5c84de49">PWM2_16BIT_SetSlice1Output1DutyCycleRegister</a>(uint16_t registerValue)</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keywordtype">void</span> PWM2_16BIT_SetSlice1Output1DutyCycleRegister(uint16_t registerValue)</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>{    </div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    PWM2S1P1L = (uint8_t)(registerValue);</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    PWM2S1P1H = (uint8_t)(registerValue &gt;&gt; 8);</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>}</div>
-</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="foldopen" id="foldopen00156" data-start="{" data-end="}">
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#a067d9a199cdd06b1c32f037948375e26">  156</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#a067d9a199cdd06b1c32f037948375e26">PWM2_16BIT_SetSlice1Output2DutyCycleRegister</a>(uint16_t registerValue)</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="keywordtype">void</span> PWM2_16BIT_SetSlice1Output2DutyCycleRegister(uint16_t registerValue)</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>{        </div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    PWM2S1P2L = (uint8_t)(registerValue);</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    PWM2S1P2H = (uint8_t)(registerValue &gt;&gt; 8);</div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>}</div>
-</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
-<div class="foldopen" id="foldopen00162" data-start="{" data-end="}">
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#a3f157cc6ad61bc898edfca5db15f7a76">  162</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#a3f157cc6ad61bc898edfca5db15f7a76">PWM2_16BIT_LoadBufferRegisters</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span><span class="keywordtype">void</span> PWM2_16BIT_LoadBufferRegisters(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>{</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="comment">//Load the period and duty cycle registers on the next period event</span></div>
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    PWM2CONbits.LD = 1;</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>}</div>
-</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="foldopen" id="foldopen00168" data-start="{" data-end="}">
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#a2d79b702a12c891cd384b566078b9cce">  168</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#a2d79b702a12c891cd384b566078b9cce">__interrupt</a>(irq(PWM2),base(8)) PWM2_16BIT_PWMI_ISR()</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keywordtype">void</span> __interrupt(irq(PWM2),base(8)) PWM2_16BIT_PWMI_ISR()</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>{</div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    PIR5bits.PWM2IF = 0;</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <span class="keywordflow">if</span>((PWM2GIEbits.S1P1IE == 1) &amp;&amp; (PWM2GIRbits.S1P1IF == 1))</div>
@@ -253,37 +238,28 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>            PWM2_16BIT_Slice1Output2_InterruptHandler();</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    }</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>}</div>
-</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
-<div class="foldopen" id="foldopen00185" data-start="{" data-end="}">
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#ac40362aaaf69f5b98cb6f1624034ca38">  185</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#a2d79b702a12c891cd384b566078b9cce">__interrupt</a>(irq(PWM2PR),base(8)) PWM2_16BIT_PWMPI_ISR()</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="keywordtype">void</span> __interrupt(irq(PWM2PR),base(8)) PWM2_16BIT_PWMPI_ISR()</div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>{</div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    PIR5bits.PWM2PIF = 0;</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="keywordflow">if</span>(PWM2_16BIT_Period_InterruptHandler != NULL)</div>
 <div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        PWM2_16BIT_Period_InterruptHandler();</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>}</div>
-</div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="foldopen" id="foldopen00192" data-start="{" data-end="}">
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#aa6044fd4b7a33bc7ca775ff7549f8509">  192</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#aa6044fd4b7a33bc7ca775ff7549f8509">PWM2_16BIT_Slice1Output1_SetInterruptHandler</a>(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>))</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="keywordtype">void</span> PWM2_16BIT_Slice1Output1_SetInterruptHandler(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>))</div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>{</div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    PWM2_16BIT_Slice1Output1_InterruptHandler = InterruptHandler;</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>}</div>
-</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="foldopen" id="foldopen00197" data-start="{" data-end="}">
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#afbeca3886fbe898629cb9000b3dae4fc">  197</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#afbeca3886fbe898629cb9000b3dae4fc">PWM2_16BIT_Slice1Output2_SetInterruptHandler</a>(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>))</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="keywordtype">void</span> PWM2_16BIT_Slice1Output2_SetInterruptHandler(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>))</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>{</div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    PWM2_16BIT_Slice1Output2_InterruptHandler = InterruptHandler;</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>}</div>
-</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
-<div class="foldopen" id="foldopen00202" data-start="{" data-end="}">
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="pwm2__16bit_8c.html#a3fa801705ee3260702197e7a691c2d89">  202</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="pwm2__16bit_8c.html#a3fa801705ee3260702197e7a691c2d89">PWM2_16BIT_Period_SetInterruptHandler</a>(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>))</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="keywordtype">void</span> PWM2_16BIT_Period_SetInterruptHandler(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>))</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>{</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    PWM2_16BIT_Period_InterruptHandler = InterruptHandler;</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>}</div>
-</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="keyword">static</span> <span class="keywordtype">void</span> PWM2_16BIT_Slice1Output1_DefaultInterruptHandler(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>{</div>
@@ -302,18 +278,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    <span class="comment">//Add your interrupt code here or</span></div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="comment">//Use PWM2_16BIT_Period_SetInterruptHandler() function to use Custom ISR</span></div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>}</div>
-<div class="ttc" id="apwm2__16bit_8c_html_a067d9a199cdd06b1c32f037948375e26"><div class="ttname"><a href="pwm2__16bit_8c.html#a067d9a199cdd06b1c32f037948375e26">PWM2_16BIT_SetSlice1Output2DutyCycleRegister</a></div><div class="ttdeci">void PWM2_16BIT_SetSlice1Output2DutyCycleRegister(uint16_t registerValue)</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00156">pwm2_16bit.c:156</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_a2d79b702a12c891cd384b566078b9cce"><div class="ttname"><a href="pwm2__16bit_8c.html#a2d79b702a12c891cd384b566078b9cce">__interrupt</a></div><div class="ttdeci">void __interrupt(irq(PWM2), base(8))</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00168">pwm2_16bit.c:168</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_a3f157cc6ad61bc898edfca5db15f7a76"><div class="ttname"><a href="pwm2__16bit_8c.html#a3f157cc6ad61bc898edfca5db15f7a76">PWM2_16BIT_LoadBufferRegisters</a></div><div class="ttdeci">void PWM2_16BIT_LoadBufferRegisters(void)</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00162">pwm2_16bit.c:162</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_a3fa801705ee3260702197e7a691c2d89"><div class="ttname"><a href="pwm2__16bit_8c.html#a3fa801705ee3260702197e7a691c2d89">PWM2_16BIT_Period_SetInterruptHandler</a></div><div class="ttdeci">void PWM2_16BIT_Period_SetInterruptHandler(void(*InterruptHandler)(void))</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00202">pwm2_16bit.c:202</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_a718af79b2fcaaaf2e44e06ac5c84de49"><div class="ttname"><a href="pwm2__16bit_8c.html#a718af79b2fcaaaf2e44e06ac5c84de49">PWM2_16BIT_SetSlice1Output1DutyCycleRegister</a></div><div class="ttdeci">void PWM2_16BIT_SetSlice1Output1DutyCycleRegister(uint16_t registerValue)</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00150">pwm2_16bit.c:150</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_a80579b9df22088420de98bcd6b9da269"><div class="ttname"><a href="pwm2__16bit_8c.html#a80579b9df22088420de98bcd6b9da269">PWM2_16BIT_Disable</a></div><div class="ttdeci">void PWM2_16BIT_Disable()</div><div class="ttdoc">Disables the PWM2_16BIT module In case if one wants to re-initialize PWM2_16BIT, this function must b...</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00139">pwm2_16bit.c:139</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_aa6044fd4b7a33bc7ca775ff7549f8509"><div class="ttname"><a href="pwm2__16bit_8c.html#aa6044fd4b7a33bc7ca775ff7549f8509">PWM2_16BIT_Slice1Output1_SetInterruptHandler</a></div><div class="ttdeci">void PWM2_16BIT_Slice1Output1_SetInterruptHandler(void(*InterruptHandler)(void))</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00192">pwm2_16bit.c:192</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_ab59aa195e7b3026c08cbaebbeed17f1a"><div class="ttname"><a href="pwm2__16bit_8c.html#ab59aa195e7b3026c08cbaebbeed17f1a">PWM2_16BIT_Enable</a></div><div class="ttdeci">void PWM2_16BIT_Enable()</div><div class="ttdoc">Enables the PWM2_16BIT module.</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00134">pwm2_16bit.c:134</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_ade0f01e3ece79145d1ad61aebd448611"><div class="ttname"><a href="pwm2__16bit_8c.html#ade0f01e3ece79145d1ad61aebd448611">PWM2_16BIT_WritePeriodRegister</a></div><div class="ttdeci">void PWM2_16BIT_WritePeriodRegister(uint16_t periodCount)</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00144">pwm2_16bit.c:144</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_afbeca3886fbe898629cb9000b3dae4fc"><div class="ttname"><a href="pwm2__16bit_8c.html#afbeca3886fbe898629cb9000b3dae4fc">PWM2_16BIT_Slice1Output2_SetInterruptHandler</a></div><div class="ttdeci">void PWM2_16BIT_Slice1Output2_SetInterruptHandler(void(*InterruptHandler)(void))</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00197">pwm2_16bit.c:197</a></div></div>
-<div class="ttc" id="apwm2__16bit_8c_html_aff5023293658af3413b265271d548346"><div class="ttname"><a href="pwm2__16bit_8c.html#aff5023293658af3413b265271d548346">PWM2_16BIT_Initialize</a></div><div class="ttdeci">void PWM2_16BIT_Initialize(void)</div><div class="ttdoc">PWM2_16BIT Generated Driver API Header File.</div><div class="ttdef"><b>Definition</b> <a href="pwm2__16bit_8c_source.html#l00063">pwm2_16bit.c:63</a></div></div>
-<div class="ttc" id="apwm2__16bit_8h_html"><div class="ttname"><a href="pwm2__16bit_8h.html">pwm2_16bit.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

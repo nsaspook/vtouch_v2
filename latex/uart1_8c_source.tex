@@ -1,6 +1,6 @@
 \doxysection{uart1.\+c}
 \hypertarget{uart1_8c_source}{}\label{uart1_8c_source}\index{secs\_q84.X/mcc\_generated\_files/uart1.c@{secs\_q84.X/mcc\_generated\_files/uart1.c}}
-\mbox{\hyperlink{uart1_8c}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00001}00001\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00024}00024\ \textcolor{comment}{/*}}
@@ -27,39 +27,39 @@
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00045}00045\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00046}00046\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00050}00050\ \textcolor{preprocessor}{\#include\ <xc.h>}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{uart1_8h}{uart1.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interrupt__manager_8h}{interrupt\_manager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ "{}uart1.h"{}}}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}interrupt\_manager.h"{}}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00053}00053\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00057}\mbox{\hyperlink{uart1_8c_a2678114a7a8e5e7c25d01c6ada2eafd7}{00057}}\ \textcolor{preprocessor}{\#define\ UART1\_TX\_BUFFER\_SIZE\ 64}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00058}\mbox{\hyperlink{uart1_8c_aa053ef004867924f9bc26798ebee0513}{00058}}\ \textcolor{preprocessor}{\#define\ UART1\_RX\_BUFFER\_SIZE\ 255}}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00057}00057\ \textcolor{preprocessor}{\#define\ UART1\_TX\_BUFFER\_SIZE\ 64}}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00058}00058\ \textcolor{preprocessor}{\#define\ UART1\_RX\_BUFFER\_SIZE\ 255}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00059}00059\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00064}00064\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1TxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00065}00065\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1TxTail\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00066}00066\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1TxBuffer[\mbox{\hyperlink{uart1_8c_a2678114a7a8e5e7c25d01c6ada2eafd7}{UART1\_TX\_BUFFER\_SIZE}}];}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00067}\mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{00067}}\ \textcolor{keyword}{volatile}\ uint8\_t\ \mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}};}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00066}00066\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1TxBuffer[UART1\_TX\_BUFFER\_SIZE];}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00067}00067\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1TxBufferRemaining;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00068}00068\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00069}00069\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1RxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00070}00070\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1RxTail\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00071}00071\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1RxBuffer[\mbox{\hyperlink{uart1_8c_aa053ef004867924f9bc26798ebee0513}{UART1\_RX\_BUFFER\_SIZE}}];}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00072}00072\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ \mbox{\hyperlink{unionuart1__status__t}{uart1\_status\_t}}\ uart1RxStatusBuffer[\mbox{\hyperlink{uart1_8c_aa053ef004867924f9bc26798ebee0513}{UART1\_RX\_BUFFER\_SIZE}}];}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00073}\mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{00073}}\ \textcolor{keyword}{volatile}\ uint8\_t\ \mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}};}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00071}00071\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1RxBuffer[UART1\_RX\_BUFFER\_SIZE];}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00072}00072\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ \mbox{\hyperlink{unionuart1__status__t}{uart1\_status\_t}}\ uart1RxStatusBuffer[UART1\_RX\_BUFFER\_SIZE];}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00073}00073\ \textcolor{keyword}{volatile}\ uint8\_t\ uart1RxCount;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00074}00074\ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ \mbox{\hyperlink{unionuart1__status__t}{uart1\_status\_t}}\ uart1RxLastError;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00075}00075\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00079}\mbox{\hyperlink{uart1_8c_adead81f12d80599ce50c945035f9eb8a}{00079}}\ void\ (*\mbox{\hyperlink{uart1_8c_adead81f12d80599ce50c945035f9eb8a}{UART1\_FramingErrorHandler}})(void);}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00080}\mbox{\hyperlink{uart1_8c_a40db9ec85d7563dee683923c1bd71f33}{00080}}\ void\ (*\mbox{\hyperlink{uart1_8c_a40db9ec85d7563dee683923c1bd71f33}{UART1\_OverrunErrorHandler}})(void);}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00081}\mbox{\hyperlink{uart1_8c_a7e1da23a5a97163253047b83cdd6478d}{00081}}\ void\ (*\mbox{\hyperlink{uart1_8c_a7e1da23a5a97163253047b83cdd6478d}{UART1\_ErrorHandler}})(void);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00079}00079\ void\ (*UART1\_FramingErrorHandler)(void);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00080}00080\ void\ (*UART1\_OverrunErrorHandler)(void);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00081}00081\ void\ (*UART1\_ErrorHandler)(void);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00082}00082\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00083}00083\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a3461fe0e45fe0e071938030c6412d9b0}{UART1\_DefaultFramingErrorHandler}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00084}00084\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_accef6aaeea72b011eca3c666d8e545cc}{UART1\_DefaultOverrunErrorHandler}}(\textcolor{keywordtype}{void});}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00085}00085\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_ac309baa7a429f9090420ec4e9f6d9b26}{UART1\_DefaultErrorHandler}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00083}00083\ \textcolor{keywordtype}{void}\ UART1\_DefaultFramingErrorHandler(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00084}00084\ \textcolor{keywordtype}{void}\ UART1\_DefaultOverrunErrorHandler(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00085}00085\ \textcolor{keywordtype}{void}\ UART1\_DefaultErrorHandler(\textcolor{keywordtype}{void});}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00086}00086\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00087}\mbox{\hyperlink{uart1_8c_a10757505060dc7bf0fe148c5363eae08}{00087}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a10757505060dc7bf0fe148c5363eae08}{UART1\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00087}00087\ \textcolor{keywordtype}{void}\ UART1\_Initialize(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00088}00088\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00089}00089\ \ \ \ \ \textcolor{comment}{//\ Disable\ interrupts\ before\ changing\ states}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00090}00090\ \ \ \ \ PIE4bits.U1RXIE\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00091}00091\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a51639a975b53a20321ae9b38320d719a}{UART1\_SetRxInterruptHandler}}(\mbox{\hyperlink{uart1_8c_a35e44d5d4f0496f870d84d858d0943d0}{UART1\_Receive\_ISR}});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00091}00091\ \ \ \ \ UART1\_SetRxInterruptHandler(UART1\_Receive\_ISR);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00092}00092\ \ \ \ \ PIE4bits.U1TXIE\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{uart1_8c_affa9949c0a2f3d5e783f4fb7e77eb930}{UART1\_SetTxInterruptHandler}}(\mbox{\hyperlink{uart1_8c_ab76641987b5b841fc99eb9b368d4f355}{UART1\_Transmit\_ISR}});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00093}00093\ \ \ \ \ UART1\_SetTxInterruptHandler(UART1\_Transmit\_ISR);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00094}00094\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00095}00095\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ UART1\ module\ to\ the\ options\ selected\ in\ the\ user\ interface.}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00096}00096\ }
@@ -109,49 +109,49 @@
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00140}00140\ \ \ \ \ U1ERRIE\ =\ 0x00;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00141}00141\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00142}00142\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00143}00143\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a6bd5f6a7a3be6d8978a3ecfbfc193947}{UART1\_SetFramingErrorHandler}}(\mbox{\hyperlink{uart1_8c_a3461fe0e45fe0e071938030c6412d9b0}{UART1\_DefaultFramingErrorHandler}});}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00144}00144\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a28f18a73d1d22df7d107f6a35471b4b1}{UART1\_SetOverrunErrorHandler}}(\mbox{\hyperlink{uart1_8c_accef6aaeea72b011eca3c666d8e545cc}{UART1\_DefaultOverrunErrorHandler}});}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00145}00145\ \ \ \ \ \mbox{\hyperlink{uart1_8c_acde2f103f66cbd3c6a30212c67f8b62a}{UART1\_SetErrorHandler}}(\mbox{\hyperlink{uart1_8c_ac309baa7a429f9090420ec4e9f6d9b26}{UART1\_DefaultErrorHandler}});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00143}00143\ \ \ \ \ UART1\_SetFramingErrorHandler(UART1\_DefaultFramingErrorHandler);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00144}00144\ \ \ \ \ UART1\_SetOverrunErrorHandler(UART1\_DefaultOverrunErrorHandler);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00145}00145\ \ \ \ \ UART1\_SetErrorHandler(UART1\_DefaultErrorHandler);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00146}00146\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00147}00147\ \ \ \ \ uart1RxLastError.\mbox{\hyperlink{unionuart1__status__t_ade818037fd6c985038ff29656089758d}{status}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00147}00147\ \ \ \ \ uart1RxLastError.status\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00148}00148\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00149}00149\ \ \ \ \ \textcolor{comment}{//\ initializing\ the\ driver\ state}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00150}00150\ \ \ \ \ uart1TxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00151}00151\ \ \ \ \ uart1TxTail\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00152}00152\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}}\ =\ \textcolor{keyword}{sizeof}(uart1TxBuffer);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00152}00152\ \ \ \ \ uart1TxBufferRemaining\ =\ \textcolor{keyword}{sizeof}(uart1TxBuffer);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00153}00153\ \ \ \ \ uart1RxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00154}00154\ \ \ \ \ uart1RxTail\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00155}00155\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00155}00155\ \ \ \ \ uart1RxCount\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00156}00156\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00157}00157\ \ \ \ \ \textcolor{comment}{//\ enable\ receive\ interrupt}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00158}00158\ \ \ \ \ PIE4bits.U1RXIE\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00159}00159\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00160}00160\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00161}\mbox{\hyperlink{uart1_8c_a9cc281a1b89d2c4a0fb3acfaedaf2ce9}{00161}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{uart1_8c_a9cc281a1b89d2c4a0fb3acfaedaf2ce9}{UART1\_is\_rx\_ready}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00161}00161\ \textcolor{keywordtype}{bool}\ UART1\_is\_rx\_ready(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00162}00162\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{return}(\mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}}\ ?\ \textcolor{keyword}{true}\ :\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00163}00163\ \ \ \ \ \textcolor{keywordflow}{return}(uart1RxCount\ ?\ \textcolor{keyword}{true}\ :\ false);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00164}00164\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00165}00165\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00166}\mbox{\hyperlink{uart1_8c_a081dc1b3106c9f47745278fc60699120}{00166}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{uart1_8c_a081dc1b3106c9f47745278fc60699120}{UART1\_is\_tx\_ready}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00166}00166\ \textcolor{keywordtype}{bool}\ UART1\_is\_tx\_ready(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00167}00167\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00168}00168\ \ \ \ \ \textcolor{keywordflow}{return}(\mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}}\ ?\ \textcolor{keyword}{true}\ :\ \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00168}00168\ \ \ \ \ \textcolor{keywordflow}{return}(uart1TxBufferRemaining\ ?\ \textcolor{keyword}{true}\ :\ false);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00169}00169\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00170}00170\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00171}\mbox{\hyperlink{uart1_8c_a148a187d5306be550fed35e47f5d5fe7}{00171}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{uart1_8c_a148a187d5306be550fed35e47f5d5fe7}{UART1\_is\_tx\_done}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00171}00171\ \textcolor{keywordtype}{bool}\ UART1\_is\_tx\_done(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00172}00172\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00173}00173\ \ \ \ \ \textcolor{keywordflow}{return}\ U1ERRIRbits.TXMTIF;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00174}00174\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00175}00175\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00176}\mbox{\hyperlink{uart1_8c_ab27c9d15f40e994febdf4f5825e68f2f}{00176}}\ \mbox{\hyperlink{unionuart1__status__t}{uart1\_status\_t}}\ \mbox{\hyperlink{uart1_8c_ab27c9d15f40e994febdf4f5825e68f2f}{UART1\_get\_last\_status}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00176}00176\ \mbox{\hyperlink{unionuart1__status__t}{uart1\_status\_t}}\ UART1\_get\_last\_status(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00177}00177\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00178}00178\ \ \ \ \ \textcolor{keywordflow}{return}\ uart1RxLastError;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00179}00179\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00180}00180\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00181}\mbox{\hyperlink{uart1_8c_a4e34071aa3125eb037bd6ae844c7ffbb}{00181}}\ uint8\_t\ \mbox{\hyperlink{uart1_8c_a4e34071aa3125eb037bd6ae844c7ffbb}{UART1\_Read}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00181}00181\ uint8\_t\ UART1\_Read(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00182}00182\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00183}00183\ \ \ \ \ uint8\_t\ readValue\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00184}00184\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00185}00185\ \ \ \ \ \textcolor{keywordflow}{while}\ (0\ ==\ \mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}})\ \{}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00185}00185\ \ \ \ \ \textcolor{keywordflow}{while}\ (0\ ==\ uart1RxCount)\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00186}00186\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00187}00187\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00188}00188\ \ \ \ \ uart1RxLastError\ =\ uart1RxStatusBuffer[uart1RxTail];}
@@ -161,15 +161,15 @@
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00192}00192\ \ \ \ \ \ \ \ \ uart1RxTail\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00193}00193\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00194}00194\ \ \ \ \ PIE4bits.U1RXIE\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00195}00195\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}}-\/-\/;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00195}00195\ \ \ \ \ uart1RxCount-\/-\/;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00196}00196\ \ \ \ \ PIE4bits.U1RXIE\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00197}00197\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00198}00198\ \ \ \ \ \textcolor{keywordflow}{return}\ readValue;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00199}00199\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00200}00200\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00201}\mbox{\hyperlink{uart1_8c_a90e1d95e8003b3fd38e37e35e5864b2f}{00201}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a90e1d95e8003b3fd38e37e35e5864b2f}{UART1\_Write}}(uint8\_t\ txData)}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00201}00201\ \textcolor{keywordtype}{void}\ UART1\_Write(uint8\_t\ txData)}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00202}00202\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{while}\ (0\ ==\ \mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}})\ \{}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{while}\ (0\ ==\ uart1TxBufferRemaining)\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00204}00204\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00205}00205\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{if}\ (0\ ==\ PIE4bits.U1TXIE)\ \{}
@@ -180,34 +180,34 @@
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00211}00211\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{sizeof}(uart1TxBuffer)\ <=\ uart1TxHead)\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ uart1TxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00213}00213\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00214}00214\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}}-\/-\/;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00214}00214\ \ \ \ \ \ \ \ \ uart1TxBufferRemaining-\/-\/;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00215}00215\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00216}00216\ \ \ \ \ PIE4bits.U1TXIE\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00217}00217\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00218}00218\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00219}\mbox{\hyperlink{uart1_8c_aaf3f91c4a730f98dcf101ed897653ac9}{00219}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_aaf3f91c4a730f98dcf101ed897653ac9}{\_\_interrupt}}(irq(U1TX),\ base(8))\ UART1\_tx\_vect\_isr()}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00219}00219\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(U1TX),\ base(8))\ UART1\_tx\_vect\_isr()}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00220}00220\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00221}00221\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{uart1_8h_a6cec36d70999e547de397c9940e647cf}{UART1\_TxInterruptHandler}})\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00222}00222\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8h_a6cec36d70999e547de397c9940e647cf}{UART1\_TxInterruptHandler}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00221}00221\ \ \ \ \ \textcolor{keywordflow}{if}\ (UART1\_TxInterruptHandler)\ \{}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00222}00222\ \ \ \ \ \ \ \ \ UART1\_TxInterruptHandler();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00223}00223\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00224}00224\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00225}00225\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00226}\mbox{\hyperlink{uart1_8c_a19cc1c3c11253fa53d5d96a806bcce8f}{00226}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_aaf3f91c4a730f98dcf101ed897653ac9}{\_\_interrupt}}(irq(U1RX),\ base(8))\ UART1\_rx\_vect\_isr()}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00226}00226\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(U1RX),\ base(8))\ UART1\_rx\_vect\_isr()}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00227}00227\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00228}00228\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{uart1_8h_a9aea9ddba8a608c2eb7e20d87a10609e}{UART1\_RxInterruptHandler}})\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00229}00229\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8h_a9aea9ddba8a608c2eb7e20d87a10609e}{UART1\_RxInterruptHandler}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00228}00228\ \ \ \ \ \textcolor{keywordflow}{if}\ (UART1\_RxInterruptHandler)\ \{}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00229}00229\ \ \ \ \ \ \ \ \ UART1\_RxInterruptHandler();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00230}00230\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00231}00231\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00232}00232\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00233}\mbox{\hyperlink{uart1_8c_ab76641987b5b841fc99eb9b368d4f355}{00233}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_ab76641987b5b841fc99eb9b368d4f355}{UART1\_Transmit\_ISR}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00233}00233\ \textcolor{keywordtype}{void}\ UART1\_Transmit\_ISR(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00234}00234\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00235}00235\ \ \ \ \ \textcolor{comment}{//\ use\ this\ default\ transmit\ interrupt\ handler\ code}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00236}00236\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{sizeof}(uart1TxBuffer)\ >\ \mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}})\ \{}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00236}00236\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{sizeof}(uart1TxBuffer)\ >\ uart1TxBufferRemaining)\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00237}00237\ \ \ \ \ \ \ \ \ U1TXB\ =\ uart1TxBuffer[uart1TxTail++];}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00238}00238\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{sizeof}(uart1TxBuffer)\ <=\ uart1TxTail)\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00239}00239\ \ \ \ \ \ \ \ \ \ \ \ \ uart1TxTail\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00240}00240\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00241}00241\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}}++;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00241}00241\ \ \ \ \ \ \ \ \ uart1TxBufferRemaining++;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00242}00242\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00243}00243\ \ \ \ \ \ \ \ \ PIE4bits.U1TXIE\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00244}00244\ \ \ \ \ \}}
@@ -215,105 +215,105 @@
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00246}00246\ \ \ \ \ \textcolor{comment}{//\ or\ set\ custom\ function\ using\ UART1\_SetTxInterruptHandler()}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00247}00247\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00248}00248\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00249}\mbox{\hyperlink{uart1_8c_a35e44d5d4f0496f870d84d858d0943d0}{00249}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a35e44d5d4f0496f870d84d858d0943d0}{UART1\_Receive\_ISR}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00249}00249\ \textcolor{keywordtype}{void}\ UART1\_Receive\_ISR(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00250}00250\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00251}00251\ \ \ \ \ \textcolor{comment}{//\ use\ this\ default\ receive\ interrupt\ handler\ code}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00252}00252\ \ \ \ \ uart1RxStatusBuffer[uart1RxHead].\mbox{\hyperlink{unionuart1__status__t_ade818037fd6c985038ff29656089758d}{status}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00252}00252\ \ \ \ \ uart1RxStatusBuffer[uart1RxHead].status\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00253}00253\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00254}00254\ \ \ \ \ \textcolor{keywordflow}{if}\ (U1ERRIRbits.FERIF)\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00255}00255\ \ \ \ \ \ \ \ \ uart1RxStatusBuffer[uart1RxHead].\mbox{\hyperlink{unionuart1__status__t_ac0a53829c3a0a280025ae6bbb85e88f8}{ferr}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00256}00256\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8c_adead81f12d80599ce50c945035f9eb8a}{UART1\_FramingErrorHandler}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00255}00255\ \ \ \ \ \ \ \ \ uart1RxStatusBuffer[uart1RxHead].ferr\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00256}00256\ \ \ \ \ \ \ \ \ UART1\_FramingErrorHandler();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00257}00257\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00258}00258\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00259}00259\ \ \ \ \ \textcolor{keywordflow}{if}\ (U1ERRIRbits.RXFOIF)\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00260}00260\ \ \ \ \ \ \ \ \ uart1RxStatusBuffer[uart1RxHead].\mbox{\hyperlink{unionuart1__status__t_a8e7505a43bf03e13302937d789ce63ae}{oerr}}\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00261}00261\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8c_a40db9ec85d7563dee683923c1bd71f33}{UART1\_OverrunErrorHandler}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00260}00260\ \ \ \ \ \ \ \ \ uart1RxStatusBuffer[uart1RxHead].oerr\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00261}00261\ \ \ \ \ \ \ \ \ UART1\_OverrunErrorHandler();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00262}00262\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00263}00263\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00264}00264\ \ \ \ \ \textcolor{keywordflow}{if}\ (uart1RxStatusBuffer[uart1RxHead].status)\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00265}00265\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8c_a7e1da23a5a97163253047b83cdd6478d}{UART1\_ErrorHandler}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00265}00265\ \ \ \ \ \ \ \ \ UART1\_ErrorHandler();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00266}00266\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00267}00267\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{uart1_8c_a43e8b9c56ae13841e7df4c17a3b82edf}{UART1\_RxDataHandler}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00267}00267\ \ \ \ \ \ \ \ \ UART1\_RxDataHandler();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00268}00268\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00269}00269\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00270}00270\ \ \ \ \ \textcolor{comment}{//\ or\ set\ custom\ function\ using\ UART1\_SetRxInterruptHandler()}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00271}00271\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00272}00272\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00273}\mbox{\hyperlink{uart1_8c_a43e8b9c56ae13841e7df4c17a3b82edf}{00273}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a43e8b9c56ae13841e7df4c17a3b82edf}{UART1\_RxDataHandler}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00273}00273\ \textcolor{keywordtype}{void}\ UART1\_RxDataHandler(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00274}00274\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00275}00275\ \ \ \ \ \textcolor{comment}{//\ use\ this\ default\ receive\ interrupt\ handler\ code}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00276}00276\ \ \ \ \ uart1RxBuffer[uart1RxHead++]\ =\ U1RXB;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00277}00277\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{sizeof}(uart1RxBuffer)\ <=\ uart1RxHead)\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00278}00278\ \ \ \ \ \ \ \ \ uart1RxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00279}00279\ \ \ \ \ \}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00280}00280\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}}++;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00280}00280\ \ \ \ \ uart1RxCount++;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00281}00281\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00282}00282\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00283}\mbox{\hyperlink{uart1_8c_a3461fe0e45fe0e071938030c6412d9b0}{00283}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a3461fe0e45fe0e071938030c6412d9b0}{UART1\_DefaultFramingErrorHandler}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00283}00283\ \textcolor{keywordtype}{void}\ UART1\_DefaultFramingErrorHandler(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00284}00284\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00285}00285\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00286}00286\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00287}\mbox{\hyperlink{uart1_8c_accef6aaeea72b011eca3c666d8e545cc}{00287}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_accef6aaeea72b011eca3c666d8e545cc}{UART1\_DefaultOverrunErrorHandler}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00287}00287\ \textcolor{keywordtype}{void}\ UART1\_DefaultOverrunErrorHandler(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00288}00288\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00289}00289\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00290}00290\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00291}\mbox{\hyperlink{uart1_8c_ac309baa7a429f9090420ec4e9f6d9b26}{00291}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_ac309baa7a429f9090420ec4e9f6d9b26}{UART1\_DefaultErrorHandler}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00291}00291\ \textcolor{keywordtype}{void}\ UART1\_DefaultErrorHandler(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00292}00292\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00293}00293\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a43e8b9c56ae13841e7df4c17a3b82edf}{UART1\_RxDataHandler}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00293}00293\ \ \ \ \ UART1\_RxDataHandler();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00294}00294\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00295}00295\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00296}\mbox{\hyperlink{uart1_8c_a6bd5f6a7a3be6d8978a3ecfbfc193947}{00296}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a6bd5f6a7a3be6d8978a3ecfbfc193947}{UART1\_SetFramingErrorHandler}}(\textcolor{keywordtype}{void}\ (*\ interruptHandler)(\textcolor{keywordtype}{void}))}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00296}00296\ \textcolor{keywordtype}{void}\ UART1\_SetFramingErrorHandler(\textcolor{keywordtype}{void}\ (*\ interruptHandler)(\textcolor{keywordtype}{void}))}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00297}00297\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00298}00298\ \ \ \ \ \mbox{\hyperlink{uart1_8c_adead81f12d80599ce50c945035f9eb8a}{UART1\_FramingErrorHandler}}\ =\ interruptHandler;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00298}00298\ \ \ \ \ UART1\_FramingErrorHandler\ =\ interruptHandler;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00299}00299\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00300}00300\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00301}\mbox{\hyperlink{uart1_8c_a28f18a73d1d22df7d107f6a35471b4b1}{00301}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a28f18a73d1d22df7d107f6a35471b4b1}{UART1\_SetOverrunErrorHandler}}(\textcolor{keywordtype}{void}\ (*\ interruptHandler)(\textcolor{keywordtype}{void}))}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00301}00301\ \textcolor{keywordtype}{void}\ UART1\_SetOverrunErrorHandler(\textcolor{keywordtype}{void}\ (*\ interruptHandler)(\textcolor{keywordtype}{void}))}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00302}00302\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00303}00303\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a40db9ec85d7563dee683923c1bd71f33}{UART1\_OverrunErrorHandler}}\ =\ interruptHandler;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00303}00303\ \ \ \ \ UART1\_OverrunErrorHandler\ =\ interruptHandler;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00304}00304\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00305}00305\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00306}\mbox{\hyperlink{uart1_8c_acde2f103f66cbd3c6a30212c67f8b62a}{00306}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_acde2f103f66cbd3c6a30212c67f8b62a}{UART1\_SetErrorHandler}}(\textcolor{keywordtype}{void}\ (*\ interruptHandler)(\textcolor{keywordtype}{void}))}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00306}00306\ \textcolor{keywordtype}{void}\ UART1\_SetErrorHandler(\textcolor{keywordtype}{void}\ (*\ interruptHandler)(\textcolor{keywordtype}{void}))}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00307}00307\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00308}00308\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a7e1da23a5a97163253047b83cdd6478d}{UART1\_ErrorHandler}}\ =\ interruptHandler;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00308}00308\ \ \ \ \ UART1\_ErrorHandler\ =\ interruptHandler;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00309}00309\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00310}00310\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00311}\mbox{\hyperlink{uart1_8c_a51639a975b53a20321ae9b38320d719a}{00311}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a51639a975b53a20321ae9b38320d719a}{UART1\_SetRxInterruptHandler}}(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00311}00311\ \textcolor{keywordtype}{void}\ UART1\_SetRxInterruptHandler(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00312}00312\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00313}00313\ \ \ \ \ \mbox{\hyperlink{uart1_8h_a9aea9ddba8a608c2eb7e20d87a10609e}{UART1\_RxInterruptHandler}}\ =\ InterruptHandler;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00313}00313\ \ \ \ \ UART1\_RxInterruptHandler\ =\ InterruptHandler;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00314}00314\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00315}00315\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00316}\mbox{\hyperlink{uart1_8c_affa9949c0a2f3d5e783f4fb7e77eb930}{00316}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_affa9949c0a2f3d5e783f4fb7e77eb930}{UART1\_SetTxInterruptHandler}}(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00316}00316\ \textcolor{keywordtype}{void}\ UART1\_SetTxInterruptHandler(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00317}00317\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00318}00318\ \ \ \ \ \mbox{\hyperlink{uart1_8h_a6cec36d70999e547de397c9940e647cf}{UART1\_TxInterruptHandler}}\ =\ InterruptHandler;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00318}00318\ \ \ \ \ UART1\_TxInterruptHandler\ =\ InterruptHandler;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00319}00319\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00320}00320\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00321}00321\ \textcolor{comment}{/*\ stuff\ the\ uart1\ receive\ buffer\ with\ testing\ data\ */}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00322}\mbox{\hyperlink{uart1_8c_a3bbebda4ada7cefb82e65ef9b12a76b3}{00322}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a3bbebda4ada7cefb82e65ef9b12a76b3}{UART1\_put\_buffer}}(uint8\_t\ bufData)}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00322}00322\ \textcolor{keywordtype}{void}\ UART1\_put\_buffer(uint8\_t\ bufData)}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00323}00323\ \{}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00324}00324\ \ \ \ \ \mbox{\hyperlink{interrupt__manager_8h_adbb459e16400896a6530a8bf39788ec7}{INTERRUPT\_GlobalInterruptHighDisable}}();}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00325}00325\ \ \ \ \ \mbox{\hyperlink{interrupt__manager_8h_a5413f71ea540433be5616d831ff8a111}{INTERRUPT\_GlobalInterruptLowDisable}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00324}00324\ \ \ \ \ INTERRUPT\_GlobalInterruptHighDisable();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00325}00325\ \ \ \ \ INTERRUPT\_GlobalInterruptLowDisable();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00326}00326\ \ \ \ \ PIE4bits.U1RXIE\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00327}00327\ \ \ \ \ uart1RxBuffer[uart1RxHead++]\ =\ bufData;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00328}00328\ \ \ \ \ \textcolor{keywordflow}{if}\ (\textcolor{keyword}{sizeof}(uart1RxBuffer)\ <=\ uart1RxHead)\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00329}00329\ \ \ \ \ \ \ \ \ uart1RxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00330}00330\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00331}00331\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00332}00332\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}}++;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00332}00332\ \ \ \ \ uart1RxCount++;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00333}00333\ \ \ \ \ PIE4bits.U1RXIE\ =\ 1;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00334}00334\ \ \ \ \ \mbox{\hyperlink{interrupt__manager_8h_a8cd67a145b9cc65a8d54347159a46e64}{INTERRUPT\_GlobalInterruptLowEnable}}();}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00335}00335\ \ \ \ \ \mbox{\hyperlink{interrupt__manager_8h_aab72fb58c88f1144f26ba7cab4f785cb}{INTERRUPT\_GlobalInterruptHighEnable}}();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00334}00334\ \ \ \ \ INTERRUPT\_GlobalInterruptLowEnable();}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00335}00335\ \ \ \ \ INTERRUPT\_GlobalInterruptHighEnable();}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00336}00336\ \}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00337}00337\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00338}00338\ \textcolor{comment}{/*}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00339}00339\ \textcolor{comment}{\ *\ on\ the\ fly\ bps\ selection}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00340}00340\ \textcolor{comment}{\ */}}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00341}\mbox{\hyperlink{uart1_8c_a4519c9ab5367dda912bb974b52874c0f}{00341}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{uart1_8c_a4519c9ab5367dda912bb974b52874c0f}{UART1\_Initialize19200}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00341}00341\ \textcolor{keywordtype}{void}\ UART1\_Initialize19200(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00342}00342\ \{}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00343}00343\ \ \ \ \ \textcolor{comment}{//\ Disable\ interrupts\ before\ changing\ states}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00344}00344\ \ \ \ \ PIE4bits.U1RXIE\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00345}00345\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a51639a975b53a20321ae9b38320d719a}{UART1\_SetRxInterruptHandler}}(\mbox{\hyperlink{uart1_8c_a35e44d5d4f0496f870d84d858d0943d0}{UART1\_Receive\_ISR}});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00345}00345\ \ \ \ \ UART1\_SetRxInterruptHandler(UART1\_Receive\_ISR);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00346}00346\ \ \ \ \ PIE4bits.U1TXIE\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00347}00347\ \ \ \ \ \mbox{\hyperlink{uart1_8c_affa9949c0a2f3d5e783f4fb7e77eb930}{UART1\_SetTxInterruptHandler}}(\mbox{\hyperlink{uart1_8c_ab76641987b5b841fc99eb9b368d4f355}{UART1\_Transmit\_ISR}});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00347}00347\ \ \ \ \ UART1\_SetTxInterruptHandler(UART1\_Transmit\_ISR);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00348}00348\ \ \ \ \ PIE4bits.U1EIE\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00349}00349\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00350}00350\ }
@@ -365,18 +365,18 @@
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00396}00396\ \ \ \ \ U1ERRIE\ =\ 0x00;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00397}00397\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00398}00398\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00399}00399\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a28f18a73d1d22df7d107f6a35471b4b1}{UART1\_SetOverrunErrorHandler}}(\mbox{\hyperlink{uart1_8c_accef6aaeea72b011eca3c666d8e545cc}{UART1\_DefaultOverrunErrorHandler}});}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00400}00400\ \ \ \ \ \mbox{\hyperlink{uart1_8c_acde2f103f66cbd3c6a30212c67f8b62a}{UART1\_SetErrorHandler}}(\mbox{\hyperlink{uart1_8c_ac309baa7a429f9090420ec4e9f6d9b26}{UART1\_DefaultErrorHandler}});}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00399}00399\ \ \ \ \ UART1\_SetOverrunErrorHandler(UART1\_DefaultOverrunErrorHandler);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00400}00400\ \ \ \ \ UART1\_SetErrorHandler(UART1\_DefaultErrorHandler);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00401}00401\ }
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00402}00402\ \ \ \ \ uart1RxLastError.\mbox{\hyperlink{unionuart1__status__t_ade818037fd6c985038ff29656089758d}{status}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00402}00402\ \ \ \ \ uart1RxLastError.status\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00403}00403\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00404}00404\ \ \ \ \ \textcolor{comment}{//\ initializing\ the\ driver\ state}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00405}00405\ \ \ \ \ uart1TxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00406}00406\ \ \ \ \ uart1TxTail\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00407}00407\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a3a3f53cf67998c8ba16d6923dd34bc5f}{uart1TxBufferRemaining}}\ =\ \textcolor{keyword}{sizeof}(uart1TxBuffer);}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00407}00407\ \ \ \ \ uart1TxBufferRemaining\ =\ \textcolor{keyword}{sizeof}(uart1TxBuffer);}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00408}00408\ \ \ \ \ uart1RxHead\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00409}00409\ \ \ \ \ uart1RxTail\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00410}00410\ \ \ \ \ \mbox{\hyperlink{uart1_8c_a74f93e31d32186fbb69744edd5927b90}{uart1RxCount}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{uart1_8c_source_l00410}00410\ \ \ \ \ uart1RxCount\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00411}00411\ }
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00412}00412\ \ \ \ \ \textcolor{comment}{//\ enable\ receive\ interrupt}}
 \DoxyCodeLine{\Hypertarget{uart1_8c_source_l00413}00413\ \ \ \ \ PIE4bits.U1RXIE\ =\ 1;}

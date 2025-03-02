@@ -1,6 +1,6 @@
 \doxysection{tmr5.\+c}
 \hypertarget{tmr5_8c_source}{}\label{tmr5_8c_source}\index{secs\_q84.X/mcc\_generated\_files/tmr5.c@{secs\_q84.X/mcc\_generated\_files/tmr5.c}}
-\mbox{\hyperlink{tmr5_8c}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00001}00001\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00024}00024\ \textcolor{comment}{/*}}
@@ -27,13 +27,13 @@
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00045}00045\ \textcolor{comment}{*/}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00046}00046\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{tmr5_8h}{tmr5.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00053}00053\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interrupt__manager_8h}{interrupt\_manager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}tmr5.h"{}}}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00053}00053\ \textcolor{preprocessor}{\#include\ "{}interrupt\_manager.h"{}}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00054}00054\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00058}\mbox{\hyperlink{tmr5_8c_a2dbdf31606a6249556d997f0924f2b35}{00058}}\ \textcolor{keyword}{volatile}\ uint16\_t\ \mbox{\hyperlink{tmr5_8c_a2dbdf31606a6249556d997f0924f2b35}{timer5ReloadVal}};}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00059}\mbox{\hyperlink{tmr5_8c_a2829958a2ef379044480b7f406d12230}{00059}}\ void\ (*\mbox{\hyperlink{tmr5_8c_a2829958a2ef379044480b7f406d12230}{TMR5\_InterruptHandler}})(void);}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00058}00058\ \textcolor{keyword}{volatile}\ uint16\_t\ timer5ReloadVal;}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00059}00059\ void\ (*TMR5\_InterruptHandler)(void);}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00060}00060\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00065}\mbox{\hyperlink{tmr5_8c_a00d059673a2ccd8a980e0ae629c2df4a}{00065}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_a00d059673a2ccd8a980e0ae629c2df4a}{TMR5\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00065}00065\ \textcolor{keywordtype}{void}\ TMR5\_Initialize(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00066}00066\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00067}00067\ \ \ \ \ \textcolor{comment}{//Set\ the\ Timer\ to\ the\ options\ selected\ in\ the\ GUI}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00068}00068\ }
@@ -56,31 +56,31 @@
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00085}00085\ \ \ \ \ PIR8bits.TMR5IF\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00086}00086\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00087}00087\ \ \ \ \ \textcolor{comment}{//\ Load\ the\ TMR\ value\ to\ reload\ variable}}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00088}00088\ \ \ \ \ \mbox{\hyperlink{tmr5_8c_a2dbdf31606a6249556d997f0924f2b35}{timer5ReloadVal}}=(uint16\_t)((TMR5H\ <<\ 8)\ |\ TMR5L);}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00088}00088\ \ \ \ \ timer5ReloadVal=(uint16\_t)((TMR5H\ <<\ 8)\ |\ TMR5L);}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00089}00089\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00090}00090\ \ \ \ \ \textcolor{comment}{//\ Enabling\ TMR5\ interrupt.}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00091}00091\ \ \ \ \ PIE8bits.TMR5IE\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00092}00092\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00093}00093\ \ \ \ \ \textcolor{comment}{//\ Set\ Default\ Interrupt\ Handler}}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00094}00094\ \ \ \ \ \mbox{\hyperlink{tmr5_8c_a2963d4a01246f33d36fc840540def47e}{TMR5\_SetInterruptHandler}}(\mbox{\hyperlink{tmr5_8c_afb8634b4b6491652bb5c8aef16663aee}{TMR5\_DefaultInterruptHandler}});}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00094}00094\ \ \ \ \ TMR5\_SetInterruptHandler(TMR5\_DefaultInterruptHandler);}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00095}00095\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00096}00096\ \ \ \ \ \textcolor{comment}{//\ CKPS\ 1:8;\ NOT\_SYNC\ synchronize;\ TMR5ON\ enabled;\ T5RD16\ disabled;\ }}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00097}00097\ \ \ \ \ T5CON\ =\ 0x31;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00098}00098\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00099}00099\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00100}\mbox{\hyperlink{tmr5_8c_a20e57f18e5ec374c2cdf577309ebb8d0}{00100}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_a20e57f18e5ec374c2cdf577309ebb8d0}{TMR5\_StartTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00100}00100\ \textcolor{keywordtype}{void}\ TMR5\_StartTimer(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00101}00101\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00102}00102\ \ \ \ \ \textcolor{comment}{//\ Start\ the\ Timer\ by\ writing\ to\ TMRxON\ bit}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00103}00103\ \ \ \ \ T5CONbits.TMR5ON\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00104}00104\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00105}00105\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00106}\mbox{\hyperlink{tmr5_8c_a5c1728f8f51e96dfaac245fea1fece67}{00106}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_a5c1728f8f51e96dfaac245fea1fece67}{TMR5\_StopTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00106}00106\ \textcolor{keywordtype}{void}\ TMR5\_StopTimer(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00107}00107\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00108}00108\ \ \ \ \ \textcolor{comment}{//\ Stop\ the\ Timer\ by\ writing\ to\ TMRxON\ bit}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00109}00109\ \ \ \ \ T5CONbits.TMR5ON\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00110}00110\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00111}00111\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00112}\mbox{\hyperlink{tmr5_8c_a729be756b41d0fd9c64d656d818d1365}{00112}}\ uint16\_t\ \mbox{\hyperlink{tmr5_8c_a729be756b41d0fd9c64d656d818d1365}{TMR5\_ReadTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00112}00112\ uint16\_t\ TMR5\_ReadTimer(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00113}00113\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00114}00114\ \ \ \ \ uint16\_t\ readVal;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00115}00115\ \ \ \ \ uint8\_t\ readValHigh;}
@@ -96,7 +96,7 @@
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00125}00125\ \ \ \ \ \textcolor{keywordflow}{return}\ readVal;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00126}00126\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00127}00127\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00128}\mbox{\hyperlink{tmr5_8c_aff96cfd796008b442c4076edf21b212a}{00128}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_aff96cfd796008b442c4076edf21b212a}{TMR5\_WriteTimer}}(uint16\_t\ timerVal)}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00128}00128\ \textcolor{keywordtype}{void}\ TMR5\_WriteTimer(uint16\_t\ timerVal)}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00129}00129\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00130}00130\ \ \ \ \ \textcolor{keywordflow}{if}\ (T5CONbits.NOT\_SYNC\ ==\ 1)}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00131}00131\ \ \ \ \ \{}
@@ -118,54 +118,54 @@
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00147}00147\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00148}00148\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00149}00149\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00150}\mbox{\hyperlink{tmr5_8c_a8ca13876d542b4c54dcf8de332dc4010}{00150}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_a8ca13876d542b4c54dcf8de332dc4010}{TMR5\_Reload}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00150}00150\ \textcolor{keywordtype}{void}\ TMR5\_Reload(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00151}00151\ \{}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00152}00152\ \ \ \ \ \mbox{\hyperlink{tmr5_8c_aff96cfd796008b442c4076edf21b212a}{TMR5\_WriteTimer}}(\mbox{\hyperlink{tmr5_8c_a2dbdf31606a6249556d997f0924f2b35}{timer5ReloadVal}});}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00152}00152\ \ \ \ \ TMR5\_WriteTimer(timer5ReloadVal);}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00153}00153\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00154}00154\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00155}\mbox{\hyperlink{tmr5_8c_ac8931933d745ea83743e8cb4c7320bb4}{00155}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_ac8931933d745ea83743e8cb4c7320bb4}{TMR5\_StartSinglePulseAcquisition}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00155}00155\ \textcolor{keywordtype}{void}\ TMR5\_StartSinglePulseAcquisition(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00156}00156\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00157}00157\ \ \ \ \ T5GCONbits.T5GGO\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00158}00158\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00159}00159\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00160}\mbox{\hyperlink{tmr5_8c_a2c247c5ab9fccd8cfb7c47db432debcb}{00160}}\ uint8\_t\ \mbox{\hyperlink{tmr5_8c_a2c247c5ab9fccd8cfb7c47db432debcb}{TMR5\_CheckGateValueStatus}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00160}00160\ uint8\_t\ TMR5\_CheckGateValueStatus(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00161}00161\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00162}00162\ \ \ \ \ \textcolor{keywordflow}{return}\ (T5GCONbits.T5GVAL);}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00163}00163\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00164}00164\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00165}\mbox{\hyperlink{tmr5_8c_a71c58fb9f415ac2d51454074c3ec1b32}{00165}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_a71c58fb9f415ac2d51454074c3ec1b32}{\_\_interrupt}}(irq(TMR5),base(8),low\_priority)\ TMR5\_ISR()}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00165}00165\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(TMR5),base(8),low\_priority)\ TMR5\_ISR()}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00166}00166\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00167}00167\ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{volatile}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ CountCallBack\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00168}00168\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00169}00169\ \ \ \ \ \textcolor{comment}{//\ Clear\ the\ TMR5\ interrupt\ flag}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00170}00170\ \ \ \ \ PIR8bits.TMR5IF\ =\ 0;}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00171}00171\ \ \ \ \ \mbox{\hyperlink{tmr5_8c_aff96cfd796008b442c4076edf21b212a}{TMR5\_WriteTimer}}(\mbox{\hyperlink{tmr5_8c_a2dbdf31606a6249556d997f0924f2b35}{timer5ReloadVal}});}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00171}00171\ \ \ \ \ TMR5\_WriteTimer(timer5ReloadVal);}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00172}00172\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00173}00173\ \ \ \ \ \textcolor{comment}{//\ callback\ function\ -\/\ called\ every\ 50th\ pass}}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00174}00174\ \ \ \ \ \textcolor{keywordflow}{if}\ (++CountCallBack\ >=\ \mbox{\hyperlink{tmr5_8h_abb7cbdd887b838a1b0b92624405291b6}{TMR5\_INTERRUPT\_TICKER\_FACTOR}})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00174}00174\ \ \ \ \ \textcolor{keywordflow}{if}\ (++CountCallBack\ >=\ TMR5\_INTERRUPT\_TICKER\_FACTOR)}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00175}00175\ \ \ \ \ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00176}00176\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ ticker\ function\ call}}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00177}00177\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{tmr5_8c_a096424e4a56cca4fcf5cca60899d9b9a}{TMR5\_CallBack}}();}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00177}00177\ \ \ \ \ \ \ \ \ TMR5\_CallBack();}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00178}00178\ }
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ reset\ ticker\ counter}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00180}00180\ \ \ \ \ \ \ \ \ CountCallBack\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00181}00181\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00182}00182\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00183}00183\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00184}\mbox{\hyperlink{tmr5_8c_a096424e4a56cca4fcf5cca60899d9b9a}{00184}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_a096424e4a56cca4fcf5cca60899d9b9a}{TMR5\_CallBack}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00184}00184\ \textcolor{keywordtype}{void}\ TMR5\_CallBack(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00185}00185\ \{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00186}00186\ \ \ \ \ \textcolor{comment}{//\ Add\ your\ custom\ callback\ code\ here}}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00187}00187\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{tmr5_8c_a2829958a2ef379044480b7f406d12230}{TMR5\_InterruptHandler}})}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00187}00187\ \ \ \ \ \textcolor{keywordflow}{if}(TMR5\_InterruptHandler)}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00188}00188\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00189}00189\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{tmr5_8c_a2829958a2ef379044480b7f406d12230}{TMR5\_InterruptHandler}}();}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00189}00189\ \ \ \ \ \ \ \ \ TMR5\_InterruptHandler();}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00190}00190\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00191}00191\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00192}00192\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00193}\mbox{\hyperlink{tmr5_8c_a2963d4a01246f33d36fc840540def47e}{00193}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_a2963d4a01246f33d36fc840540def47e}{TMR5\_SetInterruptHandler}}(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))\{}
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00194}00194\ \ \ \ \ \mbox{\hyperlink{tmr5_8c_a2829958a2ef379044480b7f406d12230}{TMR5\_InterruptHandler}}\ =\ InterruptHandler;}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00193}00193\ \textcolor{keywordtype}{void}\ TMR5\_SetInterruptHandler(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))\{}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00194}00194\ \ \ \ \ TMR5\_InterruptHandler\ =\ InterruptHandler;}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00195}00195\ \}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00196}00196\ }
-\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00197}\mbox{\hyperlink{tmr5_8c_afb8634b4b6491652bb5c8aef16663aee}{00197}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr5_8c_afb8634b4b6491652bb5c8aef16663aee}{TMR5\_DefaultInterruptHandler}}(\textcolor{keywordtype}{void})\{}
+\DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00197}00197\ \textcolor{keywordtype}{void}\ TMR5\_DefaultInterruptHandler(\textcolor{keywordtype}{void})\{}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00198}00198\ \ \ \ \ \textcolor{comment}{//\ add\ your\ TMR5\ interrupt\ custom\ code}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00199}00199\ \ \ \ \ \textcolor{comment}{//\ or\ set\ custom\ function\ using\ TMR5\_SetInterruptHandler()}}
 \DoxyCodeLine{\Hypertarget{tmr5_8c_source_l00200}00200\ \}}

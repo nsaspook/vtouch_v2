@@ -1,6 +1,6 @@
 \doxysection{memory.\+c}
 \hypertarget{memory_8c_source}{}\label{memory_8c_source}\index{secs\_q84.X/mcc\_generated\_files/memory.c@{secs\_q84.X/mcc\_generated\_files/memory.c}}
-\mbox{\hyperlink{memory_8c}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00001}00001\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00024}00024\ \textcolor{comment}{/*}}
@@ -27,12 +27,12 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00045}00045\ \textcolor{comment}{*/}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00046}00046\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00050}00050\ \textcolor{preprocessor}{\#include\ <xc.h>}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{memory_8h}{memory.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ "{}memory.h"{}}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00052}00052\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00057}00057\ \textcolor{comment}{//128-\/words\ of\ Buffer\ RAM\ for\ PIC18F47Q84\ is\ available\ at\ 0x3700}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00058}\mbox{\hyperlink{memory_8c_a0db1ba081500416c9aa6485b11b21d64}{00058}}\ uint16\_t\ bufferRAM\ \mbox{\hyperlink{memory_8c_a0db1ba081500416c9aa6485b11b21d64}{\_\_at}}(0x3700);\ }
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00058}00058\ uint16\_t\ bufferRAM\ \_\_at(0x3700);\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00059}00059\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00060}\mbox{\hyperlink{memory_8c_a989fc8af0790ea48a22f9ae91fae5bc1}{00060}}\ uint8\_t\ \mbox{\hyperlink{memory_8c_a989fc8af0790ea48a22f9ae91fae5bc1}{FLASH\_ReadByte}}(uint32\_t\ flashAddr)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00060}00060\ uint8\_t\ FLASH\_ReadByte(uint32\_t\ flashAddr)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00061}00061\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//Set\ TBLPTR\ with\ the\ target\ byte\ address}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00063}00063\ \ \ \ \ TBLPTRU\ =\ (uint8\_t)\ ((flashAddr\ \&\ 0x00FF0000)\ >>\ 16);}
@@ -45,7 +45,7 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00070}00070\ \ \ \ \ \textcolor{keywordflow}{return}\ (TABLAT);}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00071}00071\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00072}00072\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00073}\mbox{\hyperlink{memory_8c_a465bb55a80f2aef3143b3df9b28a004a}{00073}}\ uint16\_t\ \mbox{\hyperlink{memory_8c_a465bb55a80f2aef3143b3df9b28a004a}{FLASH\_ReadWord}}(uint32\_t\ flashAddr)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00073}00073\ uint16\_t\ FLASH\_ReadWord(uint32\_t\ flashAddr)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00074}00074\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00075}00075\ \ \ \ \ uint8\_t\ readWordL,\ readWordH;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00076}00076\ }
@@ -65,7 +65,7 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00090}00090\ \ \ \ \ \textcolor{keywordflow}{return}\ (((uint16\_t)\ readWordH\ <<\ 8)\ |\ (readWordL));}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00091}00091\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00092}00092\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00093}\mbox{\hyperlink{memory_8c_a6c6f7bcaf4f6d20466bb9d53d1cf8343}{00093}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8c_a6c6f7bcaf4f6d20466bb9d53d1cf8343}{FLASH\_ReadPage}}(uint32\_t\ flashAddr)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00093}00093\ \textcolor{keywordtype}{void}\ FLASH\_ReadPage(uint32\_t\ flashAddr)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00094}00094\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00095}00095\ \ \ \ \ uint8\_t\ GIEBitValue\ =\ INTCON0bits.GIE;\ \textcolor{comment}{//\ Save\ interrupt\ enable}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00096}00096\ }
@@ -95,7 +95,7 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00120}00120\ \ \ \ \ NVMCON1bits.NVMCMD\ =\ 0b000;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00121}00121\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00122}00122\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00123}\mbox{\hyperlink{memory_8c_a8841f8f7da080973be19b888dbb5e21c}{00123}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8c_a8841f8f7da080973be19b888dbb5e21c}{FLASH\_WritePage}}(uint32\_t\ flashAddr)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00123}00123\ \textcolor{keywordtype}{void}\ FLASH\_WritePage(uint32\_t\ flashAddr)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00124}00124\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00125}00125\ \ \ \ \ uint8\_t\ GIEBitValue\ =\ INTCON0bits.GIE;\ \textcolor{comment}{//\ Save\ interrupt\ enable}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00126}00126\ }
@@ -125,30 +125,30 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00150}00150\ \ \ \ \ NVMCON1bits.NVMCMD\ =\ 0b000;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00151}00151\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00152}00152\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00153}\mbox{\hyperlink{memory_8c_a2921ceaf1ad4bff7c594a58db7e82c44}{00153}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8c_a2921ceaf1ad4bff7c594a58db7e82c44}{FLASH\_WriteWord}}(uint32\_t\ flashAddr,\ uint16\_t\ word)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00153}00153\ \textcolor{keywordtype}{void}\ FLASH\_WriteWord(uint32\_t\ flashAddr,\ uint16\_t\ word)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00154}00154\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00155}00155\ \ \ \ \ uint16\_t\ *bufferRamPtr\ =\ (uint16\_t*)\ \&\ bufferRAM;}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00156}00156\ \ \ \ \ uint32\_t\ blockStartAddr\ =\ (uint32\_t)\ (flashAddr\ \&\ ((\mbox{\hyperlink{memory_8h_a1f5e97b130e249bb5c96354b4933bb76}{END\_FLASH}}\ -\/\ 1)\ \string^\ ((\mbox{\hyperlink{memory_8h_a96d0844a0ca8255fff8bb2d96d7c0779}{ERASE\_FLASH\_BLOCKSIZE}}\ *\ 2)\ -\/\ 1)));}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00157}00157\ \ \ \ \ uint8\_t\ offset\ =\ (uint8\_t)\ ((flashAddr\ \&\ ((\mbox{\hyperlink{memory_8h_a96d0844a0ca8255fff8bb2d96d7c0779}{ERASE\_FLASH\_BLOCKSIZE}}\ *\ 2)\ -\/\ 1))\ /\ 2);}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00156}00156\ \ \ \ \ uint32\_t\ blockStartAddr\ =\ (uint32\_t)\ (flashAddr\ \&\ ((END\_FLASH\ -\/\ 1)\ \string^\ ((ERASE\_FLASH\_BLOCKSIZE\ *\ 2)\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00157}00157\ \ \ \ \ uint8\_t\ offset\ =\ (uint8\_t)\ ((flashAddr\ \&\ ((ERASE\_FLASH\_BLOCKSIZE\ *\ 2)\ -\/\ 1))\ /\ 2);}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00158}00158\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00159}00159\ \ \ \ \ \textcolor{comment}{//Read\ existing\ block\ into\ Buffer\ RAM}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00160}00160\ \ \ \ \ \mbox{\hyperlink{memory_8c_a6c6f7bcaf4f6d20466bb9d53d1cf8343}{FLASH\_ReadPage}}(blockStartAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00160}00160\ \ \ \ \ FLASH\_ReadPage(blockStartAddr);}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00161}00161\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00162}00162\ \ \ \ \ \textcolor{comment}{//Erase\ the\ given\ block}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00163}00163\ \ \ \ \ \mbox{\hyperlink{memory_8c_afcf8165862863c67dda417daca8404b6}{FLASH\_EraseBlock}}(blockStartAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00163}00163\ \ \ \ \ FLASH\_EraseBlock(blockStartAddr);}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00164}00164\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00165}00165\ \ \ \ \ \textcolor{comment}{//Modify\ Buffer\ RAM\ for\ the\ given\ word\ to\ be\ written\ to\ Program\ Flash\ Memory}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00166}00166\ \ \ \ \ bufferRamPtr\ +=\ offset;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00167}00167\ \ \ \ \ *bufferRamPtr\ =\ word;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00168}00168\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00169}00169\ \ \ \ \ \textcolor{comment}{//Write\ Buffer\ RAM\ contents\ to\ given\ Program\ Flash\ Memory\ block}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00170}00170\ \ \ \ \ \mbox{\hyperlink{memory_8c_a8841f8f7da080973be19b888dbb5e21c}{FLASH\_WritePage}}(blockStartAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00170}00170\ \ \ \ \ FLASH\_WritePage(blockStartAddr);}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00171}00171\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00172}00172\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00173}\mbox{\hyperlink{memory_8c_a77ded5ca8cc1c341d976e1f481533689}{00173}}\ int8\_t\ \mbox{\hyperlink{memory_8c_a77ded5ca8cc1c341d976e1f481533689}{FLASH\_WriteBlock}}(uint32\_t\ flashAddr,\ uint16\_t\ *flashWrBufPtr)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00173}00173\ int8\_t\ FLASH\_WriteBlock(uint32\_t\ flashAddr,\ uint16\_t\ *flashWrBufPtr)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00174}00174\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00175}00175\ \ \ \ \ uint16\_t\ *bufferRamPtr\ =\ (uint16\_t*)\ \&\ bufferRAM;}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00176}00176\ \ \ \ \ uint32\_t\ blockStartAddr\ =\ (uint32\_t)\ (flashAddr\ \&\ ((\mbox{\hyperlink{memory_8h_a1f5e97b130e249bb5c96354b4933bb76}{END\_FLASH}}\ -\/\ 1)\ \string^\ ((\mbox{\hyperlink{memory_8h_a96d0844a0ca8255fff8bb2d96d7c0779}{ERASE\_FLASH\_BLOCKSIZE}}\ *\ 2)\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00176}00176\ \ \ \ \ uint32\_t\ blockStartAddr\ =\ (uint32\_t)\ (flashAddr\ \&\ ((END\_FLASH\ -\/\ 1)\ \string^\ ((ERASE\_FLASH\_BLOCKSIZE\ *\ 2)\ -\/\ 1)));}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00177}00177\ \ \ \ \ uint16\_t\ i;\ \textcolor{comment}{//\ change\ to\ uint16\_t\ so\ i\ in\ for\ loop\ will\ not\ always\ be\ true}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00178}00178\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00179}00179\ \ \ \ \ \textcolor{comment}{//Block\ write\ must\ start\ at\ the\ beginning\ of\ a\ row}}
@@ -158,23 +158,23 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00183}00183\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00184}00184\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00185}00185\ \ \ \ \ \textcolor{comment}{//Copy\ application\ buffer\ contents\ to\ Buffer\ RAM}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00186}00186\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ \mbox{\hyperlink{memory_8h_a96d0844a0ca8255fff8bb2d96d7c0779}{ERASE\_FLASH\_BLOCKSIZE}};\ i++)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00186}00186\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ ERASE\_FLASH\_BLOCKSIZE;\ i++)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00187}00187\ \ \ \ \ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00188}00188\ \ \ \ \ \ \ \ \ *bufferRamPtr++\ =\ flashWrBufPtr[i];}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00189}00189\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00190}00190\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00191}00191\ \ \ \ \ \textcolor{comment}{//Erase\ the\ given\ block}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00192}00192\ \ \ \ \ \mbox{\hyperlink{memory_8c_afcf8165862863c67dda417daca8404b6}{FLASH\_EraseBlock}}(flashAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00192}00192\ \ \ \ \ FLASH\_EraseBlock(flashAddr);}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00193}00193\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00194}00194\ \ \ \ \ \textcolor{comment}{//Write\ Buffer\ RAM\ contents\ to\ given\ Program\ Flash\ Memory\ block}}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00195}00195\ \ \ \ \ \mbox{\hyperlink{memory_8c_a8841f8f7da080973be19b888dbb5e21c}{FLASH\_WritePage}}(flashAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00195}00195\ \ \ \ \ FLASH\_WritePage(flashAddr);}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00196}00196\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00197}00197\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00198}00198\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00199}00199\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00200}\mbox{\hyperlink{memory_8c_afcf8165862863c67dda417daca8404b6}{00200}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8c_afcf8165862863c67dda417daca8404b6}{FLASH\_EraseBlock}}(uint32\_t\ flashAddr)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00200}00200\ \textcolor{keywordtype}{void}\ FLASH\_EraseBlock(uint32\_t\ flashAddr)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00201}00201\ \{}
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00202}00202\ \ \ \ \ uint32\_t\ blockStartAddr\ =\ (uint32\_t)\ (flashAddr\ \&\ ((\mbox{\hyperlink{memory_8h_a1f5e97b130e249bb5c96354b4933bb76}{END\_FLASH}}\ -\/\ 1)\ \string^\ ((\mbox{\hyperlink{memory_8h_a96d0844a0ca8255fff8bb2d96d7c0779}{ERASE\_FLASH\_BLOCKSIZE}}\ *\ 2)\ -\/\ 1)));}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00202}00202\ \ \ \ \ uint32\_t\ blockStartAddr\ =\ (uint32\_t)\ (flashAddr\ \&\ ((END\_FLASH\ -\/\ 1)\ \string^\ ((ERASE\_FLASH\_BLOCKSIZE\ *\ 2)\ -\/\ 1)));}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00203}00203\ \ \ \ \ uint8\_t\ GIEBitValue\ =\ INTCON0bits.GIE;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00204}00204\ }
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00205}00205\ \ \ \ \ \textcolor{comment}{//The\ NVMADR[21:8]\ bits\ point\ to\ the\ page\ being\ erased.}}
@@ -203,7 +203,7 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00228}00228\ \ \ \ \ NVMCON1bits.NVMCMD\ =\ 0b000;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00229}00229\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00230}00230\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00231}\mbox{\hyperlink{memory_8c_ad140c679b7890a5888e7d71ca5b768a9}{00231}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8c_ad140c679b7890a5888e7d71ca5b768a9}{DATAEE\_WriteByte}}(uint16\_t\ bAdd,\ uint8\_t\ bData)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00231}00231\ \textcolor{keywordtype}{void}\ DATAEE\_WriteByte(uint16\_t\ bAdd,\ uint8\_t\ bData)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00232}00232\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00233}00233\ \ \ \ \ uint8\_t\ GIEBitValue\ =\ INTCON0bits.GIE;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00234}00234\ }
@@ -236,7 +236,7 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00261}00261\ \ \ \ \ NVMCON1bits.NVMCMD\ =\ 0b000;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00262}00262\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00263}00263\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00264}\mbox{\hyperlink{memory_8c_a6bb8bbce0a43091315812a55ba80f0cd}{00264}}\ uint8\_t\ \mbox{\hyperlink{memory_8c_a6bb8bbce0a43091315812a55ba80f0cd}{DATAEE\_ReadByte}}(uint16\_t\ bAdd)}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00264}00264\ uint8\_t\ DATAEE\_ReadByte(uint16\_t\ bAdd)}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00265}00265\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00266}00266\ \ \ \ \ \textcolor{comment}{//Set\ NVMADR\ with\ the\ target\ word\ address\ (0x380000\ -\/\ 0x3803FF)}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00267}00267\ \ \ \ \ NVMADRU\ =\ 0x38;}
@@ -250,7 +250,7 @@
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00275}00275\ \ \ \ \ \textcolor{keywordflow}{return}\ NVMDATL;}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00276}00276\ \}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00277}00277\ }
-\DoxyCodeLine{\Hypertarget{memory_8c_source_l00278}\mbox{\hyperlink{memory_8c_a93b91ceb47cfda42116717961f2b46b1}{00278}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{memory_8c_a93b91ceb47cfda42116717961f2b46b1}{\_\_interrupt}}(irq(NVM),base(8))\ MEMORY\_ISR()}
+\DoxyCodeLine{\Hypertarget{memory_8c_source_l00278}00278\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(NVM),base(8))\ MEMORY\_ISR()}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00279}00279\ \{}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00280}00280\ \ \ \ \ \textcolor{comment}{/*\ TODO\ :\ Add\ interrupt\ handling\ code\ */}}
 \DoxyCodeLine{\Hypertarget{memory_8c_source_l00281}00281\ \ \ \ \ PIR15bits.NVMIF\ =\ 0;}

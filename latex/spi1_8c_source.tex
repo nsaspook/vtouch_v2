@@ -1,6 +1,6 @@
 \doxysection{spi1.\+c}
 \hypertarget{spi1_8c_source}{}\label{spi1_8c_source}\index{secs\_q84.X/mcc\_generated\_files/spi1.c@{secs\_q84.X/mcc\_generated\_files/spi1.c}}
-\mbox{\hyperlink{spi1_8c}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00001}00001\ }
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00024}00024\ \textcolor{comment}{/*}}
@@ -26,7 +26,7 @@
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00045}00045\ \textcolor{comment}{*/}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00046}00046\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00047}00047\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{spi1_8h}{spi1.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00047}00047\ \textcolor{preprocessor}{\#include\ "{}spi1.h"{}}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00048}00048\ \textcolor{preprocessor}{\#include\ <xc.h>}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00049}00049\ }
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00050}00050\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\{\ }
@@ -43,7 +43,7 @@
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00061}00061\ \ \ \ \ \{\ 0x83,\ 0x20,\ 0x3,\ 0x4,\ 0\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00062}00062\ \};}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00063}00063\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00064}\mbox{\hyperlink{spi1_8c_a0607cad7a6b302950091fea719146a54}{00064}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8c_a0607cad7a6b302950091fea719146a54}{SPI1\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00064}00064\ \textcolor{keywordtype}{void}\ SPI1\_Initialize(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00065}00065\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//EN\ enabled;\ LSBF\ MSb\ first;\ MST\ bus\ master;\ BMODE\ every\ byte;\ }}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00067}00067\ \ \ \ \ SPI1CON0\ =\ 0x83;}
@@ -58,27 +58,27 @@
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00076}00076\ \ \ \ \ TRISCbits.TRISC3\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00077}00077\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00078}00078\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00079}\mbox{\hyperlink{spi1_8c_a75b793019e1495a9eb4c9d40f15fa9f2}{00079}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{spi1_8c_a75b793019e1495a9eb4c9d40f15fa9f2}{SPI1\_Open}}(\mbox{\hyperlink{spi1_8h_a5534ab3c3850e4ce85ccbc35cbf841eb}{spi1\_modes\_t}}\ spi1UniqueConfiguration)}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00079}00079\ \textcolor{keywordtype}{bool}\ SPI1\_Open(spi1\_modes\_t\ spi1UniqueConfiguration)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00080}00080\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00081}00081\ \ \ \ \ \textcolor{keywordflow}{if}(!SPI1CON0bits.EN)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00082}00082\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ SPI1CON0\ =\ spi1\_configuration[spi1UniqueConfiguration].\mbox{\hyperlink{structspi1__configuration__t_a430fa528340d660fc70b29c26cf20183}{con0}};}
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ SPI1CON1\ =\ spi1\_configuration[spi1UniqueConfiguration].\mbox{\hyperlink{structspi1__configuration__t_a9388dc2dccf6bde0c3585ce4c2d5cf06}{con1}};}
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ SPI1CON2\ =\ spi1\_configuration[spi1UniqueConfiguration].\mbox{\hyperlink{structspi1__configuration__t_a14912c148f966f93823e580e266d09eb}{con2}}\ |\ (\_SPI1CON2\_SPI1RXR\_MASK\ |\ \_SPI1CON2\_SPI1TXR\_MASK);}
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ SPI1BAUD\ =\ spi1\_configuration[spi1UniqueConfiguration].\mbox{\hyperlink{structspi1__configuration__t_ae6a3e8755dc67d806f4689f25b386636}{baud}};\ \ \ \ \ \ \ \ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ TRISCbits.TRISC3\ =\ spi1\_configuration[spi1UniqueConfiguration].\mbox{\hyperlink{structspi1__configuration__t_a97d486d6926f9137837e1d8ecf0bbfdd}{operation}};}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ SPI1CON0\ =\ spi1\_configuration[spi1UniqueConfiguration].con0;}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ SPI1CON1\ =\ spi1\_configuration[spi1UniqueConfiguration].con1;}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ SPI1CON2\ =\ spi1\_configuration[spi1UniqueConfiguration].con2\ |\ (\_SPI1CON2\_SPI1RXR\_MASK\ |\ \_SPI1CON2\_SPI1TXR\_MASK);}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ SPI1BAUD\ =\ spi1\_configuration[spi1UniqueConfiguration].baud;\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ TRISCbits.TRISC3\ =\ spi1\_configuration[spi1UniqueConfiguration].operation;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ SPI1CON0bits.EN\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00089}00089\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00090}00090\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00091}00091\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00092}00092\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00093}00093\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00094}\mbox{\hyperlink{spi1_8c_a8d97c5f4dff35a4940b7843207912659}{00094}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8c_a8d97c5f4dff35a4940b7843207912659}{SPI1\_Close}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00094}00094\ \textcolor{keywordtype}{void}\ SPI1\_Close(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00095}00095\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00096}00096\ \ \ \ \ SPI1CON0bits.EN\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00097}00097\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00098}00098\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00099}\mbox{\hyperlink{spi1_8c_ae07af4d41776972ec7a7691cec4ca0c4}{00099}}\ uint8\_t\ \mbox{\hyperlink{spi1_8c_ae07af4d41776972ec7a7691cec4ca0c4}{SPI1\_ExchangeByte}}(uint8\_t\ data)}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00099}00099\ uint8\_t\ SPI1\_ExchangeByte(uint8\_t\ data)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00100}00100\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00101}00101\ \ \ \ \ SPI1TCNTL\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00102}00102\ \ \ \ \ SPI1TXB\ =\ data;}
@@ -86,7 +86,7 @@
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00104}00104\ \ \ \ \ \textcolor{keywordflow}{return}\ SPI1RXB;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00105}00105\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00106}00106\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00107}\mbox{\hyperlink{spi1_8c_a5ca38ee9c820ae41a0c2e751e9fbb9a2}{00107}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8c_a5ca38ee9c820ae41a0c2e751e9fbb9a2}{SPI1\_ExchangeBlock}}(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize)}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00107}00107\ \textcolor{keywordtype}{void}\ SPI1\_ExchangeBlock(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00108}00108\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00109}00109\ \ \ \ \ uint8\_t\ *data\ =\ block;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00110}00110\ \ \ \ \ \textcolor{keywordflow}{while}(blockSize-\/-\/)}
@@ -99,30 +99,30 @@
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00117}00117\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00118}00118\ }
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00119}00119\ \textcolor{comment}{//\ Half\ Duplex\ SPI\ Functions}}
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00120}\mbox{\hyperlink{spi1_8c_af8e73470ce8af7f2ce8fd04990162caf}{00120}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8c_af8e73470ce8af7f2ce8fd04990162caf}{SPI1\_WriteBlock}}(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize)}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00120}00120\ \textcolor{keywordtype}{void}\ SPI1\_WriteBlock(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00121}00121\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00122}00122\ \ \ \ \ uint8\_t\ *data\ =\ block;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00123}00123\ \ \ \ \ \textcolor{keywordflow}{while}(blockSize-\/-\/)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00124}00124\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{spi1_8c_ae07af4d41776972ec7a7691cec4ca0c4}{SPI1\_ExchangeByte}}(*data++);}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ SPI1\_ExchangeByte(*data++);}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00126}00126\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00127}00127\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00128}00128\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00129}\mbox{\hyperlink{spi1_8c_a0d9ea49076af2ddeec759efe4fadc70a}{00129}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8c_a0d9ea49076af2ddeec759efe4fadc70a}{SPI1\_ReadBlock}}(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize)}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00129}00129\ \textcolor{keywordtype}{void}\ SPI1\_ReadBlock(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00130}00130\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00131}00131\ \ \ \ \ uint8\_t\ *data\ =\ block;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00132}00132\ \ \ \ \ \textcolor{keywordflow}{while}(blockSize-\/-\/)}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00133}00133\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00134}00134\ \ \ \ \ \ \ \ \ *data++\ =\ \mbox{\hyperlink{spi1_8c_ae07af4d41776972ec7a7691cec4ca0c4}{SPI1\_ExchangeByte}}(0);}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00134}00134\ \ \ \ \ \ \ \ \ *data++\ =\ SPI1\_ExchangeByte(0);}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00135}00135\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00136}00136\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00137}00137\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00138}\mbox{\hyperlink{spi1_8c_af04c82a7fa9d0a7595b69e2808d5c837}{00138}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8c_af04c82a7fa9d0a7595b69e2808d5c837}{SPI1\_WriteByte}}(uint8\_t\ \textcolor{keywordtype}{byte})}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00138}00138\ \textcolor{keywordtype}{void}\ SPI1\_WriteByte(uint8\_t\ \textcolor{keywordtype}{byte})}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00139}00139\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00140}00140\ \ \ \ \ SPI1TXB\ =\ byte;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00141}00141\ \}}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00142}00142\ }
-\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00143}\mbox{\hyperlink{spi1_8c_abbc9771abeebcf4c26bcaf627666ffc2}{00143}}\ uint8\_t\ \mbox{\hyperlink{spi1_8c_abbc9771abeebcf4c26bcaf627666ffc2}{SPI1\_ReadByte}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{spi1_8c_source_l00143}00143\ uint8\_t\ SPI1\_ReadByte(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00144}00144\ \{}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00145}00145\ \ \ \ \ \textcolor{keywordflow}{return}\ SPI1RXB;}
 \DoxyCodeLine{\Hypertarget{spi1_8c_source_l00146}00146\ \}}

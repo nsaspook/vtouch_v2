@@ -81,7 +81,7 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">tmr5.c</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="tmr5_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">    (c) 2018 Microchip Technology Inc. and its subsidiaries. </span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">    </span></div>
@@ -106,14 +106,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &lt;xc.h&gt;</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;<a class="code" href="tmr5_8h.html">tmr5.h</a>&quot;</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#include &quot;<a class="code" href="interrupt__manager_8h.html">interrupt_manager.h</a>&quot;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;tmr5.h&quot;</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#include &quot;interrupt_manager.h&quot;</span></div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a2dbdf31606a6249556d997f0924f2b35">   58</a></span><span class="keyword">volatile</span> uint16_t <a class="code hl_variable" href="tmr5_8c.html#a2dbdf31606a6249556d997f0924f2b35">timer5ReloadVal</a>;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a2829958a2ef379044480b7f406d12230">   59</a></span>void (*<a class="code hl_variable" href="tmr5_8c.html#a2829958a2ef379044480b7f406d12230">TMR5_InterruptHandler</a>)(void);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">volatile</span> uint16_t timer5ReloadVal;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>void (*TMR5_InterruptHandler)(void);</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a00d059673a2ccd8a980e0ae629c2df4a">   65</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#a00d059673a2ccd8a980e0ae629c2df4a">TMR5_Initialize</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keywordtype">void</span> TMR5_Initialize(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>{</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment">//Set the Timer to the options selected in the GUI</span></div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
@@ -136,37 +135,31 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    PIR8bits.TMR5IF = 0;</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="comment">// Load the TMR value to reload variable</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <a class="code hl_variable" href="tmr5_8c.html#a2dbdf31606a6249556d997f0924f2b35">timer5ReloadVal</a>=(uint16_t)((TMR5H &lt;&lt; 8) | TMR5L);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    timer5ReloadVal=(uint16_t)((TMR5H &lt;&lt; 8) | TMR5L);</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="comment">// Enabling TMR5 interrupt.</span></div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    PIE8bits.TMR5IE = 1;</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="comment">// Set Default Interrupt Handler</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <a class="code hl_function" href="tmr5_8c.html#a2963d4a01246f33d36fc840540def47e">TMR5_SetInterruptHandler</a>(<a class="code hl_function" href="tmr5_8c.html#afb8634b4b6491652bb5c8aef16663aee">TMR5_DefaultInterruptHandler</a>);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    TMR5_SetInterruptHandler(TMR5_DefaultInterruptHandler);</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="comment">// CKPS 1:8; NOT_SYNC synchronize; TMR5ON enabled; T5RD16 disabled; </span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    T5CON = 0x31;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
-</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="foldopen" id="foldopen00100" data-start="{" data-end="}">
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a20e57f18e5ec374c2cdf577309ebb8d0">  100</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#a20e57f18e5ec374c2cdf577309ebb8d0">TMR5_StartTimer</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keywordtype">void</span> TMR5_StartTimer(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>{</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="comment">// Start the Timer by writing to TMRxON bit</span></div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    T5CONbits.TMR5ON = 1;</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>}</div>
-</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="foldopen" id="foldopen00106" data-start="{" data-end="}">
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a5c1728f8f51e96dfaac245fea1fece67">  106</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#a5c1728f8f51e96dfaac245fea1fece67">TMR5_StopTimer</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keywordtype">void</span> TMR5_StopTimer(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>{</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="comment">// Stop the Timer by writing to TMRxON bit</span></div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    T5CONbits.TMR5ON = 0;</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>}</div>
-</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
-<div class="foldopen" id="foldopen00112" data-start="{" data-end="}">
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a729be756b41d0fd9c64d656d818d1365">  112</a></span>uint16_t <a class="code hl_function" href="tmr5_8c.html#a729be756b41d0fd9c64d656d818d1365">TMR5_ReadTimer</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>uint16_t TMR5_ReadTimer(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>{</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    uint16_t readVal;</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    uint8_t readValHigh;</div>
@@ -181,10 +174,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordflow">return</span> readVal;</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>}</div>
-</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="foldopen" id="foldopen00128" data-start="{" data-end="}">
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="tmr5_8c.html#aff96cfd796008b442c4076edf21b212a">  128</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#aff96cfd796008b442c4076edf21b212a">TMR5_WriteTimer</a>(uint16_t timerVal)</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="keywordtype">void</span> TMR5_WriteTimer(uint16_t timerVal)</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>{</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordflow">if</span> (T5CONbits.NOT_SYNC == 1)</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    {</div>
@@ -205,91 +196,59 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        TMR5L = (uint8_t)timerVal;</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    }</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>}</div>
-</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
-<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a8ca13876d542b4c54dcf8de332dc4010">  150</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#a8ca13876d542b4c54dcf8de332dc4010">TMR5_Reload</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="keywordtype">void</span> TMR5_Reload(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>{</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <a class="code hl_function" href="tmr5_8c.html#aff96cfd796008b442c4076edf21b212a">TMR5_WriteTimer</a>(<a class="code hl_variable" href="tmr5_8c.html#a2dbdf31606a6249556d997f0924f2b35">timer5ReloadVal</a>);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    TMR5_WriteTimer(timer5ReloadVal);</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>}</div>
-</div>
 <div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="foldopen" id="foldopen00155" data-start="{" data-end="}">
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="tmr5_8c.html#ac8931933d745ea83743e8cb4c7320bb4">  155</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#ac8931933d745ea83743e8cb4c7320bb4">TMR5_StartSinglePulseAcquisition</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="keywordtype">void</span> TMR5_StartSinglePulseAcquisition(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>{</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    T5GCONbits.T5GGO = 1;</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>}</div>
-</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="foldopen" id="foldopen00160" data-start="{" data-end="}">
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a2c247c5ab9fccd8cfb7c47db432debcb">  160</a></span>uint8_t <a class="code hl_function" href="tmr5_8c.html#a2c247c5ab9fccd8cfb7c47db432debcb">TMR5_CheckGateValueStatus</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>uint8_t TMR5_CheckGateValueStatus(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>{</div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordflow">return</span> (T5GCONbits.T5GVAL);</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>}</div>
-</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="foldopen" id="foldopen00165" data-start="{" data-end="}">
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a71c58fb9f415ac2d51454074c3ec1b32">  165</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#a71c58fb9f415ac2d51454074c3ec1b32">__interrupt</a>(irq(TMR5),base(8),low_priority) TMR5_ISR()</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="keywordtype">void</span> __interrupt(irq(TMR5),base(8),low_priority) TMR5_ISR()</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>{</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> CountCallBack = 0;</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="comment">// Clear the TMR5 interrupt flag</span></div>
 <div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    PIR8bits.TMR5IF = 0;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    <a class="code hl_function" href="tmr5_8c.html#aff96cfd796008b442c4076edf21b212a">TMR5_WriteTimer</a>(<a class="code hl_variable" href="tmr5_8c.html#a2dbdf31606a6249556d997f0924f2b35">timer5ReloadVal</a>);</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    TMR5_WriteTimer(timer5ReloadVal);</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    <span class="comment">// callback function - called every 50th pass</span></div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordflow">if</span> (++CountCallBack &gt;= <a class="code hl_define" href="tmr5_8h.html#abb7cbdd887b838a1b0b92624405291b6">TMR5_INTERRUPT_TICKER_FACTOR</a>)</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordflow">if</span> (++CountCallBack &gt;= TMR5_INTERRUPT_TICKER_FACTOR)</div>
 <div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    {</div>
 <div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        <span class="comment">// ticker function call</span></div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <a class="code hl_function" href="tmr5_8c.html#a096424e4a56cca4fcf5cca60899d9b9a">TMR5_CallBack</a>();</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        TMR5_CallBack();</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <span class="comment">// reset ticker counter</span></div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        CountCallBack = 0;</div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    }</div>
 <div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>}</div>
-</div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="foldopen" id="foldopen00184" data-start="{" data-end="}">
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a096424e4a56cca4fcf5cca60899d9b9a">  184</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#a096424e4a56cca4fcf5cca60899d9b9a">TMR5_CallBack</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="keywordtype">void</span> TMR5_CallBack(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>{</div>
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="comment">// Add your custom callback code here</span></div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordflow">if</span>(<a class="code hl_variable" href="tmr5_8c.html#a2829958a2ef379044480b7f406d12230">TMR5_InterruptHandler</a>)</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordflow">if</span>(TMR5_InterruptHandler)</div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <a class="code hl_variable" href="tmr5_8c.html#a2829958a2ef379044480b7f406d12230">TMR5_InterruptHandler</a>();</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        TMR5_InterruptHandler();</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    }</div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>}</div>
-</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
-<div class="foldopen" id="foldopen00193" data-start="{" data-end="}">
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="tmr5_8c.html#a2963d4a01246f33d36fc840540def47e">  193</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#a2963d4a01246f33d36fc840540def47e">TMR5_SetInterruptHandler</a>(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>)){</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    <a class="code hl_variable" href="tmr5_8c.html#a2829958a2ef379044480b7f406d12230">TMR5_InterruptHandler</a> = InterruptHandler;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="keywordtype">void</span> TMR5_SetInterruptHandler(<span class="keywordtype">void</span> (* InterruptHandler)(<span class="keywordtype">void</span>)){</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    TMR5_InterruptHandler = InterruptHandler;</div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>}</div>
-</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span> </div>
-<div class="foldopen" id="foldopen00197" data-start="{" data-end="}">
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno"><a class="line" href="tmr5_8c.html#afb8634b4b6491652bb5c8aef16663aee">  197</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr5_8c.html#afb8634b4b6491652bb5c8aef16663aee">TMR5_DefaultInterruptHandler</a>(<span class="keywordtype">void</span>){</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="keywordtype">void</span> TMR5_DefaultInterruptHandler(<span class="keywordtype">void</span>){</div>
 <div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    <span class="comment">// add your TMR5 interrupt custom code</span></div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="comment">// or set custom function using TMR5_SetInterruptHandler()</span></div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>}</div>
-</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
-<div class="ttc" id="ainterrupt__manager_8h_html"><div class="ttname"><a href="interrupt__manager_8h.html">interrupt_manager.h</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a00d059673a2ccd8a980e0ae629c2df4a"><div class="ttname"><a href="tmr5_8c.html#a00d059673a2ccd8a980e0ae629c2df4a">TMR5_Initialize</a></div><div class="ttdeci">void TMR5_Initialize(void)</div><div class="ttdoc">Section: TMR5 APIs.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00065">tmr5.c:65</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a096424e4a56cca4fcf5cca60899d9b9a"><div class="ttname"><a href="tmr5_8c.html#a096424e4a56cca4fcf5cca60899d9b9a">TMR5_CallBack</a></div><div class="ttdeci">void TMR5_CallBack(void)</div><div class="ttdoc">@Summary CallBack function.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00184">tmr5.c:184</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a20e57f18e5ec374c2cdf577309ebb8d0"><div class="ttname"><a href="tmr5_8c.html#a20e57f18e5ec374c2cdf577309ebb8d0">TMR5_StartTimer</a></div><div class="ttdeci">void TMR5_StartTimer(void)</div><div class="ttdoc">@Summary This function starts the TMR5.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00100">tmr5.c:100</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a2829958a2ef379044480b7f406d12230"><div class="ttname"><a href="tmr5_8c.html#a2829958a2ef379044480b7f406d12230">TMR5_InterruptHandler</a></div><div class="ttdeci">void(* TMR5_InterruptHandler)(void)</div><div class="ttdoc">@Summary Timer Interrupt Handler</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00059">tmr5.c:59</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a2963d4a01246f33d36fc840540def47e"><div class="ttname"><a href="tmr5_8c.html#a2963d4a01246f33d36fc840540def47e">TMR5_SetInterruptHandler</a></div><div class="ttdeci">void TMR5_SetInterruptHandler(void(*InterruptHandler)(void))</div><div class="ttdoc">@Summary Set Timer Interrupt Handler</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00193">tmr5.c:193</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a2c247c5ab9fccd8cfb7c47db432debcb"><div class="ttname"><a href="tmr5_8c.html#a2c247c5ab9fccd8cfb7c47db432debcb">TMR5_CheckGateValueStatus</a></div><div class="ttdeci">uint8_t TMR5_CheckGateValueStatus(void)</div><div class="ttdoc">@Summary Check the current state of Timer1 gate.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00160">tmr5.c:160</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a2dbdf31606a6249556d997f0924f2b35"><div class="ttname"><a href="tmr5_8c.html#a2dbdf31606a6249556d997f0924f2b35">timer5ReloadVal</a></div><div class="ttdeci">volatile uint16_t timer5ReloadVal</div><div class="ttdoc">TMR5 Generated Driver File.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00058">tmr5.c:58</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a5c1728f8f51e96dfaac245fea1fece67"><div class="ttname"><a href="tmr5_8c.html#a5c1728f8f51e96dfaac245fea1fece67">TMR5_StopTimer</a></div><div class="ttdeci">void TMR5_StopTimer(void)</div><div class="ttdoc">@Summary This function stops the TMR5.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00106">tmr5.c:106</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a71c58fb9f415ac2d51454074c3ec1b32"><div class="ttname"><a href="tmr5_8c.html#a71c58fb9f415ac2d51454074c3ec1b32">__interrupt</a></div><div class="ttdeci">void __interrupt(irq(TMR5), base(8), low_priority)</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00165">tmr5.c:165</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a729be756b41d0fd9c64d656d818d1365"><div class="ttname"><a href="tmr5_8c.html#a729be756b41d0fd9c64d656d818d1365">TMR5_ReadTimer</a></div><div class="ttdeci">uint16_t TMR5_ReadTimer(void)</div><div class="ttdoc">@Summary Reads the TMR5 register.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00112">tmr5.c:112</a></div></div>
-<div class="ttc" id="atmr5_8c_html_a8ca13876d542b4c54dcf8de332dc4010"><div class="ttname"><a href="tmr5_8c.html#a8ca13876d542b4c54dcf8de332dc4010">TMR5_Reload</a></div><div class="ttdeci">void TMR5_Reload(void)</div><div class="ttdoc">@Summary Reload the TMR5 register.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00150">tmr5.c:150</a></div></div>
-<div class="ttc" id="atmr5_8c_html_ac8931933d745ea83743e8cb4c7320bb4"><div class="ttname"><a href="tmr5_8c.html#ac8931933d745ea83743e8cb4c7320bb4">TMR5_StartSinglePulseAcquisition</a></div><div class="ttdeci">void TMR5_StartSinglePulseAcquisition(void)</div><div class="ttdoc">@Summary Starts the single pulse acquisition in TMR5 gate operation.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00155">tmr5.c:155</a></div></div>
-<div class="ttc" id="atmr5_8c_html_afb8634b4b6491652bb5c8aef16663aee"><div class="ttname"><a href="tmr5_8c.html#afb8634b4b6491652bb5c8aef16663aee">TMR5_DefaultInterruptHandler</a></div><div class="ttdeci">void TMR5_DefaultInterruptHandler(void)</div><div class="ttdoc">@Summary Default Timer Interrupt Handler</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00197">tmr5.c:197</a></div></div>
-<div class="ttc" id="atmr5_8c_html_aff96cfd796008b442c4076edf21b212a"><div class="ttname"><a href="tmr5_8c.html#aff96cfd796008b442c4076edf21b212a">TMR5_WriteTimer</a></div><div class="ttdeci">void TMR5_WriteTimer(uint16_t timerVal)</div><div class="ttdoc">@Summary Writes the TMR5 register.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8c_source.html#l00128">tmr5.c:128</a></div></div>
-<div class="ttc" id="atmr5_8h_html"><div class="ttname"><a href="tmr5_8h.html">tmr5.h</a></div></div>
-<div class="ttc" id="atmr5_8h_html_abb7cbdd887b838a1b0b92624405291b6"><div class="ttname"><a href="tmr5_8h.html#abb7cbdd887b838a1b0b92624405291b6">TMR5_INTERRUPT_TICKER_FACTOR</a></div><div class="ttdeci">#define TMR5_INTERRUPT_TICKER_FACTOR</div><div class="ttdoc">TMR5 Generated Driver API Header File.</div><div class="ttdef"><b>Definition</b> <a href="tmr5_8h_source.html#l00063">tmr5.h:63</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

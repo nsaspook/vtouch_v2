@@ -1,6 +1,6 @@
 \doxysection{tmr6.\+c}
 \hypertarget{tmr6_8c_source}{}\label{tmr6_8c_source}\index{secs\_q84.X/mcc\_generated\_files/tmr6.c@{secs\_q84.X/mcc\_generated\_files/tmr6.c}}
-\mbox{\hyperlink{tmr6_8c}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00001}00001\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00024}00024\ \textcolor{comment}{/*}}
@@ -27,14 +27,14 @@
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00045}00045\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00046}00046\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{tmr6_8h}{tmr6.h}}"{}}}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00053}00053\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interrupt__manager_8h}{interrupt\_manager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}tmr6.h"{}}}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00053}00053\ \textcolor{preprocessor}{\#include\ "{}interrupt\_manager.h"{}}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00054}00054\ \textcolor{preprocessor}{\#include\ "{}../timers.h"{}}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00055}00055\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00056}00056\ \textcolor{keyword}{extern}\ \textcolor{keyword}{volatile}\ uint16\_t\ \mbox{\hyperlink{tmr6_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[\mbox{\hyperlink{timers_8h_ad499250d949643c5a12161767059a3d2abaa7883f9d3702d4c1fba3442fec0595}{TMR\_COUNT}}];}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00061}\mbox{\hyperlink{tmr6_8c_adecc23d6e5f71b1101a63a19a0f2be14}{00061}}\ void\ (*\mbox{\hyperlink{tmr6_8c_adecc23d6e5f71b1101a63a19a0f2be14}{TMR6\_InterruptHandler}})(void);}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00056}00056\ \textcolor{keyword}{extern}\ \textcolor{keyword}{volatile}\ uint16\_t\ \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[TMR\_COUNT];}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00061}00061\ void\ (*TMR6\_InterruptHandler)(void);}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00062}00062\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00067}\mbox{\hyperlink{tmr6_8c_ac14bdb75adaba37fb447e5b8c69767b8}{00067}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_ac14bdb75adaba37fb447e5b8c69767b8}{TMR6\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00067}00067\ \textcolor{keywordtype}{void}\ TMR6\_Initialize(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00068}00068\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ Set\ TMR6\ to\ the\ options\ selected\ in\ the\ User\ Interface}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00070}00070\ }
@@ -60,47 +60,47 @@
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00090}00090\ \ \ \ \ PIE15bits.TMR6IE\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00091}00091\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ Set\ Default\ Interrupt\ Handler}}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{tmr6_8c_a3498261ba2974cd43ec2cc819bac27c0}{TMR6\_SetInterruptHandler}}(\mbox{\hyperlink{tmr6_8c_a4fe121f46fddf6421958028d90468db5}{TMR6\_DefaultInterruptHandler}});}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00093}00093\ \ \ \ \ TMR6\_SetInterruptHandler(TMR6\_DefaultInterruptHandler);}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00094}00094\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00095}00095\ \ \ \ \ \textcolor{comment}{//\ T6CKPS\ 1:16;\ T6OUTPS\ 1:4;\ TMR6ON\ on;\ }}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00096}00096\ \ \ \ \ T6CON\ =\ 0xC3;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00097}00097\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00098}00098\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00099}\mbox{\hyperlink{tmr6_8c_ae90b47d263032eceb94fabaa99c47c35}{00099}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_ae90b47d263032eceb94fabaa99c47c35}{TMR6\_ModeSet}}(\mbox{\hyperlink{tmr6_8h_abd475203a092bd4372b3a696fcf760f7}{TMR6\_HLT\_MODE}}\ mode)}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00099}00099\ \textcolor{keywordtype}{void}\ TMR6\_ModeSet(TMR6\_HLT\_MODE\ mode)}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00100}00100\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00101}00101\ \ \ \ \ \textcolor{comment}{//\ Configure\ different\ types\ HLT\ mode}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00102}00102\ \ \ \ \ T6HLTbits.MODE\ =\ mode;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00103}00103\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00104}00104\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00105}\mbox{\hyperlink{tmr6_8c_ad716b44c29306d46b4d533a069545f1f}{00105}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_ad716b44c29306d46b4d533a069545f1f}{TMR6\_ExtResetSourceSet}}(\mbox{\hyperlink{tmr6_8h_a085fa27f9fc1f6967bd3206415cd77fc}{TMR6\_HLT\_EXT\_RESET\_SOURCE}}\ reset)}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00105}00105\ \textcolor{keywordtype}{void}\ TMR6\_ExtResetSourceSet(TMR6\_HLT\_EXT\_RESET\_SOURCE\ reset)}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00106}00106\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00107}00107\ \ \ \ \ \textcolor{comment}{//Configure\ different\ types\ of\ HLT\ external\ reset\ source}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00108}00108\ \ \ \ \ T6RSTbits.RSEL\ =\ reset;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00109}00109\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00110}00110\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00111}\mbox{\hyperlink{tmr6_8c_a4db4f3b9542867f08752509d184f7a85}{00111}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_a4db4f3b9542867f08752509d184f7a85}{TMR6\_Start}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00111}00111\ \textcolor{keywordtype}{void}\ TMR6\_Start(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00112}00112\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00113}00113\ \ \ \ \ \textcolor{comment}{//\ Start\ the\ Timer\ by\ writing\ to\ TMRxON\ bit}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00114}00114\ \ \ \ \ T6CONbits.TMR6ON\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00115}00115\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00116}00116\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00117}\mbox{\hyperlink{tmr6_8c_abb4c3a072158b6dac7cb290c3aa40fc6}{00117}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_abb4c3a072158b6dac7cb290c3aa40fc6}{TMR6\_StartTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00117}00117\ \textcolor{keywordtype}{void}\ TMR6\_StartTimer(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00118}00118\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00119}00119\ \ \ \ \ \mbox{\hyperlink{tmr6_8c_a4db4f3b9542867f08752509d184f7a85}{TMR6\_Start}}();}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00119}00119\ \ \ \ \ TMR6\_Start();}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00120}00120\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00121}00121\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00122}\mbox{\hyperlink{tmr6_8c_acb10a6876aae4a1cc753bc7197d3780f}{00122}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_acb10a6876aae4a1cc753bc7197d3780f}{TMR6\_Stop}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00122}00122\ \textcolor{keywordtype}{void}\ TMR6\_Stop(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00123}00123\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00124}00124\ \ \ \ \ \textcolor{comment}{//\ Stop\ the\ Timer\ by\ writing\ to\ TMRxON\ bit}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00125}00125\ \ \ \ \ T6CONbits.TMR6ON\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00126}00126\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00127}00127\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00128}\mbox{\hyperlink{tmr6_8c_ad5d9c9046d2e3f3a6a9442c7bdfa4232}{00128}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_ad5d9c9046d2e3f3a6a9442c7bdfa4232}{TMR6\_StopTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00128}00128\ \textcolor{keywordtype}{void}\ TMR6\_StopTimer(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00129}00129\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00130}00130\ \ \ \ \ \mbox{\hyperlink{tmr6_8c_acb10a6876aae4a1cc753bc7197d3780f}{TMR6\_Stop}}();}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00130}00130\ \ \ \ \ TMR6\_Stop();}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00131}00131\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00132}00132\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00133}\mbox{\hyperlink{tmr6_8c_a249fbfea7508a50f0db21a90244279cc}{00133}}\ uint8\_t\ \mbox{\hyperlink{tmr6_8c_a249fbfea7508a50f0db21a90244279cc}{TMR6\_Counter8BitGet}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00133}00133\ uint8\_t\ TMR6\_Counter8BitGet(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00134}00134\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00135}00135\ \ \ \ \ uint8\_t\ readVal;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00136}00136\ }
@@ -109,33 +109,33 @@
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00139}00139\ \ \ \ \ \textcolor{keywordflow}{return}\ readVal;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00140}00140\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00141}00141\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00142}\mbox{\hyperlink{tmr6_8c_a79739a14373cd3bf47e0fc915c3efa02}{00142}}\ uint8\_t\ \mbox{\hyperlink{tmr6_8c_a79739a14373cd3bf47e0fc915c3efa02}{TMR6\_ReadTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00142}00142\ uint8\_t\ TMR6\_ReadTimer(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00143}00143\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{tmr6_8c_a249fbfea7508a50f0db21a90244279cc}{TMR6\_Counter8BitGet}}();}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{return}\ TMR6\_Counter8BitGet();}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00145}00145\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00146}00146\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00147}\mbox{\hyperlink{tmr6_8c_a1e5ecd05910256bd99407c7c44e060b6}{00147}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_a1e5ecd05910256bd99407c7c44e060b6}{TMR6\_Counter8BitSet}}(uint8\_t\ timerVal)}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00147}00147\ \textcolor{keywordtype}{void}\ TMR6\_Counter8BitSet(uint8\_t\ timerVal)}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00148}00148\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00149}00149\ \ \ \ \ \textcolor{comment}{//\ Write\ to\ the\ Timer6\ register}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00150}00150\ \ \ \ \ TMR6\ =\ timerVal;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00151}00151\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00152}00152\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00153}\mbox{\hyperlink{tmr6_8c_aa89e621e7ea9d004720d90f4893f6540}{00153}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_aa89e621e7ea9d004720d90f4893f6540}{TMR6\_WriteTimer}}(uint8\_t\ timerVal)}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00153}00153\ \textcolor{keywordtype}{void}\ TMR6\_WriteTimer(uint8\_t\ timerVal)}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00154}00154\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00155}00155\ \ \ \ \ \mbox{\hyperlink{tmr6_8c_a1e5ecd05910256bd99407c7c44e060b6}{TMR6\_Counter8BitSet}}(timerVal);}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00155}00155\ \ \ \ \ TMR6\_Counter8BitSet(timerVal);}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00156}00156\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00157}00157\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00158}\mbox{\hyperlink{tmr6_8c_af2f7e4e427026082d89918e328435356}{00158}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_af2f7e4e427026082d89918e328435356}{TMR6\_Period8BitSet}}(uint8\_t\ periodVal)}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00158}00158\ \textcolor{keywordtype}{void}\ TMR6\_Period8BitSet(uint8\_t\ periodVal)}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00159}00159\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00160}00160\ \ \ \ \ PR6\ =\ periodVal;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00161}00161\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00162}00162\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00163}\mbox{\hyperlink{tmr6_8c_a8d758bacfb96ef279726717b60c354d7}{00163}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_a8d758bacfb96ef279726717b60c354d7}{TMR6\_LoadPeriodRegister}}(uint8\_t\ periodVal)}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00163}00163\ \textcolor{keywordtype}{void}\ TMR6\_LoadPeriodRegister(uint8\_t\ periodVal)}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00164}00164\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00165}00165\ \ \ \ \ \mbox{\hyperlink{tmr6_8c_af2f7e4e427026082d89918e328435356}{TMR6\_Period8BitSet}}(periodVal);}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00165}00165\ \ \ \ \ TMR6\_Period8BitSet(periodVal);}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00166}00166\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00167}00167\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00168}\mbox{\hyperlink{tmr6_8c_a74e46937b2d6d828c8f510132454e72a}{00168}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_a74e46937b2d6d828c8f510132454e72a}{\_\_interrupt}}(irq(TMR6),base(8),low\_priority)\ TMR6\_ISR()}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00168}00168\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(TMR6),base(8),low\_priority)\ TMR6\_ISR()}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00169}00169\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00170}00170\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00171}00171\ \ \ \ \ \textcolor{comment}{//\ clear\ the\ TMR6\ interrupt\ flag}}
@@ -143,33 +143,33 @@
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00173}00173\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00174}00174\ \ \ \ \ \textcolor{comment}{//\ ticker\ function\ call;}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00175}00175\ \ \ \ \ \textcolor{comment}{//\ ticker\ is\ 1\ -\/>\ Callback\ function\ gets\ called\ everytime\ this\ ISR\ executes}}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00176}00176\ \ \ \ \ \mbox{\hyperlink{tmr6_8c_aa86d273159ad12e1b77e7d44cc52e219}{TMR6\_CallBack}}();}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00176}00176\ \ \ \ \ TMR6\_CallBack();}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00177}00177\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00178}00178\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00179}\mbox{\hyperlink{tmr6_8c_aa86d273159ad12e1b77e7d44cc52e219}{00179}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_aa86d273159ad12e1b77e7d44cc52e219}{TMR6\_CallBack}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00179}00179\ \textcolor{keywordtype}{void}\ TMR6\_CallBack(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00180}00180\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00181}00181\ \ \ \ \ \textcolor{comment}{//\ Add\ your\ custom\ callback\ code\ here}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00182}00182\ \ \ \ \ \textcolor{comment}{//\ this\ code\ executes\ every\ TMR6\_INTERRUPT\_TICKER\_FACTOR\ periods\ of\ TMR6}}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00183}00183\ \ \ \ \ \textcolor{keywordflow}{if}(\mbox{\hyperlink{tmr6_8c_adecc23d6e5f71b1101a63a19a0f2be14}{TMR6\_InterruptHandler}})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00183}00183\ \ \ \ \ \textcolor{keywordflow}{if}(TMR6\_InterruptHandler)}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00184}00184\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00185}00185\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{tmr6_8c_adecc23d6e5f71b1101a63a19a0f2be14}{TMR6\_InterruptHandler}}();}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00185}00185\ \ \ \ \ \ \ \ \ TMR6\_InterruptHandler();}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00186}00186\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00187}00187\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00188}00188\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00189}\mbox{\hyperlink{tmr6_8c_a3498261ba2974cd43ec2cc819bac27c0}{00189}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_a3498261ba2974cd43ec2cc819bac27c0}{TMR6\_SetInterruptHandler}}(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))\{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00190}00190\ \ \ \ \ \mbox{\hyperlink{tmr6_8c_adecc23d6e5f71b1101a63a19a0f2be14}{TMR6\_InterruptHandler}}\ =\ InterruptHandler;}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00189}00189\ \textcolor{keywordtype}{void}\ TMR6\_SetInterruptHandler(\textcolor{keywordtype}{void}\ (*\ InterruptHandler)(\textcolor{keywordtype}{void}))\{}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00190}00190\ \ \ \ \ TMR6\_InterruptHandler\ =\ InterruptHandler;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00191}00191\ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00192}00192\ }
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00193}\mbox{\hyperlink{tmr6_8c_a4fe121f46fddf6421958028d90468db5}{00193}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr6_8c_a4fe121f46fddf6421958028d90468db5}{TMR6\_DefaultInterruptHandler}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00193}00193\ \textcolor{keywordtype}{void}\ TMR6\_DefaultInterruptHandler(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00194}00194\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00195}00195\ \ \ \ \ uint8\_t\ i;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00196}00196\ \ \ \ \ \textcolor{comment}{//\ add\ your\ TMR6\ interrupt\ custom\ code}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00197}00197\ \ \ \ \ \textcolor{comment}{//\ or\ set\ custom\ function\ using\ TMR6\_SetInterruptHandler()}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00198}00198\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00199}00199\ \ \ \ \ \textcolor{comment}{//Decrement\ each\ software\ timer}}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00200}00200\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ \mbox{\hyperlink{timers_8h_ad499250d949643c5a12161767059a3d2abaa7883f9d3702d4c1fba3442fec0595}{TMR\_COUNT}};\ i++)\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{tmr6_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[i]\ !=\ 0)\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{tmr6_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[i]-\/-\/;}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00200}00200\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ TMR\_COUNT;\ i++)\ \{}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tickCount[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[i]-\/-\/;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00204}00204\ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00205}00205\ \}}

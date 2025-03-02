@@ -76,14 +76,14 @@ $(function() {
 <p>This routine reads one block from given address of Program Flash Memory into device Buffer RAM </p><dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">Starting</td><td>address of a Program Flash Memory block case: Read one page from given PFM location into device Buffer RAM using <a class="el" href="memory_8h.html#a6c6f7bcaf4f6d20466bb9d53d1cf8343">FLASH_ReadPage()</a> Transfer the contents of device Buffer RAM to U1TXB using DMA2</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Starting</td><td>address of a Program Flash Memory block case: Read one page from given PFM location into device Buffer RAM using FLASH_ReadPage() Transfer the contents of device Buffer RAM to U1TXB using DMA2</td></tr>
   </table>
   </dd>
 </dl>
-<p>void <a class="el" href="main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667" title="Lets get going with the code.">main(void)</a> { <br  />
- <a class="el" href="mcc_8c.html#a5e8391114a0cf91ac20002be25e3d352" title="@Generated PIC10 / PIC12 / PIC16 / PIC18 MCUs Source File">SYSTEM_Initialize()</a>;</p>
-<p>//Read one page from PFM into device Buffer RAM <a class="el" href="memory_8h.html#a6c6f7bcaf4f6d20466bb9d53d1cf8343">FLASH_ReadPage()</a>;</p>
-<p>//Initialize DMA2 to copy data from device Buffer RAM to U1TXB register //Configure source size as 256 and destination size as 1 <a class="el" href="dma2_8c.html#a50c3e6f809230788a1871b9ee2436eea" title="DMA Generated Driver File.">DMA2_Initialize()</a>; }</p>
+<p>void <a class="el" href="main_8c.html#a6288eba0f8e8ad3ab1544ad731eb7667">main(void)</a> { <br  />
+ SYSTEM_Initialize();</p>
+<p>//Read one page from PFM into device Buffer RAM FLASH_ReadPage();</p>
+<p>//Initialize DMA2 to copy data from device Buffer RAM to U1TXB register //Configure source size as 256 and destination size as 1 DMA2_Initialize(); }</p>
 <div class="fragment"></div><!-- fragment --> </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

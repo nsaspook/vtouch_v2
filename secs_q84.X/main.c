@@ -776,7 +776,8 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false, faker;
 void onesec_io(void);
 
-/** Lets get going with the code.
+/** \file main.c
+ * Lets get going with the code.
  * Main application
  */
 void main(void)

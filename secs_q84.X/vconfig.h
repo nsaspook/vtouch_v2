@@ -20,7 +20,8 @@ extern "C" {
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
 #define VER	"2.16G"
-	/** Software version and a brief doc for each version changes.
+	/** \file vconfig.h
+	 * Software version and a brief doc for each version changes.
  
 		1.13G wafer load-lock control.
 		1.15 add specific equipment types V.e_types.

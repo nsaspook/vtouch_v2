@@ -1,6 +1,6 @@
 \doxysection{adc.\+c}
 \hypertarget{adc_8c_source}{}\label{adc_8c_source}\index{secs\_q84.X/mcc\_generated\_files/adc.c@{secs\_q84.X/mcc\_generated\_files/adc.c}}
-\mbox{\hyperlink{adc_8c}{Go to the documentation of this file.}}
+
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00001}00001\ }
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00024}00024\ \textcolor{comment}{/*}}
@@ -27,7 +27,7 @@
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00045}00045\ \textcolor{comment}{*/}}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00046}00046\ }
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
-\DoxyCodeLine{\Hypertarget{adc_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{adc_8h}{adc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{adc_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}adc.h"{}}}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00053}00053\ }
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00054}00054\ \textcolor{comment}{//Pointers\ to\ ADC\ interrupt\ handlers}}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00055}00055\ \textcolor{comment}{//User\ can\ use\ them\ in\ application\ code\ to\ initialize\ with\ custom\ ISRs}}
@@ -178,7 +178,7 @@
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00200}00200\ \{}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00201}00201\ \ \ \ \ \textcolor{keywordflow}{switch}\ (context)}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00202}00202\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{adc_8c_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group__adc__context__scan_ggae1d3d7089e713acebb1897f907d366b6a83ddd7463ff764993cbfa9bf033f00ed}{CONTEXT\_1}}:}
+\DoxyCodeLine{\Hypertarget{adc_8c_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{case}\ CONTEXT\_1:}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00204}00204\ \ \ \ \ \ \ \ \ ADCSEL1bits.CHEN\ =\ 1;}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00205}00205\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00206}00206\ \ \ \ \ \textcolor{keywordflow}{default}:}
@@ -190,7 +190,7 @@
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00212}00212\ \{}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00213}00213\ \ \ \ \ \textcolor{keywordflow}{switch}\ (context)}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00214}00214\ \ \ \ \ \{}
-\DoxyCodeLine{\Hypertarget{adc_8c_source_l00215}00215\ \ \ \ \ \textcolor{keywordflow}{case}\ \mbox{\hyperlink{group__adc__context__scan_ggae1d3d7089e713acebb1897f907d366b6a83ddd7463ff764993cbfa9bf033f00ed}{CONTEXT\_1}}:}
+\DoxyCodeLine{\Hypertarget{adc_8c_source_l00215}00215\ \ \ \ \ \textcolor{keywordflow}{case}\ CONTEXT\_1:}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00216}00216\ \ \ \ \ \ \ \ \ ADCSEL1bits.CHEN\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00217}00217\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00218}00218\ \ \ \ \ \textcolor{keywordflow}{default}:}
@@ -371,14 +371,14 @@
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00393}00393\ \ \ \ \ ADCPbits.CPON\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00394}00394\ \}}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00395}00395\ }
-\DoxyCodeLine{\Hypertarget{adc_8c_source_l00396}\mbox{\hyperlink{adc_8c_a1c5ff9cbd0daf05af8aca4b52df06303}{00396}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adc_8c_a1c5ff9cbd0daf05af8aca4b52df06303}{\_\_interrupt}}(irq(AD),base(8))\ ADC\_ADI\_ISR(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adc_8c_source_l00396}00396\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(AD),base(8))\ ADC\_ADI\_ISR(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00397}00397\ \{}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00398}00398\ \ \ \ \ PIR1bits.ADIF\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00399}00399\ \ \ \ \ \textcolor{keywordflow}{if}\ (ADC\_ConversionComplete\_ISR\ !=\ NULL)}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00400}00400\ \ \ \ \ \ \ \ \ ADC\_ConversionComplete\_ISR();}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00401}00401\ \}}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00402}00402\ }
-\DoxyCodeLine{\Hypertarget{adc_8c_source_l00403}\mbox{\hyperlink{adc_8c_ab69bc294b8df51cc2bd2d4004b74d1cf}{00403}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adc_8c_a1c5ff9cbd0daf05af8aca4b52df06303}{\_\_interrupt}}(irq(ACT),base(8))\ ADC\_ACTI\_ISR(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adc_8c_source_l00403}00403\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(ACT),base(8))\ ADC\_ACTI\_ISR(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00404}00404\ \{}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00405}00405\ \ \ \ \ PIR1bits.ACTIF\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00406}00406\ \ \ \ \ \textcolor{keywordflow}{if}\ (ADC\_ActiveClockTuning\_ISR\ !=\ NULL)}
@@ -386,7 +386,7 @@
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00408}00408\ \}}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00409}00409\ }
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00410}00410\ }
-\DoxyCodeLine{\Hypertarget{adc_8c_source_l00411}\mbox{\hyperlink{adc_8c_a1a80f33826e68e9c4cbeebfe93d9846d}{00411}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adc_8c_a1c5ff9cbd0daf05af8aca4b52df06303}{\_\_interrupt}}(irq(ADCH1),base(8))\ ADC\_ADCH1\_ISR(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adc_8c_source_l00411}00411\ \textcolor{keywordtype}{void}\ \_\_interrupt(irq(ADCH1),base(8))\ ADC\_ADCH1\_ISR(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00412}00412\ \{}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00413}00413\ \ \ \ \ PIR2bits.ADCH1IF\ =\ 0;}
 \DoxyCodeLine{\Hypertarget{adc_8c_source_l00414}00414\ \ \ \ \ \textcolor{keywordflow}{if}\ (ADC\_Context1Thereshld\_ISR\ !=\ NULL)}

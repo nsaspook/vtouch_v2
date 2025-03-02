@@ -81,7 +81,7 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">pwm8.c</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="pwm8_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> <span class="comment">/*</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">    (c) 2018 Microchip Technology Inc. and its subsidiaries. </span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">    </span></div>
@@ -106,10 +106,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor"> #include &lt;xc.h&gt;</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor"> #include &quot;<a class="code" href="pwm8_8h.html">pwm8.h</a>&quot;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor"> #include &quot;pwm8.h&quot;</span></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="foldopen" id="foldopen00058" data-start="{" data-end="}">
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="pwm8_8c.html#a5a4d25705ca1aecf11504b4575a94dd6">   58</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="pwm8_8c.html#a5a4d25705ca1aecf11504b4575a94dd6">PWM8_Initialize</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> <span class="keywordtype">void</span> PWM8_Initialize(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> {</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">// Set the PWM to the options selected in the PIC10 / PIC12 / PIC16 / PIC18 MCUs.</span></div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">// PWM8POL active_hi; PWM8EN enabled; </span></div>
@@ -124,10 +123,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="comment">// Select timer</span></div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    CCPTMRS1bits.P8TSEL = 1;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> }</div>
-</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="foldopen" id="foldopen00074" data-start="{" data-end="}">
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="pwm8_8c.html#a8435e5b19496ca07d19b217aee178eaa">   74</a></span> <span class="keywordtype">void</span> <a class="code hl_function" href="pwm8_8c.html#a8435e5b19496ca07d19b217aee178eaa">PWM8_LoadDutyValue</a>(uint16_t dutyValue)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> <span class="keywordtype">void</span> PWM8_LoadDutyValue(uint16_t dutyValue)</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> {</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>     <span class="comment">// Writing to 8 MSBs of PWM duty cycle in PWMDCH register</span></div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>     PWM8DCH = (dutyValue &amp; 0x03FC)&gt;&gt;2;</div>
@@ -135,10 +132,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>     <span class="comment">// Writing to 2 LSBs of PWM duty cycle in PWMDCL register</span></div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>     PWM8DCL = (dutyValue &amp; 0x0003)&lt;&lt;6;</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> }</div>
-</div>
-<div class="ttc" id="apwm8_8c_html_a5a4d25705ca1aecf11504b4575a94dd6"><div class="ttname"><a href="pwm8_8c.html#a5a4d25705ca1aecf11504b4575a94dd6">PWM8_Initialize</a></div><div class="ttdeci">void PWM8_Initialize(void)</div><div class="ttdoc">PWM8 Generated Driver File.</div><div class="ttdef"><b>Definition</b> <a href="pwm8_8c_source.html#l00058">pwm8.c:58</a></div></div>
-<div class="ttc" id="apwm8_8c_html_a8435e5b19496ca07d19b217aee178eaa"><div class="ttname"><a href="pwm8_8c.html#a8435e5b19496ca07d19b217aee178eaa">PWM8_LoadDutyValue</a></div><div class="ttdeci">void PWM8_LoadDutyValue(uint16_t dutyValue)</div><div class="ttdoc">@Summary Loads 16-bit duty cycle.</div><div class="ttdef"><b>Definition</b> <a href="pwm8_8c_source.html#l00074">pwm8.c:74</a></div></div>
-<div class="ttc" id="apwm8_8h_html"><div class="ttname"><a href="pwm8_8h.html">pwm8.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

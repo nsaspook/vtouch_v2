@@ -1,30 +1,6 @@
 var searchData=
 [
-  ['i_5ftrace_0',['I_TRACE',['../main_8c.html#ac97678d743f94219bf2712a302091217',1,'main.c']]],
-  ['info_1',['info',['../structterminal__type.html#a1c842107c9cc549fe3badbb4a0edfbf0',1,'terminal_type::info'],['../struct_v__data.html#a3f20ff875fe72e46d5faa5a345d4bd43',1,'V_data::info']]],
-  ['info_5fvterm_2',['INFO_VTERM',['../vconfig_8h.html#ac9aaa2ee7db2839baaa73a76809841a9',1,'vconfig.h']]],
-  ['init_5fdisplay_3',['init_display',['../eadog_8c.html#ab5c89a01791e81a5efcee4e25a938a7e',1,'init_display(void):&#160;eadog.c'],['../eadog_8h.html#ab5c89a01791e81a5efcee4e25a938a7e',1,'init_display(void):&#160;eadog.c']]],
-  ['input_4',['INPUT',['../pin__manager_8h.html#a1bb283bd7893b9855e2f23013891fc82',1,'pin_manager.h']]],
-  ['int0_5fcallback_5',['int0_callback',['../ext__int_8c.html#a65bcc7f5fd45615ab6110412d62d60dd',1,'INT0_CallBack(void):&#160;ext_int.c'],['../ext__int_8h.html#a65bcc7f5fd45615ab6110412d62d60dd',1,'INT0_CallBack(void):&#160;ext_int.c']]],
-  ['int0_5fdefaultinterrupthandler_6',['int0_defaultinterrupthandler',['../ext__int_8c.html#aa775b159f418a494f6afeaf5d1dd6118',1,'INT0_DefaultInterruptHandler(void):&#160;ext_int.c'],['../ext__int_8h.html#aa775b159f418a494f6afeaf5d1dd6118',1,'INT0_DefaultInterruptHandler(void):&#160;ext_int.c']]],
-  ['int0_5finterrupthandler_7',['int0_interrupthandler',['../ext__int_8h.html#ad6255d5886da2e6a49d678612333915b',1,'INT0_InterruptHandler:&#160;ext_int.c'],['../ext__int_8c.html#ad6255d5886da2e6a49d678612333915b',1,'INT0_InterruptHandler:&#160;ext_int.c']]],
-  ['int0_5fsetinterrupthandler_8',['int0_setinterrupthandler',['../ext__int_8h.html#a4bda8f69112ff74b316079155eab8a9c',1,'INT0_SetInterruptHandler(void(*InterruptHandler)(void)):&#160;ext_int.c'],['../ext__int_8c.html#a4bda8f69112ff74b316079155eab8a9c',1,'INT0_SetInterruptHandler(void(*InterruptHandler)(void)):&#160;ext_int.c']]],
-  ['int1_5fcallback_9',['int1_callback',['../ext__int_8c.html#a07191d2946129b36e26569cf5317a448',1,'INT1_CallBack(void):&#160;ext_int.c'],['../ext__int_8h.html#a07191d2946129b36e26569cf5317a448',1,'INT1_CallBack(void):&#160;ext_int.c']]],
-  ['int1_5fdefaultinterrupthandler_10',['int1_defaultinterrupthandler',['../ext__int_8c.html#ad59a2b0cf38c4f940548c59b2087ae6d',1,'INT1_DefaultInterruptHandler(void):&#160;ext_int.c'],['../ext__int_8h.html#ad59a2b0cf38c4f940548c59b2087ae6d',1,'INT1_DefaultInterruptHandler(void):&#160;ext_int.c']]],
-  ['int1_5finterrupthandler_11',['int1_interrupthandler',['../ext__int_8c.html#a4ec45c12ec6b93695d7b162e218c9b1b',1,'INT1_InterruptHandler:&#160;ext_int.c'],['../ext__int_8h.html#a4ec45c12ec6b93695d7b162e218c9b1b',1,'INT1_InterruptHandler:&#160;ext_int.c']]],
-  ['int1_5fsetinterrupthandler_12',['int1_setinterrupthandler',['../ext__int_8c.html#a0495029beae6b7f23d6d58a6d0715b73',1,'INT1_SetInterruptHandler(void(*InterruptHandler)(void)):&#160;ext_int.c'],['../ext__int_8h.html#a0495029beae6b7f23d6d58a6d0715b73',1,'INT1_SetInterruptHandler(void(*InterruptHandler)(void)):&#160;ext_int.c']]],
-  ['int24_5ft_13',['int24_t',['../main_8c.html#a5b45919dd9dbd4d48b64a76567b9b599',1,'main.c']]],
-  ['int2_5fcallback_14',['int2_callback',['../ext__int_8c.html#a379d5ff4d1008e4d9978487ebdb79d4e',1,'INT2_CallBack(void):&#160;ext_int.c'],['../ext__int_8h.html#a379d5ff4d1008e4d9978487ebdb79d4e',1,'INT2_CallBack(void):&#160;ext_int.c']]],
-  ['int2_5fdefaultinterrupthandler_15',['int2_defaultinterrupthandler',['../ext__int_8c.html#aa4762a4bb5d777b61b4f76e73b6199dc',1,'INT2_DefaultInterruptHandler(void):&#160;ext_int.c'],['../ext__int_8h.html#aa4762a4bb5d777b61b4f76e73b6199dc',1,'INT2_DefaultInterruptHandler(void):&#160;ext_int.c']]],
-  ['int2_5finterrupthandler_16',['int2_interrupthandler',['../ext__int_8c.html#a2c39f6147dce2039bda440c9b0a371b5',1,'INT2_InterruptHandler:&#160;ext_int.c'],['../ext__int_8h.html#a2c39f6147dce2039bda440c9b0a371b5',1,'INT2_InterruptHandler:&#160;ext_int.c']]],
-  ['int2_5fsetinterrupthandler_17',['int2_setinterrupthandler',['../ext__int_8c.html#adb973ce1fafb0a60b9fa446ce1d72916',1,'INT2_SetInterruptHandler(void(*InterruptHandler)(void)):&#160;ext_int.c'],['../ext__int_8h.html#adb973ce1fafb0a60b9fa446ce1d72916',1,'INT2_SetInterruptHandler(void(*InterruptHandler)(void)):&#160;ext_int.c']]],
-  ['int_5fcount_18',['int_count',['../structspi__link__type.html#ae385aac6ddd0c8a964ef0a97a1fea4b9',1,'spi_link_type']]],
-  ['interrupt_5fglobalinterrupthighdisable_19',['INTERRUPT_GlobalInterruptHighDisable',['../interrupt__manager_8h.html#adbb459e16400896a6530a8bf39788ec7',1,'interrupt_manager.h']]],
-  ['interrupt_5fglobalinterrupthighenable_20',['INTERRUPT_GlobalInterruptHighEnable',['../interrupt__manager_8h.html#aab72fb58c88f1144f26ba7cab4f785cb',1,'interrupt_manager.h']]],
-  ['interrupt_5fglobalinterruptlowdisable_21',['INTERRUPT_GlobalInterruptLowDisable',['../interrupt__manager_8h.html#a5413f71ea540433be5616d831ff8a111',1,'interrupt_manager.h']]],
-  ['interrupt_5fglobalinterruptlowenable_22',['INTERRUPT_GlobalInterruptLowEnable',['../interrupt__manager_8h.html#a8cd67a145b9cc65a8d54347159a46e64',1,'interrupt_manager.h']]],
-  ['interrupt_5finitialize_23',['interrupt_initialize',['../interrupt__manager_8c.html#a5c526129ee879458dff6755f5768a6e3',1,'INTERRUPT_Initialize(void):&#160;interrupt_manager.c'],['../interrupt__manager_8h.html#a5c526129ee879458dff6755f5768a6e3',1,'INTERRUPT_Initialize(void):&#160;interrupt_manager.c']]],
-  ['interrupt_5fmanager_2ec_24',['interrupt_manager.c',['../interrupt__manager_8c.html',1,'']]],
-  ['interrupt_5fmanager_2eh_25',['interrupt_manager.h',['../interrupt__manager_8h.html',1,'']]],
-  ['interrupt_5fmanager_2ep1_2ed_26',['interrupt_manager.p1.d',['../interrupt__manager_8p1_8d.html',1,'']]]
+  ['terminal_5ftype_0',['terminal_type',['../structterminal__type.html',1,'']]],
+  ['tickcount_1',['tickCount',['../main_8c.html#ada284e1e4e960e3a4fd5c0b0a93314e1',1,'main.c']]],
+  ['to_20digital_20converter_20with_20context_2',['ADC3: Analog-to-Digital Converter with Context',['../group__adc__context__scan.html',1,'']]]
 ];

@@ -81,7 +81,7 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">tmr2.c</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="tmr2_8c.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">/*</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">    (c) 2018 Microchip Technology Inc. and its subsidiaries. </span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">    </span></div>
@@ -106,10 +106,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment">*/</span></div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#include &lt;xc.h&gt;</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;<a class="code" href="tmr2_8h.html">tmr2.h</a>&quot;</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#include &quot;tmr2.h&quot;</span></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="foldopen" id="foldopen00062" data-start="{" data-end="}">
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a46c13c9255379e99c10240229a145d37">   62</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a46c13c9255379e99c10240229a145d37">TMR2_Initialize</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keywordtype">void</span> TMR2_Initialize(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>{</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="comment">// Set TMR2 to the options selected in the User Interface</span></div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
@@ -134,56 +133,42 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="comment">// T2CKPS 1:1; T2OUTPS 1:16; TMR2ON on; </span></div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    T2CON = 0x8F;</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
-</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="foldopen" id="foldopen00088" data-start="{" data-end="}">
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a1d3f4785995b9957ae3ad3f6e3b2c08f">   88</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a1d3f4785995b9957ae3ad3f6e3b2c08f">TMR2_ModeSet</a>(<a class="code hl_enumeration" href="tmr2_8h.html#a23179ba73e4f08e79993bbda785709d0">TMR2_HLT_MODE</a> mode)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span><span class="keywordtype">void</span> TMR2_ModeSet(TMR2_HLT_MODE mode)</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>{</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>   <span class="comment">// Configure different types HLT mode</span></div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    T2HLTbits.MODE = mode;</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>}</div>
-</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="foldopen" id="foldopen00094" data-start="{" data-end="}">
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a4cdefdf25ae2fdd0df54dd0b1108e293">   94</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a4cdefdf25ae2fdd0df54dd0b1108e293">TMR2_ExtResetSourceSet</a>(<a class="code hl_enumeration" href="tmr2_8h.html#afda82e9798eaf3ad608a5557dbf50b74">TMR2_HLT_EXT_RESET_SOURCE</a> reset)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keywordtype">void</span> TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset)</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>{</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="comment">//Configure different types of HLT external reset source</span></div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    T2RSTbits.RSEL = reset;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>}</div>
-</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="foldopen" id="foldopen00100" data-start="{" data-end="}">
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a7eccfd0fac278e0099d27631e116cfbf">  100</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a7eccfd0fac278e0099d27631e116cfbf">TMR2_Start</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="keywordtype">void</span> TMR2_Start(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>{</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="comment">// Start the Timer by writing to TMRxON bit</span></div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    T2CONbits.TMR2ON = 1;</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>}</div>
-</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="foldopen" id="foldopen00106" data-start="{" data-end="}">
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="tmr2_8c.html#afb37b846db811f973b4009215d59f91a">  106</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#afb37b846db811f973b4009215d59f91a">TMR2_StartTimer</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="keywordtype">void</span> TMR2_StartTimer(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>{</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <a class="code hl_function" href="tmr2_8c.html#a7eccfd0fac278e0099d27631e116cfbf">TMR2_Start</a>();</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    TMR2_Start();</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>}</div>
-</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="foldopen" id="foldopen00111" data-start="{" data-end="}">
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a90159f110263038f478f43a3ac9ab3ee">  111</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a90159f110263038f478f43a3ac9ab3ee">TMR2_Stop</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="keywordtype">void</span> TMR2_Stop(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>{</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="comment">// Stop the Timer by writing to TMRxON bit</span></div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    T2CONbits.TMR2ON = 0;</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
-</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="foldopen" id="foldopen00117" data-start="{" data-end="}">
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a36d7e6eab8b279863c83a32fb41adb02">  117</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a36d7e6eab8b279863c83a32fb41adb02">TMR2_StopTimer</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="keywordtype">void</span> TMR2_StopTimer(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>{</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <a class="code hl_function" href="tmr2_8c.html#a90159f110263038f478f43a3ac9ab3ee">TMR2_Stop</a>();</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    TMR2_Stop();</div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>}</div>
-</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="foldopen" id="foldopen00122" data-start="{" data-end="}">
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="tmr2_8c.html#aa016556d5d1a99da79708bcac03d9d65">  122</a></span>uint8_t <a class="code hl_function" href="tmr2_8c.html#aa016556d5d1a99da79708bcac03d9d65">TMR2_Counter8BitGet</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>uint8_t TMR2_Counter8BitGet(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>{</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    uint8_t readVal;</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
@@ -191,46 +176,34 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">return</span> readVal;</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>}</div>
-</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="foldopen" id="foldopen00131" data-start="{" data-end="}">
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a4acc1f7c8c2dbd46424dad273cdb9cb1">  131</a></span>uint8_t <a class="code hl_function" href="tmr2_8c.html#a4acc1f7c8c2dbd46424dad273cdb9cb1">TMR2_ReadTimer</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>uint8_t TMR2_ReadTimer(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>{</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="tmr2_8c.html#aa016556d5d1a99da79708bcac03d9d65">TMR2_Counter8BitGet</a>();</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordflow">return</span> TMR2_Counter8BitGet();</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>}</div>
-</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="foldopen" id="foldopen00136" data-start="{" data-end="}">
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a0179f776b701464c6b44495e7114e5e1">  136</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a0179f776b701464c6b44495e7114e5e1">TMR2_Counter8BitSet</a>(uint8_t timerVal)</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="keywordtype">void</span> TMR2_Counter8BitSet(uint8_t timerVal)</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>{</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="comment">// Write to the Timer2 register</span></div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    TMR2 = timerVal;</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>}</div>
-</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="foldopen" id="foldopen00142" data-start="{" data-end="}">
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="tmr2_8c.html#acb2fbe8254fcc8c01b9784b028a7eac6">  142</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#acb2fbe8254fcc8c01b9784b028a7eac6">TMR2_WriteTimer</a>(uint8_t timerVal)</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="keywordtype">void</span> TMR2_WriteTimer(uint8_t timerVal)</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>{</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <a class="code hl_function" href="tmr2_8c.html#a0179f776b701464c6b44495e7114e5e1">TMR2_Counter8BitSet</a>(timerVal);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    TMR2_Counter8BitSet(timerVal);</div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>}</div>
-</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="foldopen" id="foldopen00147" data-start="{" data-end="}">
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a04766b6d89a990720759c1a03a649fd5">  147</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a04766b6d89a990720759c1a03a649fd5">TMR2_Period8BitSet</a>(uint8_t periodVal)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="keywordtype">void</span> TMR2_Period8BitSet(uint8_t periodVal)</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>{</div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>   PR2 = periodVal;</div>
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>}</div>
-</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="foldopen" id="foldopen00152" data-start="{" data-end="}">
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="tmr2_8c.html#a5490961ba3ba77d10896e320ab840a74">  152</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="tmr2_8c.html#a5490961ba3ba77d10896e320ab840a74">TMR2_LoadPeriodRegister</a>(uint8_t periodVal)</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="keywordtype">void</span> TMR2_LoadPeriodRegister(uint8_t periodVal)</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>{</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>   <a class="code hl_function" href="tmr2_8c.html#a04766b6d89a990720759c1a03a649fd5">TMR2_Period8BitSet</a>(periodVal);</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>   TMR2_Period8BitSet(periodVal);</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>}</div>
-</div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="foldopen" id="foldopen00157" data-start="{" data-end="}">
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="tmr2_8c.html#ab0b9dbd90bacc904f311d71fbcccd038">  157</a></span><span class="keywordtype">bool</span> <a class="code hl_function" href="tmr2_8c.html#ab0b9dbd90bacc904f311d71fbcccd038">TMR2_HasOverflowOccured</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="keywordtype">bool</span> TMR2_HasOverflowOccured(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>{</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    <span class="comment">// check if  overflow has occurred by checking the TMRIF bit</span></div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordtype">bool</span> status = PIR3bits.TMR2IF;</div>
@@ -241,24 +214,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    }</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordflow">return</span> status;</div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>}</div>
-</div>
-<div class="ttc" id="atmr2_8c_html_a0179f776b701464c6b44495e7114e5e1"><div class="ttname"><a href="tmr2_8c.html#a0179f776b701464c6b44495e7114e5e1">TMR2_Counter8BitSet</a></div><div class="ttdeci">void TMR2_Counter8BitSet(uint8_t timerVal)</div><div class="ttdoc">@Summary Writes the TMR2 register.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00136">tmr2.c:136</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a04766b6d89a990720759c1a03a649fd5"><div class="ttname"><a href="tmr2_8c.html#a04766b6d89a990720759c1a03a649fd5">TMR2_Period8BitSet</a></div><div class="ttdeci">void TMR2_Period8BitSet(uint8_t periodVal)</div><div class="ttdoc">@Summary Load value to Period Register.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00147">tmr2.c:147</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a1d3f4785995b9957ae3ad3f6e3b2c08f"><div class="ttname"><a href="tmr2_8c.html#a1d3f4785995b9957ae3ad3f6e3b2c08f">TMR2_ModeSet</a></div><div class="ttdeci">void TMR2_ModeSet(TMR2_HLT_MODE mode)</div><div class="ttdoc">@Summary Configures the Hardware Limit Timer mode.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00088">tmr2.c:88</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a36d7e6eab8b279863c83a32fb41adb02"><div class="ttname"><a href="tmr2_8c.html#a36d7e6eab8b279863c83a32fb41adb02">TMR2_StopTimer</a></div><div class="ttdeci">void TMR2_StopTimer(void)</div><div class="ttdoc">@Summary This function stops the TMR2.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00117">tmr2.c:117</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a46c13c9255379e99c10240229a145d37"><div class="ttname"><a href="tmr2_8c.html#a46c13c9255379e99c10240229a145d37">TMR2_Initialize</a></div><div class="ttdeci">void TMR2_Initialize(void)</div><div class="ttdoc">TMR2 Generated Driver File.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00062">tmr2.c:62</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a4acc1f7c8c2dbd46424dad273cdb9cb1"><div class="ttname"><a href="tmr2_8c.html#a4acc1f7c8c2dbd46424dad273cdb9cb1">TMR2_ReadTimer</a></div><div class="ttdeci">uint8_t TMR2_ReadTimer(void)</div><div class="ttdoc">@Summary Reads the TMR2 register.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00131">tmr2.c:131</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a4cdefdf25ae2fdd0df54dd0b1108e293"><div class="ttname"><a href="tmr2_8c.html#a4cdefdf25ae2fdd0df54dd0b1108e293">TMR2_ExtResetSourceSet</a></div><div class="ttdeci">void TMR2_ExtResetSourceSet(TMR2_HLT_EXT_RESET_SOURCE reset)</div><div class="ttdoc">@Summary Configures the HLT external reset source.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00094">tmr2.c:94</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a5490961ba3ba77d10896e320ab840a74"><div class="ttname"><a href="tmr2_8c.html#a5490961ba3ba77d10896e320ab840a74">TMR2_LoadPeriodRegister</a></div><div class="ttdeci">void TMR2_LoadPeriodRegister(uint8_t periodVal)</div><div class="ttdoc">@Summary Load value to Period Register.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00152">tmr2.c:152</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a7eccfd0fac278e0099d27631e116cfbf"><div class="ttname"><a href="tmr2_8c.html#a7eccfd0fac278e0099d27631e116cfbf">TMR2_Start</a></div><div class="ttdeci">void TMR2_Start(void)</div><div class="ttdoc">@Summary This function starts the TMR2.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00100">tmr2.c:100</a></div></div>
-<div class="ttc" id="atmr2_8c_html_a90159f110263038f478f43a3ac9ab3ee"><div class="ttname"><a href="tmr2_8c.html#a90159f110263038f478f43a3ac9ab3ee">TMR2_Stop</a></div><div class="ttdeci">void TMR2_Stop(void)</div><div class="ttdoc">@Summary This function stops the TMR2.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00111">tmr2.c:111</a></div></div>
-<div class="ttc" id="atmr2_8c_html_aa016556d5d1a99da79708bcac03d9d65"><div class="ttname"><a href="tmr2_8c.html#aa016556d5d1a99da79708bcac03d9d65">TMR2_Counter8BitGet</a></div><div class="ttdeci">uint8_t TMR2_Counter8BitGet(void)</div><div class="ttdoc">@Summary Reads the TMR2 register.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00122">tmr2.c:122</a></div></div>
-<div class="ttc" id="atmr2_8c_html_ab0b9dbd90bacc904f311d71fbcccd038"><div class="ttname"><a href="tmr2_8c.html#ab0b9dbd90bacc904f311d71fbcccd038">TMR2_HasOverflowOccured</a></div><div class="ttdeci">bool TMR2_HasOverflowOccured(void)</div><div class="ttdoc">@Summary Boolean routine to poll or to check for the match flag on the fly.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00157">tmr2.c:157</a></div></div>
-<div class="ttc" id="atmr2_8c_html_acb2fbe8254fcc8c01b9784b028a7eac6"><div class="ttname"><a href="tmr2_8c.html#acb2fbe8254fcc8c01b9784b028a7eac6">TMR2_WriteTimer</a></div><div class="ttdeci">void TMR2_WriteTimer(uint8_t timerVal)</div><div class="ttdoc">@Summary Writes the TMR2 register.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00142">tmr2.c:142</a></div></div>
-<div class="ttc" id="atmr2_8c_html_afb37b846db811f973b4009215d59f91a"><div class="ttname"><a href="tmr2_8c.html#afb37b846db811f973b4009215d59f91a">TMR2_StartTimer</a></div><div class="ttdeci">void TMR2_StartTimer(void)</div><div class="ttdoc">@Summary This function starts the TMR2.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8c_source.html#l00106">tmr2.c:106</a></div></div>
-<div class="ttc" id="atmr2_8h_html"><div class="ttname"><a href="tmr2_8h.html">tmr2.h</a></div></div>
-<div class="ttc" id="atmr2_8h_html_a23179ba73e4f08e79993bbda785709d0"><div class="ttname"><a href="tmr2_8h.html#a23179ba73e4f08e79993bbda785709d0">TMR2_HLT_MODE</a></div><div class="ttdeci">TMR2_HLT_MODE</div><div class="ttdoc">TMR2 Generated Driver API Header File.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8h_source.html#l00079">tmr2.h:80</a></div></div>
-<div class="ttc" id="atmr2_8h_html_afda82e9798eaf3ad608a5557dbf50b74"><div class="ttname"><a href="tmr2_8h.html#afda82e9798eaf3ad608a5557dbf50b74">TMR2_HLT_EXT_RESET_SOURCE</a></div><div class="ttdeci">TMR2_HLT_EXT_RESET_SOURCE</div><div class="ttdoc">HLT Reset Source Enumeration.</div><div class="ttdef"><b>Definition</b> <a href="tmr2_8h_source.html#l00220">tmr2.h:221</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

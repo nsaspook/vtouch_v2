@@ -1,5 +1,10 @@
 \doxysection{secs\+\_\+q84.\+X/main.c File Reference}
 \hypertarget{main_8c}{}\label{main_8c}\index{secs\_q84.X/main.c@{secs\_q84.X/main.c}}
+
+
+Lets get going with the code.  
+
+
 {\ttfamily \#include $<$stdio.\+h$>$}\newline
 {\ttfamily \#include $<$string.\+h$>$}\newline
 {\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/mcc.\+h"{}}\newline
@@ -30,7 +35,7 @@ typedef signed long long \mbox{\hyperlink{main_8c_a5b45919dd9dbd4d48b64a76567b9b
 void \mbox{\hyperlink{main_8c_abaf162c1efebcc3af6a46b1ca9b8499b}{onesec\+\_\+io}} (void)
 \item 
 void \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}} (void)
-\begin{DoxyCompactList}\small\item\em Lets get going with the code. \end{DoxyCompactList}\item 
+\item 
 char \mbox{\hyperlink{main_8c_a2c7bc8ae77786e8970ac3f03b92a1d00}{spinners}} (uint8\+\_\+t shape, const uint8\+\_\+t reset)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Variables}
@@ -76,12 +81,21 @@ const \mbox{\hyperlink{structheader33}{header33}} \mbox{\hyperlink{main_8c_ab2f2
 \item 
 \mbox{\hyperlink{structheader10}{header10}} \mbox{\hyperlink{main_8c_ae930faf19041d623f7c4320110c4eba2}{r\+\_\+block}}
 \item 
-volatile uint16\+\_\+t \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tick\+Count}} \mbox{[}\mbox{\hyperlink{timers_8h_ad499250d949643c5a12161767059a3d2abaa7883f9d3702d4c1fba3442fec0595}{TMR\+\_\+\+COUNT}}\mbox{]} = \{0\}
+volatile uint16\+\_\+t \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tick\+Count}} \mbox{[}TMR\+\_\+\+COUNT\mbox{]} = \{0\}
 \begin{DoxyCompactList}\small\item\em TMR6 Generated Driver File. \end{DoxyCompactList}\item 
 volatile uint8\+\_\+t \mbox{\hyperlink{main_8c_a100a8078f274b8dcba40099c11217cf6}{mode\+\_\+sw}} = false
 \item 
 volatile uint8\+\_\+t \mbox{\hyperlink{main_8c_aae51255fe85ff54dd87fdc3aef4a2062}{faker}}
 \end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Lets get going with the code. 
+
+Main application 
+
+Definition in file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
 
 
 \doxysubsection{Macro Definition Documentation}
@@ -122,7 +136,7 @@ Definition at line \mbox{\hyperlink{main_8c_source_l00177}{177}} of file \mbox{\
 \index{main.c@{main.c}!int24\_t@{int24\_t}}
 \index{int24\_t@{int24\_t}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{int24\_t}{int24\_t}}
-{\footnotesize\ttfamily typedef signed long long \mbox{\hyperlink{main_8c_a5b45919dd9dbd4d48b64a76567b9b599}{int24\+\_\+t}}}
+{\footnotesize\ttfamily typedef signed long long int24\+\_\+t}
 
 
 
@@ -137,13 +151,9 @@ Definition at line \mbox{\hyperlink{main_8c_source_l00161}{161}} of file \mbox{\
 \doxysubsubsection{\texorpdfstring{main()}{main()}}
 {\footnotesize\ttfamily void main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
 
+Speed locking setup code. Use a few EEPROM bytes to cycle or lock the serial port baud rate during a power-\/up. 9600 and 19200 are the normal speeds for SECS-\/I serial communications
 
-
-Lets get going with the code. 
-
-Main application Speed locking setup code. Use a few EEPROM bytes to cycle or lock the serial port baud rate during a power-\/up. 9600 and 19200 are the normal speeds for SECS-\/I serial communications
-
-Definition at line \mbox{\hyperlink{main_8c_source_l00782}{782}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+Definition at line \mbox{\hyperlink{main_8c_source_l00783}{783}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
 
 \Hypertarget{main_8c_abaf162c1efebcc3af6a46b1ca9b8499b}\label{main_8c_abaf162c1efebcc3af6a46b1ca9b8499b} 
 \index{main.c@{main.c}!onesec\_io@{onesec\_io}}
@@ -153,7 +163,7 @@ Definition at line \mbox{\hyperlink{main_8c_source_l00782}{782}} of file \mbox{\
 
 
 
-Definition at line \mbox{\hyperlink{main_8c_source_l01234}{1234}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+Definition at line \mbox{\hyperlink{main_8c_source_l01235}{1235}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
 
 \Hypertarget{main_8c_a2c7bc8ae77786e8970ac3f03b92a1d00}\label{main_8c_a2c7bc8ae77786e8970ac3f03b92a1d00} 
 \index{main.c@{main.c}!spinners@{spinners}}
@@ -163,7 +173,7 @@ Definition at line \mbox{\hyperlink{main_8c_source_l01234}{1234}} of file \mbox{
 
 
 
-Definition at line \mbox{\hyperlink{main_8c_source_l01243}{1243}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+Definition at line \mbox{\hyperlink{main_8c_source_l01244}{1244}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
 
 
 
@@ -179,7 +189,7 @@ Definition at line \mbox{\hyperlink{main_8c_source_l01243}{1243}} of file \mbox{
 \DoxyCodeLine{=\ \{}
 \DoxyCodeLine{\ \ \ \ .one\_sec\_flag\ =\ \textcolor{keyword}{false},}
 \DoxyCodeLine{\ \ \ \ .display\_update\ =\ \textcolor{keyword}{false},}
-\DoxyCodeLine{\ \ \ \ .dim\_delay\ =\ \mbox{\hyperlink{eadog_8h_a65041631a3a21ddef404472dfd33e166}{DIM\_DELAY}},}
+\DoxyCodeLine{\ \ \ \ .dim\_delay\ =\ DIM\_DELAY,}
 \DoxyCodeLine{\}}
 
 \end{DoxyCode}
@@ -515,7 +525,7 @@ Definition at line \mbox{\hyperlink{eadog_8c_source_l00019}{19}} of file \mbox{\
 \index{main.c@{main.c}!tickCount@{tickCount}}
 \index{tickCount@{tickCount}!main.c@{main.c}}
 \doxysubsubsection{\texorpdfstring{tickCount}{tickCount}}
-{\footnotesize\ttfamily volatile uint16\+\_\+t tick\+Count\mbox{[}\mbox{\hyperlink{timers_8h_ad499250d949643c5a12161767059a3d2abaa7883f9d3702d4c1fba3442fec0595}{TMR\+\_\+\+COUNT}}\mbox{]} = \{0\}}
+{\footnotesize\ttfamily volatile uint16\+\_\+t tick\+Count\mbox{[}TMR\+\_\+\+COUNT\mbox{]} = \{0\}}
 
 
 
@@ -523,7 +533,7 @@ TMR6 Generated Driver File.
 
 @\+Company Microchip Technology Inc.
 
-@\+File Name \doxylink{tmr6_8c}{tmr6.\+c}
+@\+File Name \doxylink{tmr6_8c_source}{tmr6.\+c}
 
 @\+Summary This is the generated driver implementation file for the TMR6 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
 
