@@ -1,0 +1,53 @@
+\doxysection{spi1.\+h}
+\hypertarget{spi1_8h_source}{}\label{spi1_8h_source}\index{secs\_q84.X/mcc\_generated\_files/spi1.h@{secs\_q84.X/mcc\_generated\_files/spi1.h}}
+\mbox{\hyperlink{spi1_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00047}00047\ \textcolor{preprocessor}{\#ifndef\ SPI1\_MASTER\_H}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00048}00048\ \textcolor{preprocessor}{\#define\ SPI1\_MASTER\_H}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00054}00054\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00055}00055\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00056}00056\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00058}00058\ \textcolor{comment}{/*\ SPI\ interfaces\ */}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00059}\mbox{\hyperlink{spi1_8h_a5534ab3c3850e4ce85ccbc35cbf841eb}{00059}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{\ }
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00060}00060\ \ \ \ \ \mbox{\hyperlink{spi1_8h_a5534ab3c3850e4ce85ccbc35cbf841eba70443a1da9c21e88400c09d62c228365}{SPI1\_DEFAULT}}}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00061}\mbox{\hyperlink{spi1_8h_a5534ab3c3850e4ce85ccbc35cbf841eba70443a1da9c21e88400c09d62c228365}{00061}}\ \}\ \mbox{\hyperlink{spi1_8h_a5534ab3c3850e4ce85ccbc35cbf841eb}{spi1\_modes\_t}};}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00063}00063\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8h_a0607cad7a6b302950091fea719146a54}{SPI1\_Initialize}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00064}00064\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{spi1_8h_a75b793019e1495a9eb4c9d40f15fa9f2}{SPI1\_Open}}(\mbox{\hyperlink{spi1_8h_a5534ab3c3850e4ce85ccbc35cbf841eb}{spi1\_modes\_t}}\ spi1UniqueConfiguration);}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00065}00065\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8h_a8d97c5f4dff35a4940b7843207912659}{SPI1\_Close}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00066}00066\ uint8\_t\ \mbox{\hyperlink{spi1_8h_ae07af4d41776972ec7a7691cec4ca0c4}{SPI1\_ExchangeByte}}(uint8\_t\ data);}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00067}00067\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8h_a5ca38ee9c820ae41a0c2e751e9fbb9a2}{SPI1\_ExchangeBlock}}(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize);}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00068}00068\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8h_af8e73470ce8af7f2ce8fd04990162caf}{SPI1\_WriteBlock}}(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize);}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00069}00069\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8h_a0d9ea49076af2ddeec759efe4fadc70a}{SPI1\_ReadBlock}}(\textcolor{keywordtype}{void}\ *block,\ \textcolor{keywordtype}{size\_t}\ blockSize);}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00070}00070\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{spi1_8h_af04c82a7fa9d0a7595b69e2808d5c837}{SPI1\_WriteByte}}(uint8\_t\ \textcolor{keywordtype}{byte});}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00071}00071\ uint8\_t\ \mbox{\hyperlink{spi1_8h_abbc9771abeebcf4c26bcaf627666ffc2}{SPI1\_ReadByte}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{spi1_8h_source_l00073}00073\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//SPI1\_H}}
+
+\end{DoxyCode}

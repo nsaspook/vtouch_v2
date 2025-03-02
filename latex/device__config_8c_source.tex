@@ -1,0 +1,146 @@
+\doxysection{device\+\_\+config.\+c}
+\hypertarget{device__config_8c_source}{}\label{device__config_8c_source}\index{secs\_q84.X/mcc\_generated\_files/device\_config.c@{secs\_q84.X/mcc\_generated\_files/device\_config.c}}
+\mbox{\hyperlink{device__config_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00047}00047\ \textcolor{comment}{//\ Configuration\ bits:\ selected\ in\ the\ GUI}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00049}00049\ \textcolor{comment}{//\ CONFIG1}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00050}00050\ \textcolor{preprocessor}{\#pragma\ config\ FEXTOSC\ =\ ECH\ \ \ \ }\textcolor{comment}{//\ External\ Oscillator\ Selection-\/>EC\ (external\ clock)\ above\ 8\ MHz}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00051}00051\ \textcolor{preprocessor}{\#pragma\ config\ RSTOSC\ =\ EXTOSC\_4PLL\ \ \ \ }\textcolor{comment}{//\ Reset\ Oscillator\ Selection-\/>EXTOSC\ with\ 4x\ PLL,\ with\ EXTOSC\ operating\ per\ FEXTOSC\ bits}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00053}00053\ \textcolor{comment}{//\ CONFIG2}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00054}00054\ \textcolor{preprocessor}{\#pragma\ config\ CLKOUTEN\ =\ ON\ \ \ \ }\textcolor{comment}{//\ Clock\ out\ Enable\ bit-\/>CLKOUT\ function\ is\ enabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00055}00055\ \textcolor{preprocessor}{\#pragma\ config\ PR1WAY\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ PRLOCKED\ One-\/Way\ Set\ Enable\ bit-\/>PRLOCKED\ bit\ can\ be\ set\ and\ cleared\ repeatedly}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00056}00056\ \textcolor{preprocessor}{\#pragma\ config\ CSWEN\ =\ ON\ \ \ \ }\textcolor{comment}{//\ Clock\ Switch\ Enable\ bit-\/>Writing\ to\ NOSC\ and\ NDIV\ is\ allowed}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00057}00057\ \textcolor{preprocessor}{\#pragma\ config\ JTAGEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ JTAG\ Enable\ bit-\/>Disable\ JTAG\ Boundary\ Scan\ mode,\ JTAG\ pins\ revert\ to\ user\ functions}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00058}00058\ \textcolor{preprocessor}{\#pragma\ config\ FCMEN\ =\ ON\ \ \ \ }\textcolor{comment}{//\ Fail-\/Safe\ Clock\ Monitor\ Enable\ bit-\/>Fail-\/Safe\ Clock\ Monitor\ enabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00059}00059\ \textcolor{preprocessor}{\#pragma\ config\ FCMENP\ =\ ON\ \ \ \ }\textcolor{comment}{//\ Fail-\/Safe\ Clock\ Monitor\ -\/Primary\ XTAL\ Enable\ bit-\/>FSCM\ timer\ will\ set\ FSCMP\ bit\ and\ OSFIF\ interrupt\ on\ Primary\ XTAL\ failure}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00060}00060\ \textcolor{preprocessor}{\#pragma\ config\ FCMENS\ =\ ON\ \ \ \ }\textcolor{comment}{//\ Fail-\/Safe\ Clock\ Monitor\ -\/Secondary\ XTAL\ Enable\ bit-\/>FSCM\ timer\ will\ set\ FSCMS\ bit\ and\ OSFIF\ interrupt\ on\ Secondary\ XTAL\ failure}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00062}00062\ \textcolor{comment}{//\ CONFIG3}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00063}00063\ \textcolor{preprocessor}{\#pragma\ config\ MCLRE\ =\ EXTMCLR\ \ \ \ }\textcolor{comment}{//\ MCLR\ Enable\ bit-\/>If\ LVP\ =\ 0,\ MCLR\ pin\ is\ MCLR;\ If\ LVP\ =\ 1,\ RE3\ pin\ function\ is\ MCLR\ }}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00064}00064\ \textcolor{preprocessor}{\#pragma\ config\ PWRTS\ =\ PWRT\_OFF\ \ \ \ }\textcolor{comment}{//\ Power-\/up\ timer\ selection\ bits-\/>PWRT\ is\ disabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00065}00065\ \textcolor{preprocessor}{\#pragma\ config\ MVECEN\ =\ ON\ \ \ \ }\textcolor{comment}{//\ Multi-\/vector\ enable\ bit-\/>Multi-\/vector\ enabled,\ Vector\ table\ used\ for\ interrupts}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00066}00066\ \textcolor{preprocessor}{\#pragma\ config\ IVT1WAY\ =\ ON\ \ \ \ }\textcolor{comment}{//\ IVTLOCK\ bit\ One-\/way\ set\ enable\ bit-\/>IVTLOCKED\ bit\ can\ be\ cleared\ and\ set\ only\ once}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00067}00067\ \textcolor{preprocessor}{\#pragma\ config\ LPBOREN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Low\ Power\ BOR\ Enable\ bit-\/>Low-\/Power\ BOR\ disabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00068}00068\ \textcolor{preprocessor}{\#pragma\ config\ BOREN\ =\ SBORDIS\ \ \ \ }\textcolor{comment}{//\ Brown-\/out\ Reset\ Enable\ bits-\/>Brown-\/out\ Reset\ enabled\ ,\ SBOREN\ bit\ is\ ignored}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00070}00070\ \textcolor{comment}{//\ CONFIG4}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00071}00071\ \textcolor{preprocessor}{\#pragma\ config\ BORV\ =\ VBOR\_1P9\ \ \ \ }\textcolor{comment}{//\ Brown-\/out\ Reset\ Voltage\ Selection\ bits-\/>Brown-\/out\ Reset\ Voltage\ (VBOR)\ set\ to\ 1.9V}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00072}00072\ \textcolor{preprocessor}{\#pragma\ config\ ZCD\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ ZCD\ Disable\ bit-\/>ZCD\ module\ is\ disabled.\ ZCD\ can\ be\ enabled\ by\ setting\ the\ ZCDSEN\ bit\ of\ ZCDCON}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00073}00073\ \textcolor{preprocessor}{\#pragma\ config\ PPS1WAY\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ PPSLOCK\ bit\ One-\/Way\ Set\ Enable\ bit-\/>PPSLOCKED\ bit\ can\ be\ set\ and\ cleared\ repeatedly\ (subject\ to\ the\ unlock\ sequence)}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00074}00074\ \textcolor{preprocessor}{\#pragma\ config\ STVREN\ =\ ON\ \ \ \ }\textcolor{comment}{//\ Stack\ Full/Underflow\ Reset\ Enable\ bit-\/>Stack\ full/underflow\ will\ cause\ Reset}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00075}00075\ \textcolor{preprocessor}{\#pragma\ config\ LVP\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Low\ Voltage\ Programming\ Enable\ bit-\/>HV\ on\ MCLR/VPP\ must\ be\ used\ for\ programming}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00076}00076\ \textcolor{preprocessor}{\#pragma\ config\ XINST\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Extended\ Instruction\ Set\ Enable\ bit-\/>Extended\ Instruction\ Set\ and\ Indexed\ Addressing\ Mode\ disabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00078}00078\ \textcolor{comment}{//\ CONFIG5}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00079}00079\ \textcolor{preprocessor}{\#pragma\ config\ WDTCPS\ =\ WDTCPS\_31\ \ \ \ }\textcolor{comment}{//\ WDT\ Period\ selection\ bits-\/>Divider\ ratio\ 1:65536;\ software\ control\ of\ WDTPS}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00080}00080\ \textcolor{preprocessor}{\#pragma\ config\ WDTE\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ WDT\ operating\ mode-\/>WDT\ Disabled;\ SWDTEN\ is\ ignored}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00082}00082\ \textcolor{comment}{//\ CONFIG6}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00083}00083\ \textcolor{preprocessor}{\#pragma\ config\ WDTCWS\ =\ WDTCWS\_7\ \ \ \ }\textcolor{comment}{//\ WDT\ Window\ Select\ bits-\/>window\ always\ open\ (100\%);\ software\ control;\ keyed\ access\ not\ required}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00084}00084\ \textcolor{preprocessor}{\#pragma\ config\ WDTCCS\ =\ SC\ \ \ \ }\textcolor{comment}{//\ WDT\ input\ clock\ selector-\/>Software\ Control}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00086}00086\ \textcolor{comment}{//\ CONFIG7}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00087}00087\ \textcolor{preprocessor}{\#pragma\ config\ BBSIZE\ =\ BBSIZE\_512\ \ \ \ }\textcolor{comment}{//\ Boot\ Block\ Size\ selection\ bits-\/>Boot\ Block\ size\ is\ 512\ words}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00088}00088\ \textcolor{preprocessor}{\#pragma\ config\ BBEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Block\ enable\ bit-\/>Boot\ block\ disabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00089}00089\ \textcolor{preprocessor}{\#pragma\ config\ SAFEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Storage\ Area\ Flash\ enable\ bit-\/>SAF\ disabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00091}00091\ \textcolor{comment}{//\ CONFIG8}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00092}00092\ \textcolor{preprocessor}{\#pragma\ config\ WRTB\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Block\ Write\ Protection\ bit-\/>Boot\ Block\ not\ Write\ protected}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00093}00093\ \textcolor{preprocessor}{\#pragma\ config\ WRTC\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Configuration\ Register\ Write\ Protection\ bit-\/>Configuration\ registers\ not\ Write\ protected}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00094}00094\ \textcolor{preprocessor}{\#pragma\ config\ WRTD\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Data\ EEPROM\ Write\ Protection\ bit-\/>Data\ EEPROM\ not\ Write\ protected}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00095}00095\ \textcolor{preprocessor}{\#pragma\ config\ WRTSAF\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ SAF\ Write\ protection\ bit-\/>SAF\ not\ Write\ Protected}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00096}00096\ \textcolor{preprocessor}{\#pragma\ config\ WRTAPP\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Application\ Block\ write\ protection\ bit-\/>Application\ Block\ not\ write\ protected}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00097}00097\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00098}00098\ \textcolor{comment}{//\ CONFIG9}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00099}00099\ \textcolor{preprocessor}{\#pragma\ config\ BOOTPINSEL\ =\ RC5\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ output\ pin\ selection-\/>CRC\ on\ boot\ output\ pin\ is\ RC5}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00100}00100\ \textcolor{preprocessor}{\#pragma\ config\ BPEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ output\ pin\ enable\ bit-\/>CRC\ on\ boot\ output\ pin\ disabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00101}00101\ \textcolor{preprocessor}{\#pragma\ config\ ODCON\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ output\ pin\ open\ drain\ bit-\/>Pin\ drives\ both\ high-\/going\ and\ low-\/going\ signals}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00103}00103\ \textcolor{comment}{//\ CONFIG10}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00104}00104\ \textcolor{preprocessor}{\#pragma\ config\ CP\ =\ ON\ \ \ \ }\textcolor{comment}{//\ PFM\ and\ Data\ EEPROM\ Code\ Protection\ bit-\/>PFM\ and\ Data\ EEPROM\ code\ protection\ enabled}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00106}00106\ \textcolor{comment}{//\ CONFIG11}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00107}00107\ \textcolor{preprocessor}{\#pragma\ config\ BOOTSCEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ scan\ enable\ for\ boot\ area-\/>CRC\ on\ boot\ will\ not\ include\ the\ boot\ area\ of\ program\ memory\ in\ its\ calculation}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00108}00108\ \textcolor{preprocessor}{\#pragma\ config\ BOOTCOE\ =\ HALT\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ Continue\ on\ Error\ for\ boot\ areas\ bit-\/>CRC\ on\ boot\ will\ stop\ device\ if\ error\ is\ detected\ in\ boot\ areas}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00109}00109\ \textcolor{preprocessor}{\#pragma\ config\ APPSCEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ application\ code\ scan\ enable-\/>CRC\ on\ boot\ will\ not\ include\ the\ application\ area\ of\ program\ memory\ in\ its\ calculation}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00110}00110\ \textcolor{preprocessor}{\#pragma\ config\ SAFSCEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ SAF\ area\ scan\ enable-\/>CRC\ on\ boot\ will\ not\ include\ the\ SAF\ area\ of\ program\ memory\ in\ its\ calculation}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00111}00111\ \textcolor{preprocessor}{\#pragma\ config\ DATASCEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ Data\ EEPROM\ scan\ enable-\/>CRC\ on\ boot\ will\ not\ include\ data\ EEPROM\ in\ its\ calculation}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00112}00112\ \textcolor{preprocessor}{\#pragma\ config\ CFGSCEN\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ Config\ fuses\ scan\ enable-\/>CRC\ on\ boot\ will\ not\ include\ the\ configuration\ fuses\ in\ its\ calculation}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00113}00113\ \textcolor{preprocessor}{\#pragma\ config\ COE\ =\ HALT\ \ \ \ }\textcolor{comment}{//\ CRC\ on\ boot\ Continue\ on\ Error\ for\ non-\/boot\ areas\ bit-\/>CRC\ on\ boot\ will\ stop\ device\ if\ error\ is\ detected\ in\ non-\/boot\ areas}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00114}00114\ \textcolor{preprocessor}{\#pragma\ config\ BOOTPOR\ =\ OFF\ \ \ \ }\textcolor{comment}{//\ Boot\ on\ CRC\ Enable\ bit-\/>CRC\ on\ boot\ will\ not\ run}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00116}00116\ \textcolor{comment}{//\ CONFIG12}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00117}00117\ \textcolor{preprocessor}{\#pragma\ config\ BCRCPOLT\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 31-\/24-\/>Bits\ 31:24\ of\ BCRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00119}00119\ \textcolor{comment}{//\ CONFIG13}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00120}00120\ \textcolor{preprocessor}{\#pragma\ config\ BCRCPOLU\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 23-\/16-\/>Bits\ 23:16\ of\ BCRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00122}00122\ \textcolor{comment}{//\ CONFIG14}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00123}00123\ \textcolor{preprocessor}{\#pragma\ config\ BCRCPOLH\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 15-\/8-\/>Bits\ 15:8\ of\ BCRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00125}00125\ \textcolor{comment}{//\ CONFIG15}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00126}00126\ \textcolor{preprocessor}{\#pragma\ config\ BCRCPOLL\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 7-\/0-\/>Bits\ 7:0\ of\ BCRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00128}00128\ \textcolor{comment}{//\ CONFIG16}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00129}00129\ \textcolor{preprocessor}{\#pragma\ config\ BCRCSEEDT\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 31-\/24-\/>Bits\ 31:24\ of\ BCRCSEED\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00131}00131\ \textcolor{comment}{//\ CONFIG17}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00132}00132\ \textcolor{preprocessor}{\#pragma\ config\ BCRCSEEDU\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 23-\/16-\/>Bits\ 23:16\ of\ BCRCSEED\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00134}00134\ \textcolor{comment}{//\ CONFIG18}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00135}00135\ \textcolor{preprocessor}{\#pragma\ config\ BCRCSEEDH\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 15-\/8-\/>Bits\ 15:8\ of\ BCRCSEED\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00137}00137\ \textcolor{comment}{//\ CONFIG19}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00138}00138\ \textcolor{preprocessor}{\#pragma\ config\ BCRCSEEDL\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 7-\/0-\/>Bits\ 7:0\ of\ BCRCSEED\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00140}00140\ \textcolor{comment}{//\ CONFIG24}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00141}00141\ \textcolor{preprocessor}{\#pragma\ config\ CRCPOLT\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 31-\/24-\/>Bits\ 31:24\ of\ CRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00143}00143\ \textcolor{comment}{//\ CONFIG25}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00144}00144\ \textcolor{preprocessor}{\#pragma\ config\ CRCPOLU\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 23-\/16-\/>Bits\ 23:16\ of\ CRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00146}00146\ \textcolor{comment}{//\ CONFIG26}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00147}00147\ \textcolor{preprocessor}{\#pragma\ config\ CRCPOLH\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 15-\/8-\/>Bits\ 15:8\ of\ CRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00149}00149\ \textcolor{comment}{//\ CONFIG27}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00150}00150\ \textcolor{preprocessor}{\#pragma\ config\ CRCPOLL\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Polynomial\ for\ CRC\ on\ boot\ bits\ 7-\/0-\/>Bits\ 7:0\ of\ CRCPOL\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00152}00152\ \textcolor{comment}{//\ CONFIG28}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00153}00153\ \textcolor{preprocessor}{\#pragma\ config\ CRCSEEDT\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 31-\/24-\/>Bits\ 31:24\ of\ CRCSEED\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00155}00155\ \textcolor{comment}{//\ CONFIG29}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00156}00156\ \textcolor{preprocessor}{\#pragma\ config\ CRCSEEDU\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 23-\/16-\/>Bits\ 23:16\ of\ CRCSEED\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00158}00158\ \textcolor{comment}{//\ CONFIG30}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00159}00159\ \textcolor{preprocessor}{\#pragma\ config\ CRCSEEDH\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 15-\/8-\/>Bits\ 15:8\ of\ CRCSEED\ are\ 0xFF}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00161}00161\ \textcolor{comment}{//\ CONFIG31}}
+\DoxyCodeLine{\Hypertarget{device__config_8c_source_l00162}00162\ \textcolor{preprocessor}{\#pragma\ config\ CRCSEEDL\ =\ hFF\ \ \ \ }\textcolor{comment}{//\ Non-\/Boot\ Sector\ Seed\ for\ CRC\ on\ boot\ bits\ 7-\/0-\/>Bits\ 7:0\ of\ CRCSEED\ are\ 0xFF}}
+
+\end{DoxyCode}

@@ -1,0 +1,94 @@
+\doxysection{dsm.\+c}
+\hypertarget{dsm_8c_source}{}\label{dsm_8c_source}\index{secs\_q84.X/mcc\_generated\_files/dsm.c@{secs\_q84.X/mcc\_generated\_files/dsm.c}}
+\mbox{\hyperlink{dsm_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dsm_8h}{dsm.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00058}\mbox{\hyperlink{dsm_8c_a0da641d57ad578d549661d352b5f660b}{00058}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dsm_8c_a0da641d57ad578d549661d352b5f660b}{DSM\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00059}00059\ \{}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ set\ the\ DSM\ to\ the\ options\ selected\ in\ the\ User\ Interface}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00061}00061\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ Modulator\ Output\ Pin\ Polarity\ is\ not\ inverted}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00063}00063\ \ \ \ \ MD1CON0bits.MD1OPOL\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00065}00065\ \ \ \ \ \textcolor{comment}{//\ Modulation\ Low\ Carrier\ Synchronization\ is\ enabled}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00066}00066\ \ \ \ \ MD1CON1bits.MD1CLSYNC\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00068}00068\ \ \ \ \ \textcolor{comment}{//\ Modulation\ Low\ Carrier\ Polarity\ is\ not\ inverted}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00069}00069\ \ \ \ \ MD1CON1bits.MD1CLPOL\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ Modulation\ High\ Carrier\ Synchronization\ is\ enabled}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00072}00072\ \ \ \ \ MD1CON1bits.MD1CHSYNC\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00074}00074\ \ \ \ \ \textcolor{comment}{//\ Modulation\ High\ Carrier\ Polarity\ is\ not\ inverted}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00075}00075\ \ \ \ \ MD1CON1bits.MD1CHPOL\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00077}00077\ \ \ \ \ \textcolor{comment}{//\ MD1MS\ UART1\_TX;\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00078}00078\ \ \ \ \ MD1SRC\ =\ 0x13;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00079}00079\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00080}00080\ \ \ \ \ \textcolor{comment}{//\ MD1CH\ NCO1OUT;\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00081}00081\ \ \ \ \ MD1CARH\ =\ 0x0E;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00082}00082\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00083}00083\ \ \ \ \ \textcolor{comment}{//\ MD1CL\ CCP1;\ }}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00084}00084\ \ \ \ \ MD1CARL\ =\ 0x04;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00085}00085\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00086}00086\ \ \ \ \ \textcolor{comment}{//\ Enable\ the\ Modulator}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00087}00087\ \ \ \ \ MD1CON0bits.MD1EN\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00088}00088\ \}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00089}00089\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00090}\mbox{\hyperlink{dsm_8c_a41794a0f6357b7b3e80d49aeec92f79d}{00090}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dsm_8c_a41794a0f6357b7b3e80d49aeec92f79d}{DSM\_ManualModulationSet}}\ (\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00091}00091\ \{}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ Set\ MDBIT\ to\ High,\ Modulator\ uses\ high\ carrier\ source}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00093}00093\ \ \ \ \ MD1CON0bits.MD1BIT\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00094}00094\ \}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00096}\mbox{\hyperlink{dsm_8c_ad858d154dac150a04dc5a72015956d89}{00096}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dsm_8c_ad858d154dac150a04dc5a72015956d89}{DSM\_ManualModulationClear}}\ (\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00097}00097\ \{}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00098}00098\ \ \ \ \ \textcolor{comment}{//\ Set\ MDBIT\ to\ Low,\ Modulator\ uses\ low\ carrier\ source}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00099}00099\ \ \ \ \ MD1CON0bits.MD1BIT\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00100}00100\ \}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00102}\mbox{\hyperlink{dsm_8c_a5e817c0098ab1b390184d2e65fc234be}{00102}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dsm_8c_a5e817c0098ab1b390184d2e65fc234be}{DSM\_ManualModulationToggle}}\ (\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00103}00103\ \{}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00104}00104\ \ \ \ \ \textcolor{comment}{//\ Toggle\ the\ MDBIT}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00105}00105\ \ \ \ \ MD1CON0bits.MD1BIT\ \string^=\ 1;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00106}00106\ \}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00108}\mbox{\hyperlink{dsm_8c_a89626218eea7d49c6a3a2d39a4020549}{00108}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dsm_8c_a89626218eea7d49c6a3a2d39a4020549}{DSM\_ModulationStart}}\ (\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00109}00109\ \{}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00110}00110\ \ \ \ \ \textcolor{comment}{//\ Enables\ module\ and\ begins\ modulation}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00111}00111\ \ \ \ \ MD1CON0bits.MD1EN\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00112}00112\ \}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00113}00113\ }
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00114}\mbox{\hyperlink{dsm_8c_a4719ae43a3688a7060e29c9d821947ce}{00114}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dsm_8c_a4719ae43a3688a7060e29c9d821947ce}{DSM\_ModulationStop}}\ (\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00115}00115\ \{}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00116}00116\ \ \ \ \ \textcolor{comment}{//\ Disables\ module\ and\ stops\ modulation}}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00117}00117\ \ \ \ \ MD1CON0bits.MD1EN\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{dsm_8c_source_l00118}00118\ \}}
+
+\end{DoxyCode}

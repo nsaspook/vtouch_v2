@@ -1,0 +1,343 @@
+\doxysection{secs\+\_\+q84.\+X/eadog.c File Reference}
+\hypertarget{eadog_8c}{}\label{eadog_8c}\index{secs\_q84.X/eadog.c@{secs\_q84.X/eadog.c}}
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}eadog.\+h"{}}\newline
+{\ttfamily \#include "{}vconfig.\+h"{}}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/mcc.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{eadog_8c_a00f46ef6532ece2210bb23643fd4b6b0}{E\+\_\+\+TRACE}}~\mbox{\hyperlink{pin__manager_8h_a598e47eddb57ff8787d84c7098846f06}{DEBUG1\+\_\+\+Toggle}}()
+\item 
+\#define \mbox{\hyperlink{eadog_8c_a0103e89e5f392811c4acfbc5403f66ba}{DONE\+\_\+\+DELAY}}~9999
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{eadog_8c_ab5c89a01791e81a5efcee4e25a938a7e}{init\+\_\+display}} (void)
+\item 
+void \mbox{\hyperlink{eadog_8c_a354a7869fc0c21ba6ac9176523c70406}{ea\+Dog\+M\+\_\+\+Write\+String}} (char \texorpdfstring{$\ast$}{*}str\+Ptr)
+\item 
+void \mbox{\hyperlink{eadog_8c_ac5585b92f3ab25fe8ae2e2b5ec1cbf35}{send\+\_\+lcd\+\_\+cmd\+\_\+dma}} (const uint8\+\_\+t str\+Ptr)
+\item 
+void \mbox{\hyperlink{eadog_8c_a73a4ef55ce025687fb0498bbf1af928e}{send\+\_\+lcd\+\_\+data\+\_\+dma}} (const uint8\+\_\+t str\+Ptr)
+\item 
+void \mbox{\hyperlink{eadog_8c_a4003f144ad500adb8b664ecf940460f7}{send\+\_\+lcd\+\_\+pos\+\_\+dma}} (const uint8\+\_\+t str\+Ptr)
+\item 
+void \mbox{\hyperlink{eadog_8c_a469b07cd52f5a0a71c589c78ded7ca3b}{ea\+Dog\+M\+\_\+\+Write\+String\+At\+Pos}} (const uint8\+\_\+t r, const uint8\+\_\+t c, char \texorpdfstring{$\ast$}{*}str\+Ptr)
+\item 
+void \mbox{\hyperlink{eadog_8c_a69927a3649ff3bd7d1e714c40412dd05}{ea\+Dog\+M\+\_\+\+Write\+Int\+At\+Pos}} (const uint8\+\_\+t r, const uint8\+\_\+t c, const uint8\+\_\+t i)
+\item 
+void \mbox{\hyperlink{eadog_8c_a14d6c8d2a272183e99a56fdf118a8dc8}{ea\+Dog\+M\+\_\+\+Set\+Pos}} (const uint8\+\_\+t r, const uint8\+\_\+t c)
+\item 
+void \mbox{\hyperlink{eadog_8c_a2276e41b9d632dd7ace4bf60bd595b2c}{ea\+Dog\+M\+\_\+\+Clear\+Row}} (const uint8\+\_\+t r)
+\item 
+void \mbox{\hyperlink{eadog_8c_a14fc02c95332797dcaf9f04006e6cfb6}{ea\+Dog\+M\+\_\+\+Write\+Byte\+To\+CGRAM}} (const uint8\+\_\+t ndx, const uint8\+\_\+t data)
+\item 
+void \mbox{\hyperlink{eadog_8c_a38560127e69611361f6edc5b83c9518f}{ea\+Dog\+M\+\_\+\+Write\+Command}} (const uint8\+\_\+t cmd)
+\item 
+void \mbox{\hyperlink{eadog_8c_a012b70e817b582af428c3dc8043ff04c}{ea\+Dog\+M\+\_\+\+Write\+Chr}} (const int8\+\_\+t value)
+\item 
+void \mbox{\hyperlink{eadog_8c_aa1f14a3ecc647d99fcf5ea0281eb433a}{start\+\_\+lcd}} (void)
+\item 
+void \mbox{\hyperlink{eadog_8c_a41e751304b342050075d6a42885e5be9}{wait\+\_\+lcd\+\_\+set}} (void)
+\item 
+bool \mbox{\hyperlink{eadog_8c_a6c1680eb5821cfbf5d7dc689a2774846}{wait\+\_\+lcd\+\_\+check}} (void)
+\item 
+void \mbox{\hyperlink{eadog_8c_ad1c508e21d80c901ee119631b8d06349}{wait\+\_\+lcd\+\_\+done}} (void)
+\item 
+void \mbox{\hyperlink{eadog_8c_af97a7634a90dd5ed782b7124540c7818}{clear\+\_\+lcd\+\_\+done}} (void)
+\item 
+void \mbox{\hyperlink{eadog_8c_ad48c238ccf5961cfd48b7660c65f7839}{spi\+\_\+rec\+\_\+done}} (void)
+\item 
+char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{eadog_8c_ae8f50b6d3935a397ae8af27a63be14a2}{ea\+Dog\+M\+\_\+\+Scroll\+\_\+\+String}} (char \texorpdfstring{$\ast$}{*}str\+Ptr)
+\item 
+void \mbox{\hyperlink{eadog_8c_acc9ccd8c6efcbbefec86c4122d0065f2}{ea\+Dog\+M\+\_\+\+Scroll\+\_\+\+Task}} (void)
+\item 
+void \mbox{\hyperlink{eadog_8c_a5d89523c6da6150f0e42c89f8f717f0e}{no\+\_\+dma\+\_\+set\+\_\+lcd}} (void)
+\item 
+void \mbox{\hyperlink{eadog_8c_a0ff93cba41b12de5c4f933740d10e5c8}{check\+\_\+lcd\+\_\+dim}} (const bool dim)
+\item 
+void \mbox{\hyperlink{eadog_8c_af2766e0444001bb7952930559a89ee99}{set\+\_\+lcd\+\_\+dim}} (const bool dim)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile struct \mbox{\hyperlink{structspi__link__type}{spi\+\_\+link\+\_\+type}} \mbox{\hyperlink{eadog_8c_a7722e6df2875d9534e7906918ba1b6ad}{spi\+\_\+link}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{eadog_8c_a0103e89e5f392811c4acfbc5403f66ba}\label{eadog_8c_a0103e89e5f392811c4acfbc5403f66ba} 
+\index{eadog.c@{eadog.c}!DONE\_DELAY@{DONE\_DELAY}}
+\index{DONE\_DELAY@{DONE\_DELAY}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{DONE\_DELAY}{DONE\_DELAY}}
+{\footnotesize\ttfamily \#define DONE\+\_\+\+DELAY~9999}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00016}{16}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a00f46ef6532ece2210bb23643fd4b6b0}\label{eadog_8c_a00f46ef6532ece2210bb23643fd4b6b0} 
+\index{eadog.c@{eadog.c}!E\_TRACE@{E\_TRACE}}
+\index{E\_TRACE@{E\_TRACE}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{E\_TRACE}{E\_TRACE}}
+{\footnotesize\ttfamily \#define E\+\_\+\+TRACE~\mbox{\hyperlink{pin__manager_8h_a598e47eddb57ff8787d84c7098846f06}{DEBUG1\+\_\+\+Toggle}}()}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00008}{8}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{eadog_8c_a0ff93cba41b12de5c4f933740d10e5c8}\label{eadog_8c_a0ff93cba41b12de5c4f933740d10e5c8} 
+\index{eadog.c@{eadog.c}!check\_lcd\_dim@{check\_lcd\_dim}}
+\index{check\_lcd\_dim@{check\_lcd\_dim}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{check\_lcd\_dim()}{check\_lcd\_dim()}}
+{\footnotesize\ttfamily void check\+\_\+lcd\+\_\+dim (\begin{DoxyParamCaption}\item[{const bool}]{dim }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00410}{410}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_af97a7634a90dd5ed782b7124540c7818}\label{eadog_8c_af97a7634a90dd5ed782b7124540c7818} 
+\index{eadog.c@{eadog.c}!clear\_lcd\_done@{clear\_lcd\_done}}
+\index{clear\_lcd\_done@{clear\_lcd\_done}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{clear\_lcd\_done()}{clear\_lcd\_done()}}
+{\footnotesize\ttfamily void clear\+\_\+lcd\+\_\+done (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00339}{339}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a2276e41b9d632dd7ace4bf60bd595b2c}\label{eadog_8c_a2276e41b9d632dd7ace4bf60bd595b2c} 
+\index{eadog.c@{eadog.c}!eaDogM\_ClearRow@{eaDogM\_ClearRow}}
+\index{eaDogM\_ClearRow@{eaDogM\_ClearRow}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_ClearRow()}{eaDogM\_ClearRow()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Clear\+Row (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{r }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00264}{264}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_ae8f50b6d3935a397ae8af27a63be14a2}\label{eadog_8c_ae8f50b6d3935a397ae8af27a63be14a2} 
+\index{eadog.c@{eadog.c}!eaDogM\_Scroll\_String@{eaDogM\_Scroll\_String}}
+\index{eaDogM\_Scroll\_String@{eaDogM\_Scroll\_String}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_Scroll\_String()}{eaDogM\_Scroll\_String()}}
+{\footnotesize\ttfamily char \texorpdfstring{$\ast$}{*} ea\+Dog\+M\+\_\+\+Scroll\+\_\+\+String (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00365}{365}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_acc9ccd8c6efcbbefec86c4122d0065f2}\label{eadog_8c_acc9ccd8c6efcbbefec86c4122d0065f2} 
+\index{eadog.c@{eadog.c}!eaDogM\_Scroll\_Task@{eaDogM\_Scroll\_Task}}
+\index{eaDogM\_Scroll\_Task@{eaDogM\_Scroll\_Task}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_Scroll\_Task()}{eaDogM\_Scroll\_Task()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Scroll\+\_\+\+Task (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00380}{380}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a14d6c8d2a272183e99a56fdf118a8dc8}\label{eadog_8c_a14d6c8d2a272183e99a56fdf118a8dc8} 
+\index{eadog.c@{eadog.c}!eaDogM\_SetPos@{eaDogM\_SetPos}}
+\index{eaDogM\_SetPos@{eaDogM\_SetPos}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_SetPos()}{eaDogM\_SetPos()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Set\+Pos (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{r,  }\item[{const uint8\+\_\+t}]{c }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00259}{259}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a14fc02c95332797dcaf9f04006e6cfb6}\label{eadog_8c_a14fc02c95332797dcaf9f04006e6cfb6} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteByteToCGRAM@{eaDogM\_WriteByteToCGRAM}}
+\index{eaDogM\_WriteByteToCGRAM@{eaDogM\_WriteByteToCGRAM}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteByteToCGRAM()}{eaDogM\_WriteByteToCGRAM()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Byte\+To\+CGRAM (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{ndx,  }\item[{const uint8\+\_\+t}]{data }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00269}{269}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a012b70e817b582af428c3dc8043ff04c}\label{eadog_8c_a012b70e817b582af428c3dc8043ff04c} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteChr@{eaDogM\_WriteChr}}
+\index{eaDogM\_WriteChr@{eaDogM\_WriteChr}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteChr()}{eaDogM\_WriteChr()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Chr (\begin{DoxyParamCaption}\item[{const int8\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00286}{286}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a38560127e69611361f6edc5b83c9518f}\label{eadog_8c_a38560127e69611361f6edc5b83c9518f} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteCommand@{eaDogM\_WriteCommand}}
+\index{eaDogM\_WriteCommand@{eaDogM\_WriteCommand}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteCommand()}{eaDogM\_WriteCommand()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Command (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00277}{277}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a69927a3649ff3bd7d1e714c40412dd05}\label{eadog_8c_a69927a3649ff3bd7d1e714c40412dd05} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteIntAtPos@{eaDogM\_WriteIntAtPos}}
+\index{eaDogM\_WriteIntAtPos@{eaDogM\_WriteIntAtPos}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteIntAtPos()}{eaDogM\_WriteIntAtPos()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Int\+At\+Pos (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{r,  }\item[{const uint8\+\_\+t}]{c,  }\item[{const uint8\+\_\+t}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00254}{254}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a354a7869fc0c21ba6ac9176523c70406}\label{eadog_8c_a354a7869fc0c21ba6ac9176523c70406} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteString@{eaDogM\_WriteString}}
+\index{eaDogM\_WriteString@{eaDogM\_WriteString}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteString()}{eaDogM\_WriteString()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+String (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00144}{144}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a469b07cd52f5a0a71c589c78ded7ca3b}\label{eadog_8c_a469b07cd52f5a0a71c589c78ded7ca3b} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteStringAtPos@{eaDogM\_WriteStringAtPos}}
+\index{eaDogM\_WriteStringAtPos@{eaDogM\_WriteStringAtPos}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteStringAtPos()}{eaDogM\_WriteStringAtPos()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+String\+At\+Pos (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{r,  }\item[{const uint8\+\_\+t}]{c,  }\item[{char \texorpdfstring{$\ast$}{*}}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00212}{212}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_ab5c89a01791e81a5efcee4e25a938a7e}\label{eadog_8c_ab5c89a01791e81a5efcee4e25a938a7e} 
+\index{eadog.c@{eadog.c}!init\_display@{init\_display}}
+\index{init\_display@{init\_display}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{init\_display()}{init\_display()}}
+{\footnotesize\ttfamily bool init\+\_\+display (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00041}{41}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a5d89523c6da6150f0e42c89f8f717f0e}\label{eadog_8c_a5d89523c6da6150f0e42c89f8f717f0e} 
+\index{eadog.c@{eadog.c}!no\_dma\_set\_lcd@{no\_dma\_set\_lcd}}
+\index{no\_dma\_set\_lcd@{no\_dma\_set\_lcd}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{no\_dma\_set\_lcd()}{no\_dma\_set\_lcd()}}
+{\footnotesize\ttfamily void no\+\_\+dma\+\_\+set\+\_\+lcd (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00399}{399}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_ac5585b92f3ab25fe8ae2e2b5ec1cbf35}\label{eadog_8c_ac5585b92f3ab25fe8ae2e2b5ec1cbf35} 
+\index{eadog.c@{eadog.c}!send\_lcd\_cmd\_dma@{send\_lcd\_cmd\_dma}}
+\index{send\_lcd\_cmd\_dma@{send\_lcd\_cmd\_dma}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{send\_lcd\_cmd\_dma()}{send\_lcd\_cmd\_dma()}}
+{\footnotesize\ttfamily void send\+\_\+lcd\+\_\+cmd\+\_\+dma (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00170}{170}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a73a4ef55ce025687fb0498bbf1af928e}\label{eadog_8c_a73a4ef55ce025687fb0498bbf1af928e} 
+\index{eadog.c@{eadog.c}!send\_lcd\_data\_dma@{send\_lcd\_data\_dma}}
+\index{send\_lcd\_data\_dma@{send\_lcd\_data\_dma}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{send\_lcd\_data\_dma()}{send\_lcd\_data\_dma()}}
+{\footnotesize\ttfamily void send\+\_\+lcd\+\_\+data\+\_\+dma (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00179}{179}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a4003f144ad500adb8b664ecf940460f7}\label{eadog_8c_a4003f144ad500adb8b664ecf940460f7} 
+\index{eadog.c@{eadog.c}!send\_lcd\_pos\_dma@{send\_lcd\_pos\_dma}}
+\index{send\_lcd\_pos\_dma@{send\_lcd\_pos\_dma}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{send\_lcd\_pos\_dma()}{send\_lcd\_pos\_dma()}}
+{\footnotesize\ttfamily void send\+\_\+lcd\+\_\+pos\+\_\+dma (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00196}{196}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_af2766e0444001bb7952930559a89ee99}\label{eadog_8c_af2766e0444001bb7952930559a89ee99} 
+\index{eadog.c@{eadog.c}!set\_lcd\_dim@{set\_lcd\_dim}}
+\index{set\_lcd\_dim@{set\_lcd\_dim}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{set\_lcd\_dim()}{set\_lcd\_dim()}}
+{\footnotesize\ttfamily void set\+\_\+lcd\+\_\+dim (\begin{DoxyParamCaption}\item[{const bool}]{dim }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00435}{435}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_ad48c238ccf5961cfd48b7660c65f7839}\label{eadog_8c_ad48c238ccf5961cfd48b7660c65f7839} 
+\index{eadog.c@{eadog.c}!spi\_rec\_done@{spi\_rec\_done}}
+\index{spi\_rec\_done@{spi\_rec\_done}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{spi\_rec\_done()}{spi\_rec\_done()}}
+{\footnotesize\ttfamily void spi\+\_\+rec\+\_\+done (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00348}{348}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_aa1f14a3ecc647d99fcf5ea0281eb433a}\label{eadog_8c_aa1f14a3ecc647d99fcf5ea0281eb433a} 
+\index{eadog.c@{eadog.c}!start\_lcd@{start\_lcd}}
+\index{start\_lcd@{start\_lcd}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{start\_lcd()}{start\_lcd()}}
+{\footnotesize\ttfamily void start\+\_\+lcd (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00298}{298}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a6c1680eb5821cfbf5d7dc689a2774846}\label{eadog_8c_a6c1680eb5821cfbf5d7dc689a2774846} 
+\index{eadog.c@{eadog.c}!wait\_lcd\_check@{wait\_lcd\_check}}
+\index{wait\_lcd\_check@{wait\_lcd\_check}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{wait\_lcd\_check()}{wait\_lcd\_check()}}
+{\footnotesize\ttfamily bool wait\+\_\+lcd\+\_\+check (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00310}{310}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_ad1c508e21d80c901ee119631b8d06349}\label{eadog_8c_ad1c508e21d80c901ee119631b8d06349} 
+\index{eadog.c@{eadog.c}!wait\_lcd\_done@{wait\_lcd\_done}}
+\index{wait\_lcd\_done@{wait\_lcd\_done}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{wait\_lcd\_done()}{wait\_lcd\_done()}}
+{\footnotesize\ttfamily void wait\+\_\+lcd\+\_\+done (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00315}{315}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{eadog_8c_a41e751304b342050075d6a42885e5be9}\label{eadog_8c_a41e751304b342050075d6a42885e5be9} 
+\index{eadog.c@{eadog.c}!wait\_lcd\_set@{wait\_lcd\_set}}
+\index{wait\_lcd\_set@{wait\_lcd\_set}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{wait\_lcd\_set()}{wait\_lcd\_set()}}
+{\footnotesize\ttfamily void wait\+\_\+lcd\+\_\+set (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00305}{305}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{eadog_8c_a7722e6df2875d9534e7906918ba1b6ad}\label{eadog_8c_a7722e6df2875d9534e7906918ba1b6ad} 
+\index{eadog.c@{eadog.c}!spi\_link@{spi\_link}}
+\index{spi\_link@{spi\_link}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{spi\_link}{spi\_link}}
+{\footnotesize\ttfamily volatile struct \mbox{\hyperlink{structspi__link__type}{spi\+\_\+link\+\_\+type}} spi\+\_\+link}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ .LCD\_DATA\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00019}{19}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+

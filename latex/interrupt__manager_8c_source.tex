@@ -1,0 +1,68 @@
+\doxysection{interrupt\+\_\+manager.\+c}
+\hypertarget{interrupt__manager_8c_source}{}\label{interrupt__manager_8c_source}\index{secs\_q84.X/mcc\_generated\_files/interrupt\_manager.c@{secs\_q84.X/mcc\_generated\_files/interrupt\_manager.c}}
+\mbox{\hyperlink{interrupt__manager_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00026}00026\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00045}00045\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00046}00046\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00047}00047\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00049}00049\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{interrupt__manager_8h}{interrupt\_manager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00050}00050\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{mcc_8h}{mcc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00052}\mbox{\hyperlink{interrupt__manager_8c_a5c526129ee879458dff6755f5768a6e3}{00052}}\ \textcolor{keywordtype}{void}\ \ \mbox{\hyperlink{interrupt__manager_8c_a5c526129ee879458dff6755f5768a6e3}{INTERRUPT\_Initialize}}\ (\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00053}00053\ \{}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00054}00054\ \ \ \ \ INTCON0bits.IPEN\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{bool}\ state\ =\ (\textcolor{keywordtype}{unsigned}\ char)GIE;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00057}00057\ \ \ \ \ GIE\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00058}00058\ \ \ \ \ IVTLOCK\ =\ 0x55;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00059}00059\ \ \ \ \ IVTLOCK\ =\ 0xAA;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00060}00060\ \ \ \ \ IVTLOCKbits.IVTLOCKED\ =\ 0x00;\ \textcolor{comment}{//\ unlock\ IVT}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00062}00062\ \ \ \ \ IVTBASEU\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00063}00063\ \ \ \ \ IVTBASEH\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00064}00064\ \ \ \ \ IVTBASEL\ =\ 8;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00066}00066\ \ \ \ \ IVTLOCK\ =\ 0x55;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00067}00067\ \ \ \ \ IVTLOCK\ =\ 0xAA;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00068}00068\ \ \ \ \ IVTLOCKbits.IVTLOCKED\ =\ 0x01;\ \textcolor{comment}{//\ lock\ IVT}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00070}00070\ \ \ \ \ GIE\ =\ state;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//\ Assign\ peripheral\ interrupt\ priority\ vectors}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00073}00073\ \ \ \ \ IPR2bits.DMA1SCNTIP\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00074}00074\ \ \ \ \ IPR2bits.DMA1ORIP\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00075}00075\ \ \ \ \ IPR8bits.U2TXIP\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00076}00076\ \ \ \ \ IPR8bits.U2RXIP\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00077}00077\ \ \ \ \ IPR4bits.U1TXIP\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00078}00078\ \ \ \ \ IPR4bits.U1RXIP\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00079}00079\ \ \ \ \ IPR15bits.TMR6IP\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00080}00080\ \ \ \ \ IPR8bits.TMR5IP\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00081}00081\ \}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00083}\mbox{\hyperlink{interrupt__manager_8c_a86473c67b728c8b7725e9005fd103d57}{00083}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{interrupt__manager_8c_a86473c67b728c8b7725e9005fd103d57}{\_\_interrupt}}(irq(\textcolor{keywordflow}{default}),base(8))\ Default\_ISR()}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00084}00084\ \{}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00085}00085\ \}}
+\DoxyCodeLine{\Hypertarget{interrupt__manager_8c_source_l00086}00086\ }
+
+\end{DoxyCode}

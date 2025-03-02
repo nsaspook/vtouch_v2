@@ -1,0 +1,461 @@
+\doxysection{gem/secstwo-\/1.0.1/secstwo\+\_\+serialize.cxx File Reference}
+\hypertarget{secstwo__serialize_8cxx}{}\label{secstwo__serialize_8cxx}\index{gem/secstwo-\/1.0.1/secstwo\_serialize.cxx@{gem/secstwo-\/1.0.1/secstwo\_serialize.cxx}}
+{\ttfamily \#include "{}config.\+h"{}}\newline
+{\ttfamily \#include $<$arpa/inet.\+h$>$}\newline
+{\ttfamily \#include $<$libxml/tree.\+h$>$}\newline
+{\ttfamily \#include $<$libxml/encoding.\+h$>$}\newline
+{\ttfamily \#include $<$libxml/xmlwriter.\+h$>$}\newline
+{\ttfamily \#include $<$libxml/xmlsave.\+h$>$}\newline
+{\ttfamily \#include $<$libxml/xmlschemas.\+h$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+{\ttfamily \#include $<$wchar.\+h$>$}\newline
+{\ttfamily \#include $<$iconv.\+h$>$}\newline
+{\ttfamily \#include "{}secstwo\+\_\+internal.\+hxx"{}}\newline
+{\ttfamily \#include "{}secstwo\+\_\+serialize.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_abc75c68596f87177dd2426a7ce4b9069}{\+\_\+\+LIBXML\+\_\+\+ALREADY\+\_\+\+INCLUDED}}
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_ad6ed29e23f3cd99eb200317327cf6dcc}{SCHEMA\+\_\+\+URI}}~"{}http\+:\textbackslash{}/\textbackslash{}/freesecs.\+sourceforge.\+net/\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xsd}}/\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{e5"{}}}
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_af633cf472c997492bd792041a794af5c}{ENCODING}}~"{}UTF-\/8"{}
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_a0bb2fc32a98b16ad7582202c9b183139}{ASSERT\+\_\+\+THROW}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}},  fmt...)~\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{if}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}})\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fprintf}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{stderr}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fmt}}); \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{throw}};\}\}
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_a64b73e086bf6294e74973d15f3ec917a}{ASSERT\+\_\+\+RETURN}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}},  fmt...)~\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{if}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}})\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fprintf}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{stderr}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fmt}}); \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{return}} -\/1;\}\}
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_a1f8decfefab5db3e067b2a1f2d0b812e}{ASSERT\+\_\+\+FREE}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+\_\+val}})~\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{if}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{NULL}} != \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+\_\+val}}) \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Free}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+\_\+val}});\}
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_a8c6e94b5f670369abfdfd27955a5b73b}{XMLCHAR\+\_\+\+CAST}}~(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Char}}\texorpdfstring{$\ast$}{*})
+\item 
+\#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \mbox{\hyperlink{secstwo__serialize_8cxx_a8fa4eff7d61e28d05c5f689a77cbea17}{MOVE\+\_\+\+TO\+\_\+\+NEXT\+\_\+\+NODE}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}})~\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{while}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}} \&\& \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{XML\+\_\+\+ELEMENT\+\_\+\+NODE}} != \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}}-\/$>$type) \{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}} = \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}}-\/$>$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{next}};\}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{secstwo__serialize_8cxx_af7b9fa0fbfe8c44b797c064b31ef5c43}{bserialize\+\_\+fn}}) (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&)
+\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int}}(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{secstwo__serialize_8cxx_a056b159298ebc5842c1dc6cae266a0ca}{xserialize\+\_\+fn}}) (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Text\+Writer}} \texorpdfstring{$\ast$}{*})
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_aa7f75f9acf97ee4674c67ac44154924a}{ntohll}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{n}})
+\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a264afbfa55bb20623fc4df6b623cf300}{htonll}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{n}})
+\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Node}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{secstwo__serialize_8cxx_a5292e2101e6d317bff2a076da759f30d}{move\+\_\+to\+\_\+next}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Node}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} type $>$ }\\type \mbox{\hyperlink{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}{ntoh}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} type \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ uint16\+\_\+t \mbox{\hyperlink{secstwo__serialize_8cxx_a74613f8737c15fe946dfe3b6db62e232}{ntoh$<$ uint16\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} uint16\+\_\+t \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a28e0a909014a3eec555673997bc75958}{ntoh$<$ uint32\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a981c2ead25f2b151ba1aeed0b59c3d0b}{ntoh$<$ int16\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a38735bde406d2b47dea20c6bd1c092f9}{ntoh$<$ int32\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ae100cd821e0eca6648fcac26ba3b0f53}{ntoh$<$ uint64\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ac620baabee1504e541c75a3ce59199dc}{ntoh$<$ int64\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} type $>$ }\\type \mbox{\hyperlink{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}{hton}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} type \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ uint16\+\_\+t \mbox{\hyperlink{secstwo__serialize_8cxx_a46c0211b31a0aa6bd9ef9678c8b27121}{hton$<$ uint16\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} uint16\+\_\+t \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a95c75e980307f8d801928e29af96d416}{hton$<$ uint32\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a62d8bac7985eae5a387679dc903642dc}{hton$<$ int16\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ab2639beb06d21769765cc5202f33e162}{hton$<$ int32\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a2284fa5f1c7428a190c2f430d71b6718}{hton$<$ uint64\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+template$<$$>$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a39fbcf5135d55c769c82447f1af77cb1}{hton$<$ int64\+\_\+t $>$}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{simple\+\_\+t}} $>$ }\\\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a9d3bbb28950b5a7f801fb6a28f903c9d}{bdeserialize\+\_\+simple\+\_\+type}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}begin, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}end)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{st}} $>$ }\\\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a7e843f0e51b40d716f4b494ffb1ff231}{bdeserialize\+\_\+string\+\_\+type}} (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}begin, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}end)
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5}{data\+\_\+type\+\_\+t}} type$>$ }\\void \mbox{\hyperlink{secstwo__serialize_8cxx_af51e59ef3adc301a378f942a353bc23c}{bserialize\+\_\+simple\+\_\+type}} (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pit}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{raw\+\_\+data\+\_\+container}})
+\item 
+template$<$$>$ void \mbox{\hyperlink{secstwo__serialize_8cxx_a921f8f5f102a4bb72fb1962e22f83b1b}{bserialize\+\_\+simple\+\_\+type$<$ e\+\_\+ascii\+\_\+t $>$}} (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pit}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{raw\+\_\+data\+\_\+container}})
+\item 
+template$<$$>$ void \mbox{\hyperlink{secstwo__serialize_8cxx_ad532300c62bc09eb799c3f5de8d76401}{bserialize\+\_\+simple\+\_\+type$<$ e\+\_\+wchar\+\_\+t $>$}} (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pit}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{raw\+\_\+data\+\_\+container}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}} $>$ }\\\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int}} \mbox{\hyperlink{secstwo__serialize_8cxx_a0112f82ea6dc2f547d14479c2a3c4191}{xml\+\_\+serialize\+\_\+simple\+\_\+type}} (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pit}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Text\+Writer}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pwriter}})
+\item 
+{\footnotesize template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}} $>$ }\\\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int}} \mbox{\hyperlink{secstwo__serialize_8cxx_ab9dd3380575ce27c2f8285255d77ce3c}{xml\+\_\+serialize\+\_\+string\+\_\+type}} (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pit}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Text\+Writer}} \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pwriter}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{secstwo__serialize_8cxx_abc75c68596f87177dd2426a7ce4b9069}\label{secstwo__serialize_8cxx_abc75c68596f87177dd2426a7ce4b9069} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!\_LIBXML\_ALREADY\_INCLUDED@{\_LIBXML\_ALREADY\_INCLUDED}}
+\index{\_LIBXML\_ALREADY\_INCLUDED@{\_LIBXML\_ALREADY\_INCLUDED}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{\_LIBXML\_ALREADY\_INCLUDED}{\_LIBXML\_ALREADY\_INCLUDED}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} \+\_\+\+LIBXML\+\_\+\+ALREADY\+\_\+\+INCLUDED}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00030}{30}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a1f8decfefab5db3e067b2a1f2d0b812e}\label{secstwo__serialize_8cxx_a1f8decfefab5db3e067b2a1f2d0b812e} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ASSERT\_FREE@{ASSERT\_FREE}}
+\index{ASSERT\_FREE@{ASSERT\_FREE}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ASSERT\_FREE}{ASSERT\_FREE}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} ASSERT\+\_\+\+FREE(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+\_\+val}} }\end{DoxyParamCaption})~\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{if}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{NULL}} != \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+\_\+val}}) \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Free}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+\_\+val}});\}}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00040}{40}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a64b73e086bf6294e74973d15f3ec917a}\label{secstwo__serialize_8cxx_a64b73e086bf6294e74973d15f3ec917a} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ASSERT\_RETURN@{ASSERT\_RETURN}}
+\index{ASSERT\_RETURN@{ASSERT\_RETURN}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ASSERT\_RETURN}{ASSERT\_RETURN}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} ASSERT\+\_\+\+RETURN(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}},  }\item[{}]{fmt... }\end{DoxyParamCaption})~\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{if}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}})\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fprintf}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{stderr}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fmt}}); \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{return}} -\/1;\}\}}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00039}{39}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a0bb2fc32a98b16ad7582202c9b183139}\label{secstwo__serialize_8cxx_a0bb2fc32a98b16ad7582202c9b183139} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ASSERT\_THROW@{ASSERT\_THROW}}
+\index{ASSERT\_THROW@{ASSERT\_THROW}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ASSERT\_THROW}{ASSERT\_THROW}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} ASSERT\+\_\+\+THROW(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}},  }\item[{}]{fmt... }\end{DoxyParamCaption})~\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{if}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{expr}})\{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fprintf}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{stderr}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fmt}}); \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{throw}};\}\}}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00038}{38}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_af633cf472c997492bd792041a794af5c}\label{secstwo__serialize_8cxx_af633cf472c997492bd792041a794af5c} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ENCODING@{ENCODING}}
+\index{ENCODING@{ENCODING}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ENCODING}{ENCODING}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} ENCODING~"{}UTF-\/8"{}}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00037}{37}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a8fa4eff7d61e28d05c5f689a77cbea17}\label{secstwo__serialize_8cxx_a8fa4eff7d61e28d05c5f689a77cbea17} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!MOVE\_TO\_NEXT\_NODE@{MOVE\_TO\_NEXT\_NODE}}
+\index{MOVE\_TO\_NEXT\_NODE@{MOVE\_TO\_NEXT\_NODE}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{MOVE\_TO\_NEXT\_NODE}{MOVE\_TO\_NEXT\_NODE}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} MOVE\+\_\+\+TO\+\_\+\+NEXT\+\_\+\+NODE(\begin{DoxyParamCaption}\item[{}]{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}} }\end{DoxyParamCaption})~\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{while}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}} \&\& \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{XML\+\_\+\+ELEMENT\+\_\+\+NODE}} != \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}}-\/$>$type) \{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}} = \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pnode}}-\/$>$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{next}};\}}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00043}{43}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_ad6ed29e23f3cd99eb200317327cf6dcc}\label{secstwo__serialize_8cxx_ad6ed29e23f3cd99eb200317327cf6dcc} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!SCHEMA\_URI@{SCHEMA\_URI}}
+\index{SCHEMA\_URI@{SCHEMA\_URI}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{SCHEMA\_URI}{SCHEMA\_URI}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} SCHEMA\+\_\+\+URI~"{}http\+:\textbackslash{}/\textbackslash{}/freesecs.\+sourceforge.\+net/\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xsd}}/\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{e5"{}}}}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00036}{36}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a8c6e94b5f670369abfdfd27955a5b73b}\label{secstwo__serialize_8cxx_a8c6e94b5f670369abfdfd27955a5b73b} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!XMLCHAR\_CAST@{XMLCHAR\_CAST}}
+\index{XMLCHAR\_CAST@{XMLCHAR\_CAST}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{XMLCHAR\_CAST}{XMLCHAR\_CAST}}
+{\footnotesize\ttfamily \#\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{define}} XMLCHAR\+\_\+\+CAST~(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Char}}\texorpdfstring{$\ast$}{*})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00041}{41}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{secstwo__serialize_8cxx_af7b9fa0fbfe8c44b797c064b31ef5c43}\label{secstwo__serialize_8cxx_af7b9fa0fbfe8c44b797c064b31ef5c43} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!bserialize\_fn@{bserialize\_fn}}
+\index{bserialize\_fn@{bserialize\_fn}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{bserialize\_fn}{bserialize\_fn}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} void(\texorpdfstring{$\ast$}{*} bserialize\+\_\+fn) (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&)}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00299}{299}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a056b159298ebc5842c1dc6cae266a0ca}\label{secstwo__serialize_8cxx_a056b159298ebc5842c1dc6cae266a0ca} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!xserialize\_fn@{xserialize\_fn}}
+\index{xserialize\_fn@{xserialize\_fn}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{xserialize\_fn}{xserialize\_fn}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int}}(\texorpdfstring{$\ast$}{*} xserialize\+\_\+fn) (\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}, \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Text\+Writer}} \texorpdfstring{$\ast$}{*})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00468}{468}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{secstwo__serialize_8cxx_a9d3bbb28950b5a7f801fb6a28f903c9d}\label{secstwo__serialize_8cxx_a9d3bbb28950b5a7f801fb6a28f903c9d} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!bdeserialize\_simple\_type@{bdeserialize\_simple\_type}}
+\index{bdeserialize\_simple\_type@{bdeserialize\_simple\_type}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{bdeserialize\_simple\_type()}{bdeserialize\_simple\_type()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{simple\+\_\+t}} $>$ \\
+\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} bdeserialize\+\_\+simple\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{begin,  }\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{end }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00138}{138}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a7e843f0e51b40d716f4b494ffb1ff231}\label{secstwo__serialize_8cxx_a7e843f0e51b40d716f4b494ffb1ff231} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!bdeserialize\_string\_type@{bdeserialize\_string\_type}}
+\index{bdeserialize\_string\_type@{bdeserialize\_string\_type}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{bdeserialize\_string\_type()}{bdeserialize\_string\_type()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{st}} $>$ \\
+\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} bdeserialize\+\_\+string\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{begin,  }\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\+\_\+t}} \texorpdfstring{$\ast$}{*}}]{end }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00158}{158}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_af51e59ef3adc301a378f942a353bc23c}\label{secstwo__serialize_8cxx_af51e59ef3adc301a378f942a353bc23c} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!bserialize\_simple\_type@{bserialize\_simple\_type}}
+\index{bserialize\_simple\_type@{bserialize\_simple\_type}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{bserialize\_simple\_type()}{bserialize\_simple\_type()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5}{data\+\_\+type\+\_\+t}} type$>$ \\
+void bserialize\+\_\+simple\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}}]{pit,  }\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&}]{raw\+\_\+data\+\_\+container }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00225}{225}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a921f8f5f102a4bb72fb1962e22f83b1b}\label{secstwo__serialize_8cxx_a921f8f5f102a4bb72fb1962e22f83b1b} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!bserialize\_simple\_type$<$ e\_ascii\_t $>$@{bserialize\_simple\_type$<$ e\_ascii\_t $>$}}
+\index{bserialize\_simple\_type$<$ e\_ascii\_t $>$@{bserialize\_simple\_type$<$ e\_ascii\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{bserialize\_simple\_type$<$ e\_ascii\_t $>$()}{bserialize\_simple\_type< e\_ascii\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+void \mbox{\hyperlink{secstwo__serialize_8cxx_af51e59ef3adc301a378f942a353bc23c}{bserialize\+\_\+simple\+\_\+type}}$<$ e\+\_\+ascii\+\_\+t $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}}]{pit,  }\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&}]{raw\+\_\+data\+\_\+container }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00239}{239}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_ad532300c62bc09eb799c3f5de8d76401}\label{secstwo__serialize_8cxx_ad532300c62bc09eb799c3f5de8d76401} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!bserialize\_simple\_type$<$ e\_wchar\_t $>$@{bserialize\_simple\_type$<$ e\_wchar\_t $>$}}
+\index{bserialize\_simple\_type$<$ e\_wchar\_t $>$@{bserialize\_simple\_type$<$ e\_wchar\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{bserialize\_simple\_type$<$ e\_wchar\_t $>$()}{bserialize\_simple\_type< e\_wchar\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+void \mbox{\hyperlink{secstwo__serialize_8cxx_af51e59ef3adc301a378f942a353bc23c}{bserialize\+\_\+simple\+\_\+type}}$<$ e\+\_\+wchar\+\_\+t $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}}]{pit,  }\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\+\_\+serializer\+\_\+t\+::data\+\_\+container\+\_\+t}} \&}]{raw\+\_\+data\+\_\+container }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00253}{253}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}\label{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!hton@{hton}}
+\index{hton@{hton}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{hton()}{hton()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} type $>$ \\
+type hton (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} type \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00079}{79}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a62d8bac7985eae5a387679dc903642dc}\label{secstwo__serialize_8cxx_a62d8bac7985eae5a387679dc903642dc} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!hton$<$ int16\_t $>$@{hton$<$ int16\_t $>$}}
+\index{hton$<$ int16\_t $>$@{hton$<$ int16\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{hton$<$ int16\_t $>$()}{hton< int16\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}{hton}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00082}{82}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_ab2639beb06d21769765cc5202f33e162}\label{secstwo__serialize_8cxx_ab2639beb06d21769765cc5202f33e162} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!hton$<$ int32\_t $>$@{hton$<$ int32\_t $>$}}
+\index{hton$<$ int32\_t $>$@{hton$<$ int32\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{hton$<$ int32\_t $>$()}{hton< int32\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}{hton}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00083}{83}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a39fbcf5135d55c769c82447f1af77cb1}\label{secstwo__serialize_8cxx_a39fbcf5135d55c769c82447f1af77cb1} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!hton$<$ int64\_t $>$@{hton$<$ int64\_t $>$}}
+\index{hton$<$ int64\_t $>$@{hton$<$ int64\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{hton$<$ int64\_t $>$()}{hton< int64\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}{hton}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00085}{85}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a46c0211b31a0aa6bd9ef9678c8b27121}\label{secstwo__serialize_8cxx_a46c0211b31a0aa6bd9ef9678c8b27121} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!hton$<$ uint16\_t $>$@{hton$<$ uint16\_t $>$}}
+\index{hton$<$ uint16\_t $>$@{hton$<$ uint16\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{hton$<$ uint16\_t $>$()}{hton< uint16\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+uint16\+\_\+t \mbox{\hyperlink{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}{hton}}$<$ uint16\+\_\+t $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} uint16\+\_\+t \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00080}{80}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a95c75e980307f8d801928e29af96d416}\label{secstwo__serialize_8cxx_a95c75e980307f8d801928e29af96d416} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!hton$<$ uint32\_t $>$@{hton$<$ uint32\_t $>$}}
+\index{hton$<$ uint32\_t $>$@{hton$<$ uint32\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{hton$<$ uint32\_t $>$()}{hton< uint32\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}{hton}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00081}{81}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a2284fa5f1c7428a190c2f430d71b6718}\label{secstwo__serialize_8cxx_a2284fa5f1c7428a190c2f430d71b6718} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!hton$<$ uint64\_t $>$@{hton$<$ uint64\_t $>$}}
+\index{hton$<$ uint64\_t $>$@{hton$<$ uint64\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{hton$<$ uint64\_t $>$()}{hton< uint64\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_ae1993c3a5ebdfa279defae5b4da4a2e7}{hton}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00084}{84}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a264afbfa55bb20623fc4df6b623cf300}\label{secstwo__serialize_8cxx_a264afbfa55bb20623fc4df6b623cf300} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!htonll@{htonll}}
+\index{htonll@{htonll}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{htonll()}{htonll()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} htonll (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}}}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00054}{54}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a5292e2101e6d317bff2a076da759f30d}\label{secstwo__serialize_8cxx_a5292e2101e6d317bff2a076da759f30d} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!move\_to\_next@{move\_to\_next}}
+\index{move\_to\_next@{move\_to\_next}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{move\_to\_next()}{move\_to\_next()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Node}} \texorpdfstring{$\ast$}{*} move\+\_\+to\+\_\+next (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Node}} \texorpdfstring{$\ast$}{*}}]{pnode }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00064}{64}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}\label{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntoh@{ntoh}}
+\index{ntoh@{ntoh}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntoh()}{ntoh()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} type $>$ \\
+type ntoh (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} type \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00071}{71}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a981c2ead25f2b151ba1aeed0b59c3d0b}\label{secstwo__serialize_8cxx_a981c2ead25f2b151ba1aeed0b59c3d0b} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntoh$<$ int16\_t $>$@{ntoh$<$ int16\_t $>$}}
+\index{ntoh$<$ int16\_t $>$@{ntoh$<$ int16\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntoh$<$ int16\_t $>$()}{ntoh< int16\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}{ntoh}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int16\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00074}{74}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a38735bde406d2b47dea20c6bd1c092f9}\label{secstwo__serialize_8cxx_a38735bde406d2b47dea20c6bd1c092f9} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntoh$<$ int32\_t $>$@{ntoh$<$ int32\_t $>$}}
+\index{ntoh$<$ int32\_t $>$@{ntoh$<$ int32\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntoh$<$ int32\_t $>$()}{ntoh< int32\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}{ntoh}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int32\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00075}{75}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_ac620baabee1504e541c75a3ce59199dc}\label{secstwo__serialize_8cxx_ac620baabee1504e541c75a3ce59199dc} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntoh$<$ int64\_t $>$@{ntoh$<$ int64\_t $>$}}
+\index{ntoh$<$ int64\_t $>$@{ntoh$<$ int64\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntoh$<$ int64\_t $>$()}{ntoh< int64\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}{ntoh}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int64\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00077}{77}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a74613f8737c15fe946dfe3b6db62e232}\label{secstwo__serialize_8cxx_a74613f8737c15fe946dfe3b6db62e232} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntoh$<$ uint16\_t $>$@{ntoh$<$ uint16\_t $>$}}
+\index{ntoh$<$ uint16\_t $>$@{ntoh$<$ uint16\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntoh$<$ uint16\_t $>$()}{ntoh< uint16\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+uint16\+\_\+t \mbox{\hyperlink{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}{ntoh}}$<$ uint16\+\_\+t $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} uint16\+\_\+t \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00072}{72}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a28e0a909014a3eec555673997bc75958}\label{secstwo__serialize_8cxx_a28e0a909014a3eec555673997bc75958} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntoh$<$ uint32\_t $>$@{ntoh$<$ uint32\_t $>$}}
+\index{ntoh$<$ uint32\_t $>$@{ntoh$<$ uint32\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntoh$<$ uint32\_t $>$()}{ntoh< uint32\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}{ntoh}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint32\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00073}{73}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_ae100cd821e0eca6648fcac26ba3b0f53}\label{secstwo__serialize_8cxx_ae100cd821e0eca6648fcac26ba3b0f53} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntoh$<$ uint64\_t $>$@{ntoh$<$ uint64\_t $>$}}
+\index{ntoh$<$ uint64\_t $>$@{ntoh$<$ uint64\_t $>$}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntoh$<$ uint64\_t $>$()}{ntoh< uint64\_t >()}}
+{\footnotesize\ttfamily template$<$$>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \mbox{\hyperlink{secstwo__serialize_8cxx_a48639c803254a75a30db0a62822d5f91}{ntoh}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} $>$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{const}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} \&}]{t }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00076}{76}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_aa7f75f9acf97ee4674c67ac44154924a}\label{secstwo__serialize_8cxx_aa7f75f9acf97ee4674c67ac44154924a} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!ntohll@{ntohll}}
+\index{ntohll@{ntohll}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{ntohll()}{ntohll()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}} ntohll (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint64\+\_\+t}}}]{n }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00045}{45}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_a0112f82ea6dc2f547d14479c2a3c4191}\label{secstwo__serialize_8cxx_a0112f82ea6dc2f547d14479c2a3c4191} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!xml\_serialize\_simple\_type@{xml\_serialize\_simple\_type}}
+\index{xml\_serialize\_simple\_type@{xml\_serialize\_simple\_type}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{xml\_serialize\_simple\_type()}{xml\_serialize\_simple\_type()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}} $>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int}} xml\+\_\+serialize\+\_\+simple\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}}]{pit,  }\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Text\+Writer}} \texorpdfstring{$\ast$}{*}}]{pwriter }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00433}{433}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+
+\Hypertarget{secstwo__serialize_8cxx_ab9dd3380575ce27c2f8285255d77ce3c}\label{secstwo__serialize_8cxx_ab9dd3380575ce27c2f8285255d77ce3c} 
+\index{secstwo\_serialize.cxx@{secstwo\_serialize.cxx}!xml\_serialize\_string\_type@{xml\_serialize\_string\_type}}
+\index{xml\_serialize\_string\_type@{xml\_serialize\_string\_type}!secstwo\_serialize.cxx@{secstwo\_serialize.cxx}}
+\doxysubsubsection{\texorpdfstring{xml\_serialize\_string\_type()}{xml\_serialize\_string\_type()}}
+{\footnotesize\ttfamily template$<$\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typename}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{t}} $>$ \\
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{int}} xml\+\_\+serialize\+\_\+string\+\_\+type (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}}]{pit,  }\item[{\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\+Text\+Writer}} \texorpdfstring{$\ast$}{*}}]{pwriter }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{secstwo__serialize_8cxx_source_l00455}{455}} of file \mbox{\hyperlink{secstwo__serialize_8cxx_source}{secstwo\+\_\+serialize.\+cxx}}.
+

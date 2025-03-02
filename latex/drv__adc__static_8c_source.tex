@@ -1,0 +1,161 @@
+\doxysection{drv\+\_\+adc\+\_\+static.\+c}
+\hypertarget{drv__adc__static_8c_source}{}\label{drv__adc__static_8c_source}\index{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/driver/adc/src/drv\_adc\_static.c@{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/driver/adc/src/drv\_adc\_static.c}}
+\mbox{\hyperlink{drv__adc__static_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00001}00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00002}00002\ \textcolor{comment}{\ \ ADC\ Driver\ Initialization\ File}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00004}00004\ \textcolor{comment}{\ \ File\ Name:}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ drv\_adc\_static.c}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00007}00007\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ \ This\ file\ contains\ source\ code\ necessary\ to\ initialize\ the\ ADC\ driver.}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00010}00010\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ \ This\ file\ contains\ source\ code\ necessary\ to\ initialize\ the\ system.\ \ It}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ \ implements\ the\ "{}DRV\_ADC\_Initialize"{}\ function,\ configuration\ bits,\ and\ allocates}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ \ any\ necessary\ global\ system\ resources,\ such\ as\ the\ systemObjects\ structure}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ \ that\ contains\ the\ object\ handles\ to\ all\ the\ MPLAB\ Harmony\ module\ objects\ in}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ \ the\ system.}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00016}00016\ \textcolor{comment}{\ *******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00018}00018\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00019}00019\ \textcolor{comment}{Copyright\ (c)\ 2013-\/2014\ released\ Microchip\ Technology\ Inc.\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00020}00020\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00021}00021\ \textcolor{comment}{Microchip\ licenses\ to\ you\ the\ right\ to\ use,\ modify,\ copy\ and\ distribute}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00022}00022\ \textcolor{comment}{Software\ only\ when\ embedded\ on\ a\ Microchip\ microcontroller\ or\ digital\ signal}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00023}00023\ \textcolor{comment}{controller\ that\ is\ integrated\ into\ your\ product\ or\ third\ party\ product}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00024}00024\ \textcolor{comment}{(pursuant\ to\ the\ sublicense\ terms\ in\ the\ accompanying\ license\ agreement).}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00026}00026\ \textcolor{comment}{You\ should\ refer\ to\ the\ license\ agreement\ accompanying\ this\ Software\ for}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00027}00027\ \textcolor{comment}{additional\ information\ regarding\ your\ rights\ and\ obligations.}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00028}00028\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00029}00029\ \textcolor{comment}{SOFTWARE\ AND\ DOCUMENTATION\ ARE\ PROVIDED\ AS\ IS\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00030}00030\ \textcolor{comment}{EITHER\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ WITHOUT\ LIMITATION,\ ANY\ WARRANTY\ OF}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00031}00031\ \textcolor{comment}{MERCHANTABILITY,\ TITLE,\ NON-\/INFRINGEMENT\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00032}00032\ \textcolor{comment}{IN\ NO\ EVENT\ SHALL\ MICROCHIP\ OR\ ITS\ LICENSORS\ BE\ LIABLE\ OR\ OBLIGATED\ UNDER}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00033}00033\ \textcolor{comment}{CONTRACT,\ NEGLIGENCE,\ STRICT\ LIABILITY,\ CONTRIBUTION,\ BREACH\ OF\ WARRANTY,\ OR}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00034}00034\ \textcolor{comment}{OTHER\ LEGAL\ EQUITABLE\ THEORY\ ANY\ DIRECT\ OR\ INDIRECT\ DAMAGES\ OR\ EXPENSES}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00035}00035\ \textcolor{comment}{INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ INCIDENTAL,\ SPECIAL,\ INDIRECT,\ PUNITIVE\ OR}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00036}00036\ \textcolor{comment}{CONSEQUENTIAL\ DAMAGES,\ LOST\ PROFITS\ OR\ LOST\ DATA,\ COST\ OF\ PROCUREMENT\ OF}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00037}00037\ \textcolor{comment}{SUBSTITUTE\ GOODS,\ TECHNOLOGY,\ SERVICES,\ OR\ ANY\ CLAIMS\ BY\ THIRD\ PARTIES}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00038}00038\ \textcolor{comment}{(INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ DEFENSE\ THEREOF),\ OR\ OTHER\ SIMILAR\ COSTS.}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00039}00039\ \textcolor{comment}{\ *******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00041}00041\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00042}00042\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00043}00043\ \textcolor{comment}{//\ Section:\ Include\ Files}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00044}00044\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00045}00045\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00046}00046\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{drv__adc__static_8h}{framework/driver/adc/drv\_adc\_static.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00047}00047\ \ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00048}00048\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00049}00049\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00050}00050\ \textcolor{comment}{//\ Section:\ ADC\ Static\ Driver\ Functions}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00051}00051\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00052}00052\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00053}\mbox{\hyperlink{drv__adc__static_8h_a223964324e557ee7c3476cfcd3d45a44}{00053}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a223964324e557ee7c3476cfcd3d45a44}{DRV\_ADC\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00054}00054\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00055}00055\ \ \ \ \ \textcolor{comment}{/*\ Select\ Clock\ Source\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00056}00056\ \ \ \ \ PLIB\_ADC\_ConversionClockSourceSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_CLOCK\_SOURCE\_PERIPHERAL\_BUS\_CLOCK);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00057}00057\ \ \ \ \ \textcolor{comment}{/*\ Select\ Clock\ Prescaler\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00058}00058\ \ \ \ \ PLIB\_ADC\_ConversionClockSet(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ \mbox{\hyperlink{system__config_8h_a15a6f6e84852f2e75acae13ce382d371}{SYS\_CLK\_BUS\_PERIPHERAL\_1}},\ 320000000);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00060}00060\ \ \ \ \ \textcolor{comment}{/*\ Select\ Power\ Mode\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00061}00061\ \ \ \ \ PLIB\_ADC\_StopInIdleDisable(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}});}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00062}00062\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00063}00063\ \ \ \ \ \textcolor{comment}{/*\ Select\ Voltage\ Reference\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00064}00064\ \ \ \ \ PLIB\_ADC\_VoltageReferenceSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_REFERENCE\_VDD\_TO\_AVSS);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00066}00066\ \ \ \ \ \textcolor{comment}{/*\ Sampling\ Selections\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00067}00067\ \ \ \ \ \textcolor{comment}{/*\ Select\ Sampling\ Mode\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00068}00068\ \ \ \ \ PLIB\_ADC\_SamplingModeSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_SAMPLING\_MODE\_MUXA);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00069}00069\ \ \ \ \ \textcolor{comment}{/*\ Number\ of\ Samples\ Per\ Interrupt\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00070}00070\ \ \ \ \ PLIB\_ADC\_SamplesPerInterruptSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_16SAMPLES\_PER\_INTERRUPT);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00072}00072\ \ \ \ \ \textcolor{comment}{/*\ Conversion\ Selections\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00073}00073\ \ \ \ \ \textcolor{comment}{/*\ Select\ Trigger\ Source\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00074}00074\ \ \ \ \ PLIB\_ADC\_ConversionTriggerSourceSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_CONVERSION\_TRIGGER\_INTERNAL\_COUNT);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00075}00075\ \ \ \ \ \textcolor{comment}{/*\ Select\ Result\ Format\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00076}00076\ \ \ \ \ PLIB\_ADC\_ResultFormatSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_RESULT\_FORMAT\_INTEGER\_16BIT);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00077}00077\ \ \ \ \ \textcolor{comment}{/*\ Buffer\ Mode\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00078}00078\ \ \ \ \ PLIB\_ADC\_ResultBufferModeSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_BUFFER\_MODE\_ONE\_16WORD\_BUFFER);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00080}00080\ \ \ \ \ \textcolor{comment}{/*\ Channel\ Selections\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00081}00081\ \ \ \ \ \textcolor{comment}{/*\ MUX\ A\ Negative\ Input\ Select\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00082}00082\ \ \ \ \ PLIB\_ADC\_MuxChannel0InputNegativeSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_MUX\_A,\ ADC\_INPUT\_NEGATIVE\_VREF\_MINUS);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00083}00083\ \ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00086}00086\ \ \ \ \ \textcolor{comment}{/*\ MUX\ A\ Positive\ Input\ Select\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00087}00087\ \ \ \ \ PLIB\_ADC\_MuxChannel0InputPositiveSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ ADC\_MUX\_A,\ ADC\_INPUT\_POSITIVE\_AN0);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00088}00088\ \ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00089}00089\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00091}\mbox{\hyperlink{drv__adc__static_8h_a7775818cf3c562ebbf52eb3dc92d1ebc}{00091}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a7775818cf3c562ebbf52eb3dc92d1ebc}{DRV\_ADC\_DeInitialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00092}00092\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00093}00093\ \ \ \ \ \textcolor{comment}{/*\ Disable\ ADC\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00094}00094\ \ \ \ \ PLIB\_ADC\_Disable(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}});}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00095}00095\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00097}\mbox{\hyperlink{drv__adc__static_8h_acc0c400e02d6ced6ac5552f9687386c7}{00097}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_acc0c400e02d6ced6ac5552f9687386c7}{DRV\_ADC\_Open}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00098}00098\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00099}00099\ \ \ \ \ \textcolor{comment}{/*\ Enable\ ADC\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00100}00100\ \ \ \ \ PLIB\_ADC\_Enable(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}});}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00101}00101\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00103}\mbox{\hyperlink{drv__adc__static_8h_a32746b15c7df3264ee1e81df14269a03}{00103}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a32746b15c7df3264ee1e81df14269a03}{DRV\_ADC\_Close}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00104}00104\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00105}00105\ \ \ \ \ \textcolor{comment}{/*\ Disable\ ADC\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00106}00106\ \ \ \ \ PLIB\_ADC\_Disable(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}});}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00107}00107\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00109}\mbox{\hyperlink{drv__adc__static_8h_a9b06f68a42771766770774e3302a1ffe}{00109}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a9b06f68a42771766770774e3302a1ffe}{DRV\_ADC\_Start}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00110}00110\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00111}00111\ \ \ \ \ \textcolor{comment}{/*\ Start\ ADC\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00112}00112\ \ \ \ \ PLIB\_ADC\_SamplingStart(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}});}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00113}00113\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00115}\mbox{\hyperlink{drv__adc__static_8h_a5ce4fc63c43258ab116fcdd2b4d84eaf}{00115}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a5ce4fc63c43258ab116fcdd2b4d84eaf}{DRV\_ADC\_Stop}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00116}00116\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00117}00117\ \ \ \ \ \textcolor{comment}{/*\ Stop\ ADC\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00118}00118\ \ \ \ \ PLIB\_ADC\_SamplingStop(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}});\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00119}00119\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00121}\mbox{\hyperlink{drv__adc__static_8h_abba3306d3e2b5fe2116213f4abf819c1}{00121}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_abba3306d3e2b5fe2116213f4abf819c1}{DRV\_ADC\_NegativeInputSelect}}(\mbox{\hyperlink{drv__adc__static_8h_a0dcb00f9816c5e098481aa4f5ce35989}{DRV\_ADC\_MUX}}\ mux,\ \mbox{\hyperlink{drv__adc__static_8h_afc8fff1bcfafbcd2b9009ed370c81966}{DRV\_ADC\_INPUTS\_NEGATIVE}}\ input)}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00122}00122\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00123}00123\ \ \ \ \ \textcolor{comment}{/*\ Select\ Negative\ Input\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00124}00124\ \ \ \ \ PLIB\_ADC\_MuxChannel0InputNegativeSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ mux,\ input);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00125}00125\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00127}\mbox{\hyperlink{drv__adc__static_8h_a863785455c54d6ea7e3626236591f6ff}{00127}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a863785455c54d6ea7e3626236591f6ff}{DRV\_ADC\_PositiveInputSelect}}(\mbox{\hyperlink{drv__adc__static_8h_a0dcb00f9816c5e098481aa4f5ce35989}{DRV\_ADC\_MUX}}\ mux,\ \mbox{\hyperlink{drv__adc__static_8h_afadbf73fd1f0ef8789eac977fdf26568}{DRV\_ADC\_INPUTS\_POSITIVE}}\ input)}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00128}00128\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00129}00129\ \ \ \ \ \textcolor{comment}{/*\ Select\ Positive\ Input\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00130}00130\ \ \ \ \ PLIB\_ADC\_MuxChannel0InputPositiveSelect(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ mux,\ input);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00131}00131\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00133}\mbox{\hyperlink{drv__adc__static_8h_a7bb71a965d20ab667c6960e276cfc8df}{00133}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a7bb71a965d20ab667c6960e276cfc8df}{DRV\_ADC\_ChannelScanInputsAdd}}(\mbox{\hyperlink{drv__adc__static_8h_abd88c660c3015001dab221dfaa7cb6a7}{DRV\_ADC\_INPUTS\_SCAN}}\ scanInput)}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00134}00134\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00135}00135\ \ \ \ \ \textcolor{comment}{/*\ Add\ Scan\ Input\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00136}00136\ \ \ \ \ PLIB\_ADC\_InputScanMaskAdd(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ scanInput);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00137}00137\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00139}\mbox{\hyperlink{drv__adc__static_8h_a58d471ca9babab9d11a4f85b41ec2711}{00139}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{drv__adc__static_8c_a58d471ca9babab9d11a4f85b41ec2711}{DRV\_ADC\_ChannelScanInputsRemove}}(\mbox{\hyperlink{drv__adc__static_8h_abd88c660c3015001dab221dfaa7cb6a7}{DRV\_ADC\_INPUTS\_SCAN}}\ scanInput)}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00140}00140\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00141}00141\ \ \ \ \ \textcolor{comment}{/*\ Remove\ Scan\ Input\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00142}00142\ \ \ \ \ PLIB\_ADC\_InputScanMaskRemove(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ scanInput);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00143}00143\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00145}\mbox{\hyperlink{drv__adc__static_8h_a17cc870932d701b92153dc65bff7e83f}{00145}}\ ADC\_SAMPLE\ \mbox{\hyperlink{drv__adc__static_8c_a17cc870932d701b92153dc65bff7e83f}{DRV\_ADC\_SamplesRead}}(uint8\_t\ bufIndex)}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00146}00146\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00147}00147\ \ \ \ \ \textcolor{comment}{/*\ Read\ Result\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00148}00148\ \ \ \ \ \textcolor{keywordflow}{return}\ PLIB\_ADC\_ResultGetByIndex(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}},\ bufIndex);}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00149}00149\ \}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00151}\mbox{\hyperlink{drv__adc__static_8h_ac7ac5b979cf8f3e33ecae62475446a6c}{00151}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{drv__adc__static_8c_ac7ac5b979cf8f3e33ecae62475446a6c}{DRV\_ADC\_SamplesAvailable}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00152}00152\ \{}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00153}00153\ \ \ \ \ \textcolor{comment}{/*\ Return\ ADC\ conversion\ complete\ status\ */}}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{return}\ (PLIB\_ADC\_ConversionHasCompleted(\mbox{\hyperlink{drv__adc__static_8h_a3d575066602109075a1f4b805bf2f211a05665343fa369f4b26f635a210205c52}{DRV\_ADC\_ID\_1}}));}
+\DoxyCodeLine{\Hypertarget{drv__adc__static_8c_source_l00155}00155\ \}}
+
+\end{DoxyCode}

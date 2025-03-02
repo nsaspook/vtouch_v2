@@ -1,0 +1,139 @@
+\doxysection{tmr2.\+c}
+\hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source}{}\label{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source}\index{secs\_q84.X/mcc\_generated\_files/tmr2.c@{secs\_q84.X/mcc\_generated\_files/tmr2.c}}
+\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2tmr2_8h}{tmr2.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00062}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a46c13c9255379e99c10240229a145d37}{00062}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a46c13c9255379e99c10240229a145d37}{TMR2\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00063}00063\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//\ Set\ TMR2\ to\ the\ options\ selected\ in\ the\ User\ Interface}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ T2CS\ FOSC/4;\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00067}00067\ \ \ \ \ T2CLKCON\ =\ 0x01;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ T2PSYNC\ Not\ Synchronized;\ T2MODE\ Software\ control;\ T2CKPOL\ Rising\ Edge;\ T2CKSYNC\ Not\ Synchronized;\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00070}00070\ \ \ \ \ T2HLT\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//\ T2RSEL\ T2CKIPPS\ pin;\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00073}00073\ \ \ \ \ T2RST\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00075}00075\ \ \ \ \ \textcolor{comment}{//\ PR2\ 99;\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00076}00076\ \ \ \ \ T2PR\ =\ 0x63;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00078}00078\ \ \ \ \ \textcolor{comment}{//\ TMR2\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00079}00079\ \ \ \ \ T2TMR\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//\ Clearing\ IF\ flag.}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00082}00082\ \ \ \ \ PIR3bits.TMR2IF\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00084}00084\ \ \ \ \ \textcolor{comment}{//\ T2CKPS\ 1:1;\ T2OUTPS\ 1:16;\ TMR2ON\ on;\ }}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00085}00085\ \ \ \ \ T2CON\ =\ 0x8F;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00086}00086\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00088}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a1d3f4785995b9957ae3ad3f6e3b2c08f}{00088}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a1d3f4785995b9957ae3ad3f6e3b2c08f}{TMR2\_ModeSet}}(\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8h_a23179ba73e4f08e79993bbda785709d0}{TMR2\_HLT\_MODE}}\ mode)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00089}00089\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00090}00090\ \ \ \ \textcolor{comment}{//\ Configure\ different\ types\ HLT\ mode}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00091}00091\ \ \ \ \ T2HLTbits.MODE\ =\ mode;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00092}00092\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00094}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a4cdefdf25ae2fdd0df54dd0b1108e293}{00094}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a4cdefdf25ae2fdd0df54dd0b1108e293}{TMR2\_ExtResetSourceSet}}(\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74}{TMR2\_HLT\_EXT\_RESET\_SOURCE}}\ reset)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00095}00095\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00096}00096\ \ \ \ \ \textcolor{comment}{//Configure\ different\ types\ of\ HLT\ external\ reset\ source}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00097}00097\ \ \ \ \ T2RSTbits.RSEL\ =\ reset;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00098}00098\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00100}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a7eccfd0fac278e0099d27631e116cfbf}{00100}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a7eccfd0fac278e0099d27631e116cfbf}{TMR2\_Start}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00101}00101\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00102}00102\ \ \ \ \ \textcolor{comment}{//\ Start\ the\ Timer\ by\ writing\ to\ TMRxON\ bit}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00103}00103\ \ \ \ \ T2CONbits.TMR2ON\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00104}00104\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00106}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_afb37b846db811f973b4009215d59f91a}{00106}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_afb37b846db811f973b4009215d59f91a}{TMR2\_StartTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00107}00107\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00108}00108\ \ \ \ \ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a7eccfd0fac278e0099d27631e116cfbf}{TMR2\_Start}}();}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00109}00109\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00111}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a90159f110263038f478f43a3ac9ab3ee}{00111}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a90159f110263038f478f43a3ac9ab3ee}{TMR2\_Stop}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00112}00112\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00113}00113\ \ \ \ \ \textcolor{comment}{//\ Stop\ the\ Timer\ by\ writing\ to\ TMRxON\ bit}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00114}00114\ \ \ \ \ T2CONbits.TMR2ON\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00115}00115\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00117}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a36d7e6eab8b279863c83a32fb41adb02}{00117}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a36d7e6eab8b279863c83a32fb41adb02}{TMR2\_StopTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00118}00118\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00119}00119\ \ \ \ \ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a90159f110263038f478f43a3ac9ab3ee}{TMR2\_Stop}}();}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00120}00120\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00122}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_aa016556d5d1a99da79708bcac03d9d65}{00122}}\ uint8\_t\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_aa016556d5d1a99da79708bcac03d9d65}{TMR2\_Counter8BitGet}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00123}00123\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00124}00124\ \ \ \ \ uint8\_t\ readVal;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00126}00126\ \ \ \ \ readVal\ =\ TMR2;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{return}\ readVal;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00129}00129\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00131}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a4acc1f7c8c2dbd46424dad273cdb9cb1}{00131}}\ uint8\_t\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a4acc1f7c8c2dbd46424dad273cdb9cb1}{TMR2\_ReadTimer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00132}00132\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00133}00133\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_aa016556d5d1a99da79708bcac03d9d65}{TMR2\_Counter8BitGet}}();}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00134}00134\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00135}00135\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00136}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a0179f776b701464c6b44495e7114e5e1}{00136}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a0179f776b701464c6b44495e7114e5e1}{TMR2\_Counter8BitSet}}(uint8\_t\ timerVal)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00137}00137\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00138}00138\ \ \ \ \ \textcolor{comment}{//\ Write\ to\ the\ Timer2\ register}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00139}00139\ \ \ \ \ TMR2\ =\ timerVal;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00140}00140\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00142}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_acb2fbe8254fcc8c01b9784b028a7eac6}{00142}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_acb2fbe8254fcc8c01b9784b028a7eac6}{TMR2\_WriteTimer}}(uint8\_t\ timerVal)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00143}00143\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00144}00144\ \ \ \ \ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a0179f776b701464c6b44495e7114e5e1}{TMR2\_Counter8BitSet}}(timerVal);}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00145}00145\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00147}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a04766b6d89a990720759c1a03a649fd5}{00147}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a04766b6d89a990720759c1a03a649fd5}{TMR2\_Period8BitSet}}(uint8\_t\ periodVal)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00148}00148\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00149}00149\ \ \ \ PR2\ =\ periodVal;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00150}00150\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00152}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a5490961ba3ba77d10896e320ab840a74}{00152}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a5490961ba3ba77d10896e320ab840a74}{TMR2\_LoadPeriodRegister}}(uint8\_t\ periodVal)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00153}00153\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00154}00154\ \ \ \ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_a04766b6d89a990720759c1a03a649fd5}{TMR2\_Period8BitSet}}(periodVal);}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00155}00155\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00157}\mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_ab0b9dbd90bacc904f311d71fbcccd038}{00157}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_ab0b9dbd90bacc904f311d71fbcccd038}{TMR2\_HasOverflowOccured}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00158}00158\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00159}00159\ \ \ \ \ \textcolor{comment}{//\ check\ if\ \ overflow\ has\ occurred\ by\ checking\ the\ TMRIF\ bit}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00160}00160\ \ \ \ \ \textcolor{keywordtype}{bool}\ status\ =\ PIR3bits.TMR2IF;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00161}00161\ \ \ \ \ \textcolor{keywordflow}{if}(status)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00162}00162\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00163}00163\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Clearing\ IF\ flag.}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00164}00164\ \ \ \ \ \ \ \ \ PIR3bits.TMR2IF\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00165}00165\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00166}00166\ \ \ \ \ \textcolor{keywordflow}{return}\ status;}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2mcc__generated__files_2tmr2_8c_source_l00167}00167\ \}}
+
+\end{DoxyCode}

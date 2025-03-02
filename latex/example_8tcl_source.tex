@@ -1,0 +1,65 @@
+\doxysection{example.\+tcl}
+\hypertarget{example_8tcl_source}{}\label{example_8tcl_source}\index{gem/secs/tcl/example.tcl@{gem/secs/tcl/example.tcl}}
+\mbox{\hyperlink{example_8tcl}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00001}00001\ \#!/bin/sh}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00002}00002\ \#\ The\ next\ line\ restarts\ using\ tclsh\ \(\backslash\)}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00003}00003\ exec\ tclsh\ \$0\ \$\{1+"{}\$@"{}\}}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00004}00004\ ::tcl::tm::path\ add\ [file\ dirname\ [info\ script]]}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00006}00006\ set\ host\ \{\}}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00007}00007\ set\ port\ 3350}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00008}00008\ package\ require\ secs}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00010}00010\ namespace\ eval\ my\ \{}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00012}00012\ \ \ \ \ \#\#}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00013}00013\ \ \ \ \ \#\ Here\ we\ keep\ track\ of\ the\ device\ number\ and\ socket}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00014}00014\ \ \ \ \ \#\ format:\ list\ \$dev\ \$sock}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00015}00015\ \ \ \ \ variable\ dev\ 0}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00017}00017\ \ \ \ \ \#\#\ Standard\ parameters\ to\ be\ set}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00018}00018\ \ \ \ \ variable\ SOFTWARE\ \{L\ \{A\ MYSOFT\}\ \{A\ 1.0\}\}}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00019}00019\ \ \ \ \ variable\ RTY\ 3}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00020}00020\ \ \ \ \ variable\ T0\ 60000}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00021}00021\ \ \ \ \ variable\ T1\ 300}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00022}00022\ \ \ \ \ variable\ T2\ 500}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00023}00023\ \ \ \ \ variable\ T3\ 45000}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00024}00024\ \ \ \ \ variable\ T4\ 45000}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00025}00025\ \ \ \ \ variable\ T5\ 10000}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00026}00026\ \ \ \ \ variable\ T6\ 5000}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00027}00027\ \ \ \ \ variable\ T7\ 10000}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00028}00028\ \ \ \ \ variable\ T8\ 5000}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00030}00030\ \ \ \ \ \#\#}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00031}00031\ \ \ \ \ \#\ This\ function\ is\ called\ as\ soon\ as\ a\ connection}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00032}00032\ \ \ \ \ \#\ is\ created.}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00033}00033\ \ \ \ \ proc\ connect\ \{sock\ host\ port\}\ \{}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00034}00034\ \ \ \ \ \ \ \ \ variable\ dev}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00035}00035\ \ \ \ \ \ \ \ \ set\ dev\ [list\ [lindex\ \$dev\ 0]\ \$sock]}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00038}00038\ \ \ \ \ \#\#}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00039}00039\ \ \ \ \ \#\ This\ function\ is\ called\ for\ logging\ from\ any}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00040}00040\ \ \ \ \ \#\ place\ of\ the\ secs\ library.}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00041}00041\ \ \ \ \ proc\ log\ \{args\}\ \{}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00042}00042\ \ \ \ \ \ \ \ \ puts\ stdout\ [join\ \$args]}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00043}00043\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00045}00045\ \ \ \ \ \#\#}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00046}00046\ \ \ \ \ \#\ Any\ special\ behavior\ you\ want.}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00047}00047\ \ \ \ \ proc\ S1F1\ \{dev\ cmd\ msg\}\ \{}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00048}00048\ \ \ \ \ \ \ \ \ variable\ SOFTWARE}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00049}00049\ \ \ \ \ \ \ \ \ log\ received\ S1F1}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00050}00050\ \ \ \ \ \ \ \ \ secs\ reply\ \$dev\ \$cmd\ \$SOFTWARE}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00051}00051\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00053}00053\ \ \ \ \ \#\#}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00054}00054\ \ \ \ \ \#\ Finally,\ create\ the\ connection}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00055}00055\ \ \ \ \ secs\ init\ \$::host\ \$::port}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00056}00056\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00057}00057\ \ \ \ \ \#\ And\ enter\ the\ mainloop}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00058}00058\ \ \ \ \ vwait\ forever}
+\DoxyCodeLine{\Hypertarget{example_8tcl_source_l00059}00059\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,82 @@
+\doxysection{eadog.\+h}
+\hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source}{}\label{touch__board_2elo__touch_8_x_2eadog_8h_source}\index{touch\_board/elo\_touch.X/eadog.h@{touch\_board/elo\_touch.X/eadog.h}}
+\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00001}00001\ \textcolor{comment}{/*\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00002}00002\ \textcolor{comment}{\ *\ File:\ \ \ eadog.h}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00003}00003\ \textcolor{comment}{\ *\ Author:\ root}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Created\ on\ July\ 27,\ 2015,\ 2:05\ PM}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00006}00006\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00008}00008\ \textcolor{comment}{/*\ Parts\ taken\ from:}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00009}00009\ \textcolor{comment}{\ *\ This\ version\ for\ XC8\ 2.10\ PIC18f47K42\ polled}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00010}00010\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00011}00011\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ file:\ EA-\/DOGM\_MIO.c}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00012}00012\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ version:\ 2.03}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00013}00013\ \textcolor{comment}{\ *\ \ \ \ \ description:\ Multi\ I/O\ driver\ for\ EA\ DOGM\ displays}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00014}00014\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ Uses\ 8Bit,\ SPI\ HW\ or\ SPI\ SW\ (bitbang)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00015}00015\ \textcolor{comment}{\ *\ \ \ \ \ written\ by\ :\ Michael\ Bradley\ (mbradley@mculabs.com)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00016}00016\ \textcolor{comment}{\ *\ \ \ contributions:\ Imaginos\ (CCS\ forum),\ Emil\ Nad\ (8Bit\ testing)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00017}00017\ \textcolor{comment}{\ *\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ jgschmidt\ (CCS\ forum)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00018}00018\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00020}00020\ \textcolor{preprocessor}{\#ifndef\ EADOG\_H}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00021}00021\ \textcolor{preprocessor}{\#define\ EADOG\_H}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00023}00023\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00024}00024\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00025}00025\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00028}00028\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00029}00029\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00031}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a302bf062d36343c88a83608a3565bf24}{00031}}\ \textcolor{preprocessor}{\#define\ LCD\_CMD\_MASK\ \ \ \ 0x01}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00032}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a04c71b1c46bea47afa34331ee4a78e3d}{00032}}\ \textcolor{preprocessor}{\#define\ LCD\_CMD\_SET\ 0x100}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00033}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_aa888ed6f8f8762d93e88b6cb12bb2334}{00033}}\ \textcolor{preprocessor}{\#define\ LCD\_CLEAR\_HOME\ \ 0x04}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00034}00034\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00035}00035\ \textcolor{comment}{\ \ \ \ \ *\ for\ 2MHz\ SPI\ clock\ on\ PIC18f47K42\ 64MHz\ clock\ from\ PLL}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00036}00036\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00037}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a82abe28910029852fd02595254ae1e30}{00037}}\ \textcolor{preprocessor}{\#define\ IS\_DELAYSHORT\ \ \ 9}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00038}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a232f6582fe6ab36e60e4064019ff7eba}{00038}}\ \textcolor{preprocessor}{\#define\ IS\_DELAYMED\ 10}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00039}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_aea3033b04ab7e8ff15f2616dcc217c91}{00039}}\ \textcolor{preprocessor}{\#define\ IS\_DELAYLONG\ \ \ \ 800}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00040}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a1bfcdda7acef901d8b7787e0fc4cb439}{00040}}\ \textcolor{preprocessor}{\#define\ IS\_DELAYPOWERUP\ 350000}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00042}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a7305eb3ce47b9f48bd5f881f425d89bd}{00042}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_CLR\ \ \ \ \ \ 1}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00043}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a34ba4da8d39dd01512cadfcbdb52aac7}{00043}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_CURSOR\_ON\ \ \ \ \ 0b00001111}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00044}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_ad336599984071e260bc0d5745c5475a7}{00044}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_CURSOR\_OFF\ \ \ \ 0b00001100}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00045}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_ab988f2285d27e2bb5a6655ee05992d72}{00045}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_DISPLAY\_ON\ \ \ \ 0b00001100}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00046}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_af2a4584f63838f7fdb64527d1ca958e0}{00046}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_DISPLAY\_OFF\ \ \ 0b00001000}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00047}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_aa8a5cd90ced9677024707408c316c814}{00047}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_DDRAM\_ADDR\ \ \ \ 0b10000000}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00048}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_aee7db570e3142cc0ee984fb0dfb09c90}{00048}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_CGRAM\_ADDR\ \ \ \ 0b01000000}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00049}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a0ecc052740fc0dd563a715795823baf1}{00049}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_SELECT\_R0\ \ \ \ \ 0b00011000}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00050}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_ab2409af5588af15b838b21e5194a36a5}{00050}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_SELECT\_R1\ \ \ \ \ 0b00010000}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00051}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a44248834924bc4cb37c21dbd2fed005d}{00051}}\ \textcolor{preprocessor}{\#define\ EADOGM\_CMD\_SET\_TABLE2\ \ \ \ 0b00101010}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00052}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a22a6f60895705326cf0d5bf9e767224b}{00052}}\ \textcolor{preprocessor}{\#define\ EADOGM\_COLSPAN\ \ \ \ \ \ 16}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00054}00054\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a9b048d319f94e64f9ae4babd002b8db4}{wdtdelay}}(uint32\_t);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00055}00055\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_ab5c89a01791e81a5efcee4e25a938a7e}{init\_display}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00056}00056\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_ace2eafc28f81059e7f8011f94e800b6d}{eaDogM\_WriteChr}}(int8\_t);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_a4c99c21f8f16fbd0bba6db689af3a545}{eaDogM\_WriteCommand}}(uint8\_t);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00058}00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_a11a453eee4bda3ace8c287ee98a37a77}{eaDogM\_SetPos}}(uint8\_t,\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_acfe4822a02e0a83bc9271e9cd73dc5c8}{eaDogM\_ClearRow}}(uint8\_t);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_abdf8cb128258dcce825732deb3bb707e}{eaDogM\_WriteString}}(\textcolor{keywordtype}{char}\ *);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00061}00061\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_a293a42d10ba9bdf0f56ab58c60304dd4}{eaDogM\_WriteStringAtPos}}(uint8\_t,\ uint8\_t,\ \textcolor{keywordtype}{char}\ *);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00062}00062\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_a1ba60d595359aeb5a90c8cf505e589de}{eaDogM\_WriteIntAtPos}}(uint8\_t,\ uint8\_t,\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00063}00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2eadog_8h_a87fc96664b3d2453106c0db1b7ea4d68}{eaDogM\_WriteByteToCGRAM}}(uint8\_t,\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00065}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a5260aa490f83d00a95f5b5dcc2cac5d6}{00065}}\ \textcolor{preprocessor}{\#define\ eaDogM\_Cls()\ \ \ \ \ \ \ \ \ \ \ \ \ eaDogM\_WriteCommand(EADOGM\_CMD\_CLR)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00066}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_afa033231b13c422461bd9ca85d64841b}{00066}}\ \textcolor{preprocessor}{\#define\ eaDogM\_CursorOn()\ \ \ \ \ \ \ \ eaDogM\_WriteCommand(EADOGM\_CMD\_CURSOR\_ON)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00067}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_afe1e8968c2813eabc6c12bfac2bc76ad}{00067}}\ \textcolor{preprocessor}{\#define\ eaDogM\_CursorOff()\ \ \ \ \ \ \ eaDogM\_WriteCommand(EADOGM\_CMD\_CURSOR\_OFF)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00068}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a2a2549836e8ecf765f7a674e4e025bd7}{00068}}\ \textcolor{preprocessor}{\#define\ eaDogM\_DisplayOn()\ \ \ \ \ \ \ eaDogM\_WriteCommand(EADOGM\_CMD\_DISPLAY\_ON)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00069}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8h_a46b140c344288c431ea7244d708f8f5d}{00069}}\ \textcolor{preprocessor}{\#define\ eaDogM\_DisplayOff()\ \ \ \ \ \ eaDogM\_WriteCommand(EADOGM\_CMD\_DISPLAY\_OFF)}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00071}00071\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00072}00072\ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00073}00073\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00075}00075\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{/*\ EADOG\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8h_source_l00076}00076\ }
+
+\end{DoxyCode}

@@ -1,0 +1,65 @@
+\doxysection{rs232.\+c}
+\hypertarget{rs232_8c_source}{}\label{rs232_8c_source}\index{secs\_q84.X/rs232.c@{secs\_q84.X/rs232.c}}
+\mbox{\hyperlink{rs232_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{rs232_8h}{rs232.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00003}00003\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ line\_status(\textcolor{keyword}{const}\ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}});}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00004}00004\ \textcolor{keyword}{extern}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_v__data}{V\_data}}\ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00006}00006\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00007}00007\ \textcolor{comment}{\ *\ convert\ the\ raw\ ADC\ result\ into\ something\ close\ to\ the\ RS-\/232\ wire\ voltages}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00008}00008\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00009}\mbox{\hyperlink{rs232_8c_a31c3653f5d780fbc3c450887255445fa}{00009}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{rs232_8c_a31c3653f5d780fbc3c450887255445fa}{update\_rs232\_line\_status}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_ac516dd32d7e2029001bff6107c994a69}{tx\_rs232}}\ =\ line\_status(\mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_aeb658dcd3ed115f9eea35f4853dcaefc}{v\_tx\_line}});}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a89d74e09f9df6187e7c9c66aaf8c83b1}{rx\_rs232}}\ =\ line\_status(\mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a654152cf89942c9a89046a705154d14c}{v\_rx\_line}});}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a6cb7a7e8cde86838821f6eeb14b192e4}{tx\_volts}}\ =\ (\mbox{\hyperlink{rs232_8h_a68e2b7fd2e5711b9b77c7d3feb9411e3}{adc\_scale\_zero}}\ +\ (int16\_t)\ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_aeb658dcd3ed115f9eea35f4853dcaefc}{v\_tx\_line}})\ /\ \mbox{\hyperlink{rs232_8h_afb6d75ca76c7e7c53aaeccef536bf745}{neg\_scale}};\ \textcolor{comment}{//\ negative\ scaling}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a6cb7a7e8cde86838821f6eeb14b192e4}{tx\_volts}}\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00016}00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a6cb7a7e8cde86838821f6eeb14b192e4}{tx\_volts}}\ =\ (\mbox{\hyperlink{rs232_8h_a68e2b7fd2e5711b9b77c7d3feb9411e3}{adc\_scale\_zero}}\ +\ (int16\_t)\ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_aeb658dcd3ed115f9eea35f4853dcaefc}{v\_tx\_line}})\ /\ \mbox{\hyperlink{rs232_8h_a38405bfb952eb696fb40bc23e9e93176}{pos\_scale}};\ \textcolor{comment}{//\ positive\ scaling}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00017}00017\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a6cb7a7e8cde86838821f6eeb14b192e4}{tx\_volts}}\ <\ \mbox{\hyperlink{rs232_8h_a98a51589bb5ed8162ffc05551efd98f7}{line\_zero\_limit}})\ \{\ \textcolor{comment}{//\ check\ for\ ADC\ disconnect\ condition}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a6cb7a7e8cde86838821f6eeb14b192e4}{tx\_volts}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00020}00020\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00021}00021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_acbbe7f8ff9f75c9d02ec6f360fabef20}{rx\_volts}}\ =\ (\mbox{\hyperlink{rs232_8h_a68e2b7fd2e5711b9b77c7d3feb9411e3}{adc\_scale\_zero}}\ +\ (int16\_t)\ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a654152cf89942c9a89046a705154d14c}{v\_rx\_line}})\ /\ \mbox{\hyperlink{rs232_8h_afb6d75ca76c7e7c53aaeccef536bf745}{neg\_scale}};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_acbbe7f8ff9f75c9d02ec6f360fabef20}{rx\_volts}}\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_acbbe7f8ff9f75c9d02ec6f360fabef20}{rx\_volts}}\ =\ (\mbox{\hyperlink{rs232_8h_a68e2b7fd2e5711b9b77c7d3feb9411e3}{adc\_scale\_zero}}\ +\ (int16\_t)\ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_a654152cf89942c9a89046a705154d14c}{v\_rx\_line}})\ /\ \mbox{\hyperlink{rs232_8h_a38405bfb952eb696fb40bc23e9e93176}{pos\_scale}};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00026}00026\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_acbbe7f8ff9f75c9d02ec6f360fabef20}{rx\_volts}}\ <\ \mbox{\hyperlink{rs232_8h_a98a51589bb5ed8162ffc05551efd98f7}{line\_zero\_limit}})\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{rs232_8c_aa47b282cad3df72620b76a4ca8bd6694}{V}}.\mbox{\hyperlink{struct_v__data_acbbe7f8ff9f75c9d02ec6f360fabef20}{rx\_volts}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00030}00030\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00034}00034\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00035}00035\ \textcolor{comment}{\ *\ convert\ raw\ ADC\ values\ tto\ RS232\ line\ status\ indicators}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00036}00036\ \textcolor{comment}{\ *\ D:\ Disconnected\ from\ anyload\ (device\ measurements\ error)}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00037}00037\ \textcolor{comment}{\ *\ O:\ Open,\ Line\ receiver\ connected\ only\ voltage}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00038}00038\ \textcolor{comment}{\ *\ M:\ Mark\ line\ condition}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00039}00039\ \textcolor{comment}{\ *\ S:\ Space\ line\ condition}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00040}00040\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00041}00041\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00042}00042\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ line\_status(\textcolor{keyword}{const}\ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ value)}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00043}00043\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{char}\ status\_c\ =\ \textcolor{charliteral}{'D'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{if}\ ((value\ <\ (\mbox{\hyperlink{vconfig_8h_a6f0f951b3dc2acd6e42357fa15aaad68}{LINE\_OPEN\_V}}\ -\/\ \mbox{\hyperlink{vconfig_8h_a9aba1a253a5ea669e186825bc13f82f3}{LINE\_LIMIT\_OPEN}}))\ \&\&\ (value\ >\ (\mbox{\hyperlink{vconfig_8h_a36aa44c970c32cbdf182885e5a54e01c}{LINE\_RECV\_V}}\ -\/\ \mbox{\hyperlink{vconfig_8h_a9aba1a253a5ea669e186825bc13f82f3}{LINE\_LIMIT\_OPEN}})))\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00047}00047\ \ \ \ \ \ \ \ \ status\_c\ =\ \textcolor{charliteral}{'O'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{if}\ ((value\ >\ (\mbox{\hyperlink{vconfig_8h_a6f0f951b3dc2acd6e42357fa15aaad68}{LINE\_OPEN\_V}}\ +\ \mbox{\hyperlink{vconfig_8h_a8f06ccaa1d208c36107da2c1a71dc2a3}{LINE\_LIMIT\_LOW}}))\ \&\&\ (value\ <\ (\mbox{\hyperlink{vconfig_8h_a5d58b31d4008736878e5149ea3428dab}{LINE\_SPACE\_V}}\ +\ \mbox{\hyperlink{vconfig_8h_ada56b603b36fc57ef54be09949781f2c}{LINE\_LIMIT\_H}})))\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ status\_c\ =\ \textcolor{charliteral}{'S'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00052}00052\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{if}\ ((value\ <\ (\mbox{\hyperlink{vconfig_8h_a6f0f951b3dc2acd6e42357fa15aaad68}{LINE\_OPEN\_V}}\ -\/\ \mbox{\hyperlink{vconfig_8h_acf38b26f2e0252cbf01df9fc49bbe95d}{LINE\_LIMIT\_MARK}}))\ \&\&\ (value\ >\ (\mbox{\hyperlink{vconfig_8h_a122e240a6f0e9255c829a4cfb0b00d76}{LINE\_MARK\_V}}\ -\/\ \mbox{\hyperlink{vconfig_8h_ada56b603b36fc57ef54be09949781f2c}{LINE\_LIMIT\_H}})))\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00055}00055\ \ \ \ \ \ \ \ \ status\_c\ =\ \textcolor{charliteral}{'M'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00056}00056\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{return}\ status\_c;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00059}00059\ \}}
+
+\end{DoxyCode}

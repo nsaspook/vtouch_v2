@@ -1,0 +1,105 @@
+\doxysection{system\+\_\+tasks.\+c}
+\hypertarget{system__tasks_8c_source}{}\label{system__tasks_8c_source}\index{pic32\_daq/remote\_daq/firmware/src/system\_config/default/system\_tasks.c@{pic32\_daq/remote\_daq/firmware/src/system\_config/default/system\_tasks.c}}
+\mbox{\hyperlink{system__tasks_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00001}00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00002}00002\ \textcolor{comment}{\ System\ Tasks\ File}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00004}00004\ \textcolor{comment}{\ \ File\ Name:}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ system\_tasks.c}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00007}00007\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ \ This\ file\ contains\ source\ code\ necessary\ to\ maintain\ system's\ polled\ state}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ \ machines.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00011}00011\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ \ This\ file\ contains\ source\ code\ necessary\ to\ maintain\ system's\ polled\ state}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ \ machines.\ \ It\ implements\ the\ "{}SYS\_Tasks"{}\ function\ that\ calls\ the\ individual}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ \ "{}Tasks"{}\ functions\ for\ all\ polled\ MPLAB\ Harmony\ modules\ in\ the\ system.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00015}00015\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00016}00016\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00017}00017\ \textcolor{comment}{\ \ \ \ This\ file\ requires\ access\ to\ the\ systemObjects\ global\ data\ structure\ that}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00018}00018\ \textcolor{comment}{\ \ \ \ contains\ the\ object\ handles\ to\ all\ MPLAB\ Harmony\ module\ objects\ executing}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00019}00019\ \textcolor{comment}{\ \ \ \ polled\ in\ the\ system.\ \ These\ handles\ are\ passed\ into\ the\ individual\ module}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00020}00020\ \textcolor{comment}{\ \ \ \ "{}Tasks"{}\ functions\ to\ identify\ the\ instance\ of\ the\ module\ to\ maintain.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00021}00021\ \textcolor{comment}{\ *******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00023}00023\ \textcolor{comment}{//\ DOM-\/IGNORE-\/BEGIN}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00024}00024\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00025}00025\ \textcolor{comment}{Copyright\ (c)\ 2013-\/2015\ released\ Microchip\ Technology\ Inc.\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00026}00026\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00027}00027\ \textcolor{comment}{Microchip\ licenses\ to\ you\ the\ right\ to\ use,\ modify,\ copy\ and\ distribute}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00028}00028\ \textcolor{comment}{Software\ only\ when\ embedded\ on\ a\ Microchip\ microcontroller\ or\ digital\ signal}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00029}00029\ \textcolor{comment}{controller\ that\ is\ integrated\ into\ your\ product\ or\ third\ party\ product}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00030}00030\ \textcolor{comment}{(pursuant\ to\ the\ sublicense\ terms\ in\ the\ accompanying\ license\ agreement).}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00031}00031\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00032}00032\ \textcolor{comment}{You\ should\ refer\ to\ the\ license\ agreement\ accompanying\ this\ Software\ for}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00033}00033\ \textcolor{comment}{additional\ information\ regarding\ your\ rights\ and\ obligations.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00034}00034\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00035}00035\ \textcolor{comment}{SOFTWARE\ AND\ DOCUMENTATION\ ARE\ PROVIDED\ "{}AS\ IS"{}\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00036}00036\ \textcolor{comment}{EITHER\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ WITHOUT\ LIMITATION,\ ANY\ WARRANTY\ OF}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00037}00037\ \textcolor{comment}{MERCHANTABILITY,\ TITLE,\ NON-\/INFRINGEMENT\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00038}00038\ \textcolor{comment}{IN\ NO\ EVENT\ SHALL\ MICROCHIP\ OR\ ITS\ LICENSORS\ BE\ LIABLE\ OR\ OBLIGATED\ UNDER}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00039}00039\ \textcolor{comment}{CONTRACT,\ NEGLIGENCE,\ STRICT\ LIABILITY,\ CONTRIBUTION,\ BREACH\ OF\ WARRANTY,\ OR}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00040}00040\ \textcolor{comment}{OTHER\ LEGAL\ EQUITABLE\ THEORY\ ANY\ DIRECT\ OR\ INDIRECT\ DAMAGES\ OR\ EXPENSES}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00041}00041\ \textcolor{comment}{INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ INCIDENTAL,\ SPECIAL,\ INDIRECT,\ PUNITIVE\ OR}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00042}00042\ \textcolor{comment}{CONSEQUENTIAL\ DAMAGES,\ LOST\ PROFITS\ OR\ LOST\ DATA,\ COST\ OF\ PROCUREMENT\ OF}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00043}00043\ \textcolor{comment}{SUBSTITUTE\ GOODS,\ TECHNOLOGY,\ SERVICES,\ OR\ ANY\ CLAIMS\ BY\ THIRD\ PARTIES}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00044}00044\ \textcolor{comment}{(INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ DEFENSE\ THEREOF),\ OR\ OTHER\ SIMILAR\ COSTS.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00045}00045\ \textcolor{comment}{\ *******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00046}00046\ \textcolor{comment}{//\ DOM-\/IGNORE-\/END}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00048}00048\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00049}00049\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00050}00050\ \textcolor{comment}{//\ Section:\ Included\ Files}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00051}00051\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00052}00052\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00054}00054\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{system__config_8h}{system\_config.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00055}00055\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{system__definitions_8h}{system\_definitions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00058}00058\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00059}00059\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00060}00060\ \textcolor{comment}{//\ Section:\ System\ "{}Tasks"{}\ Routine}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00061}00061\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00062}00062\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00064}00064\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00065}00065\ \textcolor{comment}{\ \ Function:}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00066}00066\ \textcolor{comment}{\ \ \ \ void\ SYS\_Tasks\ (\ void\ )}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00067}00067\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00068}00068\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00069}00069\ \textcolor{comment}{\ \ \ \ See\ prototype\ in\ system/common/sys\_module.h.}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00070}00070\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00071}00071\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00072}\mbox{\hyperlink{system__tasks_8c_af9ad5acf548a2bbd66c249fe2fdad3b9}{00072}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{system__tasks_8c_af9ad5acf548a2bbd66c249fe2fdad3b9}{SYS\_Tasks}}\ (\ \textcolor{keywordtype}{void}\ )}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00073}00073\ \{}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00074}00074\ \ \ \ \ \textcolor{comment}{/*\ Maintain\ system\ services\ */}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00075}00075\ \ \ \ \ \textcolor{comment}{/*\ SYS\_COMMAND\ layer\ tasks\ routine\ */}\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00076}00076\ \ \ \ \ SYS\_CMD\_Tasks();}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00077}00077\ \ \ \ \ SYS\_CONSOLE\_Tasks(\mbox{\hyperlink{system__definitions_8h_a30844c8986bf7f486a84065cc35b3c5a}{sysObj}}.\mbox{\hyperlink{struct_s_y_s_t_e_m___o_b_j_e_c_t_s_a6945ef9dac5ef49162ee233746636ccf}{sysConsole0}});}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00078}00078\ \ \ \ \ \textcolor{comment}{/*\ Maintain\ the\ file\ system\ state\ machine.\ */}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00079}00079\ \ \ \ \ SYS\_FS\_Tasks();}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00080}00080\ \ \ \ \ \textcolor{comment}{/*\ SYS\_TMR\ Device\ layer\ tasks\ routine\ */}\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00081}00081\ \ \ \ \ SYS\_TMR\_Tasks(\mbox{\hyperlink{system__definitions_8h_a30844c8986bf7f486a84065cc35b3c5a}{sysObj}}.\mbox{\hyperlink{struct_s_y_s_t_e_m___o_b_j_e_c_t_s_ae4194b510699275a5f9526dfb2c114db}{sysTmr}});}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00083}00083\ \ \ \ \ \textcolor{comment}{/*\ Maintain\ Device\ Drivers\ */}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00084}00084\ \ \ \ \ DRV\_MIIM\_Tasks\ (\mbox{\hyperlink{system__definitions_8h_a30844c8986bf7f486a84065cc35b3c5a}{sysObj}}.\mbox{\hyperlink{struct_s_y_s_t_e_m___o_b_j_e_c_t_s_af438d498c2482127dd6b084993128172}{drvMiim}});}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00086}00086\ \ \ \ \ \textcolor{comment}{/*\ Maintain\ Middleware\ \&\ Other\ Libraries\ */}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00087}00087\ \ \ \ \ NET\_PRES\_Tasks(\mbox{\hyperlink{system__definitions_8h_a30844c8986bf7f486a84065cc35b3c5a}{sysObj}}.\mbox{\hyperlink{struct_s_y_s_t_e_m___o_b_j_e_c_t_s_a476ae602fedd55df8b7b40218f3bb775}{netPres}});}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00088}00088\ \ \ \ \ \textcolor{comment}{/*\ Maintain\ the\ TCP/IP\ Stack*/}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00089}00089\ \ \ \ \ TCPIP\_STACK\_Task(\mbox{\hyperlink{system__definitions_8h_a30844c8986bf7f486a84065cc35b3c5a}{sysObj}}.\mbox{\hyperlink{struct_s_y_s_t_e_m___o_b_j_e_c_t_s_a89673da7c83809f7e99a644dd1a3af1a}{tcpip}});}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00091}00091\ \ \ \ \ \textcolor{comment}{/*\ Maintain\ the\ application's\ state\ machine.\ */}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00092}00092\ \ \ \ \ \mbox{\hyperlink{app_8c_a859aee46b660cfee47cfd45ce08f6862}{APP\_Tasks}}();}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00093}00093\ \}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00096}00096\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00097}00097\ \textcolor{comment}{\ End\ of\ File}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00098}00098\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{system__tasks_8c_source_l00099}00099\ }
+
+\end{DoxyCode}

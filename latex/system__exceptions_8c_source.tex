@@ -1,0 +1,149 @@
+\doxysection{system\+\_\+exceptions.\+c}
+\hypertarget{system__exceptions_8c_source}{}\label{system__exceptions_8c_source}\index{pic32\_daq/remote\_daq/firmware/src/system\_config/default/system\_exceptions.c@{pic32\_daq/remote\_daq/firmware/src/system\_config/default/system\_exceptions.c}}
+\mbox{\hyperlink{system__exceptions_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00001}00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00002}00002\ \textcolor{comment}{\ \ MPLAB\ Harmony\ Exceptions\ Source\ File}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00004}00004\ \textcolor{comment}{\ \ File\ Name:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ system\_exceptions.c}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00007}00007\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ \ This\ file\ contains\ a\ function\ which\ overrides\ the\ deafult\ \_weak\_\ exception}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00009}00009\ \textcolor{comment}{\ \ \ \ handler\ provided\ by\ the\ XC32\ compiler.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00010}00010\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00011}00011\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00012}00012\ \textcolor{comment}{\ \ \ \ This\ file\ redefines\ the\ default\ \_weak\_\ \ exception\ handler\ with\ a\ more\ debug}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00013}00013\ \textcolor{comment}{\ \ \ \ friendly\ one.\ If\ an\ unexpected\ exception\ occurs\ the\ code\ will\ stop\ in\ a}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ \ while(1)\ loop.\ \ The\ debugger\ can\ be\ halted\ and\ two\ variables\ \_excep\_code\ and}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ \ \_except\_addr\ can\ be\ examined\ to\ determine\ the\ cause\ and\ address\ where\ the}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ \ exception\ occured.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00017}00017\ \textcolor{comment}{\ *******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00019}00019\ \textcolor{comment}{//\ DOM-\/IGNORE-\/BEGIN}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00020}00020\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00021}00021\ \textcolor{comment}{Copyright\ (c)\ 2013-\/2017\ released\ Microchip\ Technology\ Inc.\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00023}00023\ \textcolor{comment}{Microchip\ licenses\ to\ you\ the\ right\ to\ use,\ modify,\ copy\ and\ distribute}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00024}00024\ \textcolor{comment}{Software\ only\ when\ embedded\ on\ a\ Microchip\ microcontroller\ or\ digital\ signal}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00025}00025\ \textcolor{comment}{controller\ that\ is\ integrated\ into\ your\ product\ or\ third\ party\ product}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00026}00026\ \textcolor{comment}{(pursuant\ to\ the\ sublicense\ terms\ in\ the\ accompanying\ license\ agreement).}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00028}00028\ \textcolor{comment}{You\ should\ refer\ to\ the\ license\ agreement\ accompanying\ this\ Software\ for}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00029}00029\ \textcolor{comment}{additional\ information\ regarding\ your\ rights\ and\ obligations.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00031}00031\ \textcolor{comment}{SOFTWARE\ AND\ DOCUMENTATION\ ARE\ PROVIDED\ AS\ IS\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00032}00032\ \textcolor{comment}{EITHER\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ WITHOUT\ LIMITATION,\ ANY\ WARRANTY\ OF}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00033}00033\ \textcolor{comment}{MERCHANTABILITY,\ TITLE,\ NON-\/INFRINGEMENT\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00034}00034\ \textcolor{comment}{IN\ NO\ EVENT\ SHALL\ MICROCHIP\ OR\ ITS\ LICENSORS\ BE\ LIABLE\ OR\ OBLIGATED\ UNDER}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00035}00035\ \textcolor{comment}{CONTRACT,\ NEGLIGENCE,\ STRICT\ LIABILITY,\ CONTRIBUTION,\ BREACH\ OF\ WARRANTY,\ OR}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00036}00036\ \textcolor{comment}{OTHER\ LEGAL\ EQUITABLE\ THEORY\ ANY\ DIRECT\ OR\ INDIRECT\ DAMAGES\ OR\ EXPENSES}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00037}00037\ \textcolor{comment}{INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ INCIDENTAL,\ SPECIAL,\ INDIRECT,\ PUNITIVE\ OR}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00038}00038\ \textcolor{comment}{CONSEQUENTIAL\ DAMAGES,\ LOST\ PROFITS\ OR\ LOST\ DATA,\ COST\ OF\ PROCUREMENT\ OF}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00039}00039\ \textcolor{comment}{SUBSTITUTE\ GOODS,\ TECHNOLOGY,\ SERVICES,\ OR\ ANY\ CLAIMS\ BY\ THIRD\ PARTIES}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00040}00040\ \textcolor{comment}{(INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ DEFENSE\ THEREOF),\ OR\ OTHER\ SIMILAR\ COSTS.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00041}00041\ \textcolor{comment}{\ *******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00042}00042\ \textcolor{comment}{//\ DOM-\/IGNORE-\/END}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00045}00045\ \textcolor{preprocessor}{\#include\ <xc.h>}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Defines\ special\ function\ registers,\ CP0\ regs\ \ */}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00046}00046\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{system__config_8h}{system\_config.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00047}00047\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{system__definitions_8h}{system\_definitions.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00048}00048\ \textcolor{preprocessor}{\#include\ "{}system/debug/sys\_debug.h"{}}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00051}00051\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00052}00052\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00053}00053\ \textcolor{comment}{//\ Section:\ Global\ Data\ Definitions}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00054}00054\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00055}00055\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00057}00057\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00058}00058\ \textcolor{comment}{\ \ Exception\ Reason\ Data}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00059}00059\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00060}00060\ \textcolor{comment}{\ \ <editor-\/fold\ defaultstate="{}expanded"{}\ desc="{}Exception\ Reason\ Data"{}>}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00061}00061\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00062}00062\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00063}00063\ \textcolor{comment}{\ \ \ \ These\ global\ static\ items\ are\ used\ instead\ of\ local\ variables\ in\ the}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00064}00064\ \textcolor{comment}{\ \ \ \ \_general\_exception\_handler\ function\ because\ the\ stack\ may\ not\ be\ available}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00065}00065\ \textcolor{comment}{\ \ \ \ if\ an\ exception\ has\ occured.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00066}00066\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00068}00068\ \textcolor{comment}{/*\ Code\ identifying\ the\ cause\ of\ the\ exception\ (CP0\ Cause\ register).\ */}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00069}00069\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \_excep\_code;}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00071}00071\ \textcolor{comment}{/*\ Address\ of\ instruction\ that\ caused\ the\ exception.\ */}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00072}00072\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \_excep\_addr;}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00074}00074\ \textcolor{comment}{/*\ Pointer\ to\ the\ string\ describing\ the\ cause\ of\ the\ exception.\ */}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00075}00075\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ *\_cause\_str;}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00077}00077\ \textcolor{comment}{/*\ Array\ identifying\ the\ cause\ (indexed\ by\ \_exception\_code).\ */}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00078}00078\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ *cause[]\ =}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00079}00079\ \{}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00080}00080\ \ \ \ \ \textcolor{stringliteral}{"{}Interrupt"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00081}00081\ \ \ \ \ \textcolor{stringliteral}{"{}Undefined"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00082}00082\ \ \ \ \ \textcolor{stringliteral}{"{}Undefined"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00083}00083\ \ \ \ \ \textcolor{stringliteral}{"{}Undefined"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00084}00084\ \ \ \ \ \textcolor{stringliteral}{"{}Load/fetch\ address\ error"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00085}00085\ \ \ \ \ \textcolor{stringliteral}{"{}Store\ address\ error"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00086}00086\ \ \ \ \ \textcolor{stringliteral}{"{}Instruction\ bus\ error"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00087}00087\ \ \ \ \ \textcolor{stringliteral}{"{}Data\ bus\ error"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00088}00088\ \ \ \ \ \textcolor{stringliteral}{"{}Syscall"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00089}00089\ \ \ \ \ \textcolor{stringliteral}{"{}Breakpoint"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00090}00090\ \ \ \ \ \textcolor{stringliteral}{"{}Reserved\ instruction"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00091}00091\ \ \ \ \ \textcolor{stringliteral}{"{}Coprocessor\ unusable"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00092}00092\ \ \ \ \ \textcolor{stringliteral}{"{}Arithmetic\ overflow"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00093}00093\ \ \ \ \ \textcolor{stringliteral}{"{}Trap"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00094}00094\ \ \ \ \ \textcolor{stringliteral}{"{}Reserved"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00095}00095\ \ \ \ \ \textcolor{stringliteral}{"{}Reserved"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00096}00096\ \ \ \ \ \textcolor{stringliteral}{"{}Reserved"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00097}00097\ \ \ \ \ \textcolor{stringliteral}{"{}Reserved"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00098}00098\ \ \ \ \ \textcolor{stringliteral}{"{}Reserved"{}}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00099}00099\ \};}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00101}00101\ \textcolor{comment}{//\ </editor-\/fold>}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00104}00104\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00105}00105\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00106}00106\ \textcolor{comment}{//\ Section:\ Exception\ Handling}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00107}00107\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00108}00108\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00110}00110\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00111}00111\ \textcolor{comment}{\ \ Function:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00112}00112\ \textcolor{comment}{\ \ \ \ void\ \_general\_exception\_handler\ (\ void\ )}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00113}00113\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00114}00114\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00115}00115\ \textcolor{comment}{\ \ \ \ Overrides\ the\ XC32\ \_weak\_\ \_generic\_exception\_handler.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00116}00116\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00117}00117\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00118}00118\ \textcolor{comment}{\ \ \ \ This\ function\ overrides\ the\ XC32\ default\ \_weak\_\ \_generic\_exception\_handler.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00119}00119\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00120}00120\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00121}00121\ \textcolor{comment}{\ \ \ \ Refer\ to\ the\ XC32\ User's\ Guide\ for\ additional\ information.}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00122}00122\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00125}\mbox{\hyperlink{system__exceptions_8c_ab447301f9b8180a3c4144762e789dff0}{00125}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{system__exceptions_8c_ab447301f9b8180a3c4144762e789dff0}{\_general\_exception\_handler}}\ (\ \textcolor{keywordtype}{void}\ )}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00126}00126\ \{}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00127}00127\ \ \ \ \ \textcolor{comment}{/*\ Mask\ off\ Mask\ of\ the\ ExcCode\ Field\ from\ the\ Cause\ Register}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00128}00128\ \textcolor{comment}{\ \ \ \ Refer\ to\ the\ MIPs\ Software\ User's\ manual\ */}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00129}00129\ \ \ \ \ \_excep\_code\ =\ (\_CP0\_GET\_CAUSE()\ \&\ 0x0000007C)\ >>\ 2;}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00130}00130\ \ \ \ \ \_excep\_addr\ =\ \_CP0\_GET\_EPC();}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00131}00131\ \ \ \ \ \_cause\_str\ \ =\ cause[\_excep\_code];}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00132}00132\ \ \ \ \ SYS\_DEBUG\_PRINT(SYS\_ERROR\_FATAL,\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)rGeneral\ Exception\ \%s\ (cause=\%d,\ addr=\%x).\(\backslash\)n\(\backslash\)r"{}},}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \_cause\_str,\ \_excep\_code,\ \_excep\_addr);}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00135}00135\ \ \ \ \ \textcolor{keywordflow}{while}\ (1)}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00136}00136\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00137}00137\ \ \ \ \ \ \ \ \ SYS\_DEBUG\_BreakPoint();}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00138}00138\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00139}00139\ \}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00141}00141\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00142}00142\ \textcolor{comment}{\ End\ of\ File}}
+\DoxyCodeLine{\Hypertarget{system__exceptions_8c_source_l00143}00143\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

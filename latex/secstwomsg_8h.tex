@@ -1,0 +1,110 @@
+\doxysection{gem/secstwo-\/1.0.1/secstwomsg.h File Reference}
+\hypertarget{secstwomsg_8h}{}\label{secstwomsg_8h}\index{gem/secstwo-\/1.0.1/secstwomsg.h@{gem/secstwo-\/1.0.1/secstwomsg.h}}
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$ostream$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include "{}secstwo\+\_\+shared\+\_\+ptr.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1data__item__t}{data\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em SEMI E5 Data item base class. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__t}{msg\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em SECSII message declaration. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacefreesecs}{freesecs}}
+\item 
+namespace \mbox{\hyperlink{namespacefreesecs_1_1secstwo}{freesecs\+::secstwo}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}{NUM}}(x)~((uint32\+\_\+t)x)
+\begin{DoxyCompactList}\small\item\em Macro to resolve ambiguity netween numeric zero and string null ptr. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{secstwomsg_8h_a469d8f92f4ec1d035d33a043f2f615c1}{VAR\+\_\+\+ARRAY\+\_\+\+ELEMENT}}~((uint32\+\_\+t)-\/1)
+\begin{DoxyCompactList}\small\item\em Macro to be used to access to the default element value of fariable array. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{shared\+\_\+ptr\+\_\+t}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1data__item__t}{data\+\_\+item\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em shared ptr specialization for data item \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{shared\+\_\+ptr\+\_\+t}}$<$ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__t}{msg\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5c2aee5d97b5ea75721375ff5063a68d}{pmsg\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em shared ptr specialization for secs\+II message \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5}{data\+\_\+type\+\_\+t}} \{ \newline
+\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a32ee9e92d58cf6cb8827bc1be64559b7}{e\+\_\+list\+\_\+t}} =0x00
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a2fcbe006412e7c6d51606dd2f65397c7}{e\+\_\+binary\+\_\+t}} =0x08
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a42a3048650b269d4350a87e69e4f905e}{e\+\_\+boolean\+\_\+t}} =0x09
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a1aca4f22d278f2ef8807f8f874dfd295}{e\+\_\+ascii\+\_\+t}} =0x10
+, \newline
+\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a3e214668a43c924f691cf4cc86838643}{e\+\_\+jis8\+\_\+t}} =0x11
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a03b332d7db621fb65a5edc6cd41d497f}{e\+\_\+wchar\+\_\+t}} =0x12
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5aed3b27370dc7eec484b5ca958be9bf13}{e\+\_\+int64\+\_\+t}} =0x18
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5ac813faee506a3e29916efbe98dfc61a2}{e\+\_\+int8\+\_\+t}} =0x19
+, \newline
+\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5af161957b9b4a1a408333d765dfd6aaff}{e\+\_\+int16\+\_\+t}} =0x1a
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a89c96f9986d794012f7626bbf2bde891}{e\+\_\+int32\+\_\+t}} =0x1c
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5aec9e9262b262ac062d6f9cd93fcd3eb9}{e\+\_\+double\+\_\+t}} =0x20
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5af88b49400d9e63aabd69dc9106f5a8cf}{e\+\_\+float\+\_\+t}} =0x24
+, \newline
+\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a31530f7b3632412d1e2cb082bbc6ed60}{e\+\_\+uint64\+\_\+t}} =0x28
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5acb56ddee709cecf12e8a6e9e8fc92247}{e\+\_\+uint8\+\_\+t}} =0x29
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5ae2485a46d6cb6882943dc49232828977}{e\+\_\+uint16\+\_\+t}} =0x2a
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a29def01b5a9e9dcb257faff8a3084457}{e\+\_\+uint32\+\_\+t}} =0x2c
+, \newline
+\mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a9f8931c049741722c145a7d84058cc8d}{e\+\_\+none\+\_\+t}} =0x2d
+ \}
+\begin{DoxyCompactList}\small\item\em SECSII type enum with values according to SEMI E5. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{namespacefreesecs_1_1secstwo_ad36d94d73d00bffac1e1b7e0b72d744b}{match\+\_\+t}} \{ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_ad36d94d73d00bffac1e1b7e0b72d744ba840fc36796c5af05b4616165e6449dad}{STRUCT}}
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_ad36d94d73d00bffac1e1b7e0b72d744ba9d7d6f31868d66330397c967c4afd2d2}{DATA}}
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_ad36d94d73d00bffac1e1b7e0b72d744ba84d92da7ce3752e6d704bcc09ae120c7}{NON\+\_\+\+EMPTY\+\_\+\+DATA}}
+, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_ad36d94d73d00bffac1e1b7e0b72d744bab1d5eac4b1dca480c8056eaea7663b7a}{ALL}}
+ \}
+\begin{DoxyCompactList}\small\item\em Kind of match operation for messages or data items STRUCT -\/ match only structure DATA -\/ match structure and data NON\+\_\+\+EMPTY\+\_\+\+DATA -\/ match structure only, if one of the match subjects has no data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a77ebb3d8f3bf657a574b03e5ed94e1f8}{operator$<$$<$}} (std\+::ostream \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{os}}, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5fdc96ce4e52cdd4399d5bb838faf5eb}{pdata\+\_\+item\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}})
+\begin{DoxyCompactList}\small\item\em Data item print operator. \end{DoxyCompactList}\item 
+std\+::ostream \& \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a0bdf1a38dcb7ae81b484885a90c96dee}{operator$<$$<$}} (std\+::ostream \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{os}}, \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5c2aee5d97b5ea75721375ff5063a68d}{pmsg\+\_\+t}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pmsg}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}\label{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549} 
+\index{secstwomsg.h@{secstwomsg.h}!NUM@{NUM}}
+\index{NUM@{NUM}!secstwomsg.h@{secstwomsg.h}}
+\doxysubsubsection{\texorpdfstring{NUM}{NUM}}
+{\footnotesize\ttfamily \#define NUM(\begin{DoxyParamCaption}\item[{}]{x }\end{DoxyParamCaption})~((uint32\+\_\+t)x)}
+
+
+
+Macro to resolve ambiguity netween numeric zero and string null ptr. 
+
+
+
+Definition at line \mbox{\hyperlink{secstwomsg_8h_source_l00037}{37}} of file \mbox{\hyperlink{secstwomsg_8h_source}{secstwomsg.\+h}}.
+
+\Hypertarget{secstwomsg_8h_a469d8f92f4ec1d035d33a043f2f615c1}\label{secstwomsg_8h_a469d8f92f4ec1d035d33a043f2f615c1} 
+\index{secstwomsg.h@{secstwomsg.h}!VAR\_ARRAY\_ELEMENT@{VAR\_ARRAY\_ELEMENT}}
+\index{VAR\_ARRAY\_ELEMENT@{VAR\_ARRAY\_ELEMENT}!secstwomsg.h@{secstwomsg.h}}
+\doxysubsubsection{\texorpdfstring{VAR\_ARRAY\_ELEMENT}{VAR\_ARRAY\_ELEMENT}}
+{\footnotesize\ttfamily \#define VAR\+\_\+\+ARRAY\+\_\+\+ELEMENT~((uint32\+\_\+t)-\/1)}
+
+
+
+Macro to be used to access to the default element value of fariable array. 
+
+
+
+Definition at line \mbox{\hyperlink{secstwomsg_8h_source_l00043}{43}} of file \mbox{\hyperlink{secstwomsg_8h_source}{secstwomsg.\+h}}.
+

@@ -1,0 +1,359 @@
+\doxysection{tmr2.\+h}
+\hypertarget{tmr2_8h_source}{}\label{tmr2_8h_source}\index{secs\_q84.X/mcc\_generated\_files/tmr2.h@{secs\_q84.X/mcc\_generated\_files/tmr2.h}}
+\mbox{\hyperlink{tmr2_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00047}00047\ \textcolor{preprocessor}{\#ifndef\ TMR2\_H}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00048}00048\ \textcolor{preprocessor}{\#define\ TMR2\_H}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00054}00054\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00055}00055\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00057}00057\ \textcolor{preprocessor}{\#ifdef\ \_\_cplusplus\ \ }\textcolor{comment}{//\ Provide\ C++\ Compatibility}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00059}00059\ \ \ \ \ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00061}00061\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00079}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0}{00079}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00080}00080\ \{}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00082}00082\ \ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ clears\ the\ TMRx\ upon\ TMRx\ =\ PRx,\ then\ continue\ running.}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00083}00083\ \textcolor{comment}{\ \ \ \ ON\ bit\ must\ be\ set\ and\ is\ not\ affected\ by\ Resets}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00084}00084\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00086}00086\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00087}00087\ \textcolor{comment}{\ \ \ immediately\ upon\ ON\ =\ 1\ (Software\ Control)}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00088}00088\ \textcolor{comment}{\ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00089}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a3fd553121c6ebf326307e1c0e56f886b}{00089}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a3fd553121c6ebf326307e1c0e56f886b}{TMR2\_ROP\_STARTS\_TMRON}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00091}00091\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00092}00092\ \textcolor{comment}{\ \ \ \ \ \ \ when\ ON\ =\ 1\ and\ TMRx\_ers\ =\ 1.\ Stops\ when\ TMRx\_ers\ =\ 0}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00093}00093\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00094}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a6d99667ff1d2a04ef3ceb05f3d704720}{00094}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a6d99667ff1d2a04ef3ceb05f3d704720}{TMR2\_ROP\_STARTS\_TMRON\_ERSHIGH}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00096}00096\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00097}00097\ \textcolor{comment}{\ \ \ \ \ \ when\ ON\ =\ 1\ and\ TMRx\_ers\ =\ 0.\ Stops\ when\ TMRx\_ers\ =\ 1}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00098}00098\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00099}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a06bfcb95f6af3aece22039eec2e1832f}{00099}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a06bfcb95f6af3aece22039eec2e1832f}{TMR2\_ROP\_STARTS\_TMRON\_ERSLOW}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00101}00101\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ the\ Timer\ resets}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00102}00102\ \textcolor{comment}{\ \ \ upon\ rising\ or\ falling\ edge\ of\ TMRx\_ers}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00103}00103\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00104}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a6529f2c13547cebeae3bd67c14f0d22b}{00104}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a6529f2c13547cebeae3bd67c14f0d22b}{TMR2\_ROP\_RESETS\_ERSBOTHEDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00106}00106\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ the\ Timer\ resets}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00107}00107\ \textcolor{comment}{\ \ \ \ upon\ rising\ edge\ of\ TMRx\_ers}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00108}00108\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00109}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a6dab37c4b770ab120dda20b7fcc5aa29}{00109}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a6dab37c4b770ab120dda20b7fcc5aa29}{TMR2\_ROP\_RESETS\_ERSRISINGEDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00111}00111\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ the\ Timer\ resets}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00112}00112\ \textcolor{comment}{\ \ \ upon\ falling\ edge\ of\ TMRx\_ers}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00113}00113\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00114}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0ae51c8fcfb2c9a11ac00d13ac55ce1478}{00114}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0ae51c8fcfb2c9a11ac00d13ac55ce1478}{TMR2\_ROP\_RESETS\_ERSFALLINGEDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00116}00116\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ the\ Timer\ resets}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00117}00117\ \textcolor{comment}{\ \ \ upon\ TMRx\_ers\ =\ 0}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00118}00118\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00119}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a7ae5a7a0b64bad3c2fd89ed6515154a5}{00119}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a7ae5a7a0b64bad3c2fd89ed6515154a5}{TMR2\_ROP\_RESETS\_ERSLOW}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00121}00121\ \ \ \ \textcolor{comment}{/*\ Roll-\/over\ Pulse\ mode\ indicates\ that\ the\ Timer\ resets}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00122}00122\ \textcolor{comment}{\ \ \ upon\ TMRx\_ers\ =\ 1}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00123}00123\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00124}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a2c0433232ea2a4df38d0febf1f891c7a}{00124}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a2c0433232ea2a4df38d0febf1f891c7a}{TMR2\_ROP\_RESETS\_ERSHIGH}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00126}00126\ \ \ \ \ \textcolor{comment}{/*In\ all\ One-\/Shot\ mode\ the\ timer\ resets\ and\ the\ ON\ bit\ is}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00127}00127\ \textcolor{comment}{\ \ \ \ cleared\ when\ the\ timer\ value\ matches\ the\ PRx\ period}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00128}00128\ \textcolor{comment}{\ \ \ \ value.\ The\ ON\ bit\ must\ be\ set\ by\ software\ to\ start}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00129}00129\ \textcolor{comment}{\ \ \ \ another\ timer\ cycle.}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00130}00130\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00132}00132\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00133}00133\ \textcolor{comment}{\ \ \ \ immediately\ upon\ ON\ =\ 1\ (Software\ Control)}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00134}00134\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00135}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a5f74ea74585f7947a0106eb88e2400b4}{00135}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a5f74ea74585f7947a0106eb88e2400b4}{TMR2\_OS\_STARTS\_TMRON}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00137}00137\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00138}00138\ \textcolor{comment}{\ \ \ \ when\ a\ rising\ edge\ is\ detected\ on\ the\ TMRx\_ers}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00139}00139\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00140}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a66d70315baf3e76dc7bc981998ad76e8}{00140}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a66d70315baf3e76dc7bc981998ad76e8}{TMR2\_OS\_STARTS\_ERSRISINGEDGE}}\ ,}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00142}00142\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00143}00143\ \textcolor{comment}{\ \ \ \ when\ a\ falling\ edge\ is\ detected\ on\ the\ TMRx\_ers}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00144}00144\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00145}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a2b93f68815582cfce4f327d9a40cd90c}{00145}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a2b93f68815582cfce4f327d9a40cd90c}{TMR2\_OS\_STARTS\_ERSFALLINGEDGE}}\ ,}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00147}00147\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00148}00148\ \textcolor{comment}{\ \ \ \ when\ either\ a\ rising\ or\ falling\ edge\ is\ detected\ on\ TMRx\_ers}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00149}00149\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00150}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a4f079af3a73b60b0bc70714262d1a311}{00150}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a4f079af3a73b60b0bc70714262d1a311}{TMR2\_OS\_STARTS\_ERSBOTHEDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00152}00152\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00153}00153\ \textcolor{comment}{\ \ \ \ upon\ first\ TMRx\_ers\ rising\ edge\ and\ resets\ on\ all}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00154}00154\ \textcolor{comment}{\ \ \ \ subsequent\ TMRx\_ers\ rising\ edges}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00155}00155\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00156}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a0be36195969804be447b5653ffd141b1}{00156}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a0be36195969804be447b5653ffd141b1}{TMR2\_OS\_STARTS\_ERSFIRSTRISINGEDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00157}00157\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00158}00158\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00159}00159\ \textcolor{comment}{\ \ \ \ upon\ first\ TMRx\_ers\ falling\ edge\ and\ restarts\ on\ all}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00160}00160\ \textcolor{comment}{\ \ \ \ subsequent\ TMRx\_ers\ falling\ edges}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00161}00161\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00162}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a35364418aaca53cb5ffffa86d10759dd}{00162}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a35364418aaca53cb5ffffa86d10759dd}{TMR2\_OS\_STARTS\_ERSFIRSTFALLINGEDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00163}00163\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00164}00164\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00165}00165\ \textcolor{comment}{\ \ \ \ when\ a\ rising\ edge\ is\ detected\ on\ the\ TMRx\_ers,}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00166}00166\ \textcolor{comment}{\ \ \ \ resets\ upon\ TMRx\_ers\ =\ 0}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00167}00167\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00168}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a1d893915010825c80e9db31093183030}{00168}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a1d893915010825c80e9db31093183030}{TMR2\_OS\_STARTS\_ERSRISINGEDGEDETECT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00169}00169\ \ \ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00170}00170\ \textcolor{comment}{\ \ \ \ when\ a\ falling\ edge\ is\ detected\ on\ the\ TMRx\_ers,}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00171}00171\ \textcolor{comment}{\ \ \ \ resets\ upon\ TMRx\_ers\ =\ 1}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00172}00172\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00173}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a7a188e6511b06977332a18841ed965bc}{00173}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a7a188e6511b06977332a18841ed965bc}{TMR2\_OS\_STARTS\_ERSFALLINGEDGEDETECT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00174}00174\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00175}00175\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00176}00176\ \textcolor{comment}{\ \ \ \ when\ a\ TMRx\_ers\ =\ 1,ON\ =1\ and\ resets\ upon\ TMRx\_ers\ =0}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00177}00177\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00178}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0aceb31af484b84f89a7b41ce73bec4ee2}{00178}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0aceb31af484b84f89a7b41ce73bec4ee2}{TMR2\_OS\_STARTS\_TMRON\_ERSHIGH}}\ =\ 0x16,}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00180}00180\ \ \ \ \textcolor{comment}{/*\ One\ shot\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00181}00181\ \textcolor{comment}{\ \ \ \ \ when\ a\ TMRx\_ers\ =\ 0,ON\ =\ 1\ and\ resets\ upon\ TMRx\_ers\ =1\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00182}00182\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00183}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a99262eba6aa0cbbc03e1a88b6d5ef16c}{00183}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a99262eba6aa0cbbc03e1a88b6d5ef16c}{TMR2\_OS\_STARTS\_TMRON\_ERSLOW}}\ =\ 0x17,}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00184}00184\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00185}00185\ \ \ \ \textcolor{comment}{/*In\ all\ Mono-\/Stable\ mode\ the\ ON\ bit\ must\ be\ initially\ set,but}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00186}00186\ \textcolor{comment}{\ \ \ \ \ not\ cleared\ upon\ the\ TMRx\ =\ PRx,\ and\ the\ timer\ will\ start\ upon}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00187}00187\ \textcolor{comment}{\ \ \ \ \ an\ TMRx\_ers\ start\ event\ following\ TMRx\ =\ PRx.*/}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00189}00189\ \ \ \ \textcolor{comment}{/*\ Mono\ Stable\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00190}00190\ \textcolor{comment}{\ \ \ \ \ \ when\ a\ rising\ edge\ is\ detected\ on\ the\ TMRx\_ers\ and\ ON\ =\ 1}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00191}00191\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00192}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a04351d54e3ac9eb29a5e88077a81d0f7}{00192}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a04351d54e3ac9eb29a5e88077a81d0f7}{TMR2\_MS\_STARTS\_TMRON\_ERSRISINGEDGEDETECT}}\ =\ 0x11,}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00194}00194\ \ \ \ \textcolor{comment}{/*\ Mono\ Stable\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00195}00195\ \textcolor{comment}{\ \ \ \ \ \ when\ a\ falling\ edge\ is\ detected\ on\ the\ TMRx\_ers\ and\ ON\ =\ 1}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00196}00196\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00197}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a294bcf5095afe777cdb1aa47159f4128}{00197}}\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a294bcf5095afe777cdb1aa47159f4128}{TMR2\_MS\_STARTS\_TMRON\_ERSFALLINGEDGEDETECT}}\ =\ 0x12,}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00199}00199\ \ \ \ \textcolor{comment}{/*\ Mono\ Stable\ mode\ indicates\ that\ the\ Timer\ starts}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00200}00200\ \textcolor{comment}{\ \ \ \ \ \ when\ \ either\ a\ rising\ or\ falling\ edge\ is\ detected\ on\ TMRx\_ers\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00201}00201\ \textcolor{comment}{\ \ \ \ \ \ and\ ON\ =\ 1}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00202}00202\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00203}00203\ \ \ \ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a913190c20405282ae9d66eee214eadea}{TMR2\_MS\_STARTS\_TMRON\_ERSBOTHEDGE}}\ =\ 0x13}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00204}00204\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00205}\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0a913190c20405282ae9d66eee214eadea}{00205}}\ \}\ \mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0}{TMR2\_HLT\_MODE}};}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00220}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74}{00220}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00221}00221\ \{}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00222}00222\ \ \ \ \ \ \textcolor{comment}{/*\ T2INPPS\ is\ the\ Timer\ external\ reset\ source}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00223}00223\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00224}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a5652f6153f80e60b1c5fdc40bd8432f2}{00224}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a5652f6153f80e60b1c5fdc40bd8432f2}{TMR2\_T2INPPS}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00225}00225\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00226}00226\ \ \ \ \ \textcolor{comment}{/*\ Reserved\ enum\ cannot\ be\ used\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00227}00227\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00228}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ad09e608224692bba9738dc81a2dd0e51}{00228}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ad09e608224692bba9738dc81a2dd0e51}{TMR2\_RESERVED}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00229}00229\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00230}00230\ \ \ \ \ \textcolor{comment}{/*\ Timer4\ Postscale\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00231}00231\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00232}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a4b2d6c36f6355315d2487271afe579c7}{00232}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a4b2d6c36f6355315d2487271afe579c7}{TMR2\_T4POSTSCALED}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00233}00233\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00234}00234\ \ \ \ \ \textcolor{comment}{/*\ Timer6\ Postscale\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00235}00235\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00236}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a517cc9938ef040918515dea00ab8efc3}{00236}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a517cc9938ef040918515dea00ab8efc3}{TMR2\_T6POSTSCALED}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00238}00238\ \ \ \ \ \textcolor{comment}{/*\ CCP1\_OUT\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00239}00239\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00240}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a8e4474a75b75dc271a0a189bfa594e20}{00240}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a8e4474a75b75dc271a0a189bfa594e20}{TMR2\_CCP1\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00241}00241\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00242}00242\ \ \ \ \ \textcolor{comment}{/*\ CCP2\_OUT\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00243}00243\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00244}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a831211585272ba9c7bc53e952b7ee77f}{00244}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a831211585272ba9c7bc53e952b7ee77f}{TMR2\_CCP2\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00245}00245\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00246}00246\ \ \ \ \ \textcolor{comment}{/*\ CCP3\_OUT\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00247}00247\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00248}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a7dbdc1453357e4c7f998171d4a76c36f}{00248}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a7dbdc1453357e4c7f998171d4a76c36f}{TMR2\_CCP3\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00250}00250\ \ \ \ \ \textcolor{comment}{/*\ PWM1S1P1\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00251}00251\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00252}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aa774b8fe6e921522ff4ae5fa51180e17}{00252}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aa774b8fe6e921522ff4ae5fa51180e17}{TMR2\_PWM1S1P1\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00253}00253\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00254}00254\ \ \ \ \ \textcolor{comment}{/*\ PWM1S1P2\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00255}00255\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00256}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a6d342c20ccbeba53283e413487a49510}{00256}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a6d342c20ccbeba53283e413487a49510}{TMR2\_PWM1S1P2\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00257}00257\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00258}00258\ \ \ \ \ \textcolor{comment}{/*\ PWM2S1P1\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00259}00259\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00260}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74acf5b551453c0bec51dfda1b25de99c7c}{00260}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74acf5b551453c0bec51dfda1b25de99c7c}{TMR2\_PWM2S1P1\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00261}00261\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00262}00262\ \ \ \ \ \textcolor{comment}{/*\ PWM2S1P2\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00263}00263\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00264}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a5f99fce0464db865f6f10d8b97e11f67}{00264}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a5f99fce0464db865f6f10d8b97e11f67}{TMR2\_PWM2S1P2\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00265}00265\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00266}00266\ \ \ \ \ \textcolor{comment}{/*\ PWM3S1P1\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00267}00267\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00268}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a4cf529c6fe5ec0f772d30a7518467582}{00268}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a4cf529c6fe5ec0f772d30a7518467582}{TMR2\_PWM3S1P1\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00269}00269\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00270}00270\ \ \ \ \ \textcolor{comment}{/*\ PWM3S1P2\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00271}00271\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00272}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a62049db39c64d5fddef6d01fb8a61b0d}{00272}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a62049db39c64d5fddef6d01fb8a61b0d}{TMR2\_PWM3S1P2\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00273}00273\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00274}00274\ \ \ \ \ \textcolor{comment}{/*\ Reserved\ enum\ cannot\ be\ used\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00275}00275\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00276}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a6ff71099c6390ccce8540d04391c98de}{00276}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a6ff71099c6390ccce8540d04391c98de}{TMR2\_RESERVED\_2}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00277}00277\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00278}00278\ \ \ \ \ \textcolor{comment}{/*\ Reserved\ enum\ cannot\ be\ used\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00279}00279\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00280}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a76e19e7fcca524bb7eb3d0a445c09b5a}{00280}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a76e19e7fcca524bb7eb3d0a445c09b5a}{TMR2\_RESERVED\_3}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00281}00281\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00282}00282\ \ \ \ \ \textcolor{comment}{/*\ CMP1\_OUT\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00283}00283\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00284}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a51b512ea8604a1442fbd497c8588f6ab}{00284}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a51b512ea8604a1442fbd497c8588f6ab}{TMR2\_CMP1\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00285}00285\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00286}00286\ \ \ \ \ \textcolor{comment}{/*\ CMP2\_OUT\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00287}00287\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00288}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74afdfdbeb4c1ec84ee9a131a07945506f2}{00288}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74afdfdbeb4c1ec84ee9a131a07945506f2}{TMR2\_CMP2\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00290}00290\ \ \ \ \ \textcolor{comment}{/*\ ZCD\_Output\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00291}00291\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00292}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a12d48551e82145434187304325ef8b88}{00292}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a12d48551e82145434187304325ef8b88}{TMR2\_ZCD\_OUTPUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00293}00293\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00294}00294\ \ \ \ \ \textcolor{comment}{/*\ CLC1\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00295}00295\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00296}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a9e7f7edbfb9d01520660d1c9189d59e0}{00296}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a9e7f7edbfb9d01520660d1c9189d59e0}{TMR2\_CLC1\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00297}00297\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00298}00298\ \ \ \ \ \textcolor{comment}{/*\ CLC2\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00299}00299\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00300}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aab33949b7c909bc0f963978945b00af7}{00300}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aab33949b7c909bc0f963978945b00af7}{TMR2\_CLC2\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00301}00301\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00302}00302\ \ \ \ \ \textcolor{comment}{/*\ CLC3\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00303}00303\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00304}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ab266502a8d32488ab1ba956b4f00f131}{00304}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ab266502a8d32488ab1ba956b4f00f131}{TMR2\_CLC3\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00306}00306\ \ \ \ \ \textcolor{comment}{/*\ CLC4\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00307}00307\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00308}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a38f6265c68e6db9e4d81fd63e469facc}{00308}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a38f6265c68e6db9e4d81fd63e469facc}{TMR2\_CLC4\_OUT}},\ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00310}00310\ \ \ \ \ \textcolor{comment}{/*\ CLC5\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00311}00311\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00312}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aba11bc89098e6556e27a6c397fc22e64}{00312}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aba11bc89098e6556e27a6c397fc22e64}{TMR2\_CLC5\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00313}00313\ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00314}00314\ \ \ \ \ \textcolor{comment}{/*\ CLC6\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00315}00315\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00316}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aaf9156bc1ace1b8395528f0b29a6d366}{00316}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74aaf9156bc1ace1b8395528f0b29a6d366}{TMR2\_CLC6\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00317}00317\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00318}00318\ \ \ \ \ \textcolor{comment}{/*\ CLC7\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00319}00319\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00320}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74af3c05219b20a24145b89db0581a90c13}{00320}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74af3c05219b20a24145b89db0581a90c13}{TMR2\_CLC7\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00321}00321\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00322}00322\ \ \ \ \ \textcolor{comment}{/*\ CLC8\_out\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00323}00323\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00324}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74af8e04c636b55cdd053f00f124489071f}{00324}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74af8e04c636b55cdd053f00f124489071f}{TMR2\_CLC8\_OUT}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00325}00325\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00326}00326\ \ \ \ \ \textcolor{comment}{/*\ UART1\_rx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00327}00327\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00328}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a2d31d1601850a7b3bf6a847f1886ee11}{00328}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a2d31d1601850a7b3bf6a847f1886ee11}{TMR2\_UART1\_RX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00329}00329\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00330}00330\ \ \ \ \ \textcolor{comment}{/*\ UART1\_tx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00331}00331\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00332}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ab5fce2bd92e3c38fb885e0d4f8b53d29}{00332}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ab5fce2bd92e3c38fb885e0d4f8b53d29}{TMR2\_UART1\_TX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00333}00333\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00334}00334\ \ \ \ \ \textcolor{comment}{/*\ UART2\_rx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00335}00335\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00336}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ac870698a3bb118d8b44384a911b7cd05}{00336}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ac870698a3bb118d8b44384a911b7cd05}{TMR2\_UART2\_RX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00337}00337\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00338}00338\ \ \ \ \ \textcolor{comment}{/*\ UART2\_tx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00339}00339\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00340}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74afbed73f822382fdca722bd601c89008b}{00340}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74afbed73f822382fdca722bd601c89008b}{TMR2\_UART2\_TX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00341}00341\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00342}00342\ \ \ \ \ \textcolor{comment}{/*\ UART3\_rx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00343}00343\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00344}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a85c04b6cef3496a9fb58694862b02c1c}{00344}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a85c04b6cef3496a9fb58694862b02c1c}{TMR2\_UART3\_RX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00345}00345\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00346}00346\ \ \ \ \ \textcolor{comment}{/*\ UART3\_tx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00347}00347\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00348}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a8ac76681964f0c84de94675d0772735d}{00348}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a8ac76681964f0c84de94675d0772735d}{TMR2\_UART3\_TX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00350}00350\ \ \ \ \ \textcolor{comment}{/*\ UART4\_rx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00351}00351\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00352}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a27603fc1efb5c1fbe9f3d41de6b252cb}{00352}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a27603fc1efb5c1fbe9f3d41de6b252cb}{TMR2\_UART4\_RX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00353}00353\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00354}00354\ \ \ \ \ \textcolor{comment}{/*\ UART4\_tx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00355}00355\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00356}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ae25ff2557945d19fea9fa911780aa20f}{00356}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ae25ff2557945d19fea9fa911780aa20f}{TMR2\_UART4\_TX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00358}00358\ \ \ \ \ \textcolor{comment}{/*\ UART5\_rx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00359}00359\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00360}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a2d63a7e35f87030059cb97401297f8c1}{00360}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74a2d63a7e35f87030059cb97401297f8c1}{TMR2\_UART5\_RX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00361}00361\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00362}00362\ \ \ \ \ \textcolor{comment}{/*\ UART5\_tx\_edge\ is\ the\ Timer\ external\ reset\ source\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00363}00363\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00364}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ae1218d6c9990ffaba8bec0a91864e2c6}{00364}}\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74ae1218d6c9990ffaba8bec0a91864e2c6}{TMR2\_UART5\_TX\_EDGE}},}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00365}00365\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00366}00366\ \ \ \ \ \textcolor{comment}{/*\ Reserved\ enum\ cannot\ be\ used\ }}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00367}00367\ \textcolor{comment}{\ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00368}00368\ \ \ \ \ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74af847a37422821a7602a319701b764a89}{TMR2\_RESERVED\_4}}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00371}\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74af847a37422821a7602a319701b764a89}{00371}}\ \}\ \mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74}{TMR2\_HLT\_EXT\_RESET\_SOURCE}};}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00372}00372\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00373}00373\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00413}00413\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a46c13c9255379e99c10240229a145d37}{TMR2\_Initialize}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00414}00414\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00449}00449\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a1d3f4785995b9957ae3ad3f6e3b2c08f}{TMR2\_ModeSet}}(\mbox{\hyperlink{tmr2_8h_a23179ba73e4f08e79993bbda785709d0}{TMR2\_HLT\_MODE}}\ mode);}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00450}00450\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00484}00484\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a4cdefdf25ae2fdd0df54dd0b1108e293}{TMR2\_ExtResetSourceSet}}(\mbox{\hyperlink{tmr2_8h_afda82e9798eaf3ad608a5557dbf50b74}{TMR2\_HLT\_EXT\_RESET\_SOURCE}}\ reset);}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00485}00485\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00513}00513\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a7eccfd0fac278e0099d27631e116cfbf}{TMR2\_Start}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00514}00514\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00542}00542\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_afb37b846db811f973b4009215d59f91a}{TMR2\_StartTimer}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00543}00543\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00574}00574\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a90159f110263038f478f43a3ac9ab3ee}{TMR2\_Stop}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00575}00575\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00606}00606\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a36d7e6eab8b279863c83a32fb41adb02}{TMR2\_StopTimer}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00607}00607\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00641}00641\ uint8\_t\ \mbox{\hyperlink{tmr2_8h_aa016556d5d1a99da79708bcac03d9d65}{TMR2\_Counter8BitGet}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00642}00642\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00676}00676\ uint8\_t\ \mbox{\hyperlink{tmr2_8h_a4acc1f7c8c2dbd46424dad273cdb9cb1}{TMR2\_ReadTimer}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00677}00677\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00715}00715\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a0179f776b701464c6b44495e7114e5e1}{TMR2\_Counter8BitSet}}(uint8\_t\ timerVal);}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00716}00716\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00754}00754\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_acb2fbe8254fcc8c01b9784b028a7eac6}{TMR2\_WriteTimer}}(uint8\_t\ timerVal);}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00755}00755\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00806}00806\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a04766b6d89a990720759c1a03a649fd5}{TMR2\_Period8BitSet}}(uint8\_t\ periodVal);}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00807}00807\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00858}00858\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{tmr2_8h_a5490961ba3ba77d10896e320ab840a74}{TMR2\_LoadPeriodRegister}}(uint8\_t\ periodVal);}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00859}00859\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00896}00896\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{tmr2_8h_ab0b9dbd90bacc904f311d71fbcccd038}{TMR2\_HasOverflowOccured}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00897}00897\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00898}00898\ \textcolor{preprocessor}{\ \#ifdef\ \_\_cplusplus\ \ }\textcolor{comment}{//\ Provide\ C++\ Compatibility}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00899}00899\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00900}00900\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00901}00901\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00902}00902\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00903}00903\ }
+\DoxyCodeLine{\Hypertarget{tmr2_8h_source_l00904}00904\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ TMR2\_H}}
+
+\end{DoxyCode}

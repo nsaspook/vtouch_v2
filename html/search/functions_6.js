@@ -1,0 +1,11 @@
+var searchData=
+[
+  ['flash_5feraseblock_0',['flash_eraseblock',['../memory_8c.html#afcf8165862863c67dda417daca8404b6',1,'FLASH_EraseBlock(uint32_t flashAddr):&#160;memory.c'],['../memory_8h.html#afcf8165862863c67dda417daca8404b6',1,'FLASH_EraseBlock(uint32_t flashAddr):&#160;memory.c']]],
+  ['flash_5freadbyte_1',['flash_readbyte',['../memory_8c.html#a989fc8af0790ea48a22f9ae91fae5bc1',1,'FLASH_ReadByte(uint32_t flashAddr):&#160;memory.c'],['../memory_8h.html#a989fc8af0790ea48a22f9ae91fae5bc1',1,'FLASH_ReadByte(uint32_t flashAddr):&#160;memory.c']]],
+  ['flash_5freadpage_2',['flash_readpage',['../memory_8c.html#a6c6f7bcaf4f6d20466bb9d53d1cf8343',1,'FLASH_ReadPage(uint32_t flashAddr):&#160;memory.c'],['../memory_8h.html#a6c6f7bcaf4f6d20466bb9d53d1cf8343',1,'FLASH_ReadPage(uint32_t flashAddr):&#160;memory.c']]],
+  ['flash_5freadword_3',['flash_readword',['../memory_8c.html#a465bb55a80f2aef3143b3df9b28a004a',1,'FLASH_ReadWord(uint32_t flashAddr):&#160;memory.c'],['../memory_8h.html#a465bb55a80f2aef3143b3df9b28a004a',1,'FLASH_ReadWord(uint32_t flashAddr):&#160;memory.c']]],
+  ['flash_5fwriteblock_4',['flash_writeblock',['../memory_8c.html#a77ded5ca8cc1c341d976e1f481533689',1,'FLASH_WriteBlock(uint32_t flashAddr, uint16_t *flashWrBufPtr):&#160;memory.c'],['../memory_8h.html#a77ded5ca8cc1c341d976e1f481533689',1,'FLASH_WriteBlock(uint32_t flashAddr, uint16_t *flashWrBufPtr):&#160;memory.c']]],
+  ['flash_5fwritepage_5',['flash_writepage',['../memory_8c.html#a8841f8f7da080973be19b888dbb5e21c',1,'FLASH_WritePage(uint32_t flashAddr):&#160;memory.c'],['../memory_8h.html#a8841f8f7da080973be19b888dbb5e21c',1,'FLASH_WritePage(uint32_t flashAddr):&#160;memory.c']]],
+  ['flash_5fwriteword_6',['flash_writeword',['../memory_8c.html#a2921ceaf1ad4bff7c594a58db7e82c44',1,'FLASH_WriteWord(uint32_t flashAddr, uint16_t word):&#160;memory.c'],['../memory_8h.html#a2921ceaf1ad4bff7c594a58db7e82c44',1,'FLASH_WriteWord(uint32_t flashAddr, uint16_t word):&#160;memory.c']]],
+  ['format_5fdisplay_5ftext_7',['format_display_text',['../gemsecs_8c.html#a6632ae3fe468410125bc992eb4907d36',1,'format_display_text(const char *data):&#160;gemsecs.c'],['../gemsecs_8h.html#af051056f20c4345cdfb995ba72fe7f0a',1,'format_display_text(const char *):&#160;gemsecs.c']]]
+];

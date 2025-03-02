@@ -1,0 +1,112 @@
+\doxysection{secs\+\_\+q84.\+X/mcc\+\_\+generated\+\_\+files/adc.h File Reference}
+\hypertarget{adc_8h}{}\label{adc_8h}\index{secs\_q84.X/mcc\_generated\_files/adc.h@{secs\_q84.X/mcc\_generated\_files/adc.h}}
+{\ttfamily \#include $<$xc.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em This typedef should be used for result of A/D conversion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}} \{ \newline
+\mbox{\hyperlink{group__adc__context__scan_ggafa03ae171963ff34e8777cdc626de003a8678dfb0c5cd8ccc52524e50ece86ce5}{channel\+\_\+\+ANA1}} = 0x1
+, \mbox{\hyperlink{group__adc__context__scan_ggafa03ae171963ff34e8777cdc626de003a49b430d7eadb18f9c2318f8fe8fbcac2}{channel\+\_\+\+ANA2}} = 0x2
+, \mbox{\hyperlink{group__adc__context__scan_ggafa03ae171963ff34e8777cdc626de003abbd41a6cef8ccb1d375f692447c70ca1}{channel\+\_\+\+VSS}} = 0x3B
+, \mbox{\hyperlink{group__adc__context__scan_ggafa03ae171963ff34e8777cdc626de003ab7dd29210090fd58211f210334462325}{channel\+\_\+\+Temp}} = 0x3C
+, \newline
+\mbox{\hyperlink{group__adc__context__scan_ggafa03ae171963ff34e8777cdc626de003a8ced1b75b5fa80701f4d5a5f4d0235b4}{channel\+\_\+\+DAC1}} = 0x3D
+, \mbox{\hyperlink{group__adc__context__scan_ggafa03ae171963ff34e8777cdc626de003a0fcb2ee1867bddff7be0f8c31c1f6e43}{channel\+\_\+\+FVR\+\_\+\+Buffer1}} = 0x3E
+, \mbox{\hyperlink{group__adc__context__scan_ggafa03ae171963ff34e8777cdc626de003a1e0f66ae38cf9b20ba905ad5a67e7604}{channel\+\_\+\+FVR\+\_\+\+Buffer2}} = 0x3F
+ \}
+\begin{DoxyCompactList}\small\item\em This enumeration contains available ADC channels. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} \{ \mbox{\hyperlink{group__adc__context__scan_ggae1d3d7089e713acebb1897f907d366b6a83ddd7463ff764993cbfa9bf033f00ed}{CONTEXT\+\_\+1}}
+ \}
+\begin{DoxyCompactList}\small\item\em This enumeration contains available ADC contexts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\+\_\+\+Initialize}} (void)
+\begin{DoxyCompactList}\small\item\em This API initializes the ADC module. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga2583fd89066ae5d0e93c9d3a92d9f034}{ADC\+\_\+\+Enable\+Channel\+Sequencer}} (void)
+\begin{DoxyCompactList}\small\item\em This API enables ADC channel sequencer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga09a2d9ace55dd1528348074b0191ab78}{ADC\+\_\+\+Disable\+Channel\+Sequencer}} (void)
+\begin{DoxyCompactList}\small\item\em This API disables ADC channel sequencer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga9040d2afbf4eb69dadb16ff85c17df7f}{ADC\+\_\+\+Start\+Channel\+Sequencer}} (void)
+\begin{DoxyCompactList}\small\item\em This API starts the channel sequencer by enabling GO bit. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context}} (\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} context)
+\begin{DoxyCompactList}\small\item\em This API is used to select an ADC context to perform read/write operations on context specific registers. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b}{ADC\+\_\+\+Enable\+Channel\+Scan}} (\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} context)
+\begin{DoxyCompactList}\small\item\em This API is used to include a channel context in the scan sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gadf1bd632e75e7b6f5a85d115acdc58d7}{ADC\+\_\+\+Disable\+Channel\+Scan}} (\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} context)
+\begin{DoxyCompactList}\small\item\em This API is used to exclude a channel context from the scan sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\+\_\+\+Start\+Conversion}} (\mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}} channel)
+\begin{DoxyCompactList}\small\item\em This API starts A/D conversion on selected channel. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\+\_\+\+Is\+Conversion\+Done}} (void)
+\begin{DoxyCompactList}\small\item\em This API checks if ongoing A/D conversion is complete. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}} \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\+\_\+\+Get\+Conversion\+Result}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to retrieve the result of latest A/D conversion. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}} \mbox{\hyperlink{group__adc__context__scan_gad1cf69dd45bbfed3bc4171d225baaba8}{ADC\+\_\+\+Get\+Single\+Conversion}} (\mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}} channel)
+\begin{DoxyCompactList}\small\item\em This API is used to retrieve the result of single A/D conversion on given channel. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga540ecad9b65eff28421e4fcda79f7dc7}{ADC\+\_\+\+Stop\+Conversion}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to stop ongoing A/D conversion. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gab119f15a751577be8b4ae1615450849e}{ADC\+\_\+\+Set\+Stop\+On\+Interrupt}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used enable Stop On Interrupt bit for selected A/D context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga281da9f1502be02e9d368e2040b6c065}{ADC\+\_\+\+Discharge\+Sample\+Capacitor}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to discharge input sample capacitor for selected context by setting the channel to AVss. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga4400d0243e745ffc82e1d9cb8d2e47b9}{ADC\+\_\+\+Load\+Acquisition\+Register}} (uint16\+\_\+t acquisition\+Value)
+\begin{DoxyCompactList}\small\item\em This API is used to load ADC Acquisition Time Control register with specified value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga6fe915c5058412e32884f659cf8aef9f}{ADC\+\_\+\+Set\+Precharge\+Time}} (uint16\+\_\+t precharge\+Time)
+\begin{DoxyCompactList}\small\item\em This API is used to load ADC Precharge Time Control register with specified value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga723ecf1350fdb425e1ae78762c055d4b}{ADC\+\_\+\+Set\+Repeat\+Count}} (uint8\+\_\+t repeat\+Count)
+\begin{DoxyCompactList}\small\item\em This API is used to load repeat counter for given context with specified value. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{group__adc__context__scan_gaf88b883b32daa63a8cec63f4484266b5}{ADC\+\_\+\+Get\+Current\+Countof\+Conversions}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the current value of ADC Repeat Count register for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga83c00205a85199ef08d9d742761a7ed9}{ADC\+\_\+\+Clear\+Accumulator}} (void)
+\begin{DoxyCompactList}\small\item\em This API clears the accumulator of selected context. \end{DoxyCompactList}\item 
+uint24\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga581ee0845f61c4850c014f10f4c8b323}{ADC\+\_\+\+Get\+Accumulator\+Value}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves 18-\/bit value of ADC accumulator of selected context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_ga29938a2ee8cee9fda098637d6eac9e43}{ADC\+\_\+\+Has\+Accumulator\+Overflowed}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to determine whether ADC accumulator has overflowed for selected context. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga78e48b8ff7ac1cc5bc1e17bf2dcd0275}{ADC\+\_\+\+Get\+Filter\+Value}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the value of ADC Filter register of selected context. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga747b71a180bc8f7fc435e5cd0a0e68cb}{ADC\+\_\+\+Get\+Previous\+Result}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the value of ADC Previous register of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga8f597e5ca55f74007bce2dd9b8dc05f2}{ADC\+\_\+\+Define\+Set\+Point}} (uint16\+\_\+t set\+Point)
+\begin{DoxyCompactList}\small\item\em This API used to set value of ADC Threshold Set-\/point of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga54b8d141256995293414ffe21e0968fb}{ADC\+\_\+\+Set\+Upper\+Threshold}} (uint16\+\_\+t upper\+Threshold)
+\begin{DoxyCompactList}\small\item\em This API used to set value of ADC Upper Threshold register of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga0234d212f6af4b4faaff764768da6e21}{ADC\+\_\+\+Set\+Lower\+Threshold}} (uint16\+\_\+t lower\+Threshold)
+\begin{DoxyCompactList}\small\item\em This API used to set value of ADC Lower Threshold register of selected context. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga87a113226569485f4a6c15468979ef07}{ADC\+\_\+\+Get\+Error\+Calculation}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the value of ADC Set-\/point Error register of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gac313bdf5e8a4a4750e585c01c0ab6cb0}{ADC\+\_\+\+Enable\+Double\+Sampling}} (void)
+\begin{DoxyCompactList}\small\item\em This API enables double-\/sampling bit for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga47912a65803ccf504c7146afd302dcbb}{ADC\+\_\+\+Enable\+Continuous\+Conversion}} (void)
+\begin{DoxyCompactList}\small\item\em This API enables continuous conversion for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gae389b316d540c08a172a418c5a4f3574}{ADC\+\_\+\+Disable\+Continuous\+Conversion}} (void)
+\begin{DoxyCompactList}\small\item\em This API disables continuous conversion for selected context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_ga69dbd3c98a1dbca1fd529120940b4a7b}{ADC\+\_\+\+Has\+Error\+Crossed\+Upper\+Threshold}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to determine if ADC error has crossed the upper threshold for selected context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_gab8b716b9ec3541cf6d2b5487e029109a}{ADC\+\_\+\+Has\+Error\+Crossed\+Lower\+Threshold}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to determine if ADC error is less than the lower threshold for selected context. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga271b057ed72fedce018be162578b4f99}{ADC\+\_\+\+Get\+Conversion\+Stage\+Status}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used retrieve the multi-\/stage status for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga16088e817846594db8fc270ac7a476c6}{ADC\+\_\+\+Enable\+Charge\+Pump}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to enable ADC charge pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga676b01c4efd317bd8c6ff50d7d61cf47}{ADC\+\_\+\+Disable\+Charge\+Pump}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to disable ADC charge pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga19b2ac860b37d84c2d3cfe161af9e65b}{ADC\+\_\+\+Set\+ADIInterrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for A/D conversion ISR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga922be39b90e7ae385d6860d954edceb0}{ADC\+\_\+\+Set\+Active\+Clock\+Tuning\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for A/D Active Clock Tuning ISR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gaedf2eff80da4f8e7fbf8a1f6ee3ee1a8}{ADC\+\_\+\+Set\+Context1\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/1 threshold interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga9dc31343b8711194ae3228d4579e1ada}{ADC\+\_\+\+Set\+Context2\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/2 threshold interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga593486553f059555f230d15bc8c53006}{ADC\+\_\+\+Set\+Context3\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/3 threshold interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga7b944c61e998435febd5c3b292017cba}{ADC\+\_\+\+Set\+Context4\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/4 threshold interrupt. \end{DoxyCompactList}\end{DoxyCompactItemize}

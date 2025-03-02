@@ -1,0 +1,70 @@
+\doxysection{dma2.\+c}
+\hypertarget{dma2_8c_source}{}\label{dma2_8c_source}\index{secs\_q84.X/mcc\_generated\_files/dma2.c@{secs\_q84.X/mcc\_generated\_files/dma2.c}}
+\mbox{\hyperlink{dma2_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{dma2_8h}{dma2.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00061}\mbox{\hyperlink{dma2_8c_a50c3e6f809230788a1871b9ee2436eea}{00061}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{dma2_8c_a50c3e6f809230788a1871b9ee2436eea}{DMA2\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00062}00062\ \{}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00063}00063\ \ \ \ \ DMA2SSA\ =\ 0x001000;\ \textcolor{comment}{//set\ source\ start\ address}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00064}00064\ \ \ \ \ DMA2DSA\ =\ 0x3FBB;\ \textcolor{comment}{//set\ destination\ start\ address\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00065}00065\ \ \ \ \ DMA2CON1\ =\ 0x03;\ \textcolor{comment}{//set\ control\ register1\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00066}00066\ \ \ \ \ DMA2SSZ\ =\ 0x0001;\ \textcolor{comment}{//set\ source\ size}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00067}00067\ \ \ \ \ DMA2DSZ\ =\ 0x0001;\ \textcolor{comment}{//set\ destination\ size}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00068}00068\ \ \ \ \ DMA2SIRQ\ =\ 0x46;\ \textcolor{comment}{//set\ DMA\ Transfer\ Trigger\ Source}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00069}00069\ \ \ \ \ DMA2AIRQ\ =\ 0x3D;\ \textcolor{comment}{//set\ DMA\ Transfer\ abort\ Source}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00070}00070\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00071}00071\ \ \ \ \ PIR5bits.DMA2DCNTIF\ =0;\ \textcolor{comment}{//\ clear\ Destination\ Count\ Interrupt\ Flag\ bit}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00072}00072\ \ \ \ \ PIR5bits.DMA2SCNTIF\ =0;\ \textcolor{comment}{//\ clear\ Source\ Count\ Interrupt\ Flag\ bit}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00073}00073\ \ \ \ \ PIR5bits.DMA2AIF\ =0;\ \textcolor{comment}{//\ clear\ abort\ Interrupt\ Flag\ bit}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00074}00074\ \ \ \ \ PIR5bits.DMA2ORIF\ =0;\ \textcolor{comment}{//\ clear\ overrun\ Interrupt\ Flag\ bit}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00075}00075\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00076}00076\ \ \ \ \ PIE5bits.DMA2DCNTIE\ =0;\ \textcolor{comment}{//\ disable\ Destination\ Count\ 0\ Interrupt}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00077}00077\ \ \ \ \ PIE5bits.DMA2SCNTIE\ =0;\ \textcolor{comment}{//\ disable\ Source\ Count\ Interrupt}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00078}00078\ \ \ \ \ PIE5bits.DMA2AIE\ =0;\ \textcolor{comment}{//\ disable\ abort\ Interrupt}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00079}00079\ \ \ \ \ PIE5bits.DMA2ORIE\ =0;\ \textcolor{comment}{//\ disable\ overrun\ Interrupt\ }}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00080}00080\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00081}00081\ \ \ \ \ \textcolor{keyword}{asm}(\textcolor{stringliteral}{"{}BCF\ INTCON0,7"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00082}00082\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00083}00083\ \ \ \ \ \textcolor{keyword}{asm}\ (\textcolor{stringliteral}{"{}BANKSEL\ PRLOCK"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00084}00084\ \ \ \ \ \textcolor{keyword}{asm}\ (\textcolor{stringliteral}{"{}MOVLW\ 0x55"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00085}00085\ \ \ \ \ \textcolor{keyword}{asm}\ (\textcolor{stringliteral}{"{}MOVWF\ PRLOCK"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00086}00086\ \ \ \ \ \textcolor{keyword}{asm}\ (\textcolor{stringliteral}{"{}MOVLW\ 0xAA"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00087}00087\ \ \ \ \ \textcolor{keyword}{asm}\ (\textcolor{stringliteral}{"{}MOVWF\ PRLOCK"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00088}00088\ \ \ \ \ \textcolor{keyword}{asm}\ (\textcolor{stringliteral}{"{}BSF\ PRLOCK,\ 0"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00089}00089\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00090}00090\ \ \ \ \ \textcolor{keyword}{asm}(\textcolor{stringliteral}{"{}BSF\ INTCON0,7"{}});}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00092}00092\ \ \ \ \ DMA2CON0\ =\ 0x00;\ \textcolor{comment}{//set\ control\ register0}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00093}00093\ \}}
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{dma2_8c_source_l00097}00097\ }
+
+\end{DoxyCode}

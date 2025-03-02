@@ -1,0 +1,207 @@
+\doxysection{d232.\+h}
+\hypertarget{d232_8h_source}{}\label{d232_8h_source}\index{touch\_board/elo\_touch.X/d232.h@{touch\_board/elo\_touch.X/d232.h}}
+\mbox{\hyperlink{d232_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00001}00001\ \textcolor{comment}{/*\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ \ You\ may\ use\ this\ software}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00002}00002\ \textcolor{comment}{\ *\ and\ any\ derivatives\ exclusively\ with\ Microchip\ products.}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00003}00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00004}00004\ \textcolor{comment}{\ *\ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ \ NO\ WARRANTIES,\ WHETHER}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00005}00005\ \textcolor{comment}{\ *\ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ IMPLIED}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00006}00006\ \textcolor{comment}{\ *\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ FOR\ A}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00007}00007\ \textcolor{comment}{\ *\ PARTICULAR\ PURPOSE,\ OR\ ITS\ INTERACTION\ WITH\ MICROCHIP\ PRODUCTS,\ COMBINATION}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00008}00008\ \textcolor{comment}{\ *\ WITH\ ANY\ OTHER\ PRODUCTS,\ OR\ USE\ IN\ ANY\ APPLICATION.}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00009}00009\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00010}00010\ \textcolor{comment}{\ *\ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00011}00011\ \textcolor{comment}{\ *\ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00012}00012\ \textcolor{comment}{\ *\ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ HAS}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00013}00013\ \textcolor{comment}{\ *\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ \ TO\ THE}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00014}00014\ \textcolor{comment}{\ *\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ CLAIMS}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00015}00015\ \textcolor{comment}{\ *\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ OF\ FEES,\ IF}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00016}00016\ \textcolor{comment}{\ *\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00017}00017\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00018}00018\ \textcolor{comment}{\ *\ MICROCHIP\ PROVIDES\ THIS\ SOFTWARE\ CONDITIONALLY\ UPON\ YOUR\ ACCEPTANCE\ OF\ THESE}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00019}00019\ \textcolor{comment}{\ *\ TERMS.}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00020}00020\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00022}00022\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00023}00023\ \textcolor{comment}{\ *\ File:}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00024}00024\ \textcolor{comment}{\ *\ Author:}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00025}00025\ \textcolor{comment}{\ *\ Comments:}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00026}00026\ \textcolor{comment}{\ *\ Revision\ history:}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00027}00027\ \textcolor{comment}{\ *\ 40\ bits\ of\ data\ in\ 5\ 8-\/bit\ ports}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00028}00028\ \textcolor{comment}{\ *\ port1\ input}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00029}00029\ \textcolor{comment}{\ *\ port-\/2-\/5\ output}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00030}00030\ \textcolor{comment}{\ *\ I/O\ to\ Digital232\ is\ binary\ format}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00031}00031\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00033}00033\ \textcolor{comment}{//\ This\ is\ a\ guard\ condition\ so\ that\ contents\ of\ this\ file\ are\ not\ included}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00034}00034\ \textcolor{comment}{//\ more\ than\ once.}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00035}00035\ \textcolor{preprocessor}{\#ifndef\ XC\_HEADER\_TEMPLATE\_H}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00036}00036\ \textcolor{preprocessor}{\#define\ XC\_HEADER\_TEMPLATE\_H}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00038}00038\ \textcolor{preprocessor}{\#include\ <xc.h>}\ \textcolor{comment}{//\ include\ processor\ files\ -\/\ each\ processor\ file\ is\ guarded.}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00039}00039\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00040}00040\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00041}00041\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00042}00042\ \textcolor{preprocessor}{\#include\ "{}mcc\_generated\_files/pin\_manager.h"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00043}00043\ \textcolor{preprocessor}{\#include\ "{}mcc\_generated\_files/uart2.h"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00044}00044\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{adcc_8h}{mcc\_generated\_files/adcc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00045}00045\ \textcolor{preprocessor}{\#include\ "{}mcc\_generated\_files/pwm8.h"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00046}00046\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2timers_8h}{timers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00048}\mbox{\hyperlink{d232_8h_af06baee05280c189592215d5ea08e7ef}{00048}}\ \textcolor{preprocessor}{\#define\ sw\_version\ "{}1.07"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00049}00049\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00050}00050\ \textcolor{comment}{\ *\ 1.01\ Add\ auto\ game\ switching\ back\ to\ startup\ game}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00051}00051\ \textcolor{comment}{\ *\ 1.04\ define\ output\ ports\ for\ led\ and\ sounds}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00052}00052\ \textcolor{comment}{\ *\ 1.06\ use\ defined\ ports\ for\ led\ and\ sounds}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00053}00053\ \textcolor{comment}{\ *\ 1.07\ convert\ to\ elo\ touch\ driver}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00054}00054\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00055}00055\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00057}\mbox{\hyperlink{d232_8h_a10d2743eb39d980b1fd6b796b79a70b0}{00057}}\ \textcolor{preprocessor}{\#define\ LPORT\ \ \ 1\ \ \ }\textcolor{comment}{//\ prototype\ 2}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00058}\mbox{\hyperlink{d232_8h_a0b892921fbe6f24bd8f6c7b3620e67c9}{00058}}\ \textcolor{preprocessor}{\#define\ SPORT\ \ \ 2\ \ \ }\textcolor{comment}{//\ prototype\ 1}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00060}\mbox{\hyperlink{d232_8h_ac5d957e4fd3dc11cd97a54cf9ca057a4}{00060}}\ \textcolor{preprocessor}{\#define\ RST\ "{}XQ\(\backslash\)r"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00061}\mbox{\hyperlink{d232_8h_a1c9b2e3fb0b84e6da7e8e01a402cfd9b}{00061}}\ \textcolor{preprocessor}{\#define\ CNF\ "{}C4\(\backslash\)r"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00062}\mbox{\hyperlink{d232_8h_a3dfb8ef0d04e938194da60b4420c7517}{00062}}\ \textcolor{preprocessor}{\#define\ FMT\ "{}F4\(\backslash\)r"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00063}\mbox{\hyperlink{d232_8h_afb7e2b9da4a7821f2ef93bbcd5a06455}{00063}}\ \textcolor{preprocessor}{\#define\ SRQ\ "{}M4\(\backslash\)r"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00064}\mbox{\hyperlink{d232_8h_a88073666e3996e7dc66ea4ed323b749f}{00064}}\ \textcolor{preprocessor}{\#define\ DRD\ "{}R0\(\backslash\)r"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00065}\mbox{\hyperlink{d232_8h_aa29bdc169bad775698bca6d517b5c5df}{00065}}\ \textcolor{preprocessor}{\#define\ DTEST\ \ \ "{}T2\(\backslash\)r"{}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00067}\mbox{\hyperlink{d232_8h_ad5a44a7f7099f4518f885f48a93ceb14}{00067}}\ \textcolor{preprocessor}{\#define\ SLED\ \ \ \ LED\_RSET\_LAT}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00069}\mbox{\hyperlink{d232_8h_a4a6e744374f3461a025120b62bd8d758}{00069}}\ \textcolor{preprocessor}{\#define\ CHIRP\ \ \ 0x01}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00070}\mbox{\hyperlink{d232_8h_a6d319563dac46bc6621c442ed3af5380}{00070}}\ \textcolor{preprocessor}{\#define\ WARP\ \ \ \ 0x04}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00071}\mbox{\hyperlink{d232_8h_a5b01e05043c5de245040ac9330ea03d5}{00071}}\ \textcolor{preprocessor}{\#define\ SIREN\ \ \ 0x02}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00073}\mbox{\hyperlink{d232_8h_a79d840ae9bfab8fee23ac051409ee9d4}{00073}}\ \textcolor{preprocessor}{\#define\ DEFAULT\_SEQ\ 0}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00074}\mbox{\hyperlink{d232_8h_a90ae11e039b8fe18bcee3d5a4589a261}{00074}}\ \textcolor{preprocessor}{\#define\ DEBUG\_SEQ\ \ \ 1}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00075}\mbox{\hyperlink{d232_8h_a1c172edc0329714d6a5e90a4a76ed156}{00075}}\ \textcolor{preprocessor}{\#define\ WIN\_SEQ\ \ \ \ \ 2}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00076}\mbox{\hyperlink{d232_8h_ae6fe5afb74bad93f4fa5bec723428f2c}{00076}}\ \textcolor{preprocessor}{\#define\ CYLON\ \ \ \ \ \ \ 0}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00077}\mbox{\hyperlink{d232_8h_ae760f762576e319d8e06d167a6118a3e}{00077}}\ \textcolor{preprocessor}{\#define\ LED\_BAL\ \ \ \ \ 3}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00079}\mbox{\hyperlink{d232_8h_abcd250c74f3a025370a52d697fad9a87}{00079}}\ \textcolor{preprocessor}{\#define\ DISPLAY\_UPDATE\ \ 500\ }\textcolor{comment}{//\ 1000}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00080}\mbox{\hyperlink{d232_8h_a51aec7972337f7bcaeb2045ac9c8027f}{00080}}\ \textcolor{preprocessor}{\#define\ RXTO\_DELAY\ \ 250\ }\textcolor{comment}{//\ 250}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00082}\mbox{\hyperlink{d232_8h_abd4b7f2b9b32ee682855abc35921dec1}{00082}}\ \textcolor{preprocessor}{\#define\ ADC\_SCALE\ \ \ 255.0}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00083}\mbox{\hyperlink{d232_8h_a483747c5053d5b10010725137aa3310c}{00083}}\ \textcolor{preprocessor}{\#define\ ADC\_SCALE\_ZERO\ \ -\/127}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00085}\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6}{00085}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00086}\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6ac363f49f30d0b709cd0508311565b87c}{00086}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6ac363f49f30d0b709cd0508311565b87c}{D232\_IDLE}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00087}\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a381f5252b2a8a87283c2bdafab306990}{00087}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a381f5252b2a8a87283c2bdafab306990}{D232\_INIT}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00088}\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a31c402080487c2b07cf698ed486b4b8b}{00088}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a31c402080487c2b07cf698ed486b4b8b}{D232\_OUT\_IN}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00089}\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a0bba4215588ae98b637191f3cadcbc84}{00089}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a0bba4215588ae98b637191f3cadcbc84}{D232\_SRQ}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00090}00090\ \ \ \ \ \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a8628c6473bd7854bf258529f7333e833}{D232\_UPDATE}}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00091}\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a8628c6473bd7854bf258529f7333e833}{00091}}\ \}\ \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6}{D232\_STATE}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00092}00092\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00093}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393e}{00093}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00094}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea18732ab11f58837f7e0f425b39db1ce8}{00094}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea18732ab11f58837f7e0f425b39db1ce8}{IO\_IDLE}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00095}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea58339e4984cf90de30dc1b89cfcffae8}{00095}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea58339e4984cf90de30dc1b89cfcffae8}{IO\_INIT}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00096}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eac944dcc9827cca4526478777b4ca5a89}{00096}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eac944dcc9827cca4526478777b4ca5a89}{IO\_OUT}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00097}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea0751316ed3ef2e45e5a9c0f80540598c}{00097}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea0751316ed3ef2e45e5a9c0f80540598c}{IO\_IN}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00098}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eaa6022c2b2d8d42cf0bf7f4b59386665f}{00098}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eaa6022c2b2d8d42cf0bf7f4b59386665f}{IO\_SRQ}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00099}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eaee0b3fcfe170bf6f66b2f40e426867b7}{00099}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eaee0b3fcfe170bf6f66b2f40e426867b7}{IO\_UPDATE}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00100}\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea750eac5ef49fe8514858f289a3656d00}{00100}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea750eac5ef49fe8514858f289a3656d00}{IO\_FAIL}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00101}00101\ \}\ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393e}{IO\_STATE}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00103}\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59b}{00103}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00104}\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba86e3fc319fdf083afe88308950abab44}{00104}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba86e3fc319fdf083afe88308950abab44}{S\_IDLE}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00105}\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bab76712cbc44f311a633f6d3e27a612b0}{00105}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bab76712cbc44f311a633f6d3e27a612b0}{S\_S}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00106}\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba91cabc097f573ad6eb61839d7e092aec}{00106}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba91cabc097f573ad6eb61839d7e092aec}{S\_R}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00107}\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bad81f14df61561f5291bd55766cdf8b7d}{00107}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bad81f14df61561f5291bd55766cdf8b7d}{S\_Q}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00108}\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba362ec1f096af9e0f0a0c01a5603b3dbc}{00108}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba362ec1f096af9e0f0a0c01a5603b3dbc}{S\_NUM}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00109}\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bacd3582eb729cdb7bb1825540032b3af5}{00109}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bacd3582eb729cdb7bb1825540032b3af5}{S\_UPDATE}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00110}00110\ \}\ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59b}{SRQ\_STATE}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00112}\mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85}{00112}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00113}\mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85aba595d8bca8bc5e67c37c0a9d89becfa}{00113}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85aba595d8bca8bc5e67c37c0a9d89becfa}{UP}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00114}\mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a977d478dacaae531f95695750d1e9d03}{00114}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a977d478dacaae531f95695750d1e9d03}{ON}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00115}\mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a9b0b4a95b99523966e0e34ffdadac9da}{00115}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a9b0b4a95b99523966e0e34ffdadac9da}{DOWN}},}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00116}00116\ \}\ \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85}{BAL\_STATE}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00118}\mbox{\hyperlink{struct_a__data}{00118}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_a__data}{A\_data}}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00119}\mbox{\hyperlink{struct_a__data_abd3d880c90ca2b0f384e631f38676a2a}{00119}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_a__data_abd3d880c90ca2b0f384e631f38676a2a}{inbytes}}[5];\ \textcolor{comment}{//\ input\ from\ Digital232\ buffer}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00120}\mbox{\hyperlink{struct_a__data_a10336df23a2ffed720e58c261f3b7c5a}{00120}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_a__data_a10336df23a2ffed720e58c261f3b7c5a}{outbytes}}[5];\ \textcolor{comment}{//\ output\ from\ Digital232\ buffer}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00121}\mbox{\hyperlink{struct_a__data_a1931b37917aa9bb29bd4c6ffb8e25939}{00121}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_a__data_a1931b37917aa9bb29bd4c6ffb8e25939}{input\_ok}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00122}\mbox{\hyperlink{struct_a__data_a74018f8a2e636d448423c216676ff8ef}{00122}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_a__data_a74018f8a2e636d448423c216676ff8ef}{output\_ok}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00123}\mbox{\hyperlink{struct_a__data_a9e2822bd8c099a2235d8c51aeba67f33}{00123}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393e}{IO\_STATE}}\ \mbox{\hyperlink{struct_a__data_a9e2822bd8c099a2235d8c51aeba67f33}{io}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00124}\mbox{\hyperlink{struct_a__data_a523cb3886a2eb77d8550a8517610da13}{00124}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6}{D232\_STATE}}\ \mbox{\hyperlink{struct_a__data_a523cb3886a2eb77d8550a8517610da13}{d232}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00125}\mbox{\hyperlink{struct_a__data_aa4fbf9314ac3d50fc7b808cfceaae98b}{00125}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59b}{SRQ\_STATE}}\ \mbox{\hyperlink{struct_a__data_aa4fbf9314ac3d50fc7b808cfceaae98b}{srq}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00126}\mbox{\hyperlink{struct_a__data_af065932cfc043cd7c39016257542caf6}{00126}}\ \ \ \ \ \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85}{BAL\_STATE}}\ \mbox{\hyperlink{struct_a__data_af065932cfc043cd7c39016257542caf6}{BAL}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00127}\mbox{\hyperlink{struct_a__data_a70766639e06ce7a1f9675837c14c9157}{00127}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_a__data_abbc806335baa26abd59cbefc40a2efdf}{srq\_value}},\ \mbox{\hyperlink{struct_a__data_af015e31c6a071c2938d203bc31d63dbd}{seq\_value}},\ \mbox{\hyperlink{struct_a__data_a70766639e06ce7a1f9675837c14c9157}{hits}},\ \mbox{\hyperlink{struct_a__data_a3a10c43b82d93ec71782ca5a08ea7ac1}{misses}},\ \mbox{\hyperlink{struct_a__data_ad89903731d7f7be95b5d969211e27c26}{score}},\ \mbox{\hyperlink{struct_a__data_a89d055cb0a629af4a5d8d3b27aaeb34c}{stats}},\ \mbox{\hyperlink{struct_a__data_afc338a1f4340fb96ea6a920065dd7fcf}{rnd\_count}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00128}\mbox{\hyperlink{struct_a__data_aee231fee7ba470f62f458300d6bd3ed6}{00128}}\ \ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ \mbox{\hyperlink{struct_a__data_aee231fee7ba470f62f458300d6bd3ed6}{button\_value}},\ \mbox{\hyperlink{struct_a__data_add558f4c833c1a42bca284d5d6b296e5}{seq\_current}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00129}\mbox{\hyperlink{struct_a__data_acd93232e3988448a5418ca61bb1cbda4}{00129}}\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{struct_a__data_a12633132d07532aac2bd05fa1d5c8a72}{speed}},\ \mbox{\hyperlink{struct_a__data_af33e55a482f0e1caee644beee541948f}{slower}},\ \mbox{\hyperlink{struct_a__data_acd93232e3988448a5418ca61bb1cbda4}{clock}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00130}\mbox{\hyperlink{struct_a__data_a8b941f6c3f5a2fa2633edd51b9bff9c3}{00130}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{struct_a__data_a24d97b5bb747a2dd051f6bb1b11ddbe6}{speed\_update}},\ \mbox{\hyperlink{struct_a__data_ad525f5574f21cfc4854be1f9a40099f6}{sequence\_done}},\ \mbox{\hyperlink{struct_a__data_a568f8fc25455991c59ab8f2ca95e7017}{win}},\ \mbox{\hyperlink{struct_a__data_a8b941f6c3f5a2fa2633edd51b9bff9c3}{f1}},\ \mbox{\hyperlink{struct_a__data_afc3faa56f3a796bbb27085193f5a42c9}{f2}},\ \mbox{\hyperlink{struct_a__data_aa0ef602ae5aed250c287f21a4262e88c}{f3}},\ \mbox{\hyperlink{struct_a__data_a8980a15e9b641ec02c9eaf24e3ddb6f4}{f4}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00131}\mbox{\hyperlink{struct_a__data_aa79c5914a7ea2903318a42c5014e5668}{00131}}\ \ \ \ \ int8\_t\ \mbox{\hyperlink{struct_a__data_aa79c5914a7ea2903318a42c5014e5668}{rnd}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00132}\mbox{\hyperlink{d232_8h_a8425a8d5a70419a38850d325e17463db}{00132}}\ \}\ \mbox{\hyperlink{struct_a__data}{A\_data}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00134}\mbox{\hyperlink{struct_b_p_o_t__type}{00134}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_b_p_o_t__type}{BPOT\_type}}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00135}00135\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00136}00136\ \textcolor{comment}{\ \ \ \ \ *\ ADC\ result\ norm}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00137}00137\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00138}\mbox{\hyperlink{struct_b_p_o_t__type_a59f874d10bf763992bd4b427fdb7f0cd}{00138}}\ \ \ \ \ int16\_t\ \mbox{\hyperlink{struct_b_p_o_t__type_a59f874d10bf763992bd4b427fdb7f0cd}{offset}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00139}\mbox{\hyperlink{struct_b_p_o_t__type_a1e2d64dadc4acd8445bb670743fd7110}{00139}}\ \ \ \ \ int16\_t\ \mbox{\hyperlink{struct_b_p_o_t__type_ad3285e2a51f8fd1ed64bf4143e386c83}{span}},\ \mbox{\hyperlink{struct_b_p_o_t__type_a1e2d64dadc4acd8445bb670743fd7110}{range}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00140}\mbox{\hyperlink{struct_b_p_o_t__type_abe41941d169ac3b9b693d85eee6be327}{00140}}\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{struct_b_p_o_t__type_abe41941d169ac3b9b693d85eee6be327}{scalar}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00141}\mbox{\hyperlink{struct_b_p_o_t__type_af141067af650d06e892d0c0acc376bbc}{00141}}\ \ \ \ \ int16\_t\ \mbox{\hyperlink{struct_b_p_o_t__type_af141067af650d06e892d0c0acc376bbc}{zero}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00142}\mbox{\hyperlink{struct_b_p_o_t__type_a68dda9d8e6a09d264458fa5263a63d6b}{00142}}\ \ \ \ \ int16\_t\ \mbox{\hyperlink{struct_b_p_o_t__type_a68dda9d8e6a09d264458fa5263a63d6b}{result}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00143}\mbox{\hyperlink{d232_8h_aeb2a498dfc2d82a4a2de66823f57fa68}{00143}}\ \}\ \mbox{\hyperlink{struct_b_p_o_t__type}{BPOT\_type}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00145}\mbox{\hyperlink{struct_i_n__data}{00145}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_i_n__data}{IN\_data}}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00146}00146\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00147}00147\ \textcolor{comment}{\ \ \ \ \ *\ port\ 0}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00148}00148\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00149}\mbox{\hyperlink{struct_i_n__data_a9428f4229e2203fa643916ca52a3e663}{00149}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_i_n__data_a9428f4229e2203fa643916ca52a3e663}{b0}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00150}\mbox{\hyperlink{struct_i_n__data_a98e677a32f20b8a61d9597f2abf855a1}{00150}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_i_n__data_a98e677a32f20b8a61d9597f2abf855a1}{detonator}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00151}\mbox{\hyperlink{struct_i_n__data_a24c4de93334545789031f0722721bacc}{00151}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_i_n__data_a24c4de93334545789031f0722721bacc}{pir}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00152}\mbox{\hyperlink{struct_i_n__data_a269293d41f5c36dccdd01102ad037627}{00152}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_i_n__data_a269293d41f5c36dccdd01102ad037627}{b3}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00153}\mbox{\hyperlink{struct_i_n__data_ad34d4ef6759c8fd9602432f68937a151}{00153}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_i_n__data_ad34d4ef6759c8fd9602432f68937a151}{b4}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00154}\mbox{\hyperlink{d232_8h_a45f7c66a9ccf4c2a691e312c13f6b35b}{00154}}\ \}\ \mbox{\hyperlink{struct_i_n__data}{IN\_data}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00155}00155\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00156}\mbox{\hyperlink{struct_o_u_t__data1}{00156}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_o_u_t__data1}{OUT\_data1}}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00157}00157\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00158}00158\ \textcolor{comment}{\ \ \ \ \ *\ port1}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00159}00159\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00160}\mbox{\hyperlink{struct_o_u_t__data1_a14be029cc12337ff54289a2d8933523e}{00160}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data1_a14be029cc12337ff54289a2d8933523e}{sound1}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00161}\mbox{\hyperlink{struct_o_u_t__data1_a62d12aa56e6c60aa666844768f169a14}{00161}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data1_a62d12aa56e6c60aa666844768f169a14}{chirp}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00162}\mbox{\hyperlink{struct_o_u_t__data1_a236047a6424ace211ccb60042eab3915}{00162}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data1_a236047a6424ace211ccb60042eab3915}{sound3}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00163}\mbox{\hyperlink{struct_o_u_t__data1_a5243fc56e50fe2efb0043b07f468a6ec}{00163}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data1_a5243fc56e50fe2efb0043b07f468a6ec}{misc1}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00164}\mbox{\hyperlink{struct_o_u_t__data1_aa60e73687651fb93ddf9e615721970c1}{00164}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data1_aa60e73687651fb93ddf9e615721970c1}{misc2}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00165}\mbox{\hyperlink{struct_o_u_t__data1_a39a59b6c1472f906b670beae834c6646}{00165}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data1_a39a59b6c1472f906b670beae834c6646}{filler1}}\ :\ 3;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00166}\mbox{\hyperlink{d232_8h_aac0b1a2707e6776fa91f9d21f8d40807}{00166}}\ \}\ \mbox{\hyperlink{struct_o_u_t__data1}{OUT\_data1}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00168}\mbox{\hyperlink{struct_o_u_t__data2}{00168}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_o_u_t__data2}{OUT\_data2}}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00169}00169\ \ \ \ \ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00170}00170\ \textcolor{comment}{\ \ \ \ \ *\ port2}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00171}00171\ \textcolor{comment}{\ \ \ \ \ */}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00172}\mbox{\hyperlink{struct_o_u_t__data2_ac708a64f8edfe764996e62d75862e186}{00172}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_ac708a64f8edfe764996e62d75862e186}{led1}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00173}\mbox{\hyperlink{struct_o_u_t__data2_ab5b45f6d44fe6b9f02b3f0686542114a}{00173}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_ab5b45f6d44fe6b9f02b3f0686542114a}{led2}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00174}\mbox{\hyperlink{struct_o_u_t__data2_a886af3a3463b7d08c22a71782dd78b59}{00174}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_a886af3a3463b7d08c22a71782dd78b59}{led3}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00175}\mbox{\hyperlink{struct_o_u_t__data2_a6da3211952c9960b7f59df926bd1d27d}{00175}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_a6da3211952c9960b7f59df926bd1d27d}{led4}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00176}\mbox{\hyperlink{struct_o_u_t__data2_a9223072365f6a12406f01585073ed4df}{00176}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_a9223072365f6a12406f01585073ed4df}{led5}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00177}\mbox{\hyperlink{struct_o_u_t__data2_a7bf28f93cd2aaefd049fd3e983889c05}{00177}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_a7bf28f93cd2aaefd049fd3e983889c05}{led6}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00178}\mbox{\hyperlink{struct_o_u_t__data2_abc73fb7a2b1f028719959b0b9c728f74}{00178}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_abc73fb7a2b1f028719959b0b9c728f74}{led7}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00179}\mbox{\hyperlink{struct_o_u_t__data2_a5bb136298921ff01ffe8127416761375}{00179}}\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{struct_o_u_t__data2_a5bb136298921ff01ffe8127416761375}{led8}}\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00180}\mbox{\hyperlink{d232_8h_a740945dc13d46493b34992cb0af13219}{00180}}\ \}\ \mbox{\hyperlink{struct_o_u_t__data2}{OUT\_data2}};}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00181}00181\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00182}00182\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{d232_8h_a4f70304687ba1131f354bd28f6913438}{Digital232\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00183}00183\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{d232_8h_a34184a4e0c31a75a302bca2902790f06}{Digital232\_RW}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00184}00184\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{d232_8h_a0cc3c338e416e8814f646a668665c8b1}{led\_lightshow}}(uint8\_t,\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00185}00185\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{d232_8h_a06227b27b331da5d4ec43a92b2269ad8}{once}}(\textcolor{keywordtype}{bool}*);}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00186}00186\ int16\_t\ \mbox{\hyperlink{d232_8h_a6528f931895f3e1ba2b70f0a2d29708a}{calc\_pot}}(\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}});}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00187}00187\ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{d232_8h_a95deb21002796091eb0aa22a5164d191}{lp\_filter}}(\textcolor{keywordtype}{float},\ int16\_t,\ int16\_t);}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00189}00189\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00190}00190\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00191}00191\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_\_cplusplus\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00193}00193\ \ \ \ \ \textcolor{comment}{//\ TODO\ If\ C++\ is\ being\ used,\ regular\ C\ code\ needs\ function\ names\ to\ have\ C}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00194}00194\ \ \ \ \ \textcolor{comment}{//\ linkage\ so\ the\ functions\ can\ be\ used\ by\ the\ c\ code.}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00196}00196\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00197}00197\ \}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00198}00198\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ \_\_cplusplus\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00200}00200\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{/*\ XC\_HEADER\_TEMPLATE\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{d232_8h_source_l00201}00201\ }
+
+\end{DoxyCode}

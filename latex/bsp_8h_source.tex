@@ -1,0 +1,605 @@
+\doxysection{bsp.\+h}
+\hypertarget{bsp_8h_source}{}\label{bsp_8h_source}\index{pic32\_daq/remote\_daq/firmware/src/system\_config/default/bsp/bsp.h@{pic32\_daq/remote\_daq/firmware/src/system\_config/default/bsp/bsp.h}}
+\mbox{\hyperlink{bsp_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00001}00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00002}00002\ \textcolor{comment}{\ \ Board\ Support\ Package\ Header\ File.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00004}00004\ \textcolor{comment}{\ \ Company:\ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00005}00005\ \textcolor{comment}{\ \ \ \ Microchip\ Technology\ Inc.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00007}00007\ \textcolor{comment}{\ \ File\ Name:\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00008}00008\ \textcolor{comment}{\ \ \ \ bsp.h}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00010}00010\ \textcolor{comment}{\ \ Summary:\ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00011}00011\ \textcolor{comment}{\ \ \ \ Board\ Support\ Package\ Header\ File\ for\ PIC32MZ\ Embedded\ Connectivity\ (EF)}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00012}00012\ \textcolor{comment}{\ \ \ \ Starter\ Kit.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00013}00013\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00014}00014\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00015}00015\ \textcolor{comment}{\ \ \ \ This\ file\ contains\ constants,\ macros,\ type\ definitions\ and\ function}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00016}00016\ \textcolor{comment}{\ \ \ \ declarations\ required\ by\ the\ PIC32MZ\ Embedded\ Connectivity\ (EC)\ Starter\ Kit.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00017}00017\ \textcolor{comment}{*******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00019}00019\ \textcolor{comment}{//\ DOM-\/IGNORE-\/BEGIN}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00020}00020\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00021}00021\ \textcolor{comment}{Copyright\ (c)\ 2014\ released\ Microchip\ Technology\ Inc.\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00022}00022\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00023}00023\ \textcolor{comment}{Microchip\ licenses\ to\ you\ the\ right\ to\ use,\ modify,\ copy\ and\ distribute}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00024}00024\ \textcolor{comment}{Software\ only\ when\ embedded\ on\ a\ Microchip\ microcontroller\ or\ digital\ signal}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00025}00025\ \textcolor{comment}{controller\ that\ is\ integrated\ into\ your\ product\ or\ third\ party\ product}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00026}00026\ \textcolor{comment}{(pursuant\ to\ the\ sublicense\ terms\ in\ the\ accompanying\ license\ agreement).}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00027}00027\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00028}00028\ \textcolor{comment}{You\ should\ refer\ to\ the\ license\ agreement\ accompanying\ this\ Software\ for}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00029}00029\ \textcolor{comment}{additional\ information\ regarding\ your\ rights\ and\ obligations.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00031}00031\ \textcolor{comment}{SOFTWARE\ AND\ DOCUMENTATION\ ARE\ PROVIDED\ "{}AS\ IS"{}\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00032}00032\ \textcolor{comment}{EITHER\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ WITHOUT\ LIMITATION,\ ANY\ WARRANTY\ OF}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00033}00033\ \textcolor{comment}{MERCHANTABILITY,\ TITLE,\ NON-\/INFRINGEMENT\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00034}00034\ \textcolor{comment}{IN\ NO\ EVENT\ SHALL\ MICROCHIP\ OR\ ITS\ LICENSORS\ BE\ LIABLE\ OR\ OBLIGATED\ UNDER}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00035}00035\ \textcolor{comment}{CONTRACT,\ NEGLIGENCE,\ STRICT\ LIABILITY,\ CONTRIBUTION,\ BREACH\ OF\ WARRANTY,\ OR}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00036}00036\ \textcolor{comment}{OTHER\ LEGAL\ EQUITABLE\ THEORY\ ANY\ DIRECT\ OR\ INDIRECT\ DAMAGES\ OR\ EXPENSES}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00037}00037\ \textcolor{comment}{INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ INCIDENTAL,\ SPECIAL,\ INDIRECT,\ PUNITIVE\ OR}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00038}00038\ \textcolor{comment}{CONSEQUENTIAL\ DAMAGES,\ LOST\ PROFITS\ OR\ LOST\ DATA,\ COST\ OF\ PROCUREMENT\ OF}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00039}00039\ \textcolor{comment}{SUBSTITUTE\ GOODS,\ TECHNOLOGY,\ SERVICES,\ OR\ ANY\ CLAIMS\ BY\ THIRD\ PARTIES}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00040}00040\ \textcolor{comment}{(INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ DEFENSE\ THEREOF),\ OR\ OTHER\ SIMILAR\ COSTS.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00041}00041\ \textcolor{comment}{*******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00042}00042\ \textcolor{comment}{//\ DOM-\/IGNORE-\/END}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00044}00044\ \textcolor{preprocessor}{\#ifndef\ \_BSP\_H}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00045}00045\ \textcolor{preprocessor}{\#define\ \_BSP\_H}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00047}00047\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00048}00048\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00049}00049\ \textcolor{comment}{//\ Section:\ Included\ Files}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00050}00050\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00051}00051\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00053}00053\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00054}00054\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00055}00055\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00056}00056\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00057}00057\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00058}00058\ \textcolor{preprocessor}{\#include\ "{}peripheral/ports/plib\_ports.h"{}}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00061}00061\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00062}00062\ \textcolor{comment}{/*\ BSP\ Switch.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00063}00063\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00064}00064\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00065}00065\ \textcolor{comment}{\ \ \ \ Defines\ the\ switches\ available\ on\ this\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00066}00066\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00067}00067\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00068}00068\ \textcolor{comment}{\ \ \ \ This\ enumeration\ defines\ the\ switches\ available\ on\ this\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00069}00069\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00070}00070\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00071}00071\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00072}00072\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00074}\mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebd}{00074}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00075}00075\ \{}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00076}\mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebda4f15a191af3a04fef37f826960615f2e}{00076}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebda4f15a191af3a04fef37f826960615f2e}{BSP\_SWITCH\_3}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00077}\mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebda7605a7f08856f0416ad8d215735625c3}{00077}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebda7605a7f08856f0416ad8d215735625c3}{BSP\_SWITCH\_1}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00078}00078\ \ \ \ \ \mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebdafefb02653422b8cfa1fbd7f4fcda85b2}{BSP\_SWITCH\_2}}\ =\ 2}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00079}\mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebdafefb02653422b8cfa1fbd7f4fcda85b2}{00079}}\ \}\ \mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebd}{BSP\_SWITCH}};}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00082}00082\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00083}00083\ \textcolor{comment}{/*\ BSP\ Switch\ state.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00084}00084\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00085}00085\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00086}00086\ \textcolor{comment}{\ \ \ \ Defines\ possible\ states\ of\ the\ switches\ on\ this\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00087}00087\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00088}00088\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00089}00089\ \textcolor{comment}{\ \ \ \ This\ enumeration\ defines\ the\ possible\ states\ of\ the\ switches\ on\ this\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00090}00090\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00091}00091\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00092}00092\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00093}00093\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00095}\mbox{\hyperlink{bsp_8h_aa7ef156811ace3cce47db4678d6f03c5}{00095}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00096}00096\ \{}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00097}00097\ \ \ \ \ \textcolor{comment}{/*\ Switch\ pressed\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00098}\mbox{\hyperlink{bsp_8h_aa7ef156811ace3cce47db4678d6f03c5ade97d601d69596f1a539baa904c4d6c4}{00098}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_aa7ef156811ace3cce47db4678d6f03c5ade97d601d69596f1a539baa904c4d6c4}{BSP\_SWITCH\_STATE\_PRESSED}}\ =\textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}\ 0\textcolor{comment}{/*DOM-\/IGNORE-\/END*/},}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00100}00100\ \ \ \ \textcolor{comment}{/*\ Switch\ not\ pressed\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00101}00101\ \ \ \ \ \mbox{\hyperlink{bsp_8h_aa7ef156811ace3cce47db4678d6f03c5aed0a6200d5c40f260efe71351d0ee962}{BSP\_SWITCH\_STATE\_RELEASED}}\ =\textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}\ 1\textcolor{comment}{/*DOM-\/IGNORE-\/END*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00103}\mbox{\hyperlink{bsp_8h_aa7ef156811ace3cce47db4678d6f03c5aed0a6200d5c40f260efe71351d0ee962}{00103}}\ \}\ \mbox{\hyperlink{bsp_8h_aa7ef156811ace3cce47db4678d6f03c5}{BSP\_SWITCH\_STATE}};}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00106}00106\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00107}00107\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00108}00108\ \textcolor{comment}{\ \ \ \ BSP\_SWITCH\_STATE\ BSP\_SwitchStateGet(BSP\_SWITCH\ switch);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00109}00109\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00110}00110\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00111}00111\ \textcolor{comment}{\ \ \ \ Returns\ the\ present\ state\ (pressed\ or\ not\ pressed)\ of\ the\ specified\ switch.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00112}00112\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00113}00113\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00114}00114\ \textcolor{comment}{\ \ \ \ This\ function\ returns\ the\ present\ state\ (pressed\ or\ not\ pressed)\ of\ the}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00115}00115\ \textcolor{comment}{\ \ \ \ specified\ switch.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00116}00116\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00117}00117\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00118}00118\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00119}00119\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00120}00120\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00121}00121\ \textcolor{comment}{\ \ \ \ switch\ \ -\/\ The\ switch\ whose\ state\ needs\ to\ be\ obtained.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00122}00122\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00123}00123\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00124}00124\ \textcolor{comment}{\ \ \ \ The\ pressed\ released\ state\ of\ the\ switch.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00125}00125\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00126}00126\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00127}00127\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00128}00128\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00129}00129\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00130}00130\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00131}00131\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00132}00132\ \textcolor{comment}{\ \ \ \ //\ Check\ the\ state\ of\ the\ switch.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00133}00133\ \textcolor{comment}{\ \ \ \ if(BSP\_SWITCH\_STATE\_PRESSED\ ==\ BSP\_SwitchStateGet(BSP\_SWITCH\_1))}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00134}00134\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00135}00135\ \textcolor{comment}{\ \ \ \ \ \ \ \ //\ This\ means\ that\ Switch\ 1\ on\ the\ board\ is\ pressed.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00136}00136\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00137}00137\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00138}00138\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00139}00139\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00140}00140\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00141}00141\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00142}00142\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00144}00144\ \mbox{\hyperlink{bsp_8h_aa7ef156811ace3cce47db4678d6f03c5}{BSP\_SWITCH\_STATE}}\ \mbox{\hyperlink{bsp_8h_ae7637adee392d43a251a13012daa63d6}{BSP\_SwitchStateGet}}(\mbox{\hyperlink{bsp_8h_a2dcc8421136c2833ba66edce7853aebd}{BSP\_SWITCH}}\ bspSwitch);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00146}00146\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00147}00147\ \textcolor{comment}{/*\ BSP\_LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00148}00148\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00149}00149\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00150}00150\ \textcolor{comment}{\ \ \ \ Defines\ the\ LEDs\ available\ on\ this\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00151}00151\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00152}00152\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00153}00153\ \textcolor{comment}{\ \ \ \ This\ enumeration\ defines\ the\ LEDs\ available\ on\ this\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00154}00154\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00155}00155\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00156}00156\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00157}00157\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00158}\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449}{00158}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00159}00159\ \{}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00160}\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449aace5198815db6bfdd1fe6410151c0031}{00160}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449aace5198815db6bfdd1fe6410151c0031}{BSP\_LED\_1}}\ =\ 0,}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00161}\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449a8720aa9ffbc392fbeb14c41fdc6a34ac}{00161}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449a8720aa9ffbc392fbeb14c41fdc6a34ac}{BSP\_LED\_2}}\ =\ 1,}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00162}00162\ \ \ \ \ \mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449a3f7da97d77ea2f1da65c72c52efde4e7}{BSP\_LED\_3}}\ =\ 2}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00163}\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449a3f7da97d77ea2f1da65c72c52efde4e7}{00163}}\ \}\ \mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449}{BSP\_LED}};}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00165}00165\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00166}00166\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00167}00167\ \textcolor{comment}{/*\ LED\ State}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00168}00168\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00169}00169\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00170}00170\ \textcolor{comment}{\ \ \ \ Enumerates\ the\ supported\ LED\ states.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00171}00171\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00172}00172\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00173}00173\ \textcolor{comment}{\ \ \ \ This\ enumeration\ defines\ the\ supported\ LED\ states.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00174}00174\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00175}00175\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00176}00176\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00177}00177\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00179}\mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68e}{00179}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00180}00180\ \{}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00181}00181\ \ \ \ \ \textcolor{comment}{/*\ LED\ State\ is\ on\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00182}\mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68eaa06935b569f152f35bdfbfa495367359}{00182}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68eaa06935b569f152f35bdfbfa495367359}{BSP\_LED\_STATE\_OFF}}\ =\ \textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}0\textcolor{comment}{/*DOM-\/IGNORE-\/END*/},}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00184}00184\ \ \ \ \textcolor{comment}{/*\ LED\ State\ is\ off\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00185}00185\ \ \ \ \ \mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68eaca6ffa1efcd13b58d2e04b6cbd149093}{BSP\_LED\_STATE\_ON}}\ =\ \textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}1\textcolor{comment}{/*DOM-\/IGNORE-\/END*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00187}\mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68eaca6ffa1efcd13b58d2e04b6cbd149093}{00187}}\ \}\ \mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68e}{BSP\_LED\_STATE}};}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00188}00188\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00189}00189\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00190}00190\ \textcolor{comment}{/*\ LED\ Active\ Level}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00191}00191\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00192}00192\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00193}00193\ \textcolor{comment}{\ \ \ \ Enumerates\ the\ supported\ LED\ active\ level.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00194}00194\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00195}00195\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00196}00196\ \textcolor{comment}{\ \ \ \ This\ enumeration\ defines\ the\ supported\ LED\ sactive\ levels.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00197}00197\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00198}00198\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00199}00199\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00200}00200\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00202}\mbox{\hyperlink{bsp_8h_a6fb6752e51597e4cfbe90f60ce203bf0}{00202}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00203}00203\ \{}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00204}00204\ \ \ \ \ \textcolor{comment}{/*\ LED\ active\ level\ is\ low\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00205}\mbox{\hyperlink{bsp_8h_a6fb6752e51597e4cfbe90f60ce203bf0a54203b1673f8d6f9ccbc4732e2010f63}{00205}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_a6fb6752e51597e4cfbe90f60ce203bf0a54203b1673f8d6f9ccbc4732e2010f63}{BSP\_LED\_ACTIVE\_LOW}}\ =\ \textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}0\textcolor{comment}{/*DOM-\/IGNORE-\/END*/},}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00206}00206\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00207}00207\ \ \ \ \ \textcolor{comment}{/*\ LED\ active\ level\ is\ high\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00208}00208\ \ \ \ \ \mbox{\hyperlink{bsp_8h_a6fb6752e51597e4cfbe90f60ce203bf0a8de18011a4b149db0eaea50d4e72f8d5}{BSP\_LED\_ACTIVE\_HIGH}}\ =\ \textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}1\textcolor{comment}{/*DOM-\/IGNORE-\/END*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00210}\mbox{\hyperlink{bsp_8h_a6fb6752e51597e4cfbe90f60ce203bf0a8de18011a4b149db0eaea50d4e72f8d5}{00210}}\ \}\ \mbox{\hyperlink{bsp_8h_a6fb6752e51597e4cfbe90f60ce203bf0}{BSP\_LED\_ACTIVE\_LEVEL}};}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00211}00211\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00212}00212\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00213}00213\ \textcolor{comment}{\ \ \ \ void\ BSP\_LEDStateSet(BSP\_LED\ led,\ BSP\_LED\_STATE\ state);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00214}00214\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00215}00215\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00216}00216\ \textcolor{comment}{\ \ \ \ Controls\ the\ state\ of\ the\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00217}00217\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00218}00218\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00219}00219\ \textcolor{comment}{\ \ \ \ This\ function\ allows\ the\ application\ to\ specify\ the\ state\ of\ the\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00220}00220\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00221}00221\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00222}00222\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00223}00223\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00224}00224\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00225}00225\ \textcolor{comment}{\ \ \ \ led\ \ \ \ \ -\/\ The\ LED\ to\ operate\ on.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00226}00226\ \textcolor{comment}{\ \ \ \ state\ \ \ -\/\ The\ state\ to\ be\ set.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00227}00227\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00228}00228\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00229}00229\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00230}00230\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00231}00231\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00232}00232\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00233}00233\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00234}00234\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00235}00235\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00236}00236\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00237}00237\ \textcolor{comment}{\ \ \ \ //\ Switch\ on\ LED1\ on\ the\ board\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00238}00238\ \textcolor{comment}{\ \ \ \ BSP\_LEDStateSet(BSP\_LED\_1,\ BSP\_LED\_STATE\_ON);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00239}00239\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00240}00240\ \textcolor{comment}{\ \ \ \ //\ Switch\ off\ LED2\ on\ the\ board\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00241}00241\ \textcolor{comment}{\ \ \ \ BSP\_LEDStateSet(BSP\_LED\_2,\ BSP\_LED\_STATE\_OFF);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00242}00242\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00243}00243\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00244}00244\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00245}00245\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00246}00246\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00247}00247\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00248}00248\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00249}00249\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bsp_8h_a20fff6dcb078cc435b88081f659f45fd}{BSP\_LEDStateSet}}(\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449}{BSP\_LED}}\ led,\ \mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68e}{BSP\_LED\_STATE}}\ state);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00250}00250\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00252}00252\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00253}00253\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00254}00254\ \textcolor{comment}{\ \ \ \ BSP\_LED\_STATE\ BSP\_LEDStateGet(BSP\_LED\ led);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00255}00255\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00256}00256\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00257}00257\ \textcolor{comment}{\ \ \ \ Returns\ the\ present\ state\ of\ the\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00258}00258\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00259}00259\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00260}00260\ \textcolor{comment}{\ \ \ \ This\ function\ returns\ the\ present\ state\ of\ the\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00261}00261\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00262}00262\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00263}00263\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00264}00264\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00265}00265\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00266}00266\ \textcolor{comment}{\ \ \ \ led\ -\/\ The\ LED\ to\ whose\ status\ needs\ to\ be\ obtained.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00267}00267\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00268}00268\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00269}00269\ \textcolor{comment}{\ \ \ \ The\ ON/OFF\ state\ of\ the\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00270}00270\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00271}00271\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00272}00272\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00273}00273\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00274}00274\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00275}00275\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00276}00276\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00277}00277\ \textcolor{comment}{\ \ \ \ //\ Check\ if\ LED2\ is\ off}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00278}00278\ \textcolor{comment}{\ \ \ \ if(BSP\_LED\_STATE\_OFF\ ==\ BSP\_LEDStateGet(BSP\_LED\_2)}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00279}00279\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00280}00280\ \textcolor{comment}{\ \ \ \ \ \ \ \ //\ Switch\ on\ the\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00281}00281\ \textcolor{comment}{\ \ \ \ \ \ \ \ BSP\_LEDStateSet(BSP\_LED\_2,\ BSP\_LED\_STATE\_ON);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00282}00282\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00283}00283\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00284}00284\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00285}00285\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00286}00286\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00287}00287\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00288}00288\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00289}00289\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00290}00290\ \mbox{\hyperlink{bsp_8h_a78b78b7d2d00afabfe861b7f1fd0c68e}{BSP\_LED\_STATE}}\ \mbox{\hyperlink{bsp_8h_ad70074709056bff185cf493b59e65768}{BSP\_LEDStateGet}}(\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449}{BSP\_LED}}\ led);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00291}00291\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00292}00292\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00293}00293\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00294}00294\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00295}00295\ \textcolor{comment}{\ \ \ \ void\ BSP\_LEDToggle(BSP\_LED\ led);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00296}00296\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00297}00297\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00298}00298\ \textcolor{comment}{\ \ \ \ Toggles\ the\ state\ of\ the\ LED\ between\ BSP\_LED\_STATE\_ON\ and\ BSP\_LED\_STATE\_OFF.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00299}00299\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00300}00300\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00301}00301\ \textcolor{comment}{\ \ \ \ This\ function\ toggles\ the\ state\ of\ the\ LED\ between\ BSP\_LED\_STATE\_ON\ and}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00302}00302\ \textcolor{comment}{\ \ \ \ BSP\_LED\_STATE\_OFF.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00303}00303\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00304}00304\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00305}00305\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00306}00306\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00307}00307\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00308}00308\ \textcolor{comment}{\ \ \ \ led\ -\/\ The\ LED\ to\ toggle.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00309}00309\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00310}00310\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00311}00311\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00312}00312\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00313}00313\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00314}00314\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00315}00315\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00316}00316\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00317}00317\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00318}00318\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00319}00319\ \textcolor{comment}{\ \ \ \ //\ Switch\ on\ LED1\ on\ the\ board\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00320}00320\ \textcolor{comment}{\ \ \ \ BSP\_LEDStateSet(BSP\_LED\_1,\ BSP\_LED\_STATE\_ON);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00321}00321\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00322}00322\ \textcolor{comment}{\ \ \ \ //\ Switch\ off\ LED2\ on\ the\ board\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00323}00323\ \textcolor{comment}{\ \ \ \ BSP\_LEDStateSet(BSP\_LED\_2,\ BSP\_LED\_STATE\_OFF);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00324}00324\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00325}00325\ \textcolor{comment}{\ \ \ \ //\ Toggle\ state\ of\ LED3}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00326}00326\ \textcolor{comment}{\ \ \ \ BSP\_LEDToggle(BSP\_LED\_3);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00327}00327\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00328}00328\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00329}00329\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00330}00330\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00331}00331\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00332}00332\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00333}00333\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bsp_8h_aacfcb4ab21752df7c6032fcad0810a9c}{BSP\_LEDToggle}}(\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449}{BSP\_LED}}\ led);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00334}00334\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00336}00336\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00337}00337\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00338}00338\ \textcolor{comment}{\ \ \ \ void\ BSP\_LEDOn(BSP\_LED\ led);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00339}00339\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00340}00340\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00341}00341\ \textcolor{comment}{\ \ \ \ Switches\ ON\ the\ specified\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00342}00342\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00343}00343\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00344}00344\ \textcolor{comment}{\ \ \ \ This\ function\ switches\ ON\ the\ specified\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00345}00345\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00346}00346\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00347}00347\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00348}00348\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00349}00349\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00350}00350\ \textcolor{comment}{\ \ \ \ led\ -\/\ The\ LED\ to\ switch\ on.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00351}00351\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00352}00352\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00353}00353\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00354}00354\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00355}00355\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00356}00356\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00357}00357\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00358}00358\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00359}00359\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00360}00360\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00361}00361\ \textcolor{comment}{\ \ \ \ //\ Switch\ on\ LED1\ on\ the\ board\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00362}00362\ \textcolor{comment}{\ \ \ \ BSP\_LEDOn(BSP\_LED\_1);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00363}00363\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00364}00364\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00365}00365\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00366}00366\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00367}00367\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00368}00368\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00370}00370\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bsp_8h_a90c5d54bd70ef4108397aaa90defa61a}{BSP\_LEDOn}}(\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449}{BSP\_LED}}\ led);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00371}00371\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00372}00372\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00373}00373\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00374}00374\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00375}00375\ \textcolor{comment}{\ \ \ \ void\ BSP\_LEDOff(BSP\_LED\ led);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00376}00376\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00377}00377\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00378}00378\ \textcolor{comment}{\ \ \ \ Switches\ OFF\ the\ specified\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00379}00379\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00380}00380\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00381}00381\ \textcolor{comment}{\ \ \ \ This\ function\ switches\ OFF\ the\ specified\ LED.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00382}00382\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00383}00383\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00384}00384\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00385}00385\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00386}00386\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00387}00387\ \textcolor{comment}{\ \ \ \ led\ -\/\ The\ LED\ to\ switch\ off.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00388}00388\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00389}00389\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00390}00390\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00391}00391\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00392}00392\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00393}00393\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00394}00394\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00395}00395\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00396}00396\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00397}00397\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00398}00398\ \textcolor{comment}{\ \ \ \ //\ Switch\ off\ LED1\ on\ the\ board\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00399}00399\ \textcolor{comment}{\ \ \ \ BSP\_LEDOff(BSP\_LED\_1);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00400}00400\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00401}00401\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00402}00402\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00403}00403\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00404}00404\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00405}00405\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00406}00406\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00407}00407\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bsp_8h_af9450fa39bbd225e15d4b31894c8a5ee}{BSP\_LEDOff}}(\mbox{\hyperlink{bsp_8h_afe0089b34dd0d36880f7101d4e676449}{BSP\_LED}}\ led);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00408}00408\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00409}00409\ \textcolor{comment}{/*\ USB\ VBUS\ Switch\ State}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00410}00410\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00411}00411\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00412}00412\ \textcolor{comment}{\ \ \ \ Defines\ the\ possible\ states\ of\ the\ USB\ VBUS\ Switch\ on\ this\ board}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00413}00413\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00414}00414\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00415}00415\ \textcolor{comment}{\ \ \ \ This\ enumeration\ defines\ the\ possible\ states\ of\ the\ USB\ VBUS\ Switch\ on\ this}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00416}00416\ \textcolor{comment}{\ \ \ \ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00417}00417\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00418}00418\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00419}00419\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00420}00420\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00421}00421\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00422}\mbox{\hyperlink{bsp_8h_aed07a065916d288dea615a7de4157aa5}{00422}}\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00423}00423\ \{}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00424}00424\ \ \ \ \ \textcolor{comment}{/*\ USB\ VBUS\ Switch\ disable\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00425}\mbox{\hyperlink{bsp_8h_aed07a065916d288dea615a7de4157aa5aa89a21eccf58fb53dc55311c82fa5275}{00425}}\ \ \ \ \ \mbox{\hyperlink{bsp_8h_aed07a065916d288dea615a7de4157aa5aa89a21eccf58fb53dc55311c82fa5275}{BSP\_USB\_VBUS\_SWITCH\_STATE\_DISABLE}}\ =\ \textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}0\textcolor{comment}{/*DOM-\/IGNORE-\/END*/},}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00426}00426\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00427}00427\ \ \ \ \ \textcolor{comment}{/*\ USB\ VBUS\ Switch\ enable\ */}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00428}00428\ \ \ \ \ \mbox{\hyperlink{bsp_8h_aed07a065916d288dea615a7de4157aa5a24fad00ff88a80af40c41e3dceefe7d1}{BSP\_USB\_VBUS\_SWITCH\_STATE\_ENABLE}}\ =\ \textcolor{comment}{/*DOM-\/IGNORE-\/BEGIN*/}1\textcolor{comment}{/*DOM-\/IGNORE-\/END*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00429}00429\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00430}\mbox{\hyperlink{bsp_8h_aed07a065916d288dea615a7de4157aa5a24fad00ff88a80af40c41e3dceefe7d1}{00430}}\ \}\ \mbox{\hyperlink{bsp_8h_aed07a065916d288dea615a7de4157aa5}{BSP\_USB\_VBUS\_SWITCH\_STATE}};}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00431}00431\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00432}00432\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00433}00433\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00434}00434\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00435}00435\ \textcolor{comment}{\ \ \ \ void\ BSP\_USBVBUSSwitchStateSet(BSP\_USB\_VBUS\_SWITCH\_STATE\ state);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00436}00436\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00437}00437\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00438}00438\ \textcolor{comment}{\ \ \ \ This\ function\ enables\ or\ disables\ the\ USB\ VBUS\ switch\ on\ the\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00439}00439\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00440}00440\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00441}00441\ \textcolor{comment}{\ \ \ \ This\ function\ enables\ or\ disables\ the\ VBUS\ switch\ on\ the\ board.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00442}00442\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00443}00443\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00444}00444\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00445}00445\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00446}00446\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00447}00447\ \textcolor{comment}{\ \ \ \ state\ -\/\ If\ BSP\_USB\_VBUS\_SWITCH\_STATE\_ENABLE,\ then\ the\ USB\ VBUS\ switch\ is}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00448}00448\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ enabled\ and\ VBUS\ is\ supplied\ on\ the\ USB.\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00449}00449\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ If\ BSP\_USB\_VBUS\_SWITCH\_STATE\_DISABLE,\ then\ the\ USB\ VBUS}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00450}00450\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ switch\ is\ disabled\ and\ VBUS\ is\ not\ supplied\ on\ the\ USB.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00451}00451\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00452}00452\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00453}00453\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00454}00454\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00455}00455\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00456}00456\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00457}00457\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00458}00458\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00459}00459\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00460}00460\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00461}00461\ \textcolor{comment}{\ \ \ \ //\ Enable\ the\ VBUS\ switch.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00462}00462\ \textcolor{comment}{\ \ \ \ BSP\_USBVBUSSwitchStateSet(BSP\_USB\_VBUS\_SWITCH\_STATE\_ENABLE);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00463}00463\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00464}00464\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00465}00465\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00466}00466\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00467}00467\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00468}00468\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00469}00469\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00470}00470\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bsp_8h_af4f8a588467bd03e0763ce908e84b079}{BSP\_USBVBUSSwitchStateSet}}(\mbox{\hyperlink{bsp_8h_aed07a065916d288dea615a7de4157aa5}{BSP\_USB\_VBUS\_SWITCH\_STATE}}\ state);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00471}00471\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00472}00472\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00473}00473\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00474}00474\ \textcolor{comment}{\ \ \ \ bool\ BSP\_USBVBUSPowerEnable(uint8\_t\ port,\ bool\ enable)}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00475}00475\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00476}00476\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00477}00477\ \textcolor{comment}{\ \ \ \ This\ function\ controls\ the\ USB\ VBUS\ supply.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00478}00478\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00479}00479\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00480}00480\ \textcolor{comment}{\ \ \ \ This\ function\ controls\ the\ USB\ VBUS\ supply.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00481}00481\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00482}00482\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00483}00483\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00484}00484\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00485}00485\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00486}00486\ \textcolor{comment}{\ \ \ \ port\ -\/\ This\ parameter\ is\ ignored.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00487}00487\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00488}00488\ \textcolor{comment}{\ \ \ \ enable\ \ -\/\ if\ true\ VBUS\ supply\ is\ enabled.\ If\ false\ VBUS\ supply\ is\ disabled.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00489}00489\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00490}00490\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00491}00491\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00492}00492\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00493}00493\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00494}00494\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00495}00495\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00496}00496\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00497}00497\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00498}00498\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00499}00499\ \textcolor{comment}{\ \ \ \ //\ Enable\ the\ power.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00500}00500\ \textcolor{comment}{\ \ \ \ BSP\_USBVBUSPowerEnable(0,\ true);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00501}00501\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00502}00502\ \textcolor{comment}{\ \ \ \ //\ Disable\ the\ power.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00503}00503\ \textcolor{comment}{\ \ \ \ BSP\_USBVBUSPowerEnable(0,\ false);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00504}00504\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00505}00505\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00506}00506\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00507}00507\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00508}00508\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00509}00509\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00510}00510\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00511}00511\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bsp_8h_ae3a795de9e66ad5a010af3ee70faad6d}{BSP\_USBVBUSPowerEnable}}(uint8\_t\ port,\ \textcolor{keywordtype}{bool}\ enable);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00512}00512\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00513}00513\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00514}00514\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00515}00515\ \textcolor{comment}{\ \ \ \ bool\ BSP\_USBVBUSSwitchOverCurrentDetect(uint8\_t\ port)}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00516}00516\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00517}00517\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00518}00518\ \textcolor{comment}{\ \ \ \ Returns\ true\ if\ the\ over\ current\ is\ detected\ on\ the\ VBUS\ supply.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00519}00519\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00520}00520\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00521}00521\ \textcolor{comment}{\ \ \ \ This\ function\ returns\ true\ if\ over\ current\ is\ detected\ on\ the\ VBUS\ supply.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00522}00522\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00523}00523\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00524}00524\ \textcolor{comment}{\ \ \ \ BSP\_Initialize()\ should\ have\ been\ called.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00525}00525\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00526}00526\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00527}00527\ \textcolor{comment}{\ \ \ \ port\ -\/\ This\ parameter\ is\ ignored.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00528}00528\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00529}00529\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00530}00530\ \textcolor{comment}{\ \ \ \ true\ -\/\ VBUS\ supply\ over\ current\ is\ detected.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00531}00531\ \textcolor{comment}{\ \ \ \ false\ -\/\ VBUS\ supply\ over\ current\ is\ not\ detected.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00532}00532\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00533}00533\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00534}00534\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00535}00535\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00536}00536\ \textcolor{comment}{\ \ \ \ //\ Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00537}00537\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00538}00538\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00539}00539\ \textcolor{comment}{\ \ \ \ //\ Enable\ the\ power.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00540}00540\ \textcolor{comment}{\ \ \ \ BSP\_USBVBUSPowerEnable(0,\ true);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00541}00541\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00542}00542\ \textcolor{comment}{\ \ \ \ if(BSP\_USBVBUSSwitchOverCurrentDetect(0))}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00543}00543\ \textcolor{comment}{\ \ \ \ \{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00544}00544\ \textcolor{comment}{\ \ \ \ \ \ \ \ //\ Disable\ the\ power.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00545}00545\ \textcolor{comment}{\ \ \ \ \ \ \ \ BSP\_USBVBUSPowerEnable(0,\ false);}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00546}00546\ \textcolor{comment}{\ \ \ \ \}}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00547}00547\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00548}00548\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00549}00549\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00550}00550\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00551}00551\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00552}00552\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00553}00553\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00554}00554\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{bsp_8h_a144bcfd2c1adc1c8802092a068908972}{BSP\_USBVBUSSwitchOverCurrentDetect}}(uint8\_t\ port);}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00555}00555\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00556}00556\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00557}00557\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00558}00558\ \textcolor{comment}{//\ Section:\ Interface\ Routines}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00559}00559\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00560}00560\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00561}00561\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00562}00562\ \textcolor{comment}{//\ *****************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00563}00563\ \textcolor{comment}{/*\ Function:\ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00564}00564\ \textcolor{comment}{\ \ \ \ void\ BSP\_Initialize(void)}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00565}00565\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00566}00566\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00567}00567\ \textcolor{comment}{\ \ \ \ Performs\ the\ necessary\ actions\ to\ initialize\ a\ board}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00568}00568\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00569}00569\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00570}00570\ \textcolor{comment}{\ \ \ \ This\ function\ initializes\ the\ LED\ and\ Switch\ ports\ on\ the\ board.\ \ This}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00571}00571\ \textcolor{comment}{\ \ \ \ function\ must\ be\ called\ by\ the\ user\ before\ using\ any\ APIs\ present\ on\ this}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00572}00572\ \textcolor{comment}{\ \ \ \ BSP.\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00573}00573\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00574}00574\ \textcolor{comment}{\ \ Precondition:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00575}00575\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00576}00576\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00577}00577\ \textcolor{comment}{\ \ Parameters:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00578}00578\ \textcolor{comment}{\ \ \ \ None}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00579}00579\ \textcolor{comment}{\ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00580}00580\ \textcolor{comment}{\ \ Returns:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00581}00581\ \textcolor{comment}{\ \ \ \ None.}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00582}00582\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00583}00583\ \textcolor{comment}{\ \ Example:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00584}00584\ \textcolor{comment}{\ \ \ \ <code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00585}00585\ \textcolor{comment}{\ \ \ \ //Initialize\ the\ BSP}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00586}00586\ \textcolor{comment}{\ \ \ \ BSP\_Initialize();}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00587}00587\ \textcolor{comment}{\ \ \ \ </code>}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00588}00588\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00589}00589\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00590}00590\ \textcolor{comment}{\ \ \ \ None\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00591}00591\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00592}00592\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00593}00593\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{bsp_8h_a2a70be190d35528de1a33c03b0334d34}{BSP\_Initialize}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00594}00594\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00595}00595\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ \_BSP\_H}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00596}00596\ }
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00597}00597\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00598}00598\ \textcolor{comment}{\ End\ of\ File}}
+\DoxyCodeLine{\Hypertarget{bsp_8h_source_l00599}00599\ \textcolor{comment}{*/}}
+
+\end{DoxyCode}

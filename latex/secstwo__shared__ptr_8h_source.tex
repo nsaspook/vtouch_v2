@@ -1,0 +1,99 @@
+\doxysection{secstwo\+\_\+shared\+\_\+ptr.\+h}
+\hypertarget{secstwo__shared__ptr_8h_source}{}\label{secstwo__shared__ptr_8h_source}\index{gem/secstwo-\/1.0.1/secstwo\_shared\_ptr.h@{gem/secstwo-\/1.0.1/secstwo\_shared\_ptr.h}}
+\mbox{\hyperlink{secstwo__shared__ptr_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00001}00001\ \textcolor{comment}{/*\ \ \ }}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00002}00002\ \textcolor{comment}{\ *\ \ \ This\ file\ is\ part\ of\ FREESECS.}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00003}00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00004}00004\ \textcolor{comment}{\ *\ \ \ FREESECS\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00005}00005\ \textcolor{comment}{\ *\ \ \ it\ under\ the\ terms\ of\ the\ GNU\ Lesser\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00006}00006\ \textcolor{comment}{\ *\ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00007}00007\ \textcolor{comment}{\ *\ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00008}00008\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00009}00009\ \textcolor{comment}{\ *\ \ \ FREESECS\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00010}00010\ \textcolor{comment}{\ *\ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00011}00011\ \textcolor{comment}{\ *\ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00012}00012\ \textcolor{comment}{\ *\ \ \ GNU\ Lesser\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00013}00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00014}00014\ \textcolor{comment}{\ *\ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ Lesser\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00015}00015\ \textcolor{comment}{\ *\ \ \ along\ with\ FREESECS,\ see\ COPYING.}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00016}00016\ \textcolor{comment}{\ *\ \ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00017}00017\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00018}00018\ \textcolor{preprocessor}{\#ifndef\ \_SHARED\_PTR\_H}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00019}00019\ \textcolor{preprocessor}{\#define\ \_SHARED\_PTR\_H}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00021}00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacefreesecs}{freesecs}}\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00026}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{00026}}\ \ \ \ \ \textcolor{keyword}{template}\ <\ \textcolor{keyword}{class}\ T\ >\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{shared\_ptr\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00027}00027\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00028}00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ *\ ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ *count;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ *nil()\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{size\_t}\ nil\_counter(1);}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \&nil\_counter;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00034}00034\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordtype}{void}\ decref()\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (-\/-\/(*count)\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ count;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ incref()\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ ++(*count);}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00044}00044\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00046}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_acf4eed829cf6fa7e365da70dfc75f4f0}{00046}}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_acf4eed829cf6fa7e365da70dfc75f4f0}{shared\_ptr\_t}}():ptr(0),\ count(nil())\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ incref();}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00049}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a19c5e64ab2db5a4d05b31e2e3c31bd21}{00049}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a19c5e64ab2db5a4d05b31e2e3c31bd21}{\string~shared\_ptr\_t}}()\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ decref();}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00053}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a46cb83605121f2ba7f3f9e269947144a}{00053}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a46cb83605121f2ba7f3f9e269947144a}{shared\_ptr\_t}}(\textcolor{keyword}{const}\ shared\_ptr\_t\ <\ T\ >\ \&o):ptr(o.ptr),}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ count(o.count)\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ incref();}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00057}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a5b0ece8501f2f344ff5fb22be787e7f6}{00057}}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a5b0ece8501f2f344ff5fb22be787e7f6}{shared\_ptr\_t}}(\mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ *\ p):ptr(p),\ count(new\ \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\_t}}(1))\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00060}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_ac64e6cfd33e7a8d8fa86556c332c1e50}{00060}}\ \ \ \ \ \ \ \ \ shared\_ptr\_t\ <\ T\ >\ \&\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_ac64e6cfd33e7a8d8fa86556c332c1e50}{operator=}}(\textcolor{keyword}{const}\ shared\_ptr\_t\ <\ T\ >\ \&o)\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ptr\ ==\ o.ptr)}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ decref();}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ ptr\ =\ o.ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ count\ =\ o.count;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ incref();}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00068}00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00070}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a04ddccce7102c0f434702f33f534a87c}{00070}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ *\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a04ddccce7102c0f434702f33f534a87c}{get}}()\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00073}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a4442b1b9eab40e7939e1e01cdedcb7ae}{00073}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ *\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a4442b1b9eab40e7939e1e01cdedcb7ae}{operator-\/>}}()\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00075}00075\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00076}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a3f534efce0b043d603eb8f5653268e7d}{00076}}\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ \&\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a3f534efce0b043d603eb8f5653268e7d}{operator*}}()\ \{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00080}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_aebf515b783686e5302b6e52f4ed35981}{00080}}\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ *\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_aebf515b783686e5302b6e52f4ed35981}{get}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00082}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_abaade5c780b539b94de660e314cb0c90}{00082}}\ \ \ \ \ \ \ \ \ \}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ *\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a4442b1b9eab40e7939e1e01cdedcb7ae}{operator-\/>}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00084}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a241c04e3ce86e1fd5a946eb2aa8b1f22}{00084}}\ \ \ \ \ \ \ \ \ \}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ \&\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a3f534efce0b043d603eb8f5653268e7d}{operator*}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00086}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_adb362c5769495b693b4c869428921510}{00086}}\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_adb362c5769495b693b4c869428921510}{operator==}}(\textcolor{keyword}{const}\ shared\_ptr\_t\ <\ T\ >\ \&o)\textcolor{keyword}{const\ }\{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr\ ==\ o.ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00088}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_af4344331d18e0650e3690b9846b86e79}{00088}}\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_af4344331d18e0650e3690b9846b86e79}{operator!=}}(\textcolor{keyword}{const}\ shared\_ptr\_t\ <\ T\ >\ \&o)\textcolor{keyword}{const\ }\{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr\ !=\ o.ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00090}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a2654b1bf92cb51f1cac429a4c40112ae}{00090}}\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a2654b1bf92cb51f1cac429a4c40112ae}{operator<}}(\textcolor{keyword}{const}\ shared\_ptr\_t\ <\ T\ >\ \&o)\textcolor{keyword}{const\ }\{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ ptr\ <\ o.ptr;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00092}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a887aa2213fe3881750986293561c6a2d}{00092}}\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordtype}{size\_t}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a887aa2213fe3881750986293561c6a2d}{refcount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *count;}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00094}\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a265a253612b46abed17c61b0a5e5ce30}{00094}}\ \ \ \ \ \ \ \ \ \}\ \textcolor{keyword}{typedef}\ \mbox{\hyperlink{msg__text_8h_a248cb5e9a1a45dba9ea0fd9014d5f12e}{T}}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a265a253612b46abed17c61b0a5e5ce30}{value\_type}};}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00095}00095\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00096}00096\ \}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//namespace}}
+\DoxyCodeLine{\Hypertarget{secstwo__shared__ptr_8h_source_l00097}00097\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\_SHARED\_PTR\_H}}
+
+\end{DoxyCode}

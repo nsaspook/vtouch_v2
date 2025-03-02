@@ -1,0 +1,46 @@
+\doxysection{ringbufs.\+h}
+\hypertarget{ringbufs_8h_source}{}\label{ringbufs_8h_source}\index{secs\_q84.X/ringbufs.h@{secs\_q84.X/ringbufs.h}}
+\mbox{\hyperlink{ringbufs_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00001}00001\ \textcolor{comment}{/*\ }}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00002}00002\ \textcolor{comment}{\ *\ File:\ \ \ ringbufs.h}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00003}00003\ \textcolor{comment}{\ *\ Author:\ rootswitcDC\ circuit\ breakerh\ debounce\ icdebounce\ icfuse\ type\ T}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Created\ on\ July\ 25,\ 2015,\ 2:03\ PM}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00006}00006\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00008}00008\ \textcolor{preprocessor}{\#ifndef\ RINGBUFS\_H}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00009}00009\ \textcolor{preprocessor}{\#define\ RINGBUFS\_H}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00011}00011\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00012}00012\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00013}00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{vconfig_8h}{vconfig.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00017}\mbox{\hyperlink{ringbufs_8h_a3979138d69702d83185bef951f48dcd5}{00017}}\ \textcolor{preprocessor}{\#define\ RBUF\_SIZE\ \ \ \ 64}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00019}\mbox{\hyperlink{structring_buf_s__t}{00019}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ \{}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00020}\mbox{\hyperlink{structring_buf_s__t_a0ee22aa827067e77fbdc8ca5d5d6f87b}{00020}}\ \ \ \ \ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structring_buf_s__t_a0ee22aa827067e77fbdc8ca5d5d6f87b}{buf}}[\mbox{\hyperlink{ringbufs_8h_a3979138d69702d83185bef951f48dcd5}{RBUF\_SIZE}}];}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00021}\mbox{\hyperlink{structring_buf_s__t_a9794c0e61506b826b49b458708ae2489}{00021}}\ \ \ \ \ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structring_buf_s__t_a9794c0e61506b826b49b458708ae2489}{head}};}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00022}\mbox{\hyperlink{structring_buf_s__t_a8db7f977b77e4e4d588ef0d3e04ada16}{00022}}\ \ \ \ \ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structring_buf_s__t_a8db7f977b77e4e4d588ef0d3e04ada16}{tail}};}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00023}\mbox{\hyperlink{structring_buf_s__t_a20302e2c99a60d3f612dba57e3f6333b}{00023}}\ \ \ \ \ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structring_buf_s__t_a20302e2c99a60d3f612dba57e3f6333b}{count}};}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00024}\mbox{\hyperlink{ringbufs_8h_aa5eceade01632aebac2d54dcd423b617}{00024}}\ \ \ \ \ \}\ \mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}};}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ringbufs_8h_a27710758d20eb3eec5cf0f91bbb1a797}{ringBufS\_init}}(\textcolor{keyword}{volatile}\ \mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00027}00027\ \ \ \ \ int8\_t\ \mbox{\hyperlink{ringbufs_8h_a35cc95280d10e20a261938e56b6a614a}{ringBufS\_empty}}(\mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00028}00028\ \ \ \ \ int8\_t\ \mbox{\hyperlink{ringbufs_8h_aaf5edf59424df3782d371ebae7b8f1d5}{ringBufS\_full}}(\mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00029}00029\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{ringbufs_8h_adc3bc6838d1f9fa6e1f958c0038ded86}{ringBufS\_get}}(\mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ *\_this);}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ringbufs_8h_affc9992c49c8184c104a5d96587b949b}{ringBufS\_put}}(\mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ *\_this,\ \textcolor{keyword}{const}\ uint8\_t\ c);}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00031}00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ringbufs_8h_afd07784b578ae76b66595ca22f2df9ab}{ringBufS\_put\_dma}}(\mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ *\_this,\ \textcolor{keyword}{const}\ uint8\_t\ c);}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{ringbufs_8h_af880dd4233d1cab4da28e23ccd080d6c}{ringBufS\_flush}}(\mbox{\hyperlink{structring_buf_s__t}{ringBufS\_t}}\ *\_this,\ \textcolor{keyword}{const}\ int8\_t\ clearBuffer);}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00035}00035\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00037}00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00039}00039\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{/*\ RINGBUFS\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{ringbufs_8h_source_l00040}00040\ }
+
+\end{DoxyCode}

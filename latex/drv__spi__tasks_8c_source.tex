@@ -1,0 +1,220 @@
+\doxysection{drv\+\_\+spi\+\_\+tasks.\+c}
+\hypertarget{drv__spi__tasks_8c_source}{}\label{drv__spi__tasks_8c_source}\index{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/driver/spi/dynamic/drv\_spi\_tasks.c@{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/driver/spi/dynamic/drv\_spi\_tasks.c}}
+\mbox{\hyperlink{drv__spi__tasks_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00001}00001\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00002}00002\ \textcolor{comment}{\ \ SPI\ Driver\ Functions\ for\ Dynamic\ Driver\ Tasks\ Functions}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00003}00003\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00004}00004\ \textcolor{comment}{\ \ Company:}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00005}00005\ \textcolor{comment}{\ \ \ \ Microchip\ Technology\ Inc.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00006}00006\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00007}00007\ \textcolor{comment}{\ \ File\ Name:}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00008}00008\ \textcolor{comment}{\ \ \ \ drv\_spi\_dynamic\_tasks.c}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00009}00009\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00010}00010\ \textcolor{comment}{\ \ Summary:}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00011}00011\ \textcolor{comment}{\ \ \ \ SPI\ driver\ tasks\ functions}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00012}00012\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00013}00013\ \textcolor{comment}{\ \ Description:}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00014}00014\ \textcolor{comment}{\ \ \ \ The\ SPI\ device\ driver\ provides\ a\ simple\ interface\ to\ manage\ the\ SPI}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00015}00015\ \textcolor{comment}{\ \ \ \ modules\ on\ Microchip\ microcontrollers.\ This\ file\ contains\ implemenation}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00016}00016\ \textcolor{comment}{\ \ \ \ for\ the\ SPI\ driver.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00017}00017\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00018}00018\ \textcolor{comment}{\ \ Remarks:}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00019}00019\ \textcolor{comment}{\ \ This\ file\ is\ generated\ from\ framework/driver/spi/template/drv\_spi\_dynamic\_tasks.c.ftl}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00020}00020\ \textcolor{comment}{*******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00022}00022\ \textcolor{comment}{//DOM-\/IGNORE-\/BEGIN}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00023}00023\ \textcolor{comment}{/*******************************************************************************}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00024}00024\ \textcolor{comment}{Copyright\ (c)\ 2013\ released\ Microchip\ Technology\ Inc.\ \ All\ rights\ reserved.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00025}00025\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00026}00026\ \textcolor{comment}{Microchip\ licenses\ to\ you\ the\ right\ to\ use,\ modify,\ copy\ and\ distribute}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00027}00027\ \textcolor{comment}{Software\ only\ when\ embedded\ on\ a\ Microchip\ microcontroller\ or\ digital\ signal}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00028}00028\ \textcolor{comment}{controller\ that\ is\ integrated\ into\ your\ product\ or\ third\ party\ product}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00029}00029\ \textcolor{comment}{(pursuant\ to\ the\ sublicense\ terms\ in\ the\ accompanying\ license\ agreement).}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00030}00030\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00031}00031\ \textcolor{comment}{You\ should\ refer\ to\ the\ license\ agreement\ accompanying\ this\ Software\ for}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00032}00032\ \textcolor{comment}{additional\ information\ regarding\ your\ rights\ and\ obligations.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00033}00033\ \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00034}00034\ \textcolor{comment}{SOFTWARE\ AND\ DOCUMENTATION\ ARE\ PROVIDED\ AS\ IS\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00035}00035\ \textcolor{comment}{EITHER\ EXPRESS\ OR\ IMPLIED,\ INCLUDING\ WITHOUT\ LIMITATION,\ ANY\ WARRANTY\ OF}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00036}00036\ \textcolor{comment}{MERCHANTABILITY,\ TITLE,\ NON-\/INFRINGEMENT\ AND\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00037}00037\ \textcolor{comment}{IN\ NO\ EVENT\ SHALL\ MICROCHIP\ OR\ ITS\ LICENSORS\ BE\ LIABLE\ OR\ OBLIGATED\ UNDER}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00038}00038\ \textcolor{comment}{CONTRACT,\ NEGLIGENCE,\ STRICT\ LIABILITY,\ CONTRIBUTION,\ BREACH\ OF\ WARRANTY,\ OR}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00039}00039\ \textcolor{comment}{OTHER\ LEGAL\ EQUITABLE\ THEORY\ ANY\ DIRECT\ OR\ INDIRECT\ DAMAGES\ OR\ EXPENSES}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00040}00040\ \textcolor{comment}{INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ INCIDENTAL,\ SPECIAL,\ INDIRECT,\ PUNITIVE\ OR}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00041}00041\ \textcolor{comment}{CONSEQUENTIAL\ DAMAGES,\ LOST\ PROFITS\ OR\ LOST\ DATA,\ COST\ OF\ PROCUREMENT\ OF}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00042}00042\ \textcolor{comment}{SUBSTITUTE\ GOODS,\ TECHNOLOGY,\ SERVICES,\ OR\ ANY\ CLAIMS\ BY\ THIRD\ PARTIES}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00043}00043\ \textcolor{comment}{(INCLUDING\ BUT\ NOT\ LIMITED\ TO\ ANY\ DEFENSE\ THEREOF),\ OR\ OTHER\ SIMILAR\ COSTS.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00044}00044\ \textcolor{comment}{*******************************************************************************/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00045}00045\ \textcolor{comment}{//DOM-\/IGNORE-\/END}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00046}00046\ \textcolor{preprocessor}{\#include\ "{}driver/spi/src/dynamic/drv\_spi\_internal.h"{}}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00047}00047\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00051}\mbox{\hyperlink{drv__spi__tasks_8c_a6f61e90a09e9aa1ebc1e47e0dcd02f12}{00051}}\ int32\_t\ \mbox{\hyperlink{drv__spi__tasks_8c_a6f61e90a09e9aa1ebc1e47e0dcd02f12}{DRV\_SPI\_ISRMasterEBM8BitTasks}}\ (\ \textcolor{keyword}{struct}\ DRV\_SPI\_DRIVER\_OBJECT\ *\ pDrvInstance\ )\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00052}00052\ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00053}00053\ \ \ \ \ \textcolor{keyword}{volatile}\ \textcolor{keywordtype}{bool}\ continueLoop;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00054}00054\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00055}00055\ \ \ \ \ \textcolor{comment}{/*\ Disable\ the\ interrupts\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00056}00056\ \ \ \ \ SYS\_INT\_SourceDisable(pDrvInstance-\/>rxInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00057}00057\ \ \ \ \ SYS\_INT\_SourceDisable(pDrvInstance-\/>txInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00058}00058\ \ \ \ \ SYS\_INT\_SourceDisable(pDrvInstance-\/>errInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00060}00060\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00061}00061\ \ \ \ \ \ \ \ \ DRV\_SPI\_JOB\_OBJECT\ *\ currentJob\ =\ pDrvInstance-\/>currentJob;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00062}00062\ \ \ \ \ \ \ \ \ SPI\_MODULE\_ID\ spiId\ =\ pDrvInstance-\/>spiId;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00063}00063\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Check\ for\ a\ new\ task\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pDrvInstance-\/>currentJob\ ==\ NULL)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (DRV\_SPI\_SYS\_QUEUE\_Dequeue(pDrvInstance-\/>queue,\ (\textcolor{keywordtype}{void}\ *)\&(pDrvInstance-\/>currentJob))\ !=\ DRV\_SPI\_SYS\_QUEUE\_SUCCESS)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00068}00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SYS\_ASSERT(\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)nSPI\ Driver:\ Error\ in\ dequeing."{}});}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;\ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00070}00070\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pDrvInstance-\/>currentJob\ ==\ NULL)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pDrvInstance-\/>txEnabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ currentJob\ =\ pDrvInstance-\/>currentJob;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ pDrvInstance-\/>symbolsInProgress\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Call\ the\ operation\ starting\ function\ pointer.\ \ This\ can\ be\ used\ to\ modify\ the\ slave\ select\ lines\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ DRV\_SPI\_CLIENT\_OBJECT\ *\ pClient\ =\ (DRV\_SPI\_CLIENT\_OBJECT*)currentJob-\/>pClient;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pClient-\/>operationStarting\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*pClient-\/>operationStarting)(DRV\_SPI\_BUFFER\_EVENT\_PROCESSING,\ (DRV\_SPI\_BUFFER\_HANDLE)currentJob,\ currentJob-\/>context);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Check\ the\ baud\ rate.\ \ If\ its\ different\ set\ the\ new\ baud\ rate*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pClient-\/>baudRate\ !=\ pDrvInstance-\/>currentBaudRate)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00089}00089\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#if\ defined\ (PLIB\_SPI\_ExistsBaudRateClock)}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pDrvInstance-\/>baudClockSource\ ==\ SPI\_BAUD\_RATE\_PBCLK\_CLOCK)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLIB\_SPI\_BaudRateSet(\ spiId\ ,\ \mbox{\hyperlink{sys__clk__pic32mx_8c_a83312ff8e5487220f748eebfb269b145}{SYS\_CLK\_PeripheralFrequencyGet}}(pDrvInstance-\/>spiClk),\ pClient-\/>baudRate\ );}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{comment}{//\ if\ baud\ clock\ source\ is\ reference\ clock}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLIB\_SPI\_BaudRateSet(\ spiId\ ,\ \mbox{\hyperlink{sys__clk__pic32mx_8c_ae5dfb1869e54117771f960a4914c3bdd}{SYS\_CLK\_ReferenceFrequencyGet}}(CLK\_BUS\_REFERENCE\_1),\ pClient-\/>baudRate\ );}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00098}00098\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#else}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLIB\_SPI\_BaudRateSet(\ spiId\ ,\ \mbox{\hyperlink{sys__clk__pic32mx_8c_a83312ff8e5487220f748eebfb269b145}{SYS\_CLK\_PeripheralFrequencyGet}}(pDrvInstance-\/>spiClk),\ pClient-\/>baudRate\ );}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00100}00100\ \textcolor{preprocessor}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \#endif}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pDrvInstance-\/>currentBaudRate\ =\ pClient-\/>baudRate;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ List\ the\ new\ job\ as\ processing*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ currentJob-\/>status\ =\ DRV\_SPI\_BUFFER\_EVENT\_PROCESSING;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (currentJob-\/>dataLeftToTx\ +currentJob-\/>dummyLeftToTx\ >\ PLIB\_SPI\_RX\_8BIT\_FIFO\_SIZE(spiId))}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLIB\_SPI\_FIFOInterruptModeSelect(spiId,\ SPI\_FIFO\_INTERRUPT\_WHEN\_TRANSMIT\_BUFFER\_IS\_1HALF\_EMPTY\_OR\_MORE);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PLIB\_SPI\_FIFOInterruptModeSelect(spiId,\ SPI\_FIFO\_INTERRUPT\_WHEN\_RECEIVE\_BUFFER\_IS\_1HALF\_FULL\_OR\_MORE);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Flush\ out\ the\ Receive\ buffer\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ PLIB\_SPI\_BufferClear(spiId);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ continueLoop\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Execute\ the\ sub\ tasks\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ (currentJob-\/>dataLeftToTx\ +currentJob-\/>dummyLeftToTx\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00121}00121\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{drv__spi__master__ebm__tasks_8c_ae052661d6e15c126aabcd664104cbe85}{DRV\_SPI\_MasterEBMSend8BitISR}}(pDrvInstance);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00124}00124\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ DRV\_SPI\_ISRErrorTasks(pDrvInstance);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00126}00126\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Figure\ out\ how\ many\ bytes\ are\ left\ to\ be\ received\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00128}00128\ \ \ \ \ \ \ \ \ \textcolor{keyword}{volatile}\ \textcolor{keywordtype}{size\_t}\ bytesLeft\ =\ currentJob-\/>dataLeftToRx\ +\ currentJob-\/>dummyLeftToRx;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00129}00129\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Check\ to\ see\ if\ we\ have\ any\ data\ left\ to\ receive\ and\ update\ the\ bytes\ left.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00131}00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bytesLeft\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00132}00132\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{drv__spi__master__ebm__tasks_8c_a3db4a28aa52640e7b57d4bc3a5e08889}{DRV\_SPI\_MasterEBMReceive8BitISR}}(pDrvInstance);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ bytesLeft\ =\ currentJob-\/>dataLeftToRx\ +\ currentJob-\/>dummyLeftToRx;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00136}00136\ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00137}00137\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (bytesLeft\ ==\ 0)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Disable\ the\ interrupt,\ or\ more\ correctly\ don't\ re-\/enable\ it\ later*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pDrvInstance-\/>rxEnabled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Job\ is\ complete*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentJob-\/>status\ =\ DRV\_SPI\_BUFFER\_EVENT\_COMPLETE;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Call\ the\ job\ complete\ call\ back*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (currentJob-\/>completeCB\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*currentJob-\/>completeCB)(DRV\_SPI\_BUFFER\_EVENT\_COMPLETE,\ (DRV\_SPI\_BUFFER\_HANDLE)currentJob,\ currentJob-\/>context);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Call\ the\ operation\ complete\ call\ back.\ \ This\ is\ different\ than\ the}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00149}00149\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ job\ complete\ callback.\ \ This\ can\ be\ used\ to\ modify\ the\ Slave\ Select\ line.}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00150}00150\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ The\ job\ complete\ callback\ can\ be\ used\ to\ free\ a\ client\ that\ is\ blocked\ }}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00151}00151\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ waiting\ for\ complete*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ DRV\_SPI\_CLIENT\_OBJECT\ *\ pClient\ =\ (DRV\_SPI\_CLIENT\_OBJECT*)currentJob-\/>pClient;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pClient-\/>operationEnded\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (*pClient-\/>operationEnded)(DRV\_SPI\_BUFFER\_EVENT\_COMPLETE,\ (DRV\_SPI\_BUFFER\_HANDLE)currentJob,\ currentJob-\/>context);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Return\ the\ job\ back\ to\ the\ free\ queue*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (DRV\_SPI\_SYS\_QUEUE\_FreeElement(pDrvInstance-\/>queue,\ currentJob)\ !=\ DRV\_SPI\_SYS\_QUEUE\_SUCCESS)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ SYS\_ASSERT(\textcolor{keyword}{false},\ \textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)nSPI\ Driver:\ Queue\ free\ element\ error."{}});}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Clean\ up\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pDrvInstance-\/>currentJob\ =\ NULL;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (!DRV\_SPI\_SYS\_QUEUE\_IsEmpty(pDrvInstance-\/>queue))}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ continueLoop\ =\ \textcolor{keyword}{true};\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00175}00175\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00176}00176\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00177}00177\ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Check\ to\ see\ if\ the\ interrupts\ would\ fire\ again\ if\ so\ just\ go\ back\ into\ }}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00178}00178\ \textcolor{comment}{\ \ \ \ \ \ \ \ \ \ \ the\ loop\ instead\ of\ suffering\ the\ interrupt\ latency\ of\ exiting\ and\ re-\/entering*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00179}00179\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (pDrvInstance-\/>currentJob\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00180}00180\ \ \ \ \ \ \ \ \ \{\ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00181}00181\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Clear\ the\ Interrupts\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ SYS\_INT\_SourceStatusClear(pDrvInstance-\/>rxInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ SYS\_INT\_SourceStatusClear(pDrvInstance-\/>txInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ SYS\_INT\_SourceStatusClear(pDrvInstance-\/>errInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Interrupts\ should\ immediately\ become\ active\ again\ if\ they're\ in\ a\ fired\ condition\ */}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((SYS\_INT\_SourceStatusGet(pDrvInstance-\/>rxInterruptSource))\ ||}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (SYS\_INT\_SourceStatusGet(pDrvInstance-\/>txInterruptSource))\ ||}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (SYS\_INT\_SourceStatusGet(pDrvInstance-\/>errInterruptSource)))}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Interrupt\ would\ fire\ again\ anyway\ so\ we\ should\ just\ go\ back\ to\ the\ start*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ continueLoop\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ If\ we're\ here\ then\ we\ know\ that\ the\ interrupt\ should\ not\ be\ firing\ again\ immediately,\ so\ re-\/enable\ them\ and\ exit*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ SYS\_INT\_SourceEnable(pDrvInstance-\/>rxInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ SYS\_INT\_SourceEnable(pDrvInstance-\/>txInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00197}00197\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;\ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00199}00199\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00200}00200\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00201}00201\ \ \ \ \ \}\ \textcolor{keywordflow}{while}(continueLoop);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00202}00202\ \ \ \ \ \textcolor{comment}{/*\ if\ we're\ here\ it\ means\ that\ we\ have\ no\ more\ jobs\ in\ the\ queue,\ tx\ and\ rx\ interrupts\ will\ be\ re-\/enabled\ by\ the\ BufferAdd*\ functions*/}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00203}00203\ \ \ \ \ SYS\_INT\_SourceStatusClear(pDrvInstance-\/>rxInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00204}00204\ \ \ \ \ SYS\_INT\_SourceStatusClear(pDrvInstance-\/>txInterruptSource);}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00205}00205\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00206}00206\ \}}
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00208}00208\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00212}00212\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{drv__spi__tasks_8c_source_l00214}00214\ }
+
+\end{DoxyCode}

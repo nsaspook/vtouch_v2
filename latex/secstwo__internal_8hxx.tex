@@ -1,0 +1,95 @@
+\doxysection{gem/secstwo-\/1.0.1/secstwo\+\_\+internal.hxx File Reference}
+\hypertarget{secstwo__internal_8hxx}{}\label{secstwo__internal_8hxx}\index{gem/secstwo-\/1.0.1/secstwo\_internal.hxx@{gem/secstwo-\/1.0.1/secstwo\_internal.hxx}}
+{\ttfamily \#include $<$errno.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$iconv.\+h$>$}\newline
+{\ttfamily \#include "{}secstwomsg.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector}{type\+\_\+selector$<$ data\+\_\+type\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em Type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__list__t_01_4}{type\+\_\+selector$<$ e\+\_\+list\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em List type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__binary__t_01_4}{type\+\_\+selector$<$ e\+\_\+binary\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em Binary type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__boolean__t_01_4}{type\+\_\+selector$<$ e\+\_\+boolean\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em Boolean type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__ascii__t_01_4}{type\+\_\+selector$<$ e\+\_\+ascii\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em ASCII type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__jis8__t_01_4}{type\+\_\+selector$<$ e\+\_\+jis8\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em JIS-\/8 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__wchar__t_01_4}{type\+\_\+selector$<$ e\+\_\+wchar\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em UNICODE type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__int64__t_01_4}{type\+\_\+selector$<$ e\+\_\+int64\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em INT64 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__int8__t_01_4}{type\+\_\+selector$<$ e\+\_\+int8\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em INT8 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__int16__t_01_4}{type\+\_\+selector$<$ e\+\_\+int16\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em INT16 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__int32__t_01_4}{type\+\_\+selector$<$ e\+\_\+int32\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em INT32 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__double__t_01_4}{type\+\_\+selector$<$ e\+\_\+double\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em DOUBLE type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__float__t_01_4}{type\+\_\+selector$<$ e\+\_\+float\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em FLOAT type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__uint64__t_01_4}{type\+\_\+selector$<$ e\+\_\+uint64\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em UINT64 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__uint8__t_01_4}{type\+\_\+selector$<$ e\+\_\+uint8\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em UINT8 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__uint16__t_01_4}{type\+\_\+selector$<$ e\+\_\+uint16\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em UINT16 type selector helper struct. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1type__selector_3_01e__uint32__t_01_4}{type\+\_\+selector$<$ e\+\_\+uint32\+\_\+t $>$}}
+\begin{DoxyCompactList}\small\item\em UINT32 type selector helper struct. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t$<$ \+\_\+type $>$}}
+\begin{DoxyCompactList}\small\item\em Implementation for all simple datatypes Implements data array handling. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1list__item__t}{list\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Implementation for list data type Operator item\mbox{[}"{}sub-\/item name"{}\mbox{]} returns the item by name or this if not found. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structfreesecs_1_1secstwo_1_1list__item__t_1_1match__name}{list\+\_\+item\+\_\+t\+::match\+\_\+name}}
+\item 
+class \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1var__list__item__t}{var\+\_\+list\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Variable list implementation. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1string__data__item__t}{string\+\_\+data\+\_\+item\+\_\+t$<$ \+\_\+type $>$}}
+\begin{DoxyCompactList}\small\item\em String data item family implementation For JIS-\/8 and UNICODE data items, the contents is converted from WCHAR to UTF-\/8 on deverialization and back from UTF-\/8 to WCHAR on serialization. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__impl__t}{msg\+\_\+impl\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Message internal representation. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespacefreesecs}{freesecs}}
+\item 
+namespace \mbox{\hyperlink{namespacefreesecs_1_1secstwo}{freesecs\+::secstwo}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5ac813faee506a3e29916efbe98dfc61a2}{e\+\_\+int8\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a10520164f7c8f9fdae1c28bd9da37ad2}{int8\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em INT8 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5af161957b9b4a1a408333d765dfd6aaff}{e\+\_\+int16\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_adb5c319b75a3393b8df4e03e253a0d28}{int16\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em INT16 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a89c96f9986d794012f7626bbf2bde891}{e\+\_\+int32\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a002f8ad1d29c022ed0a8668ab040aeb4}{int32\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em INT32 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5aed3b27370dc7eec484b5ca958be9bf13}{e\+\_\+int64\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_ad107810b29cc3523af6282a0cd389630}{int64\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em INT64 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a2fcbe006412e7c6d51606dd2f65397c7}{e\+\_\+binary\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a97dd5f217a536c19b516e507d27ac078}{binary\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em BINARY type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5acb56ddee709cecf12e8a6e9e8fc92247}{e\+\_\+uint8\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a887e06c6704f12fa94f1306480b83772}{uint8\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em UINT8 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5ae2485a46d6cb6882943dc49232828977}{e\+\_\+uint16\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a831afd9abeb0a1b214cd6268f6bf9f53}{uint16\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em UINT16 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a29def01b5a9e9dcb257faff8a3084457}{e\+\_\+uint32\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a217acdd6f85dda622b913d48259b31be}{uint32\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em UINT32 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a31530f7b3632412d1e2cb082bbc6ed60}{e\+\_\+uint64\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_aaf385c90fc0d039f8a90299fd081185e}{uint64\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em UINT64 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5af88b49400d9e63aabd69dc9106f5a8cf}{e\+\_\+float\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_ad1021bb347ebe03b48f0de1b9c9f903e}{float\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em FLOAT type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5aec9e9262b262ac062d6f9cd93fcd3eb9}{e\+\_\+double\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a654878df996366737a8203033dae7c6f}{double\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em DOUBLE type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\+\_\+item\+\_\+impl\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a42a3048650b269d4350a87e69e4f905e}{e\+\_\+boolean\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a23ad76a197572d483c339571fa0988be}{bool\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em BOOLEAN type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1string__data__item__t}{string\+\_\+data\+\_\+item\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a1aca4f22d278f2ef8807f8f874dfd295}{e\+\_\+ascii\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a0cede791d544c7e29502f5d2f2fa2ca5}{ascii\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em ASCII type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1string__data__item__t}{string\+\_\+data\+\_\+item\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a3e214668a43c924f691cf4cc86838643}{e\+\_\+jis8\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_aeaaa0c13253d7558ce40f511f39240d5}{jis8\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em JIS-\/8 type specification. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{typedef}} \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1string__data__item__t}{string\+\_\+data\+\_\+item\+\_\+t}}$<$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a49b5dfea31023fcd165ce36384234dc5a03b332d7db621fb65a5edc6cd41d497f}{e\+\_\+wchar\+\_\+t}} $>$ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5b72aec8b55673d36210241c381077f9}{wchar\+\_\+item\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em UNICODE type specification. \end{DoxyCompactList}\end{DoxyCompactItemize}

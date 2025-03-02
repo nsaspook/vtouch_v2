@@ -1,0 +1,591 @@
+\doxysection{touch\+\_\+board/elo\+\_\+touch.X/d232.h File Reference}
+\hypertarget{d232_8h}{}\label{d232_8h}\index{touch\_board/elo\_touch.X/d232.h@{touch\_board/elo\_touch.X/d232.h}}
+{\ttfamily \#include $<$xc.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/pin\+\_\+manager.\+h"{}}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/uart2.\+h"{}}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/adcc.\+h"{}}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/pwm8.\+h"{}}\newline
+{\ttfamily \#include "{}timers.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_a__data}{A\+\_\+data}}
+\item 
+struct \mbox{\hyperlink{struct_b_p_o_t__type}{BPOT\+\_\+type}}
+\item 
+struct \mbox{\hyperlink{struct_i_n__data}{IN\+\_\+data}}
+\item 
+struct \mbox{\hyperlink{struct_o_u_t__data1}{OUT\+\_\+data1}}
+\item 
+struct \mbox{\hyperlink{struct_o_u_t__data2}{OUT\+\_\+data2}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{d232_8h_af06baee05280c189592215d5ea08e7ef}{sw\+\_\+version}}~"{}1.\+07"{}
+\item 
+\#define \mbox{\hyperlink{d232_8h_a10d2743eb39d980b1fd6b796b79a70b0}{LPORT}}~1
+\item 
+\#define \mbox{\hyperlink{d232_8h_a0b892921fbe6f24bd8f6c7b3620e67c9}{SPORT}}~2
+\item 
+\#define \mbox{\hyperlink{d232_8h_ac5d957e4fd3dc11cd97a54cf9ca057a4}{RST}}~"{}XQ\textbackslash{}r"{}
+\item 
+\#define \mbox{\hyperlink{d232_8h_a1c9b2e3fb0b84e6da7e8e01a402cfd9b}{CNF}}~"{}C4\textbackslash{}r"{}
+\item 
+\#define \mbox{\hyperlink{d232_8h_a3dfb8ef0d04e938194da60b4420c7517}{FMT}}~"{}F4\textbackslash{}r"{}
+\item 
+\#define \mbox{\hyperlink{d232_8h_afb7e2b9da4a7821f2ef93bbcd5a06455}{SRQ}}~"{}M4\textbackslash{}r"{}
+\item 
+\#define \mbox{\hyperlink{d232_8h_a88073666e3996e7dc66ea4ed323b749f}{DRD}}~"{}R0\textbackslash{}r"{}
+\item 
+\#define \mbox{\hyperlink{d232_8h_aa29bdc169bad775698bca6d517b5c5df}{DTEST}}~"{}T2\textbackslash{}r"{}
+\item 
+\#define \mbox{\hyperlink{d232_8h_ad5a44a7f7099f4518f885f48a93ceb14}{SLED}}~\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2pin__manager_8h_ac91bb95ca1a46fe13eac8d11d938c613}{LED\+\_\+\+RSET\+\_\+\+LAT}}
+\item 
+\#define \mbox{\hyperlink{d232_8h_a4a6e744374f3461a025120b62bd8d758}{CHIRP}}~0x01
+\item 
+\#define \mbox{\hyperlink{d232_8h_a6d319563dac46bc6621c442ed3af5380}{WARP}}~0x04
+\item 
+\#define \mbox{\hyperlink{d232_8h_a5b01e05043c5de245040ac9330ea03d5}{SIREN}}~0x02
+\item 
+\#define \mbox{\hyperlink{d232_8h_a79d840ae9bfab8fee23ac051409ee9d4}{DEFAULT\+\_\+\+SEQ}}~0
+\item 
+\#define \mbox{\hyperlink{d232_8h_a90ae11e039b8fe18bcee3d5a4589a261}{DEBUG\+\_\+\+SEQ}}~1
+\item 
+\#define \mbox{\hyperlink{d232_8h_a1c172edc0329714d6a5e90a4a76ed156}{WIN\+\_\+\+SEQ}}~2
+\item 
+\#define \mbox{\hyperlink{d232_8h_ae6fe5afb74bad93f4fa5bec723428f2c}{CYLON}}~0
+\item 
+\#define \mbox{\hyperlink{d232_8h_ae760f762576e319d8e06d167a6118a3e}{LED\+\_\+\+BAL}}~3
+\item 
+\#define \mbox{\hyperlink{d232_8h_abcd250c74f3a025370a52d697fad9a87}{DISPLAY\+\_\+\+UPDATE}}~500
+\item 
+\#define \mbox{\hyperlink{d232_8h_a51aec7972337f7bcaeb2045ac9c8027f}{RXTO\+\_\+\+DELAY}}~250
+\item 
+\#define \mbox{\hyperlink{d232_8h_abd4b7f2b9b32ee682855abc35921dec1}{ADC\+\_\+\+SCALE}}~255.\+0
+\item 
+\#define \mbox{\hyperlink{d232_8h_a483747c5053d5b10010725137aa3310c}{ADC\+\_\+\+SCALE\+\_\+\+ZERO}}~-\/127
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{struct_a__data}{A\+\_\+data}} \mbox{\hyperlink{d232_8h_a8425a8d5a70419a38850d325e17463db}{A\+\_\+data}}
+\item 
+typedef struct \mbox{\hyperlink{struct_b_p_o_t__type}{BPOT\+\_\+type}} \mbox{\hyperlink{d232_8h_aeb2a498dfc2d82a4a2de66823f57fa68}{BPOT\+\_\+type}}
+\item 
+typedef struct \mbox{\hyperlink{struct_i_n__data}{IN\+\_\+data}} \mbox{\hyperlink{d232_8h_a45f7c66a9ccf4c2a691e312c13f6b35b}{IN\+\_\+data}}
+\item 
+typedef struct \mbox{\hyperlink{struct_o_u_t__data1}{OUT\+\_\+data1}} \mbox{\hyperlink{d232_8h_aac0b1a2707e6776fa91f9d21f8d40807}{OUT\+\_\+data1}}
+\item 
+typedef struct \mbox{\hyperlink{struct_o_u_t__data2}{OUT\+\_\+data2}} \mbox{\hyperlink{d232_8h_a740945dc13d46493b34992cb0af13219}{OUT\+\_\+data2}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6}{D232\+\_\+\+STATE}} \{ \newline
+\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6ac363f49f30d0b709cd0508311565b87c}{D232\+\_\+\+IDLE}}
+, \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a381f5252b2a8a87283c2bdafab306990}{D232\+\_\+\+INIT}}
+, \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a31c402080487c2b07cf698ed486b4b8b}{D232\+\_\+\+OUT\+\_\+\+IN}}
+, \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a0bba4215588ae98b637191f3cadcbc84}{D232\+\_\+\+SRQ}}
+, \newline
+\mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a8628c6473bd7854bf258529f7333e833}{D232\+\_\+\+UPDATE}}
+ \}
+\item 
+enum \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393e}{IO\+\_\+\+STATE}} \{ \newline
+\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea18732ab11f58837f7e0f425b39db1ce8}{IO\+\_\+\+IDLE}}
+, \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea58339e4984cf90de30dc1b89cfcffae8}{IO\+\_\+\+INIT}}
+, \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eac944dcc9827cca4526478777b4ca5a89}{IO\+\_\+\+OUT}}
+, \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea0751316ed3ef2e45e5a9c0f80540598c}{IO\+\_\+\+IN}}
+, \newline
+\mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eaa6022c2b2d8d42cf0bf7f4b59386665f}{IO\+\_\+\+SRQ}}
+, \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393eaee0b3fcfe170bf6f66b2f40e426867b7}{IO\+\_\+\+UPDATE}}
+, \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393ea750eac5ef49fe8514858f289a3656d00}{IO\+\_\+\+FAIL}}
+ \}
+\item 
+enum \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59b}{SRQ\+\_\+\+STATE}} \{ \newline
+\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba86e3fc319fdf083afe88308950abab44}{S\+\_\+\+IDLE}}
+, \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bab76712cbc44f311a633f6d3e27a612b0}{S\+\_\+S}}
+, \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba91cabc097f573ad6eb61839d7e092aec}{S\+\_\+R}}
+, \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bad81f14df61561f5291bd55766cdf8b7d}{S\+\_\+Q}}
+, \newline
+\mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba362ec1f096af9e0f0a0c01a5603b3dbc}{S\+\_\+\+NUM}}
+, \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59bacd3582eb729cdb7bb1825540032b3af5}{S\+\_\+\+UPDATE}}
+ \}
+\item 
+enum \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85}{BAL\+\_\+\+STATE}} \{ \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85aba595d8bca8bc5e67c37c0a9d89becfa}{UP}}
+, \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a977d478dacaae531f95695750d1e9d03}{ON}}
+, \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a9b0b4a95b99523966e0e34ffdadac9da}{DOWN}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{d232_8h_a4f70304687ba1131f354bd28f6913438}{Digital232\+\_\+init}} (void)
+\item 
+bool \mbox{\hyperlink{d232_8h_a34184a4e0c31a75a302bca2902790f06}{Digital232\+\_\+\+RW}} (void)
+\item 
+void \mbox{\hyperlink{d232_8h_a0cc3c338e416e8814f646a668665c8b1}{led\+\_\+lightshow}} (uint8\+\_\+t, uint16\+\_\+t)
+\item 
+bool \mbox{\hyperlink{d232_8h_a06227b27b331da5d4ec43a92b2269ad8}{once}} (bool \texorpdfstring{$\ast$}{*})
+\item 
+int16\+\_\+t \mbox{\hyperlink{d232_8h_a6528f931895f3e1ba2b70f0a2d29708a}{calc\+\_\+pot}} (\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}})
+\item 
+float \mbox{\hyperlink{d232_8h_a95deb21002796091eb0aa22a5164d191}{lp\+\_\+filter}} (float, int16\+\_\+t, int16\+\_\+t)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{d232_8h_abd4b7f2b9b32ee682855abc35921dec1}\label{d232_8h_abd4b7f2b9b32ee682855abc35921dec1} 
+\index{d232.h@{d232.h}!ADC\_SCALE@{ADC\_SCALE}}
+\index{ADC\_SCALE@{ADC\_SCALE}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{ADC\_SCALE}{ADC\_SCALE}}
+{\footnotesize\ttfamily \#define ADC\+\_\+\+SCALE~255.\+0}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00082}{82}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a483747c5053d5b10010725137aa3310c}\label{d232_8h_a483747c5053d5b10010725137aa3310c} 
+\index{d232.h@{d232.h}!ADC\_SCALE\_ZERO@{ADC\_SCALE\_ZERO}}
+\index{ADC\_SCALE\_ZERO@{ADC\_SCALE\_ZERO}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{ADC\_SCALE\_ZERO}{ADC\_SCALE\_ZERO}}
+{\footnotesize\ttfamily \#define ADC\+\_\+\+SCALE\+\_\+\+ZERO~-\/127}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00083}{83}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a4a6e744374f3461a025120b62bd8d758}\label{d232_8h_a4a6e744374f3461a025120b62bd8d758} 
+\index{d232.h@{d232.h}!CHIRP@{CHIRP}}
+\index{CHIRP@{CHIRP}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{CHIRP}{CHIRP}}
+{\footnotesize\ttfamily \#define CHIRP~0x01}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00069}{69}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a1c9b2e3fb0b84e6da7e8e01a402cfd9b}\label{d232_8h_a1c9b2e3fb0b84e6da7e8e01a402cfd9b} 
+\index{d232.h@{d232.h}!CNF@{CNF}}
+\index{CNF@{CNF}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{CNF}{CNF}}
+{\footnotesize\ttfamily \#define CNF~"{}C4\textbackslash{}r"{}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00061}{61}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_ae6fe5afb74bad93f4fa5bec723428f2c}\label{d232_8h_ae6fe5afb74bad93f4fa5bec723428f2c} 
+\index{d232.h@{d232.h}!CYLON@{CYLON}}
+\index{CYLON@{CYLON}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{CYLON}{CYLON}}
+{\footnotesize\ttfamily \#define CYLON~0}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00076}{76}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a90ae11e039b8fe18bcee3d5a4589a261}\label{d232_8h_a90ae11e039b8fe18bcee3d5a4589a261} 
+\index{d232.h@{d232.h}!DEBUG\_SEQ@{DEBUG\_SEQ}}
+\index{DEBUG\_SEQ@{DEBUG\_SEQ}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{DEBUG\_SEQ}{DEBUG\_SEQ}}
+{\footnotesize\ttfamily \#define DEBUG\+\_\+\+SEQ~1}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00074}{74}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a79d840ae9bfab8fee23ac051409ee9d4}\label{d232_8h_a79d840ae9bfab8fee23ac051409ee9d4} 
+\index{d232.h@{d232.h}!DEFAULT\_SEQ@{DEFAULT\_SEQ}}
+\index{DEFAULT\_SEQ@{DEFAULT\_SEQ}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{DEFAULT\_SEQ}{DEFAULT\_SEQ}}
+{\footnotesize\ttfamily \#define DEFAULT\+\_\+\+SEQ~0}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00073}{73}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_abcd250c74f3a025370a52d697fad9a87}\label{d232_8h_abcd250c74f3a025370a52d697fad9a87} 
+\index{d232.h@{d232.h}!DISPLAY\_UPDATE@{DISPLAY\_UPDATE}}
+\index{DISPLAY\_UPDATE@{DISPLAY\_UPDATE}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{DISPLAY\_UPDATE}{DISPLAY\_UPDATE}}
+{\footnotesize\ttfamily \#define DISPLAY\+\_\+\+UPDATE~500}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00079}{79}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a88073666e3996e7dc66ea4ed323b749f}\label{d232_8h_a88073666e3996e7dc66ea4ed323b749f} 
+\index{d232.h@{d232.h}!DRD@{DRD}}
+\index{DRD@{DRD}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{DRD}{DRD}}
+{\footnotesize\ttfamily \#define DRD~"{}R0\textbackslash{}r"{}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00064}{64}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_aa29bdc169bad775698bca6d517b5c5df}\label{d232_8h_aa29bdc169bad775698bca6d517b5c5df} 
+\index{d232.h@{d232.h}!DTEST@{DTEST}}
+\index{DTEST@{DTEST}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{DTEST}{DTEST}}
+{\footnotesize\ttfamily \#define DTEST~"{}T2\textbackslash{}r"{}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00065}{65}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a3dfb8ef0d04e938194da60b4420c7517}\label{d232_8h_a3dfb8ef0d04e938194da60b4420c7517} 
+\index{d232.h@{d232.h}!FMT@{FMT}}
+\index{FMT@{FMT}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{FMT}{FMT}}
+{\footnotesize\ttfamily \#define FMT~"{}F4\textbackslash{}r"{}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00062}{62}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_ae760f762576e319d8e06d167a6118a3e}\label{d232_8h_ae760f762576e319d8e06d167a6118a3e} 
+\index{d232.h@{d232.h}!LED\_BAL@{LED\_BAL}}
+\index{LED\_BAL@{LED\_BAL}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{LED\_BAL}{LED\_BAL}}
+{\footnotesize\ttfamily \#define LED\+\_\+\+BAL~3}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00077}{77}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a10d2743eb39d980b1fd6b796b79a70b0}\label{d232_8h_a10d2743eb39d980b1fd6b796b79a70b0} 
+\index{d232.h@{d232.h}!LPORT@{LPORT}}
+\index{LPORT@{LPORT}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{LPORT}{LPORT}}
+{\footnotesize\ttfamily \#define LPORT~1}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00057}{57}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_ac5d957e4fd3dc11cd97a54cf9ca057a4}\label{d232_8h_ac5d957e4fd3dc11cd97a54cf9ca057a4} 
+\index{d232.h@{d232.h}!RST@{RST}}
+\index{RST@{RST}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{RST}{RST}}
+{\footnotesize\ttfamily \#define RST~"{}XQ\textbackslash{}r"{}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00060}{60}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a51aec7972337f7bcaeb2045ac9c8027f}\label{d232_8h_a51aec7972337f7bcaeb2045ac9c8027f} 
+\index{d232.h@{d232.h}!RXTO\_DELAY@{RXTO\_DELAY}}
+\index{RXTO\_DELAY@{RXTO\_DELAY}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{RXTO\_DELAY}{RXTO\_DELAY}}
+{\footnotesize\ttfamily \#define RXTO\+\_\+\+DELAY~250}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00080}{80}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a5b01e05043c5de245040ac9330ea03d5}\label{d232_8h_a5b01e05043c5de245040ac9330ea03d5} 
+\index{d232.h@{d232.h}!SIREN@{SIREN}}
+\index{SIREN@{SIREN}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{SIREN}{SIREN}}
+{\footnotesize\ttfamily \#define SIREN~0x02}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00071}{71}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_ad5a44a7f7099f4518f885f48a93ceb14}\label{d232_8h_ad5a44a7f7099f4518f885f48a93ceb14} 
+\index{d232.h@{d232.h}!SLED@{SLED}}
+\index{SLED@{SLED}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{SLED}{SLED}}
+{\footnotesize\ttfamily \#define SLED~\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2pin__manager_8h_ac91bb95ca1a46fe13eac8d11d938c613}{LED\+\_\+\+RSET\+\_\+\+LAT}}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00067}{67}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a0b892921fbe6f24bd8f6c7b3620e67c9}\label{d232_8h_a0b892921fbe6f24bd8f6c7b3620e67c9} 
+\index{d232.h@{d232.h}!SPORT@{SPORT}}
+\index{SPORT@{SPORT}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{SPORT}{SPORT}}
+{\footnotesize\ttfamily \#define SPORT~2}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00058}{58}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_afb7e2b9da4a7821f2ef93bbcd5a06455}\label{d232_8h_afb7e2b9da4a7821f2ef93bbcd5a06455} 
+\index{d232.h@{d232.h}!SRQ@{SRQ}}
+\index{SRQ@{SRQ}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{SRQ}{SRQ}}
+{\footnotesize\ttfamily \#define SRQ~"{}M4\textbackslash{}r"{}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00063}{63}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_af06baee05280c189592215d5ea08e7ef}\label{d232_8h_af06baee05280c189592215d5ea08e7ef} 
+\index{d232.h@{d232.h}!sw\_version@{sw\_version}}
+\index{sw\_version@{sw\_version}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{sw\_version}{sw\_version}}
+{\footnotesize\ttfamily \#define sw\+\_\+version~"{}1.\+07"{}}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00048}{48}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a6d319563dac46bc6621c442ed3af5380}\label{d232_8h_a6d319563dac46bc6621c442ed3af5380} 
+\index{d232.h@{d232.h}!WARP@{WARP}}
+\index{WARP@{WARP}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{WARP}{WARP}}
+{\footnotesize\ttfamily \#define WARP~0x04}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00070}{70}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a1c172edc0329714d6a5e90a4a76ed156}\label{d232_8h_a1c172edc0329714d6a5e90a4a76ed156} 
+\index{d232.h@{d232.h}!WIN\_SEQ@{WIN\_SEQ}}
+\index{WIN\_SEQ@{WIN\_SEQ}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{WIN\_SEQ}{WIN\_SEQ}}
+{\footnotesize\ttfamily \#define WIN\+\_\+\+SEQ~2}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00075}{75}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{d232_8h_a8425a8d5a70419a38850d325e17463db}\label{d232_8h_a8425a8d5a70419a38850d325e17463db} 
+\index{d232.h@{d232.h}!A\_data@{A\_data}}
+\index{A\_data@{A\_data}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{A\_data}{A\_data}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_a__data}{A\+\_\+data}} \mbox{\hyperlink{struct_a__data}{A\+\_\+data}}}
+
+\Hypertarget{d232_8h_aeb2a498dfc2d82a4a2de66823f57fa68}\label{d232_8h_aeb2a498dfc2d82a4a2de66823f57fa68} 
+\index{d232.h@{d232.h}!BPOT\_type@{BPOT\_type}}
+\index{BPOT\_type@{BPOT\_type}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{BPOT\_type}{BPOT\_type}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_b_p_o_t__type}{BPOT\+\_\+type}} \mbox{\hyperlink{struct_b_p_o_t__type}{BPOT\+\_\+type}}}
+
+\Hypertarget{d232_8h_a45f7c66a9ccf4c2a691e312c13f6b35b}\label{d232_8h_a45f7c66a9ccf4c2a691e312c13f6b35b} 
+\index{d232.h@{d232.h}!IN\_data@{IN\_data}}
+\index{IN\_data@{IN\_data}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{IN\_data}{IN\_data}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_i_n__data}{IN\+\_\+data}} \mbox{\hyperlink{struct_i_n__data}{IN\+\_\+data}}}
+
+\Hypertarget{d232_8h_aac0b1a2707e6776fa91f9d21f8d40807}\label{d232_8h_aac0b1a2707e6776fa91f9d21f8d40807} 
+\index{d232.h@{d232.h}!OUT\_data1@{OUT\_data1}}
+\index{OUT\_data1@{OUT\_data1}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{OUT\_data1}{OUT\_data1}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_o_u_t__data1}{OUT\+\_\+data1}} \mbox{\hyperlink{struct_o_u_t__data1}{OUT\+\_\+data1}}}
+
+\Hypertarget{d232_8h_a740945dc13d46493b34992cb0af13219}\label{d232_8h_a740945dc13d46493b34992cb0af13219} 
+\index{d232.h@{d232.h}!OUT\_data2@{OUT\_data2}}
+\index{OUT\_data2@{OUT\_data2}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{OUT\_data2}{OUT\_data2}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_o_u_t__data2}{OUT\+\_\+data2}} \mbox{\hyperlink{struct_o_u_t__data2}{OUT\+\_\+data2}}}
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{d232_8h_ae9e84aba738da154dfa3d16dec02ea85}\label{d232_8h_ae9e84aba738da154dfa3d16dec02ea85} 
+\index{d232.h@{d232.h}!BAL\_STATE@{BAL\_STATE}}
+\index{BAL\_STATE@{BAL\_STATE}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{BAL\_STATE}{BAL\_STATE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{d232_8h_ae9e84aba738da154dfa3d16dec02ea85}{BAL\+\_\+\+STATE}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{UP@{UP}!d232.h@{d232.h}}\index{d232.h@{d232.h}!UP@{UP}}}\Hypertarget{d232_8h_ae9e84aba738da154dfa3d16dec02ea85aba595d8bca8bc5e67c37c0a9d89becfa}\label{d232_8h_ae9e84aba738da154dfa3d16dec02ea85aba595d8bca8bc5e67c37c0a9d89becfa} 
+UP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ON@{ON}!d232.h@{d232.h}}\index{d232.h@{d232.h}!ON@{ON}}}\Hypertarget{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a977d478dacaae531f95695750d1e9d03}\label{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a977d478dacaae531f95695750d1e9d03} 
+ON&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DOWN@{DOWN}!d232.h@{d232.h}}\index{d232.h@{d232.h}!DOWN@{DOWN}}}\Hypertarget{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a9b0b4a95b99523966e0e34ffdadac9da}\label{d232_8h_ae9e84aba738da154dfa3d16dec02ea85a9b0b4a95b99523966e0e34ffdadac9da} 
+DOWN&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00112}{112}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a927aa9bfb22a05bfc400506b706d0db6}\label{d232_8h_a927aa9bfb22a05bfc400506b706d0db6} 
+\index{d232.h@{d232.h}!D232\_STATE@{D232\_STATE}}
+\index{D232\_STATE@{D232\_STATE}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{D232\_STATE}{D232\_STATE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{d232_8h_a927aa9bfb22a05bfc400506b706d0db6}{D232\+\_\+\+STATE}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D232\_IDLE@{D232\_IDLE}!d232.h@{d232.h}}\index{d232.h@{d232.h}!D232\_IDLE@{D232\_IDLE}}}\Hypertarget{d232_8h_a927aa9bfb22a05bfc400506b706d0db6ac363f49f30d0b709cd0508311565b87c}\label{d232_8h_a927aa9bfb22a05bfc400506b706d0db6ac363f49f30d0b709cd0508311565b87c} 
+D232\+\_\+\+IDLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D232\_INIT@{D232\_INIT}!d232.h@{d232.h}}\index{d232.h@{d232.h}!D232\_INIT@{D232\_INIT}}}\Hypertarget{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a381f5252b2a8a87283c2bdafab306990}\label{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a381f5252b2a8a87283c2bdafab306990} 
+D232\+\_\+\+INIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D232\_OUT\_IN@{D232\_OUT\_IN}!d232.h@{d232.h}}\index{d232.h@{d232.h}!D232\_OUT\_IN@{D232\_OUT\_IN}}}\Hypertarget{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a31c402080487c2b07cf698ed486b4b8b}\label{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a31c402080487c2b07cf698ed486b4b8b} 
+D232\+\_\+\+OUT\+\_\+\+IN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D232\_SRQ@{D232\_SRQ}!d232.h@{d232.h}}\index{d232.h@{d232.h}!D232\_SRQ@{D232\_SRQ}}}\Hypertarget{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a0bba4215588ae98b637191f3cadcbc84}\label{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a0bba4215588ae98b637191f3cadcbc84} 
+D232\+\_\+\+SRQ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{D232\_UPDATE@{D232\_UPDATE}!d232.h@{d232.h}}\index{d232.h@{d232.h}!D232\_UPDATE@{D232\_UPDATE}}}\Hypertarget{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a8628c6473bd7854bf258529f7333e833}\label{d232_8h_a927aa9bfb22a05bfc400506b706d0db6a8628c6473bd7854bf258529f7333e833} 
+D232\+\_\+\+UPDATE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00085}{85}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393e}\label{d232_8h_a70df8b64b29043464ea705268550393e} 
+\index{d232.h@{d232.h}!IO\_STATE@{IO\_STATE}}
+\index{IO\_STATE@{IO\_STATE}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{IO\_STATE}{IO\_STATE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{d232_8h_a70df8b64b29043464ea705268550393e}{IO\+\_\+\+STATE}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IO\_IDLE@{IO\_IDLE}!d232.h@{d232.h}}\index{d232.h@{d232.h}!IO\_IDLE@{IO\_IDLE}}}\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393ea18732ab11f58837f7e0f425b39db1ce8}\label{d232_8h_a70df8b64b29043464ea705268550393ea18732ab11f58837f7e0f425b39db1ce8} 
+IO\+\_\+\+IDLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IO\_INIT@{IO\_INIT}!d232.h@{d232.h}}\index{d232.h@{d232.h}!IO\_INIT@{IO\_INIT}}}\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393ea58339e4984cf90de30dc1b89cfcffae8}\label{d232_8h_a70df8b64b29043464ea705268550393ea58339e4984cf90de30dc1b89cfcffae8} 
+IO\+\_\+\+INIT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IO\_OUT@{IO\_OUT}!d232.h@{d232.h}}\index{d232.h@{d232.h}!IO\_OUT@{IO\_OUT}}}\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393eac944dcc9827cca4526478777b4ca5a89}\label{d232_8h_a70df8b64b29043464ea705268550393eac944dcc9827cca4526478777b4ca5a89} 
+IO\+\_\+\+OUT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IO\_IN@{IO\_IN}!d232.h@{d232.h}}\index{d232.h@{d232.h}!IO\_IN@{IO\_IN}}}\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393ea0751316ed3ef2e45e5a9c0f80540598c}\label{d232_8h_a70df8b64b29043464ea705268550393ea0751316ed3ef2e45e5a9c0f80540598c} 
+IO\+\_\+\+IN&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IO\_SRQ@{IO\_SRQ}!d232.h@{d232.h}}\index{d232.h@{d232.h}!IO\_SRQ@{IO\_SRQ}}}\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393eaa6022c2b2d8d42cf0bf7f4b59386665f}\label{d232_8h_a70df8b64b29043464ea705268550393eaa6022c2b2d8d42cf0bf7f4b59386665f} 
+IO\+\_\+\+SRQ&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IO\_UPDATE@{IO\_UPDATE}!d232.h@{d232.h}}\index{d232.h@{d232.h}!IO\_UPDATE@{IO\_UPDATE}}}\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393eaee0b3fcfe170bf6f66b2f40e426867b7}\label{d232_8h_a70df8b64b29043464ea705268550393eaee0b3fcfe170bf6f66b2f40e426867b7} 
+IO\+\_\+\+UPDATE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{IO\_FAIL@{IO\_FAIL}!d232.h@{d232.h}}\index{d232.h@{d232.h}!IO\_FAIL@{IO\_FAIL}}}\Hypertarget{d232_8h_a70df8b64b29043464ea705268550393ea750eac5ef49fe8514858f289a3656d00}\label{d232_8h_a70df8b64b29043464ea705268550393ea750eac5ef49fe8514858f289a3656d00} 
+IO\+\_\+\+FAIL&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00093}{93}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+\Hypertarget{d232_8h_a12eae7576b18729af549fbf2fa6ac59b}\label{d232_8h_a12eae7576b18729af549fbf2fa6ac59b} 
+\index{d232.h@{d232.h}!SRQ\_STATE@{SRQ\_STATE}}
+\index{SRQ\_STATE@{SRQ\_STATE}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{SRQ\_STATE}{SRQ\_STATE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{d232_8h_a12eae7576b18729af549fbf2fa6ac59b}{SRQ\+\_\+\+STATE}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\_IDLE@{S\_IDLE}!d232.h@{d232.h}}\index{d232.h@{d232.h}!S\_IDLE@{S\_IDLE}}}\Hypertarget{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba86e3fc319fdf083afe88308950abab44}\label{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba86e3fc319fdf083afe88308950abab44} 
+S\+\_\+\+IDLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\_S@{S\_S}!d232.h@{d232.h}}\index{d232.h@{d232.h}!S\_S@{S\_S}}}\Hypertarget{d232_8h_a12eae7576b18729af549fbf2fa6ac59bab76712cbc44f311a633f6d3e27a612b0}\label{d232_8h_a12eae7576b18729af549fbf2fa6ac59bab76712cbc44f311a633f6d3e27a612b0} 
+S\+\_\+S&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\_R@{S\_R}!d232.h@{d232.h}}\index{d232.h@{d232.h}!S\_R@{S\_R}}}\Hypertarget{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba91cabc097f573ad6eb61839d7e092aec}\label{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba91cabc097f573ad6eb61839d7e092aec} 
+S\+\_\+R&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\_Q@{S\_Q}!d232.h@{d232.h}}\index{d232.h@{d232.h}!S\_Q@{S\_Q}}}\Hypertarget{d232_8h_a12eae7576b18729af549fbf2fa6ac59bad81f14df61561f5291bd55766cdf8b7d}\label{d232_8h_a12eae7576b18729af549fbf2fa6ac59bad81f14df61561f5291bd55766cdf8b7d} 
+S\+\_\+Q&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\_NUM@{S\_NUM}!d232.h@{d232.h}}\index{d232.h@{d232.h}!S\_NUM@{S\_NUM}}}\Hypertarget{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba362ec1f096af9e0f0a0c01a5603b3dbc}\label{d232_8h_a12eae7576b18729af549fbf2fa6ac59ba362ec1f096af9e0f0a0c01a5603b3dbc} 
+S\+\_\+\+NUM&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{S\_UPDATE@{S\_UPDATE}!d232.h@{d232.h}}\index{d232.h@{d232.h}!S\_UPDATE@{S\_UPDATE}}}\Hypertarget{d232_8h_a12eae7576b18729af549fbf2fa6ac59bacd3582eb729cdb7bb1825540032b3af5}\label{d232_8h_a12eae7576b18729af549fbf2fa6ac59bacd3582eb729cdb7bb1825540032b3af5} 
+S\+\_\+\+UPDATE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{d232_8h_source_l00103}{103}} of file \mbox{\hyperlink{d232_8h_source}{d232.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{d232_8h_a6528f931895f3e1ba2b70f0a2d29708a}\label{d232_8h_a6528f931895f3e1ba2b70f0a2d29708a} 
+\index{d232.h@{d232.h}!calc\_pot@{calc\_pot}}
+\index{calc\_pot@{calc\_pot}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{calc\_pot()}{calc\_pot()}}
+{\footnotesize\ttfamily int16\+\_\+t calc\+\_\+pot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}}}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8c_source_l00057}{57}} of file \mbox{\hyperlink{d232_8c_source}{d232.\+c}}.
+
+\Hypertarget{d232_8h_a4f70304687ba1131f354bd28f6913438}\label{d232_8h_a4f70304687ba1131f354bd28f6913438} 
+\index{d232.h@{d232.h}!Digital232\_init@{Digital232\_init}}
+\index{Digital232\_init@{Digital232\_init}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{Digital232\_init()}{Digital232\_init()}}
+{\footnotesize\ttfamily void Digital232\+\_\+init (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8c_source_l00010}{10}} of file \mbox{\hyperlink{d232_8c_source}{d232.\+c}}.
+
+\Hypertarget{d232_8h_a34184a4e0c31a75a302bca2902790f06}\label{d232_8h_a34184a4e0c31a75a302bca2902790f06} 
+\index{d232.h@{d232.h}!Digital232\_RW@{Digital232\_RW}}
+\index{Digital232\_RW@{Digital232\_RW}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{Digital232\_RW()}{Digital232\_RW()}}
+{\footnotesize\ttfamily bool Digital232\+\_\+\+RW (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8c_source_l00066}{66}} of file \mbox{\hyperlink{d232_8c_source}{d232.\+c}}.
+
+\Hypertarget{d232_8h_a0cc3c338e416e8814f646a668665c8b1}\label{d232_8h_a0cc3c338e416e8814f646a668665c8b1} 
+\index{d232.h@{d232.h}!led\_lightshow@{led\_lightshow}}
+\index{led\_lightshow@{led\_lightshow}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{led\_lightshow()}{led\_lightshow()}}
+{\footnotesize\ttfamily void led\+\_\+lightshow (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{seq,  }\item[{uint16\+\_\+t}]{speed }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8c_source_l00178}{178}} of file \mbox{\hyperlink{d232_8c_source}{d232.\+c}}.
+
+\Hypertarget{d232_8h_a95deb21002796091eb0aa22a5164d191}\label{d232_8h_a95deb21002796091eb0aa22a5164d191} 
+\index{d232.h@{d232.h}!lp\_filter@{lp\_filter}}
+\index{lp\_filter@{lp\_filter}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{lp\_filter()}{lp\_filter()}}
+{\footnotesize\ttfamily float lp\+\_\+filter (\begin{DoxyParamCaption}\item[{float}]{new,  }\item[{int16\+\_\+t}]{bn,  }\item[{int16\+\_\+t}]{slow }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8c_source_l00036}{36}} of file \mbox{\hyperlink{d232_8c_source}{d232.\+c}}.
+
+\Hypertarget{d232_8h_a06227b27b331da5d4ec43a92b2269ad8}\label{d232_8h_a06227b27b331da5d4ec43a92b2269ad8} 
+\index{d232.h@{d232.h}!once@{once}}
+\index{once@{once}!d232.h@{d232.h}}
+\doxysubsubsection{\texorpdfstring{once()}{once()}}
+{\footnotesize\ttfamily bool once (\begin{DoxyParamCaption}\item[{bool \texorpdfstring{$\ast$}{*}}]{once\+\_\+flag }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{d232_8c_source_l00287}{287}} of file \mbox{\hyperlink{d232_8c_source}{d232.\+c}}.
+

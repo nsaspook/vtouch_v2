@@ -1,0 +1,102 @@
+\doxysection{spi1.\+c}
+\hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source}{}\label{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source}\index{touch\_board/elo\_touch.X/mcc\_generated\_files/spi1.c@{touch\_board/elo\_touch.X/mcc\_generated\_files/spi1.c}}
+\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00046}00046\ \ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8h}{spi1.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00058}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a011da4553b47eb034efc43de93985cf3}{00058}}\ \textcolor{preprocessor}{\#define\ SPI\_RX\_IN\_PROGRESS\ 0x0}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00064}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a0607cad7a6b302950091fea719146a54}{00064}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2mcc__generated__files_2spi1_8c_a0607cad7a6b302950091fea719146a54}{SPI1\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00065}00065\ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ SPI1\ module\ to\ the\ options\ selected\ in\ the\ User\ Interface}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SSP\ active\ high;\ SDOP\ active\ high;\ FST\ disabled;\ SMP\ Middle;\ CKP\ Idle:Low,\ Active:High;\ CKE\ Active\ to\ idle;\ SDIP\ active\ high;\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00068}00068\ \ \ \ \ \ \ \ \ SPI1CON1\ =\ 0x40;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ SSET\ disabled;\ RXR\ suspended\ if\ the\ RxFIFO\ is\ full;\ TXR\ required\ for\ a\ transfer;\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00070}00070\ \ \ \ \ \ \ \ \ SPI1CON2\ =\ 0x03;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ BAUD\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00072}00072\ \ \ \ \ \ \ \ \ SPI1BAUD\ =\ 0x0F;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ CLKSEL\ FOSC;\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ SPI1CLK\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ BMODE\ last\ byte;\ LSBF\ MSb\ first;\ EN\ enabled;\ MST\ bus\ master;\ }}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ SPI1CON0\ =\ 0x82;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00077}00077\ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00079}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a6553e18263c48505676958ce4c937167}{00079}}\ uint8\_t\ \mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a6553e18263c48505676958ce4c937167}{SPI1\_Exchange8bit}}(uint8\_t\ data)}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00080}00080\ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//One\ byte\ transfer\ count}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00082}00082\ \ \ \ \ SPI1TCNTL\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00083}00083\ \ \ \ \ SPI1TXB\ =\ data;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00085}00085\ \ \ \ \ \textcolor{keywordflow}{while}(PIR2bits.SPI1RXIF\ ==\ \mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a011da4553b47eb034efc43de93985cf3}{SPI\_RX\_IN\_PROGRESS}})}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00086}00086\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00087}00087\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00089}00089\ \ \ \ \ \textcolor{keywordflow}{return}\ (SPI1RXB);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00090}00090\ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00092}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a4ccde3f5a15ef528146e9cad91bd637b}{00092}}\ uint8\_t\ \mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a4ccde3f5a15ef528146e9cad91bd637b}{SPI1\_Exchange8bitBuffer}}(uint8\_t\ *dataIn,\ uint8\_t\ bufLen,\ uint8\_t\ *dataOut)}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00093}00093\ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00094}00094\ \ \ \ \ uint8\_t\ bytesWritten\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00096}00096\ \ \ \ \ \textcolor{keywordflow}{if}(bufLen\ !=\ 0)}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00097}00097\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(dataIn\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00099}00099\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(bytesWritten\ <\ bufLen)}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(dataOut\ ==\ NULL)}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a6553e18263c48505676958ce4c937167}{SPI1\_Exchange8bit}}(dataIn[bytesWritten]);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dataOut[bytesWritten]\ =\ \mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a6553e18263c48505676958ce4c937167}{SPI1\_Exchange8bit}}(dataIn[bytesWritten]);}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bytesWritten++;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00113}00113\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00115}00115\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(dataOut\ !=\ NULL)}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(bytesWritten\ <\ bufLen\ )}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dataOut[bytesWritten]\ =\ \mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_a6553e18263c48505676958ce4c937167}{SPI1\_Exchange8bit}}(\mbox{\hyperlink{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8h_a5fc5258fad26a2225b045a59bb32c8d9}{DUMMY\_DATA}});}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ bytesWritten++;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00126}00126\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{return}\ bytesWritten;}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00129}00129\ \}}
+\DoxyCodeLine{\Hypertarget{touch__board_2elo__touch_8_x_2mcc__generated__files_2spi1_8c_source_l00130}00130\ }
+
+\end{DoxyCode}
