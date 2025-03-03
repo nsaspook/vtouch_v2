@@ -1,0 +1,511 @@
+\doxysection{secs\+\_\+q84.\+X/mcc\+\_\+generated\+\_\+files/uart2.h File Reference}
+\hypertarget{uart2_8h}{}\label{uart2_8h}\index{secs\_q84.X/mcc\_generated\_files/uart2.h@{secs\_q84.X/mcc\_generated\_files/uart2.h}}
+{\ttfamily \#include $<$xc.\+h$>$}\newline
+{\ttfamily \#include $<$stdbool.\+h$>$}\newline
+{\ttfamily \#include $<$stdint.\+h$>$}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+union \mbox{\hyperlink{unionuart2__status__t}{uart2\+\_\+status\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Section\+: Data Type Definitions. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{uart2_8h_afe1c320ed638e4c05d6b991049e8f678}{UART2\+\_\+\+Data\+Ready}}~(\mbox{\hyperlink{uart2_8c_ad5100005572a62acfca2456f75acc3e7}{UART2\+\_\+is\+\_\+rx\+\_\+ready}}())
+\begin{DoxyCompactList}\small\item\em UART2 Generated Driver API Header File. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize}} (void)
+\begin{DoxyCompactList}\small\item\em Section\+: UART2 APIs. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{uart2_8h_ad5100005572a62acfca2456f75acc3e7}{UART2\+\_\+is\+\_\+rx\+\_\+ready}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Checks if the UART2 receiver ready for reading \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{uart2_8h_a663583d096e660408c0bf2ef737a2b23}{UART2\+\_\+is\+\_\+tx\+\_\+ready}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Checks if the UART2 transmitter is ready to transmit data \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{uart2_8h_a1bc4f15fcee6ed112f4b839cb2dfaaa3}{UART2\+\_\+is\+\_\+tx\+\_\+done}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Checks if UART2 data is transmitted \end{DoxyCompactList}\item 
+\mbox{\hyperlink{unionuart2__status__t}{uart2\+\_\+status\+\_\+t}} \mbox{\hyperlink{uart2_8h_a3a1327186607b1cc23bc91e34bdf68e9}{UART2\+\_\+get\+\_\+last\+\_\+status}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Gets the error status of the last read byte. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d}{UART2\+\_\+\+Read}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Read a byte of data from the UART2. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_a39d80e6786b7cbcadcbd0c020e60a6e7}{UART2\+\_\+\+Write}} (uint8\+\_\+t tx\+Data)
+\begin{DoxyCompactList}\small\item\em @\+Summary Writes a byte of data to the UART2. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_ab3ec214031edcf1ef1d5e4f4fc101f7f}{UART2\+\_\+put\+\_\+buffer}} (uint8\+\_\+t)
+\item 
+void \mbox{\hyperlink{uart2_8h_ad74e2ceb3a733f5d18c70203bd78c9f6}{UART2\+\_\+\+Transmit\+\_\+\+ISR}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Maintains the driver\textquotesingle{}s transmitter state machine and implements its ISR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_ab813e516bc322e754a679dd3614aab7a}{UART2\+\_\+\+Receive\+\_\+\+ISR}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Maintains the driver\textquotesingle{}s receiver state machine and implements its ISR \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_acb7fe7356e91188e5c5a866c45615e84}{UART2\+\_\+\+Rx\+Data\+Handler}} (void)
+\begin{DoxyCompactList}\small\item\em @\+Summary Maintains the driver\textquotesingle{}s receiver state machine \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_ace233f2d0ed985a01ef775599f80ec97}{UART2\+\_\+\+Set\+Framing\+Error\+Handler}} (void(\texorpdfstring{$\ast$}{*}interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em @\+Summary Set UART2 Framing Error Handler \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_a1c1f29b45d53bec912742c2367714d04}{UART2\+\_\+\+Set\+Overrun\+Error\+Handler}} (void(\texorpdfstring{$\ast$}{*}interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em @\+Summary Set UART2 Overrun Error Handler \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_a726a09e8bb181fa81a5c68627f313188}{UART2\+\_\+\+Set\+Error\+Handler}} (void(\texorpdfstring{$\ast$}{*}interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em @\+Summary Set UART2 Error Handler \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_aba09e847361490c97b8477881636ed48}{UART2\+\_\+\+Set\+Rx\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em @\+Summary Set UART2 Receive Interrupt Handler \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{uart2_8h_afc053933c73f83ea73800a01992e0f5f}{UART2\+\_\+\+Set\+Tx\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em @\+Summary Set UART2 Transmit Interrupt Handler \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+volatile uint8\+\_\+t \mbox{\hyperlink{uart2_8h_aeaf05dc1fa0465da3fe083436d7ff35e}{uart2\+Tx\+Buffer\+Remaining}}
+\begin{DoxyCompactList}\small\item\em Section\+: Global variables. \end{DoxyCompactList}\item 
+volatile uint8\+\_\+t \mbox{\hyperlink{uart2_8h_a0087360dc4ebd918007a03572a911d04}{uart2\+Rx\+Count}}
+\item 
+void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{uart2_8h_ae3f3181a10dce6a15d18d04b2afc10fb}{UART2\+\_\+\+Rx\+Interrupt\+Handler}} )(void)
+\begin{DoxyCompactList}\small\item\em @\+Summary UART2 Receive Interrupt Handler \end{DoxyCompactList}\item 
+void(\texorpdfstring{$\ast$}{*} \mbox{\hyperlink{uart2_8h_ad75d6b0e59d602deab3ab6494323cc89}{UART2\+\_\+\+Tx\+Interrupt\+Handler}} )(void)
+\begin{DoxyCompactList}\small\item\em @\+Summary UART2 Transmit Interrupt Handler \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{uart2_8h_afe1c320ed638e4c05d6b991049e8f678}\label{uart2_8h_afe1c320ed638e4c05d6b991049e8f678} 
+\index{uart2.h@{uart2.h}!UART2\_DataReady@{UART2\_DataReady}}
+\index{UART2\_DataReady@{UART2\_DataReady}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_DataReady}{UART2\_DataReady}}
+{\footnotesize\ttfamily \#define UART2\+\_\+\+Data\+Ready~(\mbox{\hyperlink{uart2_8c_ad5100005572a62acfca2456f75acc3e7}{UART2\+\_\+is\+\_\+rx\+\_\+ready}}())}
+
+
+
+UART2 Generated Driver API Header File. 
+
+@\+Company Microchip Technology Inc.
+
+@\+File Name \doxylink{uart2_8h}{uart2.\+h}
+
+@\+Summary This is the generated header file for the UART2 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+
+@\+Description This header file provides APIs for driver for UART2. Generation Information \+: Product Revision \+: PIC10 / PIC12 / PIC16 / PIC18 MCUs -\/ 1.\+81.\+8 Device \+: PIC18\+F47\+Q84 Driver Version \+: 2.\+4.\+1 The generated drivers are tested against the following\+: Compiler \+: XC8 2.\+36 and above MPLAB \+: MPLAB X 6.\+00 Section\+: Included Files Section\+: Macro Declarations 
+
+Definition at line \mbox{\hyperlink{uart2_8h_source_l00068}{68}} of file \mbox{\hyperlink{uart2_8h_source}{uart2.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{uart2_8h_a3a1327186607b1cc23bc91e34bdf68e9}\label{uart2_8h_a3a1327186607b1cc23bc91e34bdf68e9} 
+\index{uart2.h@{uart2.h}!UART2\_get\_last\_status@{UART2\_get\_last\_status}}
+\index{UART2\_get\_last\_status@{UART2\_get\_last\_status}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_get\_last\_status()}{UART2\_get\_last\_status()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{unionuart2__status__t}{uart2\+\_\+status\+\_\+t}} UART2\+\_\+get\+\_\+last\+\_\+status (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Gets the error status of the last read byte. 
+
+@\+Description This routine gets the error status of the last read byte.
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should have been called before calling this function. The returned value is only updated after a read is called.
+
+@\+Param None
+
+@\+Returns the status of the last read byte
+
+@\+Example {\ttfamily  void \doxylink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main(void)} \{ volatile uint8\+\_\+t rx\+Data; volatile \doxylink{unionuart2__status__t}{uart2\+\_\+status\+\_\+t} rx\+Status;}
+
+{\ttfamily Initialize the device \doxylink{mcc_8c_a5e8391114a0cf91ac20002be25e3d352}{SYSTEM\+\_\+\+Initialize()};}
+
+{\ttfamily Enable the Global Interrupts INTERRUPT\+\_\+\+Global\+Interrupt\+Enable();}
+
+{\ttfamily  while(1) \{ Logic to echo received data if(\+UART2\+\_\+is\+\_\+rx\+\_\+ready()) \{ rx\+Data = \doxylink{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d}{UART2\+\_\+\+Read()}; rx\+Status = \doxylink{uart2_8h_a3a1327186607b1cc23bc91e34bdf68e9}{UART2\+\_\+get\+\_\+last\+\_\+status()}; if(rx\+Status.\+ferr)\{ LED\+\_\+0\+\_\+\+Set\+High(); \} \} \} \} } 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00176}{176}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}\label{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7} 
+\index{uart2.h@{uart2.h}!UART2\_Initialize@{UART2\_Initialize}}
+\index{UART2\_Initialize@{UART2\_Initialize}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_Initialize()}{UART2\_Initialize()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Initialize (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Section\+: UART2 APIs. 
+
+@\+Summary Initialization routine that takes inputs from the UART2 GUI.
+
+@\+Description This routine initializes the UART2 driver. This routine must be called before any other UART2 routine is called.
+
+@\+Preconditions None
+
+@\+Param None
+
+@\+Returns None
+
+@\+Comment
+
+@\+Example 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00087}{87}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_ad5100005572a62acfca2456f75acc3e7}\label{uart2_8h_ad5100005572a62acfca2456f75acc3e7} 
+\index{uart2.h@{uart2.h}!UART2\_is\_rx\_ready@{UART2\_is\_rx\_ready}}
+\index{UART2\_is\_rx\_ready@{UART2\_is\_rx\_ready}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_is\_rx\_ready()}{UART2\_is\_rx\_ready()}}
+{\footnotesize\ttfamily bool UART2\+\_\+is\+\_\+rx\+\_\+ready (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Checks if the UART2 receiver ready for reading 
+
+@\+Description This routine checks if UART2 receiver has received data and ready to be read
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should be called before calling this function UART2 receiver should be enabled before calling this function
+
+@\+Param None
+
+@\+Returns Status of UART2 receiver TRUE\+: UART2 receiver is ready for reading FALSE\+: UART2 receiver is not ready for reading
+
+@\+Example {\ttfamily  void \doxylink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main(void)} \{ volatile uint8\+\_\+t rx\+Data;}
+
+{\ttfamily Initialize the device \doxylink{mcc_8c_a5e8391114a0cf91ac20002be25e3d352}{SYSTEM\+\_\+\+Initialize()};}
+
+{\ttfamily  while(1) \{ Logic to echo received data if(\+UART2\+\_\+is\+\_\+rx\+\_\+ready()) \{ rx\+Data = \doxylink{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d}{UART2\+\_\+\+Read()}; if(\+UART2\+\_\+is\+\_\+tx\+\_\+ready()) \{ UART2\+\_\+\+Write(rx\+Data); \} \} \} \} } 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00161}{161}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_a1bc4f15fcee6ed112f4b839cb2dfaaa3}\label{uart2_8h_a1bc4f15fcee6ed112f4b839cb2dfaaa3} 
+\index{uart2.h@{uart2.h}!UART2\_is\_tx\_done@{UART2\_is\_tx\_done}}
+\index{UART2\_is\_tx\_done@{UART2\_is\_tx\_done}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_is\_tx\_done()}{UART2\_is\_tx\_done()}}
+{\footnotesize\ttfamily bool UART2\+\_\+is\+\_\+tx\+\_\+done (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Checks if UART2 data is transmitted 
+
+@\+Description This function return the status of transmit shift register
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should be called before calling this function UART2 transmitter should be enabled and UART2\+\_\+\+Write should be called before calling this function
+
+@\+Param None
+
+@\+Returns Status of UART2 transmit shift register TRUE\+: Data completely shifted out if the UART shift register FALSE\+: Data is not completely shifted out of the shift register
+
+@\+Example {\ttfamily  void \doxylink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main(void)} \{ volatile uint8\+\_\+t rx\+Data;}
+
+{\ttfamily Initialize the device \doxylink{mcc_8c_a5e8391114a0cf91ac20002be25e3d352}{SYSTEM\+\_\+\+Initialize()};}
+
+{\ttfamily  while(1) \{ if(\+UART2\+\_\+is\+\_\+tx\+\_\+ready()) \{ LED\+\_\+0\+\_\+\+Set\+High(); UART2\+Write(rx\+Data); \} if(\doxylink{uart2_8h_a1bc4f15fcee6ed112f4b839cb2dfaaa3}{UART2\+\_\+is\+\_\+tx\+\_\+done()} \{ LED\+\_\+0\+\_\+\+Set\+Low(); \} \} \} } 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00171}{171}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_a663583d096e660408c0bf2ef737a2b23}\label{uart2_8h_a663583d096e660408c0bf2ef737a2b23} 
+\index{uart2.h@{uart2.h}!UART2\_is\_tx\_ready@{UART2\_is\_tx\_ready}}
+\index{UART2\_is\_tx\_ready@{UART2\_is\_tx\_ready}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_is\_tx\_ready()}{UART2\_is\_tx\_ready()}}
+{\footnotesize\ttfamily bool UART2\+\_\+is\+\_\+tx\+\_\+ready (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Checks if the UART2 transmitter is ready to transmit data 
+
+@\+Description This routine checks if UART2 transmitter is ready to accept and transmit data byte
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should have been called before calling this function. UART2 transmitter should be enabled before calling this function
+
+@\+Param None
+
+@\+Returns Status of UART2 transmitter TRUE\+: UART2 transmitter is ready FALSE\+: UART2 transmitter is not ready
+
+@\+Example {\ttfamily  void \doxylink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main(void)} \{ volatile uint8\+\_\+t rx\+Data;}
+
+{\ttfamily Initialize the device \doxylink{mcc_8c_a5e8391114a0cf91ac20002be25e3d352}{SYSTEM\+\_\+\+Initialize()};}
+
+{\ttfamily  while(1) \{ Logic to echo received data if(\+UART2\+\_\+is\+\_\+rx\+\_\+ready()) \{ rx\+Data = \doxylink{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d}{UART2\+\_\+\+Read()}; if(\+UART2\+\_\+is\+\_\+tx\+\_\+ready()) \{ UART2\+\_\+\+Write(rx\+Data); \} \} \} \} } 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00166}{166}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_ab3ec214031edcf1ef1d5e4f4fc101f7f}\label{uart2_8h_ab3ec214031edcf1ef1d5e4f4fc101f7f} 
+\index{uart2.h@{uart2.h}!UART2\_put\_buffer@{UART2\_put\_buffer}}
+\index{UART2\_put\_buffer@{UART2\_put\_buffer}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_put\_buffer()}{UART2\_put\_buffer()}}
+{\footnotesize\ttfamily void UART2\+\_\+put\+\_\+buffer (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{buf\+Data }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00323}{323}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d}\label{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d} 
+\index{uart2.h@{uart2.h}!UART2\_Read@{UART2\_Read}}
+\index{UART2\_Read@{UART2\_Read}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_Read()}{UART2\_Read()}}
+{\footnotesize\ttfamily uint8\+\_\+t UART2\+\_\+\+Read (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Read a byte of data from the UART2. 
+
+@\+Description This routine reads a byte of data from the UART2.
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should have been called before calling this function. The transfer status should be checked to see if the receiver is not empty before calling this function.
+
+UART2\+\_\+\+Data\+Ready is a macro which checks if any byte is received. Call this macro before using this function.
+
+@\+Param None
+
+@\+Returns A data byte received by the driver.
+
+@\+Example {\ttfamily  void \doxylink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main(void)} \{ initialize the device \doxylink{mcc_8c_a5e8391114a0cf91ac20002be25e3d352}{SYSTEM\+\_\+\+Initialize()}; uint8\+\_\+t data;}
+
+{\ttfamily Enable the Global Interrupts INTERRUPT\+\_\+\+Global\+Interrupt\+Enable();}
+
+{\ttfamily Enable the Peripheral Interrupts INTERRUPT\+\_\+\+Peripheral\+Interrupt\+Enable();}
+
+{\ttfamily  printf("{}\textbackslash{}t\textbackslash{}t\+TEST CODE\textbackslash{}n\textbackslash{}r"{}); //\+Enable redirect STDIO to USART before using printf statements printf("{}\textbackslash{}t\textbackslash{}t-\/-\/-\/-\/ -\/-\/-\/-\/\textbackslash{}n\textbackslash{}r"{}); printf("{}\textbackslash{}t\textbackslash{}t\+ECHO TEST\textbackslash{}n\textbackslash{}r"{}); printf("{}\textbackslash{}t\textbackslash{}t-\/-\/-\/-\/ -\/-\/-\/-\/\textbackslash{}n\textbackslash{}n\textbackslash{}r"{}); printf("{}\+Enter any string\+: "{}); do\{ data = \doxylink{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d}{UART2\+\_\+\+Read()}; // Read data received UART2\+\_\+\+Write(data); // Echo back the data received \}while(!\+UART2\+\_\+\+Data\+Ready); //check if any data is received}
+
+{\ttfamily  \} } 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00181}{181}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_ab813e516bc322e754a679dd3614aab7a}\label{uart2_8h_ab813e516bc322e754a679dd3614aab7a} 
+\index{uart2.h@{uart2.h}!UART2\_Receive\_ISR@{UART2\_Receive\_ISR}}
+\index{UART2\_Receive\_ISR@{UART2\_Receive\_ISR}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_Receive\_ISR()}{UART2\_Receive\_ISR()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Receive\+\_\+\+ISR (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Maintains the driver\textquotesingle{}s receiver state machine and implements its ISR 
+
+@\+Description This routine is used to maintain the driver\textquotesingle{}s internal receiver state machine.\+This interrupt service routine is called when the state of the receiver needs to be maintained in a non polled manner.
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should have been called for the ISR to execute correctly.
+
+@\+Param None
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00249}{249}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_acb7fe7356e91188e5c5a866c45615e84}\label{uart2_8h_acb7fe7356e91188e5c5a866c45615e84} 
+\index{uart2.h@{uart2.h}!UART2\_RxDataHandler@{UART2\_RxDataHandler}}
+\index{UART2\_RxDataHandler@{UART2\_RxDataHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_RxDataHandler()}{UART2\_RxDataHandler()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Rx\+Data\+Handler (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Maintains the driver\textquotesingle{}s receiver state machine 
+
+@\+Description This routine is called by the receive state routine and is used to maintain the driver\textquotesingle{}s internal receiver state machine. It should be called by a custom ISR to maintain normal behavior
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should have been called for the ISR to execute correctly.
+
+@\+Param None
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00273}{273}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_a726a09e8bb181fa81a5c68627f313188}\label{uart2_8h_a726a09e8bb181fa81a5c68627f313188} 
+\index{uart2.h@{uart2.h}!UART2\_SetErrorHandler@{UART2\_SetErrorHandler}}
+\index{UART2\_SetErrorHandler@{UART2\_SetErrorHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_SetErrorHandler()}{UART2\_SetErrorHandler()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Set\+Error\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Set UART2 Error Handler 
+
+@\+Description This API sets the function to be called upon UART2 error
+
+@\+Preconditions Initialize the UART2 module before calling this API
+
+@\+Param Address of function to be set as error handler
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00307}{307}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_ace233f2d0ed985a01ef775599f80ec97}\label{uart2_8h_ace233f2d0ed985a01ef775599f80ec97} 
+\index{uart2.h@{uart2.h}!UART2\_SetFramingErrorHandler@{UART2\_SetFramingErrorHandler}}
+\index{UART2\_SetFramingErrorHandler@{UART2\_SetFramingErrorHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_SetFramingErrorHandler()}{UART2\_SetFramingErrorHandler()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Set\+Framing\+Error\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Set UART2 Framing Error Handler 
+
+@\+Description This API sets the function to be called upon UART2 framing error
+
+@\+Preconditions Initialize the UART2 before calling this API
+
+@\+Param Address of function to be set as framing error handler
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00297}{297}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_a1c1f29b45d53bec912742c2367714d04}\label{uart2_8h_a1c1f29b45d53bec912742c2367714d04} 
+\index{uart2.h@{uart2.h}!UART2\_SetOverrunErrorHandler@{UART2\_SetOverrunErrorHandler}}
+\index{UART2\_SetOverrunErrorHandler@{UART2\_SetOverrunErrorHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_SetOverrunErrorHandler()}{UART2\_SetOverrunErrorHandler()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Set\+Overrun\+Error\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Set UART2 Overrun Error Handler 
+
+@\+Description This API sets the function to be called upon UART2 overrun error
+
+@\+Preconditions Initialize the UART2 module before calling this API
+
+@\+Param Address of function to be set as overrun error handler
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00302}{302}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_aba09e847361490c97b8477881636ed48}\label{uart2_8h_aba09e847361490c97b8477881636ed48} 
+\index{uart2.h@{uart2.h}!UART2\_SetRxInterruptHandler@{UART2\_SetRxInterruptHandler}}
+\index{UART2\_SetRxInterruptHandler@{UART2\_SetRxInterruptHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_SetRxInterruptHandler()}{UART2\_SetRxInterruptHandler()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Set\+Rx\+Interrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Set UART2 Receive Interrupt Handler 
+
+@\+Description This API sets the function to be called upon UART2 receive interrupt
+
+@\+Preconditions Initialize the UART2 module with receive interrupt enabled before calling this API
+
+@\+Param Address of function to be set as receive interrupt handler
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00312}{312}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_afc053933c73f83ea73800a01992e0f5f}\label{uart2_8h_afc053933c73f83ea73800a01992e0f5f} 
+\index{uart2.h@{uart2.h}!UART2\_SetTxInterruptHandler@{UART2\_SetTxInterruptHandler}}
+\index{UART2\_SetTxInterruptHandler@{UART2\_SetTxInterruptHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_SetTxInterruptHandler()}{UART2\_SetTxInterruptHandler()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Set\+Tx\+Interrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Set UART2 Transmit Interrupt Handler 
+
+@\+Description This API sets the function to be called upon UART2 transmit interrupt
+
+@\+Preconditions Initialize the UART2 module with transmit interrupt enabled before calling this API
+
+@\+Param Address of function to be set as transmit interrupt handler
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00317}{317}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_ad74e2ceb3a733f5d18c70203bd78c9f6}\label{uart2_8h_ad74e2ceb3a733f5d18c70203bd78c9f6} 
+\index{uart2.h@{uart2.h}!UART2\_Transmit\_ISR@{UART2\_Transmit\_ISR}}
+\index{UART2\_Transmit\_ISR@{UART2\_Transmit\_ISR}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_Transmit\_ISR()}{UART2\_Transmit\_ISR()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Transmit\+\_\+\+ISR (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Maintains the driver\textquotesingle{}s transmitter state machine and implements its ISR. 
+
+@\+Description This routine is used to maintain the driver\textquotesingle{}s internal transmitter state machine.\+This interrupt service routine is called when the state of the transmitter needs to be maintained in a non polled manner.
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should have been called for the ISR to execute correctly.
+
+@\+Param None
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00233}{233}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_a39d80e6786b7cbcadcbd0c020e60a6e7}\label{uart2_8h_a39d80e6786b7cbcadcbd0c020e60a6e7} 
+\index{uart2.h@{uart2.h}!UART2\_Write@{UART2\_Write}}
+\index{UART2\_Write@{UART2\_Write}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_Write()}{UART2\_Write()}}
+{\footnotesize\ttfamily void UART2\+\_\+\+Write (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{tx\+Data }\end{DoxyParamCaption})}
+
+
+
+@\+Summary Writes a byte of data to the UART2. 
+
+@\+Description This routine writes a byte of data to the UART2.
+
+@\+Preconditions \doxylink{uart2_8h_a1c7f32800f7e5955bc04306b2686a0d7}{UART2\+\_\+\+Initialize()} function should have been called before calling this function. The transfer status should be checked to see if transmitter is not busy before calling this function.
+
+@\+Param tx\+Data -\/ Data byte to write to the UART2
+
+@\+Returns None
+
+@\+Example {\ttfamily  Refer to \doxylink{uart2_8h_ab56d5afa62daf8dd586d6b8ebf33160d}{UART2\+\_\+\+Read()} for an example ~\newline
+ } 
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00201}{201}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{uart2_8h_ae3f3181a10dce6a15d18d04b2afc10fb}\label{uart2_8h_ae3f3181a10dce6a15d18d04b2afc10fb} 
+\index{uart2.h@{uart2.h}!UART2\_RxInterruptHandler@{UART2\_RxInterruptHandler}}
+\index{UART2\_RxInterruptHandler@{UART2\_RxInterruptHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_RxInterruptHandler}{UART2\_RxInterruptHandler}}
+{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} UART2\+\_\+\+Rx\+Interrupt\+Handler) (void) (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary UART2 Receive Interrupt Handler 
+
+@\+Description This is a pointer to the function that will be called upon UART2 receive interrupt
+
+@\+Preconditions Initialize the UART2 module with receive interrupt enabled
+
+@\+Param None
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8h_source_l00519}{519}} of file \mbox{\hyperlink{uart2_8h_source}{uart2.\+h}}.
+
+\Hypertarget{uart2_8h_ad75d6b0e59d602deab3ab6494323cc89}\label{uart2_8h_ad75d6b0e59d602deab3ab6494323cc89} 
+\index{uart2.h@{uart2.h}!UART2\_TxInterruptHandler@{UART2\_TxInterruptHandler}}
+\index{UART2\_TxInterruptHandler@{UART2\_TxInterruptHandler}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{UART2\_TxInterruptHandler}{UART2\_TxInterruptHandler}}
+{\footnotesize\ttfamily void(\texorpdfstring{$\ast$}{*} UART2\+\_\+\+Tx\+Interrupt\+Handler) (void) (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+@\+Summary UART2 Transmit Interrupt Handler 
+
+@\+Description This is a pointer to the function that will be called upon UART2 transmit interrupt
+
+@\+Preconditions Initialize the UART2 module with transmit interrupt enabled
+
+@\+Param None
+
+@\+Returns None 
+
+Definition at line \mbox{\hyperlink{uart2_8h_source_l00537}{537}} of file \mbox{\hyperlink{uart2_8h_source}{uart2.\+h}}.
+
+\Hypertarget{uart2_8h_a0087360dc4ebd918007a03572a911d04}\label{uart2_8h_a0087360dc4ebd918007a03572a911d04} 
+\index{uart2.h@{uart2.h}!uart2RxCount@{uart2RxCount}}
+\index{uart2RxCount@{uart2RxCount}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{uart2RxCount}{uart2RxCount}}
+{\footnotesize\ttfamily volatile uint8\+\_\+t uart2\+Rx\+Count\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00073}{73}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+
+\Hypertarget{uart2_8h_aeaf05dc1fa0465da3fe083436d7ff35e}\label{uart2_8h_aeaf05dc1fa0465da3fe083436d7ff35e} 
+\index{uart2.h@{uart2.h}!uart2TxBufferRemaining@{uart2TxBufferRemaining}}
+\index{uart2TxBufferRemaining@{uart2TxBufferRemaining}!uart2.h@{uart2.h}}
+\doxysubsubsection{\texorpdfstring{uart2TxBufferRemaining}{uart2TxBufferRemaining}}
+{\footnotesize\ttfamily volatile uint8\+\_\+t uart2\+Tx\+Buffer\+Remaining\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Section\+: Global variables. 
+
+
+
+Definition at line \mbox{\hyperlink{uart2_8c_source_l00067}{67}} of file \mbox{\hyperlink{uart2_8c_source}{uart2.\+c}}.
+

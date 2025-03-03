@@ -1,0 +1,1747 @@
+\doxysection{ADC3\+: Analog-\/to-\/\+Digital Converter with Context}
+\hypertarget{group__adc__context__scan}{}\label{group__adc__context__scan}\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+
+
+ADC Generated Driver API Header File.  
+
+
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em This typedef should be used for result of A/D conversion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}} \{ \newline
+{\bfseries channel\+\_\+\+ANA1} = 0x1
+, {\bfseries channel\+\_\+\+ANA2} = 0x2
+, {\bfseries channel\+\_\+\+VSS} = 0x3B
+, {\bfseries channel\+\_\+\+Temp} = 0x3C
+, \newline
+{\bfseries channel\+\_\+\+DAC1} = 0x3D
+, {\bfseries channel\+\_\+\+FVR\+\_\+\+Buffer1} = 0x3E
+, {\bfseries channel\+\_\+\+FVR\+\_\+\+Buffer2} = 0x3F
+ \}
+\begin{DoxyCompactList}\small\item\em This enumeration contains available ADC channels. \end{DoxyCompactList}\item 
+enum \mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} \{ {\bfseries CONTEXT\+\_\+1}
+ \}
+\begin{DoxyCompactList}\small\item\em This enumeration contains available ADC contexts. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\+\_\+\+Initialize}} (void)
+\begin{DoxyCompactList}\small\item\em This API initializes the ADC module. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga2583fd89066ae5d0e93c9d3a92d9f034}{ADC\+\_\+\+Enable\+Channel\+Sequencer}} (void)
+\begin{DoxyCompactList}\small\item\em This API enables ADC channel sequencer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga09a2d9ace55dd1528348074b0191ab78}{ADC\+\_\+\+Disable\+Channel\+Sequencer}} (void)
+\begin{DoxyCompactList}\small\item\em This API disables ADC channel sequencer. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga9040d2afbf4eb69dadb16ff85c17df7f}{ADC\+\_\+\+Start\+Channel\+Sequencer}} (void)
+\begin{DoxyCompactList}\small\item\em This API starts the channel sequencer by enabling GO bit. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context}} (\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} context)
+\begin{DoxyCompactList}\small\item\em This API is used to select an ADC context to perform read/write operations on context specific registers. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b}{ADC\+\_\+\+Enable\+Channel\+Scan}} (\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} context)
+\begin{DoxyCompactList}\small\item\em This API is used to include a channel context in the scan sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gadf1bd632e75e7b6f5a85d115acdc58d7}{ADC\+\_\+\+Disable\+Channel\+Scan}} (\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}} context)
+\begin{DoxyCompactList}\small\item\em This API is used to exclude a channel context from the scan sequence. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\+\_\+\+Start\+Conversion}} (\mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}} channel)
+\begin{DoxyCompactList}\small\item\em This API starts A/D conversion on selected channel. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\+\_\+\+Is\+Conversion\+Done}} (void)
+\begin{DoxyCompactList}\small\item\em This API checks if ongoing A/D conversion is complete. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}} \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\+\_\+\+Get\+Conversion\+Result}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to retrieve the result of latest A/D conversion. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}} \mbox{\hyperlink{group__adc__context__scan_gad1cf69dd45bbfed3bc4171d225baaba8}{ADC\+\_\+\+Get\+Single\+Conversion}} (\mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}} channel)
+\begin{DoxyCompactList}\small\item\em This API is used to retrieve the result of single A/D conversion on given channel. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga540ecad9b65eff28421e4fcda79f7dc7}{ADC\+\_\+\+Stop\+Conversion}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to stop ongoing A/D conversion. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gab119f15a751577be8b4ae1615450849e}{ADC\+\_\+\+Set\+Stop\+On\+Interrupt}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used enable Stop On Interrupt bit for selected A/D context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga281da9f1502be02e9d368e2040b6c065}{ADC\+\_\+\+Discharge\+Sample\+Capacitor}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to discharge input sample capacitor for selected context by setting the channel to AVss. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga4400d0243e745ffc82e1d9cb8d2e47b9}{ADC\+\_\+\+Load\+Acquisition\+Register}} (uint16\+\_\+t acquisition\+Value)
+\begin{DoxyCompactList}\small\item\em This API is used to load ADC Acquisition Time Control register with specified value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga6fe915c5058412e32884f659cf8aef9f}{ADC\+\_\+\+Set\+Precharge\+Time}} (uint16\+\_\+t precharge\+Time)
+\begin{DoxyCompactList}\small\item\em This API is used to load ADC Precharge Time Control register with specified value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga723ecf1350fdb425e1ae78762c055d4b}{ADC\+\_\+\+Set\+Repeat\+Count}} (uint8\+\_\+t repeat\+Count)
+\begin{DoxyCompactList}\small\item\em This API is used to load repeat counter for given context with specified value. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{group__adc__context__scan_gaf88b883b32daa63a8cec63f4484266b5}{ADC\+\_\+\+Get\+Current\+Countof\+Conversions}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the current value of ADC Repeat Count register for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga83c00205a85199ef08d9d742761a7ed9}{ADC\+\_\+\+Clear\+Accumulator}} (void)
+\begin{DoxyCompactList}\small\item\em This API clears the accumulator of selected context. \end{DoxyCompactList}\item 
+uint24\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga581ee0845f61c4850c014f10f4c8b323}{ADC\+\_\+\+Get\+Accumulator\+Value}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves 18-\/bit value of ADC accumulator of selected context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_ga29938a2ee8cee9fda098637d6eac9e43}{ADC\+\_\+\+Has\+Accumulator\+Overflowed}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to determine whether ADC accumulator has overflowed for selected context. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga78e48b8ff7ac1cc5bc1e17bf2dcd0275}{ADC\+\_\+\+Get\+Filter\+Value}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the value of ADC Filter register of selected context. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga747b71a180bc8f7fc435e5cd0a0e68cb}{ADC\+\_\+\+Get\+Previous\+Result}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the value of ADC Previous register of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga8f597e5ca55f74007bce2dd9b8dc05f2}{ADC\+\_\+\+Define\+Set\+Point}} (uint16\+\_\+t set\+Point)
+\begin{DoxyCompactList}\small\item\em This API used to set value of ADC Threshold Set-\/point of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga54b8d141256995293414ffe21e0968fb}{ADC\+\_\+\+Set\+Upper\+Threshold}} (uint16\+\_\+t upper\+Threshold)
+\begin{DoxyCompactList}\small\item\em This API used to set value of ADC Upper Threshold register of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga0234d212f6af4b4faaff764768da6e21}{ADC\+\_\+\+Set\+Lower\+Threshold}} (uint16\+\_\+t lower\+Threshold)
+\begin{DoxyCompactList}\small\item\em This API used to set value of ADC Lower Threshold register of selected context. \end{DoxyCompactList}\item 
+uint16\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga87a113226569485f4a6c15468979ef07}{ADC\+\_\+\+Get\+Error\+Calculation}} (void)
+\begin{DoxyCompactList}\small\item\em This API retrieves the value of ADC Set-\/point Error register of selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gac313bdf5e8a4a4750e585c01c0ab6cb0}{ADC\+\_\+\+Enable\+Double\+Sampling}} (void)
+\begin{DoxyCompactList}\small\item\em This API enables double-\/sampling bit for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga47912a65803ccf504c7146afd302dcbb}{ADC\+\_\+\+Enable\+Continuous\+Conversion}} (void)
+\begin{DoxyCompactList}\small\item\em This API enables continuous conversion for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gae389b316d540c08a172a418c5a4f3574}{ADC\+\_\+\+Disable\+Continuous\+Conversion}} (void)
+\begin{DoxyCompactList}\small\item\em This API disables continuous conversion for selected context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_ga69dbd3c98a1dbca1fd529120940b4a7b}{ADC\+\_\+\+Has\+Error\+Crossed\+Upper\+Threshold}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to determine if ADC error has crossed the upper threshold for selected context. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{group__adc__context__scan_gab8b716b9ec3541cf6d2b5487e029109a}{ADC\+\_\+\+Has\+Error\+Crossed\+Lower\+Threshold}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to determine if ADC error is less than the lower threshold for selected context. \end{DoxyCompactList}\item 
+uint8\+\_\+t \mbox{\hyperlink{group__adc__context__scan_ga271b057ed72fedce018be162578b4f99}{ADC\+\_\+\+Get\+Conversion\+Stage\+Status}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used retrieve the multi-\/stage status for selected context. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga16088e817846594db8fc270ac7a476c6}{ADC\+\_\+\+Enable\+Charge\+Pump}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to enable ADC charge pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga676b01c4efd317bd8c6ff50d7d61cf47}{ADC\+\_\+\+Disable\+Charge\+Pump}} (void)
+\begin{DoxyCompactList}\small\item\em This API is used to disable ADC charge pump. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga19b2ac860b37d84c2d3cfe161af9e65b}{ADC\+\_\+\+Set\+ADIInterrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for A/D conversion ISR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga922be39b90e7ae385d6860d954edceb0}{ADC\+\_\+\+Set\+Active\+Clock\+Tuning\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for A/D Active Clock Tuning ISR. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_gaedf2eff80da4f8e7fbf8a1f6ee3ee1a8}{ADC\+\_\+\+Set\+Context1\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/1 threshold interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga9dc31343b8711194ae3228d4579e1ada}{ADC\+\_\+\+Set\+Context2\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/2 threshold interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga593486553f059555f230d15bc8c53006}{ADC\+\_\+\+Set\+Context3\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/3 threshold interrupt. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{group__adc__context__scan_ga7b944c61e998435febd5c3b292017cba}{ADC\+\_\+\+Set\+Context4\+Threshold\+Interrupt\+Handler}} (void(\texorpdfstring{$\ast$}{*}Interrupt\+Handler)(void))
+\begin{DoxyCompactList}\small\item\em Setter for Context-\/4 threshold interrupt. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+ADC Generated Driver API Header File. 
+
+@\+Company Microchip Technology Inc.
+
+@\+File Name \doxylink{adc_8h_source}{adc.\+h}
+
+@\+Summary This is the generated header file for the ADC driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+
+@\+Description This header file provides APIs for driver for ADC. Generation Information \+: Product Revision \+: PIC10 / PIC12 / PIC16 / PIC18 MCUs -\/ 1.\+81.\+8 Device \+: PIC18\+F47\+Q84 Driver Version \+: 1.\+0.\+0 The generated drivers are tested against the following\+: Compiler \+: XC8 2.\+36 and above MPLAB \+: MPLAB X 6.\+00
+
+This file contains API prototypes and other datatypes for ADC module. 
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}\label{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!adc\_result\_t@{adc\_result\_t}}
+\index{adc\_result\_t@{adc\_result\_t}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{adc\_result\_t}{adc\_result\_t}}
+{\footnotesize\ttfamily \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}}}
+
+
+
+This typedef should be used for result of A/D conversion. 
+
+
+
+Definition at line \mbox{\hyperlink{adc_8h_source_l00065}{65}} of file \mbox{\hyperlink{adc_8h_source}{adc.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}\label{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_channel\_t@{ADC\_channel\_t}}
+\index{ADC\_channel\_t@{ADC\_channel\_t}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_channel\_t}{ADC\_channel\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}}}
+
+
+
+This enumeration contains available ADC channels. 
+
+
+
+Definition at line \mbox{\hyperlink{adc_8h_source_l00072}{72}} of file \mbox{\hyperlink{adc_8h_source}{adc.\+h}}.
+
+\Hypertarget{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}\label{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_context\_t@{ADC\_context\_t}}
+\index{ADC\_context\_t@{ADC\_context\_t}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_context\_t}{ADC\_context\_t}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}}}
+
+
+
+This enumeration contains available ADC contexts. 
+
+
+
+Definition at line \mbox{\hyperlink{adc_8h_source_l00088}{88}} of file \mbox{\hyperlink{adc_8h_source}{adc.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{group__adc__context__scan_ga83c00205a85199ef08d9d742761a7ed9}\label{group__adc__context__scan_ga83c00205a85199ef08d9d742761a7ed9} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_ClearAccumulator@{ADC\_ClearAccumulator}}
+\index{ADC\_ClearAccumulator@{ADC\_ClearAccumulator}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_ClearAccumulator()}{ADC\_ClearAccumulator()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Clear\+Accumulator (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API clears the accumulator of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga83c00205a85199ef08d9d742761a7ed9}{ADC\_ClearAccumulator}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00308}{308}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga8f597e5ca55f74007bce2dd9b8dc05f2}\label{group__adc__context__scan_ga8f597e5ca55f74007bce2dd9b8dc05f2} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_DefineSetPoint@{ADC\_DefineSetPoint}}
+\index{ADC\_DefineSetPoint@{ADC\_DefineSetPoint}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_DefineSetPoint()}{ADC\_DefineSetPoint()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Define\+Set\+Point (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{set\+Point }\end{DoxyParamCaption})}
+
+
+
+This API used to set value of ADC Threshold Set-\/point of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em set\+Point} & -\/ 16-\/bit value for set point. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ setPoint\ =\ 90;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga8f597e5ca55f74007bce2dd9b8dc05f2}{ADC\_DefineSetPoint}}(setPoint);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00333}{333}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gadf1bd632e75e7b6f5a85d115acdc58d7}\label{group__adc__context__scan_gadf1bd632e75e7b6f5a85d115acdc58d7} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_DisableChannelScan@{ADC\_DisableChannelScan}}
+\index{ADC\_DisableChannelScan@{ADC\_DisableChannelScan}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_DisableChannelScan()}{ADC\_DisableChannelScan()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Disable\+Channel\+Scan (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}}}]{context }\end{DoxyParamCaption})}
+
+
+
+This API is used to exclude a channel context from the scan sequence. 
+
+Correct context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em context} & -\/ Context which needs to be excluded from scan. Refer \doxylink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t} for available contexts \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b}{ADC\_EnableChannelScan}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadf1bd632e75e7b6f5a85d115acdc58d7}{ADC\_DisableChannelScan}}(CONTEXT\_2);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadf1bd632e75e7b6f5a85d115acdc58d7}{ADC\_DisableChannelScan}}(CONTEXT\_3);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b}{ADC\_EnableChannelScan}}(CONTEXT\_4);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00211}{211}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga09a2d9ace55dd1528348074b0191ab78}\label{group__adc__context__scan_ga09a2d9ace55dd1528348074b0191ab78} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_DisableChannelSequencer@{ADC\_DisableChannelSequencer}}
+\index{ADC\_DisableChannelSequencer@{ADC\_DisableChannelSequencer}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_DisableChannelSequencer()}{ADC\_DisableChannelSequencer()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Disable\+Channel\+Sequencer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API disables ADC channel sequencer. 
+
+ADC module should be initialized using \doxylink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\+\_\+\+Initialize} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga09a2d9ace55dd1528348074b0191ab78}{ADC\_DisableChannelSequencer}}();\ \ \ \ \textcolor{comment}{//Disable\ scanner}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_gad1cf69dd45bbfed3bc4171d225baaba8}{ADC\_GetSingleConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00184}{184}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga676b01c4efd317bd8c6ff50d7d61cf47}\label{group__adc__context__scan_ga676b01c4efd317bd8c6ff50d7d61cf47} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_DisableChargePump@{ADC\_DisableChargePump}}
+\index{ADC\_DisableChargePump@{ADC\_DisableChargePump}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_DisableChargePump()}{ADC\_DisableChargePump()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Disable\+Charge\+Pump (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API is used to disable ADC charge pump. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga676b01c4efd317bd8c6ff50d7d61cf47}{ADC\_DisableChargePump}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00391}{391}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gae389b316d540c08a172a418c5a4f3574}\label{group__adc__context__scan_gae389b316d540c08a172a418c5a4f3574} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_DisableContinuousConversion@{ADC\_DisableContinuousConversion}}
+\index{ADC\_DisableContinuousConversion@{ADC\_DisableContinuousConversion}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_DisableContinuousConversion()}{ADC\_DisableContinuousConversion()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Disable\+Continuous\+Conversion (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API disables continuous conversion for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gae389b316d540c08a172a418c5a4f3574}{ADC\_DisableContinuousConversion}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00366}{366}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga281da9f1502be02e9d368e2040b6c065}\label{group__adc__context__scan_ga281da9f1502be02e9d368e2040b6c065} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_DischargeSampleCapacitor@{ADC\_DischargeSampleCapacitor}}
+\index{ADC\_DischargeSampleCapacitor@{ADC\_DischargeSampleCapacitor}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_DischargeSampleCapacitor()}{ADC\_DischargeSampleCapacitor()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Discharge\+Sample\+Capacitor (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API is used to discharge input sample capacitor for selected context by setting the channel to AVss. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga281da9f1502be02e9d368e2040b6c065}{ADC\_DischargeSampleCapacitor}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00280}{280}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b}\label{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_EnableChannelScan@{ADC\_EnableChannelScan}}
+\index{ADC\_EnableChannelScan@{ADC\_EnableChannelScan}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_EnableChannelScan()}{ADC\_EnableChannelScan()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Enable\+Channel\+Scan (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}}}]{context }\end{DoxyParamCaption})}
+
+
+
+This API is used to include a channel context in the scan sequence. 
+
+Correct context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em context} & -\/ Context which needs to be included in scan. Refer \doxylink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t} for available contexts \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b}{ADC\_EnableChannelScan}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga8868bfcb02c9defa6e09b72f3ed0295b}{ADC\_EnableChannelScan}}(CONTEXT\_2);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00199}{199}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga2583fd89066ae5d0e93c9d3a92d9f034}\label{group__adc__context__scan_ga2583fd89066ae5d0e93c9d3a92d9f034} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_EnableChannelSequencer@{ADC\_EnableChannelSequencer}}
+\index{ADC\_EnableChannelSequencer@{ADC\_EnableChannelSequencer}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_EnableChannelSequencer()}{ADC\_EnableChannelSequencer()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Enable\+Channel\+Sequencer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API enables ADC channel sequencer. 
+
+ADC module should be initialized using \doxylink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\+\_\+\+Initialize} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue1,\ convertedValue2,\ convertedValue3,\ convertedValue4;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2583fd89066ae5d0e93c9d3a92d9f034}{ADC\_EnableChannelSequencer}}();\ \ \ \ \textcolor{comment}{//Enable\ auto-\/scanning\ if\ not\ already\ enabled\ \ }}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga9040d2afbf4eb69dadb16ff85c17df7f}{ADC\_StartChannelSequencer}}();\ \ \ \ \ \textcolor{comment}{//\ Software\ starts\ the\ sequencer\ \ \ }}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue1\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_2);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue2\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_3);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue3\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_4);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue4\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00179}{179}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga16088e817846594db8fc270ac7a476c6}\label{group__adc__context__scan_ga16088e817846594db8fc270ac7a476c6} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_EnableChargePump@{ADC\_EnableChargePump}}
+\index{ADC\_EnableChargePump@{ADC\_EnableChargePump}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_EnableChargePump()}{ADC\_EnableChargePump()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Enable\+Charge\+Pump (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API is used to enable ADC charge pump. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga16088e817846594db8fc270ac7a476c6}{ADC\_EnableChargePump}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00386}{386}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga47912a65803ccf504c7146afd302dcbb}\label{group__adc__context__scan_ga47912a65803ccf504c7146afd302dcbb} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_EnableContinuousConversion@{ADC\_EnableContinuousConversion}}
+\index{ADC\_EnableContinuousConversion@{ADC\_EnableContinuousConversion}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_EnableContinuousConversion()}{ADC\_EnableContinuousConversion()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Enable\+Continuous\+Conversion (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API enables continuous conversion for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga47912a65803ccf504c7146afd302dcbb}{ADC\_EnableContinuousConversion}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00361}{361}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gac313bdf5e8a4a4750e585c01c0ab6cb0}\label{group__adc__context__scan_gac313bdf5e8a4a4750e585c01c0ab6cb0} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_EnableDoubleSampling@{ADC\_EnableDoubleSampling}}
+\index{ADC\_EnableDoubleSampling@{ADC\_EnableDoubleSampling}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_EnableDoubleSampling()}{ADC\_EnableDoubleSampling()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Enable\+Double\+Sampling (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API enables double-\/sampling bit for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac313bdf5e8a4a4750e585c01c0ab6cb0}{ADC\_EnableDoubleSampling}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00356}{356}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga581ee0845f61c4850c014f10f4c8b323}\label{group__adc__context__scan_ga581ee0845f61c4850c014f10f4c8b323} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetAccumulatorValue@{ADC\_GetAccumulatorValue}}
+\index{ADC\_GetAccumulatorValue@{ADC\_GetAccumulatorValue}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetAccumulatorValue()}{ADC\_GetAccumulatorValue()}}
+{\footnotesize\ttfamily uint24\+\_\+t ADC\+\_\+\+Get\+Accumulator\+Value (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API retrieves 18-\/bit value of ADC accumulator of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of ADC accumulator.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint24\_t\ accumulatorValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ accumulatorValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga581ee0845f61c4850c014f10f4c8b323}{ADC\_GetAccumulatorValue}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00313}{313}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}\label{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetConversionResult@{ADC\_GetConversionResult}}
+\index{ADC\_GetConversionResult@{ADC\_GetConversionResult}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetConversionResult()}{ADC\_GetConversionResult()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}} ADC\+\_\+\+Get\+Conversion\+Result (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API is used to retrieve the result of latest A/D conversion. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of A/D conversion. Refer \doxylink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);\ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00240}{240}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga271b057ed72fedce018be162578b4f99}\label{group__adc__context__scan_ga271b057ed72fedce018be162578b4f99} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetConversionStageStatus@{ADC\_GetConversionStageStatus}}
+\index{ADC\_GetConversionStageStatus@{ADC\_GetConversionStageStatus}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetConversionStageStatus()}{ADC\_GetConversionStageStatus()}}
+{\footnotesize\ttfamily uint8\+\_\+t ADC\+\_\+\+Get\+Conversion\+Stage\+Status (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API is used retrieve the multi-\/stage status for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Contents of ADC STATUS register.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ status;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ status\ =\ \mbox{\hyperlink{group__adc__context__scan_ga271b057ed72fedce018be162578b4f99}{ADC\_GetConversionStageStatus}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00381}{381}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gaf88b883b32daa63a8cec63f4484266b5}\label{group__adc__context__scan_gaf88b883b32daa63a8cec63f4484266b5} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetCurrentCountofConversions@{ADC\_GetCurrentCountofConversions}}
+\index{ADC\_GetCurrentCountofConversions@{ADC\_GetCurrentCountofConversions}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetCurrentCountofConversions()}{ADC\_GetCurrentCountofConversions()}}
+{\footnotesize\ttfamily uint8\+\_\+t ADC\+\_\+\+Get\+Current\+Countof\+Conversions (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API retrieves the current value of ADC Repeat Count register for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Current value of ADC Repeat Count register
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ conversionCount;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ conversionCount\ =\ \mbox{\hyperlink{group__adc__context__scan_gaf88b883b32daa63a8cec63f4484266b5}{ADC\_GetCurrentCountofConversions}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00303}{303}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga87a113226569485f4a6c15468979ef07}\label{group__adc__context__scan_ga87a113226569485f4a6c15468979ef07} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetErrorCalculation@{ADC\_GetErrorCalculation}}
+\index{ADC\_GetErrorCalculation@{ADC\_GetErrorCalculation}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetErrorCalculation()}{ADC\_GetErrorCalculation()}}
+{\footnotesize\ttfamily uint16\+\_\+t ADC\+\_\+\+Get\+Error\+Calculation (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API retrieves the value of ADC Set-\/point Error register of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+16-\/bit value obtained from ADERRH and ADERRL registers.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ errorCalc;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ errorCalc\ =\ \mbox{\hyperlink{group__adc__context__scan_ga87a113226569485f4a6c15468979ef07}{ADC\_GetErrorCalculation}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00351}{351}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga78e48b8ff7ac1cc5bc1e17bf2dcd0275}\label{group__adc__context__scan_ga78e48b8ff7ac1cc5bc1e17bf2dcd0275} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetFilterValue@{ADC\_GetFilterValue}}
+\index{ADC\_GetFilterValue@{ADC\_GetFilterValue}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetFilterValue()}{ADC\_GetFilterValue()}}
+{\footnotesize\ttfamily uint16\+\_\+t ADC\+\_\+\+Get\+Filter\+Value (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API retrieves the value of ADC Filter register of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+16-\/bit value obtained from ADFLTRH and ADFLTRL registers.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ filterValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ filterValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga78e48b8ff7ac1cc5bc1e17bf2dcd0275}{ADC\_GetFilterValue}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00323}{323}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga747b71a180bc8f7fc435e5cd0a0e68cb}\label{group__adc__context__scan_ga747b71a180bc8f7fc435e5cd0a0e68cb} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetPreviousResult@{ADC\_GetPreviousResult}}
+\index{ADC\_GetPreviousResult@{ADC\_GetPreviousResult}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetPreviousResult()}{ADC\_GetPreviousResult()}}
+{\footnotesize\ttfamily uint16\+\_\+t ADC\+\_\+\+Get\+Previous\+Result (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API retrieves the value of ADC Previous register of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+16-\/bit value obtained from ADPREVH and ADPREVL registers.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ previousResult;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ previousResult\ =\ \mbox{\hyperlink{group__adc__context__scan_ga747b71a180bc8f7fc435e5cd0a0e68cb}{ADC\_GetPreviousResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00328}{328}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gad1cf69dd45bbfed3bc4171d225baaba8}\label{group__adc__context__scan_gad1cf69dd45bbfed3bc4171d225baaba8} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_GetSingleConversion@{ADC\_GetSingleConversion}}
+\index{ADC\_GetSingleConversion@{ADC\_GetSingleConversion}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_GetSingleConversion()}{ADC\_GetSingleConversion()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}} ADC\+\_\+\+Get\+Single\+Conversion (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}}}]{channel }\end{DoxyParamCaption})}
+
+
+
+This API is used to retrieve the result of single A/D conversion on given channel. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em channel} & -\/ Analog channel number on which A/D conversion has to be applied. Refer \doxylink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t} for available channels \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The result of A/D conversion. Refer \doxylink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\+\_\+result\+\_\+t}
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga09a2d9ace55dd1528348074b0191ab78}{ADC\_DisableChannelSequencer}}();\ \ \ \ \textcolor{comment}{//Disable\ scanner}}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_gad1cf69dd45bbfed3bc4171d225baaba8}{ADC\_GetSingleConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00246}{246}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga29938a2ee8cee9fda098637d6eac9e43}\label{group__adc__context__scan_ga29938a2ee8cee9fda098637d6eac9e43} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_HasAccumulatorOverflowed@{ADC\_HasAccumulatorOverflowed}}
+\index{ADC\_HasAccumulatorOverflowed@{ADC\_HasAccumulatorOverflowed}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_HasAccumulatorOverflowed()}{ADC\_HasAccumulatorOverflowed()}}
+{\footnotesize\ttfamily bool ADC\+\_\+\+Has\+Accumulator\+Overflowed (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API is used to determine whether ADC accumulator has overflowed for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of accumulator. true -\/ ADC accumulator has overflowed. false -\/ ADC accumulator has not overflowed.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ hasAccOvf;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ hasAccOvf\ =\ \mbox{\hyperlink{group__adc__context__scan_ga29938a2ee8cee9fda098637d6eac9e43}{ADC\_HasAccumulatorOverflowed}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00318}{318}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gab8b716b9ec3541cf6d2b5487e029109a}\label{group__adc__context__scan_gab8b716b9ec3541cf6d2b5487e029109a} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_HasErrorCrossedLowerThreshold@{ADC\_HasErrorCrossedLowerThreshold}}
+\index{ADC\_HasErrorCrossedLowerThreshold@{ADC\_HasErrorCrossedLowerThreshold}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_HasErrorCrossedLowerThreshold()}{ADC\_HasErrorCrossedLowerThreshold()}}
+{\footnotesize\ttfamily bool ADC\+\_\+\+Has\+Error\+Crossed\+Lower\+Threshold (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API is used to determine if ADC error is less than the lower threshold for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of operation. true -\/ if ERR \texorpdfstring{$<$}{<} LTH. false -\/ if ERR \texorpdfstring{$>$}{>}= LTH.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ ulThr;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ ulThr\ =\ \mbox{\hyperlink{group__adc__context__scan_gab8b716b9ec3541cf6d2b5487e029109a}{ADC\_HasErrorCrossedLowerThreshold}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00376}{376}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga69dbd3c98a1dbca1fd529120940b4a7b}\label{group__adc__context__scan_ga69dbd3c98a1dbca1fd529120940b4a7b} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_HasErrorCrossedUpperThreshold@{ADC\_HasErrorCrossedUpperThreshold}}
+\index{ADC\_HasErrorCrossedUpperThreshold@{ADC\_HasErrorCrossedUpperThreshold}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_HasErrorCrossedUpperThreshold()}{ADC\_HasErrorCrossedUpperThreshold()}}
+{\footnotesize\ttfamily bool ADC\+\_\+\+Has\+Error\+Crossed\+Upper\+Threshold (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API is used to determine if ADC error has crossed the upper threshold for selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Status of operation. true -\/ if ERR \texorpdfstring{$>$}{>} UTH false -\/ if ERR \texorpdfstring{$<$}{<}= UTH
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{bool}\ uThr;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ uThr\ =\ \mbox{\hyperlink{group__adc__context__scan_ga69dbd3c98a1dbca1fd529120940b4a7b}{ADC\_HasErrorCrossedUpperThreshold}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00371}{371}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}\label{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_Initialize@{ADC\_Initialize}}
+\index{ADC\_Initialize@{ADC\_Initialize}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_Initialize()}{ADC\_Initialize()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Initialize (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API initializes the ADC module. 
+
+This routine must be called before any other ADC routine. 
+\begin{DoxyParams}{Parameters}
+{\em void.} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);\ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00065}{65}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}\label{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_IsConversionDone@{ADC\_IsConversionDone}}
+\index{ADC\_IsConversionDone@{ADC\_IsConversionDone}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_IsConversionDone()}{ADC\_IsConversionDone()}}
+{\footnotesize\ttfamily bool ADC\+\_\+\+Is\+Conversion\+Done (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+This API checks if ongoing A/D conversion is complete. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+bool -\/ Status of A/D conversion. true -\/ if conversion is complete. false -\/ if conversion is ongoing.
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);\ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00235}{235}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga4400d0243e745ffc82e1d9cb8d2e47b9}\label{group__adc__context__scan_ga4400d0243e745ffc82e1d9cb8d2e47b9} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_LoadAcquisitionRegister@{ADC\_LoadAcquisitionRegister}}
+\index{ADC\_LoadAcquisitionRegister@{ADC\_LoadAcquisitionRegister}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_LoadAcquisitionRegister()}{ADC\_LoadAcquisitionRegister()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Load\+Acquisition\+Register (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{acquisition\+Value }\end{DoxyParamCaption})}
+
+
+
+This API is used to load ADC Acquisition Time Control register with specified value. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em acquisition\+Value} & -\/ Value to be loaded in the acquisition time control register. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ acquisitionValue\ =\ 98;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga4400d0243e745ffc82e1d9cb8d2e47b9}{ADC\_LoadAcquisitionRegister}}(acquisitionValue);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00286}{286}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}\label{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SelectContext@{ADC\_SelectContext}}
+\index{ADC\_SelectContext@{ADC\_SelectContext}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SelectContext()}{ADC\_SelectContext()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Select\+Context (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t}}}]{context }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API is used to select an ADC context to perform read/write operations on context specific registers. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em context} & -\/ Context to be selected. Refer \doxylink{group__adc__context__scan_gae1d3d7089e713acebb1897f907d366b6}{ADC\+\_\+context\+\_\+t} for available contexts \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);\ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00194}{194}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga922be39b90e7ae385d6860d954edceb0}\label{group__adc__context__scan_ga922be39b90e7ae385d6860d954edceb0} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetActiveClockTuningInterruptHandler@{ADC\_SetActiveClockTuningInterruptHandler}}
+\index{ADC\_SetActiveClockTuningInterruptHandler@{ADC\_SetActiveClockTuningInterruptHandler}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetActiveClockTuningInterruptHandler()}{ADC\_SetActiveClockTuningInterruptHandler()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Active\+Clock\+Tuning\+Interrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+Setter for A/D Active Clock Tuning ISR. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Interrupt\+Handler} & -\/ Pointer to custom ISR. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ customACTIHandler(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//Custom\ ISR\ code}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga922be39b90e7ae385d6860d954edceb0}{ADC\_SetActiveClockTuningInterruptHandler}}(customACTIHandler);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Replace\ with\ your\ application\ code}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00428}{428}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga19b2ac860b37d84c2d3cfe161af9e65b}\label{group__adc__context__scan_ga19b2ac860b37d84c2d3cfe161af9e65b} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetADIInterruptHandler@{ADC\_SetADIInterruptHandler}}
+\index{ADC\_SetADIInterruptHandler@{ADC\_SetADIInterruptHandler}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetADIInterruptHandler()}{ADC\_SetADIInterruptHandler()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+ADIInterrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+Setter for A/D conversion ISR. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Interrupt\+Handler} & -\/ Pointer to custom ISR. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ customADIHandler(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//Custom\ ISR\ code}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga19b2ac860b37d84c2d3cfe161af9e65b}{ADC\_SetADIInterruptHandler}}(customADIHandler);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Replace\ with\ your\ application\ code}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00418}{418}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gaedf2eff80da4f8e7fbf8a1f6ee3ee1a8}\label{group__adc__context__scan_gaedf2eff80da4f8e7fbf8a1f6ee3ee1a8} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetContext1ThresholdInterruptHandler@{ADC\_SetContext1ThresholdInterruptHandler}}
+\index{ADC\_SetContext1ThresholdInterruptHandler@{ADC\_SetContext1ThresholdInterruptHandler}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetContext1ThresholdInterruptHandler()}{ADC\_SetContext1ThresholdInterruptHandler()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Context1\+Threshold\+Interrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+Setter for Context-\/1 threshold interrupt. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Interrupt\+Handler} & -\/ Pointer to custom ISR. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ customADCH1InterruptHandler(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//Custom\ ISR\ code}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gaedf2eff80da4f8e7fbf8a1f6ee3ee1a8}{ADC\_SetContext1ThresholdInterruptHandler}}(customADCH1InterruptHandler);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Replace\ with\ your\ application\ code}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00423}{423}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga9dc31343b8711194ae3228d4579e1ada}\label{group__adc__context__scan_ga9dc31343b8711194ae3228d4579e1ada} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetContext2ThresholdInterruptHandler@{ADC\_SetContext2ThresholdInterruptHandler}}
+\index{ADC\_SetContext2ThresholdInterruptHandler@{ADC\_SetContext2ThresholdInterruptHandler}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetContext2ThresholdInterruptHandler()}{ADC\_SetContext2ThresholdInterruptHandler()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Context2\+Threshold\+Interrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+Setter for Context-\/2 threshold interrupt. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Interrupt\+Handler} & -\/ Pointer to custom ISR. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ customADCH2InterruptHandler(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//Custom\ ISR\ code}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga9dc31343b8711194ae3228d4579e1ada}{ADC\_SetContext2ThresholdInterruptHandler}}(customADCH1InterruptHandler);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_2);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Replace\ with\ your\ application\ code}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ \Hypertarget{group__adc__context__scan_ga593486553f059555f230d15bc8c53006}\label{group__adc__context__scan_ga593486553f059555f230d15bc8c53006} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetContext3ThresholdInterruptHandler@{ADC\_SetContext3ThresholdInterruptHandler}}
+\index{ADC\_SetContext3ThresholdInterruptHandler@{ADC\_SetContext3ThresholdInterruptHandler}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetContext3ThresholdInterruptHandler()}{ADC\_SetContext3ThresholdInterruptHandler()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Context3\+Threshold\+Interrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+Setter for Context-\/3 threshold interrupt. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Interrupt\+Handler} & -\/ Pointer to custom ISR. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ customADCH3InterruptHandler(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//Custom\ ISR\ code}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga593486553f059555f230d15bc8c53006}{ADC\_SetContext3ThresholdInterruptHandler}}(customADCH1InterruptHandler);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_3);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Replace\ with\ your\ application\ code}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ \Hypertarget{group__adc__context__scan_ga7b944c61e998435febd5c3b292017cba}\label{group__adc__context__scan_ga7b944c61e998435febd5c3b292017cba} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetContext4ThresholdInterruptHandler@{ADC\_SetContext4ThresholdInterruptHandler}}
+\index{ADC\_SetContext4ThresholdInterruptHandler@{ADC\_SetContext4ThresholdInterruptHandler}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetContext4ThresholdInterruptHandler()}{ADC\_SetContext4ThresholdInterruptHandler()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Context4\+Threshold\+Interrupt\+Handler (\begin{DoxyParamCaption}\item[{void(\texorpdfstring{$\ast$}{*})(void)}]{Interrupt\+Handler }\end{DoxyParamCaption})}
+
+
+
+Setter for Context-\/4 threshold interrupt. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Interrupt\+Handler} & -\/ Pointer to custom ISR. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ customADCH4InterruptHandler(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \textcolor{comment}{//Custom\ ISR\ code}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga7b944c61e998435febd5c3b292017cba}{ADC\_SetContext4ThresholdInterruptHandler}}(customADCH1InterruptHandler);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_4);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Replace\ with\ your\ application\ code}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ \Hypertarget{group__adc__context__scan_ga0234d212f6af4b4faaff764768da6e21}\label{group__adc__context__scan_ga0234d212f6af4b4faaff764768da6e21} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetLowerThreshold@{ADC\_SetLowerThreshold}}
+\index{ADC\_SetLowerThreshold@{ADC\_SetLowerThreshold}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetLowerThreshold()}{ADC\_SetLowerThreshold()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Lower\+Threshold (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{lower\+Threshold }\end{DoxyParamCaption})}
+
+
+
+This API used to set value of ADC Lower Threshold register of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em lower\+Threshold} & -\/ 16-\/bit value for lower threshold. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ lowerThreshold\ =\ 500;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga0234d212f6af4b4faaff764768da6e21}{ADC\_SetLowerThreshold}}(lowerThreshold);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00345}{345}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga6fe915c5058412e32884f659cf8aef9f}\label{group__adc__context__scan_ga6fe915c5058412e32884f659cf8aef9f} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetPrechargeTime@{ADC\_SetPrechargeTime}}
+\index{ADC\_SetPrechargeTime@{ADC\_SetPrechargeTime}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetPrechargeTime()}{ADC\_SetPrechargeTime()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Precharge\+Time (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{precharge\+Time }\end{DoxyParamCaption})}
+
+
+
+This API is used to load ADC Precharge Time Control register with specified value. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em precharge\+Time} & -\/ Value to be loaded in the precharge time control register. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ prechargeTime\ =\ 98;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga6fe915c5058412e32884f659cf8aef9f}{ADC\_SetPrechargeTime}}(prechargeTime);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00292}{292}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga723ecf1350fdb425e1ae78762c055d4b}\label{group__adc__context__scan_ga723ecf1350fdb425e1ae78762c055d4b} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetRepeatCount@{ADC\_SetRepeatCount}}
+\index{ADC\_SetRepeatCount@{ADC\_SetRepeatCount}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetRepeatCount()}{ADC\_SetRepeatCount()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Repeat\+Count (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{repeat\+Count }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API is used to load repeat counter for given context with specified value. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em repeat\+Count} & -\/ Value to be loaded to repeat counter. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ repeatCount\ =\ 32;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga723ecf1350fdb425e1ae78762c055d4b}{ADC\_SetRepeatCount}}(repeatCount);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00298}{298}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gab119f15a751577be8b4ae1615450849e}\label{group__adc__context__scan_gab119f15a751577be8b4ae1615450849e} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetStopOnInterrupt@{ADC\_SetStopOnInterrupt}}
+\index{ADC\_SetStopOnInterrupt@{ADC\_SetStopOnInterrupt}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetStopOnInterrupt()}{ADC\_SetStopOnInterrupt()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Stop\+On\+Interrupt (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API is used enable Stop On Interrupt bit for selected A/D context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga47912a65803ccf504c7146afd302dcbb}{ADC\_EnableContinuousConversion}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab119f15a751577be8b4ae1615450849e}{ADC\_SetStopOnInterrupt}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00275}{275}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga54b8d141256995293414ffe21e0968fb}\label{group__adc__context__scan_ga54b8d141256995293414ffe21e0968fb} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_SetUpperThreshold@{ADC\_SetUpperThreshold}}
+\index{ADC\_SetUpperThreshold@{ADC\_SetUpperThreshold}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_SetUpperThreshold()}{ADC\_SetUpperThreshold()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Set\+Upper\+Threshold (\begin{DoxyParamCaption}\item[{uint16\+\_\+t}]{upper\+Threshold }\end{DoxyParamCaption})}
+
+
+
+This API used to set value of ADC Upper Threshold register of selected context. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em upper\+Threshold} & -\/ 16-\/bit value for upper threshold. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ upperThreshold\ =\ 5000;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga54b8d141256995293414ffe21e0968fb}{ADC\_SetUpperThreshold}}(upperThreshold);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00339}{339}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga9040d2afbf4eb69dadb16ff85c17df7f}\label{group__adc__context__scan_ga9040d2afbf4eb69dadb16ff85c17df7f} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_StartChannelSequencer@{ADC\_StartChannelSequencer}}
+\index{ADC\_StartChannelSequencer@{ADC\_StartChannelSequencer}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_StartChannelSequencer()}{ADC\_StartChannelSequencer()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Start\+Channel\+Sequencer (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API starts the channel sequencer by enabling GO bit. 
+
+Channel sequencer should be enabled using \doxylink{group__adc__context__scan_ga2583fd89066ae5d0e93c9d3a92d9f034}{ADC\+\_\+\+Enable\+Channel\+Sequencer} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue1,\ convertedValue2,\ convertedValue3,\ convertedValue4;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2583fd89066ae5d0e93c9d3a92d9f034}{ADC\_EnableChannelSequencer}}();\ \ \ \ \textcolor{comment}{//Enable\ auto-\/scanning\ if\ not\ already\ enabled\ \ }}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga9040d2afbf4eb69dadb16ff85c17df7f}{ADC\_StartChannelSequencer}}();\ \ \ \ \ \textcolor{comment}{//\ Software\ starts\ the\ sequencer\ \ \ }}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue1\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_2);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue2\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_3);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue3\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_4);\ \ }
+\DoxyCodeLine{\ \ \ \ convertedValue4\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00189}{189}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}\label{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_StartConversion@{ADC\_StartConversion}}
+\index{ADC\_StartConversion@{ADC\_StartConversion}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_StartConversion()}{ADC\_StartConversion()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Start\+Conversion (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t}}}]{channel }\end{DoxyParamCaption})}
+
+
+
+This API starts A/D conversion on selected channel. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em channel} & -\/ Analog channel number on which A/D conversion has to be applied. Refer \doxylink{group__adc__context__scan_gafa03ae171963ff34e8777cdc626de003}{ADC\+\_\+channel\+\_\+t} for available list of channels \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);\ \ \ }
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(!\mbox{\hyperlink{group__adc__context__scan_gad5c10c1709aeacf08e783c3ea174463b}{ADC\_IsConversionDone}}());}
+\DoxyCodeLine{\ \ \ \ convertedValue\ =\ \mbox{\hyperlink{group__adc__context__scan_ga9650956bd92194e1b9f0bfd5bb2d73dd}{ADC\_GetConversionResult}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00223}{223}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+
+\Hypertarget{group__adc__context__scan_ga540ecad9b65eff28421e4fcda79f7dc7}\label{group__adc__context__scan_ga540ecad9b65eff28421e4fcda79f7dc7} 
+\index{ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}!ADC\_StopConversion@{ADC\_StopConversion}}
+\index{ADC\_StopConversion@{ADC\_StopConversion}!ADC3: Analog-\/to-\/Digital Converter with Context@{ADC3: Analog-\/to-\/Digital Converter with Context}}
+\doxysubsubsection{\texorpdfstring{ADC\_StopConversion()}{ADC\_StopConversion()}}
+{\footnotesize\ttfamily void ADC\+\_\+\+Stop\+Conversion (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+This API is used to stop ongoing A/D conversion. 
+
+Correct ADC context should be selected using \doxylink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\+\_\+\+Select\+Context} before calling this API. 
+\begin{DoxyParams}{Parameters}
+{\em void} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void
+\end{DoxyReturn}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ convertedValue;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gab0e0ea1662a8e789547210a2d33127e1}{ADC\_Initialize}}();}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gadba9f1e72755d06d4867b22e4235f551}{ADC\_SelectContext}}(CONTEXT\_1);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_gac707a2b4c0d69dbebd00de5bb18b83e4}{ADC\_StartConversion}}(channel\_ANA0);}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{group__adc__context__scan_ga540ecad9b65eff28421e4fcda79f7dc7}{ADC\_StopConversion}}();}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//Application\ code}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}(1);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 
+
+Definition at line \mbox{\hyperlink{adc_8c_source_l00269}{269}} of file \mbox{\hyperlink{adc_8c_source}{adc.\+c}}.
+

@@ -1,0 +1,59 @@
+\doxysection{memory.\+h}
+\hypertarget{memory_8h_source}{}\label{memory_8h_source}\index{secs\_q84.X/mcc\_generated\_files/memory.h@{secs\_q84.X/mcc\_generated\_files/memory.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00047}00047\ \textcolor{preprocessor}{\#ifndef\ MEMORY\_H}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00048}00048\ \textcolor{preprocessor}{\#define\ MEMORY\_H}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00054}00054\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00055}00055\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00061}00061\ \textcolor{preprocessor}{\#define\ WRITE\_FLASH\_BLOCKSIZE\ \ \ \ 256}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00062}00062\ \textcolor{preprocessor}{\#define\ ERASE\_FLASH\_BLOCKSIZE\ \ \ \ 256}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00063}00063\ \textcolor{preprocessor}{\#define\ END\_FLASH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ 0x020000}}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00081}00081\ uint8\_t\ FLASH\_ReadByte(uint32\_t\ flashAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00094}00094\ uint16\_t\ FLASH\_ReadWord(uint32\_t\ flashAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00116}00116\ \textcolor{keywordtype}{void}\ FLASH\_ReadPage(uint32\_t\ flashAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00117}00117\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00138}00138\ \textcolor{keywordtype}{void}\ FLASH\_WritePage(uint32\_t\ flashAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00151}00151\ \textcolor{keywordtype}{void}\ FLASH\_WriteWord(uint32\_t\ flashAddr,\ uint16\_t\ word);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00183}00183\ int8\_t\ FLASH\_WriteBlock(uint32\_t\ flashAddr,\ uint16\_t\ *flashWrBufPtr);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00184}00184\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00195}00195\ \textcolor{keywordtype}{void}\ FLASH\_EraseBlock(uint32\_t\ flashAddr);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00196}00196\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00212}00212\ \textcolor{keywordtype}{void}\ DATAEE\_WriteByte(uint16\_t\ bAdd,\ uint8\_t\ bData);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00213}00213\ }
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00225}00225\ uint8\_t\ DATAEE\_ReadByte(uint16\_t\ bAdd);}
+\DoxyCodeLine{\Hypertarget{memory_8h_source_l00226}00226\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{//\ MEMORY\_H}}
+
+\end{DoxyCode}

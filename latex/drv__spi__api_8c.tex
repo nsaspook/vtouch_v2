@@ -1,0 +1,435 @@
+\doxysection{pic32\+\_\+daq/remote\+\_\+daq/firmware/src/system\+\_\+config/default/framework/driver/spi/dynamic/drv\+\_\+spi\+\_\+api.c File Reference}
+\hypertarget{drv__spi__api_8c}{}\label{drv__spi__api_8c}\index{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/driver/spi/dynamic/drv\_spi\_api.c@{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/driver/spi/dynamic/drv\_spi\_api.c}}
+{\ttfamily \#include "{}driver/spi/src/dynamic/drv\+\_\+spi\+\_\+internal.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}}~0x0000
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}}~0x0001
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}}~0x0000
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}}~0x0002
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}}~0x0000
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}}~0x0004
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}~0x0008
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}~0x0010
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}~0x0020
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a980d1b7d6c2ddb76a3b39d66a2d763fe}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+R\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_aec4dd36017f44312d3761dcc16623ae8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+R\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a0997aec9360ff94052dd3e48e33c7d8f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+R\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a2878c49ee3942489c463cd241d70c962}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+E\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_ac230980448d4304edae0eeec343b5a74}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+E\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a992f2409cf93bf32a9449d3bf1f1fc54}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+E\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a4a793d036f633936f119014a936a95e6}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+R\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_ae127a169c7099eada6233c2e3acae6b0}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+R\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_ada23fa56711c789d2e0c6d4fb489d809}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+R\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a34eadce04f14e3c97cc82febda40ae34}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+E\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_ada9a5ae538350f3cb4e13ac23ad6010c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+E\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_aa833f3c6409801fad25d337c49e2ef20}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+E\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a062019598eaa9ddc6e91d95b97d481e9}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+R\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a033d0367898092d458d85a5bcc97c860}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+R\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a756c1663f28732bbaa2c43ef0c931e27}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+R\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a68d07cef6119e0923da8e2f469bc78cc}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+E\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a7597c433ed610b0b8e2b03591807bbb9}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+E\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a2834f10fddb954850461d425028145cc}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+E\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a535e00ccc4cce42ac9a159ec166806e6}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+R\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_ad59d2e95f9a7e24a463beffb9391a7b6}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+R\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a3443d7ea5d2b5e8011e49f7890134e56}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+R\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_aaaa586879ccb16e235d305677222a66d}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+E\+\_\+8}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a991a3606e54329619ab3acb982862412}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+E\+\_\+16}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}
+\item 
+\#define \mbox{\hyperlink{drv__spi__api_8c_a259abcc85ed8a6e0a0f84411fc3883c1}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+E\+\_\+32}}~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int32\+\_\+t \mbox{\hyperlink{drv__spi__api_8c_a6edd91c4e475086dd985e35262c32fb2}{DRV\+\_\+\+SPI\+\_\+\+Set\+VTable}} (struct DRV\+\_\+\+SPI\+\_\+\+DRIVER\+\_\+\+OBJECT \texorpdfstring{$\ast$}{*}driver\+Object, const DRV\+\_\+\+SPI\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const p\+Init)
+\item 
+int32\+\_\+t \mbox{\hyperlink{drv__spi__api_8c_a505c696243026ff04928f155a5eb8493}{DRV\+\_\+\+SPI\+\_\+\+Setup\+Hardware}} (struct DRV\+\_\+\+SPI\+\_\+\+DRIVER\+\_\+\+OBJECT \texorpdfstring{$\ast$}{*}driver\+Object, const DRV\+\_\+\+SPI\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const init)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}\label{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_16BIT@{\_SPI\_DRV\_VTABLE\_16BIT}}
+\index{\_SPI\_DRV\_VTABLE\_16BIT@{\_SPI\_DRV\_VTABLE\_16BIT}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_16BIT}{\_SPI\_DRV\_VTABLE\_16BIT}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT~0x0010}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00057}{57}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}\label{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_32BIT@{\_SPI\_DRV\_VTABLE\_32BIT}}
+\index{\_SPI\_DRV\_VTABLE\_32BIT@{\_SPI\_DRV\_VTABLE\_32BIT}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_32BIT}{\_SPI\_DRV\_VTABLE\_32BIT}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT~0x0020}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00058}{58}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}\label{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_8BIT@{\_SPI\_DRV\_VTABLE\_8BIT}}
+\index{\_SPI\_DRV\_VTABLE\_8BIT@{\_SPI\_DRV\_VTABLE\_8BIT}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_8BIT}{\_SPI\_DRV\_VTABLE\_8BIT}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT~0x0008}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00056}{56}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}\label{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_EBM@{\_SPI\_DRV\_VTABLE\_EBM}}
+\index{\_SPI\_DRV\_VTABLE\_EBM@{\_SPI\_DRV\_VTABLE\_EBM}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_EBM}{\_SPI\_DRV\_VTABLE\_EBM}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM~0x0004}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00054}{54}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a991a3606e54329619ab3acb982862412}\label{drv__spi__api_8c_a991a3606e54329619ab3acb982862412} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_M\_E\_16@{\_SPI\_DRV\_VTABLE\_I\_M\_E\_16}}
+\index{\_SPI\_DRV\_VTABLE\_I\_M\_E\_16@{\_SPI\_DRV\_VTABLE\_I\_M\_E\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_M\_E\_16}{\_SPI\_DRV\_VTABLE\_I\_M\_E\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+E\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00089}{89}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a259abcc85ed8a6e0a0f84411fc3883c1}\label{drv__spi__api_8c_a259abcc85ed8a6e0a0f84411fc3883c1} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_M\_E\_32@{\_SPI\_DRV\_VTABLE\_I\_M\_E\_32}}
+\index{\_SPI\_DRV\_VTABLE\_I\_M\_E\_32@{\_SPI\_DRV\_VTABLE\_I\_M\_E\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_M\_E\_32}{\_SPI\_DRV\_VTABLE\_I\_M\_E\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+E\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00090}{90}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_aaaa586879ccb16e235d305677222a66d}\label{drv__spi__api_8c_aaaa586879ccb16e235d305677222a66d} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_M\_E\_8@{\_SPI\_DRV\_VTABLE\_I\_M\_E\_8}}
+\index{\_SPI\_DRV\_VTABLE\_I\_M\_E\_8@{\_SPI\_DRV\_VTABLE\_I\_M\_E\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_M\_E\_8}{\_SPI\_DRV\_VTABLE\_I\_M\_E\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+E\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00088}{88}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_ad59d2e95f9a7e24a463beffb9391a7b6}\label{drv__spi__api_8c_ad59d2e95f9a7e24a463beffb9391a7b6} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_M\_R\_16@{\_SPI\_DRV\_VTABLE\_I\_M\_R\_16}}
+\index{\_SPI\_DRV\_VTABLE\_I\_M\_R\_16@{\_SPI\_DRV\_VTABLE\_I\_M\_R\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_M\_R\_16}{\_SPI\_DRV\_VTABLE\_I\_M\_R\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+R\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00085}{85}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a3443d7ea5d2b5e8011e49f7890134e56}\label{drv__spi__api_8c_a3443d7ea5d2b5e8011e49f7890134e56} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_M\_R\_32@{\_SPI\_DRV\_VTABLE\_I\_M\_R\_32}}
+\index{\_SPI\_DRV\_VTABLE\_I\_M\_R\_32@{\_SPI\_DRV\_VTABLE\_I\_M\_R\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_M\_R\_32}{\_SPI\_DRV\_VTABLE\_I\_M\_R\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+R\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00086}{86}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a535e00ccc4cce42ac9a159ec166806e6}\label{drv__spi__api_8c_a535e00ccc4cce42ac9a159ec166806e6} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_M\_R\_8@{\_SPI\_DRV\_VTABLE\_I\_M\_R\_8}}
+\index{\_SPI\_DRV\_VTABLE\_I\_M\_R\_8@{\_SPI\_DRV\_VTABLE\_I\_M\_R\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_M\_R\_8}{\_SPI\_DRV\_VTABLE\_I\_M\_R\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+M\+\_\+\+R\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00084}{84}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_ada9a5ae538350f3cb4e13ac23ad6010c}\label{drv__spi__api_8c_ada9a5ae538350f3cb4e13ac23ad6010c} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_S\_E\_16@{\_SPI\_DRV\_VTABLE\_I\_S\_E\_16}}
+\index{\_SPI\_DRV\_VTABLE\_I\_S\_E\_16@{\_SPI\_DRV\_VTABLE\_I\_S\_E\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_S\_E\_16}{\_SPI\_DRV\_VTABLE\_I\_S\_E\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+E\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00073}{73}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_aa833f3c6409801fad25d337c49e2ef20}\label{drv__spi__api_8c_aa833f3c6409801fad25d337c49e2ef20} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_S\_E\_32@{\_SPI\_DRV\_VTABLE\_I\_S\_E\_32}}
+\index{\_SPI\_DRV\_VTABLE\_I\_S\_E\_32@{\_SPI\_DRV\_VTABLE\_I\_S\_E\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_S\_E\_32}{\_SPI\_DRV\_VTABLE\_I\_S\_E\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+E\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00074}{74}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a34eadce04f14e3c97cc82febda40ae34}\label{drv__spi__api_8c_a34eadce04f14e3c97cc82febda40ae34} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_S\_E\_8@{\_SPI\_DRV\_VTABLE\_I\_S\_E\_8}}
+\index{\_SPI\_DRV\_VTABLE\_I\_S\_E\_8@{\_SPI\_DRV\_VTABLE\_I\_S\_E\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_S\_E\_8}{\_SPI\_DRV\_VTABLE\_I\_S\_E\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+E\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00072}{72}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_ae127a169c7099eada6233c2e3acae6b0}\label{drv__spi__api_8c_ae127a169c7099eada6233c2e3acae6b0} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_S\_R\_16@{\_SPI\_DRV\_VTABLE\_I\_S\_R\_16}}
+\index{\_SPI\_DRV\_VTABLE\_I\_S\_R\_16@{\_SPI\_DRV\_VTABLE\_I\_S\_R\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_S\_R\_16}{\_SPI\_DRV\_VTABLE\_I\_S\_R\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+R\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00069}{69}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_ada23fa56711c789d2e0c6d4fb489d809}\label{drv__spi__api_8c_ada23fa56711c789d2e0c6d4fb489d809} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_S\_R\_32@{\_SPI\_DRV\_VTABLE\_I\_S\_R\_32}}
+\index{\_SPI\_DRV\_VTABLE\_I\_S\_R\_32@{\_SPI\_DRV\_VTABLE\_I\_S\_R\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_S\_R\_32}{\_SPI\_DRV\_VTABLE\_I\_S\_R\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+R\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00070}{70}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a4a793d036f633936f119014a936a95e6}\label{drv__spi__api_8c_a4a793d036f633936f119014a936a95e6} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_I\_S\_R\_8@{\_SPI\_DRV\_VTABLE\_I\_S\_R\_8}}
+\index{\_SPI\_DRV\_VTABLE\_I\_S\_R\_8@{\_SPI\_DRV\_VTABLE\_I\_S\_R\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_I\_S\_R\_8}{\_SPI\_DRV\_VTABLE\_I\_S\_R\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+I\+\_\+\+S\+\_\+\+R\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00068}{68}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643}\label{drv__spi__api_8c_afb4f93004ae8d29129bf082117c90643} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_ISR@{\_SPI\_DRV\_VTABLE\_ISR}}
+\index{\_SPI\_DRV\_VTABLE\_ISR@{\_SPI\_DRV\_VTABLE\_ISR}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_ISR}{\_SPI\_DRV\_VTABLE\_ISR}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+ISR~0x0001}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00048}{48}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}\label{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_MASTER@{\_SPI\_DRV\_VTABLE\_MASTER}}
+\index{\_SPI\_DRV\_VTABLE\_MASTER@{\_SPI\_DRV\_VTABLE\_MASTER}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_MASTER}{\_SPI\_DRV\_VTABLE\_MASTER}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER~0x0002}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00051}{51}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a7597c433ed610b0b8e2b03591807bbb9}\label{drv__spi__api_8c_a7597c433ed610b0b8e2b03591807bbb9} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_M\_E\_16@{\_SPI\_DRV\_VTABLE\_P\_M\_E\_16}}
+\index{\_SPI\_DRV\_VTABLE\_P\_M\_E\_16@{\_SPI\_DRV\_VTABLE\_P\_M\_E\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_M\_E\_16}{\_SPI\_DRV\_VTABLE\_P\_M\_E\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+E\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00081}{81}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a2834f10fddb954850461d425028145cc}\label{drv__spi__api_8c_a2834f10fddb954850461d425028145cc} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_M\_E\_32@{\_SPI\_DRV\_VTABLE\_P\_M\_E\_32}}
+\index{\_SPI\_DRV\_VTABLE\_P\_M\_E\_32@{\_SPI\_DRV\_VTABLE\_P\_M\_E\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_M\_E\_32}{\_SPI\_DRV\_VTABLE\_P\_M\_E\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+E\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00082}{82}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a68d07cef6119e0923da8e2f469bc78cc}\label{drv__spi__api_8c_a68d07cef6119e0923da8e2f469bc78cc} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_M\_E\_8@{\_SPI\_DRV\_VTABLE\_P\_M\_E\_8}}
+\index{\_SPI\_DRV\_VTABLE\_P\_M\_E\_8@{\_SPI\_DRV\_VTABLE\_P\_M\_E\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_M\_E\_8}{\_SPI\_DRV\_VTABLE\_P\_M\_E\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+E\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00080}{80}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a033d0367898092d458d85a5bcc97c860}\label{drv__spi__api_8c_a033d0367898092d458d85a5bcc97c860} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_M\_R\_16@{\_SPI\_DRV\_VTABLE\_P\_M\_R\_16}}
+\index{\_SPI\_DRV\_VTABLE\_P\_M\_R\_16@{\_SPI\_DRV\_VTABLE\_P\_M\_R\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_M\_R\_16}{\_SPI\_DRV\_VTABLE\_P\_M\_R\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+R\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00077}{77}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a756c1663f28732bbaa2c43ef0c931e27}\label{drv__spi__api_8c_a756c1663f28732bbaa2c43ef0c931e27} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_M\_R\_32@{\_SPI\_DRV\_VTABLE\_P\_M\_R\_32}}
+\index{\_SPI\_DRV\_VTABLE\_P\_M\_R\_32@{\_SPI\_DRV\_VTABLE\_P\_M\_R\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_M\_R\_32}{\_SPI\_DRV\_VTABLE\_P\_M\_R\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+R\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00078}{78}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a062019598eaa9ddc6e91d95b97d481e9}\label{drv__spi__api_8c_a062019598eaa9ddc6e91d95b97d481e9} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_M\_R\_8@{\_SPI\_DRV\_VTABLE\_P\_M\_R\_8}}
+\index{\_SPI\_DRV\_VTABLE\_P\_M\_R\_8@{\_SPI\_DRV\_VTABLE\_P\_M\_R\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_M\_R\_8}{\_SPI\_DRV\_VTABLE\_P\_M\_R\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+M\+\_\+\+R\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a23f9e4704c81d05827be5c4d57084705}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+MASTER}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00076}{76}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_ac230980448d4304edae0eeec343b5a74}\label{drv__spi__api_8c_ac230980448d4304edae0eeec343b5a74} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_S\_E\_16@{\_SPI\_DRV\_VTABLE\_P\_S\_E\_16}}
+\index{\_SPI\_DRV\_VTABLE\_P\_S\_E\_16@{\_SPI\_DRV\_VTABLE\_P\_S\_E\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_S\_E\_16}{\_SPI\_DRV\_VTABLE\_P\_S\_E\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+E\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00065}{65}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a992f2409cf93bf32a9449d3bf1f1fc54}\label{drv__spi__api_8c_a992f2409cf93bf32a9449d3bf1f1fc54} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_S\_E\_32@{\_SPI\_DRV\_VTABLE\_P\_S\_E\_32}}
+\index{\_SPI\_DRV\_VTABLE\_P\_S\_E\_32@{\_SPI\_DRV\_VTABLE\_P\_S\_E\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_S\_E\_32}{\_SPI\_DRV\_VTABLE\_P\_S\_E\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+E\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00066}{66}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a2878c49ee3942489c463cd241d70c962}\label{drv__spi__api_8c_a2878c49ee3942489c463cd241d70c962} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_S\_E\_8@{\_SPI\_DRV\_VTABLE\_P\_S\_E\_8}}
+\index{\_SPI\_DRV\_VTABLE\_P\_S\_E\_8@{\_SPI\_DRV\_VTABLE\_P\_S\_E\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_S\_E\_8}{\_SPI\_DRV\_VTABLE\_P\_S\_E\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+E\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_acc5f59a95e319d5616b9e47a2434e85b}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+EBM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00064}{64}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_aec4dd36017f44312d3761dcc16623ae8}\label{drv__spi__api_8c_aec4dd36017f44312d3761dcc16623ae8} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_S\_R\_16@{\_SPI\_DRV\_VTABLE\_P\_S\_R\_16}}
+\index{\_SPI\_DRV\_VTABLE\_P\_S\_R\_16@{\_SPI\_DRV\_VTABLE\_P\_S\_R\_16}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_S\_R\_16}{\_SPI\_DRV\_VTABLE\_P\_S\_R\_16}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+R\+\_\+16~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a844e09ebf0f35948bc45a0527862d69c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+16\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00061}{61}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a0997aec9360ff94052dd3e48e33c7d8f}\label{drv__spi__api_8c_a0997aec9360ff94052dd3e48e33c7d8f} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_S\_R\_32@{\_SPI\_DRV\_VTABLE\_P\_S\_R\_32}}
+\index{\_SPI\_DRV\_VTABLE\_P\_S\_R\_32@{\_SPI\_DRV\_VTABLE\_P\_S\_R\_32}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_S\_R\_32}{\_SPI\_DRV\_VTABLE\_P\_S\_R\_32}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+R\+\_\+32~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac9042d2f33c33376874f0011bbc26d4c}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+32\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00062}{62}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a980d1b7d6c2ddb76a3b39d66a2d763fe}\label{drv__spi__api_8c_a980d1b7d6c2ddb76a3b39d66a2d763fe} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_P\_S\_R\_8@{\_SPI\_DRV\_VTABLE\_P\_S\_R\_8}}
+\index{\_SPI\_DRV\_VTABLE\_P\_S\_R\_8@{\_SPI\_DRV\_VTABLE\_P\_S\_R\_8}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_P\_S\_R\_8}{\_SPI\_DRV\_VTABLE\_P\_S\_R\_8}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+P\+\_\+\+S\+\_\+\+R\+\_\+8~\mbox{\hyperlink{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM}} \texorpdfstring{$\vert$}{|} \mbox{\hyperlink{drv__spi__api_8c_ac43377efa30e95eb5006cf406049a731}{\+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+8\+BIT}}}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00060}{60}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f}\label{drv__spi__api_8c_a274f0eb734096ea0a9e0ba10db806a3f} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_POLLED@{\_SPI\_DRV\_VTABLE\_POLLED}}
+\index{\_SPI\_DRV\_VTABLE\_POLLED@{\_SPI\_DRV\_VTABLE\_POLLED}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_POLLED}{\_SPI\_DRV\_VTABLE\_POLLED}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+POLLED~0x0000}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00047}{47}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8}\label{drv__spi__api_8c_a18f310d5851ce7d157d00f81517d9ba8} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_RM@{\_SPI\_DRV\_VTABLE\_RM}}
+\index{\_SPI\_DRV\_VTABLE\_RM@{\_SPI\_DRV\_VTABLE\_RM}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_RM}{\_SPI\_DRV\_VTABLE\_RM}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+RM~0x0000}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00053}{53}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06}\label{drv__spi__api_8c_afda8b2e58254e83d6918b49b48f7fb06} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!\_SPI\_DRV\_VTABLE\_SLAVE@{\_SPI\_DRV\_VTABLE\_SLAVE}}
+\index{\_SPI\_DRV\_VTABLE\_SLAVE@{\_SPI\_DRV\_VTABLE\_SLAVE}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{\_SPI\_DRV\_VTABLE\_SLAVE}{\_SPI\_DRV\_VTABLE\_SLAVE}}
+{\footnotesize\ttfamily \#define \+\_\+\+SPI\+\_\+\+DRV\+\_\+\+VTABLE\+\_\+\+SLAVE~0x0000}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00050}{50}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{drv__spi__api_8c_a505c696243026ff04928f155a5eb8493}\label{drv__spi__api_8c_a505c696243026ff04928f155a5eb8493} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!DRV\_SPI\_SetupHardware@{DRV\_SPI\_SetupHardware}}
+\index{DRV\_SPI\_SetupHardware@{DRV\_SPI\_SetupHardware}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{DRV\_SPI\_SetupHardware()}{DRV\_SPI\_SetupHardware()}}
+{\footnotesize\ttfamily int32\+\_\+t DRV\+\_\+\+SPI\+\_\+\+Setup\+Hardware (\begin{DoxyParamCaption}\item[{struct DRV\+\_\+\+SPI\+\_\+\+DRIVER\+\_\+\+OBJECT \texorpdfstring{$\ast$}{*}}]{driver\+Object,  }\item[{const DRV\+\_\+\+SPI\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const}]{init }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00146}{146}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+
+\Hypertarget{drv__spi__api_8c_a6edd91c4e475086dd985e35262c32fb2}\label{drv__spi__api_8c_a6edd91c4e475086dd985e35262c32fb2} 
+\index{drv\_spi\_api.c@{drv\_spi\_api.c}!DRV\_SPI\_SetVTable@{DRV\_SPI\_SetVTable}}
+\index{DRV\_SPI\_SetVTable@{DRV\_SPI\_SetVTable}!drv\_spi\_api.c@{drv\_spi\_api.c}}
+\doxysubsubsection{\texorpdfstring{DRV\_SPI\_SetVTable()}{DRV\_SPI\_SetVTable()}}
+{\footnotesize\ttfamily int32\+\_\+t DRV\+\_\+\+SPI\+\_\+\+Set\+VTable (\begin{DoxyParamCaption}\item[{struct DRV\+\_\+\+SPI\+\_\+\+DRIVER\+\_\+\+OBJECT \texorpdfstring{$\ast$}{*}}]{driver\+Object,  }\item[{const DRV\+\_\+\+SPI\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const}]{p\+Init }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{drv__spi__api_8c_source_l00092}{92}} of file \mbox{\hyperlink{drv__spi__api_8c_source}{drv\+\_\+spi\+\_\+api.\+c}}.
+

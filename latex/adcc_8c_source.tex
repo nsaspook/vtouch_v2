@@ -1,0 +1,271 @@
+\doxysection{adcc.\+c}
+\hypertarget{adcc_8c_source}{}\label{adcc_8c_source}\index{touch\_board/elo\_touch.X/mcc\_generated\_files/adcc.c@{touch\_board/elo\_touch.X/mcc\_generated\_files/adcc.c}}
+\mbox{\hyperlink{adcc_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{adcc_8h}{adcc.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00062}\mbox{\hyperlink{adcc_8c_a7cc2505a54ee70baa21c145f6d6223ee}{00062}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a7cc2505a54ee70baa21c145f6d6223ee}{ADCC\_Initialize}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00063}00063\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//\ set\ the\ ADCC\ to\ the\ options\ selected\ in\ the\ User\ Interface}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00065}00065\ \ \ \ \ \textcolor{comment}{//\ ADLTH\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00066}00066\ \ \ \ \ ADLTHL\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00067}00067\ \ \ \ \ \textcolor{comment}{//\ ADLTH\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00068}00068\ \ \ \ \ ADLTHH\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ ADUTH\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00070}00070\ \ \ \ \ ADUTHL\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00071}00071\ \ \ \ \ \textcolor{comment}{//\ ADUTH\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00072}00072\ \ \ \ \ ADUTHH\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00073}00073\ \ \ \ \ \textcolor{comment}{//\ ADSTPT\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00074}00074\ \ \ \ \ ADSTPTL\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00075}00075\ \ \ \ \ \textcolor{comment}{//\ ADSTPT\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00076}00076\ \ \ \ \ ADSTPTH\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00077}00077\ \ \ \ \ \textcolor{comment}{//\ ADACC\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00078}00078\ \ \ \ \ ADACCU\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00079}00079\ \ \ \ \ \textcolor{comment}{//\ ADRPT\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00080}00080\ \ \ \ \ ADRPT\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//\ ADPCH\ ANA0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00082}00082\ \ \ \ \ ADPCH\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00083}00083\ \ \ \ \ \textcolor{comment}{//\ ADACQ\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00084}00084\ \ \ \ \ ADACQL\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//\ ADACQ\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00086}00086\ \ \ \ \ ADACQH\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00087}00087\ \ \ \ \ \textcolor{comment}{//\ ADCAP\ Additional\ uC\ disabled;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00088}00088\ \ \ \ \ ADCAP\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00089}00089\ \ \ \ \ \textcolor{comment}{//\ ADPRE\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00090}00090\ \ \ \ \ ADPREL\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00091}00091\ \ \ \ \ \textcolor{comment}{//\ ADPRE\ 0;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00092}00092\ \ \ \ \ ADPREH\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00093}00093\ \ \ \ \ \textcolor{comment}{//\ ADDSEN\ disabled;\ ADGPOL\ digital\_low;\ ADIPEN\ disabled;\ ADPPOL\ Vss;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00094}00094\ \ \ \ \ ADCON1\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00095}00095\ \ \ \ \ \textcolor{comment}{//\ ADCRS\ 7;\ ADMD\ Low\_pass\_filter\_mode;\ ADACLR\ disabled;\ ADPSIS\ FLTR;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00096}00096\ \ \ \ \ ADCON2\ =\ 0xF4;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00097}00097\ \ \ \ \ \textcolor{comment}{//\ ADCALC\ Actual\ result\ vs\ filtered\ value;\ ADTMD\ disabled;\ ADSOI\ ADGO\ not\ cleared;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00098}00098\ \ \ \ \ ADCON3\ =\ 0x20;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00099}00099\ \ \ \ \ \textcolor{comment}{//\ ADMATH\ registers\ not\ updated;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00100}00100\ \ \ \ \ ADSTAT\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00101}00101\ \ \ \ \ \textcolor{comment}{//\ ADNREF\ VSS;\ ADPREF\ VDD;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00102}00102\ \ \ \ \ ADREF\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00103}00103\ \ \ \ \ \textcolor{comment}{//\ ADACT\ disabled;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00104}00104\ \ \ \ \ ADACT\ =\ 0x00;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00105}00105\ \ \ \ \ \textcolor{comment}{//\ ADCS\ FOSC/128;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00106}00106\ \ \ \ \ ADCLK\ =\ 0x3F;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00107}00107\ \ \ \ \ \textcolor{comment}{//\ ADGO\ stop;\ ADFM\ right;\ ADON\ enabled;\ ADCS\ FOSC/ADCLK;\ ADCONT\ disabled;\ }}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00108}00108\ \ \ \ \ ADCON0\ =\ 0x84;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00109}00109\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00111}00111\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00113}\mbox{\hyperlink{adcc_8c_a67ad593d717fe75c85b5a743b799a94c}{00113}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a67ad593d717fe75c85b5a743b799a94c}{ADCC\_StartConversion}}(\mbox{\hyperlink{adcc_8h_a7f93aa9fe7208ac750f64a5eb5c0b0d6}{adcc\_channel\_t}}\ channel)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00114}00114\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00115}00115\ \ \ \ \ \textcolor{comment}{//\ select\ the\ A/D\ channel}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00116}00116\ \ \ \ \ ADPCH\ =\ channel;\ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00117}00117\ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00118}00118\ \ \ \ \ \textcolor{comment}{//\ Turn\ on\ the\ ADC\ module}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00119}00119\ \ \ \ \ ADCON0bits.ADON\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00121}00121\ \ \ \ \ \textcolor{comment}{//\ Start\ the\ conversion}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00122}00122\ \ \ \ \ ADCON0bits.ADGO\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00123}00123\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00125}\mbox{\hyperlink{adcc_8c_a2989d73104c3991156837c30e8e8aa22}{00125}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{adcc_8c_a2989d73104c3991156837c30e8e8aa22}{ADCC\_IsConversionDone}}()}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00126}00126\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00127}00127\ \ \ \ \ \textcolor{comment}{//\ Start\ the\ conversion}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00128}00128\ \ \ \ \ \textcolor{keywordflow}{return}\ ((\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{char})(!ADCON0bits.ADGO));}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00129}00129\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00131}\mbox{\hyperlink{adcc_8c_ae06aa6be02d94484cbbd862478c2c646}{00131}}\ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ \mbox{\hyperlink{adcc_8c_ae06aa6be02d94484cbbd862478c2c646}{ADCC\_GetConversionResult}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00132}00132\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00133}00133\ \ \ \ \ \textcolor{comment}{//\ Return\ the\ result}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00134}00134\ \ \ \ \ \textcolor{keywordflow}{return}\ ((\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}})((ADRESH\ <<\ 8)\ +\ ADRESL));}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00135}00135\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00137}\mbox{\hyperlink{adcc_8c_a301aed2afe8b2f9f70e9282619ce659b}{00137}}\ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ \mbox{\hyperlink{adcc_8c_a301aed2afe8b2f9f70e9282619ce659b}{ADCC\_GetSingleConversion}}(\mbox{\hyperlink{adcc_8h_a7f93aa9fe7208ac750f64a5eb5c0b0d6}{adcc\_channel\_t}}\ channel)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00138}00138\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00139}00139\ \ \ \ \ \textcolor{comment}{//\ select\ the\ A/D\ channel}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00140}00140\ \ \ \ \ ADPCH\ =\ channel;\ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00141}00141\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00142}00142\ \ \ \ \ \textcolor{comment}{//\ Turn\ on\ the\ ADC\ module}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00143}00143\ \ \ \ \ ADCON0bits.ADON\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00144}00144\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00145}00145\ \ \ \ \ \textcolor{comment}{//Disable\ the\ continuous\ mode.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00146}00146\ \ \ \ \ ADCON0bits.ADCONT\ =\ 0;\ \ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00148}00148\ \ \ \ \ \textcolor{comment}{//\ Start\ the\ conversion}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00149}00149\ \ \ \ \ ADCON0bits.ADGO\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00151}00151\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00152}00152\ \ \ \ \ \textcolor{comment}{//\ Wait\ for\ the\ conversion\ to\ finish}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00153}00153\ \ \ \ \ \textcolor{keywordflow}{while}\ (ADCON0bits.ADGO)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00154}00154\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00155}00155\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00156}00156\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00157}00157\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00158}00158\ \ \ \ \ \textcolor{comment}{//\ Conversion\ finished,\ return\ the\ result}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00159}00159\ \ \ \ \ \textcolor{keywordflow}{return}\ ((\mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}})((ADRESH\ <<\ 8)\ +\ ADRESL));}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00160}00160\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00162}\mbox{\hyperlink{adcc_8c_afb38817827d02c7a32c852e7ca67ea40}{00162}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_afb38817827d02c7a32c852e7ca67ea40}{ADCC\_StopConversion}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00163}00163\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00164}00164\ \ \ \ \ \textcolor{comment}{//Reset\ the\ ADGO\ bit.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00165}00165\ \ \ \ \ ADCON0bits.ADGO\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00166}00166\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00168}\mbox{\hyperlink{adcc_8c_ac96477dfc55399321721f3474970ce2a}{00168}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_ac96477dfc55399321721f3474970ce2a}{ADCC\_SetStopOnInterrupt}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00169}00169\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00170}00170\ \ \ \ \ \textcolor{comment}{//Set\ the\ ADSOI\ bit.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00171}00171\ \ \ \ \ ADCON3bits.ADSOI\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00172}00172\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00174}\mbox{\hyperlink{adcc_8c_a46d1e51bd21582ff036c425211e1854a}{00174}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a46d1e51bd21582ff036c425211e1854a}{ADCC\_DischargeSampleCapacitor}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00175}00175\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00176}00176\ \ \ \ \ \textcolor{comment}{//Set\ the\ ADC\ channel\ to\ AVss.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00177}00177\ \ \ \ \ ADPCH\ =\ 0x3b;\ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00178}00178\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00179}00179\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00180}\mbox{\hyperlink{adcc_8c_afb70444ccbc38b4b8563c4ba31d5a861}{00180}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_afb70444ccbc38b4b8563c4ba31d5a861}{ADCC\_LoadAcquisitionRegister}}(uint16\_t\ acquisitionValue)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00181}00181\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00182}00182\ \ \ \ \ \textcolor{comment}{//Load\ the\ ADACQH\ and\ ADACQL\ registers.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00183}00183\ \ \ \ \ ADACQH\ =\ acquisitionValue\ >>\ 8;\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00184}00184\ \ \ \ \ ADACQL\ =\ acquisitionValue;\ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00185}00185\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00187}\mbox{\hyperlink{adcc_8c_a49b11acdd07638c745076203d7d1c15b}{00187}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a49b11acdd07638c745076203d7d1c15b}{ADCC\_SetPrechargeTime}}(uint16\_t\ prechargeTime)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00188}00188\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00189}00189\ \ \ \ \ \textcolor{comment}{//Load\ the\ ADPREH\ and\ ADPREL\ registers.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00190}00190\ \ \ \ \ ADPREH\ =\ prechargeTime\ >>\ 8;\ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00191}00191\ \ \ \ \ ADPREL\ =\ prechargeTime;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00192}00192\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00193}00193\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00194}\mbox{\hyperlink{adcc_8c_a3b484f590f62632f0e48d102d6b24d9a}{00194}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a3b484f590f62632f0e48d102d6b24d9a}{ADCC\_SetRepeatCount}}(uint8\_t\ repeatCount)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00195}00195\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00196}00196\ \ \ \ \ \textcolor{comment}{//Load\ the\ ADRPT\ register.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00197}00197\ \ \ \ \ ADRPT\ =\ repeatCount;\ \ \ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00198}00198\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00200}\mbox{\hyperlink{adcc_8c_a800c38cbfc0e36ae674163257aa71b4d}{00200}}\ uint8\_t\ \mbox{\hyperlink{adcc_8c_a800c38cbfc0e36ae674163257aa71b4d}{ADCC\_GetCurrentCountofConversions}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00201}00201\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00202}00202\ \ \ \ \ \textcolor{comment}{//Return\ the\ contents\ of\ ADCNT\ register}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{return}\ ADCNT;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00204}00204\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00206}\mbox{\hyperlink{adcc_8c_a787d594246e13b7fdb59ef4254249ced}{00206}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a787d594246e13b7fdb59ef4254249ced}{ADCC\_ClearAccumulator}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00207}00207\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00208}00208\ \ \ \ \ \textcolor{comment}{//Reset\ the\ ADCON2bits.ADACLR\ bit.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00209}00209\ \ \ \ \ ADCON2bits.ADACLR\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00210}00210\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00212}\mbox{\hyperlink{adcc_8c_aade0522676fa6393823e932e92066822}{00212}}\ \mbox{\hyperlink{adcc_8h_ad54a78971d0d22159cd0908dbffa9196}{uint24\_t}}\ \mbox{\hyperlink{adcc_8c_aade0522676fa6393823e932e92066822}{ADCC\_GetAccumulatorValue}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00213}00213\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00214}00214\ \ \ \ \ \textcolor{comment}{//Return\ the\ contents\ of\ ADACCU,\ ADACCH\ and\ ADACCL\ registers}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00215}00215\ \ \ \ \ \textcolor{keywordflow}{return}\ (((\mbox{\hyperlink{adcc_8h_ad54a78971d0d22159cd0908dbffa9196}{uint24\_t}})ADACCU\ <<\ 16)+((\mbox{\hyperlink{adcc_8h_ad54a78971d0d22159cd0908dbffa9196}{uint24\_t}})ADACCH\ <<\ 8)\ +\ ADACCL);}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00216}00216\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00217}00217\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00218}\mbox{\hyperlink{adcc_8c_aa4cf64ba2d2658374bff236d1d4d674b}{00218}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{adcc_8c_aa4cf64ba2d2658374bff236d1d4d674b}{ADCC\_HasAccumulatorOverflowed}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00219}00219\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00220}00220\ \ \ \ \ \textcolor{comment}{//Return\ the\ status\ of\ ADSTATbits.ADAOV}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00221}00221\ \ \ \ \ \textcolor{keywordflow}{return}\ ADSTATbits.ADAOV;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00222}00222\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00224}\mbox{\hyperlink{adcc_8c_aad9dd3c226e925374768ae09cb77b302}{00224}}\ uint16\_t\ \mbox{\hyperlink{adcc_8c_aad9dd3c226e925374768ae09cb77b302}{ADCC\_GetFilterValue}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00225}00225\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00226}00226\ \ \ \ \ \textcolor{comment}{//Return\ the\ contents\ of\ ADFLTRH\ and\ ADFLTRL\ registers}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00227}00227\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint16\_t)((ADFLTRH\ <<\ 8)\ +\ ADFLTRL));}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00228}00228\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00229}00229\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00230}\mbox{\hyperlink{adcc_8c_a386377cbf64acdee5bc0a281fb7cb7a9}{00230}}\ uint16\_t\ \mbox{\hyperlink{adcc_8c_a386377cbf64acdee5bc0a281fb7cb7a9}{ADCC\_GetPreviousResult}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00231}00231\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00232}00232\ \ \ \ \ \textcolor{comment}{//Return\ the\ contents\ of\ ADPREVH\ and\ ADPREVL\ registers}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00233}00233\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint16\_t)((ADPREVH\ <<\ 8)\ +\ ADPREVL));}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00234}00234\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00235}00235\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00236}\mbox{\hyperlink{adcc_8c_ad9e46b356934fed2223a4bd6ed2b7f40}{00236}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_ad9e46b356934fed2223a4bd6ed2b7f40}{ADCC\_DefineSetPoint}}(uint16\_t\ setPoint)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00237}00237\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00238}00238\ \ \ \ \ \textcolor{comment}{//Sets\ the\ ADSTPTH\ and\ ADSTPTL\ registers}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00239}00239\ \ \ \ \ ADSTPTH\ =\ setPoint\ >>\ 8;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00240}00240\ \ \ \ \ ADSTPTL\ =\ setPoint;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00241}00241\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00242}00242\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00243}\mbox{\hyperlink{adcc_8c_a903caa14474c05f492df09f644b11bbf}{00243}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a903caa14474c05f492df09f644b11bbf}{ADCC\_SetUpperThreshold}}(uint16\_t\ upperThreshold)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00244}00244\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00245}00245\ \ \ \ \ \textcolor{comment}{//Sets\ the\ ADUTHH\ and\ ADUTHL\ registers}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00246}00246\ \ \ \ \ ADUTHH\ =\ upperThreshold\ >>\ 8;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00247}00247\ \ \ \ \ ADUTHL\ =\ upperThreshold;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00248}00248\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00249}00249\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00250}\mbox{\hyperlink{adcc_8c_a43e9720e95c116d5b0f3bfcef500994f}{00250}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a43e9720e95c116d5b0f3bfcef500994f}{ADCC\_SetLowerThreshold}}(uint16\_t\ lowerThreshold)}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00251}00251\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00252}00252\ \ \ \ \ \textcolor{comment}{//Sets\ the\ ADLTHH\ and\ ADLTHL\ registers}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00253}00253\ \ \ \ \ ADLTHH\ =\ lowerThreshold\ >>\ 8;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00254}00254\ \ \ \ \ ADLTHL\ =\ lowerThreshold;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00255}00255\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00256}00256\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00257}\mbox{\hyperlink{adcc_8c_aa251be63c08d82f7f85fa131223c9d02}{00257}}\ uint16\_t\ \mbox{\hyperlink{adcc_8c_aa251be63c08d82f7f85fa131223c9d02}{ADCC\_GetErrorCalculation}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00258}00258\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00259}00259\ \ \ \ \ \textcolor{comment}{//Return\ the\ contents\ of\ ADERRH\ and\ ADERRL\ registers}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00260}00260\ \ \ \ \ \textcolor{keywordflow}{return}\ ((uint16\_t)((ADERRH\ <<\ 8)\ +\ ADERRL));}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00261}00261\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00263}\mbox{\hyperlink{adcc_8c_a25e783f23ab275445b37bb1f4120697d}{00263}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a25e783f23ab275445b37bb1f4120697d}{ADCC\_EnableDoubleSampling}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00264}00264\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00265}00265\ \ \ \ \ \textcolor{comment}{//Sets\ the\ ADCON1bits.ADDSEN}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00266}00266\ \ \ \ \ ADCON1bits.ADDSEN\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00267}00267\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00268}00268\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00269}\mbox{\hyperlink{adcc_8c_a90ad04c341a1ee7d92a285ed0b04fdf2}{00269}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_a90ad04c341a1ee7d92a285ed0b04fdf2}{ADCC\_EnableContinuousConversion}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00270}00270\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00271}00271\ \ \ \ \ \textcolor{comment}{//Sets\ the\ ADCON0bits.ADCONT}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00272}00272\ \ \ \ \ ADCON0bits.ADCONT\ =\ 1;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00273}00273\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00275}\mbox{\hyperlink{adcc_8c_af04f7ed654c03953b0b58f75439c1bf8}{00275}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{adcc_8c_af04f7ed654c03953b0b58f75439c1bf8}{ADCC\_DisableContinuousConversion}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00276}00276\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00277}00277\ \ \ \ \ \textcolor{comment}{//Resets\ the\ ADCON0bits.ADCONT}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00278}00278\ \ \ \ \ ADCON0bits.ADCONT\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00279}00279\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00280}00280\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00281}\mbox{\hyperlink{adcc_8c_a04b2a4adf2b44bd05dcd24aa62ee3405}{00281}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{adcc_8c_a04b2a4adf2b44bd05dcd24aa62ee3405}{ADCC\_HasErrorCrossedUpperThreshold}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00282}00282\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00283}00283\ \ \ \ \ \textcolor{comment}{//Returns\ the\ value\ of\ ADSTATbits.ADUTHR\ bit.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00284}00284\ \ \ \ \ \textcolor{keywordflow}{return}\ ADSTATbits.ADUTHR;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00285}00285\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00286}00286\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00287}\mbox{\hyperlink{adcc_8c_a0a6570913f2bdb46acbb0a93a734b7b3}{00287}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{adcc_8c_a0a6570913f2bdb46acbb0a93a734b7b3}{ADCC\_HasErrorCrossedLowerThreshold}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00288}00288\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00289}00289\ \ \ \ \ \textcolor{comment}{//Returns\ the\ value\ of\ ADSTATbits.ADLTHR\ bit.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00290}00290\ \ \ \ \ \textcolor{keywordflow}{return}\ ADSTATbits.ADLTHR;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00291}00291\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00292}00292\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00293}\mbox{\hyperlink{adcc_8c_a54c1c4de98d55a86a5fa0c62edf4df28}{00293}}\ uint8\_t\ \mbox{\hyperlink{adcc_8c_a54c1c4de98d55a86a5fa0c62edf4df28}{ADCC\_GetConversionStageStatus}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00294}00294\ \{}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00295}00295\ \ \ \ \ \textcolor{comment}{//Returns\ the\ contents\ of\ ADSTATbits.ADSTAT\ field.}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00296}00296\ \ \ \ \ \textcolor{keywordflow}{return}\ ADSTATbits.ADSTAT;}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00297}00297\ \}}
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{adcc_8c_source_l00299}00299\ }
+
+\end{DoxyCode}

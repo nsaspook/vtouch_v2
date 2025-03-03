@@ -776,7 +776,8 @@ volatile uint16_t tickCount[TMR_COUNT] = {0};
 volatile uint8_t mode_sw = false, faker;
 void onesec_io(void);
 
-/*
+/** \file main.c
+ * Lets get going with the code.
  * Main application
  */
 void main(void)
@@ -807,7 +808,7 @@ void main(void)
 	TMR6_StartTimer();
 	ADC_SelectContext(CONTEXT_1);
 
-	/*
+	/** Speed locking setup code.
 	 * Use a few EEPROM bytes to cycle or lock the serial port baud rate
 	 * during a power-up.
 	 * 9600 and 19200 are the normal speeds for SECS-I serial communications

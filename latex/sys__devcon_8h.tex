@@ -1,0 +1,426 @@
+\doxysection{pic32\+\_\+daq/remote\+\_\+daq/firmware/src/system\+\_\+config/default/framework/system/devcon/sys\+\_\+devcon.h File Reference}
+\hypertarget{sys__devcon_8h}{}\label{sys__devcon_8h}\index{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/system/devcon/sys\_devcon.h@{pic32\_daq/remote\_daq/firmware/src/system\_config/default/framework/system/devcon/sys\_devcon.h}}
+{\ttfamily \#include "{}system/system.\+h"{}}\newline
+\doxysubsubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{struct_s_y_s___d_e_v_c_o_n___i_n_i_t}{SYS\+\_\+\+DEVCON\+\_\+\+INIT}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{sys__devcon_8h_abe18f5cf08f28ab5c3dff055ba95ecd0}{SYS\+\_\+\+DEVCON\+\_\+\+INDEX\+\_\+0}}~0
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int8\+\_\+t \mbox{\hyperlink{sys__devcon_8h_ac6114dfd20a4f89db1a01e605841bb99}{SYS\+\_\+\+DEVCON\+\_\+\+HANDLE}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}} \{ \mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213daa17e51e6ae55a0061660322c6e666911}{SYS\+\_\+\+CACHE\+\_\+\+WRITETHROUGH\+\_\+\+NO\+\_\+\+WRITEALLOCATE}} = 0
+, \mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213dac890cf4f00e41c077bfe8094a0ae4883}{SYS\+\_\+\+CACHE\+\_\+\+WRITETHROUGH\+\_\+\+WRITEALLOCATE}} = 1
+, \mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213da9643d9475f5ecf0ac953c6ac8da84e19}{SYS\+\_\+\+CACHE\+\_\+\+DISABLE}} = 2
+, \mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213da6f7a047cc944f80aa5729742d0877e62}{SYS\+\_\+\+CACHE\+\_\+\+WRITEBACK\+\_\+\+WRITEALLOCATE}} = 3
+ \}
+\item 
+enum \mbox{\hyperlink{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3}{SYS\+\_\+\+POWER\+\_\+\+MODE}} \{ \mbox{\hyperlink{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3a42369ab67ced5651048fc25028fc7ae9}{SYS\+\_\+\+POWER\+\_\+\+MODE\+\_\+\+IDLE}}
+, \mbox{\hyperlink{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3a65398a4fb9761527f9c773df1f3e7ad1}{SYS\+\_\+\+POWER\+\_\+\+MODE\+\_\+\+SLEEP}}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+SYS\+\_\+\+MODULE\+\_\+\+OBJ \mbox{\hyperlink{sys__devcon_8h_a21fb0c86161c2c20ae0337c80f9ce696}{SYS\+\_\+\+DEVCON\+\_\+\+Initialize}} (const SYS\+\_\+\+MODULE\+\_\+\+INDEX index, const SYS\+\_\+\+MODULE\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const init)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a103e87d642da05258d8ffb026101fa60}{SYS\+\_\+\+DEVCON\+\_\+\+Reinitialize}} (SYS\+\_\+\+MODULE\+\_\+\+OBJ object, const SYS\+\_\+\+MODULE\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const init)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a0408d81ad995cb979276e3bd4642f0a2}{SYS\+\_\+\+DEVCON\+\_\+\+Deinitialize}} (SYS\+\_\+\+MODULE\+\_\+\+OBJ object)
+\item 
+SYS\+\_\+\+STATUS \mbox{\hyperlink{sys__devcon_8h_a08ba46168ca1be257ca512985b7f3a0e}{SYS\+\_\+\+DEVCON\+\_\+\+Status}} (SYS\+\_\+\+MODULE\+\_\+\+OBJ object)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_ac890256524d6384ad5809953e2beafb3}{SYS\+\_\+\+DEVCON\+\_\+\+Tasks}} (SYS\+\_\+\+MODULE\+\_\+\+OBJ object)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_ae64c9f02b4322d8acc0854e3d9e08cf2}{\+\_\+\+\_\+attribute\+\_\+\+\_\+}} ((nomips16)) SYS\+\_\+\+DEVCON\+\_\+\+Performance\+Config(unsigned int sysclk)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_acaf9765399a9495966981e9a55e70be8}{SYS\+\_\+\+DEVCON\+\_\+\+System\+Unlock}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a7a15e046a26ab3dfca8065fa6ddb0e90}{SYS\+\_\+\+DEVCON\+\_\+\+System\+Lock}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_aeec7986b748eb83f3ec172c13306962c}{SYS\+\_\+\+DEVCON\+\_\+\+JTAGEnable}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_ab31736e69a709120112c4dca29869d69}{SYS\+\_\+\+DEVCON\+\_\+\+JTAGDisable}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a47813dd4806a70a074774decf6c0114b}{SYS\+\_\+\+DEVCON\+\_\+\+Trace\+Enable}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a13211bf13f25d8bb67ecce47456c87f1}{SYS\+\_\+\+DEVCON\+\_\+\+Trace\+Disable}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a89795067c43e0cb19141689b5db305cc}{SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Init}} (\mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}} cache\+Coherency)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_ac5dd7e93bdff16cab0d69afbbba75dde}{SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Flush}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a25fa93ddb24efd8f282206164b1e61ac}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Flush}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a9b45121e4818740afac5b237f9760cf0}{SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Flush}} (void)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a59c779c0f2076ef50d9fb82fe572be8d}{SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Clean}} (uint32\+\_\+t addr, \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} len)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a8c4f9798b4241bfe20d42289e5eb8450}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Clean}} (uint32\+\_\+t addr, \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} len)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a5851502557a1e369d0c39e88b1827dbe}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Invalidate}} (uint32\+\_\+t addr, \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} len)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a092c4016d00be8e562fc4b0225fd119c}{SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Invalidate}} (uint32\+\_\+t addr, \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} len)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a499f6f627c53465e8f30420744a4ec83}{SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Lock}} (uint32\+\_\+t addr, \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} len)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a26eac076d85daf31476c5446e1c0bc7e}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Lock}} (uint32\+\_\+t addr, \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} len)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_a8cd23e30e03e38205af1b69d79b83a3b}{SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Sync}} (uint32\+\_\+t addr, \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} len)
+\item 
+void \mbox{\hyperlink{sys__devcon_8h_ad81e36be19439c4cd10ecb08d78511d6}{SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Coherency\+Set}} (\mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}} cache\+Coherency)
+\item 
+\mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}} \mbox{\hyperlink{sys__devcon_8h_a67039a7e32ddb7dd4bd755a61f1def9b}{SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Coherency\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_a8d3fcb5e509c9f2fb2a6325f1f1fbec9}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Associativity\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_a6be0c0148533f4edaa0933ed5fd4c0bc}{SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Associativity\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_ae25a62a6724710c0d983d213ef54c460}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Line\+Size\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_a6924a66b13ff2c499f72219f48f555ae}{SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Line\+Size\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_ae3f371a48ed5f4aaf0dc5469e048016a}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Lines\+Per\+Way\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_a4a2ed665253f0a069d3ac9c503a0ce9e}{SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Lines\+Per\+Way\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_a12a85c09e887371aeb275e0884fe1f2a}{SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Size\+Get}} (void)
+\item 
+\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} \mbox{\hyperlink{sys__devcon_8h_acebc3a01a81b4fd3539324e070722bba}{SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Size\+Get}} (void)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{sys__devcon_8h_abe18f5cf08f28ab5c3dff055ba95ecd0}\label{sys__devcon_8h_abe18f5cf08f28ab5c3dff055ba95ecd0} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_INDEX\_0@{SYS\_DEVCON\_INDEX\_0}}
+\index{SYS\_DEVCON\_INDEX\_0@{SYS\_DEVCON\_INDEX\_0}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_INDEX\_0}{SYS\_DEVCON\_INDEX\_0}}
+{\footnotesize\ttfamily \#define SYS\+\_\+\+DEVCON\+\_\+\+INDEX\+\_\+0~0}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8h_source_l00085}{85}} of file \mbox{\hyperlink{sys__devcon_8h_source}{sys\+\_\+devcon.\+h}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{sys__devcon_8h_ac6114dfd20a4f89db1a01e605841bb99}\label{sys__devcon_8h_ac6114dfd20a4f89db1a01e605841bb99} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_HANDLE@{SYS\_DEVCON\_HANDLE}}
+\index{SYS\_DEVCON\_HANDLE@{SYS\_DEVCON\_HANDLE}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_HANDLE}{SYS\_DEVCON\_HANDLE}}
+{\footnotesize\ttfamily typedef int8\+\_\+t \mbox{\hyperlink{sys__devcon_8h_ac6114dfd20a4f89db1a01e605841bb99}{SYS\+\_\+\+DEVCON\+\_\+\+HANDLE}}}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8h_source_l00104}{104}} of file \mbox{\hyperlink{sys__devcon_8h_source}{sys\+\_\+devcon.\+h}}.
+
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}\label{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_CACHE\_COHERENCY@{SYS\_CACHE\_COHERENCY}}
+\index{SYS\_CACHE\_COHERENCY@{SYS\_CACHE\_COHERENCY}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_CACHE\_COHERENCY}{SYS\_CACHE\_COHERENCY}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SYS\_CACHE\_WRITETHROUGH\_NO\_WRITEALLOCATE@{SYS\_CACHE\_WRITETHROUGH\_NO\_WRITEALLOCATE}!sys\_devcon.h@{sys\_devcon.h}}\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_CACHE\_WRITETHROUGH\_NO\_WRITEALLOCATE@{SYS\_CACHE\_WRITETHROUGH\_NO\_WRITEALLOCATE}}}\Hypertarget{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213daa17e51e6ae55a0061660322c6e666911}\label{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213daa17e51e6ae55a0061660322c6e666911} 
+SYS\+\_\+\+CACHE\+\_\+\+WRITETHROUGH\+\_\+\+NO\+\_\+\+WRITEALLOCATE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SYS\_CACHE\_WRITETHROUGH\_WRITEALLOCATE@{SYS\_CACHE\_WRITETHROUGH\_WRITEALLOCATE}!sys\_devcon.h@{sys\_devcon.h}}\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_CACHE\_WRITETHROUGH\_WRITEALLOCATE@{SYS\_CACHE\_WRITETHROUGH\_WRITEALLOCATE}}}\Hypertarget{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213dac890cf4f00e41c077bfe8094a0ae4883}\label{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213dac890cf4f00e41c077bfe8094a0ae4883} 
+SYS\+\_\+\+CACHE\+\_\+\+WRITETHROUGH\+\_\+\+WRITEALLOCATE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SYS\_CACHE\_DISABLE@{SYS\_CACHE\_DISABLE}!sys\_devcon.h@{sys\_devcon.h}}\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_CACHE\_DISABLE@{SYS\_CACHE\_DISABLE}}}\Hypertarget{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213da9643d9475f5ecf0ac953c6ac8da84e19}\label{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213da9643d9475f5ecf0ac953c6ac8da84e19} 
+SYS\+\_\+\+CACHE\+\_\+\+DISABLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SYS\_CACHE\_WRITEBACK\_WRITEALLOCATE@{SYS\_CACHE\_WRITEBACK\_WRITEALLOCATE}!sys\_devcon.h@{sys\_devcon.h}}\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_CACHE\_WRITEBACK\_WRITEALLOCATE@{SYS\_CACHE\_WRITEBACK\_WRITEALLOCATE}}}\Hypertarget{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213da6f7a047cc944f80aa5729742d0877e62}\label{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213da6f7a047cc944f80aa5729742d0877e62} 
+SYS\+\_\+\+CACHE\+\_\+\+WRITEBACK\+\_\+\+WRITEALLOCATE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8h_source_l00141}{141}} of file \mbox{\hyperlink{sys__devcon_8h_source}{sys\+\_\+devcon.\+h}}.
+
+\Hypertarget{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3}\label{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_POWER\_MODE@{SYS\_POWER\_MODE}}
+\index{SYS\_POWER\_MODE@{SYS\_POWER\_MODE}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_POWER\_MODE}{SYS\_POWER\_MODE}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3}{SYS\+\_\+\+POWER\+\_\+\+MODE}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SYS\_POWER\_MODE\_IDLE@{SYS\_POWER\_MODE\_IDLE}!sys\_devcon.h@{sys\_devcon.h}}\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_POWER\_MODE\_IDLE@{SYS\_POWER\_MODE\_IDLE}}}\Hypertarget{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3a42369ab67ced5651048fc25028fc7ae9}\label{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3a42369ab67ced5651048fc25028fc7ae9} 
+SYS\+\_\+\+POWER\+\_\+\+MODE\+\_\+\+IDLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{SYS\_POWER\_MODE\_SLEEP@{SYS\_POWER\_MODE\_SLEEP}!sys\_devcon.h@{sys\_devcon.h}}\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_POWER\_MODE\_SLEEP@{SYS\_POWER\_MODE\_SLEEP}}}\Hypertarget{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3a65398a4fb9761527f9c773df1f3e7ad1}\label{sys__devcon_8h_af064de7bd576ab0fd23174469eda78f3a65398a4fb9761527f9c773df1f3e7ad1} 
+SYS\+\_\+\+POWER\+\_\+\+MODE\+\_\+\+SLEEP&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8h_source_l00167}{167}} of file \mbox{\hyperlink{sys__devcon_8h_source}{sys\+\_\+devcon.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{sys__devcon_8h_ae64c9f02b4322d8acc0854e3d9e08cf2}\label{sys__devcon_8h_ae64c9f02b4322d8acc0854e3d9e08cf2} 
+\index{sys\_devcon.h@{sys\_devcon.h}!\_\_attribute\_\_@{\_\_attribute\_\_}}
+\index{\_\_attribute\_\_@{\_\_attribute\_\_}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{\_\_attribute\_\_()}{\_\_attribute\_\_()}}
+{\footnotesize\ttfamily void \+\_\+\+\_\+attribute\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{(nomips16)}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00389}{389}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a59c779c0f2076ef50d9fb82fe572be8d}\label{sys__devcon_8h_a59c779c0f2076ef50d9fb82fe572be8d} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_CacheClean@{SYS\_DEVCON\_CacheClean}}
+\index{SYS\_DEVCON\_CacheClean@{SYS\_DEVCON\_CacheClean}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_CacheClean()}{SYS\_DEVCON\_CacheClean()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Clean (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{addr,  }\item[{\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}}}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a67039a7e32ddb7dd4bd755a61f1def9b}\label{sys__devcon_8h_a67039a7e32ddb7dd4bd755a61f1def9b} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_CacheCoherencyGet@{SYS\_DEVCON\_CacheCoherencyGet}}
+\index{SYS\_DEVCON\_CacheCoherencyGet@{SYS\_DEVCON\_CacheCoherencyGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_CacheCoherencyGet()}{SYS\_DEVCON\_CacheCoherencyGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}} SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Coherency\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_ad81e36be19439c4cd10ecb08d78511d6}\label{sys__devcon_8h_ad81e36be19439c4cd10ecb08d78511d6} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_CacheCoherencySet@{SYS\_DEVCON\_CacheCoherencySet}}
+\index{SYS\_DEVCON\_CacheCoherencySet@{SYS\_DEVCON\_CacheCoherencySet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_CacheCoherencySet()}{SYS\_DEVCON\_CacheCoherencySet()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Coherency\+Set (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}}}]{cache\+Coherency }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_ac5dd7e93bdff16cab0d69afbbba75dde}\label{sys__devcon_8h_ac5dd7e93bdff16cab0d69afbbba75dde} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_CacheFlush@{SYS\_DEVCON\_CacheFlush}}
+\index{SYS\_DEVCON\_CacheFlush@{SYS\_DEVCON\_CacheFlush}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_CacheFlush()}{SYS\_DEVCON\_CacheFlush()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Flush (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a89795067c43e0cb19141689b5db305cc}\label{sys__devcon_8h_a89795067c43e0cb19141689b5db305cc} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_CacheInit@{SYS\_DEVCON\_CacheInit}}
+\index{SYS\_DEVCON\_CacheInit@{SYS\_DEVCON\_CacheInit}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_CacheInit()}{SYS\_DEVCON\_CacheInit()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{sys__devcon_8h_aa1a84925815e5cf09ed3ba5c9207213d}{SYS\+\_\+\+CACHE\+\_\+\+COHERENCY}}}]{cache\+Coherency }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a8cd23e30e03e38205af1b69d79b83a3b}\label{sys__devcon_8h_a8cd23e30e03e38205af1b69d79b83a3b} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_CacheSync@{SYS\_DEVCON\_CacheSync}}
+\index{SYS\_DEVCON\_CacheSync@{SYS\_DEVCON\_CacheSync}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_CacheSync()}{SYS\_DEVCON\_CacheSync()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Cache\+Sync (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{addr,  }\item[{\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}}}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a8d3fcb5e509c9f2fb2a6325f1f1fbec9}\label{sys__devcon_8h_a8d3fcb5e509c9f2fb2a6325f1f1fbec9} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheAssociativityGet@{SYS\_DEVCON\_DataCacheAssociativityGet}}
+\index{SYS\_DEVCON\_DataCacheAssociativityGet@{SYS\_DEVCON\_DataCacheAssociativityGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheAssociativityGet()}{SYS\_DEVCON\_DataCacheAssociativityGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Associativity\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a8c4f9798b4241bfe20d42289e5eb8450}\label{sys__devcon_8h_a8c4f9798b4241bfe20d42289e5eb8450} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheClean@{SYS\_DEVCON\_DataCacheClean}}
+\index{SYS\_DEVCON\_DataCacheClean@{SYS\_DEVCON\_DataCacheClean}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheClean()}{SYS\_DEVCON\_DataCacheClean()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Clean (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{addr,  }\item[{\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}}}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a25fa93ddb24efd8f282206164b1e61ac}\label{sys__devcon_8h_a25fa93ddb24efd8f282206164b1e61ac} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheFlush@{SYS\_DEVCON\_DataCacheFlush}}
+\index{SYS\_DEVCON\_DataCacheFlush@{SYS\_DEVCON\_DataCacheFlush}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheFlush()}{SYS\_DEVCON\_DataCacheFlush()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Flush (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a5851502557a1e369d0c39e88b1827dbe}\label{sys__devcon_8h_a5851502557a1e369d0c39e88b1827dbe} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheInvalidate@{SYS\_DEVCON\_DataCacheInvalidate}}
+\index{SYS\_DEVCON\_DataCacheInvalidate@{SYS\_DEVCON\_DataCacheInvalidate}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheInvalidate()}{SYS\_DEVCON\_DataCacheInvalidate()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Invalidate (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{addr,  }\item[{\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}}}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_ae25a62a6724710c0d983d213ef54c460}\label{sys__devcon_8h_ae25a62a6724710c0d983d213ef54c460} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheLineSizeGet@{SYS\_DEVCON\_DataCacheLineSizeGet}}
+\index{SYS\_DEVCON\_DataCacheLineSizeGet@{SYS\_DEVCON\_DataCacheLineSizeGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheLineSizeGet()}{SYS\_DEVCON\_DataCacheLineSizeGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Line\+Size\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_ae3f371a48ed5f4aaf0dc5469e048016a}\label{sys__devcon_8h_ae3f371a48ed5f4aaf0dc5469e048016a} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheLinesPerWayGet@{SYS\_DEVCON\_DataCacheLinesPerWayGet}}
+\index{SYS\_DEVCON\_DataCacheLinesPerWayGet@{SYS\_DEVCON\_DataCacheLinesPerWayGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheLinesPerWayGet()}{SYS\_DEVCON\_DataCacheLinesPerWayGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Lines\+Per\+Way\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a26eac076d85daf31476c5446e1c0bc7e}\label{sys__devcon_8h_a26eac076d85daf31476c5446e1c0bc7e} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheLock@{SYS\_DEVCON\_DataCacheLock}}
+\index{SYS\_DEVCON\_DataCacheLock@{SYS\_DEVCON\_DataCacheLock}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheLock()}{SYS\_DEVCON\_DataCacheLock()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Lock (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{addr,  }\item[{\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}}}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a12a85c09e887371aeb275e0884fe1f2a}\label{sys__devcon_8h_a12a85c09e887371aeb275e0884fe1f2a} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_DataCacheSizeGet@{SYS\_DEVCON\_DataCacheSizeGet}}
+\index{SYS\_DEVCON\_DataCacheSizeGet@{SYS\_DEVCON\_DataCacheSizeGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_DataCacheSizeGet()}{SYS\_DEVCON\_DataCacheSizeGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Data\+Cache\+Size\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a0408d81ad995cb979276e3bd4642f0a2}\label{sys__devcon_8h_a0408d81ad995cb979276e3bd4642f0a2} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_Deinitialize@{SYS\_DEVCON\_Deinitialize}}
+\index{SYS\_DEVCON\_Deinitialize@{SYS\_DEVCON\_Deinitialize}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_Deinitialize()}{SYS\_DEVCON\_Deinitialize()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Deinitialize (\begin{DoxyParamCaption}\item[{SYS\+\_\+\+MODULE\+\_\+\+OBJ}]{object }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00162}{162}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a21fb0c86161c2c20ae0337c80f9ce696}\label{sys__devcon_8h_a21fb0c86161c2c20ae0337c80f9ce696} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_Initialize@{SYS\_DEVCON\_Initialize}}
+\index{SYS\_DEVCON\_Initialize@{SYS\_DEVCON\_Initialize}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_Initialize()}{SYS\_DEVCON\_Initialize()}}
+{\footnotesize\ttfamily SYS\+\_\+\+MODULE\+\_\+\+OBJ SYS\+\_\+\+DEVCON\+\_\+\+Initialize (\begin{DoxyParamCaption}\item[{const SYS\+\_\+\+MODULE\+\_\+\+INDEX}]{index,  }\item[{const SYS\+\_\+\+MODULE\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const}]{init }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00101}{101}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a6be0c0148533f4edaa0933ed5fd4c0bc}\label{sys__devcon_8h_a6be0c0148533f4edaa0933ed5fd4c0bc} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_InstructionCacheAssociativityGet@{SYS\_DEVCON\_InstructionCacheAssociativityGet}}
+\index{SYS\_DEVCON\_InstructionCacheAssociativityGet@{SYS\_DEVCON\_InstructionCacheAssociativityGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_InstructionCacheAssociativityGet()}{SYS\_DEVCON\_InstructionCacheAssociativityGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Associativity\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a9b45121e4818740afac5b237f9760cf0}\label{sys__devcon_8h_a9b45121e4818740afac5b237f9760cf0} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_InstructionCacheFlush@{SYS\_DEVCON\_InstructionCacheFlush}}
+\index{SYS\_DEVCON\_InstructionCacheFlush@{SYS\_DEVCON\_InstructionCacheFlush}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_InstructionCacheFlush()}{SYS\_DEVCON\_InstructionCacheFlush()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Flush (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a092c4016d00be8e562fc4b0225fd119c}\label{sys__devcon_8h_a092c4016d00be8e562fc4b0225fd119c} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_InstructionCacheInvalidate@{SYS\_DEVCON\_InstructionCacheInvalidate}}
+\index{SYS\_DEVCON\_InstructionCacheInvalidate@{SYS\_DEVCON\_InstructionCacheInvalidate}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_InstructionCacheInvalidate()}{SYS\_DEVCON\_InstructionCacheInvalidate()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Invalidate (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{addr,  }\item[{\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}}}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a6924a66b13ff2c499f72219f48f555ae}\label{sys__devcon_8h_a6924a66b13ff2c499f72219f48f555ae} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_InstructionCacheLineSizeGet@{SYS\_DEVCON\_InstructionCacheLineSizeGet}}
+\index{SYS\_DEVCON\_InstructionCacheLineSizeGet@{SYS\_DEVCON\_InstructionCacheLineSizeGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_InstructionCacheLineSizeGet()}{SYS\_DEVCON\_InstructionCacheLineSizeGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Line\+Size\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a4a2ed665253f0a069d3ac9c503a0ce9e}\label{sys__devcon_8h_a4a2ed665253f0a069d3ac9c503a0ce9e} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_InstructionCacheLinesPerWayGet@{SYS\_DEVCON\_InstructionCacheLinesPerWayGet}}
+\index{SYS\_DEVCON\_InstructionCacheLinesPerWayGet@{SYS\_DEVCON\_InstructionCacheLinesPerWayGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_InstructionCacheLinesPerWayGet()}{SYS\_DEVCON\_InstructionCacheLinesPerWayGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Lines\+Per\+Way\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_a499f6f627c53465e8f30420744a4ec83}\label{sys__devcon_8h_a499f6f627c53465e8f30420744a4ec83} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_InstructionCacheLock@{SYS\_DEVCON\_InstructionCacheLock}}
+\index{SYS\_DEVCON\_InstructionCacheLock@{SYS\_DEVCON\_InstructionCacheLock}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_InstructionCacheLock()}{SYS\_DEVCON\_InstructionCacheLock()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Lock (\begin{DoxyParamCaption}\item[{uint32\+\_\+t}]{addr,  }\item[{\mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}}}]{len }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_acebc3a01a81b4fd3539324e070722bba}\label{sys__devcon_8h_acebc3a01a81b4fd3539324e070722bba} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_InstructionCacheSizeGet@{SYS\_DEVCON\_InstructionCacheSizeGet}}
+\index{SYS\_DEVCON\_InstructionCacheSizeGet@{SYS\_DEVCON\_InstructionCacheSizeGet}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_InstructionCacheSizeGet()}{SYS\_DEVCON\_InstructionCacheSizeGet()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{sys__devcon__local_8h_afb0843d0fb27ea1b89117293f9a01605}{size\+\_\+t}} SYS\+\_\+\+DEVCON\+\_\+\+Instruction\+Cache\+Size\+Get (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+\Hypertarget{sys__devcon_8h_ab31736e69a709120112c4dca29869d69}\label{sys__devcon_8h_ab31736e69a709120112c4dca29869d69} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_JTAGDisable@{SYS\_DEVCON\_JTAGDisable}}
+\index{SYS\_DEVCON\_JTAGDisable@{SYS\_DEVCON\_JTAGDisable}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_JTAGDisable()}{SYS\_DEVCON\_JTAGDisable()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+JTAGDisable (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00319}{319}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_aeec7986b748eb83f3ec172c13306962c}\label{sys__devcon_8h_aeec7986b748eb83f3ec172c13306962c} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_JTAGEnable@{SYS\_DEVCON\_JTAGEnable}}
+\index{SYS\_DEVCON\_JTAGEnable@{SYS\_DEVCON\_JTAGEnable}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_JTAGEnable()}{SYS\_DEVCON\_JTAGEnable()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+JTAGEnable (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00299}{299}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a103e87d642da05258d8ffb026101fa60}\label{sys__devcon_8h_a103e87d642da05258d8ffb026101fa60} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_Reinitialize@{SYS\_DEVCON\_Reinitialize}}
+\index{SYS\_DEVCON\_Reinitialize@{SYS\_DEVCON\_Reinitialize}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_Reinitialize()}{SYS\_DEVCON\_Reinitialize()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Reinitialize (\begin{DoxyParamCaption}\item[{SYS\+\_\+\+MODULE\+\_\+\+OBJ}]{object,  }\item[{const SYS\+\_\+\+MODULE\+\_\+\+INIT \texorpdfstring{$\ast$}{*}const}]{init }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00135}{135}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a08ba46168ca1be257ca512985b7f3a0e}\label{sys__devcon_8h_a08ba46168ca1be257ca512985b7f3a0e} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_Status@{SYS\_DEVCON\_Status}}
+\index{SYS\_DEVCON\_Status@{SYS\_DEVCON\_Status}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_Status()}{SYS\_DEVCON\_Status()}}
+{\footnotesize\ttfamily SYS\+\_\+\+STATUS SYS\+\_\+\+DEVCON\+\_\+\+Status (\begin{DoxyParamCaption}\item[{SYS\+\_\+\+MODULE\+\_\+\+OBJ}]{object }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00182}{182}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a7a15e046a26ab3dfca8065fa6ddb0e90}\label{sys__devcon_8h_a7a15e046a26ab3dfca8065fa6ddb0e90} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_SystemLock@{SYS\_DEVCON\_SystemLock}}
+\index{SYS\_DEVCON\_SystemLock@{SYS\_DEVCON\_SystemLock}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_SystemLock()}{SYS\_DEVCON\_SystemLock()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+System\+Lock (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00270}{270}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_acaf9765399a9495966981e9a55e70be8}\label{sys__devcon_8h_acaf9765399a9495966981e9a55e70be8} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_SystemUnlock@{SYS\_DEVCON\_SystemUnlock}}
+\index{SYS\_DEVCON\_SystemUnlock@{SYS\_DEVCON\_SystemUnlock}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_SystemUnlock()}{SYS\_DEVCON\_SystemUnlock()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+System\+Unlock (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00239}{239}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_ac890256524d6384ad5809953e2beafb3}\label{sys__devcon_8h_ac890256524d6384ad5809953e2beafb3} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_Tasks@{SYS\_DEVCON\_Tasks}}
+\index{SYS\_DEVCON\_Tasks@{SYS\_DEVCON\_Tasks}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_Tasks()}{SYS\_DEVCON\_Tasks()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Tasks (\begin{DoxyParamCaption}\item[{SYS\+\_\+\+MODULE\+\_\+\+OBJ}]{object }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00204}{204}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a13211bf13f25d8bb67ecce47456c87f1}\label{sys__devcon_8h_a13211bf13f25d8bb67ecce47456c87f1} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_TraceDisable@{SYS\_DEVCON\_TraceDisable}}
+\index{SYS\_DEVCON\_TraceDisable@{SYS\_DEVCON\_TraceDisable}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_TraceDisable()}{SYS\_DEVCON\_TraceDisable()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Trace\+Disable (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00364}{364}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+
+\Hypertarget{sys__devcon_8h_a47813dd4806a70a074774decf6c0114b}\label{sys__devcon_8h_a47813dd4806a70a074774decf6c0114b} 
+\index{sys\_devcon.h@{sys\_devcon.h}!SYS\_DEVCON\_TraceEnable@{SYS\_DEVCON\_TraceEnable}}
+\index{SYS\_DEVCON\_TraceEnable@{SYS\_DEVCON\_TraceEnable}!sys\_devcon.h@{sys\_devcon.h}}
+\doxysubsubsection{\texorpdfstring{SYS\_DEVCON\_TraceEnable()}{SYS\_DEVCON\_TraceEnable()}}
+{\footnotesize\ttfamily void SYS\+\_\+\+DEVCON\+\_\+\+Trace\+Enable (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{sys__devcon_8c_source_l00339}{339}} of file \mbox{\hyperlink{sys__devcon_8c_source}{sys\+\_\+devcon.\+c}}.
+

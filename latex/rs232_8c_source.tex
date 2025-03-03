@@ -1,0 +1,65 @@
+\doxysection{rs232.\+c}
+\hypertarget{rs232_8c_source}{}\label{rs232_8c_source}\index{secs\_q84.X/rs232.c@{secs\_q84.X/rs232.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}rs232.h"{}}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00003}00003\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ line\_status(\textcolor{keyword}{const}\ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}});}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00004}00004\ \textcolor{keyword}{extern}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{struct_v__data}{V\_data}}\ V;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00006}00006\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00007}00007\ \textcolor{comment}{\ *\ convert\ the\ raw\ ADC\ result\ into\ something\ close\ to\ the\ RS-\/232\ wire\ voltages}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00008}00008\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00009}00009\ \textcolor{keywordtype}{void}\ update\_rs232\_line\_status(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00010}00010\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00011}00011\ \ \ \ \ V.tx\_rs232\ =\ line\_status(V.v\_tx\_line);}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00012}00012\ \ \ \ \ V.rx\_rs232\ =\ line\_status(V.v\_rx\_line);}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00014}00014\ \ \ \ \ V.tx\_volts\ =\ (adc\_scale\_zero\ +\ (int16\_t)\ V.v\_tx\_line)\ /\ neg\_scale;\ \textcolor{comment}{//\ negative\ scaling}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{if}\ (V.tx\_volts\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00016}00016\ \ \ \ \ \ \ \ \ V.tx\_volts\ =\ (adc\_scale\_zero\ +\ (int16\_t)\ V.v\_tx\_line)\ /\ pos\_scale;\ \textcolor{comment}{//\ positive\ scaling}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00017}00017\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (V.tx\_volts\ <\ line\_zero\_limit)\ \{\ \textcolor{comment}{//\ check\ for\ ADC\ disconnect\ condition}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ V.tx\_volts\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00020}00020\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00021}00021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00023}00023\ \ \ \ \ V.rx\_volts\ =\ (adc\_scale\_zero\ +\ (int16\_t)\ V.v\_rx\_line)\ /\ neg\_scale;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00024}00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (V.rx\_volts\ >\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00025}00025\ \ \ \ \ \ \ \ \ V.rx\_volts\ =\ (adc\_scale\_zero\ +\ (int16\_t)\ V.v\_rx\_line)\ /\ pos\_scale;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00026}00026\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (V.rx\_volts\ <\ line\_zero\_limit)\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ V.rx\_volts\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00030}00030\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00032}00032\ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00034}00034\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00035}00035\ \textcolor{comment}{\ *\ convert\ raw\ ADC\ values\ tto\ RS232\ line\ status\ indicators}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00036}00036\ \textcolor{comment}{\ *\ D:\ Disconnected\ from\ anyload\ (device\ measurements\ error)}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00037}00037\ \textcolor{comment}{\ *\ O:\ Open,\ Line\ receiver\ connected\ only\ voltage}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00038}00038\ \textcolor{comment}{\ *\ M:\ Mark\ line\ condition}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00039}00039\ \textcolor{comment}{\ *\ S:\ Space\ line\ condition}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00040}00040\ \textcolor{comment}{\ *\ }}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00041}00041\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00042}00042\ \textcolor{keyword}{static}\ \textcolor{keywordtype}{char}\ line\_status(\textcolor{keyword}{const}\ \mbox{\hyperlink{group__adc__context__scan_ga2e870a0e6f5efcac7b66ad2ede52ee52}{adc\_result\_t}}\ value)}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00043}00043\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{char}\ status\_c\ =\ \textcolor{charliteral}{'D'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{if}\ ((value\ <\ (LINE\_OPEN\_V\ -\/\ LINE\_LIMIT\_OPEN))\ \&\&\ (value\ >\ (LINE\_RECV\_V\ -\/\ LINE\_LIMIT\_OPEN)))\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00047}00047\ \ \ \ \ \ \ \ \ status\_c\ =\ \textcolor{charliteral}{'O'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00048}00048\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{if}\ ((value\ >\ (LINE\_OPEN\_V\ +\ LINE\_LIMIT\_LOW))\ \&\&\ (value\ <\ (LINE\_SPACE\_V\ +\ LINE\_LIMIT\_H)))\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ status\_c\ =\ \textcolor{charliteral}{'S'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00052}00052\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00053}00053\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{if}\ ((value\ <\ (LINE\_OPEN\_V\ -\/\ LINE\_LIMIT\_MARK))\ \&\&\ (value\ >\ (LINE\_MARK\_V\ -\/\ LINE\_LIMIT\_H)))\ \{}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00055}00055\ \ \ \ \ \ \ \ \ status\_c\ =\ \textcolor{charliteral}{'M'};}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00056}00056\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00058}00058\ \ \ \ \ \textcolor{keywordflow}{return}\ status\_c;}
+\DoxyCodeLine{\Hypertarget{rs232_8c_source_l00059}00059\ \}}
+
+\end{DoxyCode}

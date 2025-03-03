@@ -1,0 +1,406 @@
+\doxysection{serialize\+\_\+test.\+cxx}
+\hypertarget{serialize__test_8cxx_source}{}\label{serialize__test_8cxx_source}\index{gem/secstwo-\/1.0.1/serialize\_test.cxx@{gem/secstwo-\/1.0.1/serialize\_test.cxx}}
+\mbox{\hyperlink{serialize__test_8cxx}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00001}00001\ \textcolor{comment}{/*\ \ \ }}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00002}00002\ \textcolor{comment}{\ *\ \ \ (c)\ Copyright\ 2008\ Philipp\ Skadorov\ (philipp\_s@users.sourceforge.net)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00003}00003\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00004}00004\ \textcolor{comment}{\ *\ \ \ This\ file\ is\ part\ of\ FREESECS.}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00005}00005\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00006}00006\ \textcolor{comment}{\ *\ \ \ FREESECS\ is\ free\ software:\ you\ can\ redistribute\ it\ and/or\ modify}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00007}00007\ \textcolor{comment}{\ *\ \ \ it\ under\ the\ terms\ of\ the\ GNU\ Lesser\ General\ Public\ License\ as\ published\ by}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00008}00008\ \textcolor{comment}{\ *\ \ \ the\ Free\ Software\ Foundation,\ either\ version\ 2\ of\ the\ License,\ or}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00009}00009\ \textcolor{comment}{\ *\ \ \ (at\ your\ option)\ any\ later\ version.}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00010}00010\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00011}00011\ \textcolor{comment}{\ *\ \ \ FREESECS\ is\ distributed\ in\ the\ hope\ that\ it\ will\ be\ useful,}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00012}00012\ \textcolor{comment}{\ *\ \ \ but\ WITHOUT\ ANY\ WARRANTY;\ without\ even\ the\ implied\ warranty\ of}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00013}00013\ \textcolor{comment}{\ *\ \ \ MERCHANTABILITY\ or\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE.\ \ See\ the}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00014}00014\ \textcolor{comment}{\ *\ \ \ GNU\ Lesser\ General\ Public\ License\ for\ more\ details.}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00015}00015\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00016}00016\ \textcolor{comment}{\ *\ \ \ You\ should\ have\ received\ a\ copy\ of\ the\ GNU\ Lesser\ General\ Public\ License}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00017}00017\ \textcolor{comment}{\ *\ \ \ along\ with\ FREESECS,\ see\ COPYING.}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00018}00018\ \textcolor{comment}{\ *\ \ \ If\ not,\ see\ <http://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00019}00019\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <sys/types.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <sys/stat.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <fcntl.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00024}00024\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00025}00025\ \textcolor{preprocessor}{\#include\ <wchar.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00026}00026\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00027}00027\ \textcolor{preprocessor}{\#include\ <libxml/parser.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00028}00028\ \textcolor{preprocessor}{\#include\ <libxml/tree.h>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00030}00030\ \textcolor{preprocessor}{\#include\ <sstream>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00031}00031\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00032}00032\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00034}00034\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{binary__msgs_8h}{binary\_msgs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00035}00035\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{secstwo__serialize_8h}{secstwo\_serialize.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00037}00037\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{test__defines_8h}{test\_defines.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00041}00041\ \textcolor{keyword}{static}\ std::stringstream\ s3f17\_contents\_str,\ s14f9\_contents\_str;}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00042}00042\ \textcolor{keyword}{static}\ std::stringstream\ s3f17\_xml\_contents,\ s14f9\_xml\_contents;}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00043}00043\ \textcolor{keyword}{static}\ std::stringstream\ s3f17\_str,\ s14f9\_str;}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00044}00044\ \textcolor{keyword}{static}\ std::stringstream\ s3f17\_xml\_str,\ s14f9\_xml\_str;}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00046}\mbox{\hyperlink{serialize__test_8cxx_a726359f1cb8e2912159f739eff649f1c}{00046}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{serialize__test_8cxx_a726359f1cb8e2912159f739eff649f1c}{unicode\_item\_xml\_str}}[]\ \ \ =\ \textcolor{stringliteral}{"{}<unicode\ name=\(\backslash\)"{}wchar\ item\(\backslash\)"{}>юникодовая\ строка</unicode>"{}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00047}\mbox{\hyperlink{serialize__test_8cxx_af6fb936c62394b92a18d3e50190507bc}{00047}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{serialize__test_8cxx_af6fb936c62394b92a18d3e50190507bc}{unicode\_item\_str}}[]\ \ \ \ \ \ \ =\ \textcolor{stringliteral}{"{}<WCHAR\ \(\backslash\)'wchar\ item\(\backslash\)'\ [33]\ юникодовая\ строка>"{}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00049}00049\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacefreesecs}{freesecs}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00050}00050\ \textcolor{keyword}{using\ namespace\ }\mbox{\hyperlink{namespacefreesecs_1_1secstwo}{freesecs::secstwo}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00052}\mbox{\hyperlink{serialize__test_8cxx_a250f0ae378ffa986f295753697a293d5}{00052}}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{pdata\_item\_t}}\ \mbox{\hyperlink{serialize__test_8cxx_a250f0ae378ffa986f295753697a293d5}{pit1}},\ \mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00053}\mbox{\hyperlink{serialize__test_8cxx_ae8231eabd92f5b4d78ceda3ba3675267}{00053}}\ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{pdata\_item\_t}}\ \mbox{\hyperlink{serialize__test_8cxx_ae8231eabd92f5b4d78ceda3ba3675267}{xml\_pit1}},\ \mbox{\hyperlink{serialize__test_8cxx_abf33d48ddb6abfc1b505b4fe8253520e}{xml\_pit2}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00055}00055\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00057}\mbox{\hyperlink{serialize__test_8cxx_aba1619bee6055db9b65cf6f9c1092998}{00057}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_aba1619bee6055db9b65cf6f9c1092998}{test\_binary\_deserializer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00058}00058\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00059}00059\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00060}00060\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00061}00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__deserializer__t}{binary\_deserializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{bs1}}(\mbox{\hyperlink{binary__msgs_8cxx_abcaa5a5d137f432e12373eeeb0c96cc3}{s3f17\_data}},\ \mbox{\hyperlink{binary__msgs_8cxx_abcaa5a5d137f432e12373eeeb0c96cc3}{s3f17\_data}}\ +\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{binary__msgs_8cxx_abcaa5a5d137f432e12373eeeb0c96cc3}{s3f17\_data}}));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00062}00062\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a250f0ae378ffa986f295753697a293d5}{pit1}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{bs1}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{NULL}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00063}00063\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00064}00064\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00065}00065\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00066}00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}binary\ deserializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00067}00067\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00070}00070\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00071}00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__deserializer__t}{binary\_deserializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{bs2}}(\mbox{\hyperlink{binary__msgs_8cxx_a8108b154bdfa56db54f531495712eb60}{s14f9\_data}},\ \mbox{\hyperlink{binary__msgs_8cxx_a8108b154bdfa56db54f531495712eb60}{s14f9\_data}}\ +\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{binary__msgs_8cxx_a8108b154bdfa56db54f531495712eb60}{s14f9\_data}}));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00072}00072\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{bs2}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{NULL}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00073}00073\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00074}00074\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00075}00075\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00076}00076\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}binary\ deserializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00077}00077\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00079}00079\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{serialize__test_8cxx_a250f0ae378ffa986f295753697a293d5}{pit1}}.\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a04ddccce7102c0f434702f33f534a87c}{get}}(),\ \textcolor{stringliteral}{"{}deserialized\ msg\ itam1\ is\ not\ null"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00080}00080\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}}.\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a04ddccce7102c0f434702f33f534a87c}{get}}(),\ \textcolor{stringliteral}{"{}deserialized\ msg\ item2\ is\ not\ null"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a250f0ae378ffa986f295753697a293d5}{pit1}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(s3f17\_contents\_str);}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00084}00084\ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(s14f9\_contents\_str);}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00086}00086\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s3f17\_contents\_str.str().c\_str()),\ \textcolor{stringliteral}{"{}s3f17\ printout\ not\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s14f9\_contents\_str.str().c\_str()),\ \textcolor{stringliteral}{"{}s14f9\ printout\ not\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00089}00089\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{i1}}\ =\ (*pit1)[\mbox{\hyperlink{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}{NUM}}(0)];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00090}00090\ \ \ \ \ std::string\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str1}}\ =\ (*pit1)[2];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00091}00091\ \ \ \ \ std::string\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str2}}\ =\ (*pit1)[4][4][\mbox{\hyperlink{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}{NUM}}(0)];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00092}00092\ \ \ \ \ std::string\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str3}}\ =\ (*pit2)[1];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00093}00093\ \ \ \ \ std::string\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str4}}\ =\ (*pit2)[2][1][\mbox{\hyperlink{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}{NUM}}(0)];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00094}00094\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{uint8\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{i2}}\ =\ (*pit2)[2][3][1][\mbox{\hyperlink{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}{NUM}}(0)][\mbox{\hyperlink{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}{NUM}}(0)][1][\mbox{\hyperlink{secstwomsg_8h_a4e0b64b40dee41b85c33346e5612d549}{NUM}}(0)];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00096}00096\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00097}00097\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\textcolor{stringliteral}{"{}CARRIER\_00000001"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str1}}.c\_str(),\ \textcolor{stringliteral}{"{}s3f17\ data\ check\ 1"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00098}00098\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(1\ ==\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{i1}},\ \textcolor{stringliteral}{"{}s3f17\ data\ check\ 2"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00099}00099\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\textcolor{stringliteral}{"{}ContentMap"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str2}}.c\_str(),\ \textcolor{stringliteral}{"{}s3f17\ data\ check\ 3"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00101}00101\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\textcolor{stringliteral}{"{}ControlJob"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str3}}.c\_str(),\ \textcolor{stringliteral}{"{}s14f9\ data\ check\ 1"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00102}00102\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\textcolor{stringliteral}{"{}DataCollectionPlan"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str4}}.c\_str(),\ \textcolor{stringliteral}{"{}s14f9\ data\ check\ 2"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00103}00103\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(1\ ==\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{i2}},\ \textcolor{stringliteral}{"{}s14f9\ data\ check\ 3"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00105}00105\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00107}\mbox{\hyperlink{serialize__test_8cxx_ad7e54320704358ecfc7bfa4526ae12d9}{00107}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_ad7e54320704358ecfc7bfa4526ae12d9}{test\_binary\_serializer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00108}00108\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00109}00109\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(\mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}}.\mbox{\hyperlink{classfreesecs_1_1shared__ptr__t_a04ddccce7102c0f434702f33f534a87c}{get}}(),\ \textcolor{stringliteral}{"{}s14f9\ msg\ item\ valid"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00110}00110\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00111}00111\ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(std::cout);}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00112}00112\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00113}00113\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t}{binary\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{bs3}}(\mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00115}00115\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\_serializer\_t::data\_container\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{raw\_data}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{bs3}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00117}00117\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{printf}}(\textcolor{stringliteral}{"{}\%s<\%d>:\ raw\ data\ size\ \%d,\ expected\ \%d\(\backslash\)n"{}},\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{\_\_FUNCTION\_\_}},\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{\_\_LINE\_\_}},\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{raw\_data}}.\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_a7fd4678662f9e4d095477fecf01935df}{size}}(),\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{binary__msgs_8cxx_a8108b154bdfa56db54f531495712eb60}{s14f9\_data}}));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00119}00119\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{raw\_data}}.\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_a7fd4678662f9e4d095477fecf01935df}{size}}()\ ==\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{binary__msgs_8cxx_a8108b154bdfa56db54f531495712eb60}{s14f9\_data}}),\ \textcolor{stringliteral}{"{}binary\ data\ size\ check"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00120}00120\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00121}00121\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ ==\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{memcmp}}(\&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{raw\_data}}[0],\ \mbox{\hyperlink{binary__msgs_8cxx_a8108b154bdfa56db54f531495712eb60}{s14f9\_data}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{binary__msgs_8cxx_a8108b154bdfa56db54f531495712eb60}{s14f9\_data}})),\ \textcolor{stringliteral}{"{}binary\ data\ check"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00122}00122\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00123}00123\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00124}00124\ \textcolor{comment}{//XML\ (de-\/)serialization}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00126}\mbox{\hyperlink{serialize__test_8cxx_a16622053aabd043b772e2f8f63e5365c}{00126}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_a16622053aabd043b772e2f8f63e5365c}{test\_xml\_seriaizer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00127}00127\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00128}00128\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{pmsg\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s3f17\_msg}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s14f9\_msg}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00129}00129\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00130}00130\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00131}00131\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t}{xml\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmls1}}(\mbox{\hyperlink{serialize__test_8cxx_a250f0ae378ffa986f295753697a293d5}{pit1}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00132}00132\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t}{xml\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmls2}}(\mbox{\hyperlink{serialize__test_8cxx_a93a5514b333231672f3a8f50dcc719d9}{pit2}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00133}00133\ \ \ \ \ \ \ \ \ s3f17\_xml\_contents\ <<\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmls1}}.get();}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00134}00134\ \ \ \ \ \ \ \ \ s14f9\_xml\_contents\ <<\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmls2}}.get();}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00135}00135\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00136}00136\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00137}00137\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00138}00138\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}xml\ serializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00139}00139\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00141}00141\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s3f17\_xml\_contents.str().c\_str()),\ \textcolor{stringliteral}{"{}s3f17\ xml\ data\ contents\ not\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00142}00142\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s14f9\_xml\_contents.str().c\_str()),\ \textcolor{stringliteral}{"{}s14f9\ xml\ data\ contents\ not\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00143}00143\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00145}\mbox{\hyperlink{serialize__test_8cxx_a541bdb37b737789aa3d02862686014bd}{00145}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_a541bdb37b737789aa3d02862686014bd}{test\_xml\_deserializer}}()}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00146}00146\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00147}00147\ \ \ \ \ std::stringstream\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s3f17\_out}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s14f9\_out}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00149}00149\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00150}00150\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00151}00151\ \ \ \ \ \ \ \ \ std::string\ s3f17\ =\ s3f17\_xml\_contents.str();}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00152}00152\ \ \ \ \ \ \ \ \ std::string\ s14f9\ =\ s14f9\_xml\_contents.str();}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00153}00153\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00154}00154\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocPtr}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc1}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlParseMemory}}(s3f17.c\_str(),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s3f17.c\_str()));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00155}00155\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocPtr}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc2}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlParseMemory}}(s14f9.c\_str(),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s14f9.c\_str()));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00157}00157\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__deserializer__t}{xml\_deserializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds1}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocGetRootElement}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc1}}));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00158}00158\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__deserializer__t}{xml\_deserializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds2}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocGetRootElement}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc2}}));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00159}00159\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00160}00160\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_ae8231eabd92f5b4d78ceda3ba3675267}{xml\_pit1}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds1}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00161}00161\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_abf33d48ddb6abfc1b505b4fe8253520e}{xml\_pit2}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds2}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00162}00162\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00163}00163\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlFreeDoc}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc1}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00164}00164\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlFreeDoc}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc2}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00165}00165\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00166}00166\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00167}00167\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00168}00168\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}xml\ deserializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00169}00169\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00170}00170\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00171}00171\ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_ae8231eabd92f5b4d78ceda3ba3675267}{xml\_pit1}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s3f17\_out}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00172}00172\ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_abf33d48ddb6abfc1b505b4fe8253520e}{xml\_pit2}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s14f9\_out}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00173}00173\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00174}00174\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s3f17\_out}}.str().c\_str(),\ s3f17\_contents\_str.str().c\_str(),\ \textcolor{stringliteral}{"{}xml-\/deserialized\ s3f17\ msg\ item"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00175}00175\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{s14f9\_out}}.str().c\_str(),\ s14f9\_contents\_str.str().c\_str(),\ \textcolor{stringliteral}{"{}xml-\/deserialized\ s14f9\ msg\ item"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00176}00176\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00178}\mbox{\hyperlink{serialize__test_8cxx_ae89f96cdf21aa9b1029e54b9afcbecd3}{00178}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_ae89f96cdf21aa9b1029e54b9afcbecd3}{test\_wchar\_to\_xml\_serialization}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00179}00179\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00180}00180\ \textcolor{preprocessor}{\#if\ 0}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00181}00181\ \ \ \ \ std::stringstream\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{orig}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{restored}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{restored\_from\_xml}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00182}00182\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{pdata\_item\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit1}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00183}00183\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t_a4ce0a93dc6b42ad75818f852437f32b3}{binary\_serializer\_t::data\_container\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wraw\_data}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00184}00184\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{wchar\_t}\ *\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wstring}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{L}}\textcolor{stringliteral}{"{}юникодовая\ строка"{}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00185}00185\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit}}\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{namespacefreesecs_1_1secstwo_a5b72aec8b55673d36210241c381077f9}{wchar\_item\_t}}(\textcolor{stringliteral}{"{}wchar\ item"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wstring}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00186}00186\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00187}00187\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00188}00188\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__serializer__t}{binary\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wbs}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00189}00189\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wraw\_data}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wbs}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00190}00190\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00191}00191\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00192}00192\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00193}00193\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}wchar\ serialization\ to\ binary"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00194}00194\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00195}00195\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00196}00196\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00197}00197\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00198}00198\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1binary__deserializer__t}{binary\_deserializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wbds}}(\&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wraw\_data}}[0],\ \&\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wraw\_data}}[0]\ +\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wraw\_data}}.\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_a7fd4678662f9e4d095477fecf01935df}{size}}());}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00199}00199\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit1}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wbds}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{NULL}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00200}00200\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00201}00201\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00202}00202\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00203}00203\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}wchar\ deserialization\ from\ binary"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00204}00204\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00205}00205\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{orig}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00206}00206\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit1}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{restored}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00207}00207\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00208}00208\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{orig}}.str(),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{restored}}.str(),\ \textcolor{stringliteral}{"{}wchar\ orig\ vs\ restored\ matching"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00210}00210\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00211}00211\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00212}00212\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t}{xml\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlsw}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{wit}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00213}00213\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{serialize__test_8cxx_a726359f1cb8e2912159f739eff649f1c}{unicode\_item\_xml\_str}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlsw}}.get(),\ \textcolor{stringliteral}{"{}wchar\ serialization\ to\ xml"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00214}00214\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00215}00215\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00216}00216\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00217}00217\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}wchar\ xml\ serializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00218}00218\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00219}00219\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00220}00220\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00221}00221\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00222}00222\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocPtr}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc3}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlParseMemory}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlsw}}.get(),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlsw}}.get()));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00223}00223\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__deserializer__t}{xml\_deserializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds3}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocGetRootElement}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc3}}));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00224}00224\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{pdata\_item\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_wit}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds3}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00225}00225\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_wit}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{restored\_from\_xml}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00226}00226\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00227}00227\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00228}00228\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00229}00229\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}wchar\ xml\ deserializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00230}00230\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00232}00232\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{serialize__test_8cxx_af6fb936c62394b92a18d3e50190507bc}{unicode\_item\_str}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{restored\_from\_xml}}.str(),\ \textcolor{stringliteral}{"{}restored\ whar\ from\ xml\ check"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00233}00233\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00234}00234\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00236}\mbox{\hyperlink{serialize__test_8cxx_a2c99e090cf1980dae81df867fc616b90}{00236}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_a2c99e090cf1980dae81df867fc616b90}{test\_msg\_xml\_deserializer}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00237}00237\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00238}00238\ \ \ \ \ std::stringstream\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00239}00239\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1shared__ptr__t}{pmsg\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pmsg}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00240}00240\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocPtr}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc4}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlParseMemory}}(s14f9\_xml\_str.str().c\_str(),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s14f9\_xml\_str.str().c\_str()));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00241}00241\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00242}00242\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00243}00243\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__deserializer__t}{xml\_deserializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds4}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlDocGetRootElement}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc4}}));}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00244}00244\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pmsg}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlds4}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00245}00245\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00246}00246\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00247}00247\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00248}00248\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}s14f9\ xml\ deserializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00249}00249\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00250}00250\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pmsg}}-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00251}00251\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00252}00252\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(s14f9\_str.str().c\_str(),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}}.str().c\_str(),\ \textcolor{stringliteral}{"{}s14f9\ xml\ deserialization"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00253}00253\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xmlFreeDoc}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{doc4}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00255}00255\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{NULL}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00256}00256\ \ \ \ \ \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00257}00257\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00258}00258\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t}{xml\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xs}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{pmsg}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00259}00259\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str}}\ =\ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xs}}.get();}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00260}00260\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00261}00261\ \ \ \ \ \textcolor{keywordflow}{catch}(...)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00262}00262\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00263}00263\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}xml\ serializer\ creation"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00264}00264\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00265}00265\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{str}},\ s14f9\_xml\_str.str().c\_str(),\ \textcolor{stringliteral}{"{}s14f9\ xml\ serialization\ check"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00266}00266\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00268}00268\ \textcolor{comment}{//deserialization\ from\ file}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00269}00269\ \textcolor{comment}{//serialization\ to\ file}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00270}\mbox{\hyperlink{serialize__test_8cxx_a76654a541d15b97fb2443ed414dd6449}{00270}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_a76654a541d15b97fb2443ed414dd6449}{test\_deserialization\_from\_file}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00271}00271\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00272}00272\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fd}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{open}}(\textcolor{stringliteral}{"{}xsd/test.xml"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{O\_RDONLY}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00273}00273\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_fd}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{open}}(\textcolor{stringliteral}{"{}xsd/secstwo.xsd"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{O\_RDONLY}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00274}00274\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00275}00275\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fd}}\ >\ 0\ \&\&\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_fd}}\ >\ 0,\ \textcolor{stringliteral}{"{}xml\ file\ and\ scheme\ file\ open"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00276}00276\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00277}00277\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t_a5b0b567f57c4635ca8b50589504050bd}{xml\_serializer\_t::msg\_container\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00278}00278\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00279}00279\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__deserializer__t_a92517d68370cba836cb49b4062439207}{xml\_deserializer\_t::from\_file}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fd}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_fd}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00280}00280\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00281}00281\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(!\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}},\textcolor{stringliteral}{"{}deserialization\ from\ file"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00282}00282\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00283}00283\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{ix}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00284}00284\ \ \ \ \ \textcolor{keywordflow}{for}(xml\_serializer\_t::msg\_container\_t::const\_iterator\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}}.begin();\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}}\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}}.end();\ ++\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}},\ ++\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{ix}})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00285}00285\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(3\ ==\ (*it)-\/>stream\ \&\&\ 17\ ==\ (*it)-\/>function)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00287}00287\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ (*it)-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(s3f17\_str);}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s3f17\_str.str().c\_str()),\ \textcolor{stringliteral}{"{}S3F17\ deserialization\ from\ xml"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t}{xml\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xs}}(*\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ s3f17\_xml\_str\ <<\ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xs}}.get();}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00293}00293\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00294}00294\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(14\ ==\ (*it)-\/>stream\ \&\&\ 9\ ==\ (*it)-\/>function)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00295}00295\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ (*it)-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(s14f9\_str);}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{strlen}}(s14f9\_str.str().c\_str()),\ \textcolor{stringliteral}{"{}S14F9\ deserialization\ from\ xml"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00298}00298\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00299}00299\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t}{xml\_serializer\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xs}}(*\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00300}00300\ \ \ \ \ \ \ \ \ \ \ \ \ s14f9\_xml\_str\ <<\ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xs}}.get();}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00301}00301\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00302}00302\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00304}00304\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{close}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fd}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00305}00305\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{close}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_fd}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00306}00306\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00307}00307\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{to\_fd}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{open}}(\textcolor{stringliteral}{"{}serialized.xml"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{O\_WRONLY}}\ |\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{O\_CREAT}}\ |\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{O\_TRUNC}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{S\_IRUSR}}\ |\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{S\_IWUSR}}\ |\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{S\_IRGRP}}\ |\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{S\_IROTH}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00308}00308\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00309}00309\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ <\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{to\_fd}},\ \textcolor{stringliteral}{"{}serialized.xml\ open"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00310}00310\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00311}00311\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t_a5cfe3437230f8362b643d18e35b3b7cc}{xml\_serializer\_t::to\_file}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{to\_fd}},\ (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t_a5b0b567f57c4635ca8b50589504050bd}{xml\_serializer\_t::msg\_container\_t}}\&)\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00312}00312\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00313}00313\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(!\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}},\ \textcolor{stringliteral}{"{}serialized\ to\ file"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00314}00314\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fsync}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{to\_fd}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00316}00316\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{shell\_compare}}\ =\ \textcolor{stringliteral}{"{}a=`diff\ -\/q\ serialized.xml\ xsd/test.xml`;\ if\ [\ -\/n\ \(\backslash\)"{}\$a\(\backslash\)"{}\ ];\ then\ exit\ 0;\ else\ exit\ -\/1;\ fi"{}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00317}00317\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(-\/1\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{system}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{shell\_compare}}),\ \textcolor{stringliteral}{"{}serialized\ files\ comparison"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00318}00318\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00319}00319\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00320}00320\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{close}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{to\_fd}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00321}00321\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00323}00323\ \textcolor{comment}{//deserialization\ from\ membuf}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00324}00324\ \textcolor{comment}{//serialization\ to\ membuf}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00325}\mbox{\hyperlink{serialize__test_8cxx_a381924db9b724084d7d057052ac92930}{00325}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{serialize__test_8cxx_a381924db9b724084d7d057052ac92930}{test\_deserialization\_from\_membuf}}(\textcolor{keywordtype}{void})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00326}00326\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00327}00327\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00328}00328\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_membuf}}[20*1024];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00329}00329\ \ \ \ \ \textcolor{keywordtype}{char}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_membuf}}[20*1024];}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00330}00330\ \ \ \ \ std::string\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_to\_mem}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00331}00331\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00332}00332\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fd}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{open}}(\textcolor{stringliteral}{"{}xsd/test.xml"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{O\_RDONLY}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00333}00333\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_fd}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{open}}(\textcolor{stringliteral}{"{}xsd/secstwo.xsd"{}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{O\_RDONLY}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00334}00334\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00335}00335\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{ssize\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_len}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_len}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00336}00336\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00337}00337\ \ \ \ \ \textcolor{keywordflow}{if}(0\ >=\ (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_len}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{read}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fd}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_membuf}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_membuf}}))))}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00338}00338\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00339}00339\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\ \textcolor{stringliteral}{"{}reading\ xsd/test.xml"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00340}00340\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00341}00341\ \ \ \ \ \textcolor{keywordflow}{if}(0\ >=\ (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_len}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{read}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_fd}},\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_membuf}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_membuf}}))))}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00342}00342\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00343}00343\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0,\textcolor{stringliteral}{"{}reading\ xsd/secstwo.xsd"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00344}00344\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00345}00345\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00346}00346\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t_a5b0b567f57c4635ca8b50589504050bd}{xml\_serializer\_t::msg\_container\_t}}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00347}00347\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__deserializer__t_a8a5be94d83500b5f9ddfbbbb6bbf8bc1}{xml\_deserializer\_t::from\_mem}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_membuf}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_membuf}}),\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_membuf}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_membuf}}),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00348}00348\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00349}00349\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ ==\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}},\ \textcolor{stringliteral}{"{}de-\/serialization\ from\ mem"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00350}00350\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00351}00351\ \ \ \ \ \textcolor{keywordtype}{char}\ buf[]\ =\ \textcolor{stringliteral}{"{}<messages>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00352}00352\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <secsIImsg\ name=\(\backslash\)"{}CR\(\backslash\)"{}>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00353}00353\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <stream>1</stream>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00354}00354\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <function>13</function>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00355}00355\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <wbit>1</wbit>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00356}00356\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <list>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00357}00357\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <ascii\ name=\(\backslash\)"{}MDLN\(\backslash\)"{}>Model\ 1</ascii>\ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00358}00358\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ <ascii\ name=\(\backslash\)"{}SOFTREV\(\backslash\)"{}>v.1.0.0.0</ascii>\ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00359}00359\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </list>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00360}00360\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </secsIImsg>\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00361}00361\ \textcolor{stringliteral}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ </messages>"{}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00363}00363\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__deserializer__t_a8a5be94d83500b5f9ddfbbbb6bbf8bc1}{xml\_deserializer\_t::from\_mem}}(buf,\ \textcolor{keyword}{sizeof}(buf),\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_membuf}},\ \textcolor{keyword}{sizeof}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_membuf}}),\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00364}00364\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00365}00365\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{ix}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00366}00366\ \ \ \ \ \textcolor{keywordflow}{for}(xml\_serializer\_t::msg\_container\_t::const\_iterator\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}}.begin();\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}}\ !=\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}}.end();\ ++\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{it}},\ ++\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{ix}})}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00367}00367\ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00368}00368\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(3\ ==\ (*it)-\/>stream\ \&\&\ 17\ ==\ (*it)-\/>function)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00369}00369\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00370}00370\ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00371}00371\ \ \ \ \ \ \ \ \ \ \ \ \ (*it)-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00372}00372\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}}.str().c\_str(),\ s3f17\_str.str().c\_str(),\ \textcolor{stringliteral}{"{}s3f17\ deserialized\ from\ mem\ check"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00373}00373\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00374}00374\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(14\ ==\ (*it)-\/>stream\ \&\&\ 9\ ==\ (*it)-\/>function)}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00375}00375\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00376}00376\ \ \ \ \ \ \ \ \ \ \ \ \ std::stringstream\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00377}00377\ \ \ \ \ \ \ \ \ \ \ \ \ (*it)-\/>\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t_ac481ecdfd44b0020f2e7eec021f2967b}{print}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00378}00378\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a390c9c7b7373364fcb1b8e74d2637343}{TEST\_ASSERT\_STRINGS\_EQUAL}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msg\_str}}.str().c\_str(),\ s14f9\_str.str().c\_str(),\ \textcolor{stringliteral}{"{}s14f9\ deserialized\ from\ mem\ check"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00379}00379\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00380}00380\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00381}00381\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00382}00382\ \ \ \ \ \ \ \ \ \ \ \ \ (*it)-\/>print(std::cout);}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00383}00383\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00384}00384\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00385}00385\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00386}00386\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{close}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{fd}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00387}00387\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{close}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{schema\_fd}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00388}00388\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00389}00389\ \ \ \ \ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}}\ =\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t_a89ff10a59000e103c6ffda47ea255c17}{xml\_serializer\_t::to\_mem}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_to\_mem}},\ (\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1xml__serializer__t_a5b0b567f57c4635ca8b50589504050bd}{xml\_serializer\_t::msg\_container\_t}}\&)\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{msgs}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00391}00391\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(0\ ==\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{err}},\ \textcolor{stringliteral}{"{}serailised\ to\ mem"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00392}00392\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_ab7b25216cbbbb74ae77862e0436838ee}{TEST\_ASSERT}}(\textcolor{keyword}{false}\ ==\ \mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{xml\_to\_mem}}.empty(),\ \textcolor{stringliteral}{"{}mem\ not\ empty"{}});}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00393}00393\ \}}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00394}00394\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00395}00395\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00396}\mbox{\hyperlink{serialize__test_8cxx_a96d66193c70e1185c49f9cb170ec8723}{00396}}\ \mbox{\hyperlink{struct__test__s}{test\_t}}\ \mbox{\hyperlink{serialize__test_8cxx_a96d66193c70e1185c49f9cb170ec8723}{serialize\_tests}}[]\ =\ \{}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00397}00397\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\ \textcolor{stringliteral}{"{}binary\ deserializer\ test"{}},\ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_aba1619bee6055db9b65cf6f9c1092998}{test\_binary\_deserializer}}\ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00398}00398\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\ \textcolor{stringliteral}{"{}binary\ serializer\ test"{}},\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_ad7e54320704358ecfc7bfa4526ae12d9}{test\_binary\_serializer}}\ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00399}00399\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\textcolor{stringliteral}{"{}deserialization\ from\ xml\ file"{}},\ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a76654a541d15b97fb2443ed414dd6449}{test\_deserialization\_from\_file}}\ \ ),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00400}00400\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\textcolor{stringliteral}{"{}xml\ serializer\ test"{}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a16622053aabd043b772e2f8f63e5365c}{test\_xml\_seriaizer}}\ \ \ \ \ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00401}00401\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\textcolor{stringliteral}{"{}xml\ deserializer\ test"{}},\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a541bdb37b737789aa3d02862686014bd}{test\_xml\_deserializer}}\ \ \ \ \ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00402}00402\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\textcolor{stringliteral}{"{}wchar\ serialization\ to\ xml"{}},\ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_ae89f96cdf21aa9b1029e54b9afcbecd3}{test\_wchar\_to\_xml\_serialization}}\ ),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00403}00403\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\textcolor{stringliteral}{"{}msg\ from\ xml\ deserialization"{}},\ \ \ \ \ \ \ \ \mbox{\hyperlink{serialize__test_8cxx_a2c99e090cf1980dae81df867fc616b90}{test\_msg\_xml\_deserializer}}\ \ \ \ \ \ \ ),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00404}00404\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\textcolor{stringliteral}{"{}deserialization\ from\ memory\ buffer"{}},\ \ \mbox{\hyperlink{serialize__test_8cxx_a381924db9b724084d7d057052ac92930}{test\_deserialization\_from\_membuf}}),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00405}00405\ \ \ \ \ \mbox{\hyperlink{test__defines_8h_a134a4a80e74802d33cda5cdc1e7f1fa9}{test\_t}}(\mbox{\hyperlink{classfreesecs_1_1secstwo_1_1msg__item__impl__t}{NULL}},0),}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00406}00406\ \};}
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00407}00407\ }
+\DoxyCodeLine{\Hypertarget{serialize__test_8cxx_source_l00408}\mbox{\hyperlink{serialize__test_8cxx_ae8883c2dc9e9fb6fe72cd8f1467871ca}{00408}}\ \mbox{\hyperlink{struct__test__suite__s}{test\_suite\_t}}\ \mbox{\hyperlink{serialize__test_8cxx_ae8883c2dc9e9fb6fe72cd8f1467871ca}{serialization\_suite}}(\textcolor{stringliteral}{"{}Serialization\ tests"{}},\ \mbox{\hyperlink{serialize__test_8cxx_a96d66193c70e1185c49f9cb170ec8723}{serialize\_tests}});}
+
+\end{DoxyCode}

@@ -1,0 +1,190 @@
+\doxysection{gemsecs.\+h}
+\hypertarget{gemsecs_8h_source}{}\label{gemsecs_8h_source}\index{secs\_q84.X/gemsecs.h@{secs\_q84.X/gemsecs.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00001}00001\ \textcolor{comment}{/*\ }}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00002}00002\ \textcolor{comment}{\ *\ File:\ \ \ gemsecs.h}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00003}00003\ \textcolor{comment}{\ *\ Author:\ root}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00004}00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00005}00005\ \textcolor{comment}{\ *\ Created\ on\ February\ 26,\ 2019,\ 2:58\ PM}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00006}00006\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00008}00008\ \textcolor{preprocessor}{\#ifndef\ GEMSECS\_H}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00009}00009\ \textcolor{preprocessor}{\#define\ GEMSECS\_H}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00011}00011\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00012}00012\ \textcolor{keyword}{extern}\ \textcolor{stringliteral}{"{}C"{}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00013}00013\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00015}00015\ \textcolor{preprocessor}{\#define\ ENQ\ 0x05}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00016}00016\ \textcolor{preprocessor}{\#define\ EOT\ 0x04}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00017}00017\ \textcolor{preprocessor}{\#define\ ACK\ 0x06}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00018}00018\ \textcolor{preprocessor}{\#define\ NAK\ 0x15}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{vconfig_8h}{vconfig.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ "{}mcc\_generated\_files/mcc.h"{}}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ "{}mcc\_generated\_files/uart1.h"{}}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ "{}timers.h"{}}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00026}00026\ \textcolor{preprocessor}{\#include\ "{}mydisplay.h"{}}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ "{}msg\_text.h"{}}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00029}00029\ \textcolor{preprocessor}{\#define\ HOST\_UART\ \ \ 1}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00030}00030\ \textcolor{preprocessor}{\#define\ EQUIP\_UART\ \ 2}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00032}00032\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ msg\_gemcmds[]\ =\ \textcolor{stringliteral}{"{}Host\ CMDS:\ M\ C\ R\ P\ O\ L\ S\ D\ E\ H\ F"{}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00033}00033\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ msg\_freecmds[]\ =\ \textcolor{stringliteral}{"{}Port\ baud\ rate\ unlocked\ \ \ \ \ \ \ \ "{}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00034}00034\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ msg\_gemremote[]\ =\ \textcolor{stringliteral}{"{}Host\ CMDS:\ ENABLED\ REMOTE"{}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00035}00035\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00037}\mbox{\hyperlink{structblock10__type}{00037}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structblock10__type}{block10\_type}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00038}00038\ \ \ \ \ \ \ \ \ uint32\_t\ systemb;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00039}00039\ \ \ \ \ \ \ \ \ uint8\_t\ bidl;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00040}00040\ \ \ \ \ \ \ \ \ uint8\_t\ bidh\ :\ 7;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00041}00041\ \ \ \ \ \ \ \ \ uint8\_t\ ebit\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00042}00042\ \ \ \ \ \ \ \ \ uint8\_t\ function;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00043}00043\ \ \ \ \ \ \ \ \ uint8\_t\ stream\ :\ 7;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00044}00044\ \ \ \ \ \ \ \ \ uint8\_t\ wbit\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ uint8\_t\ didl;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00046}00046\ \ \ \ \ \ \ \ \ uint8\_t\ didh\ :\ 7;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00047}00047\ \ \ \ \ \ \ \ \ uint8\_t\ rbit\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00048}00048\ \ \ \ \ \}\ \mbox{\hyperlink{structblock10__type}{block10\_type}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00050}\mbox{\hyperlink{unionblock10}{00050}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionblock10}{block10}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00051}00051\ \ \ \ \ \ \ \ \ uint8\_t\ b[\textcolor{keyword}{sizeof}(\mbox{\hyperlink{structblock10__type}{block10\_type}})];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00052}00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structblock10__type}{block10\_type}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00053}00053\ \ \ \ \ \}\ \mbox{\hyperlink{unionblock10}{block10}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00055}\mbox{\hyperlink{structheader10}{00055}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader10}{header10}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00056}00056\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00058}00058\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00059}00059\ \ \ \ \ \}\ \mbox{\hyperlink{structheader10}{header10}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00061}\mbox{\hyperlink{structheader12}{00061}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader12}{header12}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00062}00062\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00063}00063\ \ \ \ \ \ \ \ \ uint8\_t\ data[2];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00064}00064\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00065}00065\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00066}00066\ \ \ \ \ \}\ \mbox{\hyperlink{structheader12}{header12}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00068}\mbox{\hyperlink{structheader13}{00068}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader13}{header13}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00069}00069\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00070}00070\ \ \ \ \ \ \ \ \ uint8\_t\ data[3];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00071}00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00072}00072\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00073}00073\ \ \ \ \ \}\ \mbox{\hyperlink{structheader13}{header13}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00075}\mbox{\hyperlink{structheader14}{00075}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader14}{header14}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00076}00076\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00077}00077\ \ \ \ \ \ \ \ \ uint8\_t\ data[4];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00078}00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00079}00079\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00080}00080\ \ \ \ \ \}\ \mbox{\hyperlink{structheader14}{header14}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00082}\mbox{\hyperlink{structheader17}{00082}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader17}{header17}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00083}00083\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00084}00084\ \ \ \ \ \ \ \ \ uint8\_t\ data[7];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00085}00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00086}00086\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00087}00087\ \ \ \ \ \}\ \mbox{\hyperlink{structheader17}{header17}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00089}\mbox{\hyperlink{structheader18}{00089}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader18}{header18}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00090}00090\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00091}00091\ \ \ \ \ \ \ \ \ uint8\_t\ data[8];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00092}00092\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00093}00093\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00094}00094\ \ \ \ \ \}\ \mbox{\hyperlink{structheader18}{header18}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00095}00095\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00096}\mbox{\hyperlink{structheader24}{00096}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader24}{header24}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00097}00097\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ uint8\_t\ data[12];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00099}00099\ \ \ \ \ \ \ \ \ uint8\_t\ datam[2];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00100}00100\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00101}00101\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00102}00102\ \ \ \ \ \}\ \mbox{\hyperlink{structheader24}{header24}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00104}\mbox{\hyperlink{structheader26}{00104}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader26}{header26}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00105}00105\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00106}00106\ \ \ \ \ \ \ \ \ uint8\_t\ data[14];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00107}00107\ \ \ \ \ \ \ \ \ uint8\_t\ datam[2];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00108}00108\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00109}00109\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00110}00110\ \ \ \ \ \}\ \mbox{\hyperlink{structheader26}{header26}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00112}\mbox{\hyperlink{structheader27}{00112}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader27}{header27}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00113}00113\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00114}00114\ \ \ \ \ \ \ \ \ uint8\_t\ data[17];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00115}00115\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00116}00116\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00117}00117\ \ \ \ \ \}\ \mbox{\hyperlink{structheader27}{header27}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00119}\mbox{\hyperlink{structheader33}{00119}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader33}{header33}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00120}00120\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00121}00121\ \ \ \ \ \ \ \ \ uint8\_t\ data[23];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00122}00122\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00123}00123\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00124}00124\ \ \ \ \ \}\ \mbox{\hyperlink{structheader33}{header33}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00126}\mbox{\hyperlink{structheader153}{00126}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader153}{header153}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00127}00127\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00128}00128\ \ \ \ \ \ \ \ \ uint8\_t\ data[143];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00129}00129\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00130}00130\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00131}00131\ \ \ \ \ \}\ \mbox{\hyperlink{structheader153}{header153}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00132}00132\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00133}\mbox{\hyperlink{structheader254}{00133}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structheader254}{header254}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00134}00134\ \ \ \ \ \ \ \ \ uint16\_t\ checksum;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00135}00135\ \ \ \ \ \ \ \ \ uint8\_t\ data[244];}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00136}00136\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{unionblock10}{block10}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00137}00137\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00138}00138\ \ \ \ \ \}\ \mbox{\hyperlink{structheader254}{header254}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00140}\mbox{\hyperlink{structresponse__type}{00140}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structresponse__type}{response\_type}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00141}00141\ \ \ \ \ \ \ \ \ uint8\_t\ *header;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00142}00142\ \ \ \ \ \ \ \ \ uint8\_t\ length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00143}00143\ \ \ \ \ \ \ \ \ uint8\_t\ *reply;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00144}00144\ \ \ \ \ \ \ \ \ uint8\_t\ reply\_length;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00145}00145\ \ \ \ \ \ \ \ \ uint8\_t\ respond\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00146}00146\ \ \ \ \ \}\ \mbox{\hyperlink{structresponse__type}{response\_type}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00148}\mbox{\hyperlink{structgem__message__type}{00148}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structgem__message__type}{gem\_message\_type}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00149}00149\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structheader33}{header33}}\ message;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00150}00150\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structresponse__type}{response\_type}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00151}00151\ \ \ \ \ \ \ \ \ uint16\_t\ delay;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00152}00152\ \ \ \ \ \ \ \ \ uint8\_t\ stack;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00153}00153\ \ \ \ \ \}\ \mbox{\hyperlink{structgem__message__type}{gem\_message\_type}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00155}\mbox{\hyperlink{structgem__display__type}{00155}}\ \ \ \ \ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structgem__display__type}{gem\_display\_type}}\ \{}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00156}00156\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structheader153}{header153}}\ message;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00157}00157\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structresponse__type}{response\_type}}\ block;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00158}00158\ \ \ \ \ \ \ \ \ uint16\_t\ delay;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00159}00159\ \ \ \ \ \ \ \ \ uint8\_t\ stack;}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00160}00160\ \ \ \ \ \}\ \mbox{\hyperlink{structgem__display__type}{gem\_display\_type}};}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00161}00161\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00162}00162\ \ \ \ \ uint16\_t\ block\_checksum(uint8\_t\ *,\ \textcolor{keyword}{const}\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00163}00163\ \ \ \ \ uint16\_t\ run\_checksum(\textcolor{keyword}{const}\ uint8\_t,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool});}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00164}00164\ \ \ \ \ LINK\_STATES\ m\_protocol(LINK\_STATES\ *);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00165}00165\ \ \ \ \ LINK\_STATES\ r\_protocol(LINK\_STATES\ *);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00166}00166\ \ \ \ \ LINK\_STATES\ t\_protocol(LINK\_STATES\ *);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00167}00167\ \ \ \ \ \textcolor{keywordtype}{void}\ hb\_message(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00168}00168\ \ \ \ \ \textcolor{keywordtype}{void}\ terminal\_format(DISPLAY\_TYPES);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00169}00169\ \ \ \ \ uint16\_t\ format\_display\_text(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00170}00170\ \ \ \ \ P\_CODES\ s10f1\_opcmd(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00171}00171\ \ \ \ \ uint16\_t\ s6f11\_opcmd(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00172}00172\ \ \ \ \ \mbox{\hyperlink{structresponse__type}{response\_type}}\ secs\_II\_message(\textcolor{keyword}{const}\ uint8\_t,\ \textcolor{keyword}{const}\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00173}00173\ \ \ \ \ \textcolor{keywordtype}{bool}\ sequence\_messages(\textcolor{keyword}{const}\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00174}00174\ \ \ \ \ \textcolor{keywordtype}{bool}\ gem\_messages(\mbox{\hyperlink{structresponse__type}{response\_type}}\ *,\ \textcolor{keyword}{const}\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00175}00175\ \ \ \ \ \textcolor{keywordtype}{void}\ secs\_II\_monitor\_message(\textcolor{keyword}{const}\ uint8\_t,\ \textcolor{keyword}{const}\ uint8\_t,\ \textcolor{keyword}{const}\ uint16\_t);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00176}00176\ \ \ \ \ GEM\_STATES\ secs\_gem\_state(\textcolor{keyword}{const}\ uint8\_t,\ \textcolor{keyword}{const}\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00177}00177\ \ \ \ \ \textcolor{keywordtype}{void}\ equip\_tx(\textcolor{keyword}{const}\ uint8\_t);}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00179}00179\ \textcolor{preprocessor}{\#ifdef\ \ \_\_cplusplus}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00180}00180\ \}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00181}00181\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00183}00183\ \textcolor{preprocessor}{\#endif\ \ }\textcolor{comment}{/*\ GEMSECS\_H\ */}\textcolor{preprocessor}{}}
+\DoxyCodeLine{\Hypertarget{gemsecs_8h_source_l00184}00184\ }
+
+\end{DoxyCode}

@@ -1,0 +1,49 @@
+\doxysection{timers.\+c}
+\hypertarget{timers_8c_source}{}\label{timers_8c_source}\index{secs\_q84.X/timers.c@{secs\_q84.X/timers.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{vconfig_8h}{vconfig.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}timers.h"{}}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00007}00007\ \textcolor{keyword}{extern}\ \textcolor{keyword}{volatile}\ uint16\_t\ \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[TMR\_COUNT];}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00009}00009\ \textcolor{comment}{//**********************************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00010}00010\ \textcolor{comment}{//\ Start\ one\ of\ the\ software\ timers}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00012}00012\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ StartTimer(\textcolor{keyword}{const}\ uint8\_t\ timer,\ \textcolor{keyword}{const}\ uint16\_t\ count)}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[timer]\ =\ count\ <<\ 1;\ \textcolor{comment}{//Interrupt\ is\ every\ 500us\ but\ StartTimer()\ takes\ multiple\ of\ 1ms\ so\ multiply\ by\ 2}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00017}00017\ \textcolor{comment}{//**********************************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00018}00018\ \textcolor{comment}{//\ Check\ if\ one\ of\ the\ software\ software\ timers\ has\ timed\ out}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00020}00020\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ TimerDone(\textcolor{keyword}{const}\ uint8\_t\ timer)}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00021}00021\ \{}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00022}00022\ \ \ \ \ ClrWdt();\ \textcolor{comment}{//\ reset\ the\ WDT\ timer}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{if}\ (tickCount[timer]\ ==\ 0)\ \{\ \textcolor{comment}{//Check\ if\ counted\ down\ to\ zero}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//then\ return\ true}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//else\ return\ false}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00029}00029\ \textcolor{comment}{//**********************************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00030}00030\ \textcolor{comment}{//\ Simple\ delay\ for\ n\ milliseconds\ (blocking)}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00032}00032\ \textcolor{keywordtype}{void}\ WaitMs(\textcolor{keyword}{const}\ uint16\_t\ numMilliseconds)}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00033}00033\ \{}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00034}00034\ \ \ \ \ StartTimer(TMR\_INTERNAL,\ numMilliseconds);\ \textcolor{comment}{//Start\ software\ timer\ and\ wait\ for\ it\ to\ count\ down}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{while}\ (!TimerDone(TMR\_INTERNAL))\ \{}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00036}00036\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00037}00037\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00038}00038\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00039}00039\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00040}00040\ \ \ \ \ \ \ \ \ ClrWdt();\ \textcolor{comment}{//\ reset\ the\ WDT\ timer}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{timers_8c_source_l00043}00043\ }
+
+\end{DoxyCode}

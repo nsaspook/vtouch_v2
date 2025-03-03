@@ -1,0 +1,553 @@
+\doxysection{secs\+\_\+q84.\+X/main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{secs\_q84.X/main.c@{secs\_q84.X/main.c}}
+
+
+Lets get going with the code.  
+
+
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/mcc.\+h"{}}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/uart1.\+h"{}}\newline
+{\ttfamily \#include "{}eadog.\+h"{}}\newline
+{\ttfamily \#include "{}gemsecs.\+h"{}}\newline
+{\ttfamily \#include "{}timers.\+h"{}}\newline
+{\ttfamily \#include "{}mconfig.\+h"{}}\newline
+{\ttfamily \#include "{}mydisplay.\+h"{}}\newline
+{\ttfamily \#include "{}rs232.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{main_8c_a264362c275898b8493cf451f32d24a36}{\+\_\+\+\_\+\+DEFINED\+\_\+int24\+\_\+t}}
+\item 
+\#define \mbox{\hyperlink{main_8c_a7b43164abfdf24a3ef4cbcee7622551d}{M\+\_\+\+TRACE}}~do \{ LATDbits.\+LATD5 = \texorpdfstring{$\sim$}{\string~}LATDbits.\+LATD5; \} while(0)
+\item 
+\#define \mbox{\hyperlink{main_8c_ac97678d743f94219bf2712a302091217}{I\+\_\+\+TRACE}}~RB7\+\_\+\+Toggle()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef signed long long \mbox{\hyperlink{main_8c_a5b45919dd9dbd4d48b64a76567b9b599}{int24\+\_\+t}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8c_abaf162c1efebcc3af6a46b1ca9b8499b}{onesec\+\_\+io}} (void)
+\item 
+void \mbox{\hyperlink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main}} (void)
+\item 
+char \mbox{\hyperlink{main_8c_a2c7bc8ae77786e8970ac3f03b92a1d00}{spinners}} (uint8\+\_\+t shape, const uint8\+\_\+t reset)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structspi__link__type}{spi\+\_\+link\+\_\+type}} \mbox{\hyperlink{main_8c_a8fb6cbfaa028c7b5730fe95c1a798c16}{spi\+\_\+link}}
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{main_8c_a2fd487055c79a1c6b3ffa3dcd59b98fb}{build\+\_\+date}} = \+\_\+\+\_\+\+DATE\+\_\+\+\_\+
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{main_8c_a0c1b6525ab4582a08673967cfee5b994}{build\+\_\+time}} = \+\_\+\+\_\+\+TIME\+\_\+\+\_\+
+\item 
+const char \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{main_8c_a459d397966f3183f2612ab642a59ea4d}{GEM\+\_\+\+TEXT}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{struct_v__data}{V\+\_\+data}} \mbox{\hyperlink{main_8c_a3677a1b059657e0e0bcfa48d64f81cb4}{V}}
+\item 
+\mbox{\hyperlink{struct_b__type}{B\+\_\+type}} \mbox{\hyperlink{main_8c_a390edc6dc84cb12feefd336799714268}{B}}
+\item 
+\mbox{\hyperlink{structheader10}{header10}} \mbox{\hyperlink{main_8c_acb3151c137c0ab53eb92ae24c827be90}{H10}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader12}{header12}} \mbox{\hyperlink{main_8c_a7f39a1cb7795bc55b633175f71937b06}{H12}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader13}{header13}} \mbox{\hyperlink{main_8c_a5491722a8751433ab3cfe7fe74bed9f8}{H13}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader14}{header14}} \mbox{\hyperlink{main_8c_a08c7d3c20fd25362fc32fe5ef275ffd1}{H14}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader17}{header17}} \mbox{\hyperlink{main_8c_ac52c955ca5e4020cc118a098340c818e}{H17}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader26}{header26}} \mbox{\hyperlink{main_8c_a983cb0596f5eb5f3ec3ee886a3dfde7f}{H26}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader27}{header27}} \mbox{\hyperlink{main_8c_a0ed2184f7ad5d88632f74db120b9c0b8}{H27}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader33}{header33}} \mbox{\hyperlink{main_8c_a8d33318622921f0377dd16695bf30970}{H33}} \mbox{[}$\,$\mbox{]}
+\item 
+const \mbox{\hyperlink{structheader33}{header33}} \mbox{\hyperlink{main_8c_ab2f236166aee73a99ab12af202e7f4c4}{HC33}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader153}{header153}} \mbox{\hyperlink{main_8c_a84facb7ad1f9628f48740726697f57c5}{H153}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structheader254}{header254}} \mbox{\hyperlink{main_8c_a8a8041d6f1cffe3380f8cd4ce30021cc}{H254}} \mbox{[}$\,$\mbox{]}
+\item 
+\mbox{\hyperlink{structgem__message__type}{gem\+\_\+message\+\_\+type}} \mbox{\hyperlink{main_8c_ae8f502e6c5b0daf88abcb8276d39f23a}{S}} \mbox{[}10\mbox{]}
+\item 
+\mbox{\hyperlink{structgem__display__type}{gem\+\_\+display\+\_\+type}} \mbox{\hyperlink{main_8c_a8cce6c2e98aac6bcd42b7583a9593886}{D}} \mbox{[}2\mbox{]}
+\item 
+\mbox{\hyperlink{structheader10}{header10}} \mbox{\hyperlink{main_8c_ae930faf19041d623f7c4320110c4eba2}{r\+\_\+block}}
+\item 
+volatile uint16\+\_\+t \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tick\+Count}} \mbox{[}TMR\+\_\+\+COUNT\mbox{]} = \{0\}
+\begin{DoxyCompactList}\small\item\em TMR6 Generated Driver File. \end{DoxyCompactList}\item 
+volatile uint8\+\_\+t \mbox{\hyperlink{main_8c_a100a8078f274b8dcba40099c11217cf6}{mode\+\_\+sw}} = false
+\item 
+volatile uint8\+\_\+t \mbox{\hyperlink{main_8c_aae51255fe85ff54dd87fdc3aef4a2062}{faker}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Lets get going with the code. 
+
+Main application 
+
+Definition in file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{main_8c_a264362c275898b8493cf451f32d24a36}\label{main_8c_a264362c275898b8493cf451f32d24a36} 
+\index{main.c@{main.c}!\_\_DEFINED\_int24\_t@{\_\_DEFINED\_int24\_t}}
+\index{\_\_DEFINED\_int24\_t@{\_\_DEFINED\_int24\_t}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{\_\_DEFINED\_int24\_t}{\_\_DEFINED\_int24\_t}}
+{\footnotesize\ttfamily \#define \+\_\+\+\_\+\+DEFINED\+\_\+int24\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00162}{162}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_ac97678d743f94219bf2712a302091217}\label{main_8c_ac97678d743f94219bf2712a302091217} 
+\index{main.c@{main.c}!I\_TRACE@{I\_TRACE}}
+\index{I\_TRACE@{I\_TRACE}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{I\_TRACE}{I\_TRACE}}
+{\footnotesize\ttfamily \#define I\+\_\+\+TRACE~RB7\+\_\+\+Toggle()}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00178}{178}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a7b43164abfdf24a3ef4cbcee7622551d}\label{main_8c_a7b43164abfdf24a3ef4cbcee7622551d} 
+\index{main.c@{main.c}!M\_TRACE@{M\_TRACE}}
+\index{M\_TRACE@{M\_TRACE}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{M\_TRACE}{M\_TRACE}}
+{\footnotesize\ttfamily \#define M\+\_\+\+TRACE~do \{ LATDbits.\+LATD5 = \texorpdfstring{$\sim$}{\string~}LATDbits.\+LATD5; \} while(0)}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00177}{177}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\doxysubsection{Typedef Documentation}
+\Hypertarget{main_8c_a5b45919dd9dbd4d48b64a76567b9b599}\label{main_8c_a5b45919dd9dbd4d48b64a76567b9b599} 
+\index{main.c@{main.c}!int24\_t@{int24\_t}}
+\index{int24\_t@{int24\_t}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{int24\_t}{int24\_t}}
+{\footnotesize\ttfamily typedef signed long long int24\+\_\+t}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00161}{161}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}\label{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667} 
+\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily void main (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+Speed locking setup code. Use a few EEPROM bytes to cycle or lock the serial port baud rate during a power-\/up. 9600 and 19200 are the normal speeds for SECS-\/I serial communications
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00783}{783}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_abaf162c1efebcc3af6a46b1ca9b8499b}\label{main_8c_abaf162c1efebcc3af6a46b1ca9b8499b} 
+\index{main.c@{main.c}!onesec\_io@{onesec\_io}}
+\index{onesec\_io@{onesec\_io}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{onesec\_io()}{onesec\_io()}}
+{\footnotesize\ttfamily void onesec\+\_\+io (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l01235}{1235}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a2c7bc8ae77786e8970ac3f03b92a1d00}\label{main_8c_a2c7bc8ae77786e8970ac3f03b92a1d00} 
+\index{main.c@{main.c}!spinners@{spinners}}
+\index{spinners@{spinners}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{spinners()}{spinners()}}
+{\footnotesize\ttfamily char spinners (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{shape,  }\item[{const uint8\+\_\+t}]{reset }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l01244}{1244}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\doxysubsection{Variable Documentation}
+\Hypertarget{main_8c_a390edc6dc84cb12feefd336799714268}\label{main_8c_a390edc6dc84cb12feefd336799714268} 
+\index{main.c@{main.c}!B@{B}}
+\index{B@{B}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{B}{B}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_b__type}{B\+\_\+type}} B}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ .one\_sec\_flag\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{\ \ \ \ .display\_update\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{\ \ \ \ .dim\_delay\ =\ DIM\_DELAY,}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00231}{231}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a2fd487055c79a1c6b3ffa3dcd59b98fb}\label{main_8c_a2fd487055c79a1c6b3ffa3dcd59b98fb} 
+\index{main.c@{main.c}!build\_date@{build\_date}}
+\index{build\_date@{build\_date}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{build\_date}{build\_date}}
+{\footnotesize\ttfamily const char\texorpdfstring{$\ast$}{*} build\+\_\+date = \+\_\+\+\_\+\+DATE\+\_\+\+\_\+}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00185}{185}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a0c1b6525ab4582a08673967cfee5b994}\label{main_8c_a0c1b6525ab4582a08673967cfee5b994} 
+\index{main.c@{main.c}!build\_time@{build\_time}}
+\index{build\_time@{build\_time}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{build\_time}{build\_time}}
+{\footnotesize\ttfamily const char \texorpdfstring{$\ast$}{*} build\+\_\+time = \+\_\+\+\_\+\+TIME\+\_\+\+\_\+}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00185}{185}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a8cce6c2e98aac6bcd42b7583a9593886}\label{main_8c_a8cce6c2e98aac6bcd42b7583a9593886} 
+\index{main.c@{main.c}!D@{D}}
+\index{D@{D}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{D}{D}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structgem__display__type}{gem\+\_\+display\+\_\+type}} D\mbox{[}2\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00771}{771}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_aae51255fe85ff54dd87fdc3aef4a2062}\label{main_8c_aae51255fe85ff54dd87fdc3aef4a2062} 
+\index{main.c@{main.c}!faker@{faker}}
+\index{faker@{faker}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{faker}{faker}}
+{\footnotesize\ttfamily volatile uint8\+\_\+t faker}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00776}{776}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a459d397966f3183f2612ab642a59ea4d}\label{main_8c_a459d397966f3183f2612ab642a59ea4d} 
+\index{main.c@{main.c}!GEM\_TEXT@{GEM\_TEXT}}
+\index{GEM\_TEXT@{GEM\_TEXT}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{GEM\_TEXT}{GEM\_TEXT}}
+{\footnotesize\ttfamily const char\texorpdfstring{$\ast$}{*} GEM\+\_\+\+TEXT\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}DISABLE"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}COMM\ \ \ "{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}OFFLINE"{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}ONLINE\ "{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}REMOTE\ "{}},}
+\DoxyCodeLine{\ \ \ \ \textcolor{stringliteral}{"{}ERROR\ \ "{}}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00187}{187}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_acb3151c137c0ab53eb92ae24c827be90}\label{main_8c_acb3151c137c0ab53eb92ae24c827be90} 
+\index{main.c@{main.c}!H10@{H10}}
+\index{H10@{H10}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H10}{H10}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader10}{header10}} H10\mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00237}{237}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a7f39a1cb7795bc55b633175f71937b06}\label{main_8c_a7f39a1cb7795bc55b633175f71937b06} 
+\index{main.c@{main.c}!H12@{H12}}
+\index{H12@{H12}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H12}{H12}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader12}{header12}} H12\mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00321}{321}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a5491722a8751433ab3cfe7fe74bed9f8}\label{main_8c_a5491722a8751433ab3cfe7fe74bed9f8} 
+\index{main.c@{main.c}!H13@{H13}}
+\index{H13@{H13}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H13}{H13}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader13}{header13}} H13\mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00354}{354}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a08c7d3c20fd25362fc32fe5ef275ffd1}\label{main_8c_a08c7d3c20fd25362fc32fe5ef275ffd1} 
+\index{main.c@{main.c}!H14@{H14}}
+\index{H14@{H14}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H14}{H14}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader14}{header14}} H14\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \{\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .length\ =\ 14,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.rbit\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didl\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.wbit\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.stream\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.function\ =\ 4,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.ebit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidl\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.systemb\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[3]\ =\ 0x01,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[2]\ =\ 0x11,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[1]\ =\ 0x41,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[0]\ =\ 0x00,}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00421}{421}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a84facb7ad1f9628f48740726697f57c5}\label{main_8c_a84facb7ad1f9628f48740726697f57c5} 
+\index{main.c@{main.c}!H153@{H153}}
+\index{H153@{H153}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H153}{H153}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader153}{header153}} H153\mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00636}{636}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_ac52c955ca5e4020cc118a098340c818e}\label{main_8c_ac52c955ca5e4020cc118a098340c818e} 
+\index{main.c@{main.c}!H17@{H17}}
+\index{H17@{H17}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H17}{H17}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader17}{header17}} H17\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \{\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .length\ =\ 17,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.rbit\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didl\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.wbit\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.stream\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.function\ =\ 14,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.ebit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidl\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.systemb\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[6]\ =\ 0x01,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[5]\ =\ 0x02,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[4]\ =\ 0x21,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[3]\ =\ 0x01,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[2]\ =\ 0x00,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[1]\ =\ 0x01,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[0]\ =\ 0x00,}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00441}{441}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a8a8041d6f1cffe3380f8cd4ce30021cc}\label{main_8c_a8a8041d6f1cffe3380f8cd4ce30021cc} 
+\index{main.c@{main.c}!H254@{H254}}
+\index{H254@{H254}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H254}{H254}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader254}{header254}} H254\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \{\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .length\ =\ 254,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.rbit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didl\ =\ 0xEF,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.wbit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.stream\ =\ 10,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.function\ =\ 3,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.ebit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidl\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.systemb\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .checksum\ =\ 0x2019,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[1]\ =\ 0x19,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data[0]\ =\ 0x57,}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00751}{751}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a983cb0596f5eb5f3ec3ee886a3dfde7f}\label{main_8c_a983cb0596f5eb5f3ec3ee886a3dfde7f} 
+\index{main.c@{main.c}!H26@{H26}}
+\index{H26@{H26}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H26}{H26}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader26}{header26}} H26\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \{\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .length\ =\ 26,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.rbit\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didl\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.wbit\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.stream\ =\ 2,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.function\ =\ 18,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.ebit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidl\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.systemb\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .data\ =\ \textcolor{stringliteral}{"{}01091108460000"{}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .datam[1]\ =\ 0x41,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .datam[0]\ =\ 14,}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00484}{484}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a0ed2184f7ad5d88632f74db120b9c0b8}\label{main_8c_a0ed2184f7ad5d88632f74db120b9c0b8} 
+\index{main.c@{main.c}!H27@{H27}}
+\index{H27@{H27}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H27}{H27}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader27}{header27}} H27\mbox{[}$\,$\mbox{]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \{}
+\DoxyCodeLine{\ \ \ \ \{\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .length\ =\ 27,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.rbit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.didl\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.wbit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.stream\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.function\ =\ 13,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.ebit\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidh\ =\ 0,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.bidl\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ .block.block.systemb\ =\ 1,}
+\DoxyCodeLine{\ \ \ \ \},}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00505}{505}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a8d33318622921f0377dd16695bf30970}\label{main_8c_a8d33318622921f0377dd16695bf30970} 
+\index{main.c@{main.c}!H33@{H33}}
+\index{H33@{H33}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{H33}{H33}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader33}{header33}} H33\mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00522}{522}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_ab2f236166aee73a99ab12af202e7f4c4}\label{main_8c_ab2f236166aee73a99ab12af202e7f4c4} 
+\index{main.c@{main.c}!HC33@{HC33}}
+\index{HC33@{HC33}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{HC33}{HC33}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{structheader33}{header33}} HC33\mbox{[}$\,$\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00561}{561}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a100a8078f274b8dcba40099c11217cf6}\label{main_8c_a100a8078f274b8dcba40099c11217cf6} 
+\index{main.c@{main.c}!mode\_sw@{mode\_sw}}
+\index{mode\_sw@{mode\_sw}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{mode\_sw}{mode\_sw}}
+{\footnotesize\ttfamily volatile uint8\+\_\+t mode\+\_\+sw = false}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00776}{776}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_ae930faf19041d623f7c4320110c4eba2}\label{main_8c_ae930faf19041d623f7c4320110c4eba2} 
+\index{main.c@{main.c}!r\_block@{r\_block}}
+\index{r\_block@{r\_block}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{r\_block}{r\_block}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structheader10}{header10}} r\+\_\+block}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00773}{773}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_ae8f502e6c5b0daf88abcb8276d39f23a}\label{main_8c_ae8f502e6c5b0daf88abcb8276d39f23a} 
+\index{main.c@{main.c}!S@{S}}
+\index{S@{S}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{S}{S}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structgem__message__type}{gem\+\_\+message\+\_\+type}} S\mbox{[}10\mbox{]}}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00770}{770}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a8fb6cbfaa028c7b5730fe95c1a798c16}\label{main_8c_a8fb6cbfaa028c7b5730fe95c1a798c16} 
+\index{main.c@{main.c}!spi\_link@{spi\_link}}
+\index{spi\_link@{spi\_link}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{spi\_link}{spi\_link}}
+{\footnotesize\ttfamily struct \mbox{\hyperlink{structspi__link__type}{spi\+\_\+link\+\_\+type}} spi\+\_\+link\hspace{0.3cm}{\ttfamily [extern]}}
+
+
+
+Definition at line \mbox{\hyperlink{eadog_8c_source_l00019}{19}} of file \mbox{\hyperlink{eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}\label{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1} 
+\index{main.c@{main.c}!tickCount@{tickCount}}
+\index{tickCount@{tickCount}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{tickCount}{tickCount}}
+{\footnotesize\ttfamily volatile uint16\+\_\+t tick\+Count\mbox{[}TMR\+\_\+\+COUNT\mbox{]} = \{0\}}
+
+
+
+TMR6 Generated Driver File. 
+
+@\+Company Microchip Technology Inc.
+
+@\+File Name \doxylink{tmr6_8c_source}{tmr6.\+c}
+
+@\+Summary This is the generated driver implementation file for the TMR6 driver using PIC10 / PIC12 / PIC16 / PIC18 MCUs
+
+@\+Description This source file provides APIs for TMR6. Generation Information \+: Product Revision \+: PIC10 / PIC12 / PIC16 / PIC18 MCUs -\/ 1.\+81.\+8 Device \+: PIC18\+F47\+Q84 Driver Version \+: 2.\+11 The generated drivers are tested against the following\+: Compiler \+: XC8 2.\+36 and above MPLAB \+: MPLAB X 6.\+00 Section\+: Included Files 
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00775}{775}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a3677a1b059657e0e0bcfa48d64f81cb4}\label{main_8c_a3677a1b059657e0e0bcfa48d64f81cb4} 
+\index{main.c@{main.c}!V@{V}}
+\index{V@{V}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{V}{V}}
+{\footnotesize\ttfamily \mbox{\hyperlink{struct_v__data}{V\+\_\+data}} V}
+
+
+
+Definition at line \mbox{\hyperlink{main_8c_source_l00196}{196}} of file \mbox{\hyperlink{main_8c_source}{main.\+c}}.
+

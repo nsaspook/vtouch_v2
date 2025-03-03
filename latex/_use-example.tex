@@ -1,0 +1,23 @@
+\doxysection{Use}
+\hypertarget{_use-example}{}\label{_use-example}This routine reads one block from given address of Program Flash Memory into device Buffer RAM.
+
+This routine reads one block from given address of Program Flash Memory into device Buffer RAM \begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em Starting} & address of a Program Flash Memory block case\+: Read one page from given PFM location into device Buffer RAM using FLASH\+\_\+\+Read\+Page() Transfer the contents of device Buffer RAM to U1\+TXB using DMA2\\
+\hline
+\end{DoxyParams}
+void \doxylink{main_8c_a6288eba0f8e8ad3ab1544ad731eb7667}{main(void)} \{ ~\newline
+ SYSTEM\+\_\+\+Initialize();
+
+//\+Read one page from PFM into device Buffer RAM FLASH\+\_\+\+Read\+Page();
+
+//\+Initialize DMA2 to copy data from device Buffer RAM to U1\+TXB register //\+Configure source size as 256 and destination size as 1 DMA2\+\_\+\+Initialize(); \}
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

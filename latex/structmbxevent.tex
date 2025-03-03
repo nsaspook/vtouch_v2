@@ -1,0 +1,93 @@
+\doxysection{mbxevent Struct Reference}
+\hypertarget{structmbxevent}{}\label{structmbxevent}\index{mbxevent@{mbxevent}}
+
+
+Every time a message from some Mbx is expected, a new mbxevent element is created, and added to the prepared linked list.  
+
+
+\doxysubsubsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+Tcl\+\_\+\+Event \mbox{\hyperlink{structmbxevent_aeb9857a4ad614c985dfc85317a73d17d}{event}}
+\begin{DoxyCompactList}\small\item\em event to be handled by Tcl. \end{DoxyCompactList}\item 
+MAILBOX \mbox{\hyperlink{structmbxevent_a002d33eaffcba7305f855224bec19587}{id}}
+\begin{DoxyCompactList}\small\item\em mailbox connect to this mbxevent \end{DoxyCompactList}\item 
+Tcl\+\_\+\+Interp \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmbxevent_a0b87d3a13908406182fd5190054b0096}{interp}}
+\begin{DoxyCompactList}\small\item\em current interpreter \end{DoxyCompactList}\item 
+Tcl\+\_\+\+Obj \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structmbxevent_a02dfd0e637bc54d3a77278fbf05312da}{cmd}}
+\begin{DoxyCompactList}\small\item\em command to be executed as soon as a message comes in. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Every time a message from some Mbx is expected, a new mbxevent element is created, and added to the prepared linked list. 
+
+As soon as the expected message is received, the element is removed from the prepared linked list, two elements are appended to \doxylink{structmbxevent_a02dfd0e637bc54d3a77278fbf05312da}{mbxevent\+::cmd} (received message and the reply mailbox).
+
+Finally, the event is pushed to Tcl\textquotesingle{}s event queue for further handling. As soon as Tcl is ready to handle it, \doxylink{structmbxevent_a02dfd0e637bc54d3a77278fbf05312da}{mbxevent\+::cmd} is executed. 
+
+Definition at line \mbox{\hyperlink{tclmbx_8c_source_l00162}{162}} of file \mbox{\hyperlink{tclmbx_8c_source}{tclmbx.\+c}}.
+
+
+
+\doxysubsection{Field Documentation}
+\Hypertarget{structmbxevent_a02dfd0e637bc54d3a77278fbf05312da}\label{structmbxevent_a02dfd0e637bc54d3a77278fbf05312da} 
+\index{mbxevent@{mbxevent}!cmd@{cmd}}
+\index{cmd@{cmd}!mbxevent@{mbxevent}}
+\doxysubsubsection{\texorpdfstring{cmd}{cmd}}
+{\footnotesize\ttfamily Tcl\+\_\+\+Obj\texorpdfstring{$\ast$}{*} cmd}
+
+
+
+command to be executed as soon as a message comes in. 
+
+
+
+Definition at line \mbox{\hyperlink{tclmbx_8c_source_l00169}{169}} of file \mbox{\hyperlink{tclmbx_8c_source}{tclmbx.\+c}}.
+
+\Hypertarget{structmbxevent_aeb9857a4ad614c985dfc85317a73d17d}\label{structmbxevent_aeb9857a4ad614c985dfc85317a73d17d} 
+\index{mbxevent@{mbxevent}!event@{event}}
+\index{event@{event}!mbxevent@{mbxevent}}
+\doxysubsubsection{\texorpdfstring{event}{event}}
+{\footnotesize\ttfamily Tcl\+\_\+\+Event event}
+
+
+
+event to be handled by Tcl. 
+
+The Tcl\+\_\+\+Event structure contains a \textquotesingle{}next\+Ptr\textquotesingle{} element, which is used to link through to the next event 
+
+Definition at line \mbox{\hyperlink{tclmbx_8c_source_l00165}{165}} of file \mbox{\hyperlink{tclmbx_8c_source}{tclmbx.\+c}}.
+
+\Hypertarget{structmbxevent_a002d33eaffcba7305f855224bec19587}\label{structmbxevent_a002d33eaffcba7305f855224bec19587} 
+\index{mbxevent@{mbxevent}!id@{id}}
+\index{id@{id}!mbxevent@{mbxevent}}
+\doxysubsubsection{\texorpdfstring{id}{id}}
+{\footnotesize\ttfamily MAILBOX id}
+
+
+
+mailbox connect to this mbxevent 
+
+
+
+Definition at line \mbox{\hyperlink{tclmbx_8c_source_l00166}{166}} of file \mbox{\hyperlink{tclmbx_8c_source}{tclmbx.\+c}}.
+
+\Hypertarget{structmbxevent_a0b87d3a13908406182fd5190054b0096}\label{structmbxevent_a0b87d3a13908406182fd5190054b0096} 
+\index{mbxevent@{mbxevent}!interp@{interp}}
+\index{interp@{interp}!mbxevent@{mbxevent}}
+\doxysubsubsection{\texorpdfstring{interp}{interp}}
+{\footnotesize\ttfamily Tcl\+\_\+\+Interp\texorpdfstring{$\ast$}{*} interp}
+
+
+
+current interpreter 
+
+
+
+Definition at line \mbox{\hyperlink{tclmbx_8c_source_l00167}{167}} of file \mbox{\hyperlink{tclmbx_8c_source}{tclmbx.\+c}}.
+
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+gem/secs/tcl/\mbox{\hyperlink{tclmbx_8c}{tclmbx.\+c}}\end{DoxyCompactItemize}

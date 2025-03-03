@@ -39640,7 +39640,7 @@ uint8_t SPI1_ReadByte(void);
 # 366 "./mcc_generated_files/pin_manager.h"
 void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
-# 144 "./vconfig.h"
+# 146 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;

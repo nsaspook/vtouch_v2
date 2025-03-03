@@ -16,36 +16,39 @@ extern "C" {
 #include "mcc_generated_files/adc.h"
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
-//#include "ringbufs.h"
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
 #define VER	"2.16G"
-	/*
-	 * 1.13G wafer load-lock control
-	 * 1.15 add specific equipment types V.e_types
-	 * 1.22 message sequencing in secs_II_message
-	 * 2.00 Version for 47Q84
-	 * 2.01 uart to uart loopback testing with FAKER define
-	 * 2.02 more cleanups of code
-	 * 2.03 rework trace code
-	 * 2.04 program FAKER equipment side emulation
-	 * 2.05 Beta
-	 * 2.06 add TX bytes transmitted counter and display
-	 * 2.07 more info messages to equipment terminal display from host
-	 * 2.08 reformat LCD messages, add ADC 1 and 2 for RS232 line voltage checks
-	 * 2.09 add link stats for info screen
-	 * 2.10 data screens reformatting
-	 * 2.11 screen flipping timing adjustments
-	 * 2.12 remote set random error generation
-	 * 2.13 clear up display errors and make this a GAMMA software release version
-	 * 2.14 add 19200 or 9600 speed switching with reboot
-	 * 2.15 fix USART speed switching bugs
-	 * 2.16 switch to 16MHz external clock chip for 64MHz FOSC because CAN is not being used
+	/** \file vconfig.h
+	 * Software version and a brief doc for each version changes.
+ 
+		1.13G wafer load-lock control.
+		1.15 add specific equipment types V.e_types.
+		message sequencing in secs_II_message.
+		Version for 47Q84.
+		uart to uart loopback testing with FAKER define.
+	 * 2.02 more cleanups of code.
+	 * 2.03 rework trace code.
+	 * 2.04 program FAKER equipment side emulation.
+	 * 2.05 Beta.
+	 * 2.06 add TX bytes transmitted counter and display.
+	 * 2.07 more info messages to equipment terminal display from host.
+	 * 2.08 reformat LCD messages, add ADC 1 and 2 for RS232 line voltage checks.
+	 * 2.09 add link stats for info screen.
+	 * 2.10 data screens reformatting.
+	 * 2.11 screen flipping timing adjustments.
+	 * 2.12 remote set random error generation.
+	 * 2.13 clear up display errors and make this a GAMMA software release version.
+	 * 2.14 add 19200 or 9600 speed switching with reboot.
+	 * 2.15 fix USART speed switching bugs.
+	 * 2.16 switch to 16MHz external clock chip for 64MHz FOSC because CAN is not being used.
 	 */
 
-
-//#define FAKER			// emulate equipment protocol to host loopback
+	/** enable two serial port internal Host Equipment RS-232 testing.
+	 * comment out FAKER for normal host mode
+	 */
+#define FAKER			// emulate equipment protocol to host loopback
 
 	//#define	FRAME_OVERRUN
 

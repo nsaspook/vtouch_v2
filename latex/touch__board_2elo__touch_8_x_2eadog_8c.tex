@@ -1,0 +1,152 @@
+\doxysection{touch\+\_\+board/elo\+\_\+touch.X/eadog.c File Reference}
+\hypertarget{touch__board_2elo__touch_8_x_2eadog_8c}{}\label{touch__board_2elo__touch_8_x_2eadog_8c}\index{touch\_board/elo\_touch.X/eadog.c@{touch\_board/elo\_touch.X/eadog.c}}
+{\ttfamily \#include "{}eadog.\+h"{}}\newline
+{\ttfamily \#include "{}ringbufs.\+h"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include "{}d232.\+h"{}}\newline
+{\ttfamily \#include "{}mcc\+\_\+generated\+\_\+files/spi1.\+h"{}}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_af3ef2e5232000ef40cc5adc7ceb66a6e}{max\+\_\+strlen}}~64
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a8ae1626500453fd6c71c95a8a88c29d7}{wdtdelay}} (const uint32\+\_\+t delay)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a4cdbdfc36c314afb59655c3937ecce96}{init\+\_\+display}} (void)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a012b70e817b582af428c3dc8043ff04c}{ea\+Dog\+M\+\_\+\+Write\+Chr}} (const int8\+\_\+t value)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a38560127e69611361f6edc5b83c9518f}{ea\+Dog\+M\+\_\+\+Write\+Command}} (const uint8\+\_\+t cmd)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a14d6c8d2a272183e99a56fdf118a8dc8}{ea\+Dog\+M\+\_\+\+Set\+Pos}} (const uint8\+\_\+t r, const uint8\+\_\+t c)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a2276e41b9d632dd7ace4bf60bd595b2c}{ea\+Dog\+M\+\_\+\+Clear\+Row}} (const uint8\+\_\+t r)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a354a7869fc0c21ba6ac9176523c70406}{ea\+Dog\+M\+\_\+\+Write\+String}} (char \texorpdfstring{$\ast$}{*}str\+Ptr)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a469b07cd52f5a0a71c589c78ded7ca3b}{ea\+Dog\+M\+\_\+\+Write\+String\+At\+Pos}} (const uint8\+\_\+t r, const uint8\+\_\+t c, char \texorpdfstring{$\ast$}{*}str\+Ptr)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_a17a54ec270917dabd85aa5d66c809346}{ea\+Dog\+M\+\_\+\+Write\+Int\+At\+Pos}} (uint8\+\_\+t r, uint8\+\_\+t c, uint8\+\_\+t i)
+\item 
+void \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_af8cafa3b7042fa75d2d06e63b518705a}{ea\+Dog\+M\+\_\+\+Write\+Byte\+To\+CGRAM}} (uint8\+\_\+t ndx, uint8\+\_\+t data)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_af3ef2e5232000ef40cc5adc7ceb66a6e}\label{touch__board_2elo__touch_8_x_2eadog_8c_af3ef2e5232000ef40cc5adc7ceb66a6e} 
+\index{eadog.c@{eadog.c}!max\_strlen@{max\_strlen}}
+\index{max\_strlen@{max\_strlen}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{max\_strlen}{max\_strlen}}
+{\footnotesize\ttfamily \#define max\+\_\+strlen~64}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00008}{8}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a2276e41b9d632dd7ace4bf60bd595b2c}\label{touch__board_2elo__touch_8_x_2eadog_8c_a2276e41b9d632dd7ace4bf60bd595b2c} 
+\index{eadog.c@{eadog.c}!eaDogM\_ClearRow@{eaDogM\_ClearRow}}
+\index{eaDogM\_ClearRow@{eaDogM\_ClearRow}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_ClearRow()}{eaDogM\_ClearRow()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Clear\+Row (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{r }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00097}{97}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a14d6c8d2a272183e99a56fdf118a8dc8}\label{touch__board_2elo__touch_8_x_2eadog_8c_a14d6c8d2a272183e99a56fdf118a8dc8} 
+\index{eadog.c@{eadog.c}!eaDogM\_SetPos@{eaDogM\_SetPos}}
+\index{eaDogM\_SetPos@{eaDogM\_SetPos}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_SetPos()}{eaDogM\_SetPos()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Set\+Pos (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{r,  }\item[{const uint8\+\_\+t}]{c }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00090}{90}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_af8cafa3b7042fa75d2d06e63b518705a}\label{touch__board_2elo__touch_8_x_2eadog_8c_af8cafa3b7042fa75d2d06e63b518705a} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteByteToCGRAM@{eaDogM\_WriteByteToCGRAM}}
+\index{eaDogM\_WriteByteToCGRAM@{eaDogM\_WriteByteToCGRAM}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteByteToCGRAM()}{eaDogM\_WriteByteToCGRAM()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Byte\+To\+CGRAM (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{ndx,  }\item[{uint8\+\_\+t}]{data }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00140}{140}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a012b70e817b582af428c3dc8043ff04c}\label{touch__board_2elo__touch_8_x_2eadog_8c_a012b70e817b582af428c3dc8043ff04c} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteChr@{eaDogM\_WriteChr}}
+\index{eaDogM\_WriteChr@{eaDogM\_WriteChr}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteChr()}{eaDogM\_WriteChr()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Chr (\begin{DoxyParamCaption}\item[{const int8\+\_\+t}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00080}{80}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a38560127e69611361f6edc5b83c9518f}\label{touch__board_2elo__touch_8_x_2eadog_8c_a38560127e69611361f6edc5b83c9518f} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteCommand@{eaDogM\_WriteCommand}}
+\index{eaDogM\_WriteCommand@{eaDogM\_WriteCommand}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteCommand()}{eaDogM\_WriteCommand()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Command (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{cmd }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00085}{85}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a17a54ec270917dabd85aa5d66c809346}\label{touch__board_2elo__touch_8_x_2eadog_8c_a17a54ec270917dabd85aa5d66c809346} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteIntAtPos@{eaDogM\_WriteIntAtPos}}
+\index{eaDogM\_WriteIntAtPos@{eaDogM\_WriteIntAtPos}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteIntAtPos()}{eaDogM\_WriteIntAtPos()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+Int\+At\+Pos (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{r,  }\item[{uint8\+\_\+t}]{c,  }\item[{uint8\+\_\+t}]{i }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00128}{128}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a354a7869fc0c21ba6ac9176523c70406}\label{touch__board_2elo__touch_8_x_2eadog_8c_a354a7869fc0c21ba6ac9176523c70406} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteString@{eaDogM\_WriteString}}
+\index{eaDogM\_WriteString@{eaDogM\_WriteString}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteString()}{eaDogM\_WriteString()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+String (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00106}{106}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a469b07cd52f5a0a71c589c78ded7ca3b}\label{touch__board_2elo__touch_8_x_2eadog_8c_a469b07cd52f5a0a71c589c78ded7ca3b} 
+\index{eadog.c@{eadog.c}!eaDogM\_WriteStringAtPos@{eaDogM\_WriteStringAtPos}}
+\index{eaDogM\_WriteStringAtPos@{eaDogM\_WriteStringAtPos}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{eaDogM\_WriteStringAtPos()}{eaDogM\_WriteStringAtPos()}}
+{\footnotesize\ttfamily void ea\+Dog\+M\+\_\+\+Write\+String\+At\+Pos (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t}]{r,  }\item[{const uint8\+\_\+t}]{c,  }\item[{char \texorpdfstring{$\ast$}{*}}]{str\+Ptr }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00122}{122}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a4cdbdfc36c314afb59655c3937ecce96}\label{touch__board_2elo__touch_8_x_2eadog_8c_a4cdbdfc36c314afb59655c3937ecce96} 
+\index{eadog.c@{eadog.c}!init\_display@{init\_display}}
+\index{init\_display@{init\_display}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{init\_display()}{init\_display()}}
+{\footnotesize\ttfamily void init\+\_\+display (\begin{DoxyParamCaption}\item[{void}]{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00027}{27}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+
+\Hypertarget{touch__board_2elo__touch_8_x_2eadog_8c_a8ae1626500453fd6c71c95a8a88c29d7}\label{touch__board_2elo__touch_8_x_2eadog_8c_a8ae1626500453fd6c71c95a8a88c29d7} 
+\index{eadog.c@{eadog.c}!wdtdelay@{wdtdelay}}
+\index{wdtdelay@{wdtdelay}!eadog.c@{eadog.c}}
+\doxysubsubsection{\texorpdfstring{wdtdelay()}{wdtdelay()}}
+{\footnotesize\ttfamily void wdtdelay (\begin{DoxyParamCaption}\item[{const uint32\+\_\+t}]{delay }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source_l00014}{14}} of file \mbox{\hyperlink{touch__board_2elo__touch_8_x_2eadog_8c_source}{eadog.\+c}}.
+

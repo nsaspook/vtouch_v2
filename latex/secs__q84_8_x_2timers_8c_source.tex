@@ -1,0 +1,49 @@
+\doxysection{timers.\+c}
+\hypertarget{secs__q84_8_x_2timers_8c_source}{}\label{secs__q84_8_x_2timers_8c_source}\index{secs\_q84.X/timers.c@{secs\_q84.X/timers.c}}
+\mbox{\hyperlink{secs__q84_8_x_2timers_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <stdint.h>}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <stdbool.h>}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{vconfig_8h}{vconfig.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{touch__board_2elo__touch_8_x_2timers_8h}{timers.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00007}00007\ \textcolor{keyword}{extern}\ \textcolor{keyword}{volatile}\ uint16\_t\ \mbox{\hyperlink{secs__q84_8_x_2timers_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[\mbox{\hyperlink{secs__q84_8_x_2timers_8h_ad499250d949643c5a12161767059a3d2abaa7883f9d3702d4c1fba3442fec0595}{TMR\_COUNT}}];}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00009}00009\ \textcolor{comment}{//**********************************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00010}00010\ \textcolor{comment}{//\ Start\ one\ of\ the\ software\ timers}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00012}\mbox{\hyperlink{secs__q84_8_x_2timers_8c_aa7ec4ef9616686e41f92a928010bc44f}{00012}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2timers_8c_aa7ec4ef9616686e41f92a928010bc44f}{StartTimer}}(\textcolor{keyword}{const}\ uint8\_t\ timer,\ \textcolor{keyword}{const}\ uint16\_t\ count)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00013}00013\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{secs__q84_8_x_2timers_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[timer]\ =\ count\ <<\ 1;\ \textcolor{comment}{//Interrupt\ is\ every\ 500us\ but\ StartTimer()\ takes\ multiple\ of\ 1ms\ so\ multiply\ by\ 2}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00017}00017\ \textcolor{comment}{//**********************************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00018}00018\ \textcolor{comment}{//\ Check\ if\ one\ of\ the\ software\ software\ timers\ has\ timed\ out}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00020}\mbox{\hyperlink{secs__q84_8_x_2timers_8c_a6002dd7c7cad6fa060da2c3a93a481e9}{00020}}\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{secs__q84_8_x_2timers_8c_a6002dd7c7cad6fa060da2c3a93a481e9}{TimerDone}}(\textcolor{keyword}{const}\ uint8\_t\ timer)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00021}00021\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00022}00022\ \ \ \ \ ClrWdt();\ \textcolor{comment}{//\ reset\ the\ WDT\ timer}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{secs__q84_8_x_2timers_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[timer]\ ==\ 0)\ \{\ \textcolor{comment}{//Check\ if\ counted\ down\ to\ zero}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};\ \textcolor{comment}{//then\ return\ true}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};\ \textcolor{comment}{//else\ return\ false}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00029}00029\ \textcolor{comment}{//**********************************************************************************************************************}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00030}00030\ \textcolor{comment}{//\ Simple\ delay\ for\ n\ milliseconds\ (blocking)}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00032}\mbox{\hyperlink{secs__q84_8_x_2timers_8c_adcd4fad73c37c6d61e3087e1201a33e7}{00032}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{secs__q84_8_x_2timers_8c_adcd4fad73c37c6d61e3087e1201a33e7}{WaitMs}}(\textcolor{keyword}{const}\ uint16\_t\ numMilliseconds)}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00033}00033\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00034}00034\ \ \ \ \ \mbox{\hyperlink{secs__q84_8_x_2timers_8c_aa7ec4ef9616686e41f92a928010bc44f}{StartTimer}}(\mbox{\hyperlink{secs__q84_8_x_2timers_8h_ad499250d949643c5a12161767059a3d2a95f189072d8491e8a3e20a94728abbfc}{TMR\_INTERNAL}},\ numMilliseconds);\ \textcolor{comment}{//Start\ software\ timer\ and\ wait\ for\ it\ to\ count\ down}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{while}\ (!\mbox{\hyperlink{secs__q84_8_x_2timers_8c_a6002dd7c7cad6fa060da2c3a93a481e9}{TimerDone}}(\mbox{\hyperlink{secs__q84_8_x_2timers_8h_ad499250d949643c5a12161767059a3d2a95f189072d8491e8a3e20a94728abbfc}{TMR\_INTERNAL}}))\ \{}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00036}00036\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00037}00037\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00038}00038\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00039}00039\ \ \ \ \ \ \ \ \ Nop();}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00040}00040\ \ \ \ \ \ \ \ \ ClrWdt();\ \textcolor{comment}{//\ reset\ the\ WDT\ timer}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00041}00041\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{secs__q84_8_x_2timers_8c_source_l00043}00043\ }
+
+\end{DoxyCode}

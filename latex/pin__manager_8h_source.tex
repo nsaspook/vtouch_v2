@@ -1,0 +1,341 @@
+\doxysection{pin\+\_\+manager.\+h}
+\hypertarget{pin__manager_8h_source}{}\label{pin__manager_8h_source}\index{secs\_q84.X/mcc\_generated\_files/pin\_manager.h@{secs\_q84.X/mcc\_generated\_files/pin\_manager.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00024}00024\ \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00027}00027\ \textcolor{comment}{\ \ \ \ Subject\ to\ your\ compliance\ with\ these\ terms,\ you\ may\ use\ Microchip\ software\ and\ any\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00028}00028\ \textcolor{comment}{\ \ \ \ derivatives\ exclusively\ with\ Microchip\ products.\ It\ is\ your\ responsibility\ to\ comply\ with\ third\ party\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00029}00029\ \textcolor{comment}{\ \ \ \ license\ terms\ applicable\ to\ your\ use\ of\ third\ party\ software\ (including\ open\ source\ software)\ that\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00030}00030\ \textcolor{comment}{\ \ \ \ may\ accompany\ Microchip\ software.}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00031}00031\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00032}00032\ \textcolor{comment}{\ \ \ \ THIS\ SOFTWARE\ IS\ SUPPLIED\ BY\ MICROCHIP\ "{}AS\ IS"{}.\ NO\ WARRANTIES,\ WHETHER\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00033}00033\ \textcolor{comment}{\ \ \ \ EXPRESS,\ IMPLIED\ OR\ STATUTORY,\ APPLY\ TO\ THIS\ SOFTWARE,\ INCLUDING\ ANY\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00034}00034\ \textcolor{comment}{\ \ \ \ IMPLIED\ WARRANTIES\ OF\ NON-\/INFRINGEMENT,\ MERCHANTABILITY,\ AND\ FITNESS\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00035}00035\ \textcolor{comment}{\ \ \ \ FOR\ A\ PARTICULAR\ PURPOSE.}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00036}00036\ \textcolor{comment}{\ \ \ \ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00037}00037\ \textcolor{comment}{\ \ \ \ IN\ NO\ EVENT\ WILL\ MICROCHIP\ BE\ LIABLE\ FOR\ ANY\ INDIRECT,\ SPECIAL,\ PUNITIVE,\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00038}00038\ \textcolor{comment}{\ \ \ \ INCIDENTAL\ OR\ CONSEQUENTIAL\ LOSS,\ DAMAGE,\ COST\ OR\ EXPENSE\ OF\ ANY\ KIND\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00039}00039\ \textcolor{comment}{\ \ \ \ WHATSOEVER\ RELATED\ TO\ THE\ SOFTWARE,\ HOWEVER\ CAUSED,\ EVEN\ IF\ MICROCHIP\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00040}00040\ \textcolor{comment}{\ \ \ \ HAS\ BEEN\ ADVISED\ OF\ THE\ POSSIBILITY\ OR\ THE\ DAMAGES\ ARE\ FORESEEABLE.\ TO\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00041}00041\ \textcolor{comment}{\ \ \ \ THE\ FULLEST\ EXTENT\ ALLOWED\ BY\ LAW,\ MICROCHIP'S\ TOTAL\ LIABILITY\ ON\ ALL\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00042}00042\ \textcolor{comment}{\ \ \ \ CLAIMS\ IN\ ANY\ WAY\ RELATED\ TO\ THIS\ SOFTWARE\ WILL\ NOT\ EXCEED\ THE\ AMOUNT\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00043}00043\ \textcolor{comment}{\ \ \ \ OF\ FEES,\ IF\ ANY,\ THAT\ YOU\ HAVE\ PAID\ DIRECTLY\ TO\ MICROCHIP\ FOR\ THIS\ }}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00045}00045\ \textcolor{comment}{*/}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00047}00047\ \textcolor{preprocessor}{\#ifndef\ PIN\_MANAGER\_H}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00048}00048\ \textcolor{preprocessor}{\#define\ PIN\_MANAGER\_H}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00054}00054\ \textcolor{preprocessor}{\#include\ <xc.h>}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00056}00056\ \textcolor{preprocessor}{\#define\ INPUT\ \ \ 1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00057}00057\ \textcolor{preprocessor}{\#define\ OUTPUT\ \ 0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00059}00059\ \textcolor{preprocessor}{\#define\ HIGH\ \ \ \ 1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00060}00060\ \textcolor{preprocessor}{\#define\ LOW\ \ \ \ \ 0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00061}00061\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00062}00062\ \textcolor{preprocessor}{\#define\ ANALOG\ \ \ \ \ \ 1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00063}00063\ \textcolor{preprocessor}{\#define\ DIGITAL\ \ \ \ \ 0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00065}00065\ \textcolor{preprocessor}{\#define\ PULL\_UP\_ENABLED\ \ \ \ \ \ 1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00066}00066\ \textcolor{preprocessor}{\#define\ PULL\_UP\_DISABLED\ \ \ \ \ 0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00068}00068\ \textcolor{comment}{//\ get/set\ channel\_ANA1\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00069}00069\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISAbits.TRISA1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00070}00070\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATAbits.LATA1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00071}00071\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTAbits.RA1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00072}00072\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUAbits.WPUA1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00073}00073\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONAbits.ODCA1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00074}00074\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELAbits.ANSELA1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00075}00075\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATAbits.LATA1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00076}00076\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATAbits.LATA1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00077}00077\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATAbits.LATA1\ =\ \string~LATAbits.LATA1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00078}00078\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTAbits.RA1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00079}00079\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetDigitalInput()\ \ \ \ do\ \{\ TRISAbits.TRISA1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00080}00080\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetDigitalOutput()\ \ \ do\ \{\ TRISAbits.TRISA1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00081}00081\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUAbits.WPUA1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00082}00082\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUAbits.WPUA1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00083}00083\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONAbits.ODCA1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00084}00084\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONAbits.ODCA1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00085}00085\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELAbits.ANSELA1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00086}00086\ \textcolor{preprocessor}{\#define\ channel\_ANA1\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELAbits.ANSELA1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00088}00088\ \textcolor{comment}{//\ get/set\ channel\_ANA2\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00089}00089\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISAbits.TRISA2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00090}00090\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATAbits.LATA2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00091}00091\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTAbits.RA2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00092}00092\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUAbits.WPUA2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00093}00093\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONAbits.ODCA2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00094}00094\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELAbits.ANSELA2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00095}00095\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATAbits.LATA2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00096}00096\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATAbits.LATA2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00097}00097\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATAbits.LATA2\ =\ \string~LATAbits.LATA2;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00098}00098\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTAbits.RA2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00099}00099\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetDigitalInput()\ \ \ \ do\ \{\ TRISAbits.TRISA2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00100}00100\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetDigitalOutput()\ \ \ do\ \{\ TRISAbits.TRISA2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00101}00101\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUAbits.WPUA2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00102}00102\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUAbits.WPUA2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00103}00103\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONAbits.ODCA2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00104}00104\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONAbits.ODCA2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00105}00105\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELAbits.ANSELA2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00106}00106\ \textcolor{preprocessor}{\#define\ channel\_ANA2\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELAbits.ANSELA2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00108}00108\ \textcolor{comment}{//\ get/set\ MLED\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00109}00109\ \textcolor{preprocessor}{\#define\ MLED\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISBbits.TRISB1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00110}00110\ \textcolor{preprocessor}{\#define\ MLED\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATBbits.LATB1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00111}00111\ \textcolor{preprocessor}{\#define\ MLED\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00112}00112\ \textcolor{preprocessor}{\#define\ MLED\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUBbits.WPUB1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00113}00113\ \textcolor{preprocessor}{\#define\ MLED\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONBbits.ODCB1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00114}00114\ \textcolor{preprocessor}{\#define\ MLED\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELBbits.ANSELB1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00115}00115\ \textcolor{preprocessor}{\#define\ MLED\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00116}00116\ \textcolor{preprocessor}{\#define\ MLED\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00117}00117\ \textcolor{preprocessor}{\#define\ MLED\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB1\ =\ \string~LATBbits.LATB1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00118}00118\ \textcolor{preprocessor}{\#define\ MLED\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00119}00119\ \textcolor{preprocessor}{\#define\ MLED\_SetDigitalInput()\ \ \ \ do\ \{\ TRISBbits.TRISB1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00120}00120\ \textcolor{preprocessor}{\#define\ MLED\_SetDigitalOutput()\ \ \ do\ \{\ TRISBbits.TRISB1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00121}00121\ \textcolor{preprocessor}{\#define\ MLED\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00122}00122\ \textcolor{preprocessor}{\#define\ MLED\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00123}00123\ \textcolor{preprocessor}{\#define\ MLED\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00124}00124\ \textcolor{preprocessor}{\#define\ MLED\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00125}00125\ \textcolor{preprocessor}{\#define\ MLED\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELBbits.ANSELB1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00126}00126\ \textcolor{preprocessor}{\#define\ MLED\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELBbits.ANSELB1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00128}00128\ \textcolor{comment}{//\ get/set\ RLED\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00129}00129\ \textcolor{preprocessor}{\#define\ RLED\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISBbits.TRISB2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00130}00130\ \textcolor{preprocessor}{\#define\ RLED\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATBbits.LATB2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00131}00131\ \textcolor{preprocessor}{\#define\ RLED\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00132}00132\ \textcolor{preprocessor}{\#define\ RLED\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUBbits.WPUB2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00133}00133\ \textcolor{preprocessor}{\#define\ RLED\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONBbits.ODCB2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00134}00134\ \textcolor{preprocessor}{\#define\ RLED\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELBbits.ANSELB2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00135}00135\ \textcolor{preprocessor}{\#define\ RLED\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00136}00136\ \textcolor{preprocessor}{\#define\ RLED\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00137}00137\ \textcolor{preprocessor}{\#define\ RLED\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB2\ =\ \string~LATBbits.LATB2;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00138}00138\ \textcolor{preprocessor}{\#define\ RLED\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00139}00139\ \textcolor{preprocessor}{\#define\ RLED\_SetDigitalInput()\ \ \ \ do\ \{\ TRISBbits.TRISB2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00140}00140\ \textcolor{preprocessor}{\#define\ RLED\_SetDigitalOutput()\ \ \ do\ \{\ TRISBbits.TRISB2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00141}00141\ \textcolor{preprocessor}{\#define\ RLED\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00142}00142\ \textcolor{preprocessor}{\#define\ RLED\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00143}00143\ \textcolor{preprocessor}{\#define\ RLED\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00144}00144\ \textcolor{preprocessor}{\#define\ RLED\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00145}00145\ \textcolor{preprocessor}{\#define\ RLED\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELBbits.ANSELB2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00146}00146\ \textcolor{preprocessor}{\#define\ RLED\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELBbits.ANSELB2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00148}00148\ \textcolor{comment}{//\ get/set\ DLED\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00149}00149\ \textcolor{preprocessor}{\#define\ DLED\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISBbits.TRISB3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00150}00150\ \textcolor{preprocessor}{\#define\ DLED\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATBbits.LATB3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00151}00151\ \textcolor{preprocessor}{\#define\ DLED\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00152}00152\ \textcolor{preprocessor}{\#define\ DLED\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUBbits.WPUB3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00153}00153\ \textcolor{preprocessor}{\#define\ DLED\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONBbits.ODCB3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00154}00154\ \textcolor{preprocessor}{\#define\ DLED\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELBbits.ANSELB3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00155}00155\ \textcolor{preprocessor}{\#define\ DLED\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00156}00156\ \textcolor{preprocessor}{\#define\ DLED\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00157}00157\ \textcolor{preprocessor}{\#define\ DLED\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB3\ =\ \string~LATBbits.LATB3;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00158}00158\ \textcolor{preprocessor}{\#define\ DLED\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00159}00159\ \textcolor{preprocessor}{\#define\ DLED\_SetDigitalInput()\ \ \ \ do\ \{\ TRISBbits.TRISB3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00160}00160\ \textcolor{preprocessor}{\#define\ DLED\_SetDigitalOutput()\ \ \ do\ \{\ TRISBbits.TRISB3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00161}00161\ \textcolor{preprocessor}{\#define\ DLED\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00162}00162\ \textcolor{preprocessor}{\#define\ DLED\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00163}00163\ \textcolor{preprocessor}{\#define\ DLED\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00164}00164\ \textcolor{preprocessor}{\#define\ DLED\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00165}00165\ \textcolor{preprocessor}{\#define\ DLED\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELBbits.ANSELB3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00166}00166\ \textcolor{preprocessor}{\#define\ DLED\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELBbits.ANSELB3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00167}00167\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00168}00168\ \textcolor{comment}{//\ get/set\ RB0\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00169}00169\ \textcolor{preprocessor}{\#define\ RB0\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISBbits.TRISB5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00170}00170\ \textcolor{preprocessor}{\#define\ RB0\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATBbits.LATB5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00171}00171\ \textcolor{preprocessor}{\#define\ RB0\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00172}00172\ \textcolor{preprocessor}{\#define\ RB0\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUBbits.WPUB5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00173}00173\ \textcolor{preprocessor}{\#define\ RB0\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONBbits.ODCB5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00174}00174\ \textcolor{preprocessor}{\#define\ RB0\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELBbits.ANSELB5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00175}00175\ \textcolor{preprocessor}{\#define\ RB0\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00176}00176\ \textcolor{preprocessor}{\#define\ RB0\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00177}00177\ \textcolor{preprocessor}{\#define\ RB0\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATBbits.LATB5\ =\ \string~LATBbits.LATB5;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00178}00178\ \textcolor{preprocessor}{\#define\ RB0\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTBbits.RB5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00179}00179\ \textcolor{preprocessor}{\#define\ RB0\_SetDigitalInput()\ \ \ \ do\ \{\ TRISBbits.TRISB5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00180}00180\ \textcolor{preprocessor}{\#define\ RB0\_SetDigitalOutput()\ \ \ do\ \{\ TRISBbits.TRISB5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00181}00181\ \textcolor{preprocessor}{\#define\ RB0\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00182}00182\ \textcolor{preprocessor}{\#define\ RB0\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUBbits.WPUB5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00183}00183\ \textcolor{preprocessor}{\#define\ RB0\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00184}00184\ \textcolor{preprocessor}{\#define\ RB0\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONBbits.ODCB5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00185}00185\ \textcolor{preprocessor}{\#define\ RB0\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELBbits.ANSELB5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00186}00186\ \textcolor{preprocessor}{\#define\ RB0\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELBbits.ANSELB5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00187}00187\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00188}00188\ \textcolor{comment}{//\ get/set\ RC0\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00189}00189\ \textcolor{preprocessor}{\#define\ RC0\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00190}00190\ \textcolor{preprocessor}{\#define\ RC0\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00191}00191\ \textcolor{preprocessor}{\#define\ RC0\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC0\ =\ \string~LATCbits.LATC0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00192}00192\ \textcolor{preprocessor}{\#define\ RC0\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTCbits.RC0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00193}00193\ \textcolor{preprocessor}{\#define\ RC0\_SetDigitalInput()\ \ \ \ do\ \{\ TRISCbits.TRISC0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00194}00194\ \textcolor{preprocessor}{\#define\ RC0\_SetDigitalOutput()\ \ \ do\ \{\ TRISCbits.TRISC0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00195}00195\ \textcolor{preprocessor}{\#define\ RC0\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00196}00196\ \textcolor{preprocessor}{\#define\ RC0\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00197}00197\ \textcolor{preprocessor}{\#define\ RC0\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00198}00198\ \textcolor{preprocessor}{\#define\ RC0\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00199}00199\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00200}00200\ \textcolor{comment}{//\ get/set\ RC1\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00201}00201\ \textcolor{preprocessor}{\#define\ RC1\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00202}00202\ \textcolor{preprocessor}{\#define\ RC1\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00203}00203\ \textcolor{preprocessor}{\#define\ RC1\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC1\ =\ \string~LATCbits.LATC1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00204}00204\ \textcolor{preprocessor}{\#define\ RC1\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTCbits.RC1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00205}00205\ \textcolor{preprocessor}{\#define\ RC1\_SetDigitalInput()\ \ \ \ do\ \{\ TRISCbits.TRISC1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00206}00206\ \textcolor{preprocessor}{\#define\ RC1\_SetDigitalOutput()\ \ \ do\ \{\ TRISCbits.TRISC1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00207}00207\ \textcolor{preprocessor}{\#define\ RC1\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00208}00208\ \textcolor{preprocessor}{\#define\ RC1\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00209}00209\ \textcolor{preprocessor}{\#define\ RC1\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00210}00210\ \textcolor{preprocessor}{\#define\ RC1\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00212}00212\ \textcolor{comment}{//\ get/set\ RC3\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00213}00213\ \textcolor{preprocessor}{\#define\ RC3\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00214}00214\ \textcolor{preprocessor}{\#define\ RC3\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00215}00215\ \textcolor{preprocessor}{\#define\ RC3\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC3\ =\ \string~LATCbits.LATC3;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00216}00216\ \textcolor{preprocessor}{\#define\ RC3\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTCbits.RC3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00217}00217\ \textcolor{preprocessor}{\#define\ RC3\_SetDigitalInput()\ \ \ \ do\ \{\ TRISCbits.TRISC3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00218}00218\ \textcolor{preprocessor}{\#define\ RC3\_SetDigitalOutput()\ \ \ do\ \{\ TRISCbits.TRISC3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00219}00219\ \textcolor{preprocessor}{\#define\ RC3\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00220}00220\ \textcolor{preprocessor}{\#define\ RC3\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00221}00221\ \textcolor{preprocessor}{\#define\ RC3\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00222}00222\ \textcolor{preprocessor}{\#define\ RC3\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00223}00223\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00224}00224\ \textcolor{comment}{//\ get/set\ RC4\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00225}00225\ \textcolor{preprocessor}{\#define\ RC4\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC4\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00226}00226\ \textcolor{preprocessor}{\#define\ RC4\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC4\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00227}00227\ \textcolor{preprocessor}{\#define\ RC4\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC4\ =\ \string~LATCbits.LATC4;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00228}00228\ \textcolor{preprocessor}{\#define\ RC4\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTCbits.RC4}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00229}00229\ \textcolor{preprocessor}{\#define\ RC4\_SetDigitalInput()\ \ \ \ do\ \{\ TRISCbits.TRISC4\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00230}00230\ \textcolor{preprocessor}{\#define\ RC4\_SetDigitalOutput()\ \ \ do\ \{\ TRISCbits.TRISC4\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00231}00231\ \textcolor{preprocessor}{\#define\ RC4\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC4\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00232}00232\ \textcolor{preprocessor}{\#define\ RC4\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC4\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00233}00233\ \textcolor{preprocessor}{\#define\ RC4\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC4\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00234}00234\ \textcolor{preprocessor}{\#define\ RC4\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC4\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00235}00235\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00236}00236\ \textcolor{comment}{//\ get/set\ RC5\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00237}00237\ \textcolor{preprocessor}{\#define\ RC5\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00238}00238\ \textcolor{preprocessor}{\#define\ RC5\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00239}00239\ \textcolor{preprocessor}{\#define\ RC5\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATCbits.LATC5\ =\ \string~LATCbits.LATC5;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00240}00240\ \textcolor{preprocessor}{\#define\ RC5\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTCbits.RC5}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00241}00241\ \textcolor{preprocessor}{\#define\ RC5\_SetDigitalInput()\ \ \ \ do\ \{\ TRISCbits.TRISC5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00242}00242\ \textcolor{preprocessor}{\#define\ RC5\_SetDigitalOutput()\ \ \ do\ \{\ TRISCbits.TRISC5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00243}00243\ \textcolor{preprocessor}{\#define\ RC5\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00244}00244\ \textcolor{preprocessor}{\#define\ RC5\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUCbits.WPUC5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00245}00245\ \textcolor{preprocessor}{\#define\ RC5\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC5\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00246}00246\ \textcolor{preprocessor}{\#define\ RC5\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELCbits.ANSELC5\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00247}00247\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00248}00248\ \textcolor{comment}{//\ get/set\ RD0\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00249}00249\ \textcolor{preprocessor}{\#define\ RD0\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00250}00250\ \textcolor{preprocessor}{\#define\ RD0\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00251}00251\ \textcolor{preprocessor}{\#define\ RD0\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD0\ =\ \string~LATDbits.LATD0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00252}00252\ \textcolor{preprocessor}{\#define\ RD0\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00253}00253\ \textcolor{preprocessor}{\#define\ RD0\_SetDigitalInput()\ \ \ \ do\ \{\ TRISDbits.TRISD0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00254}00254\ \textcolor{preprocessor}{\#define\ RD0\_SetDigitalOutput()\ \ \ do\ \{\ TRISDbits.TRISD0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00255}00255\ \textcolor{preprocessor}{\#define\ RD0\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00256}00256\ \textcolor{preprocessor}{\#define\ RD0\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00257}00257\ \textcolor{preprocessor}{\#define\ RD0\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00258}00258\ \textcolor{preprocessor}{\#define\ RD0\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00260}00260\ \textcolor{comment}{//\ get/set\ RD1\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00261}00261\ \textcolor{preprocessor}{\#define\ RD1\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00262}00262\ \textcolor{preprocessor}{\#define\ RD1\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00263}00263\ \textcolor{preprocessor}{\#define\ RD1\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD1\ =\ \string~LATDbits.LATD1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00264}00264\ \textcolor{preprocessor}{\#define\ RD1\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD1}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00265}00265\ \textcolor{preprocessor}{\#define\ RD1\_SetDigitalInput()\ \ \ \ do\ \{\ TRISDbits.TRISD1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00266}00266\ \textcolor{preprocessor}{\#define\ RD1\_SetDigitalOutput()\ \ \ do\ \{\ TRISDbits.TRISD1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00267}00267\ \textcolor{preprocessor}{\#define\ RD1\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00268}00268\ \textcolor{preprocessor}{\#define\ RD1\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00269}00269\ \textcolor{preprocessor}{\#define\ RD1\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD1\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00270}00270\ \textcolor{preprocessor}{\#define\ RD1\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD1\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00271}00271\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00272}00272\ \textcolor{comment}{//\ get/set\ RD2\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00273}00273\ \textcolor{preprocessor}{\#define\ RD2\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00274}00274\ \textcolor{preprocessor}{\#define\ RD2\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00275}00275\ \textcolor{preprocessor}{\#define\ RD2\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD2\ =\ \string~LATDbits.LATD2;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00276}00276\ \textcolor{preprocessor}{\#define\ RD2\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD2}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00277}00277\ \textcolor{preprocessor}{\#define\ RD2\_SetDigitalInput()\ \ \ \ do\ \{\ TRISDbits.TRISD2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00278}00278\ \textcolor{preprocessor}{\#define\ RD2\_SetDigitalOutput()\ \ \ do\ \{\ TRISDbits.TRISD2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00279}00279\ \textcolor{preprocessor}{\#define\ RD2\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00280}00280\ \textcolor{preprocessor}{\#define\ RD2\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00281}00281\ \textcolor{preprocessor}{\#define\ RD2\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD2\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00282}00282\ \textcolor{preprocessor}{\#define\ RD2\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD2\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00283}00283\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00284}00284\ \textcolor{comment}{//\ get/set\ CS\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00285}00285\ \textcolor{preprocessor}{\#define\ CS\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISDbits.TRISD3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00286}00286\ \textcolor{preprocessor}{\#define\ CS\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATDbits.LATD3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00287}00287\ \textcolor{preprocessor}{\#define\ CS\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00288}00288\ \textcolor{preprocessor}{\#define\ CS\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUDbits.WPUD3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00289}00289\ \textcolor{preprocessor}{\#define\ CS\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONDbits.ODCD3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00290}00290\ \textcolor{preprocessor}{\#define\ CS\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELDbits.ANSELD3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00291}00291\ \textcolor{preprocessor}{\#define\ CS\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00292}00292\ \textcolor{preprocessor}{\#define\ CS\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00293}00293\ \textcolor{preprocessor}{\#define\ CS\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD3\ =\ \string~LATDbits.LATD3;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00294}00294\ \textcolor{preprocessor}{\#define\ CS\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD3}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00295}00295\ \textcolor{preprocessor}{\#define\ CS\_SetDigitalInput()\ \ \ \ do\ \{\ TRISDbits.TRISD3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00296}00296\ \textcolor{preprocessor}{\#define\ CS\_SetDigitalOutput()\ \ \ do\ \{\ TRISDbits.TRISD3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00297}00297\ \textcolor{preprocessor}{\#define\ CS\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00298}00298\ \textcolor{preprocessor}{\#define\ CS\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00299}00299\ \textcolor{preprocessor}{\#define\ CS\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONDbits.ODCD3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00300}00300\ \textcolor{preprocessor}{\#define\ CS\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONDbits.ODCD3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00301}00301\ \textcolor{preprocessor}{\#define\ CS\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD3\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00302}00302\ \textcolor{preprocessor}{\#define\ CS\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELDbits.ANSELD3\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00303}00303\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00304}00304\ \textcolor{comment}{//\ get/set\ RD6\ procedures}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00305}00305\ \textcolor{preprocessor}{\#define\ RD6\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD6\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00306}00306\ \textcolor{preprocessor}{\#define\ RD6\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD6\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00307}00307\ \textcolor{preprocessor}{\#define\ RD6\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD6\ =\ \string~LATDbits.LATD6;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00308}00308\ \textcolor{preprocessor}{\#define\ RD6\_GetValue()\ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD6}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00309}00309\ \textcolor{preprocessor}{\#define\ RD6\_SetDigitalInput()\ \ \ \ do\ \{\ TRISDbits.TRISD6\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00310}00310\ \textcolor{preprocessor}{\#define\ RD6\_SetDigitalOutput()\ \ \ do\ \{\ TRISDbits.TRISD6\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00311}00311\ \textcolor{preprocessor}{\#define\ RD6\_SetPullup()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD6\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00312}00312\ \textcolor{preprocessor}{\#define\ RD6\_ResetPullup()\ \ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD6\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00313}00313\ \textcolor{preprocessor}{\#define\ RD6\_SetAnalogMode()\ \ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD6\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00314}00314\ \textcolor{preprocessor}{\#define\ RD6\_SetDigitalMode()\ \ \ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD6\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00315}00315\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00316}00316\ \textcolor{comment}{//\ get/set\ DEBUG1\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00317}00317\ \textcolor{preprocessor}{\#define\ DEBUG1\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISDbits.TRISD7}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00318}00318\ \textcolor{preprocessor}{\#define\ DEBUG1\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATDbits.LATD7}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00319}00319\ \textcolor{preprocessor}{\#define\ DEBUG1\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD7}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00320}00320\ \textcolor{preprocessor}{\#define\ DEBUG1\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUDbits.WPUD7}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00321}00321\ \textcolor{preprocessor}{\#define\ DEBUG1\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONDbits.ODCD7}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00322}00322\ \textcolor{preprocessor}{\#define\ DEBUG1\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELDbits.ANSELD7}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00323}00323\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD7\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00324}00324\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD7\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00325}00325\ \textcolor{preprocessor}{\#define\ DEBUG1\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATDbits.LATD7\ =\ \string~LATDbits.LATD7;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00326}00326\ \textcolor{preprocessor}{\#define\ DEBUG1\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTDbits.RD7}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00327}00327\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetDigitalInput()\ \ \ \ do\ \{\ TRISDbits.TRISD7\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00328}00328\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetDigitalOutput()\ \ \ do\ \{\ TRISDbits.TRISD7\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00329}00329\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD7\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00330}00330\ \textcolor{preprocessor}{\#define\ DEBUG1\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUDbits.WPUD7\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00331}00331\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONDbits.ODCD7\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00332}00332\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONDbits.ODCD7\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00333}00333\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELDbits.ANSELD7\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00334}00334\ \textcolor{preprocessor}{\#define\ DEBUG1\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELDbits.ANSELD7\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00335}00335\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00336}00336\ \textcolor{comment}{//\ get/set\ RELAY0\ aliases}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00337}00337\ \textcolor{preprocessor}{\#define\ RELAY0\_TRIS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ TRISEbits.TRISE0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00338}00338\ \textcolor{preprocessor}{\#define\ RELAY0\_LAT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ LATEbits.LATE0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00339}00339\ \textcolor{preprocessor}{\#define\ RELAY0\_PORT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ PORTEbits.RE0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00340}00340\ \textcolor{preprocessor}{\#define\ RELAY0\_WPU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ WPUEbits.WPUE0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00341}00341\ \textcolor{preprocessor}{\#define\ RELAY0\_OD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ODCONEbits.ODCE0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00342}00342\ \textcolor{preprocessor}{\#define\ RELAY0\_ANS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ANSELEbits.ANSELE0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00343}00343\ \textcolor{preprocessor}{\#define\ RELAY0\_SetHigh()\ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATEbits.LATE0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00344}00344\ \textcolor{preprocessor}{\#define\ RELAY0\_SetLow()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATEbits.LATE0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00345}00345\ \textcolor{preprocessor}{\#define\ RELAY0\_Toggle()\ \ \ \ \ \ \ \ \ \ \ \ \ do\ \{\ LATEbits.LATE0\ =\ \string~LATEbits.LATE0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00346}00346\ \textcolor{preprocessor}{\#define\ RELAY0\_GetValue()\ \ \ \ \ \ \ \ \ \ \ PORTEbits.RE0}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00347}00347\ \textcolor{preprocessor}{\#define\ RELAY0\_SetDigitalInput()\ \ \ \ do\ \{\ TRISEbits.TRISE0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00348}00348\ \textcolor{preprocessor}{\#define\ RELAY0\_SetDigitalOutput()\ \ \ do\ \{\ TRISEbits.TRISE0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00349}00349\ \textcolor{preprocessor}{\#define\ RELAY0\_SetPullup()\ \ \ \ \ \ \ \ \ \ do\ \{\ WPUEbits.WPUE0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00350}00350\ \textcolor{preprocessor}{\#define\ RELAY0\_ResetPullup()\ \ \ \ \ \ \ \ do\ \{\ WPUEbits.WPUE0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00351}00351\ \textcolor{preprocessor}{\#define\ RELAY0\_SetPushPull()\ \ \ \ \ \ \ \ do\ \{\ ODCONEbits.ODCE0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00352}00352\ \textcolor{preprocessor}{\#define\ RELAY0\_SetOpenDrain()\ \ \ \ \ \ \ do\ \{\ ODCONEbits.ODCE0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00353}00353\ \textcolor{preprocessor}{\#define\ RELAY0\_SetAnalogMode()\ \ \ \ \ \ do\ \{\ ANSELEbits.ANSELE0\ =\ 1;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00354}00354\ \textcolor{preprocessor}{\#define\ RELAY0\_SetDigitalMode()\ \ \ \ \ do\ \{\ ANSELEbits.ANSELE0\ =\ 0;\ \}\ while(0)}}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00355}00355\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00366}00366\ \textcolor{keywordtype}{void}\ PIN\_MANAGER\_Initialize\ (\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00368}00368\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00369}00369\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{pin__manager_8h_source_l00371}00371\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ PIN\_MANAGER\_H}}
+
+\end{DoxyCode}
