@@ -3,6 +3,7 @@
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00023}00023\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00024}00024\ \textcolor{comment}{/*}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00025}00025\ \textcolor{comment}{\ \ \ \ (c)\ 2018\ Microchip\ Technology\ Inc.\ and\ its\ subsidiaries.\ }}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00026}00026\ \textcolor{comment}{\ \ \ \ }}
@@ -26,14 +27,17 @@
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00044}00044\ \textcolor{comment}{\ \ \ \ SOFTWARE.}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00045}00045\ \textcolor{comment}{\ */}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00050}00050\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00051}00051\ \textcolor{preprocessor}{\#include\ <xc.h>}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00052}00052\ \textcolor{preprocessor}{\#include\ "{}tmr6.h"{}}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00053}00053\ \textcolor{preprocessor}{\#include\ "{}interrupt\_manager.h"{}}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00054}00054\ \textcolor{preprocessor}{\#include\ "{}../timers.h"{}}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00055}00055\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00056}00056\ \textcolor{keyword}{extern}\ \textcolor{keyword}{volatile}\ uint16\_t\ \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[TMR\_COUNT];}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00060}00060\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00061}00061\ void\ (*TMR6\_InterruptHandler)(void);}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00066}00066\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00067}00067\ \textcolor{keywordtype}{void}\ TMR6\_Initialize(\textcolor{keywordtype}{void})}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00068}00068\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ Set\ TMR6\ to\ the\ options\ selected\ in\ the\ User\ Interface}}
@@ -168,7 +172,7 @@
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00198}00198\ }
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00199}00199\ \ \ \ \ \textcolor{comment}{//Decrement\ each\ software\ timer}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00200}00200\ \ \ \ \ \textcolor{keywordflow}{for}\ (i\ =\ 0;\ i\ <\ TMR\_COUNT;\ i++)\ \{}
-\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (tickCount[i]\ !=\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00201}00201\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[i]\ !=\ 0)\ \{}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{main_8c_ada284e1e4e960e3a4fd5c0b0a93314e1}{tickCount}}[i]-\/-\/;}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{\Hypertarget{tmr6_8c_source_l00204}00204\ \ \ \ \ \}}
