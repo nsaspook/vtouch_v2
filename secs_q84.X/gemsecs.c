@@ -1070,7 +1070,7 @@ P_CODES s10f1_opcmd(void)
  */
 uint16_t s6f11_opcmd(void)
 {
-	V.response.ceid = V.response.ack[9]; // CEID
+	V.ceid = V.response.ack[9]; // CEID
 	V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9]; // get CEID using full message block buffer
 	V.testing = (sizeof(H254[0].data) - 1) - 9;
 
@@ -1252,9 +1252,6 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			default:
 				break;
 			}
-			if (ceid == V_OSCREEN || ceid == V_SSCREEN) {
-				V.response.host_display_ack = true;
-			}
 			block.header = (uint8_t*) & H13[0];
 			block.length = sizeof(header13);
 			H13[0].block.block.systemb = V.systemb;
@@ -1292,13 +1289,12 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			break;
 		case 7:
 			break;
-		case 9:
-			V.equip_timeout++;
-			break;
 		case 11:
 			break;
 		case 13:
 			break;
+		case 9:
+			V.equip_timeout++;
 		default: // S9F0 abort
 			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];

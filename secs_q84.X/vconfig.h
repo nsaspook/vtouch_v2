@@ -48,7 +48,7 @@ extern "C" {
 	/** enable two serial port internal Host Equipment RS-232 testing.
 	 * comment out FAKER for normal host mode
 	 */
-//#define FAKER			// emulate equipment protocol to host loopback
+#define FAKER			// emulate equipment protocol to host loopback
 
 	//#define	FRAME_OVERRUN
 
@@ -104,6 +104,18 @@ extern "C" {
 #define V_SSCREEN	94
 #define E_OSCREEN	81
 #define E_SSCREEN	81
+	//CEID code	
+#define SECS_CHANGE	9
+
+#define E_OFFLINE	28 // The EQUIPMENT OFFLINE button was pressed.
+#define E_ONLINE	29 // The EQUIPMENT ONLINE button was pressed.
+#define E_REMOTE	30 // The EQUIPMENT REMOTE button was pressed.
+#define E_LOCAL		31 // The EQUIPMENT LOCAL button was pressed.
+#define C_ENABLED	32 // The COMMUNICATION ENABLED button was pressed.
+#define C_DISABLED	33 // The COMMUNICATION DISABLED button was pressed.
+
+#define CEID_LOCAL	30
+#define CEID_REMOTE	31
 
 #define S10F3_STR_POS	135
 #define S10F3_TID_POS	138
@@ -310,7 +322,7 @@ extern "C" {
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
-		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors;
+		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors, ceid;
 		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;

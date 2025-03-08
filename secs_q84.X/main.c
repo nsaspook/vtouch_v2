@@ -223,7 +223,7 @@ V_data V = {
 	.vterm = MAIN_VTERM,
 	.tx_rs232 = 'O',
 	.rx_rs232 = 'O',
-	.debug = false,
+	.debug = true,
 	.rerror = false,
 	.help = false,
 };
@@ -1042,7 +1042,7 @@ void main(void)
 			if ((V.error == LINK_ERROR_NONE) && (V.abort == LINK_ERROR_NONE)) {
 				if (TimerDone(TMR_DISPLAY)) { // limit update rate
 					if (V.debug) {
-						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
+						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "C%d C%d M %c%c %d         ", V.response.ceid, V.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
 					} else {
 #ifdef FAKER
 						snprintf(get_vterm_ptr(2, MAIN_VTERM), MAX_TEXT, "EQUI: %ld G:%s         #", V.ticks, GEM_TEXT[V.g_state]);
