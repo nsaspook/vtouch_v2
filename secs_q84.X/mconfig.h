@@ -19,7 +19,7 @@
  * TERMS. 
  */
 
-/* 
+/** \file mconfig.h
  * File:   
  * Author: 
  * Comments:
@@ -31,6 +31,13 @@
 #ifndef MCONFIG_H
 #define	MCONFIG_H
 
+#define DEF_TIME	1721693000
+#define DEF_TIME_SIZE	11
+
+#define GTI_MAX		600 // 600
+#define GTI_IDLE	50
+#define GTI_INCR	100
+#define GTI_NORM	450 // 450
 
 #include "mcc_generated_files/mcc.h"
 #include "vconfig.h"
@@ -39,6 +46,11 @@ void mconfig_init(void);
 
 void mode_lamp_dim(void);
 void mode_lamp_bright(void);
+void log_serial(uint8_t *, uint16_t);
+void logging_cmds(void);
+void set_time(const time_t);
+time_t time(time_t *);
+
 
 #endif
 

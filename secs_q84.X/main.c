@@ -226,6 +226,10 @@ V_data V = {
 	.debug = true,
 	.rerror = false,
 	.help = false,
+	.secs_value = 0,
+	.cmd_value = 0,
+	.utc_cmd_value = 0,
+	.utc_ticks = DEF_TIME,
 };
 
 B_type B = {
@@ -831,6 +835,7 @@ void main(void)
 	RLED_SetLow(); // start complete power-up serial speed setups, LEDS OFF
 	MLED_SetLow();
 	DLED_SetLow();
+	RELAY0_SetLow();
 	temp_lock = true;
 	if (V.speed_spin) { // update the speed lock status byte
 		DATAEE_WriteByte(UART_SPEED_LOCK_EADR, temp_lock);
@@ -882,6 +887,12 @@ void main(void)
 			equip_tx(ENQ); // simulate equipment comm data
 #endif
 		}
+		
+		/*
+		 * check and parse logging configuration commands on UART3
+		 */
+		logging_cmds();
+		
 		/*
 		 * protocol state machine for HOST emulation
 		 */
@@ -1238,6 +1249,7 @@ void onesec_io(void)
 	MLED_SetLow();
 	DLED_SetLow();
 	B.one_sec_flag = true;
+	V.utc_ticks++;
 }
 
 /* Misc ACSII spinner character generator, stores position for each shape */

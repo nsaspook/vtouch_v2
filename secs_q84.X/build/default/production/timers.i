@@ -39287,6 +39287,105 @@ unsigned char __t3rd16on(void);
 # 4 "timers.c" 2
 # 1 "./vconfig.h" 1
 # 16 "./vconfig.h"
+# 1 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 1 3
+# 33 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+# 1 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 1 3
+# 82 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long time_t;
+# 303 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+typedef void * timer_t;
+
+
+
+
+typedef int clockid_t;
+
+
+
+
+typedef unsigned long clock_t;
+# 323 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+struct timespec { time_t tv_sec; long tv_nsec; };
+
+
+
+
+
+typedef int pid_t;
+# 421 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+typedef struct __locale_struct * locale_t;
+# 34 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 2 3
+
+
+
+
+
+
+struct tm {
+ int tm_sec;
+ int tm_min;
+ int tm_hour;
+ int tm_mday;
+ int tm_mon;
+ int tm_year;
+ int tm_wday;
+ int tm_yday;
+ int tm_isdst;
+ long __tm_gmtoff;
+ const char *__tm_zone;
+};
+
+clock_t clock (void);
+time_t time (time_t *);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
+size_t strftime (char *restrict, size_t, const char *restrict, const struct tm *restrict);
+struct tm *gmtime (const time_t *);
+struct tm *localtime (const time_t *);
+char *asctime (const struct tm *);
+char *ctime (const time_t *);
+int timespec_get(struct timespec *, int);
+# 73 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+size_t strftime_l (char * restrict, size_t, const char * restrict, const struct tm * restrict, locale_t);
+
+struct tm *gmtime_r (const time_t *restrict, struct tm *restrict);
+struct tm *localtime_r (const time_t *restrict, struct tm *restrict);
+char *asctime_r (const struct tm *restrict, char *restrict);
+char *ctime_r (const time_t *, char *);
+
+void tzset (void);
+
+struct itimerspec {
+ struct timespec it_interval;
+ struct timespec it_value;
+};
+# 102 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+int nanosleep (const struct timespec *, struct timespec *);
+int clock_getres (clockid_t, struct timespec *);
+int clock_gettime (clockid_t, struct timespec *);
+int clock_settime (clockid_t, const struct timespec *);
+int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
+int clock_getcpuclockid (pid_t, clockid_t *);
+
+struct sigevent;
+int timer_create (clockid_t, struct sigevent *restrict, timer_t *restrict);
+int timer_delete (timer_t);
+int timer_settime (timer_t, int, const struct itimerspec *restrict, struct itimerspec *restrict);
+int timer_gettime (timer_t, struct itimerspec *);
+int timer_getoverrun (timer_t);
+
+extern char *tzname[2];
+
+
+
+
+
+char *strptime (const char *restrict, const char *restrict, struct tm *restrict);
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+struct tm *getdate (const char *);
+# 17 "./vconfig.h" 2
 # 1 "./mcc_generated_files/adc.h" 1
 # 65 "./mcc_generated_files/adc.h"
 typedef uint16_t adc_result_t;
@@ -39398,7 +39497,7 @@ void ADC_SetContext2ThresholdInterruptHandler(void (* InterruptHandler)(void));
 void ADC_SetContext3ThresholdInterruptHandler(void (* InterruptHandler)(void));
 # 1132 "./mcc_generated_files/adc.h"
 void ADC_SetContext4ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 17 "./vconfig.h" 2
+# 18 "./vconfig.h" 2
 # 1 "./mcc_generated_files/spi1.h" 1
 # 54 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/stdio.h" 1 3
@@ -39571,12 +39670,12 @@ void SPI1_WriteBlock(void *block, size_t blockSize);
 void SPI1_ReadBlock(void *block, size_t blockSize);
 void SPI1_WriteByte(uint8_t byte);
 uint8_t SPI1_ReadByte(void);
-# 18 "./vconfig.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 366 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
-# 159 "./vconfig.h"
+# 1 "./mcc_generated_files/pin_manager.h" 1
+# 390 "./mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+# 20 "./vconfig.h" 2
+# 162 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39740,6 +39839,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[127 + 1], terminal[159 + 1], info[63 + 1];
   uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
+  volatile uint32_t utc_ticks;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -39752,6 +39852,9 @@ void PIN_MANAGER_Initialize (void);
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
+  int16_t secs_value;
+  int16_t cmd_value;
+  time_t utc_cmd_value;
  } V_data;
 
  typedef struct V_help {

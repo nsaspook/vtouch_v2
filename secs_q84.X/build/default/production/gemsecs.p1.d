@@ -13,6 +13,7 @@ mcc_generated_files/tmr6.h  \
 mcc_generated_files/dma1.h  \
 mcc_generated_files/tmr2.h  \
 mcc_generated_files/memory.h  \
+mcc_generated_files/uart3.h  \
 mcc_generated_files/uart2.h  \
 mcc_generated_files/uart1.h  \
 mcc_generated_files/pwm2_16bit.h  \

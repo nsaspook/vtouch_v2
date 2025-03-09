@@ -67,6 +67,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 #endif
 		if (UART1_is_rx_ready()) {
 			rxData = UART1_Read();
+			log_serial(&rxData, 1);
 			V.rx_total++;
 			DLED_Toggle();
 			if (rxData == ENQ) {
@@ -114,6 +115,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 #else
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				log_serial(&rxData, 1);
 				V.rx_total++;
 				DLED_Toggle();
 				if (rxData == EOT) {
@@ -145,7 +147,10 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			MLED_SetHigh();
 		} else {
 			if (UART1_is_rx_ready()) {
+				RELAY0_SetHigh();
 				rxData = UART1_Read();
+				log_serial(&rxData, 1);
+				RELAY0_SetLow();
 				V.rx_total++;
 				DLED_Toggle();
 				if (rxData_l == 0) { // start header reads
@@ -183,6 +188,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 						} else { // bad checksum
 							while (UART1_is_rx_ready()) { // dump receive buffer of bad data
 								rxData = UART1_Read();
+								log_serial(&rxData, 1);
 								V.rx_total++;
 							}
 							WaitMs(T1); // inter-character timeout
@@ -261,7 +267,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 		*m_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
-			UART1_Read();
+			rxData = UART1_Read();
+			log_serial(&rxData, 1);
 			V.rx_total++;
 		}
 		while (UART2_DataReady) { // dump the receive buffer
@@ -295,6 +302,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				log_serial(&rxData, 1);
 				V.rx_total++;
 			}
 			if (UART2_is_rx_ready()) {
@@ -366,7 +374,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		} else {
 			if (UART1_is_rx_ready() || UART1_is_rx_ready()) {
 				if (UART1_is_rx_ready()) {
+					RELAY0_SetHigh();
 					rxData = UART1_Read();
+					log_serial(&rxData, 1);
+					RELAY0_SetLow();
 					V.rx_total++;
 				}
 				if (UART2_is_rx_ready()) {
@@ -410,6 +421,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 						} else { // bad checksum
 							while (UART1_is_rx_ready()) { // dump receive buffer of bad data
 								rxData = UART1_Read();
+								log_serial(&rxData, 1);
 								V.rx_total++;
 							}
 							while (UART2_is_rx_ready()) { // dump receive buffer of bad data
@@ -462,7 +474,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		*r_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
-			UART1_Read();
+			rxData = UART1_Read();
+			log_serial(&rxData, 1);
 			V.rx_total++;
 		}
 		while (UART2_DataReady) { // dump the receive buffer
@@ -534,6 +547,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		} else {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				log_serial(&rxData, 1);
 				V.rx_total++;
 				if (rxData == EOT) {
 					StartTimer(TMR_T3, T3);
@@ -613,6 +627,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		} else {
 			if (UART1_is_rx_ready()) {
 				rxData = UART1_Read();
+				log_serial(&rxData, 1);
 				V.rx_total++;
 				if (rxData == ACK) {
 					V.failed_send = SEND_ERROR_NONE;
@@ -640,7 +655,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
 		*t_link = LINK_STATE_ERROR;
 		V.all_errors++;
 		while (UART1_DataReady) { // dump the receive buffer
-			UART1_Read();
+			rxData = UART1_Read();
+			log_serial(&rxData, 1);
 			V.rx_total++;
 		}
 		while (UART2_DataReady) { // dump the receive buffer
@@ -1073,7 +1089,13 @@ uint16_t s6f11_opcmd(void)
 	V.ceid = V.response.ack[9]; // CEID
 	V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9]; // get CEID using full message block buffer
 	V.testing = (sizeof(H254[0].data) - 1) - 9;
-
+#ifdef LOG_SERIAL_s6f11
+	RELAY0_SetHigh();
+	log_serial((uint8_t *) " S6F11 B ", 9);
+	log_serial(H254[0].data, sizeof(H254[0].data));
+	log_serial((uint8_t *) " S6F11 E ", 9);
+	RELAY0_SetLow();
+#endif
 	return V.response.ceid;
 }
 

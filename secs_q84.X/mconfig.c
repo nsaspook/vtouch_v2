@@ -12,7 +12,7 @@ typedef struct D_data { // control data structure
 extern V_data V;
 static D_data D = {0};
 
-/*
+/** \file mconfig.c
  * This MUST run first to clear the vterm buffers before using any other functions
  */
 void mconfig_init(void)
@@ -259,4 +259,172 @@ D_CODES set_temp_display_help(const D_CODES new_response_info)
 	old_info = V.response.help_temp;
 	V.response.help_temp = new_response_info;
 	return old_info;
+}
+
+/** \file mconfig.c
+ * send to logging serial port, busy wait until port buffer has space
+ */
+void log_serial(uint8_t * data, uint16_t len)
+{
+	uint16_t idx = 0;
+
+	if (len == 0) {
+		return;
+	}
+
+	while (len--) {
+		if (UART3_is_tx_ready()) {
+			UART3_Write(data[idx++]);
+		} else {
+			while (!UART3_is_tx_ready()) {
+			};
+			UART3_Write(data[idx++]);
+		}
+	}
+}
+
+/*
+ * check for incoming data on the logging TTL serial connection
+ * use UART3 
+ * 
+ * cmd_value is the buffer variable
+ */
+void logging_cmds(void)
+{
+	static uint8_t value[] = {0, 0, 0, 0}, vi = 0;
+	static uint8_t utc_value[DEF_TIME_SIZE] = {0};
+	static bool utc = false;
+	uint8_t vcmd_size = sizeof(value), rxData = 0;
+	uint8_t utc_vcmd_size = DEF_TIME_SIZE - 1;
+
+	if (UART3_is_rx_ready()) {
+		rxData = UART3_Read();
+
+		switch (rxData) {
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			if (!utc) { // process power cmds
+				if (vi < vcmd_size) {
+					value[vi++] = rxData - 48; // ascii '0'
+				} else {
+				}
+			} else { // process UTC time from host cmds
+				if (vi < utc_vcmd_size) {
+					utc_value[vi++] = rxData;
+				} else {
+				}
+			}
+			break;
+		case 'T': // begin UTC value
+			utc = true;
+			break;
+		case 't': // end UTC value
+			utc = false;
+			if (vi >= utc_vcmd_size) {
+				vi = 0;
+				utc_value[10] = 0;
+				V.utc_cmd_value = (time_t) atol((char *) utc_value);
+
+				if (V.utc_cmd_value < DEF_TIME) {
+					V.utc_cmd_value = DEF_TIME;
+				}
+				set_time(V.utc_cmd_value);
+			};
+			break;
+		case 'V': // begin power/utc value
+			vi = 0;
+			break;
+		case 'X': // end power value
+			utc = false;
+			if (vi >= vcmd_size) {
+				vi = 0;
+				V.cmd_value = value[0]*1000 + value [1]*100 + value[2]*10 + value[3];
+				if (V.cmd_value > GTI_MAX) {
+					V.cmd_value = GTI_MAX;
+				}
+				if (V.cmd_value < 0) {
+					V.cmd_value = 0;
+				}
+				INTERRUPT_GlobalInterruptLowDisable(); // 16-bit atomic update
+				V.secs_value = V.cmd_value;
+				INTERRUPT_GlobalInterruptLowEnable();
+			};
+			break;
+		case 'Z': // zero power
+			utc = false;
+			V.cmd_value = 0;
+			break;
+		case '+': // incr power
+			utc = false;
+			V.cmd_value = V.secs_value + GTI_INCR;
+			if (V.cmd_value > GTI_MAX) {
+				V.cmd_value = GTI_MAX;
+			}
+			break;
+		case '-': // decr power
+			utc = false;
+			V.cmd_value = V.secs_value - GTI_INCR;
+			if (V.cmd_value < 0) {
+				V.cmd_value = 0;
+			}
+			break;
+		case 'I': // idle power
+			utc = false;
+			V.cmd_value = GTI_IDLE;
+			break;
+		case 'F': // normal operation
+			utc = false;
+			V.cmd_value = GTI_NORM;
+			break;
+		case 'M': // max unit rated power testing
+			utc = false;
+			V.cmd_value = GTI_MAX;
+			break;
+		case '#': // execute command symbol
+			utc = false;
+			INTERRUPT_GlobalInterruptHighDisable();
+			INTERRUPT_GlobalInterruptLowDisable(); // 16-bit atomic update
+			V.secs_value = V.cmd_value;
+			INTERRUPT_GlobalInterruptLowEnable();
+			INTERRUPT_GlobalInterruptHighEnable();
+			break;
+		default: // eat extra characters
+			utc = false;
+			while (UART3_is_rx_ready()) {
+				rxData = UART3_Read();
+			}
+			break;
+		}
+	}
+}
+
+void set_time(const time_t t)
+{
+	PIE8bits.TMR5IE = 0;
+	V.utc_ticks = t;
+	PIE8bits.TMR5IE = 1;
+}
+
+/*
+ * if t > 0, t is set to memory location of current_time variable
+ */
+time_t time(time_t * t)
+{
+	static time_t current_time;
+	
+	PIE8bits.TMR5IE = 0;
+	current_time = V.utc_ticks;
+	PIE8bits.TMR5IE = 1;
+	if (t) {
+		t = &current_time;
+	}
+	return current_time;
 }

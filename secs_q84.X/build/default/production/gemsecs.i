@@ -39500,6 +39500,103 @@ unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 2 3
 # 16 "./vconfig.h" 2
+# 1 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 1 3
+# 33 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+# 1 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 1 3
+# 82 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long time_t;
+# 303 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+typedef void * timer_t;
+
+
+
+
+typedef int clockid_t;
+
+
+
+
+typedef unsigned long clock_t;
+# 323 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+struct timespec { time_t tv_sec; long tv_nsec; };
+
+
+
+
+
+typedef int pid_t;
+# 34 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 2 3
+
+
+
+
+
+
+struct tm {
+ int tm_sec;
+ int tm_min;
+ int tm_hour;
+ int tm_mday;
+ int tm_mon;
+ int tm_year;
+ int tm_wday;
+ int tm_yday;
+ int tm_isdst;
+ long __tm_gmtoff;
+ const char *__tm_zone;
+};
+
+clock_t clock (void);
+time_t time (time_t *);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
+size_t strftime (char *restrict, size_t, const char *restrict, const struct tm *restrict);
+struct tm *gmtime (const time_t *);
+struct tm *localtime (const time_t *);
+char *asctime (const struct tm *);
+char *ctime (const time_t *);
+int timespec_get(struct timespec *, int);
+# 73 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+size_t strftime_l (char * restrict, size_t, const char * restrict, const struct tm * restrict, locale_t);
+
+struct tm *gmtime_r (const time_t *restrict, struct tm *restrict);
+struct tm *localtime_r (const time_t *restrict, struct tm *restrict);
+char *asctime_r (const struct tm *restrict, char *restrict);
+char *ctime_r (const time_t *, char *);
+
+void tzset (void);
+
+struct itimerspec {
+ struct timespec it_interval;
+ struct timespec it_value;
+};
+# 102 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+int nanosleep (const struct timespec *, struct timespec *);
+int clock_getres (clockid_t, struct timespec *);
+int clock_gettime (clockid_t, struct timespec *);
+int clock_settime (clockid_t, const struct timespec *);
+int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
+int clock_getcpuclockid (pid_t, clockid_t *);
+
+struct sigevent;
+int timer_create (clockid_t, struct sigevent *restrict, timer_t *restrict);
+int timer_delete (timer_t);
+int timer_settime (timer_t, int, const struct itimerspec *restrict, struct itimerspec *restrict);
+int timer_gettime (timer_t, struct itimerspec *);
+int timer_getoverrun (timer_t);
+
+extern char *tzname[2];
+
+
+
+
+
+char *strptime (const char *restrict, const char *restrict, struct tm *restrict);
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+struct tm *getdate (const char *);
+# 17 "./vconfig.h" 2
 # 1 "./mcc_generated_files/adc.h" 1
 # 58 "./mcc_generated_files/adc.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/stdbool.h" 1 3
@@ -39619,7 +39716,7 @@ void ADC_SetContext2ThresholdInterruptHandler(void (* InterruptHandler)(void));
 void ADC_SetContext3ThresholdInterruptHandler(void (* InterruptHandler)(void));
 # 1132 "./mcc_generated_files/adc.h"
 void ADC_SetContext4ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 17 "./vconfig.h" 2
+# 18 "./vconfig.h" 2
 # 1 "./mcc_generated_files/spi1.h" 1
 # 59 "./mcc_generated_files/spi1.h"
 typedef enum {
@@ -39635,12 +39732,12 @@ void SPI1_WriteBlock(void *block, size_t blockSize);
 void SPI1_ReadBlock(void *block, size_t blockSize);
 void SPI1_WriteByte(uint8_t byte);
 uint8_t SPI1_ReadByte(void);
-# 18 "./vconfig.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 366 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
-# 159 "./vconfig.h"
+# 1 "./mcc_generated_files/pin_manager.h" 1
+# 390 "./mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+# 20 "./vconfig.h" 2
+# 162 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39804,6 +39901,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[127 + 1], terminal[159 + 1], info[63 + 1];
   uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
+  volatile uint32_t utc_ticks;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -39816,6 +39914,9 @@ void PIN_MANAGER_Initialize (void);
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
+  int16_t secs_value;
+  int16_t cmd_value;
+  time_t utc_cmd_value;
  } V_data;
 
  typedef struct V_help {
@@ -40602,6 +40703,58 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 # 225 "./mcc_generated_files/memory.h"
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 # 62 "./mcc_generated_files/mcc.h" 2
+# 1 "./mcc_generated_files/uart3.h" 1
+# 74 "./mcc_generated_files/uart3.h"
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart3_status_t;
+
+
+
+
+extern volatile uint8_t uart3TxBufferRemaining;
+extern volatile uint8_t uart3RxCount;
+# 115 "./mcc_generated_files/uart3.h"
+void UART3_Initialize(void);
+# 163 "./mcc_generated_files/uart3.h"
+_Bool UART3_is_rx_ready(void);
+# 211 "./mcc_generated_files/uart3.h"
+_Bool UART3_is_tx_ready(void);
+# 258 "./mcc_generated_files/uart3.h"
+_Bool UART3_is_tx_done(void);
+# 306 "./mcc_generated_files/uart3.h"
+uart3_status_t UART3_get_last_status(void);
+# 355 "./mcc_generated_files/uart3.h"
+uint8_t UART3_Read(void);
+# 380 "./mcc_generated_files/uart3.h"
+void UART3_Write(uint8_t txData);
+# 401 "./mcc_generated_files/uart3.h"
+void UART3_Transmit_ISR(void);
+# 422 "./mcc_generated_files/uart3.h"
+void UART3_Receive_ISR(void);
+# 443 "./mcc_generated_files/uart3.h"
+void UART3_RxDataHandler(void);
+# 461 "./mcc_generated_files/uart3.h"
+void UART3_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 479 "./mcc_generated_files/uart3.h"
+void UART3_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 497 "./mcc_generated_files/uart3.h"
+void UART3_SetErrorHandler(void (* interruptHandler)(void));
+# 517 "./mcc_generated_files/uart3.h"
+void (*UART3_RxInterruptHandler)(void);
+# 535 "./mcc_generated_files/uart3.h"
+void (*UART3_TxInterruptHandler)(void);
+# 555 "./mcc_generated_files/uart3.h"
+void UART3_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 573 "./mcc_generated_files/uart3.h"
+void UART3_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 63 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/uart2.h" 1
 # 74 "./mcc_generated_files/uart2.h"
 typedef union {
@@ -40655,7 +40808,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 575 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 63 "./mcc_generated_files/mcc.h" 2
+# 64 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/uart1.h" 1
 # 74 "./mcc_generated_files/uart1.h"
 typedef union {
@@ -40709,7 +40862,7 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
 void UART1_put_buffer(uint8_t);
-# 64 "./mcc_generated_files/mcc.h" 2
+# 65 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pwm2_16bit.h" 1
 # 63 "./mcc_generated_files/pwm2_16bit.h"
@@ -40737,14 +40890,14 @@ void PWM2_16BIT_Slice1Output1_SetInterruptHandler(void (* InterruptHandler)(void
 void PWM2_16BIT_Slice1Output2_SetInterruptHandler(void (* InterruptHandler)(void));
 # 209 "./mcc_generated_files/pwm2_16bit.h"
 void PWM2_16BIT_Period_SetInterruptHandler(void (* InterruptHandler)(void));
-# 66 "./mcc_generated_files/mcc.h" 2
-# 80 "./mcc_generated_files/mcc.h"
+# 67 "./mcc_generated_files/mcc.h" 2
+# 81 "./mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 93 "./mcc_generated_files/mcc.h"
+# 94 "./mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 106 "./mcc_generated_files/mcc.h"
+# 107 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 118 "./mcc_generated_files/mcc.h"
+# 119 "./mcc_generated_files/mcc.h"
 void SystemArbiter_Initialize(void);
 # 24 "./gemsecs.h" 2
 
@@ -40832,11 +40985,15 @@ D_CODES set_temp_display_help(const D_CODES);
 # 1 "./msg_text.h" 1
 # 14 "./msg_text.h"
 # 1 "./mconfig.h" 1
-# 38 "./mconfig.h"
+# 45 "./mconfig.h"
 void mconfig_init(void);
 
 void mode_lamp_dim(void);
 void mode_lamp_bright(void);
+void log_serial(uint8_t *, uint16_t);
+void logging_cmds(void);
+void set_time(const time_t);
+time_t time(time_t *);
 # 15 "./msg_text.h" 2
 
 
@@ -41097,6 +41254,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 
   if (UART1_is_rx_ready()) {
    rxData = UART1_Read();
+   log_serial(&rxData, 1);
    V.rx_total++;
    do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
    if (rxData == 0x05) {
@@ -41128,9 +41286,10 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    *m_link = LINK_STATE_NAK;
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
-# 115 "gemsecs.c"
+# 116 "gemsecs.c"
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
+    log_serial(&rxData, 1);
     V.rx_total++;
     do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData == 0x04) {
@@ -41162,7 +41321,10 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
    do { LATBbits.LATB1 = 1; } while(0);
   } else {
    if (UART1_is_rx_ready()) {
+    do { LATEbits.LATE0 = 1; } while(0);
     rxData = UART1_Read();
+    log_serial(&rxData, 1);
+    do { LATEbits.LATE0 = 0; } while(0);
     V.rx_total++;
     do { LATBbits.LATB3 = ~LATBbits.LATB3; } while(0);
     if (rxData_l == 0) {
@@ -41200,6 +41362,7 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
       } else {
        while (UART1_is_rx_ready()) {
         rxData = UART1_Read();
+        log_serial(&rxData, 1);
         V.rx_total++;
        }
        WaitMs(500);
@@ -41278,7 +41441,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
   *m_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
-   UART1_Read();
+   rxData = UART1_Read();
+   log_serial(&rxData, 1);
    V.rx_total++;
   }
   while ((UART2_is_rx_ready())) {
@@ -41312,6 +41476,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   if (UART1_is_rx_ready() || UART2_is_rx_ready()) {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
+    log_serial(&rxData, 1);
     V.rx_total++;
    }
    if (UART2_is_rx_ready()) {
@@ -41355,7 +41520,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 
   StartTimer(TMR_T2, 3000);
   *r_link = LINK_STATE_EOT;
-# 349 "gemsecs.c"
+# 357 "gemsecs.c"
   H10[3].block.block.systemb = V.ticks;
   secs_send((uint8_t*) & H10[3], sizeof(header10), 0, 2);
 
@@ -41376,7 +41541,10 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   } else {
    if (UART1_is_rx_ready() || UART1_is_rx_ready()) {
     if (UART1_is_rx_ready()) {
+     do { LATEbits.LATE0 = 1; } while(0);
      rxData = UART1_Read();
+     log_serial(&rxData, 1);
+     do { LATEbits.LATE0 = 0; } while(0);
      V.rx_total++;
     }
     if (UART2_is_rx_ready()) {
@@ -41420,6 +41588,7 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
       } else {
        while (UART1_is_rx_ready()) {
         rxData = UART1_Read();
+        log_serial(&rxData, 1);
         V.rx_total++;
        }
        while (UART2_is_rx_ready()) {
@@ -41472,7 +41641,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
   *r_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
-   UART1_Read();
+   rxData = UART1_Read();
+   log_serial(&rxData, 1);
    V.rx_total++;
   }
   while ((UART2_is_rx_ready())) {
@@ -41544,6 +41714,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   } else {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
+    log_serial(&rxData, 1);
     V.rx_total++;
     if (rxData == 0x04) {
      StartTimer(TMR_T3, 5000);
@@ -41623,6 +41794,7 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   } else {
    if (UART1_is_rx_ready()) {
     rxData = UART1_Read();
+    log_serial(&rxData, 1);
     V.rx_total++;
     if (rxData == 0x06) {
      V.failed_send = SEND_ERROR_NONE;
@@ -41650,7 +41822,8 @@ LINK_STATES t_protocol(LINK_STATES * t_link)
   *t_link = LINK_STATE_ERROR;
   V.all_errors++;
   while ((UART1_is_rx_ready())) {
-   UART1_Read();
+   rxData = UART1_Read();
+   log_serial(&rxData, 1);
    V.rx_total++;
   }
   while ((UART2_is_rx_ready())) {
@@ -41829,24 +42002,24 @@ void terminal_format(DISPLAY_TYPES t_format)
  switch (t_format) {
  case display_message:
   snprintf(V.terminal, 159, msg0,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.sequences, "2.16G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.sequences, "2.17G");
   break;
  case display_online:
   snprintf(V.terminal, 159, msg1,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.sequences, "2.16G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, V.sequences, "2.17G");
   break;
  case display_remote:
-  snprintf(V.terminal, 159, msg2, msg_gemremote, V.sequences, "2.16G");
+  snprintf(V.terminal, 159, msg2, msg_gemremote, V.sequences, "2.17G");
   break;
  case display_gemhelp:
-  snprintf(V.terminal, 159, msg_gemhelp, msg_gemcmds, "2.16G");
+  snprintf(V.terminal, 159, msg_gemhelp, msg_gemcmds, "2.17G");
   break;
  case display_free:
-  snprintf(V.terminal, 159, msg_free, msg_freecmds, "2.16G");
+  snprintf(V.terminal, 159, msg_free, msg_freecmds, "2.17G");
   break;
  default:
   snprintf(V.terminal, 159, msg99,
-   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.16G");
+   V.all_errors, V.r_l_state, V.failed_receive, V.t_l_state, V.failed_send, V.checksum_error, "2.17G");
   break;
  }
 
@@ -42083,6 +42256,12 @@ uint16_t s6f11_opcmd(void)
  V.ceid = V.response.ack[9];
  V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9];
  V.testing = (sizeof(H254[0].data) - 1) - 9;
+
+ do { LATEbits.LATE0 = 1; } while(0);
+ log_serial((uint8_t *) " S6F11 B ", 9);
+ log_serial(H254[0].data, sizeof(H254[0].data));
+ log_serial((uint8_t *) " S6F11 E ", 9);
+ do { LATEbits.LATE0 = 0; } while(0);
 
  return V.response.ceid;
 }

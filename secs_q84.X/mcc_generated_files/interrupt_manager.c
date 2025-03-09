@@ -74,6 +74,8 @@ void  INTERRUPT_Initialize (void)
     IPR2bits.DMA1ORIP = 1;
     IPR8bits.U2TXIP = 1;
     IPR8bits.U2RXIP = 1;
+    IPR9bits.U3TXIP = 1;
+    IPR9bits.U3RXIP = 1;
     IPR4bits.U1TXIP = 1;
     IPR4bits.U1RXIP = 1;
     IPR15bits.TMR6IP = 0;

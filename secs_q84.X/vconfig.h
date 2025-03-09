@@ -13,13 +13,14 @@ extern "C" {
 #endif
 
 #include <xc.h>
+#include <time.h>
 #include "mcc_generated_files/adc.h"
 #include "mcc_generated_files/spi1.h"
 #include "mcc_generated_files/pin_manager.h"
 
 #define NHD		// SPI 20X4 display, nhd-0420d3z-nsw-bbw
 
-#define VER	"2.16G"
+#define VER	"2.17G"
 	/** \file vconfig.h
 	 * Software version and a brief doc for each version changes.
  
@@ -43,12 +44,14 @@ extern "C" {
 	 * 2.14 add 19200 or 9600 speed switching with reboot.
 	 * 2.15 fix USART speed switching bugs.
 	 * 2.16 switch to 16MHz external clock chip for 64MHz FOSC because CAN is not being used.
+	 * 2.17 add logging output and input commands using UART3 and add UTC timer
 	 */
 
 	/** enable two serial port internal Host Equipment RS-232 testing.
 	 * comment out FAKER for normal host mode
 	 */
 #define FAKER			// emulate equipment protocol to host loopback
+#define LOG_SERIAL_s6f11
 
 	//#define	FRAME_OVERRUN
 
@@ -319,6 +322,7 @@ extern "C" {
 		LINK_STATES t_l_state;
 		char buf[MAX_BUF + 1], terminal[MAX_TERM + 1], info[MAX_INFO + 1];
 		uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
+		volatile uint32_t utc_ticks;
 		int32_t testing;
 		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
 		UI_STATES ui_sw;
@@ -331,6 +335,9 @@ extern "C" {
 		adc_result_t v_tx_line, v_rx_line;
 		int16_t tx_volts, rx_volts;
 		char tx_rs232, rx_rs232;
+		int16_t secs_value;
+		int16_t cmd_value;
+		time_t utc_cmd_value;
 	} V_data;
 
 	typedef struct V_help {

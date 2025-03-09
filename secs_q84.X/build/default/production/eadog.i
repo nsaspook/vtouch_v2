@@ -39344,6 +39344,103 @@ unsigned char __t1rd16on(void);
 unsigned char __t3rd16on(void);
 # 34 "/opt/microchip/xc8/v3.00/pic/include/xc.h" 2 3
 # 16 "./vconfig.h" 2
+# 1 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 1 3
+# 33 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+# 1 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 1 3
+# 82 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long time_t;
+# 303 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+typedef void * timer_t;
+
+
+
+
+typedef int clockid_t;
+
+
+
+
+typedef unsigned long clock_t;
+# 323 "/opt/microchip/xc8/v3.00/pic/include/c99/bits/alltypes.h" 3
+struct timespec { time_t tv_sec; long tv_nsec; };
+
+
+
+
+
+typedef int pid_t;
+# 34 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 2 3
+
+
+
+
+
+
+struct tm {
+ int tm_sec;
+ int tm_min;
+ int tm_hour;
+ int tm_mday;
+ int tm_mon;
+ int tm_year;
+ int tm_wday;
+ int tm_yday;
+ int tm_isdst;
+ long __tm_gmtoff;
+ const char *__tm_zone;
+};
+
+clock_t clock (void);
+time_t time (time_t *);
+double difftime (time_t, time_t);
+time_t mktime (struct tm *);
+size_t strftime (char *restrict, size_t, const char *restrict, const struct tm *restrict);
+struct tm *gmtime (const time_t *);
+struct tm *localtime (const time_t *);
+char *asctime (const struct tm *);
+char *ctime (const time_t *);
+int timespec_get(struct timespec *, int);
+# 73 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+size_t strftime_l (char * restrict, size_t, const char * restrict, const struct tm * restrict, locale_t);
+
+struct tm *gmtime_r (const time_t *restrict, struct tm *restrict);
+struct tm *localtime_r (const time_t *restrict, struct tm *restrict);
+char *asctime_r (const struct tm *restrict, char *restrict);
+char *ctime_r (const time_t *, char *);
+
+void tzset (void);
+
+struct itimerspec {
+ struct timespec it_interval;
+ struct timespec it_value;
+};
+# 102 "/opt/microchip/xc8/v3.00/pic/include/c99/time.h" 3
+int nanosleep (const struct timespec *, struct timespec *);
+int clock_getres (clockid_t, struct timespec *);
+int clock_gettime (clockid_t, struct timespec *);
+int clock_settime (clockid_t, const struct timespec *);
+int clock_nanosleep (clockid_t, int, const struct timespec *, struct timespec *);
+int clock_getcpuclockid (pid_t, clockid_t *);
+
+struct sigevent;
+int timer_create (clockid_t, struct sigevent *restrict, timer_t *restrict);
+int timer_delete (timer_t);
+int timer_settime (timer_t, int, const struct itimerspec *restrict, struct itimerspec *restrict);
+int timer_gettime (timer_t, struct itimerspec *);
+int timer_getoverrun (timer_t);
+
+extern char *tzname[2];
+
+
+
+
+
+char *strptime (const char *restrict, const char *restrict, struct tm *restrict);
+extern int daylight;
+extern long timezone;
+extern int getdate_err;
+struct tm *getdate (const char *);
+# 17 "./vconfig.h" 2
 # 1 "./mcc_generated_files/adc.h" 1
 # 58 "./mcc_generated_files/adc.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/stdbool.h" 1 3
@@ -39463,7 +39560,7 @@ void ADC_SetContext2ThresholdInterruptHandler(void (* InterruptHandler)(void));
 void ADC_SetContext3ThresholdInterruptHandler(void (* InterruptHandler)(void));
 # 1132 "./mcc_generated_files/adc.h"
 void ADC_SetContext4ThresholdInterruptHandler(void (* InterruptHandler)(void));
-# 17 "./vconfig.h" 2
+# 18 "./vconfig.h" 2
 # 1 "./mcc_generated_files/spi1.h" 1
 # 54 "./mcc_generated_files/spi1.h"
 # 1 "/opt/microchip/xc8/v3.00/pic/include/c99/stdio.h" 1 3
@@ -39636,12 +39733,12 @@ void SPI1_WriteBlock(void *block, size_t blockSize);
 void SPI1_ReadBlock(void *block, size_t blockSize);
 void SPI1_WriteByte(uint8_t byte);
 uint8_t SPI1_ReadByte(void);
-# 18 "./vconfig.h" 2
-# 1 "./mcc_generated_files/pin_manager.h" 1
-# 366 "./mcc_generated_files/pin_manager.h"
-void PIN_MANAGER_Initialize (void);
 # 19 "./vconfig.h" 2
-# 159 "./vconfig.h"
+# 1 "./mcc_generated_files/pin_manager.h" 1
+# 390 "./mcc_generated_files/pin_manager.h"
+void PIN_MANAGER_Initialize (void);
+# 20 "./vconfig.h" 2
+# 162 "./vconfig.h"
  struct spi_link_type {
   uint8_t SPI_LCD : 1;
   uint8_t SPI_AUX : 1;
@@ -39805,6 +39902,7 @@ void PIN_MANAGER_Initialize (void);
   LINK_STATES t_l_state;
   char buf[127 + 1], terminal[159 + 1], info[63 + 1];
   uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
+  volatile uint32_t utc_ticks;
   int32_t testing;
   uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
   UI_STATES ui_sw;
@@ -39817,6 +39915,9 @@ void PIN_MANAGER_Initialize (void);
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
+  int16_t secs_value;
+  int16_t cmd_value;
+  time_t utc_cmd_value;
  } V_data;
 
  typedef struct V_help {
@@ -40645,6 +40746,58 @@ void DATAEE_WriteByte(uint16_t bAdd, uint8_t bData);
 # 225 "./mcc_generated_files/memory.h"
 uint8_t DATAEE_ReadByte(uint16_t bAdd);
 # 62 "./mcc_generated_files/mcc.h" 2
+# 1 "./mcc_generated_files/uart3.h" 1
+# 74 "./mcc_generated_files/uart3.h"
+typedef union {
+    struct {
+        unsigned perr : 1;
+        unsigned ferr : 1;
+        unsigned oerr : 1;
+        unsigned reserved : 5;
+    };
+    uint8_t status;
+}uart3_status_t;
+
+
+
+
+extern volatile uint8_t uart3TxBufferRemaining;
+extern volatile uint8_t uart3RxCount;
+# 115 "./mcc_generated_files/uart3.h"
+void UART3_Initialize(void);
+# 163 "./mcc_generated_files/uart3.h"
+_Bool UART3_is_rx_ready(void);
+# 211 "./mcc_generated_files/uart3.h"
+_Bool UART3_is_tx_ready(void);
+# 258 "./mcc_generated_files/uart3.h"
+_Bool UART3_is_tx_done(void);
+# 306 "./mcc_generated_files/uart3.h"
+uart3_status_t UART3_get_last_status(void);
+# 355 "./mcc_generated_files/uart3.h"
+uint8_t UART3_Read(void);
+# 380 "./mcc_generated_files/uart3.h"
+void UART3_Write(uint8_t txData);
+# 401 "./mcc_generated_files/uart3.h"
+void UART3_Transmit_ISR(void);
+# 422 "./mcc_generated_files/uart3.h"
+void UART3_Receive_ISR(void);
+# 443 "./mcc_generated_files/uart3.h"
+void UART3_RxDataHandler(void);
+# 461 "./mcc_generated_files/uart3.h"
+void UART3_SetFramingErrorHandler(void (* interruptHandler)(void));
+# 479 "./mcc_generated_files/uart3.h"
+void UART3_SetOverrunErrorHandler(void (* interruptHandler)(void));
+# 497 "./mcc_generated_files/uart3.h"
+void UART3_SetErrorHandler(void (* interruptHandler)(void));
+# 517 "./mcc_generated_files/uart3.h"
+void (*UART3_RxInterruptHandler)(void);
+# 535 "./mcc_generated_files/uart3.h"
+void (*UART3_TxInterruptHandler)(void);
+# 555 "./mcc_generated_files/uart3.h"
+void UART3_SetRxInterruptHandler(void (* InterruptHandler)(void));
+# 573 "./mcc_generated_files/uart3.h"
+void UART3_SetTxInterruptHandler(void (* InterruptHandler)(void));
+# 63 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/uart2.h" 1
 # 74 "./mcc_generated_files/uart2.h"
 typedef union {
@@ -40698,7 +40851,7 @@ void (*UART2_TxInterruptHandler)(void);
 void UART2_SetRxInterruptHandler(void (* InterruptHandler)(void));
 # 575 "./mcc_generated_files/uart2.h"
 void UART2_SetTxInterruptHandler(void (* InterruptHandler)(void));
-# 63 "./mcc_generated_files/mcc.h" 2
+# 64 "./mcc_generated_files/mcc.h" 2
 # 1 "./mcc_generated_files/uart1.h" 1
 # 74 "./mcc_generated_files/uart1.h"
 typedef union {
@@ -40752,7 +40905,7 @@ void UART1_SetRxInterruptHandler(void (* InterruptHandler)(void));
 void UART1_SetTxInterruptHandler(void (* InterruptHandler)(void));
 
 void UART1_put_buffer(uint8_t);
-# 64 "./mcc_generated_files/mcc.h" 2
+# 65 "./mcc_generated_files/mcc.h" 2
 
 # 1 "./mcc_generated_files/pwm2_16bit.h" 1
 # 63 "./mcc_generated_files/pwm2_16bit.h"
@@ -40780,14 +40933,14 @@ void PWM2_16BIT_Slice1Output1_SetInterruptHandler(void (* InterruptHandler)(void
 void PWM2_16BIT_Slice1Output2_SetInterruptHandler(void (* InterruptHandler)(void));
 # 209 "./mcc_generated_files/pwm2_16bit.h"
 void PWM2_16BIT_Period_SetInterruptHandler(void (* InterruptHandler)(void));
-# 66 "./mcc_generated_files/mcc.h" 2
-# 80 "./mcc_generated_files/mcc.h"
+# 67 "./mcc_generated_files/mcc.h" 2
+# 81 "./mcc_generated_files/mcc.h"
 void SYSTEM_Initialize(void);
-# 93 "./mcc_generated_files/mcc.h"
+# 94 "./mcc_generated_files/mcc.h"
 void OSCILLATOR_Initialize(void);
-# 106 "./mcc_generated_files/mcc.h"
+# 107 "./mcc_generated_files/mcc.h"
 void PMD_Initialize(void);
-# 118 "./mcc_generated_files/mcc.h"
+# 119 "./mcc_generated_files/mcc.h"
 void SystemArbiter_Initialize(void);
 # 5 "eadog.c" 2
 # 19 "eadog.c"
