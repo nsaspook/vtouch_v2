@@ -16,8 +16,8 @@
  *     written by : Michael Bradley (mbradley@mculabs.com)
  *   contributions: Imaginos (CCS forum), Emil Nad (8Bit testing)
  *                  jgschmidt (CCS forum)
- * 
- * 
+ *
+ *
  * For NHD-0420D3Z-NSW-BBW-V3 20X4 CHARACTER display
 Pin No. Symbol External Connection Function Description
 1 SPISS MPU SPI Slave Select (NC in I2C mode)
@@ -26,7 +26,7 @@ Pin No. Symbol External Connection Function Description
 4 SDI/SDA MPU Serial Data In (SPI) / Serial Data (I2C)
 5 VSS Power Supply Ground
 6 VDD Power Supply Power Supply for logic (+5.0V
- * 
+ *
 R1 R2 Protocol Description
 Short Short TEST Self-test
 Open Short SPI 100KHz max clock

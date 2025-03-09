@@ -39910,12 +39910,11 @@ void PIN_MANAGER_Initialize (void);
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
-  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ;
+  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ, log_s6f11, log_abort;
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
-  int16_t secs_value;
-  int16_t cmd_value;
+  int16_t secs_value, cmd_value;
   time_t utc_cmd_value;
  } V_data;
 
@@ -40985,7 +40984,7 @@ D_CODES set_temp_display_help(const D_CODES);
 # 1 "./msg_text.h" 1
 # 14 "./msg_text.h"
 # 1 "./mconfig.h" 1
-# 45 "./mconfig.h"
+# 42 "./mconfig.h"
 void mconfig_init(void);
 
 void mode_lamp_dim(void);
@@ -42256,13 +42255,13 @@ uint16_t s6f11_opcmd(void)
  V.ceid = V.response.ack[9];
  V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9];
  V.testing = (sizeof(H254[0].data) - 1) - 9;
-
- do { LATEbits.LATE0 = 1; } while(0);
- log_serial((uint8_t *) " S6F11 B ", 9);
- log_serial(H254[0].data, sizeof(H254[0].data));
- log_serial((uint8_t *) " S6F11 E ", 9);
- do { LATEbits.LATE0 = 0; } while(0);
-
+ if (V.log_s6f11) {
+  do { LATEbits.LATE0 = 1; } while(0);
+  log_serial((uint8_t *) " S6F11 B ", 9);
+  log_serial(H254[0].data, sizeof(H254[0].data));
+  log_serial((uint8_t *) " S6F11 E ", 9);
+  do { LATEbits.LATE0 = 0; } while(0);
+ }
  return V.response.ceid;
 }
 
@@ -42372,6 +42371,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    V.all_errors++;
+   if (V.log_abort) {
+    do { LATEbits.LATE0 = 1; } while(0);
+    log_serial((uint8_t *) " ABORT B ", 9);
+    log_serial((uint8_t*) & H10[2], sizeof(header10));
+    log_serial((uint8_t *) " ABORT E ", 9);
+    do { LATEbits.LATE0 = 0; } while(0);
+   }
    break;
   }
   break;
@@ -42400,6 +42406,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    V.all_errors++;
+   if (V.log_abort) {
+    do { LATEbits.LATE0 = 1; } while(0);
+    log_serial((uint8_t *) " ABORT B ", 9);
+    log_serial((uint8_t*) & H10[2], sizeof(header10));
+    log_serial((uint8_t *) " ABORT E ", 9);
+    do { LATEbits.LATE0 = 0; } while(0);
+   }
    break;
   }
   break;
@@ -42417,6 +42430,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    V.all_errors++;
+   if (V.log_abort) {
+    do { LATEbits.LATE0 = 1; } while(0);
+    log_serial((uint8_t *) " ABORT B ", 9);
+    log_serial((uint8_t*) & H10[2], sizeof(header10));
+    log_serial((uint8_t *) " ABORT E ", 9);
+    do { LATEbits.LATE0 = 0; } while(0);
+   }
    break;
   }
   break;
@@ -42465,6 +42485,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    V.all_errors++;
+   if (V.log_abort) {
+    do { LATEbits.LATE0 = 1; } while(0);
+    log_serial((uint8_t *) " ABORT B ", 9);
+    log_serial((uint8_t*) & H10[2], sizeof(header10));
+    log_serial((uint8_t *) " ABORT E ", 9);
+    do { LATEbits.LATE0 = 0; } while(0);
+   }
    break;
   }
   break;
@@ -42491,6 +42518,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    V.all_errors++;
+   if (V.log_abort) {
+    do { LATEbits.LATE0 = 1; } while(0);
+    log_serial((uint8_t *) " ABORT B ", 9);
+    log_serial((uint8_t*) & H10[2], sizeof(header10));
+    log_serial((uint8_t *) " ABORT E ", 9);
+    do { LATEbits.LATE0 = 0; } while(0);
+   }
    break;
   }
   break;
@@ -42620,6 +42654,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
    H10[2].block.block.systemb = V.systemb;
    V.abort = LINK_ERROR_ABORT;
    V.all_errors++;
+   if (V.log_abort) {
+    do { LATEbits.LATE0 = 1; } while(0);
+    log_serial((uint8_t *) " ABORT B ", 9);
+    log_serial((uint8_t*) & H10[2], sizeof(header10));
+    log_serial((uint8_t *) " ABORT E ", 9);
+    do { LATEbits.LATE0 = 0; } while(0);
+   }
    break;
   }
   break;
@@ -42630,6 +42671,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
   H10[2].block.block.systemb = V.systemb;
   V.abort = LINK_ERROR_ABORT;
   V.all_errors++;
+  if (V.log_abort) {
+   do { LATEbits.LATE0 = 1; } while(0);
+   log_serial((uint8_t *) " ABORT B ", 9);
+   log_serial((uint8_t*) & H10[2], sizeof(header10));
+   log_serial((uint8_t *) " ABORT E ", 9);
+   do { LATEbits.LATE0 = 0; } while(0);
+  }
   break;
  }
 

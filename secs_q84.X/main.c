@@ -230,6 +230,8 @@ V_data V = {
 	.cmd_value = 0,
 	.utc_cmd_value = 0,
 	.utc_ticks = DEF_TIME,
+	.log_s6f11 = true,
+	.log_abort = true,
 };
 
 B_type B = {
@@ -753,7 +755,7 @@ header153 H153[] = {
 };
 
 header254 H254[] = {
-	{ // general message buffer for parsing 
+	{ // general message buffer for parsing
 		.length = 254,
 		.block.block.rbit = 1,
 		.block.block.didh = 0,
@@ -887,12 +889,12 @@ void main(void)
 			equip_tx(ENQ); // simulate equipment comm data
 #endif
 		}
-		
+
 		/*
 		 * check and parse logging configuration commands on UART3
 		 */
 		logging_cmds();
-		
+
 		/*
 		 * protocol state machine for HOST emulation
 		 */

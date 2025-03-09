@@ -3,7 +3,7 @@
 #include "msg_text.h"
 #include <string.h>
 
-typedef struct D_data { // control data structure 
+typedef struct D_data { // control data structure
 	char lcd[MAX_VTERM][MAX_LCD_LINES][MAX_BUF + 1];
 	uint8_t vterm : 2; // line to 4 possible lines
 	D_CODES last_info;
@@ -283,10 +283,11 @@ void log_serial(uint8_t * data, uint16_t len)
 	}
 }
 
-/*
+/**
+ *
  * check for incoming data on the logging TTL serial connection
- * use UART3 
- * 
+ * use UART3
+ *
  * cmd_value is the buffer variable
  */
 void logging_cmds(void)
@@ -339,16 +340,16 @@ void logging_cmds(void)
 				set_time(V.utc_cmd_value);
 			};
 			break;
-		case 'V': // begin power/utc value
+		case 'V': // begin number value
 			vi = 0;
 			break;
-		case 'X': // end power value
+		case 'X': // end number value
 			utc = false;
 			if (vi >= vcmd_size) {
 				vi = 0;
 				V.cmd_value = value[0]*1000 + value [1]*100 + value[2]*10 + value[3];
-				if (V.cmd_value > GTI_MAX) {
-					V.cmd_value = GTI_MAX;
+				if (V.cmd_value > SECS_MAX) {
+					V.cmd_value = SECS_MAX;
 				}
 				if (V.cmd_value < 0) {
 					V.cmd_value = 0;
@@ -358,35 +359,21 @@ void logging_cmds(void)
 				INTERRUPT_GlobalInterruptLowEnable();
 			};
 			break;
-		case 'Z': // zero power
+		case 'Z': // zero
 			utc = false;
-			V.cmd_value = 0;
 			break;
-		case '+': // incr power
+		case 'A': // set abort logging
 			utc = false;
-			V.cmd_value = V.secs_value + GTI_INCR;
-			if (V.cmd_value > GTI_MAX) {
-				V.cmd_value = GTI_MAX;
-			}
+			V.log_abort = true;
 			break;
-		case '-': // decr power
+		case 'S': // set secs logging
 			utc = false;
-			V.cmd_value = V.secs_value - GTI_INCR;
-			if (V.cmd_value < 0) {
-				V.cmd_value = 0;
-			}
+			V.log_s6f11 = true;
 			break;
-		case 'I': // idle power
+		case 'O': // shutdown extra logging
 			utc = false;
-			V.cmd_value = GTI_IDLE;
-			break;
-		case 'F': // normal operation
-			utc = false;
-			V.cmd_value = GTI_NORM;
-			break;
-		case 'M': // max unit rated power testing
-			utc = false;
-			V.cmd_value = GTI_MAX;
+			V.log_abort = false;
+			V.log_s6f11 = false;
 			break;
 		case '#': // execute command symbol
 			utc = false;
@@ -413,13 +400,13 @@ void set_time(const time_t t)
 	PIE8bits.TMR5IE = 1;
 }
 
-/*
+/**
  * if t > 0, t is set to memory location of current_time variable
  */
 time_t time(time_t * t)
 {
 	static time_t current_time;
-	
+
 	PIE8bits.TMR5IE = 0;
 	current_time = V.utc_ticks;
 	PIE8bits.TMR5IE = 1;

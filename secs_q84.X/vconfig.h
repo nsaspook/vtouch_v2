@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   vconfig.h
  * Author: root
  *
@@ -23,7 +23,7 @@ extern "C" {
 #define VER	"2.17G"
 	/** \file vconfig.h
 	 * Software version and a brief doc for each version changes.
- 
+
 		1.13G wafer load-lock control.
 		1.15 add specific equipment types V.e_types.
 		message sequencing in secs_II_message.
@@ -107,7 +107,7 @@ extern "C" {
 #define V_SSCREEN	94
 #define E_OSCREEN	81
 #define E_SSCREEN	81
-	//CEID code	
+	//CEID code
 #define SECS_CHANGE	9
 
 #define E_OFFLINE	28 // The EQUIPMENT OFFLINE button was pressed.
@@ -312,7 +312,7 @@ extern "C" {
 		TICKER_HIGH = 40,
 	} TICKER_VAL;
 
-	typedef struct V_data { // control data structure 
+	typedef struct V_data { // control data structure
 		SEQ_STATES s_state;
 		UI_STATES ui_state;
 		GEM_STATES g_state;
@@ -331,12 +331,11 @@ extern "C" {
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
 		volatile uint8_t ticker;
-		bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ;
+		bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ, log_s6f11, log_abort;
 		adc_result_t v_tx_line, v_rx_line;
 		int16_t tx_volts, rx_volts;
 		char tx_rs232, rx_rs232;
-		int16_t secs_value;
-		int16_t cmd_value;
+		int16_t secs_value, cmd_value;
 		time_t utc_cmd_value;
 	} V_data;
 

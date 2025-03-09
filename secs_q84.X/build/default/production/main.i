@@ -41006,12 +41006,11 @@ struct tm *getdate (const char *);
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
-  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ;
+  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ, log_s6f11, log_abort;
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
-  int16_t secs_value;
-  int16_t cmd_value;
+  int16_t secs_value, cmd_value;
   time_t utc_cmd_value;
  } V_data;
 
@@ -41127,7 +41126,7 @@ D_CODES set_temp_display_help(const D_CODES);
 # 1 "./msg_text.h" 1
 # 14 "./msg_text.h"
 # 1 "./mconfig.h" 1
-# 45 "./mconfig.h"
+# 42 "./mconfig.h"
 void mconfig_init(void);
 
 void mode_lamp_dim(void);
@@ -41344,7 +41343,7 @@ time_t time(time_t *);
 # 175 "main.c" 2
 # 184 "main.c"
 extern struct spi_link_type spi_link;
-const char *build_date = "Mar  9 2025", *build_time = "11:14:17";
+const char *build_date = "Mar  9 2025", *build_time = "15:35:58";
 
 const char * GEM_TEXT [] = {
  "DISABLE",
@@ -41392,6 +41391,8 @@ V_data V = {
  .cmd_value = 0,
  .utc_cmd_value = 0,
  .utc_ticks = 1721693000,
+ .log_s6f11 = 1,
+ .log_abort = 1,
 };
 
 B_type B = {
@@ -41626,7 +41627,7 @@ header17 H17[] = {
   .data[0] = 0x00,
  },
 };
-# 488 "main.c"
+# 490 "main.c"
 header26 H26[] = {
  {
   .length = 26,
@@ -42244,7 +42245,7 @@ void main(void)
      snprintf(get_vterm_ptr(2, 0), 20 +1, "CEID %d, Mesg %c%c %d         ", V.response.ceid, V.response.ack[7], V.response.ack[8], (uint8_t) V.response.ack[6]);
     else
      snprintf(get_vterm_ptr(2, 0), 20 +1, "LOG: U%d G%d %d %d      #", V.uart, V.g_state, V.timer_error, V.checksum_error);
-# 1113 "main.c"
+# 1115 "main.c"
     break;
    case SEQ_STATE_RX:
 

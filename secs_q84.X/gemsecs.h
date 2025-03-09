@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   gemsecs.h
  * Author: root
  *
@@ -32,7 +32,7 @@ extern "C" {
 	const char msg_gemcmds[] = "Host CMDS: M C R P O L S D E H F";
 	const char msg_freecmds[] = "Port baud rate unlocked        ";
 	const char msg_gemremote[] = "Host CMDS: ENABLED REMOTE";
-	
+
 
 	typedef struct block10_type {
 		uint32_t systemb;

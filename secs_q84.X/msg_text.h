@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   msg_text.h
  * Author: root
  *

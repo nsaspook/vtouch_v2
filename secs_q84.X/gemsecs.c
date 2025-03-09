@@ -1089,13 +1089,13 @@ uint16_t s6f11_opcmd(void)
 	V.ceid = V.response.ack[9]; // CEID
 	V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9]; // get CEID using full message block buffer
 	V.testing = (sizeof(H254[0].data) - 1) - 9;
-#ifdef LOG_SERIAL_s6f11
-	RELAY0_SetHigh();
-	log_serial((uint8_t *) " S6F11 B ", 9);
-	log_serial(H254[0].data, sizeof(H254[0].data));
-	log_serial((uint8_t *) " S6F11 E ", 9);
-	RELAY0_SetLow();
-#endif
+	if (V.log_s6f11) {
+		RELAY0_SetHigh();
+		log_serial((uint8_t *) " S6F11 B ", 9);
+		log_serial(H254[0].data, sizeof(H254[0].data));
+		log_serial((uint8_t *) " S6F11 E ", 9);
+		RELAY0_SetLow();
+	}
 	return V.response.ceid;
 }
 
@@ -1205,6 +1205,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
+			if (V.log_abort) {
+				RELAY0_SetHigh();
+				log_serial((uint8_t *) " ABORT B ", 9);
+				log_serial((uint8_t*) & H10[2], sizeof(header10));
+				log_serial((uint8_t *) " ABORT E ", 9);
+				RELAY0_SetLow();
+			}
 			break;
 		}
 		break;
@@ -1233,6 +1240,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
+			if (V.log_abort) {
+				RELAY0_SetHigh();
+				log_serial((uint8_t *) " ABORT B ", 9);
+				log_serial((uint8_t*) & H10[2], sizeof(header10));
+				log_serial((uint8_t *) " ABORT E ", 9);
+				RELAY0_SetLow();
+			}
 			break;
 		}
 		break;
@@ -1250,6 +1264,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
+			if (V.log_abort) {
+				RELAY0_SetHigh();
+				log_serial((uint8_t *) " ABORT B ", 9);
+				log_serial((uint8_t*) & H10[2], sizeof(header10));
+				log_serial((uint8_t *) " ABORT E ", 9);
+				RELAY0_SetLow();
+			}
 			break;
 		}
 		break;
@@ -1279,7 +1300,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H13[0].block.block.systemb = V.systemb;
 			H13[0].block.block.function = 12;
 			break;
-		case 13: // S6F14			
+		case 13: // S6F14
 			block.header = (uint8_t*) & H13[0];
 			block.length = sizeof(header13);
 			H13[0].block.block.systemb = V.systemb;
@@ -1298,6 +1319,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
+			if (V.log_abort) {
+				RELAY0_SetHigh();
+				log_serial((uint8_t *) " ABORT B ", 9);
+				log_serial((uint8_t*) & H10[2], sizeof(header10));
+				log_serial((uint8_t *) " ABORT E ", 9);
+				RELAY0_SetLow();
+			}
 			break;
 		}
 		break;
@@ -1324,6 +1352,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
+			if (V.log_abort) {
+				RELAY0_SetHigh();
+				log_serial((uint8_t *) " ABORT B ", 9);
+				log_serial((uint8_t*) & H10[2], sizeof(header10));
+				log_serial((uint8_t *) " ABORT E ", 9);
+				RELAY0_SetLow();
+			}
 			break;
 		}
 		break;
@@ -1453,6 +1488,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			H10[2].block.block.systemb = V.systemb;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
+			if (V.log_abort) {
+				RELAY0_SetHigh();
+				log_serial((uint8_t *) " ABORT B ", 9);
+				log_serial((uint8_t*) & H10[2], sizeof(header10));
+				log_serial((uint8_t *) " ABORT E ", 9);
+				RELAY0_SetLow();
+			}
 			break;
 		}
 		break;
@@ -1463,6 +1505,13 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		H10[2].block.block.systemb = V.systemb;
 		V.abort = LINK_ERROR_ABORT;
 		V.all_errors++;
+		if (V.log_abort) {
+			RELAY0_SetHigh();
+			log_serial((uint8_t *) " ABORT B ", 9);
+			log_serial((uint8_t*) & H10[2], sizeof(header10));
+			log_serial((uint8_t *) " ABORT E ", 9);
+			RELAY0_SetLow();
+		}
 		break;
 	}
 

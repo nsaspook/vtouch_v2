@@ -39911,12 +39911,11 @@ void PIN_MANAGER_Initialize (void);
   terminal_type response;
   uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
   volatile uint8_t ticker;
-  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ;
+  _Bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ, log_s6f11, log_abort;
   adc_result_t v_tx_line, v_rx_line;
   int16_t tx_volts, rx_volts;
   char tx_rs232, rx_rs232;
-  int16_t secs_value;
-  int16_t cmd_value;
+  int16_t secs_value, cmd_value;
   time_t utc_cmd_value;
  } V_data;
 
