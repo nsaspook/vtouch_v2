@@ -1203,6 +1203,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
+			H10[2].block.block.function = 0;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
@@ -1238,6 +1239,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
+			H10[2].block.block.function = 0;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
@@ -1262,6 +1264,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
+			H10[2].block.block.function = 0;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
@@ -1317,6 +1320,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
+			H10[2].block.block.function = 0;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
@@ -1344,12 +1348,14 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		case 13:
 			break;
 		case 9:
-			V.equip_timeout++;
+			V.equip_timeout++; // equipment had a T3 Reply Timeout 
+			break;
 		default: // S9F0 abort
 			H10[2].block.block.stream = stream;
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
+			H10[2].block.block.function = 0;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
@@ -1486,6 +1492,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			block.header = (uint8_t*) & H10[2];
 			block.length = sizeof(header10);
 			H10[2].block.block.systemb = V.systemb;
+			H10[2].block.block.function = 0;
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
@@ -1503,6 +1510,7 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		block.header = (uint8_t*) & H10[2];
 		block.length = sizeof(header10);
 		H10[2].block.block.systemb = V.systemb;
+		H10[2].block.block.function = 0;
 		V.abort = LINK_ERROR_ABORT;
 		V.all_errors++;
 		if (V.log_abort) {
@@ -1546,7 +1554,7 @@ static void ee_logger(const uint8_t stream, const uint8_t function, const uint16
 void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const uint16_t dtime)
 {
 	uint8_t * msg_data = (uint8_t*) & H254[0];
-	static uint8_t store1_1 = true, store1_13 = true, store6_11 = true;
+	static uint8_t store1_1 = true, store1_13 = true;
 
 
 	++V.ticks; // message sequence
@@ -1589,11 +1597,13 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 	case 6:
 		switch (function) {
 		case 11: // S6F11 // from host
-			if (!store6_11) {
-				break;
+			if (V.log_s6f11) {
+				RELAY0_SetHigh();
+				log_serial((uint8_t *) " M S6F11 B ", 11);
+				log_serial(H254[0].data, sizeof(H254[0].data));
+				log_serial((uint8_t *) " M S6F11 E ", 11);
+				RELAY0_SetLow();
 			}
-			store6_11 = false;
-			//			ee_logger(stream, function, dtime, msg_data);
 			break;
 		default:
 			break;
@@ -1730,6 +1740,17 @@ GEM_STATES secs_gem_state(const uint8_t stream, const uint8_t function)
 		switch (function) {
 		default:
 			V.alarm = function;
+			break;
+		}
+		break;
+	case 6: // events
+		switch (function) {
+		default:
+			if (block == GEM_STATE_DISABLE) {
+				block = GEM_STATE_COMM;
+				V.ticker = TICKER_HIGH;
+			}
+			V.event = function;
 			break;
 		}
 		break;

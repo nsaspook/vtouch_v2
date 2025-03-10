@@ -231,7 +231,8 @@ V_data V = {
 	.utc_cmd_value = 0,
 	.utc_ticks = DEF_TIME,
 	.log_s6f11 = true,
-	.log_abort = true,
+	.log_abort = false,
+	.log_char = false,
 };
 
 B_type B = {

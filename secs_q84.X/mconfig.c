@@ -272,6 +272,10 @@ void log_serial(uint8_t * data, uint16_t len)
 		return;
 	}
 
+	if (len == 1 && !V.log_char) {
+		return;
+	}
+
 	while (len--) {
 		if (UART3_is_tx_ready()) {
 			UART3_Write(data[idx++]);
@@ -366,6 +370,10 @@ void logging_cmds(void)
 			utc = false;
 			V.log_abort = true;
 			break;
+		case 'C': // set one character logging
+			utc = false;
+			V.log_char = true;
+			break;
 		case 'S': // set secs logging
 			utc = false;
 			V.log_s6f11 = true;
@@ -374,6 +382,7 @@ void logging_cmds(void)
 			utc = false;
 			V.log_abort = false;
 			V.log_s6f11 = false;
+			V.log_char = false;
 			break;
 		case '#': // execute command symbol
 			utc = false;

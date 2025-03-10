@@ -50,8 +50,7 @@ extern "C" {
 	/** enable two serial port internal Host Equipment RS-232 testing.
 	 * comment out FAKER for normal host mode
 	 */
-#define FAKER			// emulate equipment protocol to host loopback
-#define LOG_SERIAL_s6f11
+//#define FAKER			// emulate equipment protocol to host loopback
 
 	//#define	FRAME_OVERRUN
 
@@ -324,14 +323,14 @@ extern "C" {
 		uint32_t ticks, systemb, tx_total, rx_total, bt_total, br_total, brn_total, btn_total;
 		volatile uint32_t utc_ticks;
 		int32_t testing;
-		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm;
+		uint8_t stream, function, error, abort, msg_error, msg_ret, alarm, event;
 		UI_STATES ui_sw;
 		uint16_t r_checksum, t_checksum, checksum_error, timer_error, ping, mode_pwm, equip_timeout, sequences, all_errors, ceid;
 		uint8_t rbit : 1, wbit : 1, ebit : 1, failed_send : 4, failed_receive : 4;
 		terminal_type response;
 		uint8_t uart, llid, sid, ping_count, euart, vterm, vterm_switch, uart_speed_fast;
 		volatile uint8_t ticker;
-		bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ, log_s6f11, log_abort;
+		bool flipper, queue, debug, help, stack, help_id, rerror, speed_spin, set_sequ, log_s6f11, log_abort, log_char;
 		adc_result_t v_tx_line, v_rx_line;
 		int16_t tx_volts, rx_volts;
 		char tx_rs232, rx_rs232;
