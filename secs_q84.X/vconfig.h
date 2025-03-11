@@ -50,7 +50,7 @@ extern "C" {
 	/** enable two serial port internal Host Equipment RS-232 testing.
 	 * comment out FAKER for normal host mode
 	 */
-//#define FAKER			// emulate equipment protocol to host loopback
+#define FAKER			// emulate equipment protocol to host loopback
 
 	//#define	FRAME_OVERRUN
 

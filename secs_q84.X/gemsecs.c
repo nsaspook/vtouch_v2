@@ -147,10 +147,8 @@ LINK_STATES m_protocol(LINK_STATES *m_link)
 			MLED_SetHigh();
 		} else {
 			if (UART1_is_rx_ready()) {
-				RELAY0_SetHigh();
 				rxData = UART1_Read();
 				log_serial(&rxData, 1);
-				RELAY0_SetLow();
 				V.rx_total++;
 				DLED_Toggle();
 				if (rxData_l == 0) { // start header reads
@@ -374,10 +372,8 @@ LINK_STATES r_protocol(LINK_STATES * r_link)
 		} else {
 			if (UART1_is_rx_ready() || UART1_is_rx_ready()) {
 				if (UART1_is_rx_ready()) {
-					RELAY0_SetHigh();
 					rxData = UART1_Read();
 					log_serial(&rxData, 1);
-					RELAY0_SetLow();
 					V.rx_total++;
 				}
 				if (UART2_is_rx_ready()) {
@@ -1090,11 +1086,9 @@ uint16_t s6f11_opcmd(void)
 	V.response.ceid = H254[0].data[(sizeof(H254[0].data) - 1) - 9]; // get CEID using full message block buffer
 	V.testing = (sizeof(H254[0].data) - 1) - 9;
 	if (V.log_s6f11) {
-		RELAY0_SetHigh();
 		log_serial((uint8_t *) " S6F11 B ", 9);
 		log_serial(H254[0].data, sizeof(H254[0].data));
 		log_serial((uint8_t *) " S6F11 E ", 9);
-		RELAY0_SetLow();
 	}
 	return V.response.ceid;
 }
@@ -1207,11 +1201,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
-				RELAY0_SetHigh();
 				log_serial((uint8_t *) " ABORT B ", 9);
 				log_serial((uint8_t*) & H10[2], sizeof(header10));
 				log_serial((uint8_t *) " ABORT E ", 9);
-				RELAY0_SetLow();
 			}
 			break;
 		}
@@ -1243,11 +1235,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
-				RELAY0_SetHigh();
 				log_serial((uint8_t *) " ABORT B ", 9);
 				log_serial((uint8_t*) & H10[2], sizeof(header10));
 				log_serial((uint8_t *) " ABORT E ", 9);
-				RELAY0_SetLow();
 			}
 			break;
 		}
@@ -1268,11 +1258,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
-				RELAY0_SetHigh();
 				log_serial((uint8_t *) " ABORT B ", 9);
 				log_serial((uint8_t*) & H10[2], sizeof(header10));
 				log_serial((uint8_t *) " ABORT E ", 9);
-				RELAY0_SetLow();
 			}
 			break;
 		}
@@ -1324,11 +1312,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
-				RELAY0_SetHigh();
 				log_serial((uint8_t *) " ABORT B ", 9);
 				log_serial((uint8_t*) & H10[2], sizeof(header10));
 				log_serial((uint8_t *) " ABORT E ", 9);
-				RELAY0_SetLow();
 			}
 			break;
 		}
@@ -1359,11 +1345,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
-				RELAY0_SetHigh();
 				log_serial((uint8_t *) " ABORT B ", 9);
 				log_serial((uint8_t*) & H10[2], sizeof(header10));
 				log_serial((uint8_t *) " ABORT E ", 9);
-				RELAY0_SetLow();
 			}
 			break;
 		}
@@ -1496,11 +1480,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 			V.abort = LINK_ERROR_ABORT;
 			V.all_errors++;
 			if (V.log_abort) {
-				RELAY0_SetHigh();
 				log_serial((uint8_t *) " ABORT B ", 9);
 				log_serial((uint8_t*) & H10[2], sizeof(header10));
 				log_serial((uint8_t *) " ABORT E ", 9);
-				RELAY0_SetLow();
 			}
 			break;
 		}
@@ -1514,11 +1496,9 @@ response_type secs_II_message(const uint8_t stream, const uint8_t function)
 		V.abort = LINK_ERROR_ABORT;
 		V.all_errors++;
 		if (V.log_abort) {
-			RELAY0_SetHigh();
 			log_serial((uint8_t *) " ABORT B ", 9);
 			log_serial((uint8_t*) & H10[2], sizeof(header10));
 			log_serial((uint8_t *) " ABORT E ", 9);
-			RELAY0_SetLow();
 		}
 		break;
 	}
@@ -1598,11 +1578,9 @@ void secs_II_monitor_message(const uint8_t stream, const uint8_t function, const
 		switch (function) {
 		case 11: // S6F11 // from host
 			if (V.log_s6f11) {
-				RELAY0_SetHigh();
 				log_serial((uint8_t *) " M S6F11 B ", 11);
 				log_serial(H254[0].data, sizeof(H254[0].data));
 				log_serial((uint8_t *) " M S6F11 E ", 11);
-				RELAY0_SetLow();
 			}
 			break;
 		default:

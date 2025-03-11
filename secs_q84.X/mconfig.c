@@ -275,7 +275,7 @@ void log_serial(uint8_t * data, uint16_t len)
 	if (len == 1 && !V.log_char) {
 		return;
 	}
-
+	RELAY0_SetHigh();
 	while (len--) {
 		if (UART3_is_tx_ready()) {
 			UART3_Write(data[idx++]);
@@ -285,6 +285,7 @@ void log_serial(uint8_t * data, uint16_t len)
 			UART3_Write(data[idx++]);
 		}
 	}
+	RELAY0_SetLow();
 }
 
 /**
