@@ -223,16 +223,16 @@ V_data V = {
 	.vterm = MAIN_VTERM,
 	.tx_rs232 = 'O',
 	.rx_rs232 = 'O',
-	.debug = true,
+	.debug = false,
 	.rerror = false,
 	.help = false,
 	.secs_value = 0,
 	.cmd_value = 0,
 	.utc_cmd_value = 0,
 	.utc_ticks = DEF_TIME,
-	.log_s6f11 = true,
+	.log_s6f11 = false,
 	.log_abort = false,
-	.log_char = false,
+	.log_char = true,
 };
 
 B_type B = {
