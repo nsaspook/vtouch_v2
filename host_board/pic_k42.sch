@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.0">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -14216,6 +14216,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="58.42" y1="17.78" x2="58.42" y2="10.16" width="0.1524" layer="91"/>
 <junction x="58.42" y="17.78"/>
+<junction x="58.42" y="10.16"/>
 </segment>
 </net>
 <net name="VDD" class="0">
@@ -14285,6 +14286,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="129.54" y="71.12"/>
 <junction x="129.54" y="68.58"/>
 <junction x="142.24" y="71.12"/>
+<junction x="124.46" y="71.12"/>
 </segment>
 <segment>
 <pinref part="X5" gate="-8" pin="S"/>
@@ -14319,6 +14321,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="TP2" gate="G$1" pin="TP"/>
 <pinref part="VDD10" gate="G$1" pin="VDD"/>
 <wire x1="-106.68" y1="-45.72" x2="-106.68" y2="-43.18" width="0.1524" layer="91"/>
+<junction x="-106.68" y="-43.18"/>
+<junction x="-106.68" y="-45.72"/>
 </segment>
 </net>
 <net name="VSS" class="0">
@@ -14377,10 +14381,12 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="C12" gate="G$1" pin="2"/>
 <pinref part="VSS24" gate="G$1" pin="VSS"/>
+<junction x="-30.48" y="-48.26"/>
 </segment>
 <segment>
 <pinref part="C11" gate="G$1" pin="2"/>
 <pinref part="VSS25" gate="G$1" pin="VSS"/>
+<junction x="-17.78" y="-48.26"/>
 </segment>
 <segment>
 <pinref part="IC2" gate="G$1" pin="2"/>
@@ -14394,18 +14400,22 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="C14" gate="G$1" pin="2"/>
 <pinref part="VSS27" gate="G$1" pin="VSS"/>
+<junction x="99.06" y="-55.88"/>
 </segment>
 <segment>
 <pinref part="C15" gate="G$1" pin="2"/>
 <pinref part="VSS28" gate="G$1" pin="VSS"/>
+<junction x="109.22" y="-55.88"/>
 </segment>
 <segment>
 <pinref part="C13" gate="G$1" pin="2"/>
 <pinref part="VSS29" gate="G$1" pin="VSS"/>
+<junction x="127" y="-35.56"/>
 </segment>
 <segment>
 <pinref part="C16" gate="G$1" pin="2"/>
 <pinref part="VSS30" gate="G$1" pin="VSS"/>
+<junction x="127" y="-27.94"/>
 </segment>
 <segment>
 <pinref part="C18" gate="G$1" pin="2"/>
@@ -14441,6 +14451,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="C5" gate="G$1" pin="2"/>
 <junction x="129.54" y="60.96"/>
 <junction x="142.24" y="68.58"/>
+<junction x="124.46" y="60.96"/>
 </segment>
 <segment>
 <pinref part="X5" gate="-9" pin="S"/>
@@ -14515,6 +14526,8 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <pinref part="TP1" gate="G$1" pin="TP"/>
 <pinref part="VSS15" gate="G$1" pin="VSS"/>
 <wire x1="-111.76" y1="-43.18" x2="-111.76" y2="-45.72" width="0.1524" layer="91"/>
+<junction x="-111.76" y="-43.18"/>
+<junction x="-111.76" y="-45.72"/>
 </segment>
 </net>
 <net name="N$6" class="0">
@@ -14859,7 +14872,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="45.72" y="88.9"/>
 </segment>
 </net>
-<net name="N$30" class="0">
+<net name="LCD_MOSI" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="RC5"/>
 <wire x1="43.18" y1="88.9" x2="43.18" y2="111.76" width="0.1524" layer="91"/>
@@ -14869,9 +14882,10 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="137.16" y1="83.82" x2="142.24" y2="83.82" width="0.1524" layer="91"/>
 <junction x="142.24" y="83.82"/>
 <junction x="43.18" y="88.9"/>
+<label x="111.76" y="83.82" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$31" class="0">
+<net name="LCD_SCK" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="RC3"/>
 <wire x1="58.42" y1="88.9" x2="58.42" y2="109.22" width="0.1524" layer="91"/>
@@ -14881,6 +14895,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="134.62" y1="81.28" x2="142.24" y2="81.28" width="0.1524" layer="91"/>
 <junction x="142.24" y="81.28"/>
 <junction x="58.42" y="88.9"/>
+<label x="111.76" y="81.28" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$32" class="0">
@@ -14896,7 +14911,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <junction x="76.2" y="71.12"/>
 </segment>
 </net>
-<net name="N$33" class="0">
+<net name="LCD_CS" class="0">
 <segment>
 <pinref part="IC1" gate="G$1" pin="RC2"/>
 <wire x1="60.96" y1="88.9" x2="60.96" y2="104.14" width="0.1524" layer="91"/>
@@ -14906,6 +14921,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="129.54" y1="76.2" x2="142.24" y2="76.2" width="0.1524" layer="91"/>
 <junction x="142.24" y="76.2"/>
 <junction x="60.96" y="88.9"/>
+<label x="111.76" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$34" class="0">
@@ -15149,7 +15165,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="63.5" y1="99.06" x2="25.4" y2="99.06" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$52" class="0">
+<net name="MODE_LED" class="0">
 <segment>
 <pinref part="R7" gate="G$1" pin="2"/>
 <wire x1="-116.84" y1="45.72" x2="-93.98" y2="45.72" width="0.1524" layer="91"/>
@@ -15166,6 +15182,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <wire x1="-25.4" y1="55.88" x2="-25.4" y2="63.5" width="0.1524" layer="91"/>
 <junction x="-25.4" y="63.5"/>
 <junction x="-116.84" y="45.72"/>
+<label x="-111.76" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$53" class="0">
@@ -15343,6 +15360,7 @@ new: Attribute TP_SIGNAL_NAME&lt;br&gt;
 <segment>
 <pinref part="Q1" gate="G$1" pin="VCC"/>
 <pinref part="P+1" gate="VCC" pin="VCC"/>
+<junction x="132.08" y="-10.16"/>
 </segment>
 <segment>
 <pinref part="C21" gate="G$1" pin="1"/>
